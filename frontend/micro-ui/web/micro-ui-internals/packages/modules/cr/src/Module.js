@@ -27,6 +27,7 @@ import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclus
 import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
+import BirthInclusionAcknowledgement from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionAcknowledgement";
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
@@ -171,6 +172,7 @@ import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePub
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 
+import MarriageCorrectionAcknowledgement from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionAcknowledgement";
 import MarriageCorrectionEditPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionEditPage";
 import MarriageCorrectionLoadPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/index";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
@@ -296,6 +298,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,
   CrFlowApp,
   ScrFlowApp,
@@ -459,6 +462,7 @@ const componentsToRegister = {
   AbandonedChildDetails,
   AbandonedBirthInformarDetails,
   //Marriage
+  MarriageCorrectionAcknowledgement,
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
   BrideDetails,

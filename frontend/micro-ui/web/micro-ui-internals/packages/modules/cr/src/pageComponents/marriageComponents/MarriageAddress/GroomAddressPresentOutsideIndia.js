@@ -65,7 +65,7 @@ const GroomAddressPresentOutsideIndia = ({
   }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   let cmbCountry = [];
   Country &&
@@ -98,10 +98,10 @@ const GroomAddressPresentOutsideIndia = ({
       }
     }
   } else if (isEditDeath) {
-    if (formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
+    if (formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
         setadrsVillage(
-          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage)[0]
         );
       }
     }
@@ -116,24 +116,27 @@ const GroomAddressPresentOutsideIndia = ({
       }
     }
   }
+  const onSkip = () => onSelect();
 
   function setSelectadrsVillage(value) {
     setadrsVillage(value);
     if (isPrsentAddress) {
       setadrsPermntOutsideIndiaVillage(value);
-    } else {
-      setadrsPermntOutsideIndiaVillage("");
     }
+    // else {
+    //   setadrsPermntOutsideIndiaVillage('');
+    // }
   }
 
   function setSelectadrsCityTown(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setadrsCityTown(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaCityTown(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaCityTown("");
+        setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setadrsPermntOutsideIndiaCityTown('');
+      // }
     }
   }
 
@@ -141,20 +144,22 @@ const GroomAddressPresentOutsideIndia = ({
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setAdressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLineoneEn("");
+        setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setadrsPermntOutsideIndiaLineoneEn('');
+      // }
     }
   }
   function setSelectAdressEnB(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setAdressEnB(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLinetwoEn("");
+        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setadrsPermntOutsideIndiaLinetwoEn('');
+      // }
     }
   }
 
@@ -166,10 +171,11 @@ const GroomAddressPresentOutsideIndia = ({
     } else {
       setAdressMlB(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLinetwoMl("");
+        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setadrsPermntOutsideIndiaLinetwoMl('');
+      // }
     }
   }
   function setSelectAdressMl(e) {
@@ -180,10 +186,11 @@ const GroomAddressPresentOutsideIndia = ({
     } else {
       setAdressMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLineoneMl("");
+        setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setadrsPermntOutsideIndiaLineoneMl('');
+      // }
     }
   }
 
@@ -191,10 +198,11 @@ const GroomAddressPresentOutsideIndia = ({
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setProvinceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setPermntOutsideIndiaprovinceEn("");
+        setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setPermntOutsideIndiaprovinceEn('');
+      // }
     }
   }
   function setSelectProvinceMl(e) {
@@ -205,10 +213,11 @@ const GroomAddressPresentOutsideIndia = ({
     } else {
       setProvinceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      } else {
-        setPermntOutsideIndiaprovinceMl("");
+        setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       }
+      // else {
+      //   setPermntOutsideIndiaprovinceMl('');
+      // }
     }
   }
 
@@ -224,20 +233,16 @@ const GroomAddressPresentOutsideIndia = ({
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setPostCode(e.target.value);
-        return false;
-      } else {
-        setPostCode(e.target.value);
-        if (isPrsentAddress) {
-          setPermantpostCode(e.target.value);
-        } else {
-          setPermantpostCode("");
-        }
-      }
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
+    if (isPrsentAddress) {
+      setPermantpostCode(
+        e.target.value.trim().length <= 6
+          ? e.target.value.trim().replace(/[^0-9]/gi, "")
+          : e.target.value
+              .trim()
+              .replace(/[^0-9]/gi, "")
+              .substring(0, 6)
+      );
     }
   }
   function setCheckMalayalamInputField(e) {
@@ -246,11 +251,13 @@ const GroomAddressPresentOutsideIndia = ({
       e.preventDefault();
     }
   }
+  const goNext = () => {};
   if (isCountryLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}> */}
         {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
@@ -289,7 +296,7 @@ const GroomAddressPresentOutsideIndia = ({
               onChange={setSelectProvinceEn}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
               disable={isDisableEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -306,7 +313,12 @@ const GroomAddressPresentOutsideIndia = ({
               onChange={setSelectProvinceMl}
               disable={isDisableEdit}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_STATE_REGION_PROVINCE_EN"),
+              })}
             />
           </div>
         </div>
@@ -340,7 +352,7 @@ const GroomAddressPresentOutsideIndia = ({
               onChange={setSelectadrsCityTown}
               disable={isDisableEdit}
               placeholder={`${t("CR_CITY_TOWN_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -358,11 +370,11 @@ const GroomAddressPresentOutsideIndia = ({
               disable={isDisableEdit}
               placeholder={`${t("CR_ZIP_CODE")}`}
               {...(validation = {
-                pattern: "^[a-zA-Z-.0-9`' ]*$",
+                pattern: "^[0-9]*$",
                 isRequired: true,
-                type: "number",
-                max: 6,
-                min: 6,
+                type: "text",
+                maxLength: 6,
+                minLength: 6,
                 title: t("CR_INVALID_ZIP_CODE"),
               })}
             />
@@ -384,7 +396,7 @@ const GroomAddressPresentOutsideIndia = ({
               onChange={setSelectAdressEn}
               disable={isDisableEdit}
               placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -398,7 +410,7 @@ const GroomAddressPresentOutsideIndia = ({
               onChange={setSelectAdressEnB}
               disable={isDisableEdit}
               placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
             />
           </div>
         </div>
@@ -450,6 +462,7 @@ const GroomAddressPresentOutsideIndia = ({
             />
           </div>
         </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

@@ -14,6 +14,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   console.log("selectedConfig==in birth modal", selectedDocs, selectedConfig);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [uploadDoc, setUploadDoc] = useState({});
+  const [fileDocError, setFileDocError] = useState("");
   const fieldName = BIRTH_INCLUSION_FIELD_NAMES[selectedConfig?.documentData?.[0]?.CorrectionField];
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
@@ -21,32 +22,27 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [selectedDocuments, setSelectedDocuments] = useState(selectedConfig?.documentData);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [conditionalProperty, setConditionalProperty] = useState("");
   const [checkStudentCondition, setCheckStudentCondition] = useState("");
   const [checkCorrectionCondition, setCheckCorrectionCondition] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [certificateDob, setCertificateDob] = useState("");
+
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   let conditionalComponent = "";
 
   useEffect(() => {
     setSelectedDocuments(selectedConfig?.documentData);
-    return () => {
-      setUploadedFiles([]);
-      setDocuploadedId("");
-      setDocuploadedName("");
-      setDocuploadedType("");
-    };
   }, [selectedConfig?.documentData]);
 
   console.log("selectedConfig", selectedConfig);
-  const handleUploadDoc = (file, docType) => {
-    let tempObj = { [docType]: [...file] };
-    console.log("uploadedd===files--", docType, [...file], tempObj);
-    setUploadDoc({ ...uploadDoc, ...tempObj });
-  };
+  // const handleUploadDoc = (file, docType) => {
+  //   let tempObj = { [docType]: [...file] };
+  //   console.log("uploadedd===files--", docType, [...file], tempObj);
+  //   setUploadDoc({ ...uploadDoc, ...tempObj });
+  // };
 
   function onDeleteown(e) {
     console.log("onDelete", e);
@@ -57,6 +53,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (removeindex === -1) {
       return false;
     }
+    console.log("on delete--", removeindex, uploadedFiles);
     docIdDetails.push(e);
     setUploadedFiles(!!uploadedFiles.splice(removeindex, 1));
   }
@@ -76,13 +73,36 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     console.log("selectedConfig?.documentData==", selectedDocs, selectedConfig?.documentData);
     (async () => {
       setIsLoading(true);
-      setError(null);
+      // setError([]);
+      console.log("uploaded files==", file, file?.type);
       if (file && file?.type) {
+        console.log("file.size >= 2000000==", file.size, file.size >= 2000000);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
-          setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
+          // setError({message:t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"),fieldId:docuploadedId});
+          const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
+          let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
+          if (errorIndex === -1) {
+            setError([...error, tempObj]);
+          } else {
+            let tempError = [...error];
+            setError(tempError.splice(errorIndex, 1, tempObj));
+          }
         } else if (file.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          // setError({message:t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"),fieldId:docuploadedId});
+          const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
+          let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
+          if (errorIndex === -1) {
+            setError([...error, tempObj]);
+          } else {
+            let tempError = [...error];
+            setError(tempError.splice(errorIndex, 1, tempObj));
+          }
         } else {
+          const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
+          if (errorIndex > -1) {
+            let tempError = [...error];
+            setError(tempError.splice(errorIndex, 1));
+          }
           // try {
           const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
           if (response?.data?.files?.length > 0) {
@@ -106,7 +126,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             setUploadedFile(response?.data?.files[0]?.fileStoreId);
             setIsLoading(false);
           } else {
-            setError(t("PT_FILE_UPLOAD_ERROR"));
+            setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
             setIsLoading(false);
           }
           // } catch (err) {}
@@ -397,9 +417,10 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     setDocuploadedName("");
     setDocuploadedType("");
     setFile({});
+    setFileDocError("");
   };
 
-  console.log("selectedDocuments---", selectedDocuments);
+  console.log("selectedDocuments---", selectedDocuments, error, fileDocError);
   return (
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
@@ -412,6 +433,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         {selectedDocuments?.length == 1 && (
           <div>
             <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+            {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
             {selectedDocuments?.[0]?.Documents?.map((item, index) => (
               <div>
                 {!selectedDocs.includes(item.DocumentId?.toString()) && (
@@ -430,7 +452,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                           setUploadedFile(null);
                         }}
                         message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        error={error}
+                        iserror={error.findIndex((e) => item.DocumentId === e.fieldId) > -1 ? error.message : ""}
                       />
                     </div>
                   </div>
@@ -444,8 +466,15 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           selected={true}
           label={"Save"}
           onClick={() => {
-            resetFields();
-            onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
+            console.log("selectedDocuments in save--", selectedDocuments);
+            if (selectedDocuments?.length === 1) {
+              if (selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
+                resetFields();
+                onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
+              } else {
+                setFileDocError("You have to upload following documents to make changes in the field");
+              }
+            }
           }}
         />
         <EditButton

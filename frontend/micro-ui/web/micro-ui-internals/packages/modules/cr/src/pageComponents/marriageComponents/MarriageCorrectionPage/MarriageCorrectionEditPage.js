@@ -12,6 +12,7 @@ import {
   EditButton,
   PopUp,
   UploadFile,
+  SubmitBar,
   EditIcon,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
@@ -21,34 +22,43 @@ import { MARRIAGE_INCLUSION_FIELD_NAMES } from "../../../config/constants";
 import { initializeMarriageCorrectionObject } from "../../../business-objects/globalObject";
 import { useForm } from "react-hook-form";
 import { convertEpochToDate } from "../../../utils";
-import MarriageAddressPage from "../MarriageAddressPage";
+// import MarriageAddressPage from "../MarriageAddressPage";
 import MarriagePublicPlace from "../MarriagePublicPlace";
 import MarriageCorrectionModal from "../../../components/MarriageCorrectionModal";
 import { formatApiParams } from "../../../utils/marriageCorrectionParams";
 
 const types = ["HUSBAND DETAILS", "WIFE DETAILS"];
 
-const MarriageCorrectionEditPage = ({ navigationData, cmbPlace, cmbWardNoFinal, cmbPlaceName, cmbWardNo, BirthCorrectionDocuments }) => {
+const MarriageCorrectionEditPage = ({
+  navigationData,
+  cmbPlace,
+  cmbWardNoFinal,
+  cmbPlaceName,
+  onSubmitAcknowledgement,
+  BirthCorrectionDocuments,
+}) => {
   const { t } = useTranslation();
   let formData = {};
   let validation = {};
   const [showModal, setShowModal] = useState(false);
   // const [marriagePlaceName, setMarriagePlaceName] = useState();
   let marriageCorrectionFormData = [];
-const cmbPlaceNameReligious = cmbPlaceName?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
-const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
+  const cmbPlaceNameReligious = cmbPlaceName?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
+  const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
   const [value, setValue1] = useState(0);
   const [active, setActive] = useState(types[0]);
   const [marriageCorrectionFormsObj, setMarriageCorrectionFormsObj] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState([]);
-  const [marriageWardCode, setmarriageWardCode] = useState(
-    formData?.MarriageDetails?.marriageWardCode
-      ? formData?.MarriageDetails?.marriageWardCode
-      : marriageCorrectionFormsObj?.marriageWardCode
-      ? cmbWardNoFinal.filter((cmbWardNoFinal) => cmbWardNoFinal.code === marriageCorrectionFormsObj?.marriageWardCode[0])
-      : ""
-  );
+  const [selectedFieldType, setSelectedFieldType] = useState("");
+  // const [marriageWardCode, setmarriageWardCode] = useState(
+  //   formData?.MarriageDetails?.marriageWardCode
+  //     ? formData?.MarriageDetails?.marriageWardCode
+  //     : marriageCorrectionFormsObj?.marriageWardCode
+  //     ? cmbWardNoFinal.filter((cmbWardNoFinal) => cmbWardNoFinal.code === marriageCorrectionFormsObj?.marriageWardCode[0])
+  //     : ""
+  // );
   const [selectedCorrectionItem, setSelectedCorrectionItem] = useState([]);
+  const [selectedDocData, setSelectedDocData] = useState([]);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -87,8 +97,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
     formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
   );
   const setBirthInclusionFilterQuery = (fieldId) => {
-    const birthInclusionData = marriageCorrectionFormsObj[fieldId];
+    let birthInclusionData = marriageCorrectionFormsObj[fieldId];
+    setSelectedFieldType(fieldId);
     setSelectedCorrectionItem(birthInclusionData);
+    console.log("birthInclusionData ===", birthInclusionData, fieldId);
     setShowModal(true);
   };
 
@@ -102,15 +114,18 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
 
   const ButtonContainer = (props) => {
     return (
-      <div className="col-md-2" style={{ cursor: "pointer", background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "3rem", width: "3rem" }}>
+      <div
+        className="col-md-2"
+        style={{ cursor: "pointer", background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "3rem", width: "3rem" }}
+      >
         {props.children}
       </div>
     );
   };
 
-  const onSubmit = (data) => console.log(data);
-
   const mutation = Digit.Hooks.cr.useMarriageCorrectionAction(tenantId);
+
+  const onSubmit = (data) => console.log(data);
 
   const { register, handleSubmit, reset, setValue, getValues, watch, errors } = useForm({
     reValidateMode: "onSubmit",
@@ -128,77 +143,93 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
     return date;
   };
 
-  const onWardChange = (wardDetails) => {
-    let tempObj = { ...marriageCorrectionFormsObj };
-    let { MARRIAGE_PLACE_WARD } = tempObj;
-    tempObj = { ...tempObj, MARRIAGE_PLACE_WARD: { ...MARRIAGE_PLACE_WARD, curValue: wardDetails } };
-    setMarriageCorrectionFormsObj(tempObj);
-  };
+  // const onWardChange = (wardDetails) => {
+  //   let tempObj = { ...marriageCorrectionFormsObj };
+  //   let { PLACE_OF_MARRIAGE } = tempObj;
+  //   tempObj = { ...tempObj, PLACE_OF_MARRIAGE: { ...PLACE_OF_MARRIAGE, curValue: wardDetails } };
+  //   setMarriageCorrectionFormsObj(tempObj);
+  // };
 
-  const onPlaceTypeChange = (placeTypeDetails) => {
-    let tempObj = { ...marriageCorrectionFormsObj };
-    let { MARRIAGE_PLACE_TYPE } = tempObj;
-    tempObj = { ...tempObj, MARRIAGE_PLACE_TYPE: { ...MARRIAGE_PLACE_TYPE, curValue: placeTypeDetails } };
-    setMarriageCorrectionFormsObj(tempObj);
-  };
+  // const onPlaceTypeChange = (placeTypeDetails) => {
+  //   let tempObj = { ...marriageCorrectionFormsObj };
+  //   let { MARRIAGE_PLACE_TYPE } = tempObj;
+  //   tempObj = { ...tempObj, MARRIAGE_PLACE_TYPE: { ...MARRIAGE_PLACE_TYPE, curValue: placeTypeDetails } };
+  //   setMarriageCorrectionFormsObj(tempObj);
+  // };
 
-  const onPlaceNameChange = (placeNameDetails) => {
-    let tempObj = { ...marriageCorrectionFormsObj };
-    let { MARRIAGE_PLACE_NAME } = tempObj;
-    tempObj = { ...tempObj, MARRIAGE_PLACE_NAME: { ...MARRIAGE_PLACE_NAME, curValue: placeNameDetails } };
-    setMarriageCorrectionFormsObj(tempObj);
-  };
+  // const onPlaceNameChange = (placeNameDetails) => {
+  //   let tempObj = { ...marriageCorrectionFormsObj };
+  //   let { MARRIAGE_PLACE_NAME } = tempObj;
+  //   tempObj = { ...tempObj, MARRIAGE_PLACE_NAME: { ...MARRIAGE_PLACE_NAME, curValue: placeNameDetails } };
+  //   setMarriageCorrectionFormsObj(tempObj);
+  // };
 
   const onGroomDOBChange = (value) => {
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { GROOM_DOB } = tempObj;
-    tempObj = { ...tempObj, GROOM_DOB: { ...GROOM_DOB, curValue: value && moment(value, "YYYY-MM-DD").format("DD/MM/YYYY") } };
+    let { GROOM_AGE } = tempObj;
+    tempObj = {
+      ...tempObj,
+      GROOM_AGE: {
+        ...GROOM_AGE,
+        curValue: { dob: value && moment(value, "YYYY-MM-DD").format("DD/MM/YYYY"), age: value && moment().diff(moment(value), "years") },
+      },
+    };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
+  const onBrideDOBChange = (value) => {
+    let tempObj = { ...marriageCorrectionFormsObj };
+    let { BRIDE_AGE } = tempObj;
+    tempObj = {
+      ...tempObj,
+      BRIDE_AGE: {
+        ...BRIDE_AGE,
+        curValue: { dob: value && moment(value, "YYYY-MM-DD").format("DD/MM/YYYY"), age: value && moment().diff(moment(value), "years") },
+      },
+    };
+    setMarriageCorrectionFormsObj(tempObj);
+  };
   const formatDob = (date) => {
     return date;
   };
 
-  const onGroomNameChange = (e,fieldType) => {
+  const onGroomNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { GROOM_NAME_EN } = tempObj;
-    let { curValue } = GROOM_NAME_EN;
-    tempObj = { ...tempObj, GROOM_NAME_EN: { ...GROOM_NAME_EN, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { GROOM_NAME } = tempObj;
+    let { curValue } = GROOM_NAME;
+    tempObj = { ...tempObj, GROOM_NAME: { ...GROOM_NAME, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-  const onGroomMotherNameChange = (e,fieldType) => {
+  const onGroomMotherNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { GROOM_MOTHER_NAME_EN } = tempObj;
-    let { curValue } = GROOM_MOTHER_NAME_EN;
-    tempObj = { ...tempObj, GROOM_MOTHER_NAME_EN: { ...GROOM_MOTHER_NAME_EN, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { GROOM_MOTHER } = tempObj;
+    let { curValue } = GROOM_MOTHER;
+    tempObj = { ...tempObj, GROOM_MOTHER: { ...GROOM_MOTHER, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-  const onGroomFatherNameChange = (e,fieldType) => {
+  const onGroomFatherNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { GROOM_FATHER_NAME_EN } = tempObj;
-    let { curValue } = GROOM_FATHER_NAME_EN;
-    tempObj = { ...tempObj, GROOM_FATHER_NAME_EN: { ...GROOM_FATHER_NAME_EN, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { GROOM_FATHER } = tempObj;
+    let { curValue } = GROOM_FATHER;
+    tempObj = { ...tempObj, GROOM_FATHER: { ...GROOM_FATHER, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-  const onGroomGuardianNameChange = (e,fieldType) => {
+  const onGroomGuardianNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { GROOM_GUARDIAN_NAME_EN } = tempObj;
-    let { curValue } = GROOM_GUARDIAN_NAME_EN;
-    tempObj = { ...tempObj, GROOM_GUARDIAN_NAME_EN: { ...GROOM_GUARDIAN_NAME_EN, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { GROOM_GUARDIAN } = tempObj;
+    let { curValue } = GROOM_GUARDIAN;
+    tempObj = { ...tempObj, GROOM_GUARDIAN: { ...GROOM_GUARDIAN, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-
-
-  const onBrideNameChange = (e,fieldType) => {
+  const onBrideNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
     let { BRIDE_NAME } = tempObj;
@@ -207,62 +238,110 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-  const onBrideMotherNameChange = (e,fieldType) => {
+  const onBrideMotherNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { BRIDE_MOTHER_NAME } = tempObj;
-    let { curValue } = BRIDE_MOTHER_NAME;
-    tempObj = { ...tempObj, BRIDE_MOTHER_NAME: { ...BRIDE_MOTHER_NAME, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { BRIDE_MOTHER } = tempObj;
+    let { curValue } = BRIDE_MOTHER;
+    tempObj = { ...tempObj, BRIDE_MOTHER: { ...BRIDE_MOTHER, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-  const onBrideFatherNameChange = (e,fieldType) => {
+  const onBrideFatherNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { BRIDE_FATHER_NAME } = tempObj;
-    let { curValue } = BRIDE_FATHER_NAME;
-    tempObj = { ...tempObj, BRIDE_FATHER_NAME: { ...BRIDE_FATHER_NAME, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { BRIDE_FATHER } = tempObj;
+    let { curValue } = BRIDE_FATHER;
+    tempObj = { ...tempObj, BRIDE_FATHER: { ...BRIDE_FATHER, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-  const onBrideGuardianNameChange = (e,fieldType) => {
+  const onBrideGuardianNameChange = (e, fieldType) => {
     e.preventDefault();
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { BRIDE_GUARDIAN_NAME } = tempObj;
-    let { curValue } = BRIDE_GUARDIAN_NAME;
-    tempObj = { ...tempObj, BRIDE_GUARDIAN_NAME: { ...BRIDE_GUARDIAN_NAME, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    let { BRIDE_GUARDIAN } = tempObj;
+    let { curValue } = BRIDE_GUARDIAN;
+    tempObj = { ...tempObj, BRIDE_GUARDIAN: { ...BRIDE_GUARDIAN, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setMarriageCorrectionFormsObj(tempObj);
   };
 
-    useEffect(async()=>{
-      marriageCorrectionFormData = await initializeMarriageCorrectionObject(BirthCorrectionDocuments,navigationData,cmbWardNoFinal,cmbPlace,cmbPlaceName);
-      await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
-   },[navigationData,BirthCorrectionDocuments])
+  const onGroomAddressChange = (e, fieldType) => {
+    e.preventDefault();
+    let tempObj = { ...marriageCorrectionFormsObj };
+    let { GROOM_PERADD } = tempObj;
+    let { curValue } = GROOM_PERADD;
+    tempObj = { ...tempObj, GROOM_PERADD: { ...GROOM_PERADD, curValue: { ...curValue, [fieldType]: e.target.value }, isFocused: false } };
+    setMarriageCorrectionFormsObj(tempObj);
+  };
 
-   useEffect(() => {
-  if(marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue){
-    setMarriagePlace(marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue)
-  }
-   }, [marriageCorrectionFormsObj]);
+  const onBrideAddressChange = (e, fieldType) => {
+    e.preventDefault();
+    let tempObj = { ...marriageCorrectionFormsObj };
+    let { BRIDE_PERADD } = tempObj;
+    let { curValue } = BRIDE_PERADD;
+    tempObj = { ...tempObj, BRIDE_PERADD: { ...BRIDE_PERADD, curValue: { ...curValue, [fieldType]: e.target.value }, isFocused: false } };
+    setMarriageCorrectionFormsObj(tempObj);
+  };
 
-   const onUploadDocSubmit = async (fileData, error) => {
+  useEffect(async () => {
+    marriageCorrectionFormData = await initializeMarriageCorrectionObject(
+      BirthCorrectionDocuments,
+      navigationData,
+      cmbWardNoFinal,
+      cmbPlace,
+      cmbPlaceName
+    );
+    await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
+  }, [navigationData, BirthCorrectionDocuments]);
+
+  useEffect(() => {
+    if (marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue) {
+      setMarriagePlace(marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue);
+    }
+  }, [marriageCorrectionFormsObj]);
+
+  const onUploadDocSubmit = async ({ fileData, documentCondition }) => {
+   
+
+    // if (tempFieldType?.documentData?.Documents?.length === fileData?.length) {
     if (fileData && fileData?.length > 0) {
       const selectedDocIds = fileData.map((item) => item.documentId);
-      setSelectedDocs(selectedDocIds);
+      setSelectedDocs([...selectedDocs,...selectedDocIds]);
+      const filteredData = fileData.filter((item)=> {
+        if(!selectedDocs.includes(item.documentId)){
+              return item
+        }
+      });
+      setSelectedDocData([...selectedDocData,...filteredData]);
     }
+    console.log("uploaded documents==",fileData,selectedDocData,selectedDocs);
     selectedDocs;
     let tempObj = { ...marriageCorrectionFormsObj };
-    let { DECEASED_DOB } = tempObj;
-    tempObj = { ...tempObj, DECEASED_DOB: { ...DECEASED_DOB, Documents: fileData, isFocused: true, isDisabled: false } };
-
+    let tempFieldType = tempObj[selectedFieldType];
+    tempObj = {
+      ...tempObj,
+      [selectedFieldType]: {
+        ...tempFieldType,
+        Documents: fileData,
+        documentCondition,
+        selectedDocType: selectedFieldType,
+        isEditable: true,
+        isFocused: true,
+        isDisable: false,
+      },
+    };
     setMarriageCorrectionFormsObj(tempObj);
     setShowModal(false);
   };
 
-  const onSubmitBirthInclusion = async () => {
-    const formattedResp = await formatApiParams(marriageCorrectionFormsObj, navigationData);
-    console.log("formattedResp", formattedResp);
-   await mutation.mutate(formattedResp);
+
+  const onDocUploadSuccess = (data) =>{
+    onSubmitAcknowledgement(data);
+  }
+  const onSubmitMarriageCorrection = (data) => {
+    const formattedResp = formatApiParams(marriageCorrectionFormsObj, navigationData);
+    mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
+   
   };
 
   const setMarriageCorrecvtionFilterQuery = (fieldId) => {
@@ -271,10 +350,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
     setShowModal(true);
   };
 
-  function setSelectmarriageWardCode(value) {
-    // setTenantWard(value.code);
-    setmarriageWardCode(value);
-  }
+  // function setSelectmarriageWardCode(value) {
+  //   // setTenantWard(value.code);
+  //   setmarriageWardCode(value);
+  // }
 
   function setMarriagePlaceName(place) {
     if (place.code === "RELIGIOUS_INSTITUTION") {
@@ -301,20 +380,20 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
     }
   };
 
-  if(Object.keys(marriageCorrectionFormsObj)?.length > 0){
-  return (
-    <React.Fragment>
-      <FormStep>
-        <div className="row">
-          <div className="col-md-12">
+  if (Object.keys(marriageCorrectionFormsObj)?.length > 0) {
+    return (
+      <React.Fragment>
+        <FormStep>
+          <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_MARRIAGE")}`}</span>{" "}
-              </h1>
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_MARRIAGE")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-5">
@@ -326,7 +405,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                   // date={childDOB}
                   // datePickerRef={register}
                   name="marriageDOM"
-                  disabled={marriageCorrectionFormsObj?.DOM?.isDisabled}
+                  disabled={marriageCorrectionFormsObj?.DOM?.isDisable}
                   autofocus={marriageCorrectionFormsObj?.DOM?.isFocused}
                   date={marriageCorrectionFormsObj?.DOM?.curValue}
                   max={convertEpochToDate(new Date())}
@@ -341,14 +420,16 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
               </div>
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
+            {marriageCorrectionFormsObj?.DOM?.isDisable && (
               <ButtonContainer>
                 <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.DOM)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
+                  <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
                 </span>
               </ButtonContainer>
+            )}
             </div>
           </FormFieldContainer>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -370,9 +451,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                   isMandatory={true}
                   placeholder={t("CS_COMMON_WARD")}
                   option={cmbWardNoFinal}
-                  selected={marriageCorrectionFormsObj?.MARRIAGE_PLACE_WARD?.curValue}
-                  disabled={marriageCorrectionFormsObj?.MARRIAGE_PLACE_WARD?.isDisabled}
-                  autofocus={marriageCorrectionFormsObj?.MARRIAGE_PLACE_WARD?.isFocused}
+                  selected={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue}
+                  disabled={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.isDisable}
+                  autofocus={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.isFocused}
                   select={onWardChange}
                   {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
                 />
@@ -380,13 +461,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
+                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.PLACE_OF_MARRIAGE)}>
                   <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
                 </span>
               </ButtonContainer>
             </div>
-          </FormFieldContainer>
-          <FormFieldContainer>
+          </FormFieldContainer> */}
+          {/* <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-5">
                 <CardLabel>
@@ -399,6 +480,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                   isMandatory={false}
                   option={cmbPlace}
                   selected={marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue}
+                  disabled={marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.isDisable}
                   select={onPlaceTypeChange}
                   placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
                 />
@@ -418,6 +500,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     placeholder={t("CS_NAME_OF_PLACE'")}
                     option={setMarriagePlaceName(marriagePlace)}
                     selected={marriageCorrectionFormsObj?.MARRIAGE_PLACE_NAME?.curValue}
+                    disabled={marriageCorrectionFormsObj?.MARRIAGE_PLACE_NAME?.isDisable}
                     select={onPlaceNameChange}
                     {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
                   />
@@ -468,7 +551,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                 </span>
               </ButtonContainer>
             </div>
-          </FormFieldContainer>
+          </FormFieldContainer> */}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -502,10 +585,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         optionKey="i18nKey"
                         name="groomFirstnameEn"
-                        disabled={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME_EN?.curValue?.firstNameEn}
-                        onBlur={(e) => onGroomNameChange(e, "firstNameEn" )}
+                        disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
+                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameEn}
+                        onBlur={(e) => onGroomNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
@@ -519,10 +602,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomMiddlenameEn"
-                        disabled={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME_EN?.curValue?.middleNameEn}
-                        onBlur={(e) => onGroomNameChange(e, "middleNameEn" )}
+                        disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
+                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameEn}
+                        onBlur={(e) => onGroomNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
@@ -536,22 +619,23 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomLastnameEn"
-                        disabled={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME_EN?.curValue?.lastNameEn}
-                        onBlur={(e) => onGroomNameChange(e, "lastNameEn" )}
+                        disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
+                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameEn}
+                        onBlur={(e) => onGroomNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
-
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.GROOM_NAME?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_NAME)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -567,10 +651,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomFirstNameMl"
-                        disabled={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME_EN?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME_EN?.curValue?.firstNameMl}
-                        onBlur={(e) => onGroomNameChange(e, "firstNameMl" )}
+                        disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
+                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameMl}
+                        onBlur={(e) => onGroomNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
@@ -584,10 +668,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="GroomMiddleNameMl"
-                        disabled={marriageCorrectionFormsObj.GROOM_NAME_EN?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.GROOM_NAME_EN?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME_EN?.curValue?.middleNameMl}
-                        onBlur={(e) => onGroomNameChange(e, "middleNameMl" )}
+                        disabled={marriageCorrectionFormsObj.GROOM_NAME?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameMl}
+                        onBlur={(e) => onGroomNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
@@ -601,23 +685,15 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomLastNameMl"
-                        disabled={marriageCorrectionFormsObj.GROOM_NAME_EN?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.GROOM_NAME_EN?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME_EN?.curValue?.lastNameMl}
-                        onBlur={(e) => onGroomNameChange(e, "lastNameMl" )}
+                        disabled={marriageCorrectionFormsObj.GROOM_NAME?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameMl}
+                        onBlur={(e) => onGroomNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
-
-                  <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
-                  </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
                   <FieldComponentContainer>
@@ -631,9 +707,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         datePickerRef={register}
                         // max={convertEpochToDate(new Date())}
                         name="groomDOB"
-                        disabled={marriageCorrectionFormsObj.GROOM_DOB?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.GROOM_DOB?.isFocused}
-                        date={marriageCorrectionFormsObj?.GROOM_DOB?.curValue}
+                        disabled={marriageCorrectionFormsObj.GROOM_AGE?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_AGE?.isFocused}
+                        date={marriageCorrectionFormsObj?.GROOM_AGE?.curValue?.dob}
                         max={convertEpochToDate(new Date())}
                         onChange={onGroomDOBChange}
                         formattingFn={formatDob}
@@ -654,22 +730,24 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="GroomAge"
-                        disabled={marriageCorrectionFormsObj.GROOM_AGE?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.GROOM_AGE?.isDisable}
                         autofocus={marriageCorrectionFormsObj.GROOM_AGE?.isFocused}
-                        value={marriageCorrectionFormsObj?.GROOM_AGE?.curValue}
+                        value={marriageCorrectionFormsObj?.GROOM_AGE?.curValue?.age}
                         // value={DeceasedFirstNameEn}
-                        // onChange={setSelectDeceasedFirstNameEn}
+                        onChange={onGroomDOBChange}
                         placeholder={`${t("CR_AGE")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.GROOM_AGE?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_AGE)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -685,7 +763,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomMothernameEn"
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER_NAME_EN?.curValue?.groomMotherNameEn}
+                        disabled={marriageCorrectionFormsObj.GROOM_MOTHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameEn}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -700,7 +780,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomMothernameMl"
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER_NAME_EN?.curValue?.groomMotherNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_MOTHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameMl}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -709,11 +791,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                   </FieldComponentContainer>
 
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.GROOM_MOTHER?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_MOTHER)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -729,7 +813,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomFathernameEn"
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER_NAME_EN?.curValue?.groomFatherNameEn}
+                        disabled={marriageCorrectionFormsObj.GROOM_FATHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameEn}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -744,7 +830,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomFathernameMl"
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER_NAME_EN?.curValue?.groomFatherNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_FATHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameMl}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -753,11 +841,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                   </FieldComponentContainer>
 
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.GROOM_FATHER?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_FATHER)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -771,7 +861,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomGuardiannameEn"
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN_NAME_EN?.curValue?.groomGuardianNameEn}
+                        disabled={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameEn}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -786,7 +878,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomGuardiannameMl"
-                        defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN_NAME_EN?.curValue?.groomGuardianNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameMl}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -794,11 +888,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.GROOM_GUARDIAN?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_GUARDIAN)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <div className="row">
@@ -810,7 +906,192 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </div>
                 </div>
-                <MarriageAddressPage formData={navigationData} />
+               {((marriageCorrectionFormsObj.GROOM_PERADD?.addressType === "insideKerala")||
+               (marriageCorrectionFormsObj.GROOM_PERADD?.addressType === "outsideKerala")) ? (
+                <div>
+                 <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-6">
+                      <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameEn"
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameEn}
+                        onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityEn"
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameEn}
+                        onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
+                        placeholder={`${t("CR_LOCALITY_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_STREET_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedStreetEn"
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.streetNameEn}
+                        onBlur={(e) => onGroomAddressChange(e, "streetNameEn")}
+                        placeholder={`${t("CR_STREET_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.5rem" }}>
+                    {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
+                      <ButtonContainer>
+                        <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["GROOM_PERADD"])}>
+                          <EditIcon style={{ position: "absolute", top: "0.8rem" }}/>
+                        </span>
+                      </ButtonContainer>
+                    )}
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-6">
+                      <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameMl"
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_LOCALITY_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityMl"
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
+                        placeholder={`${t("CR_LOCALITY_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_STREET_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedStreetMl"
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.streetNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        onBlur={(e) => onGroomAddressChange(e, "streetNameMl")}
+                        placeholder={`${t("CR_STREET_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                </FormFieldContainer>
+                </div>)
+                :(
+                  <div>
+                  <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_1_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameEn"
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameEn}
+                        onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_2_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityEn"
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameEn}
+                        onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
+                        placeholder={`${t("CR_LOCALITY_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.5rem" }}>
+                    {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
+                      <ButtonContainer>
+                        <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["GROOM_PERADD"])}>
+                          <EditIcon style={{ position: "absolute", top: "0.8rem" }}/>
+                        </span>
+                      </ButtonContainer>
+                    )}
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_1_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameMl"
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_2_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityMl"
+                        defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameMl}
+                        disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                        onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
+                        placeholder={`${t("CR_LOCALITY_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                </FormFieldContainer>
+                </div>
+                )}
+                <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
+                <FormFieldContainer>
+                  <FieldComponentContainer></FieldComponentContainer>
+                </FormFieldContainer>
               </div>
             ) : (
               <div>
@@ -827,7 +1108,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideFirstNameEn"
-                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onBrideNameChange(e, "firstNameEn")}
@@ -844,7 +1125,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideMiddleNameEn"
-                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onBrideNameChange(e, "middleNameEn")}
@@ -861,7 +1142,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideLastNameEn"
-                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onBrideNameChange(e, "lastNameEn")}
@@ -871,11 +1152,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.BRIDE_NAME?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_NAME)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -891,10 +1174,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideFirstNameMl"
-                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
-                        value={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameMl}
-                        defaultValue={(e) => onBrideNameChange(e, "firstNameMl")}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameMl}
+                        onBlur={(e) => onBrideNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
@@ -908,7 +1191,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideMiddleNameMl"
-                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameMl}
                         onBlur={(e) => onBrideNameChange(e, "middleNameMl")}
@@ -925,7 +1208,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideLastNameMl"
-                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameMl}
                         onBlur={(e) => onBrideNameChange(e, "lastNameMl")}
@@ -934,14 +1217,6 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                       />
                     </div>
                   </FieldComponentContainer>
-
-                  <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
-                  </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
                   <FieldComponentContainer>
@@ -955,10 +1230,12 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         // max={convertEpochToDate(new Date())}
                         datePickerRef={register}
                         name="brideDOB"
-                        disabled={marriageCorrectionFormsObj.BRIDE_DOB?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_DOB?.isFocused}
-                        date={marriageCorrectionFormsObj?.BRIDE_DOB?.curValue}
-                        // onChange={selectDeathDate}
+                        disabled={marriageCorrectionFormsObj.BRIDE_AGE?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_AGE?.isFocused}
+                        date={marriageCorrectionFormsObj?.BRIDE_AGE?.curValue?.dob}
+                        max={convertEpochToDate(new Date())}
+                        onChange={onBrideDOBChange}
+                        formattingFn={formatDob}
                         // {...(validation = {
                         //   pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         //   isRequired: true,
@@ -976,22 +1253,24 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideAge"
-                        disabled={marriageCorrectionFormsObj.BRIDE_AGE?.isDisabled}
+                        disabled={marriageCorrectionFormsObj.BRIDE_AGE?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_AGE?.isFocused}
-                        value={marriageCorrectionFormsObj?.BRIDE_AGE?.curValue}
+                        value={marriageCorrectionFormsObj?.BRIDE_AGE?.curValue?.age}
                         // value={DeceasedFirstNameEn}
-                        // onChange={setSelectDeceasedFirstNameEn}
+                        onChange={onBrideDOBChange}
                         placeholder={`${t("CR_AGE")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.BRIDE_AGE?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_AGE)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -1007,9 +1286,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideMothernameEn"
-                        disabled={marriageCorrectionFormsObj.BRIDE_MOTHER_NAME?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER_NAME?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER_NAME?.curValue?.brideMotherNameEn}
+                        disabled={marriageCorrectionFormsObj.BRIDE_MOTHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER?.curValue?.brideMotherNameEn}
                         onBlur={(e) => onBrideMotherNameChange(e, "brideMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1024,9 +1303,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideMotherNameMl"
-                        disabled={marriageCorrectionFormsObj.BRIDE_MOTHER_NAME?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER_NAME?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER_NAME?.curValue?.brideMotherNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_MOTHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER?.curValue?.brideMotherNameMl}
                         onBlur={(e) => onBrideMotherNameChange(e, "brideMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1034,11 +1313,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.BRIDE_MOTHER?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_MOTHER)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -1054,9 +1335,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideFatherNameEn"
-                        disabled={marriageCorrectionFormsObj.BRIDE_FATHER_NAME?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_FATHER_NAME?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER_NAME?.curValue?.brideFatherNameEn}
+                        disabled={marriageCorrectionFormsObj.BRIDE_FATHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER?.curValue?.brideFatherNameEn}
                         onBlur={(e) => onBrideFatherNameChange(e, "brideFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1071,9 +1352,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideFatherNameMl"
-                        disabled={marriageCorrectionFormsObj.BRIDE_FATHER_NAME?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_FATHER_NAME?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER_NAME?.curValue?.brideFatherNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_FATHER?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER?.curValue?.brideFatherNameMl}
                         onBlur={(e) => onBrideFatherNameChange(e, "brideFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1081,11 +1362,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                  {marriageCorrectionFormsObj?.BRIDE_FATHER?.isDisable && (
+                    <ButtonContainer>
+                      <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_FATHER)}>
+                        <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                      </span>
+                    </ButtonContainer>
+                  )}
                   </div>
                 </FormFieldContainer>
                 <FormFieldContainer>
@@ -1099,9 +1382,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideGuardianNameEn"
-                        disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN_NAME?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN_NAME?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN_NAME?.curValue?.brideGuardianNameEn}
+                        disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.curValue?.brideGuardianNameEn}
                         onBlur={(e) => onBrideGuardianNameChange(e, "brideGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1116,9 +1399,9 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                         type={"text"}
                         // optionKey="i18nKey"
                         name="brideGuardianNameMl"
-                        disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN_NAME?.isDisabled}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN_NAME?.isFocused}
-                        defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN_NAME?.curValue?.brideGuardianNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.curValue?.brideGuardianNameMl}
                         onBlur={(e) => onBrideGuardianNameChange(e, "brideGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1126,11 +1409,13 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
-                  <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
-                  <EditIcon style={{ position: "absolute", top: "0.8rem"}} selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
+                    {marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.isDisable && (
+                      <ButtonContainer>
+                        <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_GUARDIAN)}>
+                          <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                        </span>
+                      </ButtonContainer>
+                    )}
                   </div>
                 </FormFieldContainer>
                 <div className="row">
@@ -1142,33 +1427,208 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                     </div>
                   </div>
                 </div>
-                <MarriageAddressPage formData={navigationData} />
+              {((marriageCorrectionFormsObj.BRIDE_PERADD?.addressType === "insideKerala")||
+               (marriageCorrectionFormsObj.BRIDE_PERADD?.addressType === "outsideKerala")) ? (  
+                <div>
+              <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-6">
+                      <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.houseNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "houseNameEn")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.localityNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "localityNameEn")}
+                        placeholder={`${t("CR_LOCALITY_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_STREET_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedStreetEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.streetNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "streetNameEn")}
+                        placeholder={`${t("CR_STREET_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.5rem" }}>
+                    {marriageCorrectionFormsObj?.BRIDE_PERADD?.isDisable && (
+                      <ButtonContainer>
+                        <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>
+                          <EditIcon style={{ position: "absolute", top: "0.8rem" }} selected={true} label={"Edit"} />
+                        </span>
+                      </ButtonContainer>
+                    )}
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-6">
+                      <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.houseNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "houseNameMl")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_LOCALITY_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.localityNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "localityNameMl")}
+                        placeholder={`${t("CR_LOCALITY_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("CR_STREET_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedStreetMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.streetNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "streetNameMl")}
+                        placeholder={`${t("CR_STREET_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                </FormFieldContainer>
+                </div>
+              )
+              :
+                ( 
+                  <div>
+                    <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_1_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.houseNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "houseNameEn")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_2_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.localityNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "localityNameEn")}
+                        placeholder={`${t("CR_LOCALITY_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.5rem" }}>
+                    {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
+                      <ButtonContainer>
+                        <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>
+                          <EditIcon style={{ position: "absolute", top: "0.8rem" }}/>
+                        </span>
+                      </ButtonContainer>
+                    )}
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_1_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.houseNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "houseNameMl")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_2_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.localityNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "localityNameMl")}
+                        placeholder={`${t("CR_LOCALITY_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                </FormFieldContainer>
+                </div>
+              )}
               </div>
             )}
           </FormFieldContainer>
-          <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
-          <FormFieldContainer>
-            <FieldComponentContainer></FieldComponentContainer>
-            
-                <span onClick={onSubmitBirthInclusion}>
-                  <EditButton selected={true} label={"Submit"} />
-                </span>
-              
-          </FormFieldContainer>
-        {/* </form> */}
-        <MarriageCorrectionModal 
-        showModal={showModal} 
-        selectedConfig={selectedCorrectionItem} 
-        onSubmit={onUploadDocSubmit} 
-        selectedDocs={selectedDocs}
-        hideModal={_hideModal}
-        />
-      </FormStep>
-    </React.Fragment>
-  );
-   } else{
-     return (<Loader/>)
-   }
+          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
+          <MarriageCorrectionModal
+            showModal={showModal}
+            selectedConfig={selectedCorrectionItem}
+            onSubmit={onUploadDocSubmit}
+            selectedDocs={selectedDocs}
+            hideModal={_hideModal}
+            selectedDocData={selectedDocData}
+          />
+        </FormStep>
+      </React.Fragment>
+    );
+  } else {
+    return <Loader />;
+  }
 };
 
 export default MarriageCorrectionEditPage;

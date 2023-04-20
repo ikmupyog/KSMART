@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
+import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
+import { useQueryClient } from "react-query";
 
 const CreateBornOutsideEmp = ({ parentUrl }) => {
   const { t } = useTranslation();
@@ -9,7 +10,8 @@ const CreateBornOutsideEmp = ({ parentUrl }) => {
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  const [isEditBornOutsideBirth, setIsEditBornOutsideBirth] = useState(Digit.Hooks.useSessionStorage("CR_BORNOUTSIDEBIRTH_EDIT_FLAG", {})[0]);
+  const queryClient = useQueryClient();
+  const [isEditBornOutsideBirth, setIsEditBornOutsideBirth] = useState(sessionStorage.getItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG") ? true : false);
   const [params, setParams, clearParams] = isEditBornOutsideBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BORNOUTSIDEBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BORNOUTSIDBIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
@@ -19,8 +21,8 @@ const CreateBornOutsideEmp = ({ parentUrl }) => {
   let { data: newConfig, isLoading } = true;
 
   newConfig = newConfigCR;
-  const stillbirthConfig = newConfig.find((item) => item.head === "BornOutsideIndia Routing");
-  config = config.concat(stillbirthConfig.body.filter((a) => !a.hideInCitizen));
+  const bornOutsidebirthConfig = newConfig.find((item) => item.head === "BornOutsideIndia Routing");
+  config = config.concat(bornOutsidebirthConfig.body.filter((a) => !a.hideInCitizen));
   config.indexRoute = "born-outside-child-details";
 
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
@@ -37,7 +39,7 @@ const CreateBornOutsideEmp = ({ parentUrl }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      return redirectWithHistory(`${match.path}/check`);
+      return redirectWithHistory(`${match.path}/born-outside-check`);
     }
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
@@ -62,8 +64,8 @@ const CreateBornOutsideEmp = ({ parentUrl }) => {
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };
-  const BornOutsideBirthCheckPage = Digit?.ComponentRegistryService?.getComponent("BornOutsideBirthCheckPage");
-  const BornOutsideBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BornOutsideBirthAcknowledgement");
+  const BornOutsideBirthCheckPage = Digit?.ComponentRegistryService?.getComponent("BornOutsideCheckPage");
+  const BornOutsideBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BornOutsideAcknowledgement");
   return (
 
     <React.Fragment>
@@ -86,7 +88,7 @@ const CreateBornOutsideEmp = ({ parentUrl }) => {
 
           );
         })}
-        <Route path={`${match.path}/check`}>
+        <Route path={`${match.path}/born-outside-check`}>
           <BornOutsideBirthCheckPage onSubmit={createProperty} value={params} />
         </Route>
         <Route path={`${match.path}/acknowledgement`}>

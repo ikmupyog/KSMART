@@ -262,7 +262,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AADHAR")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(InformationDeath?.DeceasedAadharNumber)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeceasedAadharNumber}</CardText>
                 </div>
         </div>
       )}
@@ -325,14 +325,16 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.Age}</CardText>
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(InformationDeath.Age) + "  " + t(InformationDeath?.AgeUnit.name)}
+                    </CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE_UNIT")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
+                {/* <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE_UNIT")}`} :</CardText>            
+                 
+                </div> */}
+                {/* <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.AgeUnit.name}</CardText>
-                </div>
+                </div> */}
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
                 </div>

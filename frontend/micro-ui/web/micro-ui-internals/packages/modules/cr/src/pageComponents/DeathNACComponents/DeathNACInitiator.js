@@ -11,22 +11,22 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isDeclaration, setDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : "");
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorEmail, setinitiatorEmail] = useState(formData?.InitiatorinfoDetails?.initiatorEmail ? formData?.InitiatorinfoDetails?.initiatorEmail : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorEmail ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorEmail : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.DeathNACInitiator?.initiatorNameEn ? formData?.DeathNACInitiator?.initiatorNameEn : "");
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.DeathNACInitiator?.initiatorAadhar ? formData?.DeathNACInitiator?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.DeathNACInitiator?.initiatorMobile ? formData?.DeathNACInitiator?.initiatorMobile : "");
+  const [initiatorEmail, setinitiatorEmail] = useState(formData?.DeathNACInitiator?.initiatorEmail ? formData?.DeathNACInitiator?.initiatorEmail :  "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.DeathNACInitiator?.initiatorDesi ? formData?.DeathNACInitiator?.initiatorDesi :  "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.DeathNACInitiator?.initiatorAddress ? formData?.DeathNACInitiator?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [error, setError] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(formData?.DeathNACInitiator?.uploadedFile ? formData?.DeathNACInitiator?.uploadedFile : null);
   const [uploadedFile1, setUploadedFile1] = useState(null);
   const [uploadedFile2, setUploadedFile2] = useState(null);
   const [uploadedFile3, setUploadedFile3] = useState(null);
   const [uploadedFile4, setUploadedFile4] = useState(null);
   const [uploadedFile5, setUploadedFile5] = useState(null);
   const [uploadedFile6, setUploadedFile6] = useState(null);
-  const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file, setFile] = useState(formData?.DeathNACInitiator?.docType1);
   const [file1, setFile1] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file2, setFile2] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file3, setFile3] = useState(formData?.owners?.documents?.ProofOfIdentity);
@@ -378,7 +378,6 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       });
     }
   };
-  console.log(formData);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>

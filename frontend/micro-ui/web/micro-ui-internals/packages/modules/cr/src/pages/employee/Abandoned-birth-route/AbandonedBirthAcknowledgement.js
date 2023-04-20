@@ -2,15 +2,18 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToAbandonedBirthRegistration,convertToEditAbandonedBirthRegistration } from "../../../utils/abandonedbirthindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import { convertToAbandonedBirthRegistration } from "../../../utils/abandonedbirthindex";
+import getPDFData from "../../../utils/getCRAbandonedBirthAcknowledgementData";
+import { useHistory } from "react-router-dom";
+
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
+    return t("CR_CREATE_APPLICATION_PENDING");
+    // return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
     return t("CR_CREATE_APPLICATION_FAILED");
   }
@@ -36,39 +39,33 @@ const BannerPicker = (props) => {
 
 const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const { t } = useTranslation();
+  const history = useHistory();
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+  const stateId = Digit.ULBService.getStateId();
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [isEditAbandonedBirth, setIsEditAbandonedBirth] = useState(sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG")? true : false);
-
-  // const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);
-  
+  let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
  
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAbandonedBirthAPI(
-    tenantId, isEditAbandonedBirth ? false : true
-  );
-
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDDEATH_REG", {});
-  const { data: storeData } = Digit.Hooks.useStore.getInitData();
-  const { tenants } = storeData || {};
-  const stateId = Digit.ULBService.getStateId();
  
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  useEffect(() => {
-    clearParams();
-  }, [mutation?.data])
+  const mutation = Digit.Hooks.cr.useCivilRegistrationAbandonedBirthAPI( tenantId ,isEditAbandonedBirth ? false : true);
+
+console.log(mutation);
+
   useEffect(() => {    
-    if (isInitialRender) {     
+    if (isInitialRender && applicationNumber === null) {
       try {
         setIsInitialRender(false);
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
-        if (!resubmit) {
-      
-          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data)  : convertToEditAbandonedBirthRegistration(data);
-         
+        if (!resubmit) {  
+          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data) : [];    
+          // let formdata = convertToAbandonedBirthRegistration(data);
             mutation.mutate(formdata, {
-              onSuccess,
+            onSuccess,
             })
          
        
@@ -79,34 +76,54 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
       }
     }
   }, [mutation]);
-
+  useEffect(() => {
+    //console.log(mutation.data);
+    if (mutation.isSuccess) {      
+      applicationNumber = mutation.data?.AbandonedDetails[0].applicationNumber;
+      sessionStorage.setItem("applicationNumber", applicationNumber);
+      //console.log(applicationNumber);
+    } else {
+      applicationNumber = null;
+    }
+  }, [mutation.isSuccess]);
  
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data
-    const License = (Licenses && Licenses[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
-    let res = License;
+    const { AbandonedDetails = [] } = mutation.data
+    const ChildDet = (AbandonedDetails && AbandonedDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantId);
+    let res = ChildDet;
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
   let enableLoader = (mutation.isIdle || mutation.isLoading);
-  if (enableLoader) { return (<Loader />) }
-  else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
-    return (
-      <Card>
+  if (enableLoader) {
+  if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
+  return (
+    <Card>
+    <Link to={`/digit-ui/employee`}>
+      <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+    </Link>
+  </Card>
+
+  ) 
+} else if (mutation.isIdle || mutation.isLoading) {
+  return (<Loader />)
+}
+} 
+else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+  return (
+     <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
         <Link to={`/digit-ui/employee`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
       </Card>)
-  }
- 
-  else
-  
-    if (mutation.isSuccess && mutation?.isError === null) {
-      return (
+  } 
+  else  
+  if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
+    return (
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
        
@@ -125,6 +142,15 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
             onClick={handleDownloadPdf}
           />
      
+     {mutation?.data?.AbandonedDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+            pathname: `/digit-ui/employee/payment/collect/${mutation.data.AbandonedDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
+            state: { tenantId: mutation.data.AbandonedDetails[0].tenantid },
+          }}>
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>}
+          <Link to={`/digit-ui/employee`}>
+            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          </Link>
         </Card>
       );
     } else {
