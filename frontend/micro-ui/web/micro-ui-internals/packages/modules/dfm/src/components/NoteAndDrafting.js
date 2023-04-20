@@ -38,12 +38,27 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
     const [checkNote, setCheckNote] = useState(true);
     const [checkEnquiry, setCheckEnquiry] = useState(false);
     const [showGeoLocation, setShowGeoLocation] = useState(false);
-
+    const [longitude, setLongitude] = useState("");
+    const [latitude, setLatitude] = useState("");
     const setNoteTextField = (e) => {
         setNoteText(e.target.value);
     }
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
+    const applicationNumber = "KL-Cochin-C-000125-CRBRNR-2023-APPL";
+    // workflow
+    const [businessService, setBusinessService] = useState("BIRTHHOSP21");
+    const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+    let workflowDetails = Digit.Hooks.useWorkflowDetails({
+        tenantId: applicationDetails?.applicationData.tenantid || tenantId,
+        id: applicationDetails?.applicationData?.applicationNumber,
+        moduleCode: businessService,
+        role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+        config: {},
+    });
+    console.log("applicationDetails", workflowDetails)
+
+    //workflow end
 
     const saveNote = () => {
         const formData = {
@@ -148,7 +163,16 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
             setShowGeoLocation(false);
         }
     }
-
+    navigator.geolocation.getCurrentPosition(function (position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+    });
+    const onLocationChange = (code, loc) => {
+        console.log("loc", code, loc)
+        // setPincode(code)
+        setLongitude(loc.longitude);
+        setLatitude(loc.latitude);
+    }
     return (
         <React.Fragment>
 
@@ -175,7 +199,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 <TextInput
 
                                     t={t}
-                                    type={"text"}
+                                    // type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
                                     placeholder={t("APPLICATION_NUMBER")}
@@ -676,31 +700,20 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                         </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 reference-div" >
-                            <div className="col-md-12 col-sm-12  col-xs-12" >
+                            <div className="col-md-12 col-sm-12  col-xs-12" style={{
+                                maxHeight: "200px",
+                                minHeight: "200px",
+                                overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "10px", paddingLeft: "20px"
+                            }}>
+                                {workflowDetails?.data?.timeline?.map((item) => {
 
-                                <ul style={{
-                                    maxHeight: "200px",
-                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "0px"
-                                }}>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-                                    <li>For verification</li>
-                                    <li>Submitting the draft notice.</li>
-
-
-                                </ul>
+                                    return <ol>
+                                        <li>Status: {item.status}</li>
+                                        <li>Assignes: {item?.assignes?.[0]?.name}</li>
+                                        <li>Created: {item?.auditDetails?.lastModified}</li>
+                                        <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px", }} />
+                                    </ol>
+                                })}
                             </div>
 
 
@@ -723,20 +736,38 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                         <div className="col-md-12  col-sm-12 geo-column">
 
-                            <div className="col-md-2 col-sm-12">
+                            {/* <div className="col-md-2 col-sm-12">
 
                                 <h3 class="geo-tag">{t("GEO_TAG_LOCATION")}</h3>
-                            </div>
-                            <div className="col-md-2" >
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3703.5056482171453!2d73.71688411494024!3d21.83802336503438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39601d55e43af21f%3A0xb8e23c01a1f6eb18!2sStatue%20of%20Unity!5e0!3m2!1sen!2sin!4v1641230123226!5m2!1sen!2sin"
-                                    width="80" height="80" allowfullscreen="" loading="lazy"></iframe>
+                            </div> */}
+                            <div className="col-md-12" >
+                                <LocationSearchCard
+                                    header={t("GEO_TAG_LOCATION")}
+                                    cardText={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_TEXT")}
+                                    nextText={t("CURRENT_LOCATION")}
+                                    //
+                                    //   skip={() => onSelect()}
+                                    //   onSave={() => onSelect({ pincode })}
+                                    onChange={(code, loc) => onLocationChange(code, loc)}
+                                />
+                                {/* <GoogleMap
+                                    onClick={ev => {
+                                        console.log("latitide = ", ev.latLng.lat());
+                                        console.log("longitude = ", ev.latLng.lng());
+                                    }}
+                                    defaultZoom={3}
+                                    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                                ></GoogleMap> */}
+                                {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3703.5056482171453!2d73.71688411494024!3d21.83802336503438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39601d55e43af21f%3A0xb8e23c01a1f6eb18!2sStatue%20of%20Unity!5e0!3m2!1sen!2sin!4v1641230123226!5m2!1sen!2sin"
+                                    width="380" height="380" allowfullscreen="" loading="lazy"
+                                ></iframe> */}
 
                             </div>
                             <div className="col-md-4 col-sm-4" >
 
                                 <CardLabel className="card-label-file">{`${t("LONGITUDE")}`}</CardLabel>
                                 <TextInput
-
+                                    value={longitude}
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
@@ -748,7 +779,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 <CardLabel className="card-label-file">{`${t("LATITUDE")}`}</CardLabel>
                                 <TextInput
-
+                                    value={latitude}
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
@@ -764,7 +795,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     <div className="row" >
 
                         <div className="col-md-12 col-sm-12  col-xs-12" >
-                            <div className="col-md-3  col-sm-3  col-xs-12" >
+                            <div className="col-md-3  col-sm-3  col-xs-12 notes" >
 
                                 <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
                                 <CheckBox t={t} optionKey="name" checked={checkNote}
@@ -825,7 +856,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                             </div>
                             <div className="col-md-6 search-file"  >
-                                <TextInput
+                                <Dropdown
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
@@ -835,7 +866,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 <ul style={{
                                     maxHeight: "120px",
-                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "0px"
+                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "10px"
                                 }}>
                                     <li>For verification</li>
                                     <li>Submitting the draft notice.</li>

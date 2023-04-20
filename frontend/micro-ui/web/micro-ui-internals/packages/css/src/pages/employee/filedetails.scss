@@ -80,14 +80,19 @@
     }
 
     @media (max-width: 600px) {
-        margin-top: 185px
+        margin-top: 197px
+    }
+}
+
+.notes {
+    @media (max-width: 600px) {
+        margin-top: 48px
     }
 }
 
 .card-label-file {
     float: left;
     margin-right: 10px;
-    margin-bottom: 30px;
 }
 
 .card-checkbox {
@@ -201,7 +206,7 @@
 }
 
 .geo-location {
-    height: 200px;
+    height: 720px;
     margin-top: 30px;
 }
 
