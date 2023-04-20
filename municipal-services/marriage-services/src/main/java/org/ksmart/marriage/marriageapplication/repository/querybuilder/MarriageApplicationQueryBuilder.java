@@ -125,6 +125,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
         addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
+        addFilter("MD.applicationType", criteria.getApplicationType(), query, preparedStmtValues);
         addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
         addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
         addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
@@ -216,6 +217,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
       addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
       addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
       addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
+      addFilter("MD.applicationType", criteria.getApplicationType(), query, preparedStmtValues);
       addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
       addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
       addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
