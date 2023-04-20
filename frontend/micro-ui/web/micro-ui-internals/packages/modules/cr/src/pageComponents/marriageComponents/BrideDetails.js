@@ -613,6 +613,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   const goNext = () => {
     if (brideAadharNo.trim() == null || brideAadharNo.trim() == "" || brideAadharNo.trim() == undefined) {
       setBrideAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (brideAadharNo != null && brideAadharNo != "") {
       let adharLength = brideAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
@@ -630,6 +636,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideFatherAadharNo.trim() == null || brideFatherAadharNo.trim() == "" || brideFatherAadharNo.trim() == undefined) {
       setbrideFatherAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (brideFatherAadharNo != null && brideFatherAadharNo != "") {
       let adharLength = brideFatherAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
@@ -647,6 +659,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideMotherAadharNo.trim() == null || brideMotherAadharNo.trim() == "" || brideMotherAadharNo.trim() == undefined) {
       setbrideMotherAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (brideMotherAadharNo != null && brideMotherAadharNo != "") {
       let adharLength = brideMotherAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
@@ -664,6 +682,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideGuardianAadharNo.trim() == null || brideGuardianAadharNo.trim() == "" || brideGuardianAadharNo.trim() == undefined) {
       setbrideGuardianAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (brideMotherAadharNo != null && brideMotherAadharNo != "") {
       let adharLength = brideMotherAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
@@ -681,6 +705,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (bridePassportNo.trim() == null || bridePassportNo.trim() == "" || bridePassportNo.trim() == undefined) {
       setbridePassportNo("");
+      setbridePassportNoError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (bridePassportNo != null && bridePassportNo != "") {
       let pasportLength = bridePassportNo;
       if (pasportLength.length < 8 || pasportLength.length > 8) {
@@ -698,6 +728,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideSocialSecurityNo.trim() == null || brideSocialSecurityNo.trim() == "" || brideSocialSecurityNo.trim() == undefined) {
       setbrideSocialSecurityNo("");
+      setbrideSocialSecurityNoError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (brideSocialSecurityNo != null && brideSocialSecurityNo != "") {
       let socialLength = brideSocialSecurityNo;
       if (socialLength.length < 12) {
@@ -1167,7 +1203,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"email"}
                 optionKey="i18nKey"
                 name="brideEmailid"
                 value={brideEmailid}
