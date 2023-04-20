@@ -169,6 +169,10 @@ public class MarriageApplicationDetails {
     @JsonProperty("moduleCode")
     private String moduleCode;
 
+    @Size(max = 64)
+    @JsonProperty("zonalOffice")
+    private String zonalOffice;
+
     @NotNull
     @Size(max = 64)
     @JsonProperty("businessService")

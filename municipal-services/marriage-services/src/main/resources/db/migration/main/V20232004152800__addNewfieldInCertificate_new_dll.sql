@@ -1,2 +1,2 @@
-ALTER TABLE public.eg_marriage_certificate
-ADD COLUMN count int4;
+--ALTER TABLE public.eg_marriage_certificate
+--ADD COLUMN IF NOT EXISTS count int4;
