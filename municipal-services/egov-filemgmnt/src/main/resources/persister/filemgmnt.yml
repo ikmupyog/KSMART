@@ -992,3 +992,132 @@ serviceMaps:
         - jsonPath: $.ModuleDetails.moduleNameMalayalam
 
         - jsonPath: $.ModuleDetails.moduleCode
+
+  - version: 1.0
+    description: Insert MajorFunction Master details in egov_filemgmnt database, eg_fm_majorfunctionmaster table
+    fromTopic: save-fm-mfmaster
+    isTransaction: true
+    queryMaps:
+
+    - query: >
+            INSERT INTO public.eg_fm_majorfunctionmaster(id, tenantid, mfcode, moduleid, mfnameeng,
+            mfnamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: MajorFunctionDetails
+      jsonMaps:
+
+      - jsonPath: $.MajorFunctionDetails.id
+
+      - jsonPath: $.MajorFunctionDetails.tenantId
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionCode
+
+      - jsonPath: $.MajorFunctionDetails.moduleId
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionNameEnglish
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionNameMalayalam
+
+      - jsonPath: $.MajorFunctionDetails.auditDetails.createdBy
+
+      - jsonPath: $.MajorFunctionDetails.auditDetails.createdTime
+
+      - jsonPath: $.MajorFunctionDetails.auditDetails.lastModifiedBy
+
+      - jsonPath: $.MajorFunctionDetails.auditDetails.lastModifiedTime
+
+      - jsonPath: $.MajorFunctionDetails.status
+
+  - version: 1.0
+    description: Update MajorFunction Master in egov_filemgmnt database, eg_fm_majorfunctionmaster
+    fromTopic: update-fm-mfmaster
+    isTransaction: true
+    queryMaps:
+    - query: UPDATE public.eg_fm_majorfunctionmaster SET mfnameeng=?, mfnamemal=?
+          WHERE mfcode= ?;
+      basePath: MajorFunctionDetails
+      jsonMaps:
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionNameEnglish
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionNameMalayalam
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionCode
+
+  - version: 1.0
+    description: Delete MajorFunction Master in egov_filemgmnt database, eg_fm_majorfunctionmaster
+    fromTopic: delete-fm-mfmaster
+    isTransaction: true
+    queryMaps:
+    - query: UPDATE public.eg_fm_majorfunctionmaster SET status=?  WHERE mfcode= ?;
+      basePath: MajorFunctionDetails
+      jsonMaps:
+
+      - jsonPath: $.MajorFunctionDetails.status
+
+      - jsonPath: $.MajorFunctionDetails.majorFunctionCode
+
+  - version: 1.0
+    description: Insert Service Master details in egov_filemgmnt database, eg_fm_servicemaster table
+    fromTopic: save-fm-servicemaster
+    isTransaction: true
+    queryMaps:
+
+    - query: >
+            INSERT INTO public.eg_fm_servicemaster(	id, tenantid, servicecode, sfid, servicenameeng,
+            servicenamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime, status)
+        	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: ServiceDetails
+      jsonMaps:
+
+      - jsonPath: $.ServiceDetails.id
+
+      - jsonPath: $.ServiceDetails.tenantId
+
+      - jsonPath: $.ServiceDetails.serviceCode
+
+      - jsonPath: $.ServiceDetails.subFunctionId
+
+      - jsonPath: $.ServiceDetails.serviceNameEnglish
+
+      - jsonPath: $.ServiceDetails.serviceNameMalayalam
+
+      - jsonPath: $.ServiceDetails.auditDetails.createdBy
+
+      - jsonPath: $.ServiceDetails.auditDetails.createdTime
+
+      - jsonPath: $.ServiceDetails.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ServiceDetails.auditDetails.lastModifiedTime
+
+      - jsonPath: $.ServiceDetails.status
+  - version: 1.0
+    description: Update Service Master in egov_filemgmnt database, eg_fm_servicemaster
+    fromTopic: update-fm-servicemaster
+    isTransaction: true
+    queryMaps:
+    - query: UPDATE public.eg_fm_servicemaster SET servicenameeng=?, servicenamemal=?
+          WHERE servicecode= ?;
+      basePath: ServiceDetails
+      jsonMaps:
+
+      - jsonPath: $.ServiceDetails.serviceNameEnglish
+
+      - jsonPath: $.ServiceDetails.serviceNameMalayalam
+
+      - jsonPath: $.ServiceDetails.serviceCode
+
+  - version: 1.0
+    description: Delete Service Master in egov_filemgmnt database, eg_fm_servicemaster
+    fromTopic: delete-fm-servicemaster
+    isTransaction: true
+    queryMaps:
+    - query: UPDATE public.eg_fm_servicemaster SET status=?  WHERE servicecode= ?;
+      basePath: ServiceDetails
+      jsonMaps:
+
+      - jsonPath: $.ServiceDetails.status
+
+      - jsonPath: $.ServiceDetails.serviceCode
+
+

@@ -171,7 +171,21 @@ public class FMConfiguration {
     @Value("${persister.update.modulemaster.topic:}")
     private String updateModuleMasterTopic;
 
+    @Value("${persister.save.mfmaster.topic:}")
+    private String saveMfMasterTopic;
 
+    @Value("${persister.update.mfmaster.topic:}")
+    private String updateMfMasterTopic;
 
+    @Value("${persister.delete.mfmaster.topic:}")
+    private String deleteMfMasterTopic;
 
+    @Value("${persister.save.servicemaster.topic:}")
+    private String saveServiceMasterTopic;
+
+    @Value("${persister.update.servicemaster.topic:}")
+    private String updateServiceMasterTopic;
+
+    @Value("${persister.delete.servicemaster.topic:}")
+    private String deleteServiceMasterTopic;
 }

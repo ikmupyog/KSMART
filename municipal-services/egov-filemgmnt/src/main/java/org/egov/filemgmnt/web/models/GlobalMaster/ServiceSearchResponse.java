@@ -1,5 +1,6 @@
 package org.egov.filemgmnt.web.models.GlobalMaster;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -9,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.ArrayList;
 import java.util.List;
 
-@Schema(description = "Major Function search results")
+@Schema(description = "Service Master search results")
 @Validated
 
 @Getter
@@ -17,19 +18,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MajorFunctionSearchResponse {
+public class ServiceSearchResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("MajorFunctionDetails")
-    private List<MajorFunctionDetails> majorFunctionDetails;
+    @JsonProperty("ServiceDetails")
+    private List<ServiceDetails> serviceDetails;
 
-    public MajorFunctionSearchResponse addMFDetails(final MajorFunctionDetails majorFunctionDetail) {
-        if (majorFunctionDetails == null) {
-            majorFunctionDetails = new ArrayList<>();
+    public ServiceSearchResponse addService(final ServiceDetails serviceDetail) {
+        if (serviceDetails == null) {
+            serviceDetails = new ArrayList<>();
         }
-        majorFunctionDetails.add(majorFunctionDetail);
+        serviceDetails.add(serviceDetail);
         return this;
     }
+
+
 
 }
