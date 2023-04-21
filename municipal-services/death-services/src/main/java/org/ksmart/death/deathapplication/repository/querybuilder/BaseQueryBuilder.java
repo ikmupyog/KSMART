@@ -73,15 +73,15 @@ class BaseQueryBuilder {
             paramValues.add(value);
         }
     }
-        //Rakhi S on 18.04.2023
-        void addLikeFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
-            if (StringUtils.isNotBlank(value)) {
-                addWhereClause(paramValues, query);
-                query.append(column)
-                        .append("LIKE ?% ");
-                paramValues.add(value);
-            }
+    //Rakhi S on 18.04.2023
+    void addLikeFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("LIKE ? ");
+            paramValues.add(value.concat("%"));
         }
+    }
     // void addFilter(String column, Long value, StringBuilder query, List<Object> paramValues) {
     //     if (StringUtils.isAllBlank(value))  {
     //         addWhereClause(paramValues, query);
