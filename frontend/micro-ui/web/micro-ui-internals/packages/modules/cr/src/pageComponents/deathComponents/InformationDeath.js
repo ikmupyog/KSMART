@@ -148,53 +148,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
-  // const [DateOfDeath, setDateOfDeath] = useState(
-  //   isEditDeath &&
-  //     isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-  //     : formData?.InformationDeath?.DateOfDeath
-  // );
+ 
  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
   const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
   const [ToDate, setToDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.ToDate) : formData?.InformationDeath?.ToDate); 
-  //console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
-  // const [FromDate, setFromDate] = useState(
-  //   isEditDeath &&
-  //     isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.FromDate)
-  //     : formData?.InformationDeath?.FromDate
-  // );
-  // const [ToDate, setToDate] = useState(
-  //   isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.ToDate)
-  //     : formData?.InformationDeath?.ToDate
-  // );
-
+ 
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
     }
-  };
-  // const [DeathTimeFrom, setDeathTimeFrom] = useState(
-  //   isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.DeathTimeFrom)
-  //     : formData?.InformationDeath?.DeathTimeFrom
-  // );
- // const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom ? formData?.InformationDeath?.DeathTimeFrom : "");
+  };  
   
-  // const [DeathTimeTo, setDeathTimeTo] = useState(
-  //   isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.setDeathTimeTo)
-  //     : formData?.InformationDeath?.setDeathTimeTo
-  // );
-
-  
-  // const [DeathTime, setDeathTime] = useState("");
   const [DeathDateUnavailable, setChecked] = useState(
     formData?.InformationDeath?.DeathDateUnavailable
       ? formData?.InformationDeath?.DeathDateUnavailable
@@ -241,9 +205,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   );
   const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
-  // useEffect(()=>{
-  //   getAgeUnitOptions
-  // },[Age])
+
 
   const getAgeUnitOptions = () => {
     if (Age <= 11) {
@@ -272,12 +234,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       : formData?.InformationDeath?.Religion
       ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
       : ""
-    // formData?.InformationDeath?.Religion?.code
-    //   ? formData?.InformationDeath?.Religion
-    //   : formData?.InformationDeath?.Religion
-    //   ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
-    //   : ""
-  );
+ );
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.InformationDeath?.DifferenceInTime);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
 
@@ -331,6 +288,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       ? ""
       : ""
   );
+ 
+
   const [institution, selectinstitution] = useState(
     formData?.InformationDeath?.institution ? formData?.InformationDeath?.institution : null
   );
@@ -442,7 +401,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
   const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
   const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
-  const [access, setAccess] = React.useState(true);
+  
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -577,42 +536,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setDeathTime("");
     }
   }
-  // function setChecked(e) {
-  //   if (e.target.checked === true) {
-  //     checked(e.target.checked);
-  //     setFromDate("");
-  //     setToDate("");
-  //   } else {
-  //     setDateOfDeath("");
-  //   }
-  // }
-  // function selectFromDate(value) {
-  //   setFromDate(value);
-  //   const today = new Date();
-  //   today.setHours(0, 0, 0, 0);
-  //   const deathDate = new Date(value);
-  //   deathDate.setHours(0, 0, 0, 0);
-
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     setDOBError(false);
-  //     // To calculate the time difference of two dates
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     // console.log("Difference_In_Time" + Difference_In_Time);
-  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
-  //     if (DeathPlace) {
-  //       let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-  //       console.log("currentWorgFlowDOB" + currentWorgFlow);
-  //       if (currentWorgFlow.length > 0) {
-  //         // console.log(currentWorgFlow[0].WorkflowCode);
-  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-  //         setIsPayment(currentWorgFlow[0].payment);
-  //         setWorkFlowAmount(currentWorgFlow[0].amount);
-
-  //       }
-       
-  //     }
+ 
   function selectFromDate(value) {
     setFromDate(value);
     const today = new Date();
@@ -641,62 +565,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       }
      
     }
-  }
-    // const today = new Date();
-    // const deathDate = new Date(value);
-    // if (deathDate.getTime() <= today.getTime()) {
-    //   let Difference_In_Time = today.getTime() - deathDate.getTime();
-    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    //   Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    // }
-    // else {
-    //   setFromDate(null);
-    //   setDOBError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // }
-  
-  
-  // function selectToDate(value) {
-  //   setToDate(value);
-  //   // setFromDate(value);
-  //   const today = new Date();
-  //   today.setHours(0, 0, 0, 0);
-  //   const deathDate = new Date(value);
-  //   deathDate.setHours(0, 0, 0, 0);
+  } 
+ 
 
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     setDOBError(false);
-  //     // To calculate the time difference of two dates
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     // console.log("Difference_In_Time" + Difference_In_Time);
-  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
-  //     if (DeathPlace) {
-  //       let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-  //       console.log("currentWorgFlowDOB" + currentWorgFlow);
-  //       if (currentWorgFlow.length > 0) {
-  //         // console.log(currentWorgFlow[0].WorkflowCode);
-  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-  //         setIsPayment(currentWorgFlow[0].payment);
-  //         setWorkFlowAmount(currentWorgFlow[0].amount);
-
-  //       }
-       
-  //     }
-  //   }
   function selectToDate(value) {
     setToDate(value);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const deathDate = new Date(value);
   deathDate.setHours(0, 0, 0, 0);
-
   if (deathDate.getTime() <= today.getTime()) {
-
     setDOBError(false);
     // To calculate the time difference of two dates
     let Difference_In_Time = today.getTime() - deathDate.getTime();
@@ -713,54 +591,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setIsPayment(currentWorgFlow[0].payment);
         setAmount(currentWorgFlow[0].amount);
       }
-    }
-   
+    }  
   }
-    // const today = new Date();
-    // const toDate = new Date(value);
-    // const fromDate = new Date(DateOfDeath);
-
-    // if (toDate.getTime() <= today.getTime()) {
-    //   if (fromDate && toDate.getTime() < fromDate.getTime()) {
-    //     setToDate(null);
-    //     setDOBError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 3000);
-    //   } else {
-    //     let Difference_In_Time = today.getTime() - toDate.getTime();
-    //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    //   }
-    // } else {
-    //   setToDate(null);
-    //   setDOBError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // }
   }
-
-  // function selectToDate(value) {
-  //   setToDate(value);
-  //   const today = new Date();
-  //   const deathDate = new Date(value);
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-  //   } else {
-  //     setToDate(null);
-  //     setDOBError(true);
-  //     setToast(true);
-  //     setTimeout(() => {
-  //       setToast(false);
-  //     }, 3000);
-  //   }
-
-  //}
   function selectDeathDate(value) {
     setDateOfDeath(value);
     const today = new Date();
@@ -789,36 +622,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
        
       }
     }
-  }
-  // function selectDeathDate(value) {
-  //   setDateOfDeath(value);
-  //   const today = new Date();
-  //   today.setHours(0, 0, 0, 0);
-  //   const deathDate = new Date(value);
-  //   deathDate.setHours(0, 0, 0, 0);
-
-  //   if (deathDate.getTime() <= today.getTime()) {
-
-  //     setDOBError(false);
-  //     // To calculate the time difference of two dates
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     // console.log("Difference_In_Time" + Difference_In_Time);
-  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
-  //     setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-  //     if (DeathPlace) {
-  //       let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-  //       if (currentWorgFlow.length > 0) {
-  //         console.log(currentWorgFlow);
-  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-  //         setIsPayment(currentWorgFlow[0].payment);
-  //         setAmount(currentWorgFlow[0].amount);
-  //       }
-  //     }
-     
-  //   }
-  // }
+  }  
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
@@ -893,29 +697,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setDeceasedLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  // function setSelectAge(e) {
-  //   getAgeUnitOptions(e.target.value);
-  // }
-  // function setSelectDeceasedAadharNumber(e) {
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       setAadharError(true);
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setAadharError(true);
-  //       setDeceasedAadharNumber(e.target.value);
-  //       return false;
-  //     } else {
-  //       setAadharError(false);
-  //       setDeceasedAadharNumber(e.target.value);
-  //       return true;
-  //     }
-  //   } else {
-  //     setAadharError(false);
-  //     setDeceasedAadharNumber(e.target.value);
-  //     return true;
-  //   }
-  // }
+ 
 
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.trim().length >= 0) {
@@ -932,32 +714,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   }
  
  
-  // function selectDateOfDeath(value) {
-  //   setDateOfDeath(value);
-  //   const today = new Date();
-  //   const deathDate = new Date(value);
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-  //   } else {
-  //     setDateOfDeath(null);
-  //     setDOBError(true);
-  //     setToast(true);
-  //     setTimeout(() => {
-  //       setToast(false);
-  //     }, 3000);
-  //   }
-  // }
- 
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
+    console.log("workFlowData",workFlowData);
     let currentWorgFlow = workFlowData.filter(
       (workFlowData) =>
         workFlowData.DeathPlace === value.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
     );
-    console.log(currentWorgFlow);
+    console.log("currentWorgFlow",currentWorgFlow);
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
@@ -1104,23 +869,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         SelectPlaceOfBurialEn("");
         SelectPlaceOfBurialMl("");
         setGeneralRemarks("");
-      }    
-    
-  }
-
-  // function setSelectAge(e) {
-  //   setMotherMarriageAge(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
-  //   if (e.target.value <120) {
-  //     setAgeValidationMsg(true);
-  //     setToast(true);
-  //     setTimeout(() => {
-  //       setToast(false);
-  //     }, 2000);
-  //   } else {
-  //     setAgeValidationMsg(false);
-  //   }
-  // }
- 
+      }      
+  } 
   function setSelectAge(e) {
     if (e.target.value.trim().length >= 0) {
       setAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
@@ -1144,7 +894,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setDeathTime(value);
     }
   };
-
   function setCheckedAdhar(e) {
     if (e.target.checked === true) {
       setDeceasedAadharNotAvailable(e.target.checked);
@@ -1157,17 +906,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setAadharError(false);
       setToast(false);
     }
-  }
-  // const isTextBoxValid = () => {
-
-  //   // } else if (Age > 23 && Age <= 29) {
-  //   //   return value ===  ["Years", "Days"].includes(AgeUnit);
-  //   // } else if (Age > 29 && Age <= 120) {
-  //   //   return value ===  ["Years"].includes(AgeUnit);
-  //   // } else {
-  //   //   return false;
-  //   // }
-  // };
+  } 
   const goNext = () => {
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
@@ -1179,7 +918,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setsexError(false);
     }
-
     if(DeceasedAadharNumber === null || DeceasedAadharNumber.trim() === '' || DeceasedAadharNumber.trim() === undefined){
       setDeceasedAadharNumber("");
     } else if (DeceasedAadharNumber != null && DeceasedAadharNumber != "") {
@@ -1216,22 +954,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       }, 2000);
     } else {
       setDeceasedFirstNameMlError(false);
-    }
-
-
-    // if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined || DeceasedAadharNotAvailable === false) {
-    //   let adharLength = DeceasedAadharNumber;
-    //   if (adharLength.length < 12 || adharLength.length > 12 ) {
-    //     validFlag = false;
-    //     setAadharError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //   } else {
-    //     setAadharError(false);
-    //   }
-    // }
+    }  
     if (Age == null || Age == "" || Age == undefined) {
       validFlag = false;
       setAgeError(true);
@@ -1252,18 +975,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setAgeUnitError(false);
     }
-
-    // if (DeathPlaceWardId == null || DeathPlaceWardId == "" || DeathPlaceWardId == undefined) {
-    //   validFlag = false;
-    //   setWardNameError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setWardNameError(false);
-    // }
-
+   
     if (DeathPlace.code == "HOSPITAL") {
       if (hospitalNameEn == null || HospitalNameMl === null) {
         setHospitalError(true);
@@ -1275,9 +987,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       } else {
         DeathPlaceTypecode = hospitalNameEn.code;
         setHospitalError(false);
-      }   
-
-    
+      }    
       
     } else if (DeathPlace.code === "INSTITUTION") {
       if (institution == null) {
@@ -1314,18 +1024,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         }, 2000);
       } else {
         setDeathPlaceHomelocalityEnError(false);
-      }
-      // if (DeathPlaceHomeStreetNameEn.trim() == null || DeathPlaceHomeStreetNameEn.trim() == '' || DeathPlaceHomeStreetNameEn.trim() == undefined) {
-      //   validFlag = false;
-      //   setDeathPlaceHomestreetNameEn("");
-      //   setDeathPlaceHomeStreetNameEnError(true);
-      //   setToast(true);
-      //   setTimeout(() => {
-      //     setToast(false);
-      //   }, 2000);
-      // } else {
-      //   setDeathPlaceHomeStreetNameEnError(false);
-      // }
+      }    
    
       if (DeathPlaceHomeHoueNameEn.trim() == null || DeathPlaceHomeHoueNameEn.trim() == '' || DeathPlaceHomeHoueNameEn.trim() == undefined) {
         validFlag = false;
@@ -1348,8 +1047,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         }, 2000);
       } else {
         setDeathPlaceHomelocalityMlError(false);
-      }
-     
+      }     
      if (DeathPlaceHomehoueNameMl.trim() == null || DeathPlaceHomehoueNameMl.trim() == '' || DeathPlaceHomehoueNameMl.trim() == undefined) {
         validFlag = false;
         setDeathPlaceHomehoueNameMl("");
@@ -1404,43 +1102,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setVehicleHospitalEnError(false);
     }
-  
-    // if (VehicleFirstHaltEn === null || VehicleFirstHaltEn == "" || VehicleFirstHaltEn == undefined) {
-    //   validFlag = false;
-    //   setvehicleHaltPlaceError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setvehicleHaltPlaceError(false);
-    // }
-    // if (VehicleFromplaceEn.trim() == null || VehicleFromplaceEn.trim() == '' || VehicleFromplaceEn.trim() == undefined) {
-    //   validFlag = false;
-    //   setVehicleFromplaceEn("");
-    //   setVehicleFromplaceEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setVehicleFromplaceEnError(false);
-    // }
-    // if (VehicleToPlaceEn.trim() == null || VehicleToPlaceEn.trim() == '' || VehicleToPlaceEn.trim() == undefined) {
-    //   validFlag = false;
-    //   setVehicleToPlaceEn("");
-    //   setVehicleToPlaceEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setVehicleToPlaceEnError(false);
-    // }
+ 
   }
-  else if (DeathPlace.code === "PUBLIC_PLACES") {
-
-    
+  else if (DeathPlace.code === "PUBLIC_PLACES") {    
     if (DeathPlaceLocalityEn == null || DeathPlaceLocalityEn == "" || DeathPlaceLocalityEn == undefined) {
       validFlag = false;
       setDeathPlaceLocalityEnError(true);
@@ -1464,99 +1128,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   
   }
     if (validFlag == true) {
-      // // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      // // sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
-      // // sessionStorage.setItem("DateOfDeath1", DateOfDeath1 ? DateOfDeath1 : null);
-      // // sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
-      // // sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
-      // // sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
 
-      // // sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
-      // // sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
-      // // sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
-      // // sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
-      // // sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
-      // // sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
-      // // sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
-      // // sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
-      // // sessionStorage.setItem("Age", Age ? Age : null);
-      // // sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
-      // // sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-      // // sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
-      // // sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
-      // // // sessionStorage.setItem("checked", checked ? checked : false);
-      // // sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
-      // // sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
-      // // sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
-
-      // // sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
-      // // sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      // // sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      // // // if (validFlag === true) {
-      // // sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
-      // // sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
-
-      // // sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
-
-      // // if (DeathPlace.code === "HOSPITAL") {
-      // //   //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-      // //   // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      // //   sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
-      // //   sessionStorage.removeItem("DeathPlaceInstId");
-      // // }
-      // // if (DeathPlace.code === "INSTITUTION") {
-      // //   //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      // //   sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      // //   sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.InstitutionIdMl : null);
-      // // }
-      // // if (DeathPlace.code === "HOME") {
-      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      // //   sessionStorage.setItem("DeathPlaceHomeHoueNameEn", DeathPlaceHomeHoueNameEn ? DeathPlaceHomeHoueNameEn : null);
-      // //   sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
-      // //   sessionStorage.setItem("DeathPlaceHomeLocalityEn", DeathPlaceHomeLocalityEn ? DeathPlaceHomeLocalityEn : null);
-      // //   sessionStorage.setItem("DeathPlaceHomeLocalityMl", DeathPlaceHomeLocalityMl ? DeathPlaceHomeLocalityMl : null);
-      // //   sessionStorage.setItem("DeathPlaceHomeStreetNameEn", DeathPlaceHomeStreetNameEn ? DeathPlaceHomeStreetNameEn : null);
-      // //   sessionStorage.setItem("DeathPlaceHomeStreetNameMl", DeathPlaceHomeStreetNameMl ? DeathPlaceHomeStreetNameMl : null);
-      // //   sessionStorage.setItem("DeathPlaceHomePostofficeId", DeathPlaceHomePostofficeId ? DeathPlaceHomePostofficeId.code : null);
-      // //   sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
-      // // }
-      // // if (DeathPlace.code === "VEHICLE") {
-      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      // //   sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
-      // //   sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
-      // //   sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
-      // //   sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
-      // //   sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
-      // //   sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
-      // //   sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
-      // //   sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
-      // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-      // // }
-      // // if (DeathPlace.code === "PUBLIC_PLACES") {
-      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      // //   sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
-      // //   sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
-      // //   sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
-      // //   sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
-      // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
-      // // }
-      // // if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
-      // //   sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code : null);
-      // //   sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code : null);
-      // //   sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code : null);
-      // //   sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity : null);
-      // //   sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn : null);
-      // //   sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl : null);
-      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-      // //   sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
-      // //   sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
-      // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      // }
       let IsEditChangeScreen = isEditDeath ? isEditDeath : false;    
       let isWorkflow = isEditDeath ? false : true;
       onSelect(config.key, {
@@ -1633,19 +1205,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         PlaceOfBurialMl,
         PlaceOfBurialEn,
         isWorkflow,
+        DifferenceInTime
       });
     }
   };
-  if (
-    isEditDeath &&
-    isEditDeathPageComponents === false &&
-    (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  ) {
+  if (isEditDeath ) {
+   console.log(isEditDeath)
     if (formData?.InformationDeath?.DeceasedGender != null) {
       if (menu.length > 0 && (DeceasedGender === undefined || DeceasedGender === "")) {
         setselectedDeceasedGender(menu.filter((menu) => menu.code === formData?.InformationDeath?.DeceasedGender)[0]);
       }
     }
+   
     if (formData?.InformationDeath?.DeathPlace != null) {
       if (cmbPlace.length > 0 && (DeathPlace === undefined || DeathPlace === "")) {
         setselectDeathPlace(cmbPlace.filter((cmbPlace) => cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]);
@@ -1670,14 +1241,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setValue(formData?.InformationDeath?.Religion);
       }
     }
+   
     if (formData?.InformationDeath?.Occupation != null) {
       if (cmbOccupationMain.length > 0 && (Occupation === undefined || Occupation === "")) {
-        setSelectedReligion(cmbOccupationMain.filter((cmbOccupationMain) => cmbOccupationMain.code === formData?.InformationDeath?.Occupation)[0]);
+        selectOccupation(cmbOccupationMain.filter((cmbOccupationMain) => cmbOccupationMain.code === formData?.InformationDeath?.Occupation)[0]);
         setValue(formData?.InformationDeath?.Occupation);
       }
-    }
-
-  
+    }  
   }
   if (
     isWorkFlowDetailsLoading ||
@@ -1753,10 +1323,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                       })}
                     />
                   </div>
-                  {/* <div className="col-md-3">
-                    <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
-                    <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
-                  </div> */}
+                 
                   <div className="col-md-3">
                     <CardLabel>
                       {t("CR_TO_DATE")}
@@ -1775,10 +1342,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                       })}
                     />
                   </div>
-                  {/* <div className="col-md-3">
-                    <CardLabel>{t("CR_TO_TIME")}</CardLabel>
-                    <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
-                  </div> */}
+                 
                 </div>
               </div>
             )}
@@ -1815,41 +1379,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
               </div>
             )}
           </div>
-          {/* <div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-6">
-                  <CardLabel>
-                    {t("CR_DATE_OF_DEATH")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <DatePicker
-                    disable={isDisableEdit}
-                    date={DateOfDeath}
-                    name="DateOfDeath"
-                    inputFormat="DD-MM-YYYY"
-                    placeholder={`${t("CR_DATE_OF_DEATH")}`}
-                    onChange={selectDateOfDeath}
-                    {...(validation = {
-                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_INVALID_DATE"),
-                    })}
-                  />
-                </div>
-                <div className="col-md-2">
-                  <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                  <CustomTimePicker
-                    name="TimeOfDeath"
-                    onChange={(val) => handleTimeChange(val, setTimeOfDeath)}
-                    value={TimeOfDeath}
-                    disable={isDisableEdit}
-                  />
-                </div>
-              </div>
-            </div>
-          </div> */}
+       
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">

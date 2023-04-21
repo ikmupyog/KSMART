@@ -283,18 +283,18 @@ export const convertToDeathRegistration = (data = {}) => {
           RegistrationUnit: null,
           TenantId: data?.InformationDeath?.tenantId,
           DeathDateUnavailable: data?.InformationDeath?.DeathDateUnavailable,
-         // DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
-          
-        DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath?data?.InformationDeath?.DateOfDeath
-          :data?.InformationDeath?.FromDate),
+          // DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
+
+          DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath ? data?.InformationDeath?.DateOfDeath : data?.InformationDeath?.FromDate),
           TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
-         
+
           //TimeOfDeathUnit: "AM",
           DateOfDeath1: Date.parse(data?.InformationDeath?.ToDate),
           DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,
+          // DeathPlaceTypecode: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
           //DeathPlace: data?.InformationDeath?.DeathPlace.code,
-          //DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
-          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.hospitalName : null,
+          //DeathPlaceTypecode: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
+          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
           hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
           institution: data?.InformationDeath?.institution ? data?.InformationDeath?.institution.name : null,
           DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.code : null,
@@ -313,7 +313,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathPlaceCity: data?.InformationDeath?.DeathPlaceCity,
           DeathPlaceRemarksEn: data?.InformationDeath?.DeathPlaceRemarksEn,
           DeathPlaceRemarksMl: data?.InformationDeath?.DeathPlaceRemarksMl,
-          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId.code : null,         
+          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId.code : null,
           publicPlaceType: data?.InformationDeath?.publicPlaceType ? data?.InformationDeath?.publicPlaceType.code : null,
           PlaceOfBurialEn: data?.InformationDeath?.PlaceOfBurialEn,
           PlaceOfBurialMl: data?.InformationDeath?.PlaceOfBurialMl,
@@ -323,8 +323,10 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
           GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
           DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
-          DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId? data?.InformationDeath.DeathPlaceHomePostofficeId.code : null,
-          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode : null,        
+          DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
+            ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
+            : null,
+          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode : null,
           DeathPlaceHomeLocalityEn: data?.InformationDeath?.DeathPlaceHomeLocalityEn ? data?.InformationDeath?.DeathPlaceHomeLocalityEn : null,
           DeathPlaceHomeLocalityMl: data?.InformationDeath?.DeathPlaceHomeLocalityMl ? data?.InformationDeath?.DeathPlaceHomeLocalityMl : null,
           DeathPlaceHomeStreetNameEn: data?.InformationDeath?.DeathPlaceHomeStreetNameEn ? data?.InformationDeath?.DeathPlaceHomeStreetNameEn : null,
@@ -554,7 +556,7 @@ export const convertToDeathRegistration = (data = {}) => {
             taxPeriodTo: "1901145600000",
             demandDetails: [
               {
-                taxHeadMasterCode: "CRB_FEES",
+                taxHeadMasterCode: "140130200",
                 taxAmount: data?.InformationDeath?.workFlowAmount,
                 collectionAmount: 0,
               },
@@ -576,9 +578,9 @@ export const convertToDeathRegistration = (data = {}) => {
         action: "INITIATE",
         assignee: [],
         workflowcode: data?.InformationDeath?.workFlowCode,
-        taxHeadMasterCode: "CRB_FEES",
+        taxHeadMasterCode: "140130200",
         taxAmount: data?.InformationDeath?.workFlowAmount,
-        isPayment:data?.InformationDeath?.isPayment,
+        isPayment: data?.InformationDeath?.isPayment,
         applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
       },
     ],
@@ -604,9 +606,14 @@ export const convertToEditDeathRegistration = (data = {}) => {
           DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
           TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
           TimeOfDeathUnit: "AM",
-          DateOfDeath1: Date.parse(data?.InformationDeath?.DateOfDeath1),
-          DeathPlace: data?.InformationDeath?.DeathPlace?.code,
+          DateOfDeath1: Date.parse(data?.InformationDeath?.DateOfDeath1),    
+          tenantid: data?.InformationDeath?.tenantId,     
+          DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,
           DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType?.code : null,
+          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
+          //hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
+          hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
+         // hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
           DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId?.code : null,
           VehicleNumber: data?.InformationDeath?.VehicleNumber,
           VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
@@ -657,7 +664,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           Nationality: data?.InformationDeath?.Nationality?.code,
           Religion: data?.InformationDeath?.Religion?.code,
           Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation?.code : null,
-          funcionUID: "CRDRAB",
+          funcionUID: "CRDRNR",
           DeathACKNo: data?.InformationDeath?.DeathACKNo,
         },
         AddressBirthDetails: {
@@ -854,7 +861,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           InitiatorDocumentUserType: null,
           InitiatorDocumentFileStoreId: null,
         },
-       
+
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
@@ -864,10 +871,12 @@ export const convertToEditDeathRegistration = (data = {}) => {
         applicationType: "new",
         businessService: "CR",
         action: "APPLY",
+        applicationStatus: "",
         workflowcode: data?.InformationDeath?.workFlowCode,
+        isWorkflow: data?.InformationDeath.isWorkflow,
+        id: data?.InformationDeath?.id,
         assignee: [data?.InformationDeath?.uuid],
       },
-      
     ],
   };
   return formdata;
