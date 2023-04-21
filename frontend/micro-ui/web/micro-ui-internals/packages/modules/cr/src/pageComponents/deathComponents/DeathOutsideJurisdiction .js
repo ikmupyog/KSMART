@@ -201,7 +201,7 @@ const DeathOutsideJurisdiction = ({
                 option={cmbNation}
                 selected={DeathPlaceCountry}
                 select={selectDeathPlaceCountry}
-                disable={isDisableStatus}
+              //  disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_COUNTRY")}`}
               />
             </div>

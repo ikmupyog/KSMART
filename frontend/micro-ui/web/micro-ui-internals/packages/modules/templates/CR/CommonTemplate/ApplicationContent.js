@@ -2,23 +2,23 @@ import {
     BreakLine, CardSectionHeader, CardSubHeader, CheckPoint, ConnectingCheckPoints, Loader, Row, StatusTable,
     LinkButton, Carousel, Accordion
 } from "@egovernments/digit-ui-react-components";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import BPADocuments from "../ApplicationDetails/components/BPADocuments";
-import InspectionReport from "../ApplicationDetails/components/InspectionReport";
-import NOCDocuments from "../ApplicationDetails/components/NOCDocuments";
-import PermissionCheck from "../ApplicationDetails/components/PermissionCheck";
-import PropertyDocuments from "../ApplicationDetails/components/PropertyDocuments";
-import PropertyEstimates from "../ApplicationDetails/components/PropertyEstimates";
-import PropertyFloors from "../ApplicationDetails/components/PropertyFloors";
-import PropertyOwners from "../ApplicationDetails/components/PropertyOwners";
-import ScruntinyDetails from "../ApplicationDetails/components/ScruntinyDetails";
-import SubOccupancyTable from "../ApplicationDetails/components/SubOccupancyTable";
-import TLCaption from "../ApplicationDetails/components/TLCaption";
-import TLTradeAccessories from "../ApplicationDetails/components/TLTradeAccessories";
-import TLTradeUnits from "../ApplicationDetails/components/TLTradeUnits";
-import DocumentsPreview from "../ApplicationDetails/components/DocumentsPreview";
+import BPADocuments from "../../ApplicationDetails/components/BPADocuments";
+import InspectionReport from "../../ApplicationDetails/components/InspectionReport";
+import NOCDocuments from "../../ApplicationDetails/components/NOCDocuments";
+import PermissionCheck from "../../ApplicationDetails/components/PermissionCheck";
+import PropertyDocuments from "../../ApplicationDetails/components/PropertyDocuments";
+import PropertyEstimates from "../../ApplicationDetails/components/PropertyEstimates";
+import PropertyFloors from "../../ApplicationDetails/components/PropertyFloors";
+import PropertyOwners from "../../ApplicationDetails/components/PropertyOwners";
+import ScruntinyDetails from "../../ApplicationDetails/components/ScruntinyDetails";
+import SubOccupancyTable from "../../ApplicationDetails/components/SubOccupancyTable";
+import TLCaption from "../../ApplicationDetails/components/TLCaption";
+import TLTradeAccessories from "../../ApplicationDetails/components/TLTradeAccessories";
+import TLTradeUnits from "../../ApplicationDetails/components/TLTradeUnits";
+import DocumentsPreview from "../../ApplicationDetails/components/DocumentsPreview";
 
 function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading, applicationData,
     businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
@@ -106,24 +106,27 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
         else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
     };
 
-    const carouselItems = [
-        {
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature2.jpg",
-            caption: ""
-        },
-        {
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature4.jpg",
-            caption: "Caption One"
-        },
-        {
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature1.jpg",
-            caption: ""
-        },
-        {
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature6.jpg",
-            caption: "Caption Three"
+    const [documents, setDocuments] = useState(null);
+
+    useEffect(() => {
+        if (applicationDetails?.documents && applicationDetails?.documents?.values.length > 0) {
+          fetchImage(applicationDetails?.documents?.values)
         }
-    ]
+      }, [applicationDetails])
+    
+      const fetchImage = async (docs) => {
+        setDocuments(null)
+        const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(docs, applicationDetails?.documents?.tenentId);
+        const newdocuments = fileStoreIds.map((key) => {
+          const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url)
+          if(fileType === "image"){
+            return { image: key.url.split(",")[1], key: key.id};
+          }else{
+            return { image: key.url, key: key.id};
+          }
+        });
+        setDocuments(newdocuments);
+      }
 
     return (
         <>
@@ -139,13 +142,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                                     <Accordion expanded={index === 1 ? true : false} title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
                                         style={{ margin: "10px" }}
                                         content={<StatusTable style={getTableStyles()}>
-                                            <div className="row">
-                                                <div className="col-md-12">
-                                                    <div className="col-md-4"> <h3></h3> </div>
-                                                    <div className="col-md-4"> <h5>{t("OLD_VALUE")}</h5> </div>
-                                                    <div className="col-md-4"> <h5>{t("NEW_VALUE")}</h5> </div>
-                                                </div>
-                                            </div>
                                             {detail?.title &&
                                                 !detail?.title.includes("NOC") &&
                                                 detail?.values?.map((value, index) => {
@@ -196,12 +192,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                                                                 <div className="col-md-4">
                                                                     <h4><strong>{getTextValue(value)}</strong></h4>
                                                                 </div>
-                                                                <div className="col-md-4">
-                                                                    <h4><strong>{getTextValue(value)}</strong></h4>
-                                                                </div>
-                                                                <div className="col-md-1">
-                                                                    <LinkButton label="View" />
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     );
@@ -242,9 +232,10 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                     ))}
                 </div>
                 <div className={"cr-timeline-wrapper"}>
-                    <Carousel {...{ carouselItems }}
-                        containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }}
-                    />
+                   {documents && <Carousel carouselItems={documents||[]}
+                   imageHeight={300}
+                        containerStyle={{ height: "300px", width: "auto", overflow: "scroll" }}
+                    />}
 
                     {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
                         <React.Fragment>

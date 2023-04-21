@@ -120,6 +120,9 @@ const Urls = {
     create_adoption: "/birth-services/cr/createadoption",
     correct_update: "/birth-services/cr/createbirthcorrection",
   },
+  crcommonpayment: {
+    update: "/birth-services/cr/common/updatepaywf",
+  },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
     search: "/birth-services/cr/searchstillbirth",
@@ -137,8 +140,8 @@ const Urls = {
   },
   crabandonedbirth: {
     create: "/birth-services/cr/createabandoned",
-    search: "/birth-services/cr/searchbornoutside",
-    update: "/birth-services/cr/updatebornoutside",
+    search: "/birth-services/cr/searchabandoned",
+    update: "/birth-services/cr/updateabandoned",
   },
   crnacdeath: {
     create: "/death-services/v1/deathdetails/_createdeathnac",

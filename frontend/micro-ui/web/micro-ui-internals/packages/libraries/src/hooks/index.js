@@ -134,6 +134,7 @@ import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOu
 import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
 import useApplicationMarriageActions from "./cr/useApplicationMarriageActions";
+import useCRCommonPaymentUpdate from "./cr/useCRCommonPaymentUpdate";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -381,6 +382,7 @@ const cr = {
   useDeathCorrectionAction,
   useMarriageCorrectionAction,
   useApplicationMarriageActions,
+  useCRCommonPaymentUpdate,
   useRegSearchDeath,
   getDeathFileSourceDetails,
   useCivilRegMDMS,
@@ -430,7 +432,7 @@ const cr = {
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions: useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions: useCRStillBirthApplicationActions,
-  useApplicationAbandonedBirthActions,
+  useApplicationAbandonedBirthActions: useApplicationAbandonedBirthActions,
   useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,

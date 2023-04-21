@@ -91,6 +91,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   console.log(value);
+  console.log("abc", GroomDetails?.groomMaritalstatusID?.code);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -156,7 +157,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageVillageName ? MarriageDetails?.marriageVillageName?.code : null}
+                      {MarriageDetails?.marriageVillageName ? MarriageDetails?.marriageVillageName?.name : null}
                     </CardText>
                   </div>
                 </div>
@@ -168,7 +169,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageLBType ? MarriageDetails?.marriageLBType?.name : "NA"}
+                      {MarriageDetails?.marriageLBtype ? MarriageDetails?.marriageLBtype?.name : "NA"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -216,7 +217,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.placeidMl ? MarriageDetails?.placeidMl?.name : "NA"}
+                          {MarriageDetails?.placeidMl ? MarriageDetails?.placeidMl?.nameLocal : "NA"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -477,7 +478,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageType ? MarriageDetails?.marriageType : null}
+                      {MarriageDetails?.marriageType ? MarriageDetails?.marriageType?.name : null}
                     </CardText>
                   </div>
                 </div>
@@ -524,7 +525,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  {GroomDetails?.groomResidentship === "INDIAN" && (
+                  {GroomDetails?.groomResidentShip === "INDIAN" && (
                     <React.Fragment>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GROOM_AADHAR_NO")}`} :</CardText>
@@ -536,14 +537,14 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </React.Fragment>
                   )}
-                  {(GroomDetails?.groomResidentship === "NRI" || GroomDetails?.groomResidentship === "FOREIGN") && (
+                  {(GroomDetails?.groomResidentShip === "NRI" || GroomDetails?.groomResidentShip === "FOREIGN") && (
                     <React.Fragment>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GROOM_PASSPORT_NO")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomPassportNo ? GroomDetails?.groomAadharNo : "NA"}
+                          {GroomDetails?.groomPassportNo ? GroomDetails?.groomPassportNo : "NA"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -553,7 +554,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomSocialSecurityNo ? GroomDetails?.groomAadharNo : "NA"}
+                          {GroomDetails?.groomSocialSecurityNo ? GroomDetails?.groomSocialSecurityNo : "NA"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -666,7 +667,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomGender ? GroomDetails?.groomGender?.name : "NA"}
+                        {GroomDetails?.groomGender ? GroomDetails?.groomGender?.value : "NA"}
                       </CardText>
                     </div>
                     <div className="col-md-2">
@@ -698,20 +699,20 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                     </div>
                     {GroomDetails?.groomMaritalstatusID?.code === "MARRIED" && (
-                      <React.Component>
+                      <React.Fragment>
                         <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GROOM_DATE_OF_BIRTH")}`} :</CardText>
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ANY_SPOUSE_LIVING")}`} :</CardText>
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomDOB ? GroomDetails?.groomDOB : "NA"}
+                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.code : "NA"}
                           </CardText>
                         </div>
-                      </React.Component>
+                      </React.Fragment>
                     )}
 
                     {GroomDetails?.groomMaritalstatusID?.code === "MARRIED" && GroomDetails.groomIsSpouseLiving?.code && (
-                      <React.Component>
+                      <React.Fragment>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                             {`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`} :
@@ -722,7 +723,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                             {GroomDetails?.groomNoOfSpouse ? GroomDetails?.groomNoOfSpouse : "NA"}
                           </CardText>
                         </div>
-                      </React.Component>
+                      </React.Fragment>
                     )}
                   </div>
                 </div>
@@ -1637,7 +1638,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  {BrideDetails?.brideResidentship === "INDIAN" && (
+                  {BrideDetails?.brideResidentShip === "INDIAN" && (
                     <React.Fragment>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BRIDE_AADHAR_NO")}`} :</CardText>
@@ -1649,14 +1650,14 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </React.Fragment>
                   )}
-                  {(BrideDetails?.brideResidentship === "NRI" || BrideDetails?.brideResidentship === "FOREIGN") && (
+                  {(BrideDetails?.brideResidentShip === "NRI" || BrideDetails?.brideResidentShip === "FOREIGN") && (
                     <React.Fragment>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BRIDE_PASSPORT_NO")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.bridePassportNo ? BrideDetails?.brideAadharNo : "NA"}
+                          {BrideDetails?.bridePassportNo ? BrideDetails?.bridePassportNo : "NA"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1666,7 +1667,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.brideSocialSecurityNo ? BrideDetails?.brideAadharNo : "NA"}
+                          {BrideDetails?.brideSocialSecurityNo ? BrideDetails?.brideSocialSecurityNo : "NA"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -1779,7 +1780,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideGender ? BrideDetails?.brideGender?.name : "NA"}
+                        {BrideDetails?.brideGender ? BrideDetails?.brideGender?.value : "NA"}
                       </CardText>
                     </div>
                     <div className="col-md-2">
@@ -1811,20 +1812,20 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                     </div>
                     {BrideDetails?.brideMaritalstatusID?.code === "MARRIED" && (
-                      <React.Component>
+                      <React.Fragment>
                         <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BRIDE_DATE_OF_BIRTH")}`} :</CardText>
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ANY_SPOUSE_LIVING")}`} :</CardText>
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideDOB ? BrideDetails?.brideDOB : "NA"}
+                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.code : "NA"}
                           </CardText>
                         </div>
-                      </React.Component>
+                      </React.Fragment>
                     )}
 
                     {BrideDetails?.brideMaritalstatusID?.code === "MARRIED" && BrideDetails.brideIsSpouseLiving?.code && (
-                      <React.Component>
+                      <React.Fragement>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                             {`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`} :
@@ -1835,7 +1836,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                             {BrideDetails?.brideNoOfSpouse ? BrideDetails?.brideNoOfSpouse : "NA"}
                           </CardText>
                         </div>
-                      </React.Component>
+                      </React.Fragement>
                     )}
                   </div>
                 </div>

@@ -28,10 +28,16 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   let validation = {};
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowAdoption");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
+  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
+  const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const { data: hospitalData = {}, isLoadings } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
+  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
@@ -82,6 +88,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
+  let cmbWardNo = [];
+  let cmbPostOffice = []
+  let Zonal =[]
+  let cmbVehicle = [];
+  let cmbInstitutionType = [];
+  let cmbInstitutionList = [];
+  let cmbOtherplace = [];
   let Difference_In_DaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
@@ -90,6 +103,28 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
       workFlowData.push(ob);
       // console.log(workFlowData);
     });
+  
+    otherplace &&
+      otherplace["birth-death-service"] && otherplace["birth-death-service"].OtherBithPlace &&
+      otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
+        cmbOtherplace.push(ob);
+      });
+  
+    institutionType &&
+      institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
+      institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+        cmbInstitutionType.push(ob);
+      });
+    institutionidList &&
+      institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
+      institutionidList["egov-location"].institutionList.map((ob) => {
+        cmbInstitutionList.push(ob);
+      });
+    Vehicle &&
+      Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
+      Vehicle["birth-death-service"].VehicleType.map((ob) => {
+        cmbVehicle.push(ob);
+      });
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -109,6 +144,21 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
+    boundaryList &&
+      boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
+      boundaryList["egov-location"].TenantBoundary.map((ob) => {
+        if (ob?.hierarchyType.code === "REVENUE") {
+          Zonal.push(...ob.boundary.children);
+          ob.boundary.children.map((obward) => {
+            cmbWardNo.push(...obward.children);
+          });
+        }
+      });
+      PostOffice &&
+      PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
+      PostOffice["common-masters"].PostOffice.map((ob) => {
+        cmbPostOffice.push(ob);
+      });
  
     hospitalData &&
       hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
@@ -305,10 +355,38 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         SearchRegId?.childLastNameMl ? setChildLastNameMl(SearchRegId.childLastNameMl):setChildLastNameMl('')
         SearchRegId?.birthPlace ? selectBirthPlace((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === SearchRegId?.birthPlace)[0])):selectBirthPlace('')
         SearchRegId?.birthPlace ? setValue(SearchRegId?.birthPlace):setValue('') 
-        // console.log(cmbhospital,cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0]);
+        // console.log(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]?.pincode);
         SearchRegId?.hospitalCode ? selectHospitalName((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0])): selectHospitalName('')
         SearchRegId?.hospitalNameMl ? selectHospitalNameMl((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0]).hospitalNamelocal):selectHospitalNameMl('')
-    }
+        SearchRegId?.wardNo ?setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === SearchRegId?.wardNo )[0]):setWardNo([])
+        SearchRegId?.adrsPostOffice?setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]):''
+        SearchRegId?.adrsPostOffice?setAdrsPincode(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]?.pincode):''
+        SearchRegId?.adrsLocalityNameEn?setAdrsLocalityNameEn(SearchRegId?.adrsLocalityNameEn):setAdrsLocalityNameEn('')
+        SearchRegId?.adrsLocalityNameMl?setAdrsLocalityNameMl(SearchRegId?.adrsLocalityNameMl):setAdrsLocalityNameMl('')
+        SearchRegId?.adrsHouseNameEn?setAdrsHouseNameEn( SearchRegId?.adrsHouseNameEn):setAdrsHouseNameEn('')
+        SearchRegId?.adrsHouseNameMl? setAdrsHouseNameMl(SearchRegId?.adrsHouseNameMl):setAdrsHouseNameMl('')
+        SearchRegId?.streetNameEn?setAdrsStreetNameEn(SearchRegId?.streetNameEn):setAdrsStreetNameEn('')
+        SearchRegId?.streetNameMl?setAdrsStreetNameMl(SearchRegId?.streetNameMl):setAdrsStreetNameMl()
+        SearchRegId?.vehicleToEn?setvehicleToEn(SearchRegId?.vehicleToEn):setvehicleToEn('')
+        SearchRegId?.vehicleType?setvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === SearchRegId?.vehicleType)[0]):setvehicleType('')
+        SearchRegId?.vehicleRegistrationNo?setvehicleRegistrationNo(SearchRegId?.vehicleRegistrationNo):setvehicleRegistrationNo('')
+        SearchRegId?.vehicleFromEn?setvehicleFromEn(SearchRegId?.vehicleFromEn):setvehicleFromEn('')
+        SearchRegId?.vehicleFromMl?setvehicleFromMl(SearchRegId?.vehicleFromMl):setvehicleFromMl('')
+        SearchRegId?. vehicleHaltPlace?setvehicleHaltPlace(SearchRegId?. vehicleHaltPlace):setvehicleHaltPlace('')
+        SearchRegId?.vehicleToMl?setvehicleToMl(SearchRegId?.vehicleToMl):setvehicleToMl('')
+        SearchRegId?.vehicleDesDetailsEn?setvehicleDesDetailsEn(SearchRegId?.vehicleDesDetailsEn):setvehicleDesDetailsEn('')
+        SearchRegId?.setadmittedHospitalEn?setSelectedadmittedHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.setadmittedHospitalEn)[0]):''
+        SearchRegId?.institutionTypeCode?setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code ===SearchRegId?.institutionTypeCode)[0]):setInstitution('')
+        SearchRegId?.institutionId ?setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.institutionName === SearchRegId?.institutionNameCode)[0]):setInstitutionId('')
+        SearchRegId?.institutionIdMl ?setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.institutionName === SearchRegId?.institutionNameCode)[0]):setInstitutionIdMl('')
+        SearchRegId?.publicPlaceType? setpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code ===  SearchRegId?.publicPlaceType)[0]):setpublicPlaceType('')
+        SearchRegId?.localityNameEn ?setlocalityNameEn( SearchRegId?.localityNameEn):setlocalityNameEn('')
+        SearchRegId?.localityNameMl ?setlocalityNameMl(SearchRegId?.localityNameMl ):setlocalityNameMl("")
+        SearchRegId?.streetNameEn ?setstreetNameEn(SearchRegId?.streetNameEn ):setstreetNameEn('')
+        SearchRegId?.streetNameMl ?setstreetNameMl(SearchRegId?.streetNameMl):setstreetNameMl("")
+        SearchRegId?.vehicleDesDetailsEn ?setpublicPlaceDecpEn( SearchRegId?.vehicleDesDetailsEn):setpublicPlaceDecpEn('')
+      }
+
    
   },[SearchRegId])
 
@@ -1479,6 +1557,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
               </div>
             </div>
           </div> 
+
               {AdoptionDeedNo ==="" &&(
                      <div className="row">
                      <div className="col-md-12">
@@ -1496,7 +1575,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                            value={AdoptionDecreOrderNo}
                            // onKeyPress={setCheckMalayalamInputField}
                            onChange={setSelectDeeOrderNo}
-                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           disable={isDisableEdit || AdoptionDeedNo !=="" ||RegistrationAuthority !==""||AdoptionDeedRegDate!==""}
                            placeholder={`${t("CR_ADOPTION_DECREE")}`}
                            {...(validation = {
                              // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1510,31 +1589,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                          <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
                          {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                          </CardLabel>
-                         {/* <TextInput
-                           t={t}
-                           isMandatory={false}
-                           type={"text"}
-                           optionKey="i18nKey"
-                           name="adoptdateoforderdecree"
-                           value={childMiddleNameMl}
-                           onKeyPress={setCheckMalayalamInputField}
-                           onChange={setSelectChildMiddleNameMl}
-                           disable={isDisableEdit}
-                           placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                           {...(validation = {
-                             pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                             isRequired: false,
-                             type: "text",
-                             title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                           })}
-                         /> */}
                             <DatePicker
                                date={AdoptionDecreOrderDate}
                                name="adoptdateoforderdecree"
                                max={convertEpochToDate(new Date())}
                                //min={convertEpochToDate("1900-01-01")}
                                onChange={setSelectDeeOrderDate}
-                               disabled={isDisableEdit || AdoptionDeedNo !==""}
+                               disabled={isDisableEdit || AdoptionDeedNo !=="" ||RegistrationAuthority !=="" ||AdoptionDeedRegDate!==""}
                                //  inputFormat="DD-MM-YYYY"
                                placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
                                {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
@@ -1553,7 +1614,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                            value={IssuingAuthority}
                            // onKeyPress={setCheckMalayalamInputField}
                            onChange={setSelectIssuingAuthority}
-                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           disable={isDisableEdit || AdoptionDeedNo !=="" ||RegistrationAuthority !=="" ||AdoptionDeedRegDate!==""}
                            placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
                            {...(validation = {
                              // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1584,7 +1645,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                        value={AdoptionDeedNo}
                        // onKeyPress={setCheckMalayalamInputField}
                        onChange={setSelectDeedNo}
-                       disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
+                       disable={isDisableEdit ||AdoptionDecreOrderNo !=="" ||IssuingAuthority !=="" || AdoptionDecreOrderDate!==""}
                        placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
                        {...(validation = {
                          pattern: "^[0-9`' ]*$",
@@ -1598,31 +1659,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
                      {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
                      </CardLabel>
-                     {/* <TextInput
-                       t={t}
-                       isMandatory={false}
-                       type={"text"}
-                       optionKey="i18nKey"
-                       name="adoptdateoforderdecree"
-                       value={childMiddleNameMl}
-                       onKeyPress={setCheckMalayalamInputField}
-                       onChange={setSelectChildMiddleNameMl}
-                       disable={isDisableEdit}
-                       placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                       {...(validation = {
-                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                         isRequired: false,
-                         type: "text",
-                         title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                       })}
-                     /> */}
                         <DatePicker
                            date={AdoptionDeedRegDate}
                            name="adoptdateoforderdeed"
                            max={convertEpochToDate(new Date())}
                            //min={convertEpochToDate("1900-01-01")}
                            onChange={setSelectDeedRegDate}
-                           disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
+                           disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""||IssuingAuthority !=="" || AdoptionDecreOrderDate!==""}
                            //  inputFormat="DD-MM-YYYY"
                            placeholder={`${t("CR_DEED_REG_DATE")}`}
                            {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
@@ -1640,7 +1683,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                        value={RegistrationAuthority}
                        // onKeyPress={setCheckMalayalamInputField}
                        onChange={setSelectRegistrationAuthority}
-                       disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
+                       disable={isDisableEdit  || AdoptionDecreOrderNo !=="" ||IssuingAuthority !=="" || AdoptionDecreOrderDate!==""}
                        placeholder={`${t("CR_REG_AUTHORITY")}`}
                        {...(validation = {
                          pattern: "^[a-zA-Z-.`' ]*$",
