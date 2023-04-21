@@ -24,6 +24,7 @@ public class MarriageCertificateRowMapper implements ResultSetExtractor<List<Mar
                     .registrationno(rs.getString("MC_registrationno"))
                     .marriageRegId(rs.getString("MC_registrydetailsid"))
                     .filestoreid(rs.getString("MC_filestoreid"))
+                    .count(rs.getInt("MC_count"))
                     .marriageRegistryDetails(MarriageRegistryDetails.builder().id(rs.getString("MC_registrydetailsid")).tenantid(rs.getString("MC_tenantid")).build())
 //                    .ackNo(rs.getString("ack_no"))
                     .build());

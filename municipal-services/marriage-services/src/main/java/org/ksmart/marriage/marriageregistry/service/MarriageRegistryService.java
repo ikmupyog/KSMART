@@ -21,14 +21,20 @@ import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPDFR
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPdfResponse;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertRequest;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
+import org.ksmart.marriage.utils.NumToWordConverter;
 import org.springframework.stereotype.Service;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageRegistryEnrichment;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.MARRIAGE_DETAILS_INVALID_CREATE;
@@ -119,23 +125,34 @@ public class MarriageRegistryService {
 //                marriageDtls.add(marriageCertificate);
 //            }
             MarriageCertPDFRequest marriageCertPDFRequest = MarriageCertPDFRequest.builder().requestInfo(requestInfo).marriageCertificate(Arrays.asList(marriageCertificate)).build();
-            marriageCertPDFRequest.getMarriageCertificate().forEach(cert->{
-                String uiHost = marriageApplicationConfiguration.getUiAppHost();
-                String marriageCertPath = StringUtils.replaceEach(marriageApplicationConfiguration.getMarriageCertLink(),new String[]{"$id","$tenantId","$regNo","$marriagecertificateno"}, new String[]{cert.getId(),cert.getMarriageRegistryDetails().getTenantid(),cert.getMarriageRegistryDetails().getRegistrationno(),cert.getMarriagecertificateno()});
-                cert.setEmbeddedUrl(repository.getShortenedUrl(uiHost+marriageCertPath));
-            });
-            Calendar cal = Calendar.getInstance();
-            marriageCertificate.setDateofissue(cal.getTimeInMillis());
+            long currentDate=System.currentTimeMillis();
+            marriageCertificate.setDateofissue(currentDate);
+            String strDate=null;
+            String dodInWords = null;
+            if(marriageCertificate.getDateofissue() != null){
+                Date res = new Date(marriageCertificate.getDateofissue()) ;
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                strDate= formatter.format(res);
+                String[] dobAry = strDate.split("/");
+                try {
+                    dodInWords = NumToWordConverter.convertNumber(Long.parseLong(dobAry[0])) + "/" + new SimpleDateFormat("MMMM").format(res) + "/" + NumToWordConverter.convertNumber(Long.parseLong(dobAry[2]));
+
+                    marriageCertificate.setDateOfIssueInWords(StringUtils.upperCase(StringUtils.isNotBlank(dodInWords)?dodInWords.trim():dodInWords));
+                } catch(Exception e) {
+                }
+            }
+
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
            // marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
 //            marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
             marriageCertificate.setCertificateStatus(MarriageCertificate.StatusEnum.FREE_DOWNLOAD);
+            marriageCertificate.setCount(1);//If 1 download from filestoreId, If 0, need to regenerate certificate
 
 //            }
             marriageCertificate.setMarriagecertificateno(marriageRegistryDetailsList.get(0).getCertificateNo());
-            List<MarriageCertificate> marriageCertSearch = repository.searchCertificateByMarriageId(marriageCertRequest.getMarriageCertificate().getId());
+            List<MarriageCertificate> marriageCertSearch = repository.searchCertificateByMarriageId(marriageCertRequest.getMarriageCertificate().getMarriageRegId());
             if (null != marriageCertSearch && !marriageCertSearch.isEmpty()) {
                 marriageCertRequest.getMarriageCertificate().setId(marriageCertSearch.get(0).getId());
                 repository.updateMarriageCertificate(marriageCertRequest);
