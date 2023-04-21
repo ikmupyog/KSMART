@@ -5,6 +5,7 @@ import TLActionModal from "./TLActionModal";
 import BirthActionModal from "./BirthActionModal";
 import StillBirthActionModal from "./StillBirthActionModal";
 import BirthNACActionModal from "./BirthNACActionModal";
+import MarriageActionModal from "./MarriageActionModal";
 import BornOutsideActionModal from "./BornOutsideActionModal";
 import AdoptionActionModal from "./AdoptionActionModal";
 import AbandonedActionModal from "./AbandonedActionModal";
@@ -42,8 +43,16 @@ const ActionModal = (props) => {
     return <BornOutsideActionModal {...props} />;
   }
 
-  if (props?.businessService.includes("WFDEATH21DAYS") || props?.businessService.includes("WFDEATH30DAYS") || props?.businessService.includes("WFDEATH1YR") || props?.businessService.includes("WFDEATHABOVE1YR")
-  || props?.businessService.includes("WFDEATH21DAYSHOME") || props?.businessService.includes("WFDEATH30DAYSHOME") || props?.businessService.includes("WFDEATH1YEARHOME") || props?.businessService.includes("WFDEATHHOME1YEARABOVE")) {
+  if (
+    props?.businessService.includes("WFDEATH21DAYS") ||
+    props?.businessService.includes("WFDEATH30DAYS") ||
+    props?.businessService.includes("WFDEATH1YR") ||
+    props?.businessService.includes("WFDEATHABOVE1YR") ||
+    props?.businessService.includes("WFDEATH21DAYSHOME") ||
+    props?.businessService.includes("WFDEATH30DAYSHOME") ||
+    props?.businessService.includes("WFDEATH1YEARHOME") ||
+    props?.businessService.includes("WFDEATHHOME1YEARABOVE")
+  ) {
     return <DeathActionModal {...props} />;
   }
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
@@ -51,6 +60,14 @@ const ActionModal = (props) => {
   }
   if (props?.businessService.includes("NACAPP")) {
     return <BirthNACActionModal {...props} />;
+  }
+  if (
+    props?.businessService.includes("MARRIAGE45DAYS") ||
+    props?.businessService.includes("MARRIAGE5YRS") ||
+    props?.businessService.includes("45MARRIAGE") ||
+    props?.businessService.includes("MARRIAGEABOVE5YRS")
+  ) {
+    return <MarriageActionModal {...props} />;
   }
   if (props?.businessService.includes("NACDEATH")) {
     return <DeathNACActionModal {...props} />;
