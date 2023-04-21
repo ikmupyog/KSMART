@@ -6,8 +6,6 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstance;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,22 +33,6 @@ public class DraftFilesEnrichment extends BaseEnrichment {
 
     }
 
-    public void enrichcreateDraftProcessInstance(DraftFilesProcessInstanceRequest request) {
-
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-
-        request.getProcessInstances()
-               .forEach(processInstances -> {
-                   processInstances.setId(UUID.randomUUID()
-                                              .toString());
-                   processInstances.setAuditDetails(auditDetails);
-
-               });
-    }
-
     public void enrichUpdate(DraftFilesRequest request) {
 
         final RequestInfo requestInfo = request.getRequestInfo();
@@ -61,24 +43,6 @@ public class DraftFilesEnrichment extends BaseEnrichment {
                    draftingfile.setAuditDetails(auditDetails);
                    draftingfile.getDraftText();
                });
-    }
-
-    public void enrichCreateDraftProcessDocument(DraftFilesProcessInstanceRequest request) {
-
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-
-        for (DraftFilesProcessInstance proc : request.getProcessInstances()) {
-            for (org.egov.filemgmnt.web.models.Document doc : proc.getDocuments()) {
-                doc.setId(UUID.randomUUID()
-                              .toString());
-                doc.setAuditDetails(auditDetails);
-
-            }
-        }
-
     }
 
 }

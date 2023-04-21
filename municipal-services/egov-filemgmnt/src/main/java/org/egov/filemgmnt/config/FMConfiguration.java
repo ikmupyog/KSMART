@@ -158,11 +158,6 @@ public class FMConfiguration {
     @Value("${egov.fm.memocertificate.link}")
     private String memoCertificateLink;
 
-
-
-
-
-
     // Global Mastersettings
 
     @Value("${persister.save.modulemaster.topic:}")
@@ -171,8 +166,12 @@ public class FMConfiguration {
     @Value("${persister.update.modulemaster.topic:}")
     private String updateModuleMasterTopic;
 
+
     @Value("${persister.save.mfmaster.topic:}")
     private String saveMfMasterTopic;
+
+    @Value("${persister.save.subfunction.topic:}")
+    private String SaveSubFunctionTopic;
 
     @Value("${persister.update.mfmaster.topic:}")
     private String updateMfMasterTopic;

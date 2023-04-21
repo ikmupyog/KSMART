@@ -15,13 +15,14 @@ import java.util.List;
 
 @Service
 public class GlobalMasterServices {
-    @Autowired
-    private FMConfiguration fmConfiguration;
-    private GlobalMasterEnrichment enrichment;
-    private GlobalMasterRepository repository;
+
+    private final FMConfiguration fmConfiguration;
+    private final GlobalMasterEnrichment enrichment;
+    private final GlobalMasterRepository repository;
+
     @Autowired
     @Qualifier("fmProducer")
-    private Producer producer;
+    private  Producer producer;
 
     GlobalMasterServices(FMConfiguration fmConfiguration, Producer producer, GlobalMasterEnrichment enrichment, GlobalMasterRepository repository) {
         this.fmConfiguration = fmConfiguration;
@@ -32,7 +33,6 @@ public class GlobalMasterServices {
 
     //create Moduledetails
     public ModuleDetails createModule(final ModuleDetailsRequest request) {
-        final ModuleDetails moduleDetails = request.getModuleDetails();
         enrichment.enrichCreateModule(request);
         producer.push(fmConfiguration.getSaveModuleMasterTopic(), request);
         return request.getModuleDetails();
@@ -44,22 +44,24 @@ public class GlobalMasterServices {
         producer.push(fmConfiguration.getSaveMfMasterTopic(), request);
         return request.getMajorFunctionDetails();
     }
-//    //create Subfunction
-//    public  SubFunctionDetails createSF(SubFunctionDetailsRequest request) {
-//        GlobalMasterEnrichment.enrichCreateSubFunction(request);
-//        producer.push(fmConfiguration.getSaveSubFunctionTopic(),request);
-//        return request.getSubFunctionDetails();
-//    }
+
+    //create Subfunction
+    public  SubFunctionDetails createSF(final SubFunctionDetailsRequest request) {
+        enrichment.enrichCreateSubFunction(request);
+        producer.push(fmConfiguration.getSaveSubFunctionTopic(),request);
+        return request.getSubFunctionDetails();
+    }
+
+
     //create Servicedetails
     public ServiceDetails createService(ServiceDetailsRequest request){
-       enrichment.enrichCreateService(request);
+         enrichment.enrichCreateService(request);
         producer.push(fmConfiguration.getSaveServiceMasterTopic(),request);
         return request.getServiceDetails();
     }
 
     public ModuleDetails updateModule(ModuleDetailsRequest request) {
         final ModuleDetails moduledetails = request.getModuleDetails();
-
         String mCode = null;
         mCode = moduledetails.getModuleCode();
 
@@ -83,6 +85,7 @@ public class GlobalMasterServices {
         return (result);
     }
 
+
     public MajorFunctionDetails updateMF(MajorFunctionDetailsRequest request) {
         final MajorFunctionDetails mfDetails = request.getMajorFunctionDetails();
 
@@ -92,8 +95,10 @@ public class GlobalMasterServices {
         List<MajorFunctionDetails> searchResult = repository.searchMF(MajorFunctionSearchCriteria.builder()
                 .majorFunctionCode(mfCode)
                 .build());
+
         // validate request
         //  validator.validateUpdate(request, searchResult);
+
 
         enrichment.enrichUpdateMF(request);
 
@@ -123,7 +128,28 @@ public class GlobalMasterServices {
         return request.getMajorFunctionDetails();
 
     }
+    public SubFunctionDetails updateSF(SubFunctionDetailsRequest request) {
+        final SubFunctionDetails subFunctionDetails = request.getSubFunctionDetails();
 
+        String sfCode = null;
+        sfCode = subFunctionDetails.getSubFunctionCode();
+
+        // search database
+        List<SubFunctionDetails> searchResult = repository.searchSF(SubFunctionSearchCriteria.builder()
+                .subFunctionCode(sfCode)
+                .build());
+        enrichment.enrichUpdateSubFunction(request);
+
+        //  producer.push(fmConfiguration.getUpdateSubFunctionTopic(), request);
+
+        return request.getSubFunctionDetails();
+
+    }
+
+    public List<SubFunctionDetails> searchSF(RequestInfo requestInfo, SubFunctionSearchCriteria searchCriteria) {
+        final List<SubFunctionDetails> result= repository.searchSF(searchCriteria);
+        return (result);
+    }
     public ServiceDetails updateService(ServiceDetailsRequest request) {
 
         final ServiceDetails serviceDetails = request.getServiceDetails();

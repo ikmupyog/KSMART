@@ -28,6 +28,7 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
         moduleDetails.getAuditDetails().setLastModifiedBy(auditDetails.getLastModifiedBy());
         moduleDetails.getAuditDetails().setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
+
     //Enrich Create MajorFunction
     public  void enrichCreateMajorFunction(MajorFunctionDetailsRequest request ){
         RequestInfo requestInfo = request.getRequestInfo();
@@ -43,23 +44,19 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
         majorFunctionDetails.getAuditDetails().setLastModifiedTime(auditDetails.getLastModifiedTime());
         majorFunctionDetails.setStatus("1");
     }
-//       public static void enrichCreateSubFunction(SubFunctionDetailsRequest request){
-//        RequestInfo requestInfo = request.getRequestInfo();
-//        User userInfo = requestInfo.getUserInfo();
-//
-//        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-//        final SubFunctionDetails subFunctionDetails=request.getSubFunctionDetails();
-//           final AuditDetails subFunctionAuditDetails= subFunctionDetails.getAuditDetails();
-//           subFunctionDetails.setId(UUID.randomUUID()
-//                           .toString());
-//           subFunctionDetails.setAuditDetails(subFunctionAuditDetails);
-//           subFunctionDetails.getAuditDetails()
-//                   .setLastModifiedBy(auditDetails.getLastModifiedBy());
-//           subFunctionDetails.getAuditDetails()
-//                   .setLastModifiedTime(auditDetails.getLastModifiedTime());
-//                }
-        public  void enrichCreateService(ServiceDetailsRequest request) {
+    public  void enrichCreateSubFunction(SubFunctionDetailsRequest request){
+        final SubFunctionDetails subFunctionDetails=request.getSubFunctionDetails();
+        final AuditDetails subFunctionAuditDetails = subFunctionDetails.getAuditDetails();
+        subFunctionDetails.setId(UUID.randomUUID()
+                .toString());
+        subFunctionDetails.setAuditDetails(subFunctionAuditDetails);
+        subFunctionDetails.getAuditDetails()
+                .setLastModifiedBy(subFunctionAuditDetails.getLastModifiedBy());
+        subFunctionDetails.getAuditDetails()
+                .setLastModifiedTime(subFunctionAuditDetails.getLastModifiedTime());
+    }
 
+        public  void enrichCreateService(ServiceDetailsRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
 
@@ -75,7 +72,8 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
                     .setLastModifiedTime(auditDetails.getLastModifiedTime());
         serviceDetails.setStatus("1");
     }
-public void enrichUpdateModule(ModuleDetailsRequest request) {
+
+    public void enrichUpdateModule(ModuleDetailsRequest request) {
 
     final RequestInfo requestInfo = request.getRequestInfo();
     final User userInfo = requestInfo.getUserInfo();
@@ -86,9 +84,7 @@ public void enrichUpdateModule(ModuleDetailsRequest request) {
      moduleDetails.getModuleNameMalayalam();
 }
 
-
-
-    public void enrichUpdateMF(MajorFunctionDetailsRequest request) {
+       public void enrichUpdateMF(MajorFunctionDetailsRequest request) {
 
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
@@ -97,6 +93,29 @@ public void enrichUpdateModule(ModuleDetailsRequest request) {
         mfDetails.setAuditDetails(auditDetails);
         mfDetails.getMajorFunctionNameEnglish();
         mfDetails.getMajorFunctionNameMalayalam();
+    }
+
+    public void enrichUpdateSubFunction(SubFunctionDetailsRequest request) {
+
+        final RequestInfo requestInfo = request.getRequestInfo();
+        final User userInfo = requestInfo.getUserInfo();
+        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        final  SubFunctionDetails subFunctionDetails= request.getSubFunctionDetails();
+        subFunctionDetails.setAuditDetails(auditDetails);
+        subFunctionDetails.getSubFunctionNameEnglish();
+        subFunctionDetails.getSubFunctionNameMalayalam();
+
+    }
+
+    public void enrichUpdateService(ServiceDetailsRequest request) {
+
+        final RequestInfo requestInfo = request.getRequestInfo();
+        final User userInfo = requestInfo.getUserInfo();
+        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        final  ServiceDetails mfDetails= request.getServiceDetails();
+        mfDetails.setAuditDetails(auditDetails);
+        mfDetails.getServiceNameEnglish();
+        mfDetails.getServiceNameMalayalam();
     }
 
 
@@ -108,16 +127,6 @@ public void enrichUpdateModule(ModuleDetailsRequest request) {
         mfDetails.setAuditDetails(auditDetails);
         mfDetails.setStatus("0");
 
-    }
-    public void enrichUpdateService(ServiceDetailsRequest request) {
-
-        final RequestInfo requestInfo = request.getRequestInfo();
-        final User userInfo = requestInfo.getUserInfo();
-        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-        final  ServiceDetails mfDetails= request.getServiceDetails();
-        mfDetails.setAuditDetails(auditDetails);
-        mfDetails.getServiceNameEnglish();
-        mfDetails.getServiceNameMalayalam();
     }
 
     public void enrichDeleteService(ServiceDetailsRequest request) {

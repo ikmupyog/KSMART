@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.egov.filemgmnt.web.models.GlobalMaster.MajorFunctionSearchCriteria;
 import org.egov.filemgmnt.web.models.GlobalMaster.ModuleSearchCriteria;
 import org.egov.filemgmnt.web.models.GlobalMaster.ServiceSearchCriteria;
+import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionSearchCriteria;
 import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GlobalMasterQueryBuilder extends BaseQueryBuilder {
     private static final String QUERY = new StringBuilder().append("SELECT")
+
                                                    //ModuleMaster, MajorFuction, SubFunction and serviceMaster
                                                             //ModuleDetails
                                                            .append("  md.id AS modulemaster_id, md.tenantid, md.modulecode, md.modulenameeng, md.modulenamemal")
@@ -38,6 +40,7 @@ public class GlobalMasterQueryBuilder extends BaseQueryBuilder {
 
                                                            .toString();
 
+
     public String getModuleDetailSearchQuery(@NotNull final ModuleSearchCriteria criteria,
                                              @NotNull List<Object> preparedStmtValues, Boolean isCount) {
         StringBuilder query = new StringBuilder(QUERY);
@@ -45,6 +48,7 @@ public class GlobalMasterQueryBuilder extends BaseQueryBuilder {
         addFilter("md.modulecode", criteria.getModuleCode(), query, preparedStmtValues);
         return query.toString();
     }
+
 
     public String getMFSearchQuery(@NotNull final MajorFunctionSearchCriteria criteria,
                                              @NotNull List<Object> preparedStmtValues, Boolean isCount) {
@@ -59,6 +63,14 @@ public class GlobalMasterQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY);
 
         addFilter("svc.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
+        return query.toString();
+    }
+
+        public String getsubFunctionSearchQuery(@NotNull final SubFunctionSearchCriteria criteria,
+                                          @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+        StringBuilder query = new StringBuilder(QUERY);
+
+        addFilter("sf.sfcode", criteria.getSubFunctionCode(), query, preparedStmtValues);
         return query.toString();
     }
 }

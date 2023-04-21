@@ -6,6 +6,11 @@ import org.egov.filemgmnt.repository.rowmapper.MajorFunctionRawMapper;
 import org.egov.filemgmnt.repository.rowmapper.ModuleRowMapper;
 import org.egov.filemgmnt.repository.rowmapper.ServiceMasterRowMapper;
 import org.egov.filemgmnt.web.models.GlobalMaster.*;
+import org.egov.filemgmnt.repository.rowmapper.SubFunctionRowMapper;
+import org.egov.filemgmnt.web.models.GlobalMaster.ModuleDetails;
+import org.egov.filemgmnt.web.models.GlobalMaster.ModuleSearchCriteria;
+import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionDetails;
+import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -24,16 +29,18 @@ public class GlobalMasterRepository {
 
     @Autowired
     private final MajorFunctionRawMapper mfRawMapper;
-
+    @Autowired
+    private final SubFunctionRowMapper subFunctionRowMapper;
     private final ServiceMasterRowMapper serviceMasterRowMapper;
 
-    public GlobalMasterRepository(GlobalMasterQueryBuilder moduleDetailsQueryBuilder, ModuleRowMapper moduleRowMapper, MajorFunctionRawMapper mfRawMapper, ServiceMasterRowMapper serviceMasterRowMapper) {
+    public GlobalMasterRepository(GlobalMasterQueryBuilder moduleDetailsQueryBuilder, ModuleRowMapper moduleRowMapper, MajorFunctionRawMapper mfRawMapper, SubFunctionRowMapper subFunctionRowMapper, ServiceMasterRowMapper serviceMasterRowMapper) {
         this.globalMasterQueryBuilder = moduleDetailsQueryBuilder;
         this.moduleRowMapper = moduleRowMapper;
         this.mfRawMapper = mfRawMapper;
+        this.subFunctionRowMapper = subFunctionRowMapper;
         this.serviceMasterRowMapper = serviceMasterRowMapper;
-    }
 
+    }
     public List<ModuleDetails> searchModule(final ModuleSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
         final String query = globalMasterQueryBuilder.getModuleDetailSearchQuery(searchCriteria,
@@ -42,6 +49,16 @@ public class GlobalMasterRepository {
 
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), moduleRowMapper);
 
+
+    }
+
+    public List<SubFunctionDetails>searchSF(final SubFunctionSearchCriteria searchCriteria){
+        final List<Object> preparedStmtValues = new ArrayList<>();
+        final String query = globalMasterQueryBuilder.getsubFunctionSearchQuery(searchCriteria,
+                preparedStmtValues,
+                Boolean.FALSE);
+
+        return jdbcTemplate.query(query, preparedStmtValues.toArray(), subFunctionRowMapper);
     }
 
 
@@ -52,6 +69,7 @@ public class GlobalMasterRepository {
                 Boolean.FALSE);
        return jdbcTemplate.query(query,preparedStmtValues.toArray(), mfRawMapper);
     }
+
     public List<ServiceDetails> searchService(ServiceSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
         final String query = globalMasterQueryBuilder.getServiceSearchQuery(searchCriteria,

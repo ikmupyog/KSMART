@@ -27,6 +27,4 @@ public class ModuleRowMapper implements ResultSetExtractor<List<ModuleDetails>>,
         return result;
     }
 
-
-
 }
