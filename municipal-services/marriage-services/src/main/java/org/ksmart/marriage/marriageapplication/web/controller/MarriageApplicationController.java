@@ -89,7 +89,7 @@ public class MarriageApplicationController {
     @PostMapping(value = { "/_searchmarriage"})
     public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
-        
+        System.out.println("SearchCriteria"+criteria);
         int count=repository.getMarriageCount(criteria);
         
         List<MarriageApplicationDetails> marriageDetails = MarriageService.searchMarriageDetails(criteria, request.getRequestInfo());
