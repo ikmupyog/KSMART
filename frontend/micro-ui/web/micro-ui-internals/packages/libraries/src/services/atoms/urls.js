@@ -132,6 +132,8 @@ const Urls = {
     create: "/birth-services/cr/createnac",
     search: "/birth-services/cr/searchnac",
     update: "/birth-services/cr/updatenac",
+    registry_download: "/birth-services/cr/registrynac/_download",
+    registry_search_nac_birth: "/birth-services/cr/searchnac",
   },
   crbornoutsideindiabirth: {
     create: "/birth-services/cr/createbornoutside",

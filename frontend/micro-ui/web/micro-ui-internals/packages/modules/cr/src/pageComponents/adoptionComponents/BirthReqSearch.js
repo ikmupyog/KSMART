@@ -220,7 +220,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
     // console.log(searchResult);
     return (
       <Modal
-        headerBarMain={<Heading t={t} heading={"Search birth Applications"} />}
+        headerBarMain={<Heading t={t} heading={"CR_SEARCH_BR_APPLICATIONS"} />}
         headerBarEnd={<CloseBtn onClick={closePopup} />}
         popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto" }}
         formId="modal-action"
