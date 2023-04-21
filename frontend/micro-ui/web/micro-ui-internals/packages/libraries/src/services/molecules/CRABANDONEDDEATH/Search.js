@@ -230,6 +230,18 @@ export const CRAbandonedDeathsearch = {
         { title: "CR_WERE_AUTOPSY", value: response?.StatisticalInfoDeathAbandoned.IsAutopsyCompleted|| "NA" },
       ],
     };
+
+    const Documents = {
+      title: "CR_DOCUMENT",
+      values: [
+        { title: "Letter form the Informer/Notifier Official", value: response?.DeathAbandonedDocuments.filestoreId[0] },
+        { title: "Copy of the FIR", value: response?.DeathAbandonedDocuments.filestoreId[1] },
+        { title: "Inquest Report", value: response?.DeathAbandonedDocuments.filestoreId[2] },
+        { title: "Post-Mortem Report", value: response?.DeathAbandonedDocuments.filestoreId[3] },
+        { title: "Medical Certificate of Cause of Death", value: response?.DeathAbandonedDocuments.filestoreId[4] },
+        { title: "Court Order", value: response?.DeathAbandonedDocuments.filestoreId[5] }
+      ],
+    };
     // const permanentAddress = {
     //   title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
     //   values: [
