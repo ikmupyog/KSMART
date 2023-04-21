@@ -707,6 +707,11 @@ serviceMaps:
       fromTopic: update-marriagecertificate-topic
       isTransaction: true
       queryMaps:
+        - query: INSERT INTO public.eg_marriage_certificate_audit SELECT * FROM  public.eg_marriage_certificate WHERE registrydetailsid = ?;
+          basePath: marriageCertificate
+          jsonMaps:
+            - jsonPath: $.marriageCertificate.marriageRegistryDetails.id
+
         - query: UPDATE public.eg_marriage_certificate
             set filestoreid=? , embeddedurl=?, dateofissue=?, lastmodifiedtime=?, lastmodifiedby=? , count=? where id=? and registrydetailsid=?;
           basePath: marriageCertificate
