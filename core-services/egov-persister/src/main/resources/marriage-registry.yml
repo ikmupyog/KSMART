@@ -99,6 +99,7 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.WitnessDetails.groomExpired
 
             - jsonPath: $.MarriageDetails.*.WitnessDetails.isBackward
+            
             - jsonPath: $.MarriageDetails.*.certificateNo
 
         - query: UPDATE eg_marriage_details SET registrationno = ? ,registration_date = ? 

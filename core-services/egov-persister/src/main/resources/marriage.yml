@@ -1438,6 +1438,26 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
 
+    - version: 1.0
+      description: Persists update workflow details in marriage  table
+      fromTopic: update-demand-topic
+      isTransaction: true
+      queryMaps:
+
+        - query: UPDATE public.eg_marriage_details  SET action = ?, status = ?, amount = ?
+                 WHERE  applicationnumber = ? ;
+          basePath: PaymentDetails.*
+          jsonMaps:
+
+            - jsonPath: $.PaymentDetails.*.action
+
+            - jsonPath: $.PaymentDetails.*.applicationStatus
+
+            - jsonPath: $.PaymentDetails.*.amount         
+
+            - jsonPath: $.PaymentDetails.*.applicationNumber
+         
+
 
 
 
