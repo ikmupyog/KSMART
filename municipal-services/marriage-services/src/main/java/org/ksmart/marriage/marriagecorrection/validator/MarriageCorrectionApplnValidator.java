@@ -6,6 +6,7 @@ import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDeta
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -23,24 +24,21 @@ public class MarriageCorrectionApplnValidator {
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
                     "Marriage Correction Details is required.");
         }
-
         if (correctionApplications.size() > 1) { // NOPMD
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
                     "Supports only single Marriage correction application create request.");
         }
         if (StringUtils.isBlank(correctionApplications.get(0).getRegisterId())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
-                    "Register id is required for create correction request.");
+                    "Register Id is required for create correction request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getRegistrationno())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
-                    "Registration number is required for create correction request.");
+                    "Registration Number is required for create correction request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getTenantid())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
-                    "Tenant id is required for create correction request.");
+                    "Tenant Id is required for create correction request.");
         }
         if (CollectionUtils.isEmpty(correctionApplications.get(0).getCorrectionField())) {
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
@@ -54,6 +52,18 @@ public class MarriageCorrectionApplnValidator {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                     "Module Code is required for create correction request.");
         }
+        if (StringUtils.isBlank(correctionApplications.get(0).getWorkflowcode())) {
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                    "Workflow Code is required for create correction request.");
+        }
+        if (StringUtils.isBlank(correctionApplications.get(0).getBusinessservice())) {
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                    "Business Service is required for create correction request.");
+        }
+        if (StringUtils.isBlank(correctionApplications.get(0).getStatus())) {
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
+                    "Application Status is required for create correction request.");
+        }
     }
 
     public void validateCorrectionUpdate(MarriageCorrectionRequest request) {
@@ -62,55 +72,49 @@ public class MarriageCorrectionApplnValidator {
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
                     "Marriage details is required.");
         }
-
         if (correctionApplications.size() > 1) {
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
                     "Supports only single application update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getRegisterId())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Register id is required for update correction request.");
+                    "Register Id is required for update correction request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getRegistrationno())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Registration number is required for update correction request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getTenantid())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Tenant id is required for update request.");
+                    "Tenant Id is required for update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getId())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Application id is required for update request.");
+                    "Application Id is required for update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getApplicationtype())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Application type is required for update request.");
+                    "Application Type is required for update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getBusinessservice())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Bussiness service is required for update request.");
+                    "Bussiness Service is required for update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getApplicationNo())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Application number is required for update request.");
+                    "Application Number is required for update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getWorkflowcode())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Workflow code is required for update request.");
+                    "Workflow Code is required for update request.");
         }
-
         if (StringUtils.isBlank(correctionApplications.get(0).getAction())) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Workflow action is required for update request.");
+        }
+        if (StringUtils.isBlank(correctionApplications.get(0).getStatus())) {
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
+                    "Application Status is required for update request.");
         }
         //mdmsValidator.validateMdmsData(request, mdmsData);
     }
@@ -141,6 +145,28 @@ public class MarriageCorrectionApplnValidator {
                                             + " is invalid");
                         }
                     });
+        }
+    }
+
+    public void validateCorrectionApplnSearch(List<MarriageApplicationDetails> applicationDetails) {
+        if (applicationDetails.isEmpty()) {
+            throw new CustomException(MARRIAGE_DETAILS_NOT_FOUND.getCode(),
+                    "Marriage Correction Application(s) not found in database.");
+        }
+        if (applicationDetails.size() > 1) {
+            throw new CustomException(MARRIAGE_DETAILS_NOT_FOUND.getCode(),
+                    "Supports only single Marriage Application(s) for correction.");
+        }
+    }
+
+    public void validateCorrectionRegistrySearch(List<MarriageRegistryDetails> registryDetails) {
+        if (registryDetails.isEmpty()) {
+            throw new CustomException(MARRIAGE_DETAILS_NOT_FOUND.getCode(),
+                    "Marriage registration(s) not found in database.");
+        }
+        if (registryDetails.size() > 1) {
+            throw new CustomException(MARRIAGE_DETAILS_NOT_FOUND.getCode(),
+                    "Supports only single Marriage registration(s) for correction.");
         }
     }
 }
