@@ -55,8 +55,8 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
       } else if (hospitalCode != null) {
         if(cmbhospital.length>0){
           cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode);
-          selectHospitalName(cmbhospitalMl[0]);
-          selectHospitalNameMl(cmbhospitalMl[0]);
+          selectHospitalName(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
+          selectHospitalNameMl(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
           setIsInitialRender(false);
         }        
       }
