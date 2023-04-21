@@ -4,9 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditBirth
+  selectHospitalNameMl, isEditBirth, hospitalCode,isDisableEditRole ,setisDisableEditRole
 }) => {
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -42,24 +41,28 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
       }
     }
   }
-
   useEffect(() => {
-
     if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalCode) {
+      if (formData?.ChildDetails?.hospitalCode != null) {
+        selectHospitalName(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode));
         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode);
         selectHospitalNameMl(cmbhospitalMl[0]);
-        // selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
-      } else {
-        if (hospitalName != null) {
-          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalName.code);
+      } else if (formData?.ChildDetails?.hospitalName != null && formData?.ChildDetails?.hospitalName != "" && formData?.ChildDetails?.hospitalName != undefined) {
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalName.code);
+        selectHospitalNameMl(cmbhospitalMl[0]);
+        setIsInitialRender(false);
+      } else if (hospitalCode != null) {
+        if(cmbhospital.length>0){
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode);
+          selectHospitalName(cmbhospitalMl[0]);
           selectHospitalNameMl(cmbhospitalMl[0]);
           setIsInitialRender(false);
-        }
+        }        
       }
     }
-  }, [cmbhospitalMl,isInitialRender])
+
+  }, [cmbhospital, isInitialRender])
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
@@ -100,7 +103,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 option={cmbhospital}
                 selected={hospitalName}
                 select={setselectHospitalName}
-                disable={isDisableEdit}
+                disable={isDisableEditRole}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
