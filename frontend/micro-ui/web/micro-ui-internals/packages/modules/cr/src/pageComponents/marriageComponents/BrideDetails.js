@@ -143,6 +143,13 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   const [brideLastnameMlError, setbrideLastnameMlError] = useState(false);
   const [bridePassportNoError, setbridePassportNoError] = useState(false);
   const [brideSocialSecurityNoError, setbrideSocialSecurityNoError] = useState(false);
+  const [brideFathernameEnError, setbrideFathernameEnError] = useState(false);
+  const [brideFathernameMlError, setbrideFathernameMlError] = useState(false);
+  const [brideMothernameEnError, setbrideMothernameEnError] = useState(false);
+  const [brideMothernameMlError, setbrideMothernameMlError] = useState(false);
+  const [brideGuardiannameEnError, setbrideGuardiannameEnError] = useState(false);
+  const [brideGuardiannameMlError, setbrideGuardiannameMlError] = useState(false);
+  const [brideMobileError, setbrideMobileError] = useState(false);
   // const [brideFatherAadharError, setBrideFatherAadharError] = useState(formData?.BrideDetails?.brideFatherAadharNo ? false : false);
   // const [brideMotherAadharError, setBrideMotherAadharError] = useState(formData?.BrideDetails?.brideMotherAadharNo ? false : false);
   // const [brideGuardianAadharError, setBrideGuardianAadharError] = useState(formData?.BrideDetails?.brideGuardianAadharNo ? false : false);
@@ -681,6 +688,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (bridePassportNo.trim() == null || bridePassportNo.trim() == "" || bridePassportNo.trim() == undefined) {
       setbridePassportNo("");
+      setbridePassportNoError(true);
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+        }, 2000);
     } else if (bridePassportNo != null && bridePassportNo != "") {
       let pasportLength = bridePassportNo;
       if (pasportLength.length < 8 || pasportLength.length > 8) {
@@ -698,18 +710,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideSocialSecurityNo.trim() == null || brideSocialSecurityNo.trim() == "" || brideSocialSecurityNo.trim() == undefined) {
       setbrideSocialSecurityNo("");
-    } else if (brideSocialSecurityNo != null && brideSocialSecurityNo != "") {
-      let socialLength = brideSocialSecurityNo;
-      if (socialLength.length < 12) {
-        validFlag = false;
-        setbrideSocialSecurityNoError(true);
-        setToast(true);
-        setTimeout(() => {
+      setbrideSocialSecurityNoError(true);
+      setToast(true);
+      setTimeout(() => {
           setToast(false);
         }, 2000);
-      } else {
-        setbrideSocialSecurityNoError(false);
-      }
     } else {
       setbrideSocialSecurityNoError(false);
     }
@@ -779,6 +784,98 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       }, 2000);
     } else {
       setbrideLastnameMlError(false);
+    }
+
+    if(brideParentGuardian === "PARENT"){
+      if (brideFathernameEn.trim() == null || brideFathernameEn.trim() == '' || brideFathernameEn.trim() == undefined) {
+        validFlag = false;
+        setbrideFathernameEn("");
+        setbrideFathernameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideFathernameEnError(false);
+      }
+      if (brideFathernameMl.trim() == null || brideFathernameMl.trim() == '' || brideFathernameMl.trim() == undefined) {
+        validFlag = false;
+        setbrideFathernameMl("");
+        setbrideFathernameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideFathernameMlError(false);
+      }
+      if (brideMothernameEn.trim() == null || brideMothernameEn.trim() == '' || brideMothernameEn.trim() == undefined) {
+        validFlag = false;
+        setbrideMothernameEn("");
+        setbrideMothernameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideMothernameEnError(false);
+      }
+      if (brideMothernameMl.trim() == null || brideMothernameMl.trim() == '' || brideMothernameMl.trim() == undefined) {
+        validFlag = false;
+        setbrideMothernameMl("");
+        setbrideMothernameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideMothernameMlError(false);
+      }
+    }
+    if(brideParentGuardian === "GUARDIAN"){
+      if (brideGuardiannameEn.trim() == null || brideGuardiannameEn.trim() == '' || brideGuardiannameEn.trim() == undefined) {
+        validFlag = false;
+        setbrideGuardiannameEn("");
+        setbrideGuardiannameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideGuardiannameEnError(false);
+      }
+      if (brideGuardiannameMl.trim() == null || brideGuardiannameMl.trim() == '' || brideGuardiannameMl.trim() == undefined) {
+        validFlag = false;
+        setbrideGuardiannameMl("");
+        setbrideGuardiannameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideGuardiannameMlError(false);
+      }
+    }
+    
+    if (brideMobile != null || brideMobile != "" || brideMobile != undefined) {
+      let mobileLength = brideMobile;
+      if (mobileLength.length < 10 || mobileLength.length > 10) {
+        validFlag = false;
+        setbrideMobileError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideMobileError(false);
+      }
+    } else {
+      validFlag = false;
+      setbrideMobileError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
 
     if (validFlag == true) {
@@ -1015,7 +1112,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     placeholder={`${t("CR_BRIDE_SOCIAL_SECURITY_NO")}`}
                     {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
                       ...(validation = {
-                        pattern: "^[A-Z0-9-]{12}$",
+                        pattern: "^[A-Z0-9-]{8,12}$",
                         type: "text",
                         isRequired: true,
                         title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER"),
@@ -1167,7 +1264,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"email"}
                 optionKey="i18nKey"
                 name="brideEmailid"
                 value={brideEmailid}
@@ -1521,7 +1618,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 brideLastnameEnError ||
                 brideLastnameMlError ||
                 bridePassportNoError ||
-                brideSocialSecurityNoError
+                brideSocialSecurityNoError ||
+                brideFathernameEnError ||
+                brideFathernameMlError ||
+                brideMothernameEnError ||
+                brideMothernameMlError ||
+                brideGuardiannameEnError ||
+                brideGuardiannameMlError ||
+                brideMobileError
               }
               label={
                 AadharError ||
@@ -1534,31 +1638,52 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 brideLastnameEnError ||
                 brideLastnameMlError ||
                 bridePassportNoError ||
-                bridePassportNoError
-                  ? AadharError
+                bridePassportNoError ||
+                brideFathernameEnError ||
+                brideFathernameMlError ||
+                brideMothernameEnError ||
+                brideMothernameMlError ||
+                brideGuardiannameEnError ||
+                brideGuardiannameMlError ||
+                brideMobileError
+                 ? AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : AgeValidationMsg
-                    ? t(`CR_INVALID_BRIDE_AGE`)
-                    : AdhaarDuplicationError
-                    ? t("DUPLICATE_AADHAR_NO")
-                    : brideFirstnameEnError
-                    ? t(`CR_INVALID_FIRST_NAME_EN`)
-                    : brideFirstnameMlError
-                    ? t(`CR_INVALID_FIRST_NAME_ML`)
-                    : brideMiddlenameEnError
-                    ? t(`CR_INVALID_MIDDLE_NAME_EN`)
-                    : brideMiddlenameMlError
-                    ? t(`CR_INVALID_MIDDLE_NAME_ML`)
-                    : brideLastnameEnError
-                    ? t(`CR_INVALID_LAST_NAME_EN`)
-                    : brideLastnameMlError
-                    ? t(`CR_INVALID_LAST_NAME_ML`)
-                    : bridePassportNoError
-                    ? t(`CR_INVALID_BRIDE_PASSPORT_NO`)
-                    : bridePassportNoError
-                    ? t(`CR_INVALID_SOCIAL_SECURITY_NO`)
-                    : setToast(false)
-                  : setToast(false)
+                       ? t(`CR_INVALID_BRIDE_AGE`)
+                       : AdhaarDuplicationError
+                         ? t("DUPLICATE_AADHAR_NO")
+                         : brideFirstnameEnError
+                           ? t(`CR_INVALID_FIRST_NAME_EN`)
+                           : brideFirstnameMlError
+                             ? t(`CR_INVALID_FIRST_NAME_ML`)
+                             : brideMiddlenameEnError
+                               ? t(`CR_INVALID_MIDDLE_NAME_EN`)
+                               : brideMiddlenameMlError
+                                 ? t(`CR_INVALID_MIDDLE_NAME_ML`)
+                                 : brideLastnameEnError
+                                   ? t(`CR_INVALID_LAST_NAME_EN`)
+                                   : brideLastnameMlError
+                                     ? t(`CR_INVALID_LAST_NAME_ML`)
+                                     : bridePassportNoError
+                                       ? t(`CR_INVALID_BRIDE_PASSPORT_NO`)
+                                       : bridePassportNoError
+                                         ? t(`CR_INVALID_SOCIAL_SECURITY_NO`)
+                                         : brideFathernameEnError
+                                           ? t(`CR_INVALID_FATHER_NAME_EN`)
+                                           : brideFathernameMlError
+                                             ? t(`CR_INVALID_FATHER_NAME_ML`)
+                                             : brideMothernameEnError
+                                               ? t(`CR_INVALID_MOTHER_NAME_EN`)
+                                               : brideMothernameMlError
+                                                 ? t(`CR_INVALID_MOTHER_NAME_ML`)
+                                                 : brideGuardiannameEnError
+                                                   ? t(`CR_INVALID_GUARDIAN_NAME_EN`)
+                                                   : brideGuardiannameMlError
+                                                     ? t(`CR_INVALID_GUARDIAN_NAME_ML`)
+                                                     : brideMobileError
+                                                       ? t(`CR_INVALID_MOBILE_NO`)
+                                                       : setToast(false)
+                 : setToast(false)
               }
               onClose={() => setToast(false)}
             />

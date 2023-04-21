@@ -230,6 +230,19 @@ export const CRAbandonedDeathsearch = {
         { title: "CR_WERE_AUTOPSY", value: response?.StatisticalInfoDeathAbandoned.IsAutopsyCompleted|| "NA" },
       ],
     };
+
+    
+      const Documents = {
+
+         title: "Document SUMMARY DETAILS",
+      
+         documents: true,
+      
+         tenentId: Digit.ULBService.getStateId(),
+      
+         values: response.DeathAbandonedDocuments.map((doc) => doc?.FileStoreId),
+      
+        };
     // const permanentAddress = {
     //   title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
     //   values: [
@@ -264,6 +277,7 @@ export const CRAbandonedDeathsearch = {
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
+      documents: Documents,
       // additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,

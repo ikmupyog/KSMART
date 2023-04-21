@@ -7,6 +7,7 @@ import StillBirthActionModal from "./StillBirthActionModal";
 import BirthNACActionModal from "./BirthNACActionModal";
 import MarriageActionModal from "./MarriageActionModal";
 import BornOutsideActionModal from "./BornOutsideActionModal";
+import AbandonedBirthActionModal from "./AbandonedBirthActionModal";
 import AdoptionActionModal from "./AdoptionActionModal";
 import AbandonedActionModal from "./AbandonedActionModal";
 import DeathActionModal from "./DeathActionModal";
@@ -42,7 +43,9 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("WFBORNOUTSIDE60")) {
     return <BornOutsideActionModal {...props} />;
   }
-
+  if (props?.businessService.includes("BIRTHABANDONED")) {
+    return <AbandonedBirthActionModal {...props} />;
+  }
   if (
     props?.businessService.includes("WFDEATH21DAYS") ||
     props?.businessService.includes("WFDEATH30DAYS") ||
