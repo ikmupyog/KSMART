@@ -16,17 +16,17 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
       cmbspouse.push(ob);
     });
   const [SpouseType, setSpouseType] = useState(
-    formData?.FamilyInfoDeathAbandoned?.SpouseType?.code
-      ? formData?.FamilyInfoDeathAbandoned?.SpouseType
-      : formData?.FamilyInfoDeathAbandoned?.SpouseType
-      ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInfoDeathAbandoned?.SpouseType)[0]
+    formData?.FamilyAbandonedDeath?.SpouseType?.code
+      ? formData?.FamilyAbandonedDeath?.SpouseType
+      : formData?.FamilyAbandonedDeath?.SpouseType
+      ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyAbandonedDeath?.SpouseType)[0]
       : ""
   );
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
-    formData?.FamilyInfoDeathAbandoned?.SpouseUnavailable
-      ? formData?.FamilyInfoDeathAbandoned?.SpouseUnavailable
-      : formData?.FamilyInfoDeathAbandoned?.SpouseUnavailable
-      ? formData?.FamilyInfoDeathAbandoned?.SpouseUnavailable
+    formData?.FamilyAbandonedDeath?.SpouseUnavailable
+      ? formData?.FamilyAbandonedDeath?.SpouseUnavailable
+      : formData?.FamilyAbandonedDeath?.SpouseUnavailable
+      ? formData?.FamilyAbandonedDeath?.SpouseUnavailable
       : false
   );
   // const [Nationality, setSelectedNationality] = useState(
@@ -37,62 +37,62 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
   //     : ""
   // );
   // const [SpouseType, setSpouseType] = useState(
-  //   formData?.FamilyInfoDeathAbandoned?.SpouseType?.code
-  //     ? formData?.FamilyInfoDeathAbandoned?.SpouseType
-  //     : formData?.FamilyInfoDeathAbandoned?.SpouseType
+  //   formData?.FamilyAbandonedDeath?.SpouseType?.code
+  //     ? formData?.FamilyAbandonedDeath?.SpouseType
+  //     : formData?.FamilyAbandonedDeath?.SpouseType
   //     ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath?.SpouseType)[0]
   //     : null
   // );
   const [SpouseNameEN, setSpouseNameEN] = useState(
-    formData?.FamilyInfoDeathAbandoned?.SpouseNameEN?
-    formData?.FamilyInfoDeathAbandoned?.SpouseNameEN : ""
+    formData?.FamilyAbandonedDeath?.SpouseNameEN?
+    formData?.FamilyAbandonedDeath?.SpouseNameEN : ""
   );
 
   // const [SpouseNameEN, setSpouseNameEN] = useState(
-  //   formData?.FamilyInfoDeathAbandoned?.SpouseNameEN ? formData?.FamilyInfoDeathAbandoned?.SpouseNameEN : ""
+  //   formData?.FamilyAbandonedDeath?.SpouseNameEN ? formData?.FamilyAbandonedDeath?.SpouseNameEN : ""
   // );
   const [SpouseNameMl, setSpouseNameMl] = useState(
-    formData?.FamilyInfoDeathAbandoned?.SpouseNameMl ? formData?.FamilyInfoDeathAbandoned?.SpouseNameMl : ""
+    formData?.FamilyAbandonedDeath?.SpouseNameMl ? formData?.FamilyAbandonedDeath?.SpouseNameMl : ""
   );
   const [SpouseAadhaar, setSpouseAadhaar] = useState(
-    formData?.FamilyInfoDeathAbandoned?.SpouseAadhaar ? formData?.FamilyInfoDeathAbandoned?.SpouseAadhaar : ""
+    formData?.FamilyAbandonedDeath?.SpouseAadhaar ? formData?.FamilyAbandonedDeath?.SpouseAadhaar : ""
   );
 
   const [FatherUnavailable, setFatherUnavailablechecked] = useState(
-    formData?.FamilyInfoDeathAbandoned?.FatherUnavailable
-      ? formData?.FamilyInfoDeathAbandoned?.FatherUnavailable
-      : formData?.FamilyInfoDeathAbandoned?.FatherUnavailable
-      ? formData?.FamilyInfoDeathAbandoned?.FatherUnavailable
+    formData?.FamilyAbandonedDeath?.FatherUnavailable
+      ? formData?.FamilyAbandonedDeath?.FatherUnavailable
+      : formData?.FamilyAbandonedDeath?.FatherUnavailable
+      ? formData?.FamilyAbandonedDeath?.FatherUnavailable
       : false
   );
   const [FatherNameEn, setFatherNameEn] = useState(
-    formData?.FamilyInfoDeathAbandoned?.FatherNameEn ? formData?.FamilyInfoDeathAbandoned?.FatherNameEn : ""
+    formData?.FamilyAbandonedDeath?.FatherNameEn ? formData?.FamilyAbandonedDeath?.FatherNameEn : ""
   );
   const [FatherNameMl, setFatherNameMl] = useState(
-    formData?.FamilyInfoDeathAbandoned?.FatherNameMl ? formData?.FamilyInfoDeathAbandoned?.FatherNameMl : ""
+    formData?.FamilyAbandonedDeath?.FatherNameMl ? formData?.FamilyAbandonedDeath?.FatherNameMl : ""
   );
   const [FatherAadharNo, setFatherAadharNo] = useState(
-    formData?.FamilyInfoDeathAbandoned?.FatherAadharNo ? formData?.FamilyInfoDeathAbandoned?.FatherAadharNo : ""
+    formData?.FamilyAbandonedDeath?.FatherAadharNo ? formData?.FamilyAbandonedDeath?.FatherAadharNo : ""
   );
   const [MotherUnavailable, setMotherUnavailable] = useState(
-    formData?.FamilyInfoDeathAbandoned?.MotherUnavailable ? formData?.FamilyInfoDeathAbandoned?.MotherUnavailable : false
+    formData?.FamilyAbandonedDeath?.MotherUnavailable ? formData?.FamilyAbandonedDeath?.MotherUnavailable : false
   );
   const [MotherNameEn, setMotherNameEn] = useState(
-    formData?.FamilyInfoDeathAbandoned?.MotherNameEn ? formData?.FamilyInfoDeathAbandoned?.MotherNameEn : ""
+    formData?.FamilyAbandonedDeath?.MotherNameEn ? formData?.FamilyAbandonedDeath?.MotherNameEn : ""
   );
   const [MotherNameMl, setMotherNameMl] = useState(
-    formData?.FamilyInfoDeathAbandoned?.MotherNameMl ? formData?.FamilyInfoDeathAbandoned?.MotherNameMl : ""
+    formData?.FamilyAbandonedDeath?.MotherNameMl ? formData?.FamilyAbandonedDeath?.MotherNameMl : ""
   );
   const [MotherAadharNo, setMotherAadharNo] = useState(
-    formData?.FamilyInfoDeathAbandoned?.MotherAadharNo ? formData?.FamilyInfoDeathAbandoned?.MotherAadharNo : ""
+    formData?.FamilyAbandonedDeath?.MotherAadharNo ? formData?.FamilyAbandonedDeath?.MotherAadharNo : ""
   );
 
   const [FamilyMobileNo, setFamilyMobileNo] = useState(
-    formData?.FamilyInfoDeathAbandoned?.FamilyMobileNo ? formData?.FamilyInfoDeathAbandoned?.FamilyMobileNo : ""
+    formData?.FamilyAbandonedDeath?.FamilyMobileNo ? formData?.FamilyAbandonedDeath?.FamilyMobileNo : ""
   );
 
   const [FamilyEmailId, setFamilyEmailId] = useState(
-    formData?.FamilyInfoDeathAbandoned?.FamilyEmailId ? formData?.FamilyInfoDeathAbandoned?.FamilyEmailId : ""
+    formData?.FamilyAbandonedDeath?.FamilyEmailId ? formData?.FamilyAbandonedDeath?.FamilyEmailId : ""
   );
   const [inputValue, setInputValue] = useState("");
   const [toast, setToast] = useState(false);
@@ -304,9 +304,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
   };
 
   if (isEditAbandonedDeath) {
-    if (formData?.FamilyInfoDeathAbandoned?.SpouseType != null) {
+    if (formData?.FamilyAbandonedDeath?.SpouseType != null) {
       if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
-        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInfoDeathAbandoned?.SpouseType)[0]);
+        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyAbandonedDeath?.SpouseType)[0]);
       }
     }
   }

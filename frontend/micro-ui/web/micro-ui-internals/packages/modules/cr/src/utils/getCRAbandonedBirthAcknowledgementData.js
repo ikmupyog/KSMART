@@ -68,19 +68,19 @@ const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ")
 //     values: values,
 //   };
 // };
-const getInformationDeath = (application, t) => {
+const getAbandonedBirthChildDetails = (application, t) => {
   console.log(application);
-  application.owners = application?.deathCertificateDtls?.InformationDeath?.filter((applicationNumber) => applicationNumber.active == true) || [];
+  application.owners = application?.AbandonedDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
  
   return {
     title: "",
     values: [
-      { title: t("Date of Death"), value: application?.InformationDeath?.DateOfDeath ? Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("Gender"), value: application?.InformationDeath?.gender ? application?.InformationDeath?.gender : t("CS_NA") },
-      { title: t("Death Place"), value: application?.InformationDeath?.deathplace ? application?.InformationDeath?.deathplace : t("CS_NA") },
-      { title: t("Death Place Name"), value: application?.InformationDeath?.hospitalNameEn ? application?.InformationDeath?.hospitalNameEn : t("CS_NA") },
-
+      { title: t("Date of Birth"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
+      { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
+      { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
+      { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
+   //   { title: "Birth Place Name", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},   
       // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
       // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
       // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
@@ -113,20 +113,20 @@ const getInformationDeath = (application, t) => {
   //   };
   // }
 };
-const getAddressDetails = (application, t) => {
-  return {
-    title: "",
-    values: [
-      // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
-      // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
-      // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-      { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
-    ],
-  };
-};
+// const getAddressDetails = (application, t) => {
+//   return {
+//     title: "",
+//     values: [
+//       // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
+//       // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
+//       // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
+//       { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
+//       { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
+//     ],
+//   };
+// };
 
-const getCRDeathAcknowledgementData = async (application, tenantInfo, t) => {
+const getCRAbandonedBirthAcknowledgementData = async (application, tenantInfo, t) => {
   //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
   //   let res;
   //   if (filesArray) {
@@ -150,8 +150,8 @@ const getCRDeathAcknowledgementData = async (application, tenantInfo, t) => {
           },
         ],
       },
-      getInformationDeath(application, t),
-      getAddressDetails(application, t),
+      getAbandonedBirthChildDetails(application, t),
+      // getAddressDetails(application, t),
       //       getTradeDetails(application, t),
       //       getTradeUnitsDetails(application, t),
       //       getAccessoriesDetails(application, t),
@@ -174,4 +174,4 @@ const getCRDeathAcknowledgementData = async (application, tenantInfo, t) => {
   };
 };
 
-export default getCRDeathAcknowledgementData;
+export default getCRAbandonedBirthAcknowledgementData;

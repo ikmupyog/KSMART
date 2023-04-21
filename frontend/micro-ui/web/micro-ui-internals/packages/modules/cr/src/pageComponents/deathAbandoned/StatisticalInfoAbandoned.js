@@ -343,146 +343,146 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
   }, [DeathCauseFilterList, isInitialRenderDeathCauseFilterList]);
   const [DeathCauseMain, setDeathCauseMain] = useState(
 
-    formData?.StatisticalInfo?.DeathCauseMain?.code
-      ? formData?.StatisticalInfo?.DeathCauseMain
-      : formData?.StatisticalInfo?.DeathCauseMain
-      ? cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfo?.DeathCauseMain)[0]
+    formData?.StatisticalInfoAbandoned?.DeathCauseMain?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathCauseMain
+      : formData?.StatisticalInfoAbandoned?.DeathCauseMain
+      ? cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfoAbandoned?.DeathCauseMain)[0]
       : ""
   );
   const [DeathCauseSub, setDeathCauseSub] = useState(
-    formData?.StatisticalInfo?.DeathCauseSub?.code
-      ? formData?.StatisticalInfo?.DeathCauseSub
-      : formData?.StatisticalInfo?.DeathCauseSub
-      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]
+    formData?.StatisticalInfoAbandoned?.DeathCauseSub?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathCauseSub
+      : formData?.StatisticalInfoAbandoned?.DeathCauseSub
+      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfoAbandoned?.DeathCauseSub)[0]
       : ""
   );
  
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const [MedicalAttentionType, setMedicalAttentionType] = useState(
-    formData?.StatisticalInfo?.MedicalAttentionType?.code
-      ? formData?.StatisticalInfo?.MedicalAttentionType
-      : formData?.StatisticalInfo?.MedicalAttentionType
-      ? cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]
+    formData?.StatisticalInfoAbandoned?.MedicalAttentionType?.code
+      ? formData?.StatisticalInfoAbandoned?.MedicalAttentionType
+      : formData?.StatisticalInfoAbandoned?.MedicalAttentionType
+      ? cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfoAbandoned?.MedicalAttentionType)[0]
       : ""
   );
   // const [MedicalAttentionType, setMedicalAttentionType] = useState(
-  //   formData?.StatisticalInfo?.MedicalAttentionType ? formData?.StatisticalInfo?.MedicalAttentionType : null
+  //   formData?.StatisticalInfoAbandoned?.MedicalAttentionType ? formData?.StatisticalInfoAbandoned?.MedicalAttentionType : null
   // );
 
   const [IsAutopsyPerformed, setIsAutopsyPerformed] = useState(
-    formData?.StatisticalInfo?.IsAutopsyPerformed ? formData?.StatisticalInfo?.IsAutopsyPerformed : null
+    formData?.StatisticalInfoAbandoned?.IsAutopsyPerformed ? formData?.StatisticalInfoAbandoned?.IsAutopsyPerformed : null
   );
   const handleIsAutopsyPerformed = (e) => {
     selectIsAutopsyPerformed(e.target.value);
   };
   const [IsAutopsyCompleted, setIsIsAutopsyCompleted] = useState(
-    formData?.StatisticalInfo?.IsAutopsyCompleted ? formData?.StatisticalInfo?.IsAutopsyCompleted : null
+    formData?.StatisticalInfoAbandoned?.IsAutopsyCompleted ? formData?.StatisticalInfoAbandoned?.IsAutopsyCompleted : null
   );
   const handleIsAutopsyCompleted = (e) => {
     selectIsIsAutopsyCompleted(e.target.value);
   };
   const [MannerOfDeath, setMannerOfDeath] = useState(
-    formData?.StatisticalInfo?.MannerOfDeath?.code
-      ? formData?.StatisticalInfo?.MannerOfDeath
-      : formData?.StatisticalInfo?.MannerOfDeath
-      ? cmbmannerofdeath.filter((cmbmannerofdeath) => cmbmannerofdeath.code === formData?.StatisticalInfo?.MannerOfDeath)[0]
+    formData?.StatisticalInfoAbandoned?.MannerOfDeath?.code
+      ? formData?.StatisticalInfoAbandoned?.MannerOfDeath
+      : formData?.StatisticalInfoAbandoned?.MannerOfDeath
+      ? cmbmannerofdeath.filter((cmbmannerofdeath) => cmbmannerofdeath.code === formData?.StatisticalInfoAbandoned?.MannerOfDeath)[0]
       : ""
   );
   const [DeathMedicallyCertified, setDeathMedicallyCertified] = useState(
-    formData?.StatisticalInfo?.DeathMedicallyCertified?.code
-      ? formData?.StatisticalInfo?.DeathMedicallyCertified
-      : formData?.StatisticalInfo?.DeathMedicallyCertified
-      ? menub.filter((menub) => menub.code === formData?.StatisticalInfo?.DeathMedicallyCertified)[0]
+    formData?.StatisticalInfoAbandoned?.DeathMedicallyCertified?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathMedicallyCertified
+      : formData?.StatisticalInfoAbandoned?.DeathMedicallyCertified
+      ? menub.filter((menub) => menub.code === formData?.StatisticalInfoAbandoned?.DeathMedicallyCertified)[0]
       : ""
   );
  
-  // const [DeathCauseMain, setDeathCauseMain] = useState(formData?.StatisticalInfo?.DeathCauseMain ? formData?.StatisticalInfo?.DeathCauseMain : null);
+  // const [DeathCauseMain, setDeathCauseMain] = useState(formData?.StatisticalInfoAbandoned?.DeathCauseMain ? formData?.StatisticalInfoAbandoned?.DeathCauseMain : null);
   const [DeathCauseMainCustom, setDeathCauseMainCustom] = useState(
-    formData?.StatisticalInfo?.DeathCauseMainCustom ? formData?.StatisticalInfo?.DeathCauseMainCustom : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseMainCustom ? formData?.StatisticalInfoAbandoned?.DeathCauseMainCustom : null
   );
   const [DeathCauseMainInterval, setDeathCauseMainInterval] = useState(
-    formData?.StatisticalInfo?.DeathCauseMainInterval ? formData?.StatisticalInfo?.DeathCauseMainInterval : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseMainInterval ? formData?.StatisticalInfoAbandoned?.DeathCauseMainInterval : null
   );
   const [DeathCauseMainTimeUnit, setDeathCauseMainTimeUnit] = useState(
-    formData?.StatisticalInfo?.DeathCauseMainTimeUnit?.code
-      ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit
-      : formData?.StatisticalInfo?.DeathCauseMainTimeUnit
-      ? minutes.filter((minutes) => minutes.code === formData?.StatisticalInfo?.DeathCauseMainTimeUnit)[0]
+    formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit
+      : formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit
+      ? minutes.filter((minutes) => minutes.code === formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit)[0]
       : ""
   );
   // const [DeathCauseMainTimeUnit, setDeathCauseMainTimeUnit] = useState(
-  //   formData?.StatisticalInfo?.DeathCauseMainTimeUnit ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit : null
+  //   formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit ? formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit : null
   // );
  
-  // const [DeathCauseSub, setDeathCauseSub] = useState(formData?.StatisticalInfo?.DeathCauseSub ? formData?.StatisticalInfo?.DeathCauseSub : null);
+  // const [DeathCauseSub, setDeathCauseSub] = useState(formData?.StatisticalInfoAbandoned?.DeathCauseSub ? formData?.StatisticalInfoAbandoned?.DeathCauseSub : null);
   const [DeathCauseSubCustom, setDeathCauseSubCustom] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubCustom ? formData?.StatisticalInfo?.DeathCauseSubCustom : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseSubCustom ? formData?.StatisticalInfoAbandoned?.DeathCauseSubCustom : null
   );
 
   const [DeathCauseSubInterval, setDeathCauseSubInterval] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubInterval ? formData?.StatisticalInfo?.DeathCauseSubInterval : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseSubInterval ? formData?.StatisticalInfoAbandoned?.DeathCauseSubInterval : null
   );
   // const [DeathCauseSubTimeUnit, setDeathCauseSubTimeUnit] = useState(
-  //   formData?.StatisticalInfo?.DeathCauseSubTimeUnit ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit : null
+  //   formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit ? formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit : null
   // );
   const [DeathCauseSubTimeUnit, setDeathCauseSubTimeUnit] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubTimeUnit?.code
-      ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit
-      : formData?.StatisticalInfo?.DeathCauseSubTimeUnit
-      ? days.filter((days) => days.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit)[0]
+    formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit
+      : formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit
+      ? days.filter((days) => days.code === formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit)[0]
       : ""
   );
   const [DeathCauseSub2, setDeathCauseSub2] = useState(
-    formData?.StatisticalInfo?.DeathCauseSub2?.code
-      ? formData?.StatisticalInfo?.DeathCauseSub2
-      : formData?.StatisticalInfo?.DeathCauseSub2
-      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub2)[0]
+    formData?.StatisticalInfoAbandoned?.DeathCauseSub2?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathCauseSub2
+      : formData?.StatisticalInfoAbandoned?.DeathCauseSub2
+      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfoAbandoned?.DeathCauseSub2)[0]
       : ""
   );
-  // const [DeathCauseSub2, DeathCauseSub2] = useState(formData?.StatisticalInfo?.DeathCauseSub2 ? formData?.StatisticalInfo?.DeathCauseSub2 : null);
+  // const [DeathCauseSub2, DeathCauseSub2] = useState(formData?.StatisticalInfoAbandoned?.DeathCauseSub2 ? formData?.StatisticalInfoAbandoned?.DeathCauseSub2 : null);
   const [DeathCauseSubCustom2, setDeathCauseSubCustom2] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubCustom2 ? formData?.StatisticalInfo?.DeathCauseSubCustom2 : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseSubCustom2 ? formData?.StatisticalInfoAbandoned?.DeathCauseSubCustom2 : null
   );
   const [DeathCauseSubInterval2, setDeathCauseSubInterval2] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubInterval2 ? formData?.StatisticalInfo?.DeathCauseSubInterval2 : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseSubInterval2 ? formData?.StatisticalInfoAbandoned?.DeathCauseSubInterval2 : null
   );
   const [DeathCauseSubTimeUnit2, setDeathCauseSubTimeUnit2] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubTimeUnit2?.code
-      ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit2
-      : formData?.StatisticalInfo?.DeathCauseSubTimeUnit2
-      ? months.filter((months) => months.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit2)[0]
+    formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2?.code
+      ? formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2
+      : formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2
+      ? months.filter((months) => months.code === formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2)[0]
       : ""
   );
   // const [DeathCauseSubTimeUnit2, setDeathCauseSubTimeUnit2] = useState(
-  //   formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 : null
+  //   formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2 ? formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2 : null
   // );
 
   const [DeathCauseOther, setDeathCauseOther] = useState(
-    formData?.StatisticalInfo?.DeathCauseOther ? formData?.StatisticalInfo?.DeathCauseOther : null
+    formData?.StatisticalInfoAbandoned?.DeathCauseOther ? formData?.StatisticalInfoAbandoned?.DeathCauseOther : null
   );
   // const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : "");
   const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(
-    formData?.StatisticalInfo?.IsdeceasedPregnant
-      ? cmbDelivary.filter((cmbDelivary) => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]
+    formData?.StatisticalInfoAbandoned?.IsdeceasedPregnant
+      ? cmbDelivary.filter((cmbDelivary) => cmbDelivary.code === formData?.StatisticalInfoAbandoned?.IsdeceasedPregnant)[0]
       : ""
   );
 
-  const [IsDelivery, setIsDelivery] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ? formData?.StatisticalInfo?.IsdeceasedPregnant : null);
+  const [IsDelivery, setIsDelivery] = useState(formData?.StatisticalInfoAbandoned?.IsdeceasedPregnant ? formData?.StatisticalInfoAbandoned?.IsdeceasedPregnant : null);
   const [DeathDuringDelivery, setIsDeathDuringDelivery] = useState(
-    formData?.StatisticalInfo?.DeathDuringDelivery ? formData?.StatisticalInfo?.DeathDuringDelivery : null
+    formData?.StatisticalInfoAbandoned?.DeathDuringDelivery ? formData?.StatisticalInfoAbandoned?.DeathDuringDelivery : null
   );
   const handleDeathDuringDelivery = (e) => {
     selectDeathDuringDelivery(e.target.value);
   };
-  const [AlcoholType, setAlcoholType] = useState(formData?.StatisticalInfo?.AlcoholType ? formData?.StatisticalInfo?.AlcoholType : null);
+  const [AlcoholType, setAlcoholType] = useState(formData?.StatisticalInfoAbandoned?.AlcoholType ? formData?.StatisticalInfoAbandoned?.AlcoholType : null);
   const handleAlcoholType = (e) => {
     selectAlcoholType(e.target.value);
   };
-  const [SmokingType, setSmokingType] = useState(formData?.StatisticalInfo?.SmokingType ? formData?.StatisticalInfo?.SmokingType : null);
+  const [SmokingType, setSmokingType] = useState(formData?.StatisticalInfoAbandoned?.SmokingType ? formData?.StatisticalInfoAbandoned?.SmokingType : null);
   const handleSmokingType = (e) => {
     selectSmokingType(e.target.value);
   };
-  const [TobaccoType, setTobaccoType] = useState(formData?.StatisticalInfo?.isTabacco ? formData?.StatisticalInfo?.isTabacco : null);
+  const [TobaccoType, setTobaccoType] = useState(formData?.StatisticalInfoAbandoned?.isTabacco ? formData?.StatisticalInfoAbandoned?.isTabacco : null);
   const handleTobaccoType = (e) => {
     selectTobaccoType(e.target.value);
   };
@@ -491,54 +491,54 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
   //////////////////////
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   if (isEditAbandonedDeath) {
-    if (formData?.StatisticalInfo?.MedicalAttentionType != null) {
+    if (formData?.StatisticalInfoAbandoned?.MedicalAttentionType != null) {
       if (cmbAttention.length > 0 && (MedicalAttentionType === undefined || MedicalAttentionType === "")) {
-        setMedicalAttentionType(cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]);
+        setMedicalAttentionType(cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfoAbandoned?.MedicalAttentionType)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.MannerOfDeath != null) {
+    if (formData?.StatisticalInfoAbandoned?.MannerOfDeath != null) {
       if (cmbmannerofdeath.length > 0 && (MannerOfDeath === undefined || MannerOfDeath === "")) {
-        setMannerOfDeath(cmbmannerofdeath.filter((cmbmannerofdeath) => cmbmannerofdeath.code === formData?.StatisticalInfo?.MannerOfDeath)[0]);
+        setMannerOfDeath(cmbmannerofdeath.filter((cmbmannerofdeath) => cmbmannerofdeath.code === formData?.StatisticalInfoAbandoned?.MannerOfDeath)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathMedicallyCertified != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathMedicallyCertified != null) {
       if (menub.length > 0 && (DeathMedicallyCertified === undefined || DeathMedicallyCertified === "")) {
-        setDeathMedicallyCertified(menub.filter((menub) => menub.code === formData?.StatisticalInfo?.DeathMedicallyCertified)[0]);
+        setDeathMedicallyCertified(menub.filter((menub) => menub.code === formData?.StatisticalInfoAbandoned?.DeathMedicallyCertified)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathCauseMain != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathCauseMain != null) {
       if (cmbDeathmain.length > 0 && (DeathCauseMain === undefined || DeathCauseMain === "")) {
-        setDeathCauseMain(cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfo?.DeathCauseMain)[0]);
+        setDeathCauseMain(cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfoAbandoned?.DeathCauseMain)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathCauseMainTimeUnit != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit != null) {
       if (minutes.length > 0 && (DeathCauseMainTimeUnit === undefined || DeathCauseMainTimeUnit === "")) {
-        setDeathCauseMainTimeUnit(minutes.filter((minutes) => minutes.code === formData?.StatisticalInfo?.DeathCauseMainTimeUnit)[0]);
+        setDeathCauseMainTimeUnit(minutes.filter((minutes) => minutes.code === formData?.StatisticalInfoAbandoned?.DeathCauseMainTimeUnit)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathCauseSub != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathCauseSub != null) {
       if (cmbDeathsub.length > 0 && (DeathCauseSub === undefined || DeathCauseSub === "")) {
-        setDeathCauseSub(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]);
+        setDeathCauseSub(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfoAbandoned?.DeathCauseSub)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathCauseSubTimeUnit != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit != null) {
       if (days.length > 0 && (DeathCauseSubTimeUnit === undefined || DeathCauseSubTimeUnit === "")) {
-        setDeathCauseSubTimeUnit(days.filter((days) => days.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit)[0]);
+        setDeathCauseSubTimeUnit(days.filter((days) => days.code === formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathCauseSub2 != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathCauseSub2 != null) {
       if (cmbDeathsub.length > 0 && (DeathCauseSub2 === undefined || DeathCauseSub2 === "")) {
-        setDeathCauseSub2(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub2)[0]);
+        setDeathCauseSub2(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfoAbandoned?.DeathCauseSub2)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 != null) {
+    if (formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2 != null) {
       if (months.length > 0 && (DeathCauseSubTimeUnit2 === undefined || DeathCauseSubTimeUnit2 === "")) {
-        setDeathCauseSubTimeUnit2(months.filter((months) => months.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit2)[0]);
+        setDeathCauseSubTimeUnit2(months.filter((months) => months.code === formData?.StatisticalInfoAbandoned?.DeathCauseSubTimeUnit2)[0]);
       }
     }
-    // if (formData?.StatisticalInfo?.IsdeceasedPregnant != null) {
+    // if (formData?.StatisticalInfoAbandoned?.IsdeceasedPregnant != null) {
     //   if (cmbDelivary.length > 0 && (IsdeceasedPregnant === undefined || IsdeceasedPregnant === "")) {
-    //     setDeathCauseSubTimeUnit2(cmbDelivary.filter((cmbDelivary) => months.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]);
+    //     setDeathCauseSubTimeUnit2(cmbDelivary.filter((cmbDelivary) => months.code === formData?.StatisticalInfoAbandoned?.IsdeceasedPregnant)[0]);
     //   }
     // }
   }
@@ -686,17 +686,11 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
   );
 
   function setSelectMPAadharNumber(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-    if (newValue === MPAadharNumber) {
-      // If so, clear the Father's Aadhar number field
-      setMPAadharNumber("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setMPAadharNumber(newValue);
+
+    if (e.target.value.trim().length >= 0) {
+      setMPAadharNumber(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     
   }
@@ -1238,7 +1232,7 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
         <div className="row">
           <div className="col-md-12">
           <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}> {`Details of the Medical practitioner`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}> {t("CR_MEDICAL_PRACTITIONER")}</span>{" "}
             </h1>
             </div>
             </div>
@@ -1277,8 +1271,8 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
-                  <TextInput
+                <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+                <TextInput
                     t={t}
                     isMandatory={false}
                     type="number"

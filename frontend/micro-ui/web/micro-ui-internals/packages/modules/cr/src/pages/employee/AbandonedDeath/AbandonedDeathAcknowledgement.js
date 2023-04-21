@@ -138,8 +138,9 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
   //   }
   // }, [mutation.isSuccess, mutation1.isSuccess]);
 
+
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data;
+    const { Licenses = [] } = mutation.data
     const License = (Licenses && Licenses[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
@@ -223,6 +224,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
       return (
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
+        
           <LinkButton
             label={
               <div className="response-download-button">
@@ -231,11 +233,13 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                   </svg>
                 </span>
-                <span className="download-button">{t("Acknowledgment454545")}</span>
+                <span className="download-button">{t("Acknowledgment")}</span>
               </div>
             }
+          
             onClick={handleDownloadPdf}
           />
+     
         </Card>
       );
     }
