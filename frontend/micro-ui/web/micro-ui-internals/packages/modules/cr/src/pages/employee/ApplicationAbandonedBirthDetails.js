@@ -29,7 +29,7 @@ const ApplicationAbandonedBirthDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationAbandondBirthDetail(tenantId);
+  } = Digit.Hooks.cr.useApplicationAbandonedBirthActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);

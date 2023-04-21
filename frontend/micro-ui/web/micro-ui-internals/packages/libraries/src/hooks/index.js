@@ -436,7 +436,7 @@ const cr = {
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions: useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions: useCRStillBirthApplicationActions,
-  useApplicationAbandonedBirthActions,
+  useApplicationAbandonedBirthActions: useApplicationAbandonedBirthActions,
   useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,

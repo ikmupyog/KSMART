@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,Loader, BackButton, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -18,7 +18,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   // console.log(JSON.stringify(formData));  
   sessionStorage.removeItem("applicationNumber");
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
+  //const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
@@ -147,23 +148,31 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
-  const [DateOfDeath, setDateOfDeath] = useState(
-    isEditDeath &&
-      isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-      : formData?.InformationDeath?.DateOfDeath
-  );
- //const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
-  //const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
-console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
-  const [FromDate, setFromDate] = useState(
-    isEditDeath &&
-      isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.FromDate)
-      : formData?.InformationDeath?.FromDate
-  );
+  // const [DateOfDeath, setDateOfDeath] = useState(
+  //   isEditDeath &&
+  //     isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+  //     : formData?.InformationDeath?.DateOfDeath
+  // );
+ const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
+  const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
+  const [ToDate, setToDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.ToDate) : formData?.InformationDeath?.ToDate); 
+  //console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
+  // const [FromDate, setFromDate] = useState(
+  //   isEditDeath &&
+  //     isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.FromDate)
+  //     : formData?.InformationDeath?.FromDate
+  // );
+  // const [ToDate, setToDate] = useState(
+  //   isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.ToDate)
+  //     : formData?.InformationDeath?.ToDate
+  // );
+
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -175,22 +184,16 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   //     ? convertEpochToDate(formData?.InformationDeath?.DeathTimeFrom)
   //     : formData?.InformationDeath?.DeathTimeFrom
   // );
-  const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom ? formData?.InformationDeath?.DeathTimeFrom : "");
+ // const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom ? formData?.InformationDeath?.DeathTimeFrom : "");
   
-  const [DeathTimeTo, setDeathTimeTo] = useState(
-    isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.setDeathTimeTo)
-      : formData?.InformationDeath?.setDeathTimeTo
-  );
+  // const [DeathTimeTo, setDeathTimeTo] = useState(
+  //   isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.setDeathTimeTo)
+  //     : formData?.InformationDeath?.setDeathTimeTo
+  // );
 
-  const [ToDate, setToDate] = useState(
-    isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.ToDate)
-      : formData?.InformationDeath?.ToDate
-  );
-
+  
   // const [DeathTime, setDeathTime] = useState("");
   const [DeathDateUnavailable, setChecked] = useState(
     formData?.InformationDeath?.DeathDateUnavailable
@@ -237,7 +240,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     formData?.InformationDeath?.DeceasedLastNameMl ? formData?.InformationDeath?.DeceasedLastNameMl : ""
   );
   const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
-
+  const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   // useEffect(()=>{
   //   getAgeUnitOptions
   // },[Age])
@@ -341,8 +344,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [DeathPlaceHomePostofficeId, setDeathPlaceHomepostofficeId] = useState(
     formData?.InformationDeath?.DeathPlaceHomePostofficeId ? formData?.InformationDeath?.DeathPlaceHomePostofficeId : null
   );
-  const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(
-    formData?.InformationDeath?.DeathPlaceHomepincode ? formData?.InformationDeath?.DeathPlaceHomepincode : null
+  const [DeathPlaceHomePincode, setDeathPlaceHomepincode] = useState(
+    formData?.InformationDeath?.DeathPlaceHomePincode ? formData?.InformationDeath?.DeathPlaceHomePincode : null
   );
 
   const [DeathPlaceHomeHoueNameEn, setDeathPlaceHomehoueNameEn] = useState(
@@ -378,6 +381,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.InformationDeath?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData?.InformationDeath?.DeathPlaceWardId);
+  const [DeathPlaceHomeWardId, setDeathPlaceHomeWardId] = useState(formData?.InformationDeath?.DeathPlaceHomeWardId);
   //Public Place
   const [publicPlaceType, selectpublicPlaceType] = useState(
     formData?.InformationDeath?.publicPlaceType ? formData?.InformationDeath?.publicPlaceType : null
@@ -438,7 +442,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
   const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
   const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
-  
+  const [access, setAccess] = React.useState(true);
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -504,10 +508,10 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
-            DeathPlaceWardId={DeathPlaceWardId}
+          DeathPlaceHomeWardId={DeathPlaceHomeWardId}
             // DeathPlaceType={DeathPlaceType}
             DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
-            DeathPlaceHomepincode={DeathPlaceHomepincode}
+            DeathPlaceHomePincode={DeathPlaceHomePincode}
             DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
             DeathPlaceHomehoueNameMl={DeathPlaceHomehoueNameMl}
             DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
@@ -756,36 +760,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   //     }, 3000);
   //   }
 
-  // }
-  // function selectDeathDate(value) {
-  //   setDateOfDeath(value);
-  //   const today = new Date();
-  //   today.setHours(0, 0, 0, 0);
-  //   const deathDate = new Date(value);
-  //   deathDate.setHours(0, 0, 0, 0);
-
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     setDOBError(false);
-  //     // To calculate the time difference of two dates
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     // console.log("Difference_In_Time" + Difference_In_Time);
-  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
-  //     if (DeathPlace) {
-  //       let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-  //       console.log("currentWorgFlowDOB" + currentWorgFlow);
-  //       if (currentWorgFlow.length > 0) {
-  //         // console.log(currentWorgFlow[0].WorkflowCode);
-  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-  //         setIsPayment(currentWorgFlow[0].payment);
-  //         setWorkFlowAmount(currentWorgFlow[0].amount);
-
-  //       }
-       
-  //     }
-  //   }
-  // }
+  //}
   function selectDeathDate(value) {
     setDateOfDeath(value);
     const today = new Date();
@@ -794,27 +769,56 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     deathDate.setHours(0, 0, 0, 0);
 
     if (deathDate.getTime() <= today.getTime()) {
-
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       // console.log("Difference_In_Time" + Difference_In_Time);
       setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
+          // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
+          setWorkFlowAmount(currentWorgFlow[0].amount);
+
         }
+       
       }
-     
     }
   }
+  // function selectDeathDate(value) {
+  //   setDateOfDeath(value);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const deathDate = new Date(value);
+  //   deathDate.setHours(0, 0, 0, 0);
+
+  //   if (deathDate.getTime() <= today.getTime()) {
+
+  //     setDOBError(false);
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
+  //     // console.log("Difference_In_Time" + Difference_In_Time);
+  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+  //     setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+  //     if (DeathPlace) {
+  //       let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+  //       if (currentWorgFlow.length > 0) {
+  //         console.log(currentWorgFlow);
+  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  //         setIsPayment(currentWorgFlow[0].payment);
+  //         setAmount(currentWorgFlow[0].amount);
+  //       }
+  //     }
+     
+  //   }
+  // }
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
@@ -960,7 +964,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       setIsPayment(currentWorgFlow[0].payment);
       setWorkFlowAmount(currentWorgFlow[0].amount);
     }
-    clearDeathPlace
+    clearDeathPlace(value);
   }
     function clearDeathPlace(value) {
       if (value.code === "HOSPITAL") {
@@ -976,6 +980,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
+        setDeathPlaceHomeWardId("");
         selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
@@ -1003,6 +1008,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
+        setDeathPlaceHomeWardId("");
         selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
@@ -1054,6 +1060,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
+        setDeathPlaceHomeWardId("");
         selectpublicPlaceType("");
         setDeathPlaceLocalityEn("");
         setDeathPlaceLocalityMl("");
@@ -1075,6 +1082,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
+        setDeathPlaceHomeWardId("");
         selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
@@ -1084,14 +1092,38 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setVehicleToPlaceMl("");
         setGeneralRemarks("");
         setSelectedVehicleHospitalEn("");
-      }
-    
+      } else if (value.code === "OUTSIDE_JURISDICTION") {
+        setSelectDeathPlaceCountry("");
+        SelectDeathPlaceState("");
+        SelectDeathPlaceDistrict("");
+        SelectDeathPlaceCity("");
+        setDeathPlaceHomeWardId("");
+        SelectDeathPlaceRemarksEn("");
+        SelectDeathPlaceRemarksMl("");
+        setDeathPlaceWardId("");
+        SelectPlaceOfBurialEn("");
+        SelectPlaceOfBurialMl("");
+        setGeneralRemarks("");
+      }    
     
   }
+
+  // function setSelectAge(e) {
+  //   setMotherMarriageAge(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
+  //   if (e.target.value <120) {
+  //     setAgeValidationMsg(true);
+  //     setToast(true);
+  //     setTimeout(() => {
+  //       setToast(false);
+  //     }, 2000);
+  //   } else {
+  //     setAgeValidationMsg(false);
+  //   }
+  // }
  
   function setSelectAge(e) {
     if (e.target.value.trim().length >= 0) {
-      setAge(e.target.value.length <= 3 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 3));
+      setAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
       // getAgeUnitOptions(e.target.value);
     }
   }
@@ -1532,9 +1564,9 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         IsEditChangeScreen,
         ToDate,
         DeathDateUnavailable,
-        DeathTimeTo,
+        //DeathTimeTo,
         FromDate,
-        DeathTimeFrom,
+        //DeathTimeFrom,
         tenantId,
         DateOfDeath,
         TimeOfDeath,
@@ -1574,7 +1606,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         DeathPlaceHomeStreetNameEn,
         DeathPlaceHomeStreetNameMl,
         DeathPlaceHomePostofficeId,
-        DeathPlaceHomepincode,
+        DeathPlaceHomeWardId,
+        DeathPlaceHomePincode,
         vehicleType,
         VehicleNumber,
         VehicleFromplaceEn,
@@ -1585,7 +1618,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         VehicleFirstHaltMl,
         VehicleHospitalEn,
         GeneralRemarks,
-        DeathPlaceWardId,
+        DeathPlaceWardId,      
         publicPlaceType,
         DeathPlaceLocalityEn,
         DeathPlaceLocalityMl,
@@ -1671,7 +1704,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
          isDisabled={!DeathPlace
           || (value === "HOSPITAL" ? (!hospitalNameEn || !HospitalNameMl) : false)
           || (value === "INSTITUTION" ? (!institution || !DeathPlaceInstId || !InstitutionIdMl) : false)
-          || (value === "HOME" ? (!DeathPlaceWardId || !DeathPlaceHomePostofficeId || DeathPlaceHomepincode === "" || DeathPlaceHomeLocalityEn == ""
+          || (value === "HOME" ? (!DeathPlaceHomeWardId || !DeathPlaceHomePostofficeId || DeathPlaceHomePincode === "" || DeathPlaceHomeLocalityEn == ""
           || DeathPlaceHomeHoueNameEn == "" || DeathPlaceHomeLocalityMl == "" || DeathPlaceHomehoueNameMl == "") : false)
           || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !DeathPlaceWardId || DeathPlaceLocalityEn === "" ) : false)
           || (value === "VEHICLE" ? (!vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === ""
@@ -1770,11 +1803,13 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                       })}
                     />
                   </div>
-
+            
 
                   <div className="col-md-3">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                    <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
+                    <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)}
+                     value={TimeOfDeath} />
+                    {/* disable={isDisableEdit} */}
                   </div>
                 </div>
               </div>
@@ -1875,11 +1910,11 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                 <DeathPlaceHome
                   formData={formData}
                   isEditDeath={isEditDeath}
-                  DeathPlaceWardId={DeathPlaceWardId}
-                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  DeathPlaceHomeWardId={DeathPlaceHomeWardId}
+                  setDeathPlaceHomeWardId={setDeathPlaceHomeWardId}
                   DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
                   setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
-                  DeathPlaceHomepincode={DeathPlaceHomepincode}
+                  DeathPlaceHomePincode={DeathPlaceHomePincode}
                   setDeathPlaceHomepincode={setDeathPlaceHomepincode}
                   DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
                   setDeathPlaceHomehoueNameEn={setDeathPlaceHomehoueNameEn}
@@ -2280,9 +2315,9 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError ||vehiDesDetailsEnError }
+              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError ||vehiDesDetailsEnError ||AgeValidationMsg }
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError||vehiDesDetailsEnError
+                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError||vehiDesDetailsEnError ||AgeValidationMsg
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
@@ -2293,6 +2328,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                     ? t(`DECEASED_FIRST_NAME_EN`)
                     : DeceasedFirstNameMlError
                     ? t(`DECEASED_FIRST_NAME_ML`)
+                    : AgeValidationMsg
+                     ? t(`CR_DECEASED_AGE_WARNING`)
                     : HospitalError
                     ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
                     : InstitutionError
@@ -2316,5 +2353,5 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     );
   }
 };
-//anzar
+
 export default InformationDeath;

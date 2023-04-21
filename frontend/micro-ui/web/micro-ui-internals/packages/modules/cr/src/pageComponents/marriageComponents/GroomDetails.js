@@ -583,7 +583,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
     if (groomPassportNo.trim() == null || groomPassportNo.trim() == "" || groomPassportNo.trim() == undefined) {
       setGroomPassportNo("");
-      setGroomSocialSecurityNoError(true);
     } else if (groomPassportNo != null && groomPassportNo != "") {
       let pasportLength = groomPassportNo;
       if (pasportLength.length < 8 || pasportLength.length > 8) {
@@ -602,19 +601,11 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     if (groomSocialSecurityNo.trim() == null || groomSocialSecurityNo.trim() == "" || groomSocialSecurityNo.trim() == undefined) {
       setGroomSocialSecurityNo("");
       setGroomSocialSecurityNoError(true);
-    } else if (groomSocialSecurityNo != null && groomSocialSecurityNo != "") {
-      let socialLength = groomSocialSecurityNo;
-      if (socialLength.length > 12) {
-        validFlag = false;
-        setGroomSocialSecurityNoError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
         }, 2000);
-      } else {
-        setGroomSocialSecurityNoError(false);
-      }
-    } else {
+    }else {
       setGroomSocialSecurityNoError(false);
     }
     if (groomFirstnameEn.trim() == null || groomFirstnameEn.trim() == "" || groomFirstnameEn.trim() == undefined) {
