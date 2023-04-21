@@ -1,3 +1,4 @@
+
 package org.ksmart.marriage.marriageapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,9 +71,10 @@ public class MarriageApplicationService {
         if (request.getMarriageDetails().get(0).getIsWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }
-     
         request.getMarriageDetails().forEach(marriage->{
-            if(wfc.getPayment()!= null){
+            System.out.println("JSONStatus"+marriage.getStatus());
+            System.out.println("ConstStatus"+MarriageConstants.STATUS_FOR_PAYMENT);
+          //  if(wfc.getPayment()!= null){
                 if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
                     System.out.println("hienterpayment");
                     List<Demand> demands = new ArrayList<>();
@@ -83,7 +85,7 @@ public class MarriageApplicationService {
                     marriage.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo(), wfc));
                    // marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);   
                 }
-            }
+          //  }
         });
 
     //     request.getDeathCertificateDtls().forEach(death->{
