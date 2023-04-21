@@ -1589,8 +1589,7 @@ private void validateDoD(Long dateOfDeath, String deathPlace, String wfCode, Str
         throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
                 "Date of death should be less than or same as  current date.");
     } else {
-        wfc = checkValidation(mdmsData, deathPlace, dateOfDeath, wfc);
-
+        wfc = checkValidation(mdmsData, deathPlace, dateOfDeath, wfc);        
         if(!wfc.getWorkflowCode().equals(wfCode)) {
             throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
                     "Workflow code from the application request is wrong.");

@@ -58,9 +58,8 @@ public class DeathBasicInfoRowMapper  implements ResultSetExtractor  , BaseRowMa
           .deathPlaceHomeStreetNameMl(rs.getString("death_home_street_ml"))
           .deathPlaceHomeHoueNameEn(rs.getString("death_home_housename_en"))
           .deathPlaceHomeHoueNameMl(rs.getString("death_home_housename_ml"))
-          .deathPlaceHomeVillageId(rs.getString("death_home_ward"))
           .deathPlaceHomeTalukId(rs.getString("death_home_taluk_id"))
-          
+          .deathPlaceHomeWardId(rs.getString("death_home_ward"))
        // .deceasedAadharNotAvailable(rs.getString(""))
           .deceasedAadharNumber(rs.getString("deceased_aadhar_number"))
           .deceasedIdproofType(rs.getString("deceased_idprooftype"))
