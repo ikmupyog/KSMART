@@ -6,15 +6,11 @@ import org.egov.common.contract.request.User;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
-import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPDFRequest;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertRequest;
-import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.ListIterator;
 import java.util.UUID;
 
 @Component
