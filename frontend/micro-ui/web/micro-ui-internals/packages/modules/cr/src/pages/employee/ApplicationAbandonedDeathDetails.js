@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+// import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+import CRApplicationDetails from "../../../../templates/CR/CommonTemplate";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header,CardHeader } from "@egovernments/digit-ui-react-components";
@@ -176,7 +177,7 @@ const ApplicationAbandonedDeathDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
   
-      <ApplicationDetailsTemplate
+      <CRApplicationDetails
         header={"Abandoned Death Application Summary Details"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
