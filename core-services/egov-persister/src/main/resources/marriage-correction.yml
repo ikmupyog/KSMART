@@ -887,7 +887,7 @@ serviceMaps:
 
         - query: UPDATE public.eg_marriage_certificate
             set lastmodifiedtime=?, lastmodifiedby=? , count=0 where registrydetailsid=?;
-          basePath: marriageCertificate
+          basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
 
