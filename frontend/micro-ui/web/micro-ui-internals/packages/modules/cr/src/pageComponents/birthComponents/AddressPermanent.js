@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
@@ -190,7 +191,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             t={t}
                             optionKey="name"
                             isMandatory={false}
-                            option={cmbCountry}
+                            option={sortDropdownNames(cmbCountry ? cmbCountry : [],"name",t)}
                             selected={permtaddressCountry}
                             select={setSelectaddressCountry}
                             disable={isDisableEdit}
@@ -206,7 +207,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbState}
+                                option={sortDropdownNames(cmbState ? cmbState : [],"name",t)}
                                 selected={permtaddressStateName}
                                 select={setSelectaddressStateName}
                                 disable={isDisableEdit}
