@@ -39,8 +39,8 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlaceLocalityMl:_.get(DeathNACDetails, "DeathPlaceLocalityMl",null),
         DeathPlaceStreetEn:_.get(DeathNACDetails, "DeathPlaceStreetEn",null),
         DeathPlaceStreetMl:_.get(DeathNACDetails, "DeathPlaceStreetMl",null),
-        DeathPlaceHomeWardId:_.get(DeathNACDetails, "DeathPlaceHomeWardId",null),
-        DeathPlaceHomePostofficeId: data.DeathNACDetails.DeathPlace.code === "HOME" ? _.get(DeathNACDetails, "DeathPlaceHomePostofficeId.code",null) : _.get(DeathNACDetails, "DeathPlaceHomePostofficeId",null),
+        DeathPlaceHomeWardId:_.get(DeathNACDetails, "DeathPlaceHomeWardId.name",null),
+        DeathPlaceHomePostofficeId: data.DeathNACDetails.DeathPlace.code === "HOME" ? _.get(DeathNACDetails, "DeathPlaceHomePostofficeId.code",null) : _.get(DeathNACDetails, "DeathPlaceHomePostofficeId.name",null),
         DeathPlaceHomepincode:_.get(DeathNACDetails, "DeathPlaceHomepincode",null),
         DeathPlaceHomeLocalityEn:_.get(DeathNACDetails, "DeathPlaceHomeLocalityEn",null),
         DeathPlaceHomeLocalityMl:_.get(DeathNACDetails, "DeathPlaceHomeLocalityMl",null),
@@ -52,7 +52,7 @@ export const DeathNACRegistrationData = (data = {}) => {
 
 
         SpouseUnavailable:null,
-        SpouseType:_.get(DeathNACParentsDetails, "SpouseType",null),
+        SpouseType:_.get(DeathNACParentsDetails, "SpouseType.name",null),
         SpouseNameEn:_.get(DeathNACParentsDetails, "SpouseNameEN",null),
         SpouseNameML:_.get(DeathNACParentsDetails, "SpouseNameMl",null),
         SpouseAadhaar:_.get(DeathNACParentsDetails, "SpouseAadhaar",null),
