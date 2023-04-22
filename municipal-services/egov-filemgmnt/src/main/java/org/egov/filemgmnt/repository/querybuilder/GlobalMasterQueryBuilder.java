@@ -46,6 +46,7 @@ public class GlobalMasterQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY);
 
         addFilter("md.modulecode", criteria.getModuleCode(), query, preparedStmtValues);
+        addFilter("md.tenantid", criteria.getTenantId(),query, preparedStmtValues);
         return query.toString();
     }
 

@@ -27,6 +27,7 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
         moduleDetails.setAuditDetails(auditDetails);
         moduleDetails.getAuditDetails().setLastModifiedBy(auditDetails.getLastModifiedBy());
         moduleDetails.getAuditDetails().setLastModifiedTime(auditDetails.getLastModifiedTime());
+        moduleDetails.setStatus("1");
     }
 
     //Enrich Create MajorFunction
@@ -54,6 +55,7 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
                 .setLastModifiedBy(subFunctionAuditDetails.getLastModifiedBy());
         subFunctionDetails.getAuditDetails()
                 .setLastModifiedTime(subFunctionAuditDetails.getLastModifiedTime());
+        subFunctionDetails.setStatus("1");
     }
 
         public  void enrichCreateService(ServiceDetailsRequest request) {
@@ -117,6 +119,14 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
         mfDetails.getServiceNameEnglish();
         mfDetails.getServiceNameMalayalam();
     }
+    public void enrichDeleteModule(ModuleDetailsRequest request) {
+        final RequestInfo requestInfo = request.getRequestInfo();
+        final User userInfo = requestInfo.getUserInfo();
+        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        final  ModuleDetails moduleDetails= request.getModuleDetails();
+        moduleDetails.setAuditDetails(auditDetails);
+        moduleDetails.setStatus("0");
+    }
 
 
     public void enrichDeleteMF(MajorFunctionDetailsRequest request) {
@@ -126,10 +136,17 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
         final  MajorFunctionDetails mfDetails= request.getMajorFunctionDetails();
         mfDetails.setAuditDetails(auditDetails);
         mfDetails.setStatus("0");
-
+    }
+    public void enrichDeleteSF(SubFunctionDetailsRequest request) {
+        final RequestInfo requestInfo = request.getRequestInfo();
+        final User userInfo = requestInfo.getUserInfo();
+        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        final  SubFunctionDetails sfDetails= request.getSubFunctionDetails();
+        sfDetails.setAuditDetails(auditDetails);
+        sfDetails.setStatus("0");
     }
 
-    public void enrichDeleteService(ServiceDetailsRequest request) {
+        public void enrichDeleteService(ServiceDetailsRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
@@ -137,6 +154,7 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
         serviceDetails.setAuditDetails(auditDetails);
         serviceDetails.setStatus("0");
     }
+
 
 
 }

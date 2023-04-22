@@ -752,13 +752,12 @@ serviceMaps:
 
   - version: 1.0
     description: Save drafting details in egov_filemgmnt database, eg_fm_drafting table
-    fromTopic: save_fm_drafting
+    fromTopic: save-fm-drafting
     isTransaction: true
     queryMaps:
     - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: DraftFiles.*
       jsonMaps:
-
       - jsonPath: $.DraftFiles.*.uuid
 
       - jsonPath: $.DraftFiles.*.tenantId
@@ -789,7 +788,7 @@ serviceMaps:
 
   - version: 1.0B
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
-    fromTopic: update_fm_drafting
+    fromTopic: update-fm-drafting
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_drafting  SET  drafttext=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
@@ -805,7 +804,7 @@ serviceMaps:
 
   - version: 1.0
     description: Update drafting status  in egov_filemgmnt database, eg_fm_drafting
-    fromTopic: update_fm_draftingstatus
+    fromTopic: update-fm-draftingstatus
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_drafting  SET  status=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
@@ -821,7 +820,7 @@ serviceMaps:
           
   - version: 1.0
     description: Save Enquiry  in egov_filemgmnt database, eg_fm_enquiry
-    fromTopic: save_fm_enquiry
+    fromTopic: save-fm-enquiry
     isTransaction: true
     queryMaps:
     - query: INSERT INTO public.eg_fm_enquiry(id, tenantid, businessservice, modulename, filecode, latitude, longitude, assigner, status, imagefilestoreid, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -856,51 +855,65 @@ serviceMaps:
       - jsonPath: $.Enquiry.*.auditDetails.lastModifiedTime
 
   - version: 1.0
-    description: Insert Modulemaster  details in egov_filemgmnt database, eg_fm_modulemaster table
-    fromTopic: save_fm_modulemaster
+    description: Insert Module Master details in egov_filemgmnt database, eg_fm_modulemaster table
+    fromTopic: save-fm-modulemaster
     isTransaction: true
     queryMaps:
-
     - query: >
-        INSERT INTO public.eg_fm_modulemaster(id, tenantid, modulecode, modulenameeng, modulenamemal, status, 
-        createdby, createdtime, lastmodifiedby, lastmodifiedtime)
+        INSERT INTO public.eg_fm_modulemaster(id, tenantid, modulecode, modulenameeng, 
+        modulenamemal, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: ModuleDetails
       jsonMaps:
-        - jsonPath: $.ModuleDetails.id
+      - jsonPath: $.ModuleDetails.id
 
-        - jsonPath: $.ModuleDetails.tenantId
+      - jsonPath: $.ModuleDetails.tenantId
 
-        - jsonPath: $.ModuleDetails.moduleCode
+      - jsonPath: $.ModuleDetails.moduleCode
 
-        - jsonPath: $.ModuleDetails.moduleNameEnglish
+      - jsonPath: $.ModuleDetails.moduleNameEnglish
 
-        - jsonPath: $.ModuleDetails.moduleNameMalayalam
+      - jsonPath: $.ModuleDetails.moduleNameMalayalam
 
-        - jsonPath: $.ModuleDetails.status
+      - jsonPath: $.ModuleDetails.status
 
-        - jsonPath: $.ModuleDetails.auditDetails.createdBy
+      - jsonPath: $.ModuleDetails.auditDetails.createdBy
 
-        - jsonPath: $.ModuleDetails.auditDetails.createdTime
+      - jsonPath: $.ModuleDetails.auditDetails.createdTime
 
-        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedBy
+      - jsonPath: $.ModuleDetails.auditDetails.lastModifiedBy
 
-        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime
+      - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime
 
   - version: 1.0
-    description: Update module master in egov_filemgmnt database, eg_fm_modulemaster
+    description: Update Module Master in egov_filemgmnt database, eg_fm_modulemaster
     fromTopic: update-fm-modulemaster
     isTransaction: true
     queryMaps:
-    - query: UPDATE public.eg_fm_modulemaster SET modulenameeng=?, modulenamemal=?
-               WHERE modulecode= ?;
+    - query: >
+             UPDATE public.eg_fm_modulemaster SET modulenameeng=?, modulenamemal=? 
+             WHERE modulecode= ?;
       basePath: ModuleDetails
       jsonMaps:
-        - jsonPath: $.ModuleDetails.moduleNameEnglish
+      - jsonPath: $.ModuleDetails.moduleNameEnglish
 
-        - jsonPath: $.ModuleDetails.moduleNameMalayalam
+      - jsonPath: $.ModuleDetails.moduleNameMalayalam
 
-        - jsonPath: $.ModuleDetails.moduleCode
+      - jsonPath: $.ModuleDetails.moduleCode
+
+  - version: 1.0
+    description: Delete Module Master in egov_filemgmnt database, eg_fm_modulemaster
+    fromTopic: delete-fm-modulemaster
+    isTransaction: true
+    queryMaps:
+    - query: >
+          UPDATE public.eg_fm_modulemaster SET status=?
+          WHERE moduleCode= ?;
+      basePath: ModuleDetails
+      jsonMaps:
+      - jsonPath: $.ModuleDetails.status
+
+      - jsonPath: $.ModuleDetails.moduleCode
 
   - version: 1.0
     description: Insert MajorFunction Master details in egov_filemgmnt database, eg_fm_majorfunctionmaster table
@@ -911,9 +924,9 @@ serviceMaps:
             INSERT INTO public.eg_fm_majorfunctionmaster(id, tenantid, mfcode, moduleid, mfnameeng,
             mfnamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime, status)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
       basePath: MajorFunctionDetails
       jsonMaps:
-
       - jsonPath: $.MajorFunctionDetails.id
 
       - jsonPath: $.MajorFunctionDetails.tenantId
@@ -941,11 +954,11 @@ serviceMaps:
     fromTopic: update-fm-mfmaster
     isTransaction: true
     queryMaps:
-    - query: UPDATE public.eg_fm_majorfunctionmaster SET mfnameeng=?, mfnamemal=?
+    - query: >
+          UPDATE public.eg_fm_majorfunctionmaster SET mfnameeng=?, mfnamemal=? 
           WHERE mfcode= ?;
       basePath: MajorFunctionDetails
       jsonMaps:
-
       - jsonPath: $.MajorFunctionDetails.majorFunctionNameEnglish
 
       - jsonPath: $.MajorFunctionDetails.majorFunctionNameMalayalam
@@ -957,10 +970,10 @@ serviceMaps:
     fromTopic: delete-fm-mfmaster
     isTransaction: true
     queryMaps:
-    - query: UPDATE public.eg_fm_majorfunctionmaster SET status=?  WHERE mfcode= ?;
+    - query: >
+            UPDATE public.eg_fm_majorfunctionmaster SET status=?  WHERE mfcode= ?;
       basePath: MajorFunctionDetails
       jsonMaps:
-
       - jsonPath: $.MajorFunctionDetails.status
 
       - jsonPath: $.MajorFunctionDetails.majorFunctionCode
@@ -970,14 +983,13 @@ serviceMaps:
     fromTopic: save-fm-servicemaster
     isTransaction: true
     queryMaps:
-
     - query: >
             INSERT INTO public.eg_fm_servicemaster(	id, tenantid, servicecode, sfid, servicenameeng,
             servicenamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime, status)
-        	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
       basePath: ServiceDetails
       jsonMaps:
-
       - jsonPath: $.ServiceDetails.id
 
       - jsonPath: $.ServiceDetails.tenantId
@@ -999,16 +1011,17 @@ serviceMaps:
       - jsonPath: $.ServiceDetails.auditDetails.lastModifiedTime
 
       - jsonPath: $.ServiceDetails.status
+
   - version: 1.0
     description: Update Service Master in egov_filemgmnt database, eg_fm_servicemaster
     fromTopic: update-fm-servicemaster
     isTransaction: true
     queryMaps:
-    - query: UPDATE public.eg_fm_servicemaster SET servicenameeng=?, servicenamemal=?
-          WHERE servicecode= ?;
+    - query: >
+            UPDATE public.eg_fm_servicemaster SET servicenameeng=?, servicenamemal=?
+            WHERE servicecode= ?;
       basePath: ServiceDetails
       jsonMaps:
-
       - jsonPath: $.ServiceDetails.serviceNameEnglish
 
       - jsonPath: $.ServiceDetails.serviceNameMalayalam
@@ -1020,23 +1033,23 @@ serviceMaps:
     fromTopic: delete-fm-servicemaster
     isTransaction: true
     queryMaps:
-    - query: UPDATE public.eg_fm_servicemaster SET status=?  WHERE servicecode= ?;
+    - query: >
+            UPDATE public.eg_fm_servicemaster SET status=?  WHERE servicecode= ?;
       basePath: ServiceDetails
       jsonMaps:
-
       - jsonPath: $.ServiceDetails.status
 
       - jsonPath: $.ServiceDetails.serviceCode
 
   - version: 1.0
-    description: Create subfunction master in egov_filemgmnt database, eg_fm_subfunctionmaster
-    fromTopic: save-fm-subfunction
+    description: Insert Subfunction Master in egov_filemgmnt database, eg_fm_subfunctionmaster
+    fromTopic: save-fm-sfmaster
     isTransaction: true
     queryMaps:
     - query: >
-          INSERT INTO public.eg_fm_subfunctionmaster(id, tenantid, sfcode, mfid, sfnameeng,
-          sfnamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            INSERT INTO public.eg_fm_subfunctionmaster(id, tenantid, sfcode, mfid, 
+            sfnameeng, sfnamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: SubFunctionDetails
       jsonMaps:
       - jsonPath: $.SubFunctionDetails.id
@@ -1051,12 +1064,43 @@ serviceMaps:
 
       - jsonPath: $.SubFunctionDetails.subFunctionNameMalayalam
 
-      - jsonPath: $.ModuleDetails.auditDetails.createdBy
+      - jsonPath: $.SubFunctionDetails.auditDetails.createdBy
 
-      - jsonPath: $.ModuleDetails.auditDetails.createdTime
+      - jsonPath: $.SubFunctionDetails.auditDetails.createdTime
 
-      - jsonPath: $.ModuleDetails.auditDetails.lastModifiedBy
+      - jsonPath: $.SubFunctionDetails.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime
+      - jsonPath: $.SubFunctionDetails.auditDetails.lastModifiedTime
 
+      - jsonPath: $.SubFunctionDetails.status
 
+  - version: 1.0
+    description: Update SubFunction Master in egov_filemgmnt database, eg_fm_subfunctionmaster
+    fromTopic: update-fm-sfmaster
+    isTransaction: true
+    queryMaps:
+    - query: >
+          UPDATE eg_fm_subfunctionmaster SET sfnameeng=?, sfnamemal=?
+          WHERE sfcode= ?;
+      basePath: SubFunctionDetails
+      jsonMaps:
+      - jsonPath: $.SubFunctionDetails.subFunctionNameEnglish
+
+      - jsonPath: $.SubFunctionDetails.subFunctionNameMalayalam
+
+      - jsonPath: $.SubFunctionDetails.subFunctionCode
+
+  - version: 1.0
+    description: Delete Subfunction Master in egov_filemgmnt database, eg_fm_subfunctionmaster
+    fromTopic: delete-fm-sfmaster
+    isTransaction: true
+    queryMaps:
+    - query: >
+          UPDATE eg_fm_subfunctionmaster SET status=?  WHERE sfcode= ?;
+      basePath: SubFunctionDetails
+      jsonMaps:
+      - jsonPath: $.SubFunctionDetails.status
+
+      - jsonPath: $.SubFunctionDetails.subFunctionCode
+
+ 

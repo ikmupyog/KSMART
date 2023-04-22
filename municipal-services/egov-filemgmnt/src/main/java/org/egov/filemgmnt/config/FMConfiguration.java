@@ -159,19 +159,19 @@ public class FMConfiguration {
     private String memoCertificateLink;
 
     // Global Mastersettings
-
+     //Module Master  save,update,delete
     @Value("${persister.save.modulemaster.topic:}")
     private String saveModuleMasterTopic;
 
     @Value("${persister.update.modulemaster.topic:}")
     private String updateModuleMasterTopic;
 
+    @Value("${persister.delete.modulemaster.topic:}")
+    private String deleteModuleMasterTopic;
 
+    //MajorFuncton save,update,delete
     @Value("${persister.save.mfmaster.topic:}")
     private String saveMfMasterTopic;
-
-    @Value("${persister.save.subfunction.topic:}")
-    private String SaveSubFunctionTopic;
 
     @Value("${persister.update.mfmaster.topic:}")
     private String updateMfMasterTopic;
@@ -179,6 +179,18 @@ public class FMConfiguration {
     @Value("${persister.delete.mfmaster.topic:}")
     private String deleteMfMasterTopic;
 
+    //SubFuncton save,update,delete
+
+    @Value("${persister.save.subfunction.topic:}")
+    private String SaveSubFunctionTopic;
+
+    @Value("${persister.update.subfunction.topic:}")
+    private String UpdateSubFunctionTopic;
+
+    @Value("${persister.delete.subfunction.topic:}")
+    private String DeleteSubFunctionTopic;
+
+     //Service Master save,update,delete
     @Value("${persister.save.servicemaster.topic:}")
     private String saveServiceMasterTopic;
 

@@ -28,11 +28,11 @@ public class GlobalMasterController {
         this.responseInfoFactory = responseInfoFactory;
     }
 
-    @PostMapping("/Globalmaster/_createmodule")
+    @PostMapping("/globalmaster/_createmodule")
     public ResponseEntity<ModuleDetailsResponse> createModuledetails(@RequestBody final ModuleDetailsRequest request) {
-//        if (log.isDebugEnabled()) {
-//            log.debug("Globalmaster/_createmodule:  \n{}", FMUtils.toJson(request));
-//        }
+        if (log.isDebugEnabled()) {
+            log.debug("globalmaster/_createmodule:  \n{}", FMUtils.toJson(request));
+        }
         final ModuleDetails moduleDetails = globalMasterServices.createModule(request);
         return ResponseEntity.ok(ModuleDetailsResponse.builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
@@ -51,10 +51,10 @@ public class GlobalMasterController {
                 .build());
     }
 
-    @PostMapping("/Globalmaster/_createSF")
+    @PostMapping("/globalmaster/_createSF")
     public ResponseEntity<SubFunctionDetailsResponse> createSubFunction(@RequestBody SubFunctionDetailsRequest request) {
         if (log.isDebugEnabled()) {
-            log.debug("lobalmaster/_createSF:  \n{}", FMUtils.toJson(request));
+            log.debug("globalmaster/_createSF:  \n{}", FMUtils.toJson(request));
         }
         final SubFunctionDetails subFunctionDetails = globalMasterServices.createSF(request);
         return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
@@ -77,10 +77,7 @@ public class GlobalMasterController {
                 .build());
     }
 
-
-
-
-    @PostMapping("/Globalmaster/_updatemodule")
+    @PostMapping("/globalmaster/_updatemodule")
     public ResponseEntity<ModuleDetailsResponse> updateModule(@RequestBody ModuleDetailsRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("Globalmaster/_updatemodule:  \n{}", FMUtils.toJson(request));
@@ -106,7 +103,7 @@ public class GlobalMasterController {
                 .build());
     }
 
-    @PostMapping("/Globalmaster/_updateSF")
+    @PostMapping("/globalmaster/_updateSF")
     public ResponseEntity<SubFunctionDetailsResponse> updateSF(@RequestBody SubFunctionDetailsRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("Globalmaster/_updateSF:  \n{}", FMUtils.toJson(request));
@@ -134,11 +131,11 @@ public class GlobalMasterController {
     }
 
 
-    @PostMapping("/Globalmaster/_searchmodule")
+    @PostMapping("/globalmaster/_searchmodule")
     public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final RequestInfoWrapper request,
                                                              @ModelAttribute final ModuleSearchCriteria searchCriteria) {
         if (log.isDebugEnabled()) {
-            log.debug("Globalmaster/_searchmodule:  \n{}", FMUtils.toJson(searchCriteria));
+            log.debug("globalmaster/_searchmodule:  \n{}", FMUtils.toJson(searchCriteria));
         }
         final List<ModuleDetails> result = globalMasterServices.searchModule(request.getRequestInfo(), searchCriteria);
 
@@ -164,12 +161,11 @@ public class GlobalMasterController {
                 .majorFunctionDetails(result)
                 .build());
     }
-
-    @PostMapping("/Globalmaster/_searchSF")
+    @PostMapping("/globalmaster/_searchSF")
     public ResponseEntity<SubFunctionSearchResponse> searchSF(@RequestBody final RequestInfoWrapper request,
                                                               @ModelAttribute final SubFunctionSearchCriteria searchCriteria) {
         if (log.isDebugEnabled()) {
-            log.debug("Globalmaster/_searchSF:  \n{}", FMUtils.toJson(searchCriteria));
+            log.debug("globalmaster/_searchSF:  \n{}", FMUtils.toJson(searchCriteria));
         }
         final List<SubFunctionDetails> result = globalMasterServices.searchSF(request.getRequestInfo(), searchCriteria);
 
@@ -178,12 +174,32 @@ public class GlobalMasterController {
                         Boolean.TRUE))
                 .subFunctionDetails(result)
                 .build());
-
-
     }
+    @PostMapping("/globalmaster/_searchService")
+    public ResponseEntity<ServiceSearchResponse> searchService(@RequestBody final RequestInfoWrapper request,
+                                                              @ModelAttribute final ServiceSearchCriteria searchCriteria) {
+        if (log.isDebugEnabled()) {
+            log.debug("globalmaster/_searchService:  \n{}", FMUtils.toJson(searchCriteria));
+        }
+        final List<ServiceDetails> result = globalMasterServices.searchService(request.getRequestInfo(), searchCriteria);
 
+        return ResponseEntity.ok(ServiceSearchResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .serviceDetails(result)
+                .build());
+    }
+    @PostMapping("/globalmaster/_deleteModule")
+    public ResponseEntity<ModuleDetailsResponse> deleteModule(@RequestBody ModuleDetailsRequest request) {
 
+        final ModuleDetails moduleDetail = globalMasterServices.deleteModule(request);
 
+        return ResponseEntity.ok(ModuleDetailsResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .moduleDetails(moduleDetail)
+                .build());
+    }
     @PostMapping("/globalmaster/_deleteMF")
     public ResponseEntity<MajorFunctionDetailsResponse> deleteMF(@RequestBody MajorFunctionDetailsRequest request) {
 
@@ -196,6 +212,15 @@ public class GlobalMasterController {
                 .build());
     }
 
+    @PostMapping("/globalmaster/_deleteSF")
+    public ResponseEntity<SubFunctionDetailsResponse> deleteMF(@RequestBody SubFunctionDetailsRequest request) {
+        final SubFunctionDetails sfDetails = globalMasterServices.deleteSF(request);
+        return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .subFunctionDetails(sfDetails)
+                .build());
+    }
     @PostMapping("/globalmaster/_deleteService")
     public ResponseEntity<ServiceDetailsResponse> deleteService(@RequestBody ServiceDetailsRequest request) {
 

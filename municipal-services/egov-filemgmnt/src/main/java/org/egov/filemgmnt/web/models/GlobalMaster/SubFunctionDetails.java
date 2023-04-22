@@ -52,4 +52,9 @@ public class SubFunctionDetails {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
+    @Schema(type = "string", description = "status")
+    @Size(max = 10, message = "status length cannot exceed 10 characters")
+    @JsonProperty("status")
+    private String status;
+
 }

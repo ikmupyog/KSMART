@@ -64,20 +64,54 @@ public class GlobalMasterServices {
         final ModuleDetails moduledetails = request.getModuleDetails();
         String mCode = null;
         mCode = moduledetails.getModuleCode();
-
         // search database
         List<ModuleDetails> searchResult = repository.searchModule(ModuleSearchCriteria.builder()
                 .moduleCode(mCode)
                 .build());
         // validate request
         //  validator.validateUpdate(request, searchResult);
-
         enrichment.enrichUpdateModule(request);
-
         producer.push(fmConfiguration.getUpdateModuleMasterTopic(), request);
-
         return request.getModuleDetails();
+    }
+    public MajorFunctionDetails updateMF(MajorFunctionDetailsRequest request) {
+        final MajorFunctionDetails mfDetails = request.getMajorFunctionDetails();
+        String mfCode = mfDetails.getMajorFunctionCode();
+        // search database
+        List<MajorFunctionDetails> searchResult = repository.searchMF(MajorFunctionSearchCriteria.builder()
+                .majorFunctionCode(mfCode)
+                .build());
+        // validate request
+        //  validator.validateUpdate(request, searchResult);
+        enrichment.enrichUpdateMF(request);
+        producer.push(fmConfiguration.getUpdateMfMasterTopic(), request);
+        return request.getMajorFunctionDetails();
+    }
+    public SubFunctionDetails updateSF(SubFunctionDetailsRequest request) {
+        final SubFunctionDetails subFunctionDetails = request.getSubFunctionDetails();
+        String sfCode = null;
+        sfCode = subFunctionDetails.getSubFunctionCode();
+        // search database
+        List<SubFunctionDetails> searchResult = repository.searchSF(SubFunctionSearchCriteria.builder()
+                .subFunctionCode(sfCode)
+                .build());
+        enrichment.enrichUpdateSubFunction(request);
+        producer.push(fmConfiguration.getUpdateSubFunctionTopic(), request);
+        return request.getSubFunctionDetails();
+    }
 
+    public ServiceDetails updateService(ServiceDetailsRequest request) {
+        final ServiceDetails serviceDetails = request.getServiceDetails();
+        String svcCode = serviceDetails.getServiceCode();
+        // search database
+        List<ServiceDetails> searchResult = repository.searchService(ServiceSearchCriteria.builder()
+                .serviceCode(svcCode)
+                .build());
+        // validate request
+        //  validator.validateUpdate(request, searchResult);
+        enrichment.enrichUpdateService(request);
+        producer.push(fmConfiguration.getUpdateServiceMasterTopic(), request);
+        return request.getServiceDetails();
     }
 
     public List<ModuleDetails> searchModule(RequestInfo requestInfo, ModuleSearchCriteria searchCriteria) {
@@ -85,105 +119,62 @@ public class GlobalMasterServices {
         return (result);
     }
 
-
-    public MajorFunctionDetails updateMF(MajorFunctionDetailsRequest request) {
-        final MajorFunctionDetails mfDetails = request.getMajorFunctionDetails();
-
-        String mfCode = mfDetails.getMajorFunctionCode();
-
-        // search database
-        List<MajorFunctionDetails> searchResult = repository.searchMF(MajorFunctionSearchCriteria.builder()
-                .majorFunctionCode(mfCode)
-                .build());
-
-        // validate request
-        //  validator.validateUpdate(request, searchResult);
-
-
-        enrichment.enrichUpdateMF(request);
-
-        producer.push(fmConfiguration.getUpdateMfMasterTopic(), request);
-
-        return request.getMajorFunctionDetails();
-
-    }
     public List<MajorFunctionDetails> searchMF(RequestInfo requestInfo, final MajorFunctionSearchCriteria searchCriteria) {
       return repository.searchMF(searchCriteria);
-
     }
-
+    public List<SubFunctionDetails> searchSF(RequestInfo requestInfo, SubFunctionSearchCriteria searchCriteria) {
+        final List<SubFunctionDetails> result= repository.searchSF(searchCriteria);
+        return (result);
+    }
+    public List<ServiceDetails> searchService(RequestInfo requestInfo, ServiceSearchCriteria searchCriteria) {
+        final List<ServiceDetails> result= repository.searchService(searchCriteria);
+        return (result);
+    }
+    public ModuleDetails deleteModule(ModuleDetailsRequest request) {
+        final ModuleDetails mfDetails = request.getModuleDetails();
+        String mCode = mfDetails.getModuleCode();
+        // search database
+        List<ModuleDetails> searchResult = repository.searchModule(ModuleSearchCriteria.builder()
+                .moduleCode(mCode)
+                .build());
+        enrichment.enrichDeleteModule(request);
+        producer.push(fmConfiguration.getDeleteModuleMasterTopic(), request);
+        return request.getModuleDetails();
+    }
     public MajorFunctionDetails deleteMF(MajorFunctionDetailsRequest request) {
         final MajorFunctionDetails mfDetails = request.getMajorFunctionDetails();
-
         String mfCode = mfDetails.getMajorFunctionCode();
-
         // search database
         List<MajorFunctionDetails> searchResult = repository.searchMF(MajorFunctionSearchCriteria.builder()
                 .majorFunctionCode(mfCode)
                 .build());
         enrichment.enrichDeleteMF(request);
-
         producer.push(fmConfiguration.getDeleteMfMasterTopic(), request);
-
         return request.getMajorFunctionDetails();
-
     }
-    public SubFunctionDetails updateSF(SubFunctionDetailsRequest request) {
-        final SubFunctionDetails subFunctionDetails = request.getSubFunctionDetails();
-
-        String sfCode = null;
-        sfCode = subFunctionDetails.getSubFunctionCode();
-
+    public SubFunctionDetails deleteSF(SubFunctionDetailsRequest request) {
+        final SubFunctionDetails sfDetails=request.getSubFunctionDetails();
+        String sfCode=sfDetails.getSubFunctionCode();
         // search database
         List<SubFunctionDetails> searchResult = repository.searchSF(SubFunctionSearchCriteria.builder()
                 .subFunctionCode(sfCode)
                 .build());
-        enrichment.enrichUpdateSubFunction(request);
-
-        //  producer.push(fmConfiguration.getUpdateSubFunctionTopic(), request);
-
+        enrichment.enrichDeleteSF(request);
+        producer.push(fmConfiguration.getDeleteSubFunctionTopic(), request);
         return request.getSubFunctionDetails();
-
-    }
-
-    public List<SubFunctionDetails> searchSF(RequestInfo requestInfo, SubFunctionSearchCriteria searchCriteria) {
-        final List<SubFunctionDetails> result= repository.searchSF(searchCriteria);
-        return (result);
-    }
-    public ServiceDetails updateService(ServiceDetailsRequest request) {
-
-        final ServiceDetails serviceDetails = request.getServiceDetails();
-
-        String svcCode = serviceDetails.getServiceCode();
-
-        // search database
-        List<ServiceDetails> searchResult = repository.searchService(ServiceSearchCriteria.builder()
-                .serviceCode(svcCode)
-                .build());
-        // validate request
-        //  validator.validateUpdate(request, searchResult);
-
-        enrichment.enrichUpdateService(request);
-
-        producer.push(fmConfiguration.getUpdateServiceMasterTopic(), request);
-
-        return request.getServiceDetails();
     }
 
     public ServiceDetails deleteService(ServiceDetailsRequest request) {
-
      final ServiceDetails serviceDetails = request.getServiceDetails();
-
         String svcCode = serviceDetails.getServiceCode();
-
         // search database
         List<ServiceDetails> searchResult = repository.searchService(ServiceSearchCriteria.builder()
                 .serviceCode(svcCode)
                 .build());
         enrichment.enrichDeleteService(request);
-
         producer.push(fmConfiguration.getDeleteServiceMasterTopic(), request);
-
         return request.getServiceDetails();
     }
+
+
 }
