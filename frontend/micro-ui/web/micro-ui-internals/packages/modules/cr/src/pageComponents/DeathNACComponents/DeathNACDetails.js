@@ -341,6 +341,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.DeathNACDetails?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.DeathNACDetails?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData?.DeathNACDetails?.DeathPlaceWardId);
+  const [DeathPlaceHomeWardId, setDeathPlaceHomeWardId] = useState(formData?.DeathNACDetails?.DeathPlaceHomeWardId);
   const [vehicleType, selectvehicleType] = useState(formData?.DeathNACDetails?.DeathPlaceType?.code
       ? formData?.DeathNACDetails?.DeathPlaceType
       : formData?.DeathNACDetails?.DeathPlaceType
@@ -462,6 +463,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
             DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
             PostOfficevalues={PostOfficevalues}
+            DeathPlaceHomeWardId={DeathPlaceHomeWardId}
           />;
         }
         if (naturetype === "VEHICLE") {
@@ -1213,6 +1215,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         VehicleHospitalEn,
         GeneralRemarks,
         DeathPlaceWardId,
+        DeathPlaceHomeWardId,
         DeathPlaceType,
         publicPlaceType,
         DeathPlaceLocalityEn,
@@ -1438,9 +1441,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 />
               </div>
             </div>
-          </div>
           {value === "HOSPITAL" && (
-            <div>
+            // <div>
               <Hospital
                 formData={formData}
                 isEditDeath={isEditDeath}
@@ -1451,7 +1453,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 hospitalNameEn={hospitalNameEn}
                 selecthospitalNameEn={selectHospitalNameEn}
               />
-            </div>
+            // </div>
           )}
           {value === "INSTITUTION" && (
             <div>
@@ -1480,6 +1482,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 isEditDeath={isEditDeath}
                 DeathPlaceWardId={DeathPlaceWardId}
                 setDeathPlaceWardId={setDeathPlaceWardId}
+                DeathPlaceHomeWardId={DeathPlaceHomeWardId}
+                setDeathPlaceHomeWardId={setDeathPlaceHomeWardId}
                 DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
                 setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
                 DeathPlaceHomepincode={DeathPlaceHomepincode}
@@ -1557,34 +1561,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
               />
             </div>
           )}
-          {/* {value === "OUTSIDE_JURISDICTION" && (
-            <div>
-              <DeathOutsideJurisdiction
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceCountry={DeathPlaceCountry}
-                setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
-                DeathPlaceState={DeathPlaceState}
-                SelectDeathPlaceState={SelectDeathPlaceState}
-                DeathPlaceDistrict={DeathPlaceDistrict}
-                SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
-                DeathPlaceCity={DeathPlaceCity}
-                SelectDeathPlaceCity={SelectDeathPlaceCity}
-                DeathPlaceRemarksEn={DeathPlaceRemarksEn}
-                SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}
-                DeathPlaceRemarksMl={DeathPlaceRemarksMl}
-                SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl}
-                PlaceOfBurialMl={PlaceOfBurialMl}
-                SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
-                PlaceOfBurialEn={PlaceOfBurialEn}
-                SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
-                GeneralRemarks={GeneralRemarks}
-                setGeneralRemarks={setGeneralRemarks}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-              />
-            </div>
-          )} */}
+          </div>
+
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">

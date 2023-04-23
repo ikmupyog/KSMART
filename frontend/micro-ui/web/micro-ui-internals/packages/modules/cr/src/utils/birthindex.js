@@ -500,7 +500,7 @@ export const convertToBirthRegistration = (data = {}) => {
             taxPeriodTo: "1901145600000",
             demandDetails: [
               {
-                taxHeadMasterCode: "CRB_FEES",
+                taxHeadMasterCode: "140130200",
                 taxAmount: data?.ChildDetails?.Amount,
                 collectionAmount: 0,
               },
