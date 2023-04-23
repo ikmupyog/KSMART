@@ -17,6 +17,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Timeline from "../../../components/MARRIAGETimeline";
+import _ from "lodash";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 
 const ActionButton = ({ jumpTo }) => {
@@ -53,7 +54,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { MarriageDetails, BrideDetails, BrideAddressDetails, GroomDetails, GroomAddressDetails, WitnessDetails } = value;
+  const { MarriageDetails, BrideDetails, BrideAddressDetails, GroomDetails, GroomAddressDetails, WitnessDetails, MarriageDocuments } = value;
   console.log({ value });
   function getdate(date) {
     let newdate = Date.parse(date);
@@ -91,7 +92,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   console.log(value);
-  console.log("abc", GroomDetails?.groomMaritalstatusID?.code);
+  console.log("abc", MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE");
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -2897,11 +2898,856 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
           }
         />
 
+        <Accordion
+          expanded={false}
+          title={t("CR_MARRIAGE_DOCUMENTS")}
+          content={
+            <StatusTable>
+              <React.Fragment>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_DOCUMENTS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`}</CardText>
+                        </div>
+                      </div>
+                      {GroomDetails?.groomResidentShip === "INDIAN" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.groomAadhar)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.groomAadhar)?.pdfUrl}
+                                alt="Groom Aadhar Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.groomAadhar)?.small}
+                              alt="Groom Aadhar Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.groomAadhar)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.groomAadhar)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.groomAadhar)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {(GroomDetails?.groomResidentShip === "NRI" || GroomDetails?.groomResidentShip === "FOREIGN") && (
+                        <React.Fragment>
+                          <div className="row">
+                            {_.head(MarriageDocuments?.OtherDetails?.groomPassport)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(MarriageDocuments?.OtherDetails?.groomPassport)?.pdfUrl}
+                                  alt="Groom Passport Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                src={_.head(MarriageDocuments?.OtherDetails?.groomPassport)?.small}
+                                alt="Groom Passport Image"
+                              />
+                            )}
+                            <a
+                              target="_blank"
+                              href={
+                                _.head(MarriageDocuments?.OtherDetails?.groomPassport)?.type === "pdf"
+                                  ? _.head(MarriageDocuments?.OtherDetails?.groomPassport)?.pdfUrl
+                                  : _.head(MarriageDocuments?.OtherDetails?.groomPassport)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                            {_.head(MarriageDocuments?.OtherDetails?.groomSSN)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(MarriageDocuments?.OtherDetails?.groomSSN)?.pdfUrl}
+                                  alt="Groom SSN Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                src={_.head(MarriageDocuments?.OtherDetails?.groomSSN)?.small}
+                                alt="Groom SSN Image"
+                              />
+                            )}
+                            <a
+                              target="_blank"
+                              href={
+                                _.head(MarriageDocuments?.OtherDetails?.groomSSN)?.type === "pdf"
+                                  ? _.head(MarriageDocuments?.OtherDetails?.groomSSN)?.pdfUrl
+                                  : _.head(MarriageDocuments?.OtherDetails?.groomSSN)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        </React.Fragment>
+                      )}
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROOF_OF_AGE")}`} :</CardText>
+                        </div>
+                      </div>
+                      {MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.groomDrivingLicense)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.groomDrivingLicense)?.pdfUrl}
+                                alt="Groom Driving License Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.groomDrivingLicense)?.small}
+                              alt="Groom Driving License Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.groomDrivingLicense)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.groomDrivingLicense)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.groomDrivingLicense)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "SCHOOL_CERTIFICATE" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.groomSchoolCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.groomSchoolCertificate)?.pdfUrl}
+                                alt="Groom School Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.groomSchoolCertificate)?.small}
+                              alt="Groom School Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.groomSchoolCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.groomSchoolCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.groomSchoolCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.groomBirthCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.groomBirthCertificate)?.pdfUrl}
+                                alt="Groom Birth Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.groomBirthCertificate)?.small}
+                              alt="Groom Birth Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.groomBirthCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.groomBirthCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.groomBirthCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                    {(GroomDetails?.groomMaritalstatusID?.code === "MARRIED" || GroomDetails?.groomMaritalstatusID?.code === "ANNULLED") && (
+                      <div className="col-md-3">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {`${t("CR_PROOF_OF_ALREADY_MARRIED")}`} :
+                            </CardText>
+                          </div>
+                        </div>
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate)?.pdfUrl}
+                                alt="Groom Divorced/Annulled Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate)?.small}
+                              alt="Groom Divorced/Annulled Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      </div>
+                    )}
+
+                    {WitnessDetails?.isExpiredHusband && (
+                      <div className="col-md-3">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROOF_OF_EXPIRATION")}`} :</CardText>
+                          </div>
+                        </div>
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.groomExpirationCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.groomExpirationCertificate)?.pdfUrl}
+                                alt="Groom Expiration Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.groomExpirationCertificate)?.small}
+                              alt="Groom Expiration Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.groomExpirationCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.groomExpirationCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.groomExpirationCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_DOCUMENTS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`} :</CardText>
+                        </div>
+                      </div>
+                      {BrideDetails?.brideResidentShip === "INDIAN" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.brideAadhar)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.brideAadhar)?.pdfUrl}
+                                alt="Bride Aadhar Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.brideAadhar)?.small}
+                              alt="Bride Aadhar Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.brideAadhar)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.brideAadhar)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.brideAadhar)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {(BrideDetails?.brideResidentShip === "NRI" || BrideDetails?.brideResidentShip === "FOREIGN") && (
+                        <React.Fragment>
+                          <div className="row">
+                            {_.head(MarriageDocuments?.OtherDetails?.bridePassport)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(MarriageDocuments?.OtherDetails?.bridePassport)?.pdfUrl}
+                                  alt="Bride Passport Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                src={_.head(MarriageDocuments?.OtherDetails?.bridePassport)?.small}
+                                alt="Bride Passport Image"
+                              />
+                            )}
+                            <a
+                              target="_blank"
+                              href={
+                                _.head(MarriageDocuments?.OtherDetails?.bridePassport)?.type === "pdf"
+                                  ? _.head(MarriageDocuments?.OtherDetails?.bridePassport)?.pdfUrl
+                                  : _.head(MarriageDocuments?.OtherDetails?.bridePassport)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                            {_.head(MarriageDocuments?.OtherDetails?.brideSSN)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(MarriageDocuments?.OtherDetails?.brideSSN)?.pdfUrl}
+                                  alt="Bride SSN Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                src={_.head(MarriageDocuments?.OtherDetails?.brideSSN)?.small}
+                                alt="Bride SSN Image"
+                              />
+                            )}
+                            <a
+                              target="_blank"
+                              href={
+                                _.head(MarriageDocuments?.OtherDetails?.brideSSN)?.type === "pdf"
+                                  ? _.head(MarriageDocuments?.OtherDetails?.brideSSN)?.pdfUrl
+                                  : _.head(MarriageDocuments?.OtherDetails?.brideSSN)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        </React.Fragment>
+                      )}
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROOF_OF_AGE")}`} :</CardText>
+                        </div>
+                      </div>
+                      {MarriageDocuments?.OtherDetails?.brideAgeDocument?.code === "DRIVING_LICENSE" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.brideDrivingLicense)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.brideDrivingLicense)?.pdfUrl}
+                                alt="Bride Driving License Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.brideDrivingLicense)?.small}
+                              alt="Bride Driving License Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.brideDrivingLicense)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.brideDrivingLicense)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.brideDrivingLicense)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {MarriageDocuments?.OtherDetails?.brideAgeDocument?.code === "SCHOOL_CERTIFICATE" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.brideSchoolCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.brideSchoolCertificate)?.pdfUrl}
+                                alt="Bride School Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.brideSchoolCertificate)?.small}
+                              alt="Bride School Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.brideSchoolCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.brideSchoolCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.brideSchoolCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {MarriageDocuments?.OtherDetails?.brideAgeDocument?.code === "BIRTH_CERTIFICATE" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.brideBirthCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.brideBirthCertificate)?.pdfUrl}
+                                alt="Bride Birth Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.brideBirthCertificate)?.small}
+                              alt="Bride Birth Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.brideBirthCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.brideBirthCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.brideBirthCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                    {(BrideDetails?.brideMaritalstatusID?.code === "MARRIED" || BrideDetails?.brideMaritalstatusID?.code === "ANNULLED") && (
+                      <div className="col-md-3">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {`${t("CR_PROOF_OF_ALREADY_MARRIED")}`} :
+                            </CardText>
+                          </div>
+                        </div>
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.brideDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.brideDivorceAnnulledDecreeCertificate)?.pdfUrl}
+                                alt="Bride Divorce/Annulled Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.brideDivorceAnnulledDecreeCertificate)?.small}
+                              alt="Bride Divorce/Annulled Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.brideDivorceAnnulledDecreeCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.brideDivorceAnnulledDecreeCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                    {WitnessDetails?.isExpiredWife && (
+                      <div className="col-md-3">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROOF_OF_EXPIRATION")}`} :</CardText>
+                          </div>
+                        </div>
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.brideExpirationCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.brideExpirationCertificate)?.pdfUrl}
+                                alt="Bride Expiration Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.brideExpirationCertificate)?.small}
+                              alt="Bride Expiration Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.brideExpirationCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.brideExpirationCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.brideExpirationCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_COMMON_DOCUMENTS_OF_MARRIAGE")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            {`${t("CR_MARRIAGE_CERTIFICATE_BY_RELIGIOUS_INSTITUITION")}`} :
+                          </CardText>
+                        </div>
+                      </div>
+                      {(MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
+                        MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
+                        MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
+                        MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
+                        MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
+                        MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
+                        MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.instituitionCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.instituitionCertificate)?.pdfUrl}
+                                alt="Marriage Instituition Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.instituitionCertificate)?.small}
+                              alt="Marriage Instituition Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.instituitionCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.instituitionCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.instituitionCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                      {MarriageDetails?.marriageType?.code === "MARRIAGE_TYPE_SPECIAL_ACT" && (
+                        <div className="row">
+                          {_.head(MarriageDocuments?.OtherDetails?.marriageOfficerCertificate)?.type === "pdf" ? (
+                            <React.Fragment>
+                              <object
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                data={_.head(MarriageDocuments?.OtherDetails?.marriageOfficerCertificate)?.pdfUrl}
+                                alt="Marriage Officer Certificate Pdf"
+                              />
+                            </React.Fragment>
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(MarriageDocuments?.OtherDetails?.marriageOfficerCertificate)?.small}
+                              alt="Marriage Officer Certificate Image"
+                            />
+                          )}
+                          <a
+                            target="_blank"
+                            href={
+                              _.head(MarriageDocuments?.OtherDetails?.marriageOfficerCertificate)?.type === "pdf"
+                                ? _.head(MarriageDocuments?.OtherDetails?.marriageOfficerCertificate)?.pdfUrl
+                                : _.head(MarriageDocuments?.OtherDetails?.marriageOfficerCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            {`${t("CR_OTHER_DOCUMENTS_TO_PROVE_SOLEMNIZATION")}`} :
+                          </CardText>
+                        </div>
+                      </div>
+                      <div className="row">
+                        {_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.small}
+                            alt="Other Certificate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.type === "pdf"
+                              ? _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.pdfUrl
+                              : _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS_DOCUMENTS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_WITNESS1_AADHAR")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(MarriageDocuments?.OtherDetails?.witness1Aadhar)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(MarriageDocuments?.OtherDetails?.witness1Aadhar)?.pdfUrl}
+                              alt="Witness1 Aadhar Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(MarriageDocuments?.OtherDetails?.witness1Aadhar)?.small}
+                            alt="Witness1 Aadhar Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(MarriageDocuments?.OtherDetails?.witness1Aadhar)?.type === "pdf"
+                              ? _.head(MarriageDocuments?.OtherDetails?.witness1Aadhar)?.pdfUrl
+                              : _.head(MarriageDocuments?.OtherDetails?.witness1Aadhar)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_WITNESS2_AADHAR")}`} :</CardText>
+                        </div>
+                      </div>
+                      <div className="row">
+                        {_.head(MarriageDocuments?.OtherDetails?.witness2Aadhar)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(MarriageDocuments?.OtherDetails?.witness2Aadhar)?.pdfUrl}
+                              alt="Witness 2 Aadhar Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(MarriageDocuments?.OtherDetails?.witness2Aadhar)?.small}
+                            alt="Witness 2 Aadhar Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(MarriageDocuments?.OtherDetails?.witness2Aadhar)?.type === "pdf"
+                              ? _.head(MarriageDocuments?.OtherDetails?.witness2Aadhar)?.pdfUrl
+                              : _.head(MarriageDocuments?.OtherDetails?.witness2Aadhar)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+            </StatusTable>
+          }
+        />
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">
               <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                label={t("CR_MARRIAGE_DECLARATION_STATEMENT")}
                 onChange={setDeclarationInfo}
                 value={isInitiatorDeclaration}
                 checked={isInitiatorDeclaration}

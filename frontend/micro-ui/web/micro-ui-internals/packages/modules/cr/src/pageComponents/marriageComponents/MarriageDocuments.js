@@ -33,8 +33,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   const marriageType = formData?.MarriageDetails?.marriageType;
   const groomMaritalstatusID = formData?.GroomDetails?.groomMaritalstatusID;
   const brideMaritalstatusID = formData?.BrideDetails?.brideMaritalstatusID;
-  const expirationTypeHusband = formData?.WitnessDetails?.expirationTypeHusband;
-  const expirationTypeWife = formData?.WitnessDetails?.expirationTypeWife;
+  const isExpiredHusband = formData?.WitnessDetails?.isExpiredHusband;
+  const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
 
   console.log(groomResidentShip);
 
@@ -55,95 +55,233 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
 
   const [error, setError] = useState(null);
 
-  const [groomAadharDocumentName, setGroomAadharDocumentName] = useState(null);
-  const [groomAadharDocumentType, setGroomAadharDocumentType] = useState(null);
-  const [groomAadharDocumentOwner, setGroomAadharDocumentOwner] = useState(null);
+  const [groomAadharDocumentName, setGroomAadharDocumentName] = useState(
+    formData?.MarriageDocuments?.groomAadharDocumentName ? formData?.MarriageDocuments?.groomAadharDocumentName : null
+  );
+  const [groomAadharDocumentType, setGroomAadharDocumentType] = useState(
+    formData?.MarriageDocuments?.groomAadharDocumentType ? formData?.MarriageDocuments?.groomAadharDocumentType : null
+  );
+  const [groomAadharDocumentOwner, setGroomAadharDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomAadharDocumentOwner ? formData?.MarriageDocuments?.groomAadharDocumentOwner : null
+  );
 
-  const [brideAadharDocumentName, setBrideAadharDocumentName] = useState(null);
-  const [brideAadharDocumentType, setBrideAadharDocumentType] = useState(null);
-  const [brideAadharDocumentOwner, setBrideAadharDocumentOwner] = useState(null);
+  const [brideAadharDocumentName, setBrideAadharDocumentName] = useState(
+    formData?.MarriageDocuments?.brideAadharDocumentName ? formData?.MarriageDocuments?.brideAadharDocumentName : null
+  );
+  const [brideAadharDocumentType, setBrideAadharDocumentType] = useState(
+    formData?.MarriageDocuments?.brideAadharDocumentType ? formData?.MarriageDocuments?.brideAadharDocumentType : null
+  );
+  const [brideAadharDocumentOwner, setBrideAadharDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideAadharDocumentOwner ? formData?.MarriageDocuments?.brideAadharDocumentOwner : null
+  );
 
-  const [groomPassportDocumentName, setGroomPassportDocumentName] = useState(null);
-  const [groomPassportDocumentType, setGroomPassportDocumentType] = useState(null);
-  const [groomPassportDocumentOwner, setGroomPassportDocumentOwner] = useState(null);
+  const [groomPassportDocumentName, setGroomPassportDocumentName] = useState(
+    formData?.MarriageDocuments?.groomPassportDocumentName ? formData?.MarriageDocuments?.groomPassportDocumentName : null
+  );
+  const [groomPassportDocumentType, setGroomPassportDocumentType] = useState(
+    formData?.MarriageDocuments?.groomPassportDocumentType ? formData?.MarriageDocuments?.groomPassportDocumentType : null
+  );
+  const [groomPassportDocumentOwner, setGroomPassportDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomPassportDocumentOwner ? formData?.MarriageDocuments?.groomPassportDocumentOwner : null
+  );
 
-  const [bridePassportDocumentName, setBridePassportDocumentName] = useState(null);
-  const [bridePassportDocumentType, setBridePassportDocumentType] = useState(null);
-  const [bridePassportDocumentOwner, setBridePassportDocumentOwner] = useState(null);
+  const [bridePassportDocumentName, setBridePassportDocumentName] = useState(
+    formData?.MarriageDocuments?.bridePassportDocumentName ? formData?.MarriageDocuments?.bridePassportDocumentName : null
+  );
+  const [bridePassportDocumentType, setBridePassportDocumentType] = useState(
+    formData?.MarriageDocuments?.bridePassportDocumentType ? formData?.MarriageDocuments?.bridePassportDocumentType : null
+  );
+  const [bridePassportDocumentOwner, setBridePassportDocumentOwner] = useState(
+    formData?.MarriageDocuments?.bridePassportDocumentOwner ? formData?.MarriageDocuments?.bridePassportDocumentOwner : null
+  );
 
-  const [groomSSNDocumentName, setGroomSSNDocumentName] = useState(null);
-  const [groomSSNDocumentType, setGroomSSNDocumentType] = useState(null);
-  const [groomSSNDocumentOwner, setGroomSSNDocumentOwner] = useState(null);
+  const [groomSSNDocumentName, setGroomSSNDocumentName] = useState(
+    formData?.MarriageDocuments?.groomSSNDocumentName ? formData?.MarriageDocuments?.groomSSNDocumentName : null
+  );
+  const [groomSSNDocumentType, setGroomSSNDocumentType] = useState(
+    formData?.MarriageDocuments?.groomSSNDocumentType ? formData?.MarriageDocuments?.groomSSNDocumentType : null
+  );
+  const [groomSSNDocumentOwner, setGroomSSNDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomSSNDocumentOwner ? formData?.MarriageDocuments?.groomSSNDocumentOwner : null
+  );
 
-  const [brideSSNDocumentName, setBrideSSNDocumentName] = useState(null);
-  const [brideSSNDocumentType, setBrideSSNDocumentType] = useState(null);
-  const [brideSSNDocumentOwner, setBrideSSNDocumentOwner] = useState(null);
+  const [brideSSNDocumentName, setBrideSSNDocumentName] = useState(
+    formData?.MarriageDocuments?.brideSSNDocumentName ? formData?.MarriageDocuments?.brideSSNDocumentName : null
+  );
+  const [brideSSNDocumentType, setBrideSSNDocumentType] = useState(
+    formData?.MarriageDocuments?.brideSSNDocumentType ? formData?.MarriageDocuments?.brideSSNDocumentType : null
+  );
+  const [brideSSNDocumentOwner, setBrideSSNDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideSSNDocumentOwner ? formData?.MarriageDocuments?.brideSSNDocumentOwner : null
+  );
 
-  const [groomDrivingLicenseDocumentName, setGroomDrivingLicenseDocumentName] = useState(null);
-  const [groomDrivingLicenseDocumentType, setGroomDrivingLicenseDocumentType] = useState(null);
-  const [groomDrivingLicenseDocumentOwner, setGroomDrivingLicenseDocumentOwner] = useState(null);
+  const [groomDrivingLicenseDocumentName, setGroomDrivingLicenseDocumentName] = useState(
+    formData?.MarriageDocuments?.groomDrivingLicenseDocumentName ? formData?.MarriageDocuments?.groomDrivingLicenseDocumentName : null
+  );
+  const [groomDrivingLicenseDocumentType, setGroomDrivingLicenseDocumentType] = useState(
+    formData?.MarriageDocuments?.groomDrivingLicenseDocumentType ? formData?.MarriageDocuments?.groomDrivingLicenseDocumentType : null
+  );
+  const [groomDrivingLicenseDocumentOwner, setGroomDrivingLicenseDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomDrivingLicenseDocumentOwner ? formData?.MarriageDocuments?.groomDrivingLicenseDocumentOwner : null
+  );
 
-  const [brideDrivingLicenseDocumentName, setBrideDrivingLicenseDocumentName] = useState(null);
-  const [brideDrivingLicenseDocumentType, setBrideDrivingLicenseDocumentType] = useState(null);
-  const [brideDrivingLicenseDocumentOwner, setBrideDrivingLicenseDocumentOwner] = useState(null);
+  const [brideDrivingLicenseDocumentName, setBrideDrivingLicenseDocumentName] = useState(
+    formData?.MarriageDocuments?.brideDrivingLicenseDocumentName ? formData?.MarriageDocuments?.brideDrivingLicenseDocumentName : null
+  );
+  const [brideDrivingLicenseDocumentType, setBrideDrivingLicenseDocumentType] = useState(
+    formData?.MarriageDocuments?.brideDrivingLicenseDocumentType ? formData?.MarriageDocuments?.brideDrivingLicenseDocumentType : null
+  );
+  const [brideDrivingLicenseDocumentOwner, setBrideDrivingLicenseDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideDrivingLicenseDocumentOwner ? formData?.MarriageDocuments?.brideDrivingLicenseDocumentOwner : null
+  );
 
-  const [groomSchoolCertificateDocumentName, setGroomSchoolCertificateDocumentName] = useState(null);
-  const [groomSchoolCertificateDocumentType, setGroomSchoolCertificateDocumentType] = useState(null);
-  const [groomSchoolCertificateDocumentOwner, setGroomSchoolCertificateDocumentOwner] = useState(null);
+  const [groomSchoolCertificateDocumentName, setGroomSchoolCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.groomSchoolCertificateDocumentName ? formData?.MarriageDocuments?.groomSchoolCertificateDocumentName : null
+  );
+  const [groomSchoolCertificateDocumentType, setGroomSchoolCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.groomSchoolCertificateDocumentType ? formData?.MarriageDocuments?.groomSchoolCertificateDocumentType : null
+  );
+  const [groomSchoolCertificateDocumentOwner, setGroomSchoolCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomSchoolCertificateDocumentOwner ? formData?.MarriageDocuments?.groomSchoolCertificateDocumentOwner : null
+  );
 
-  const [brideSchoolCertificateDocumentName, setBrideSchoolCertificateDocumentName] = useState(null);
-  const [brideSchoolCertificateDocumentType, setBrideSchoolCertificateDocumentType] = useState(null);
-  const [brideSchoolCertificateDocumentOwner, setBrideSchoolCertificateDocumentOwner] = useState(null);
+  const [brideSchoolCertificateDocumentName, setBrideSchoolCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.brideSchoolCertificateDocumentName ? formData?.MarriageDocuments?.brideSchoolCertificateDocumentName : null
+  );
+  const [brideSchoolCertificateDocumentType, setBrideSchoolCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.brideSchoolCertificateDocumentType ? formData?.MarriageDocuments?.brideSchoolCertificateDocumentType : null
+  );
+  const [brideSchoolCertificateDocumentOwner, setBrideSchoolCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideSchoolCertificateDocumentOwner ? formData?.MarriageDocuments?.brideSchoolCertificateDocumentOwner : null
+  );
 
-  const [groomBirthCertificateDocumentName, setGroomBirthCertificateDocumentName] = useState(null);
-  const [groomBirthCertificateDocumentType, setGroomBirthCertificateDocumentType] = useState(null);
-  const [groomBirthCertificateDocumentOwner, setGroomBirthCertificateDocumentOwner] = useState(null);
+  const [groomBirthCertificateDocumentName, setGroomBirthCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.groomBirthCertificateDocumentName ? formData?.MarriageDocuments?.groomBirthCertificateDocumentName : null
+  );
+  const [groomBirthCertificateDocumentType, setGroomBirthCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.groomBirthCertificateDocumentType ? formData?.MarriageDocuments?.groomBirthCertificateDocumentType : null
+  );
+  const [groomBirthCertificateDocumentOwner, setGroomBirthCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomBirthCertificateDocumentOwner ? formData?.MarriageDocuments?.groomBirthCertificateDocumentOwner : null
+  );
 
-  const [brideBirthCertificateDocumentName, setBrideBirthCertificateDocumentName] = useState(null);
-  const [brideBirthCertificateDocumentType, setBrideBirthCertificateDocumentType] = useState(null);
-  const [brideBirthCertificateDocumentOwner, setBrideBirthCertificateDocumentOwner] = useState(null);
+  const [brideBirthCertificateDocumentName, setBrideBirthCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.brideBirthCertificateDocumentName ? formData?.MarriageDocuments?.brideBirthCertificateDocumentName : null
+  );
+  const [brideBirthCertificateDocumentType, setBrideBirthCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.brideBirthCertificateDocumentType ? formData?.MarriageDocuments?.brideBirthCertificateDocumentType : null
+  );
+  const [brideBirthCertificateDocumentOwner, setBrideBirthCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideBirthCertificateDocumentOwner ? formData?.MarriageDocuments?.brideBirthCertificateDocumentOwner : null
+  );
 
-  const [instituitionCertificateDocumentName, setInstituitionCertificateDocumentName] = useState(null);
-  const [instituitionCertificateDocumentType, setInstituitionCertificateDocumentType] = useState(null);
-  const [instituitionCertificateDocumentOwner, setInstituitionCertificateDocumentOwner] = useState(null);
+  const [instituitionCertificateDocumentName, setInstituitionCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.instituitionCertificateDocumentName ? formData?.MarriageDocuments?.instituitionCertificateDocumentName : null
+  );
+  const [instituitionCertificateDocumentType, setInstituitionCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.instituitionCertificateDocumentType ? formData?.MarriageDocuments?.instituitionCertificateDocumentType : null
+  );
+  const [instituitionCertificateDocumentOwner, setInstituitionCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.instituitionCertificateDocumentOwner ? formData?.MarriageDocuments?.instituitionCertificateDocumentOwner : null
+  );
 
-  const [marriageOfficerCertificateDocumentName, setMarriageOfficerCertificateDocumentName] = useState(null);
-  const [marriageOfficerCertificateDocumentType, setMarriageOfficerCertificateDocumentType] = useState(null);
-  const [marriageOfficerCertificateDocumentOwner, setMarriageOfficerCertificateDocumentOwner] = useState(null);
+  const [marriageOfficerCertificateDocumentName, setMarriageOfficerCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.marriageOfficerCertificateDocumentName ? formData?.MarriageDocuments?.marriageOfficerCertificateDocumentName : null
+  );
+  const [marriageOfficerCertificateDocumentType, setMarriageOfficerCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.marriageOfficerCertificateDocumentType ? formData?.MarriageDocuments?.marriageOfficerCertificateDocumentType : null
+  );
+  const [marriageOfficerCertificateDocumentOwner, setMarriageOfficerCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.marriageOfficerCertificateDocumentOwner ? formData?.MarriageDocuments?.marriageOfficerCertificateDocumentOwner : null
+  );
 
-  const [otherMarriageCertificateDocumentName, setOtherMarriageCertificateDocumentName] = useState(null);
-  const [otherMarriageCertificateDocumentType, setOtherMarriageCertificateDocumentType] = useState(null);
-  const [otherMarriageCertificateDocumentOwner, setOtherMarriageCertificateDocumentOwner] = useState(null);
+  const [otherMarriageCertificateDocumentName, setOtherMarriageCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.otherMarriageCertificateDocumentName ? formData?.MarriageDocuments?.otherMarriageCertificateDocumentName : null
+  );
+  const [otherMarriageCertificateDocumentType, setOtherMarriageCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.otherMarriageCertificateDocumentType ? formData?.MarriageDocuments?.otherMarriageCertificateDocumentType : null
+  );
+  const [otherMarriageCertificateDocumentOwner, setOtherMarriageCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.otherMarriageCertificateDocumentOwner ? formData?.MarriageDocuments?.otherMarriageCertificateDocumentOwner : null
+  );
 
-  const [groomDivorceAnnulledDecreeCertificateDocumentName, setGroomDivorceAnnulledDecreeCertificateDocumentName] = useState(null);
-  const [groomDivorceAnnulledDecreeCertificateDocumentType, setGroomDivorceAnnulledDecreeCertificateDocumentType] = useState(null);
-  const [groomDivorceAnnulledDecreeCertificateDocumentOwner, setGroomDivorceAnnulledDecreeCertificateDocumentOwner] = useState(null);
+  const [groomDivorceAnnulledDecreeCertificateDocumentName, setGroomDivorceAnnulledDecreeCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.groomDivorceAnnulledDecreeCertificateDocumentName
+      ? formData?.MarriageDocuments?.groomDivorceAnnulledDecreeCertificateDocumentName
+      : null
+  );
+  const [groomDivorceAnnulledDecreeCertificateDocumentType, setGroomDivorceAnnulledDecreeCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.groomDivorceAnnulledDecreeCertificateDocumentType
+      ? formData?.MarriageDocuments?.groomDivorceAnnulledDecreeCertificateDocumentType
+      : null
+  );
+  const [groomDivorceAnnulledDecreeCertificateDocumentOwner, setGroomDivorceAnnulledDecreeCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomDivorceAnnulledDecreeCertificateDocumentOwner
+      ? formData?.MarriageDocuments?.groomDivorceAnnulledDecreeCertificateDocumentOwner
+      : null
+  );
 
-  const [brideDivorceAnnulledDecreeCertificateDocumentName, setBrideDivorceAnnulledDecreeCertificateDocumentName] = useState(null);
-  const [brideDivorceAnnulledDecreeCertificateDocumentType, setBrideDivorceAnnulledDecreeCertificateDocumentType] = useState(null);
-  const [brideDivorceAnnulledDecreeCertificateDocumentOwner, setBrideDivorceAnnulledDecreeCertificateDocumentOwner] = useState(null);
+  const [brideDivorceAnnulledDecreeCertificateDocumentName, setBrideDivorceAnnulledDecreeCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.brideDivorceAnnulledDecreeCertificateDocumentName
+      ? formData?.MarriageDocuments?.brideDivorceAnnulledDecreeCertificateDocumentName
+      : null
+  );
+  const [brideDivorceAnnulledDecreeCertificateDocumentType, setBrideDivorceAnnulledDecreeCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.brideDivorceAnnulledDecreeCertificateDocumentType
+      ? formData?.MarriageDocuments?.brideDivorceAnnulledDecreeCertificateDocumentType
+      : null
+  );
+  const [brideDivorceAnnulledDecreeCertificateDocumentOwner, setBrideDivorceAnnulledDecreeCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideDivorceAnnulledDecreeCertificateDocumentOwner
+      ? formData?.MarriageDocuments?.brideDivorceAnnulledDecreeCertificateDocumentOwner
+      : null
+  );
 
-  const [groomExpirationCertificateDocumentName, setGroomExpirationCertificateDocumentName] = useState(null);
-  const [groomExpirationCertificateDocumentType, setGroomExpirationCertificateDocumentType] = useState(null);
-  const [groomExpirationCertificateDocumentOwner, setGroomExpirationCertificateDocumentOwner] = useState(null);
+  const [groomExpirationCertificateDocumentName, setGroomExpirationCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.groomExpirationCertificateDocumentName ? formData?.MarriageDocuments?.groomExpirationCertificateDocumentName : null
+  );
+  const [groomExpirationCertificateDocumentType, setGroomExpirationCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.groomExpirationCertificateDocumentType ? formData?.MarriageDocuments?.groomExpirationCertificateDocumentType : null
+  );
+  const [groomExpirationCertificateDocumentOwner, setGroomExpirationCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.groomExpirationCertificateDocumentOwner ? formData?.MarriageDocuments?.groomExpirationCertificateDocumentOwner : null
+  );
 
-  const [brideExpirationCertificateDocumentName, setBrideExpirationCertificateDocumentName] = useState(null);
-  const [brideExpirationCertificateDocumentType, setBrideExpirationCertificateDocumentType] = useState(null);
-  const [brideExpirationCertificateDocumentOwner, setBrideExpirationCertificateDocumentOwner] = useState(null);
+  const [brideExpirationCertificateDocumentName, setBrideExpirationCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.brideExpirationCertificateDocumentName ? formData?.MarriageDocuments?.brideExpirationCertificateDocumentName : null
+  );
+  const [brideExpirationCertificateDocumentType, setBrideExpirationCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.brideExpirationCertificateDocumentType ? formData?.MarriageDocuments?.brideExpirationCertificateDocumentType : null
+  );
+  const [brideExpirationCertificateDocumentOwner, setBrideExpirationCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.brideExpirationCertificateDocumentOwner ? formData?.MarriageDocuments?.brideExpirationCertificateDocumentOwner : null
+  );
 
-  const [witness1AadharDocumentName, setWitness1AadharDocumentName] = useState(null);
-  const [witness1AadharDocumentType, setWitness1AadharDocumentType] = useState(null);
-  const [witness1AadharDocumentOwner, setWitness1AadharDocumentOwner] = useState(null);
+  const [witness1AadharDocumentName, setWitness1AadharDocumentName] = useState(
+    formData?.MarriageDocuments?.witness1AadharDocumentName ? formData?.MarriageDocuments?.witness1AadharDocumentName : null
+  );
+  const [witness1AadharDocumentType, setWitness1AadharDocumentType] = useState(
+    formData?.MarriageDocuments?.witness1AadharDocumentType ? formData?.MarriageDocuments?.witness1AadharDocumentType : null
+  );
+  const [witness1AadharDocumentOwner, setWitness1AadharDocumentOwner] = useState(
+    formData?.MarriageDocuments?.witness1AadharDocumentOwner ? formData?.MarriageDocuments?.witness1AadharDocumentOwner : null
+  );
 
-  const [witness2AadharDocumentName, setWitness2AadharDocumentName] = useState(null);
-  const [witness2AadharDocumentType, setWitness2AadharDocumentType] = useState(null);
-  const [witness2AadharDocumentOwner, setWitness2AadharDocumentOwner] = useState(null);
+  const [witness2AadharDocumentName, setWitness2AadharDocumentName] = useState(
+    formData?.MarriageDocuments?.witness2AadharDocumentName ? formData?.MarriageDocuments?.witness2AadharDocumentName : null
+  );
+  const [witness2AadharDocumentType, setWitness2AadharDocumentType] = useState(
+    formData?.MarriageDocuments?.witness2AadharDocumentType ? formData?.MarriageDocuments?.witness2AadharDocumentType : null
+  );
+  const [witness2AadharDocumentOwner, setWitness2AadharDocumentOwner] = useState(
+    formData?.MarriageDocuments?.witness2AadharDocumentOwner ? formData?.MarriageDocuments?.witness2AadharDocumentOwner : null
+  );
 
   const [groomAgeDocument, setGroomAgeDocument] = useState(
-    formData?.MarriageDocuments?.groomAgeDocument?.code ? formData?.MarriageDocuments?.groomAgeDocument?.code : null
+    formData?.MarriageDocuments?.OtherDetails?.groomAgeDocument?.code ? formData?.MarriageDocuments?.OtherDetails?.groomAgeDocument : null
   );
   const [brideAgeDocument, setBrideAgeDocument] = useState(
-    formData?.MarriageDocuments?.brideAgeDocument?.code ? formData?.MarriageDocuments?.brideAgeDocument?.code : null
+    formData?.MarriageDocuments?.OtherDetails?.brideAgeDocument?.code ? formData?.MarriageDocuments?.OtherDetails?.brideAgeDocument : null
   );
 
   const [groomAadhar, setGroomAadhar] = useState(
@@ -1038,6 +1176,69 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
 
   const goNext = () => {
     onSelect(config.key, {
+      groomAadharDocumentName,
+      groomAadharDocumentType,
+      groomAadharDocumentOwner,
+      brideAadharDocumentName,
+      brideAadharDocumentType,
+      brideAadharDocumentOwner,
+      groomPassportDocumentName,
+      groomPassportDocumentType,
+      groomPassportDocumentOwner,
+      bridePassportDocumentName,
+      bridePassportDocumentType,
+      bridePassportDocumentOwner,
+      groomSSNDocumentName,
+      groomSSNDocumentType,
+      groomSSNDocumentOwner,
+      brideSSNDocumentName,
+      brideSSNDocumentType,
+      brideSSNDocumentOwner,
+      groomDrivingLicenseDocumentName,
+      groomDrivingLicenseDocumentType,
+      groomDrivingLicenseDocumentOwner,
+      brideDrivingLicenseDocumentName,
+      brideDrivingLicenseDocumentType,
+      brideDrivingLicenseDocumentOwner,
+      groomSchoolCertificateDocumentName,
+      groomSchoolCertificateDocumentType,
+      groomSchoolCertificateDocumentOwner,
+      brideSchoolCertificateDocumentName,
+      brideSchoolCertificateDocumentType,
+      brideSchoolCertificateDocumentOwner,
+      groomBirthCertificateDocumentName,
+      groomBirthCertificateDocumentType,
+      groomBirthCertificateDocumentOwner,
+      brideBirthCertificateDocumentName,
+      brideBirthCertificateDocumentType,
+      brideBirthCertificateDocumentOwner,
+      instituitionCertificateDocumentName,
+      instituitionCertificateDocumentType,
+      instituitionCertificateDocumentOwner,
+      marriageOfficerCertificateDocumentName,
+      marriageOfficerCertificateDocumentType,
+      marriageOfficerCertificateDocumentOwner,
+      otherMarriageCertificateDocumentName,
+      otherMarriageCertificateDocumentType,
+      otherMarriageCertificateDocumentOwner,
+      groomDivorceAnnulledDecreeCertificateDocumentName,
+      groomDivorceAnnulledDecreeCertificateDocumentType,
+      groomDivorceAnnulledDecreeCertificateDocumentOwner,
+      brideDivorceAnnulledDecreeCertificateDocumentName,
+      brideDivorceAnnulledDecreeCertificateDocumentType,
+      brideDivorceAnnulledDecreeCertificateDocumentOwner,
+      groomExpirationCertificateDocumentName,
+      groomExpirationCertificateDocumentType,
+      groomExpirationCertificateDocumentOwner,
+      brideExpirationCertificateDocumentName,
+      brideExpirationCertificateDocumentType,
+      brideExpirationCertificateDocumentOwner,
+      witness1AadharDocumentName,
+      witness1AadharDocumentType,
+      witness1AadharDocumentOwner,
+      witness2AadharDocumentName,
+      witness2AadharDocumentType,
+      witness2AadharDocumentOwner,
       DocumentDetails: getFormatWrapper(tenantId, [
         {
           documentName: groomAadharDocumentName,
@@ -1185,6 +1386,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
         },
       ]),
       OtherDetails: {
+        groomAgeDocument,
+        brideAgeDocument,
         groomAadhar,
         brideAadhar,
         groomPassport,
@@ -1302,36 +1505,36 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         }}
                         message={groomPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                       />
-                      {groomPassport && (
-                        <div className="col-md-4">
-                          {_.head(groomPassport)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
-                                style={{ margin: "5px 0" }}
-                                height={120}
-                                width={100}
-                                data={_.head(groomPassport)?.pdfUrl}
-                                alt="Other Certificate Pdf"
-                              />
-                            </React.Fragment>
-                          ) : (
-                            <img
+                    </div>
+                    {groomPassport && (
+                      <div className="col-md-4">
+                        {_.head(groomPassport)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={_.head(groomPassport)?.small}
-                              alt="Other Certificate Image"
+                              data={_.head(groomPassport)?.pdfUrl}
+                              alt="Other Certificate Pdf"
                             />
-                          )}
-                          <a
-                            target="_blank"
-                            href={_.head(groomPassport)?.type === "pdf" ? _.head(groomPassport)?.pdfUrl : _.head(groomPassport)?.large}
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
-                    </div>
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(groomPassport)?.small}
+                            alt="Other Certificate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={_.head(groomPassport)?.type === "pdf" ? _.head(groomPassport)?.pdfUrl : _.head(groomPassport)?.large}
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
                     <div className="col-md-8">
                       <CardLabel>
                         {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
@@ -1348,27 +1551,27 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         }}
                         message={groomSSN ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                       />
-                      {groomSSN && (
-                        <div className="col-md-4">
-                          {_.head(groomSSN)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
-                                style={{ margin: "5px 0" }}
-                                height={120}
-                                width={100}
-                                data={_.head(groomSSN)?.pdfUrl}
-                                alt="Other Certificate Pdf"
-                              />
-                            </React.Fragment>
-                          ) : (
-                            <img style={{ margin: "5px 0" }} height={120} src={_.head(groomSSN)?.small} alt="Other Certificate Image" />
-                          )}
-                          <a target="_blank" href={_.head(groomSSN)?.type === "pdf" ? _.head(groomSSN)?.pdfUrl : _.head(groomSSN)?.large}>
-                            Preview
-                          </a>
-                        </div>
-                      )}
                     </div>
+                    {groomSSN && (
+                      <div className="col-md-4">
+                        {_.head(groomSSN)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(groomSSN)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img style={{ margin: "5px 0" }} height={120} src={_.head(groomSSN)?.small} alt="Other Certificate Image" />
+                        )}
+                        <a target="_blank" href={_.head(groomSSN)?.type === "pdf" ? _.head(groomSSN)?.pdfUrl : _.head(groomSSN)?.large}>
+                          Preview
+                        </a>
+                      </div>
+                    )}
                   </React.Fragment>
                 )}
               </div>
@@ -1842,14 +2045,14 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
               </div>
             </div>
             <div className="row">
-              {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
-                marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
-                marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
-                marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
-                marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
-                marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
-                marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") && (
-                <div className="col-md-6">
+              <div className="col-md-6">
+                {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
+                  marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
+                  marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") && (
                   <div className="col-md-8">
                     <CardLabel>
                       {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_RELIGIOUS_INSTITUTION`)}`}
@@ -1866,43 +2069,41 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                       message={instituitionCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                     />
                   </div>
-                </div>
-              )}
-              {instituitionCertificate && (
-                <div className="col-md-4">
-                  {_.head(instituitionCertificate)?.type === "pdf" ? (
-                    <React.Fragment>
-                      <object
+                )}
+                {instituitionCertificate && (
+                  <div className="col-md-4">
+                    {_.head(instituitionCertificate)?.type === "pdf" ? (
+                      <React.Fragment>
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(instituitionCertificate)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <img
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(instituitionCertificate)?.pdfUrl}
-                        alt="Other Certificate Pdf"
+                        src={_.head(instituitionCertificate)?.small}
+                        alt="Other Certificate Image"
                       />
-                    </React.Fragment>
-                  ) : (
-                    <img
-                      style={{ margin: "5px 0" }}
-                      height={120}
-                      width={100}
-                      src={_.head(instituitionCertificate)?.small}
-                      alt="Other Certificate Image"
-                    />
-                  )}
-                  <a
-                    target="_blank"
-                    href={
-                      _.head(instituitionCertificate)?.type === "pdf"
-                        ? _.head(instituitionCertificate)?.pdfUrl
-                        : _.head(instituitionCertificate)?.large
-                    }
-                  >
-                    Preview
-                  </a>
-                </div>
-              )}
-              {marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && (
-                <div className="col-md-6">
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(instituitionCertificate)?.type === "pdf"
+                          ? _.head(instituitionCertificate)?.pdfUrl
+                          : _.head(instituitionCertificate)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                )}
+                {marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && (
                   <div className="col-md-8">
                     <CardLabel>
                       {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_MARRIAGE_OFFICER`)}`}
@@ -1919,41 +2120,41 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                       message={marriageOfficerCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                     />
                   </div>
-                </div>
-              )}
-              {marriageOfficerCertificate && (
-                <div className="col-md-4">
-                  {_.head(marriageOfficerCertificate)?.type === "pdf" ? (
-                    <React.Fragment>
-                      <object
+                )}
+                {marriageOfficerCertificate && (
+                  <div className="col-md-4">
+                    {_.head(marriageOfficerCertificate)?.type === "pdf" ? (
+                      <React.Fragment>
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(marriageOfficerCertificate)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <img
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(marriageOfficerCertificate)?.pdfUrl}
-                        alt="Other Certificate Pdf"
+                        src={_.head(marriageOfficerCertificate)?.small}
+                        alt="Other Certificate Image"
                       />
-                    </React.Fragment>
-                  ) : (
-                    <img
-                      style={{ margin: "5px 0" }}
-                      height={120}
-                      width={100}
-                      src={_.head(marriageOfficerCertificate)?.small}
-                      alt="Other Certificate Image"
-                    />
-                  )}
-                  <a
-                    target="_blank"
-                    href={
-                      _.head(marriageOfficerCertificate)?.type === "pdf"
-                        ? _.head(marriageOfficerCertificate)?.pdfUrl
-                        : _.head(marriageOfficerCertificate)?.large
-                    }
-                  >
-                    Preview
-                  </a>
-                </div>
-              )}
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(marriageOfficerCertificate)?.type === "pdf"
+                          ? _.head(marriageOfficerCertificate)?.pdfUrl
+                          : _.head(marriageOfficerCertificate)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                )}
+              </div>
               <div className="col-md-6">
                 <div className="col-md-8">
                   <CardLabel>
@@ -2005,10 +2206,10 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 )}
               </div>
             </div>
-            {(groomMaritalstatusID === "MARRIED" ||
-              groomMaritalstatusID === "ANNULLED" ||
-              brideMaritalstatusID === "MARRIED" ||
-              brideMaritalstatusID === "ANNULLED") && (
+            {(groomMaritalstatusID?.code === "MARRIED" ||
+              groomMaritalstatusID?.code === "ANNULLED" ||
+              brideMaritalstatusID?.code === "MARRIED" ||
+              brideMaritalstatusID?.code === "ANNULLED") && (
               <React.Fragment>
                 <div className="row">
                   <div className="col-md-12">
@@ -2019,7 +2220,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    {(groomMaritalstatusID === "MARRIED" || groomMaritalstatusID === "ANNULLED") && (
+                    {(groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") && (
                       <div className="col-md-8">
                         <CardLabel>
                           {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
@@ -2037,42 +2238,43 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         />
                       </div>
                     )}
-                  </div>
-                  {groomDivorceAnnulledDecreeCertificate && (
-                    <div className="col-md-4">
-                      {_.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
+
+                    {groomDivorceAnnulledDecreeCertificate && (
+                      <div className="col-md-4">
+                        {_.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
                             style={{ margin: "5px 0" }}
-                            height={120}
                             width={100}
-                            data={_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl}
-                            alt="Other Certificate Pdf"
+                            height={120}
+                            src={_.head(groomDivorceAnnulledDecreeCertificate)?.small}
+                            alt="Other Certificate Image"
                           />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          width={100}
-                          height={120}
-                          src={_.head(groomDivorceAnnulledDecreeCertificate)?.small}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        target="_blank"
-                        href={
-                          _.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
-                            ? _.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl
-                            : _.head(groomDivorceAnnulledDecreeCertificate)?.large
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
+                              ? _.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl
+                              : _.head(groomDivorceAnnulledDecreeCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                   <div className="col-md-6">
-                    {(brideMaritalstatusID === "MARRIED" || brideMaritalstatusID === "ANNULLED") && (
+                    {(brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") && (
                       <div className="col-md-8">
                         <CardLabel>
                           {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
@@ -2090,44 +2292,45 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         />
                       </div>
                     )}
-                  </div>
-                  {brideDivorceAnnulledDecreeCertificate && (
-                    <div className="col-md-4">
-                      {_.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
+
+                    {brideDivorceAnnulledDecreeCertificate && (
+                      <div className="col-md-4">
+                        {_.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl}
-                            alt="Other Certificate Pdf"
+                            src={_.head(brideDivorceAnnulledDecreeCertificate)?.small}
+                            alt="Other Certificate Image"
                           />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={_.head(brideDivorceAnnulledDecreeCertificate)?.small}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        target="_blank"
-                        href={
-                          _.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
-                            ? _.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl
-                            : _.head(brideDivorceAnnulledDecreeCertificate)?.large
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
+                              ? _.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl
+                              : _.head(brideDivorceAnnulledDecreeCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </React.Fragment>
             )}
-            {(expirationTypeHusband || expirationTypeWife) && (
+            {(isExpiredHusband || isExpiredWife) && (
               <React.Fragment>
                 <div className="row">
                   <div className="col-md-12">
@@ -2138,7 +2341,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    {expirationTypeHusband && (
+                    {isExpiredHusband && (
                       <div className="col-md-8">
                         <CardLabel>
                           {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_GROOM")}`}
@@ -2156,43 +2359,43 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         />
                       </div>
                     )}
-                  </div>
-                  {groomExpirationCertificate && (
-                    <div className="col-md-4">
-                      {_.head(groomExpirationCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
+
+                    {groomExpirationCertificate && (
+                      <div className="col-md-4">
+                        {_.head(groomExpirationCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(groomExpirationCertificate)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={_.head(groomExpirationCertificate)?.pdfUrl}
-                            alt="Other Certificate Pdf"
+                            src={_.head(groomExpirationCertificate)?.small}
+                            alt="Other Certificate Image"
                           />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={_.head(groomExpirationCertificate)?.small}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        target="_blank"
-                        href={
-                          _.head(groomExpirationCertificate)?.type === "pdf"
-                            ? _.head(groomExpirationCertificate)?.pdfUrl
-                            : _.head(groomExpirationCertificate)?.large
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(groomExpirationCertificate)?.type === "pdf"
+                              ? _.head(groomExpirationCertificate)?.pdfUrl
+                              : _.head(groomExpirationCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                   <div className="col-md-6">
-                    {expirationTypeWife && (
+                    {isExpiredWife && (
                       <div className="col-md-8">
                         <CardLabel>
                           {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_BRIDE")}`}
@@ -2210,40 +2413,41 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         />
                       </div>
                     )}
-                  </div>
-                  {brideExpirationCertificate && (
-                    <div className="col-md-4">
-                      {_.head(brideExpirationCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
+
+                    {brideExpirationCertificate && (
+                      <div className="col-md-4">
+                        {_.head(brideExpirationCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(brideExpirationCertificate)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={_.head(brideExpirationCertificate)?.pdfUrl}
-                            alt="Other Certificate Pdf"
+                            src={_.head(brideExpirationCertificate)?.small}
+                            alt="Other Certificate Image"
                           />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={_.head(brideExpirationCertificate)?.small}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        target="_blank"
-                        href={
-                          _.head(brideExpirationCertificate)?.type === "pdf"
-                            ? _.head(brideExpirationCertificate)?.pdfUrl
-                            : _.head(brideExpirationCertificate)?.large
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(brideExpirationCertificate)?.type === "pdf"
+                              ? _.head(brideExpirationCertificate)?.pdfUrl
+                              : _.head(brideExpirationCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </React.Fragment>
             )}
