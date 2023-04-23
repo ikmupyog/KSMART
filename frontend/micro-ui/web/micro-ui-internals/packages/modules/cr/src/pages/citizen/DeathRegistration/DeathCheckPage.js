@@ -1833,6 +1833,36 @@ content={<StatusTable >
               </div>
             </div> 
 
+            {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" && (
+    <div>
+      <div className="row">
+        <div className="col-md-12">
+         
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.cmbbirthstatus}</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_WAS_THERE_DELIVARY")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.IsdeceasedPregnant}</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DURING_DELIVERY")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.DeathDuringDelivery}</CardText>
+          </div>
+        </div>
+      </div>
+      </div>
+      )}
+
+
+
             <div className="row">
         <div className="col-md-12">
         <div className="col-md-2">
