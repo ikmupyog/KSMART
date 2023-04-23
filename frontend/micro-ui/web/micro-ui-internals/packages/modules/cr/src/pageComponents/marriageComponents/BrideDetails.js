@@ -686,38 +686,38 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     } else {
       setAadharError(false);
     }
-    if (bridePassportNo.trim() == null || bridePassportNo.trim() == "" || bridePassportNo.trim() == undefined) {
-      setbridePassportNo("");
-      setbridePassportNoError(true);
-      setToast(true);
-      setTimeout(() => {
-          setToast(false);
-        }, 2000);
-    } else if (bridePassportNo != null && bridePassportNo != "") {
-      let pasportLength = bridePassportNo;
-      if (pasportLength.length < 8 || pasportLength.length > 8) {
-        validFlag = false;
-        setbridePassportNoError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setbridePassportNoError(false);
-      }
-    } else {
-      setbridePassportNoError(false);
-    }
-    if (brideSocialSecurityNo.trim() == null || brideSocialSecurityNo.trim() == "" || brideSocialSecurityNo.trim() == undefined) {
-      setbrideSocialSecurityNo("");
-      setbrideSocialSecurityNoError(true);
-      setToast(true);
-      setTimeout(() => {
-          setToast(false);
-        }, 2000);
-    } else {
-      setbrideSocialSecurityNoError(false);
-    }
+    // if (bridePassportNo.trim() == null || bridePassportNo.trim() == "" || bridePassportNo.trim() == undefined) {
+    //   setbridePassportNo("");
+    //   setbridePassportNoError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    // } else if (bridePassportNo != null && bridePassportNo != "") {
+    //   let pasportLength = bridePassportNo;
+    //   if (pasportLength.length < 8 || pasportLength.length > 8) {
+    //     validFlag = false;
+    //     setbridePassportNoError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setbridePassportNoError(false);
+    //   }
+    // } else {
+    //   setbridePassportNoError(false);
+    // }
+    // if (brideSocialSecurityNo.trim() == null || brideSocialSecurityNo.trim() == "" || brideSocialSecurityNo.trim() == undefined) {
+    //   setbrideSocialSecurityNo("");
+    //   setbrideSocialSecurityNoError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    // } else {
+    //   setbrideSocialSecurityNoError(false);
+    // }
 
     if (brideFirstnameEn.trim() == null || brideFirstnameEn.trim() == "" || brideFirstnameEn.trim() == undefined) {
       validFlag = false;
