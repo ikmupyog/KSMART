@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
@@ -218,7 +219,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                             t={t}
                             optionKey="name"
                             isMandatory={false}
-                            option={cmbCountry}
+                            option={sortDropdownNames(cmbCountry ? cmbCountry : [],"code",t)}
                             selected={presentaddressCountry}
                             select={setSelectaddressCountry}
                             disable={isDisableEdit}
@@ -234,7 +235,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbState}
+                                option={sortDropdownNames(cmbState ? cmbState : [],"code",t)}
                                 selected={presentaddressStateName}
                                 select={setSelectaddressStateName}
                                 disable={isDisableEdit}

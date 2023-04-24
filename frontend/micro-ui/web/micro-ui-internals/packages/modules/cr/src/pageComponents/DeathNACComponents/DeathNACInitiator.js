@@ -20,12 +20,12 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(formData?.DeathNACInitiator?.uploadedFile ? formData?.DeathNACInitiator?.uploadedFile : null);
-  const [uploadedFile1, setUploadedFile1] = useState(null);
-  const [uploadedFile2, setUploadedFile2] = useState(null);
-  const [uploadedFile3, setUploadedFile3] = useState(null);
-  const [uploadedFile4, setUploadedFile4] = useState(null);
-  const [uploadedFile5, setUploadedFile5] = useState(null);
-  const [uploadedFile6, setUploadedFile6] = useState(null);
+  const [uploadedFile1, setUploadedFile1] = useState(formData?.DeathNACInitiator?.uploadedFile1 ? formData?.DeathNACInitiator?.uploadedFile1 : null);
+  const [uploadedFile2, setUploadedFile2] = useState(formData?.DeathNACInitiator?.uploadedFile2 ? formData?.DeathNACInitiator?.uploadedFile2 : null);
+  const [uploadedFile3, setUploadedFile3] = useState(formData?.DeathNACInitiator?.uploadedFile3 ? formData?.DeathNACInitiator?.uploadedFile3 : null);
+  const [uploadedFile4, setUploadedFile4] = useState(formData?.DeathNACInitiator?.uploadedFile4 ? formData?.DeathNACInitiator?.uploadedFile4 : null);
+  const [uploadedFile5, setUploadedFile5] = useState(formData?.DeathNACInitiator?.uploadedFile5 ? formData?.DeathNACInitiator?.uploadedFile5 : null);
+  const [uploadedFile6, setUploadedFile6] = useState(formData?.DeathNACInitiator?.uploadedFile6 ? formData?.DeathNACInitiator?.uploadedFile6 : null);
   const [file, setFile] = useState(formData?.DeathNACInitiator?.docType1);
   const [file1, setFile1] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file2, setFile2] = useState(formData?.owners?.documents?.ProofOfIdentity);
@@ -39,7 +39,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
   const [initiatorEmailError, setinitiatorEmailError] = useState(formData?.InitiatorinfoDetails?.initiatorEmail ? false : false);
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
-  const [RelationwithDeceased, setRelationwithDeceased] = useState(formData?.InitiatorinfoDetails?.RelationwithDeceased ? formData?.InitiatorinfoDetails?.RelationwithDeceased :  "");
+  const [RelationwithDeceased, setRelationwithDeceased] = useState(formData?.DeathNACInitiator?.RelationwithDeceased ? formData?.DeathNACInitiator?.RelationwithDeceased :  "");
   const onSkip = () => onSelect();
   const selectedRelation = [
     { label: "Father", value: "FATHER" },
@@ -99,12 +99,12 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     }
   }
   function setSelectinitiatorMobile(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
   function setSelectinitiatorEmail(e) {
-    if (e.target.value.trim().length != 0 && !(e.target.value.includes("@") && e.target.value.includes("."))) {
+    if (e.target.value.trim().length >= 0 && !(e.target.value.includes("@") && e.target.value.includes("."))) {
       setinitiatorEmail(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setinitiatorEmail(e.target.value);
@@ -388,7 +388,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         config={config}
         onSelect={goNext}
         onSkip={onSkip}
-        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile}
+        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !uploadedFile || !uploadedFile1 || !uploadedFile2 || !uploadedFile3 || !uploadedFile4 || !uploadedFile5 || !uploadedFile6}
       >
 
         <div className="row">
@@ -471,7 +471,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
             </div>
             <div className="col-md-4">
               <CardLabel>
-              {`${t("CR_MOBILE_EMAIL")}`}
+              {`${t("CR_EMAIL")}`}
               </CardLabel>
               <TextInput
                 t={t}
@@ -482,7 +482,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 value={initiatorEmail}
                 onChange={setSelectinitiatorEmail}
                 disable={isDisableEdit}
-                placeholder={`${t("CR_MOBILE_EMAIL")}`}
+                placeholder={`${t("CR_EMAIL")}`}
               // {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>

@@ -9,10 +9,11 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
+import { sortDropdownNames } from "../../utils";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
-  // console.log(formData);
+  console.log(formData);
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
@@ -782,7 +783,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           setToast(false);
         }, 2000);
       } else {
-        hospitalCode = hospitalName.code;
+        sethospitalCode(hospitalName.code);
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
@@ -1352,7 +1353,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={menu}
+                  option={sortDropdownNames(menu ? menu : [],"code",t)}
                   selected={gender}
                   select={setselectGender}
                   disable={isDisableEdit}
@@ -1400,7 +1401,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPlaceMaster}
+                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [],"name",t)}
                   selected={birthPlace}
                   disable={isDisableEditRole}
                   select={setselectBirthPlace}
@@ -1702,7 +1703,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAttDeliverySub}
+                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [],"name",t)}
                   selected={medicalAttensionSub}
                   select={setSelectMedicalAttensionSub}
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
@@ -1748,7 +1749,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbDeliveryMethod}
+                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [],"name",t)}
                   selected={deliveryMethods}
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
+import { sortDropdownNames } from "../../utils";
 
 const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict,
@@ -425,7 +426,11 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     setpermntInKeralaAdrVillage(value);
   }
   function setSelectpermntInKeralaAdrTaluk(value) {
-    setpermntInKeralaAdrTaluk(value);
+    setpermntInKeralaAdrTaluk(value);    
+    console.log("cmbFilterVillage", cmbVillage);
+    if (cmbVillage.length > 0) {
+        setLbsVillagePermvalue(cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code));
+    }
   }
 
   function setSelectpermntInKeralaAdrPostOffice(value) {
@@ -540,7 +545,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={DistrictPermvalues}
+            option={sortDropdownNames(DistrictPermvalues ? DistrictPermvalues : [],"name",t)}
             selected={permntInKeralaAdrDistrict}
             select={setSelectpermntInKeralaAdrDistrict}
             placeholder={`${t("CS_COMMON_DISTRICT")}`}
@@ -567,7 +572,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={TalukPermvalues}
+            option={sortDropdownNames(TalukPermvalues ? TalukPermvalues : [],"name",t)}
             selected={permntInKeralaAdrTaluk}
             select={setSelectpermntInKeralaAdrTaluk}
             placeholder={`${t("CS_COMMON_TALUK")}`}
@@ -582,7 +587,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={VillagePermvalues}
+            option={sortDropdownNames(VillagePermvalues ? VillagePermvalues : [],"name",t)}
             selected={permntInKeralaAdrVillage}
             select={setSelectpermntInKeralaAdrVillage}
             placeholder={`${t("CS_COMMON_VILLAGE")}`}
@@ -597,7 +602,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={permlbs}
+            option={sortDropdownNames(permlbs ? permlbs : [],"name",t)}
             selected={permntInKeralaAdrLBName}
             select={setSelectpermntInKeralaAdrLBName}
             placeholder={`${t("CS_COMMON_LB_NAME")}`}
@@ -614,7 +619,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="namecmb"
-            option={cmbWardNoFinal}
+            option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
             selected={permntInKeralaWardNo}
             select={setSelectWard}
             placeholder={`${t("CS_COMMON_WARD")}`}
@@ -630,7 +635,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={PostOfficePermvalues}
+            option={sortDropdownNames(PostOfficePermvalues ? PostOfficePermvalues : [],"name",t)}
             selected={permntInKeralaAdrPostOffice}
             select={setSelectpermntInKeralaAdrPostOffice}
             placeholder={`${t("CS_COMMON_POST_OFFICE")}`}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 // import { sleep } from "react-query/types/core/utils";
 
 const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict,
@@ -281,7 +282,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbFilterPerDistrict}
+              option={sortDropdownNames(cmbFilterPerDistrict ? cmbFilterPerDistrict : [],"name",t)}
               selected={permntOutsideKeralaDistrict}
               select={setSelectpermntOutsideKeralaDistrict}
               disable={isDisableEdit} 
@@ -322,7 +323,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
             <Dropdown
               t={t}
               optionKey="i18nKey"
-              option={cmbUrbanRural}
+              option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
               selected={permntOutsideKeralaVillage}
               select={setSelectpermntOutsideKeralaVillage}
               disable={isDisableEdit}

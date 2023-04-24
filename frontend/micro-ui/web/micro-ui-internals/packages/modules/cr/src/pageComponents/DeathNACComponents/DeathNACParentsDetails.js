@@ -429,22 +429,6 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"number"}
-                    optionKey="i18nKey"
-                    name="motherAadhar"
-                    value={motherAadhar}
-                    onChange={setSelectMotherAadhar}
-                    disable={isDisableEdit}
-                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                  />
-                </div>
-
-                <div className="col-md-4">
                   <CardLabel>
                     {`${t("CR_MOTHER_NAME_EN")}`}
                     <span className="mandatorycss">*</span>
@@ -486,6 +470,22 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
                     })}
                   />
                 </div>
+
+                <div className="col-md-4">
+                  <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"number"}
+                    optionKey="i18nKey"
+                    name="motherAadhar"
+                    value={motherAadhar}
+                    onChange={setSelectMotherAadhar}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -503,22 +503,7 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
 
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-4">
-                  <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"number"}
-                    optionKey="i18nKey"
-                    name="fatherAadhar"
-                    value={fatherAadhar}
-                    onChange={setSelectFatherAadhar}
-                    disable={isDisableEdit}
-                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                  />
-                </div>
-
+                
                 <div className="col-md-4">
                   <CardLabel>
                     {`${t("CR_FATHER_NAME_EN")}`}
@@ -559,6 +544,22 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
                       type: "text",
                       title: t("CR_INVALID_FATHER_NAME_ML"),
                     })}
+                  />
+                </div>
+
+                <div className="col-md-4">
+                  <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"number"}
+                    optionKey="i18nKey"
+                    name="fatherAadhar"
+                    value={fatherAadhar}
+                    onChange={setSelectFatherAadhar}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>
