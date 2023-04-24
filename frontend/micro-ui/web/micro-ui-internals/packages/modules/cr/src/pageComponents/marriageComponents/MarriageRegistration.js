@@ -1027,19 +1027,19 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   ? DOBError
                     ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
                     : marriageDistrictidError
-                      ? t(`CR_INVALID_DISTRICT`)
+                      ? t(`CR_ERROR_DISTRICT_CHOOSE`)
                       : marriageTalukIDError
-                        ? t(`CR_INVALID_TALUK`)
+                        ? t(`CR_ERROR_TALUK_CHOOSE`)
                         : marriageVillageNameError
-                          ? t(`CR_INVALID_VILLAGE_NAME`)
+                          ? t(`CR_ERROR_VILLAGE_NAME_CHOOSE`)
                           : marriageLBtypeError
-                            ? t(`CR_INVALID_LB_TYPE`)
+                            ? t(`CR_ERROR_LB_TYPE_CHOOSE`)
                             : marriageTenantidError
-                              ? t(`CR_INVALID_LB`)
+                              ? t(`CR_ERROR_LB_CHOOSE`)
                               : marriageWardCodeError
-                                ? t(`CR_INVALID_WARD`)
+                                ? t(`CR_ERROR_WARD_CHOOSE`)
                                 : marriagePlaceTypeError
-                                  ? t(`CR_INVALID_MARRIAGE_PLACE_TYPE`)
+                                  ? t(`CR_ERROR_MARRIAGE_PLACE_TYPE_CHOOSE`)
                                   : setToast(false)
                   : setToast(false)
               }
