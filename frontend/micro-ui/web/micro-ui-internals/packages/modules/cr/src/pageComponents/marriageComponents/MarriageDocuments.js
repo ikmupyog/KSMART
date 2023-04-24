@@ -1244,145 +1244,182 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
           documentName: groomAadharDocumentName,
           documentType: groomAadharDocumentType,
           documentOwner: groomAadharDocumentOwner,
-          fileStoreId: groomAadhar,
+          fileStoreId: _.head(groomAadhar)?.key,
+          fileURL: _.head(groomAadhar)?.type === "pdf" ? _.head(groomAadhar)?.pdfUrl : _.head(groomAadhar)?.large,
         },
         {
           documentName: brideAadharDocumentName,
           documentType: brideAadharDocumentType,
           documentOwner: brideAadharDocumentOwner,
-          fileStoreId: brideAadhar,
+          fileStoreId: _.head(brideAadhar)?.key,
+          fileURL: _.head(brideAadhar)?.type === "pdf" ? _.head(brideAadhar)?.pdfUrl : _.head(brideAadhar)?.large,
         },
 
         {
           documentName: groomPassportDocumentName,
           documentType: groomPassportDocumentType,
           documentOwner: groomPassportDocumentOwner,
-          fileStoreId: groomPassport,
+          fileStoreId: _.head(groomPassport)?.key,
+          fileURL: _.head(groomPassport)?.type === "pdf" ? _.head(groomPassport)?.pdfUrl : _.head(groomPassport)?.large,
         },
 
         {
           documentName: bridePassportDocumentName,
           documentType: bridePassportDocumentType,
           documentOwner: bridePassportDocumentOwner,
-          fileStoreId: bridePassport,
+          fileStoreId: _.head(bridePassport)?.key,
+          fileURL: _.head(bridePassport)?.type === "pdf" ? _.head(bridePassport)?.pdfUrl : _.head(bridePassport)?.large,
         },
 
         {
           documentName: groomSSNDocumentName,
           documentType: groomSSNDocumentType,
           documentOwner: groomSSNDocumentOwner,
-          fileStoreId: groomSSN,
+          fileStoreId: _.head(groomSSN)?.key,
+          fileURL: _.head(groomSSN)?.type === "pdf" ? _.head(groomSSN)?.pdfUrl : _.head(groomSSN)?.large,
         },
 
         {
           documentName: brideSSNDocumentName,
           documentType: brideSSNDocumentType,
           documentOwner: brideSSNDocumentOwner,
-          fileStoreId: brideSSN,
+          fileStoreId: _.head(brideSSN)?.key,
+          fileURL: _.head(brideSSN)?.type === "pdf" ? _.head(brideSSN)?.pdfUrl : _.head(brideSSN)?.large,
         },
         {
           documentName: groomDrivingLicenseDocumentName,
           documentType: groomDrivingLicenseDocumentType,
           documentOwner: groomDrivingLicenseDocumentOwner,
-          fileStoreId: groomDrivingLicense,
+          fileStoreId: _.head(groomDrivingLicense)?.key,
+          fileURL: _.head(groomDrivingLicense)?.type === "pdf" ? _.head(groomDrivingLicense)?.pdfUrl : _.head(groomDrivingLicense)?.large,
         },
 
         {
           documentName: brideDrivingLicenseDocumentName,
           documentType: brideDrivingLicenseDocumentType,
           documentOwner: brideDrivingLicenseDocumentOwner,
-          fileStoreId: brideDrivingLicense,
+          fileStoreId: _.head(brideDrivingLicense)?.key,
+          fileURL: _.head(brideDrivingLicense)?.type === "pdf" ? _.head(brideDrivingLicense)?.pdfUrl : _.head(brideDrivingLicense)?.large,
         },
 
         {
           documentName: groomSchoolCertificateDocumentName,
           documentType: groomSchoolCertificateDocumentType,
           documentOwner: groomSchoolCertificateDocumentOwner,
-          fileStoreId: groomSchoolCertificate,
+          fileStoreId: _.head(groomSchoolCertificate)?.key,
+          fileURL: _.head(groomSchoolCertificate)?.type === "pdf" ? _.head(groomSchoolCertificate)?.pdfUrl : _.head(groomSchoolCertificate)?.large,
         },
 
         {
           documentName: brideSchoolCertificateDocumentName,
           documentType: brideSchoolCertificateDocumentType,
           documentOwner: brideSchoolCertificateDocumentOwner,
-          fileStoreId: brideSchoolCertificate,
+          fileStoreId: _.head(brideSchoolCertificate)?.key,
+          fileURL: _.head(brideSchoolCertificate)?.type === "pdf" ? _.head(brideSchoolCertificate)?.pdfUrl : _.head(brideSchoolCertificate)?.large,
         },
 
         {
           documentName: groomBirthCertificateDocumentName,
           documentType: groomBirthCertificateDocumentType,
           documentOwner: groomBirthCertificateDocumentOwner,
-          fileStoreId: groomBirthCertificate,
+          fileStoreId: _.head(groomBirthCertificate)?.key,
+          fileURL: _.head(groomBirthCertificate)?.type === "pdf" ? _.head(groomBirthCertificate)?.pdfUrl : _.head(groomBirthCertificate)?.large,
         },
 
         {
           documentName: brideBirthCertificateDocumentName,
           documentType: brideBirthCertificateDocumentType,
           documentOwner: brideBirthCertificateDocumentOwner,
-          fileStoreId: brideBirthCertificate,
+          fileStoreId: _.head(brideBirthCertificate)?.key,
+          fileURL: _.head(brideBirthCertificate)?.type === "pdf" ? _.head(brideBirthCertificate)?.pdfUrl : _.head(brideBirthCertificate)?.large,
         },
 
         {
           documentName: instituitionCertificateDocumentName,
           documentType: instituitionCertificateDocumentType,
           documentOwner: instituitionCertificateDocumentOwner,
-          fileStoreId: instituitionCertificate,
+          fileStoreId: _.head(instituitionCertificate)?.key,
+          fileURL: _.head(instituitionCertificate)?.type === "pdf" ? _.head(instituitionCertificate)?.pdfUrl : _.head(instituitionCertificate)?.large,
         },
 
         {
           documentName: marriageOfficerCertificateDocumentName,
           documentType: marriageOfficerCertificateDocumentType,
           documentOwner: marriageOfficerCertificateDocumentOwner,
-          fileStoreId: marriageOfficerCertificate,
+          fileStoreId: _.head(marriageOfficerCertificate)?.key,
+          fileURL:
+            _.head(marriageOfficerCertificate)?.type === "pdf"
+              ? _.head(marriageOfficerCertificate)?.pdfUrl
+              : _.head(marriageOfficerCertificate)?.large,
         },
 
         {
           documentName: otherMarriageCertificateDocumentName,
           documentType: otherMarriageCertificateDocumentType,
           documentOwner: otherMarriageCertificateDocumentOwner,
-          fileStoreId: otherMarriageCertificate,
+          fileStoreId: _.head(otherMarriageCertificate)?.key,
+          fileURL:
+            _.head(otherMarriageCertificate)?.type === "pdf" ? _.head(otherMarriageCertificate)?.pdfUrl : _.head(otherMarriageCertificate)?.large,
         },
 
         {
           documentName: groomDivorceAnnulledDecreeCertificateDocumentName,
           documentType: groomDivorceAnnulledDecreeCertificateDocumentType,
           documentOwner: groomDivorceAnnulledDecreeCertificateDocumentOwner,
-          fileStoreId: groomDivorceAnnulledDecreeCertificate,
+          fileStoreId: _.head(groomDivorceAnnulledDecreeCertificate)?.key,
+          fileURL:
+            _.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
+              ? _.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl
+              : _.head(groomDivorceAnnulledDecreeCertificate)?.large,
         },
 
         {
           documentName: brideDivorceAnnulledDecreeCertificateDocumentName,
           documentType: brideDivorceAnnulledDecreeCertificateDocumentType,
           documentOwner: brideDivorceAnnulledDecreeCertificateDocumentOwner,
-          fileStoreId: brideDivorceAnnulledDecreeCertificate,
+          fileStoreId: _.head(brideDivorceAnnulledDecreeCertificate)?.key,
+          fileURL:
+            _.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
+              ? _.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl
+              : _.head(brideDivorceAnnulledDecreeCertificate)?.large,
         },
 
         {
           documentName: groomExpirationCertificateDocumentName,
           documentType: groomExpirationCertificateDocumentType,
           documentOwner: groomExpirationCertificateDocumentOwner,
-          fileStoreId: groomExpirationCertificate,
+          fileStoreId: _.head(groomExpirationCertificate)?.key,
+          fileURL:
+            _.head(groomExpirationCertificate)?.type === "pdf"
+              ? _.head(groomExpirationCertificate)?.pdfUrl
+              : _.head(groomExpirationCertificate)?.large,
         },
 
         {
           documentName: brideExpirationCertificateDocumentName,
           documentType: brideExpirationCertificateDocumentType,
           documentOwner: brideExpirationCertificateDocumentOwner,
-          fileStoreId: brideExpirationCertificate,
+          fileStoreId: _.head(brideExpirationCertificate)?.key,
+          fileURL:
+            _.head(brideExpirationCertificate)?.type === "pdf"
+              ? _.head(brideExpirationCertificate)?.pdfUrl
+              : _.head(brideExpirationCertificate)?.large,
         },
 
         {
           documentName: witness1AadharDocumentName,
           documentType: witness1AadharDocumentType,
           documentOwner: witness1AadharDocumentOwner,
-          fileStoreId: witness1Aadhar,
+          fileStoreId: _.head(witness1Aadhar)?.key,
+          fileURL: _.head(witness1Aadhar)?.type === "pdf" ? _.head(witness1Aadhar)?.pdfUrl : _.head(witness1Aadhar)?.large,
         },
 
         {
           documentName: witness2AadharDocumentName,
           documentType: witness2AadharDocumentType,
           documentOwner: witness2AadharDocumentOwner,
-          fileStoreId: witness2Aadhar,
+          fileStoreId: _.head(witness2Aadhar)?.key,
+          fileURL: _.head(witness2Aadhar)?.type === "pdf" ? _.head(witness2Aadhar)?.pdfUrl : _.head(witness2Aadhar)?.large,
         },
       ]),
       OtherDetails: {
@@ -1421,7 +1458,53 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <FormStep
+        t={t}
+        config={config}
+        onSelect={goNext}
+        onSkip={onSkip}
+        isDisabled={
+          (groomResidentShip === "INDIAN" &&
+            !groomAadharDocument) ||
+            ((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") &&
+            (!groomPassportDocument || !groomSSNDocument)) ||
+            (brideResidentShip === "INDIAN" &&
+            !brideAadharDocument) ||
+          ((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") &&
+            (!bridePassportDocument || !brideSSNDocument)) ||
+            (groomAgeDocument === "DRIVING_LICENSE" &&
+            !groomDrivingLicenseDocument) ||
+            (groomAgeDocument === "SCHOOL_CERTIFICATE" &&
+            !groomSchoolCertificateDocument) ||
+            (groomAgeDocument === "BIRTH_CERTIFICATE" &&
+            !groomBirthCertificateDocument) ||
+            (brideAgeDocument === "DRIVING_LICENSE" &&
+            !brideDrivingLicenseDocument) ||
+            (brideAgeDocument === "SCHOOL_CERTIFICATE" &&
+            !brideSchoolCertificateDocument) ||
+            (brideAgeDocument === "BIRTH_CERTIFICATE" &&
+            !brideBirthCertificateDocument) ||
+            ((marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
+              marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
+              marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
+              marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
+              marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
+              marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
+              marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") &&
+            !instituitionCertificateDocument) ||
+            (marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" &&
+            !marriageOfficerCertificateDocument) ||
+            ((groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") &&
+            !groomDivorceAnnulledDecreeCertificateDocument) ||
+            ((brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") &&
+            brideDivorceAnnulledDecreeCertificateDocument) ||
+            (isExpiredHusband &&
+            groomExpirationCertificateDocument) ||
+            (isExpiredWife &&
+            !brideExpirationCertificateDocument) ||
+          !witness1AadharDocument || !witness2AadharDocument
+        }
+      >
         <div className="row">
           <div className="col-md-12" style={{ marginBottom: "20px" }}>
             <div className="row">

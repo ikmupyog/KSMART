@@ -194,7 +194,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       cmbMarriagePlaceIds.push(ob);
     });
 
-  let currentLB = [];
   const cmbPlaceNameReligious = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
   console.log({ cmbPlaceNameReligious });
   const cmbPlaceNameMandapam = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
@@ -275,7 +274,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   const stateDist = cmbDistrict?.filter((dist) => dist.statecode == "kl");
 
-  const filteredLBType = cmbLBType?.filter((lbType) => lbType.name === "Municipality" || lbType.name === "Corporation");
+  const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
 
   function handleChange(e) {
     setFile(URL.createObjectURL(e.target.files[0]));
@@ -325,11 +324,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   }
   // });
   function setSelectmarriageDOM(value) {
-    setMarriageDistrictid("");
-    setmarriageTalukID("");
     setmarriageVillageName("");
-    setMarriageLBtype("");
-    setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
@@ -352,12 +347,13 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
   function setSelectMarriageDistrictid(value) {
+    console.log({ value });
     setMarriageDistrictid(value);
     setLbs(null);
     districtid = value.districtid;
     setTenantboundary(true);
     if (cmbLB.length > 0) {
-      currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
+      const currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
       setLbs(currentLB);
       cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
       setLbsTalukvalue(cmbFilterTaluk);
@@ -375,6 +371,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidMl("");
   }
   function setSelectmarriageTalukID(value) {
+    console.log("taluk", value);
     setmarriageTalukID(value);
     setmarriageVillageName("");
     setMarriageLBtype("");
@@ -386,8 +383,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
-    setMarriageLBtype("");
-    setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
@@ -402,6 +397,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidMl("");
   }
   function setSelectmarriageTenantid(value) {
+    console.log("tenant", value);
     setIsWardChange(true);
     setMarriageWardCode(null);
     setTenantWard(value.code);
@@ -456,12 +452,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
 
   function setCSLB(selectedLBType) {
-    const localbodies = lbs.filter((LB) => LB.city.districtid === marriageDistrictid.districtid);
-    if (selectedLBType.name === "Municipality") {
-      const filteredMunicipality = localbodies.filter((LB) => LB.city.lbtypecode.split("_")[2] === "MUNICIPALITY");
+    const localbodies = lbs?.filter((LB) => LB?.city?.districtid === marriageDistrictid?.districtid);
+    if (selectedLBType?.name === "Municipality") {
+      const filteredMunicipality = localbodies?.filter((LB) => LB?.city?.lbtypecode?.split("_")[2] === "MUNICIPALITY");
       return filteredMunicipality;
-    } else if (selectedLBType.name === "Corporation") {
-      const filteredCorporation = localbodies.filter((LB) => LB.city.lbtypecode.split("_")[2] === "CORPORATION");
+    } else if (selectedLBType?.name === "Corporation") {
+      const filteredCorporation = localbodies?.filter((LB) => LB?.city?.lbtypecode.split("_")[2] === "CORPORATION");
       return filteredCorporation;
     }
   }
@@ -475,15 +471,29 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
 
-  // useEffect(() => {
-  //   console.log({ cmbLB });
-  //   if (cmbLB?.length > 0) {
-  //     console.log("Hi");
-  //     currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-  //     console.log({ currentLB });
-  //     setMarriageTenantid(currentLB);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (cmbLB?.length > 0) {
+      console.log("Hi");
+      const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+      setMarriageTenantid(currentLB[0]);
+      console.log({ currentLB });
+      const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
+      console.log({ currentDistrict });
+      setMarriageDistrictid(currentDistrict[0]);
+      districtid = currentDistrict[0].districtid;
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      console.log({ cmbFilterTaluk });
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+      setLbsVillagevalue(cmbFilterVillage);
+      console.log({ cmbFilterVillage });
+      const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
+      setMarriageLBtype(currentLBType[0]);
+      const currentTaluk = cmbFilterTaluk?.filter((taluk) => taluk.code === currentLB[0].city.talukcode);
+      setmarriageTalukID(currentTaluk[0]);
+      console.log({ currentTaluk });
+    }
+  }, [cmbLB.length]);
 
   let validFlag = true;
   const goNext = () => {
@@ -548,6 +558,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   console.log("Registration", formData);
   console.log({ marriageType });
+  console.log({ marriageTenantid });
 
   if (
     isLoading ||
