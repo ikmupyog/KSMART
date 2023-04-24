@@ -167,9 +167,10 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                       {InformationDeathAband.DeathPlace.code === "HOSPITAL"
-                        ?  InformationDeathAband.DeathPlace.hospitalName
+                        ?  InformationDeathAband.hospitalNameEn.hospitalName + "," +
+                        InformationDeathAband.hospitalNameEn.hospitalNamelocal
                         : InformationDeathAband.DeathPlace.code === "INSTITUTION"
-                        ? t(InformationDeathAband.DeathPlace.namelocal) +
+                        ? t(InformationDeathAband.DeathPlaceInstId.institutionName) +
                           "," +
                           InformationDeathAband.DeathPlaceInstId.institutionNamelocal +
                           "/" +
@@ -198,31 +199,9 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                           InformationDeathAband.DeathPlaceHomePostofficeId.pincode
                         : InformationDeathAband.DeathPlace.code === "VEHICLE"
                         ? `${
-                            t("PDF_CR_VEHICLE_STATEMENT_ONE") +
-                            " " +
-                            InformationDeathAband.VehicleFromplaceMl +
-                            " " +
-                            "PDF_CR_VEHICLE_STATEMENT_TWO" +
-                            " " +
-                            InformationDeathAband.VehicleToPlaceMl +
-                            " " +
-                            "PDF_CR_VEHICLE_STATEMENT_THREE" +
-                            " " +
-                            InformationDeathAband.VehicleFirstHaltEn +
-                            " " +
-                            "PDF_CR_VEHICLE_STATEMENT_FOUR" +
-                            "/ " +
-                            "PDF_CR_VEHICLE_STATEMENT_ONE_EN" +
-                            " " +
-                            InformationDeathAband.VehicleFromplaceEn +
-                            " " +
-                            "PDF_CR_VEHICLE_STATEMENT_TWO_EN" +
-                            " " +
-                            InformationDeathAband.VehicleToPlaceEn +
-                            "" +
-                            "PDF_CR_VEHICLE_STATEMENT_THREE_EN" +
-                            " " +
-                            InformationDeathAband.VehicleFirstHaltEn
+                           
+                            InformationDeathAband.vehicleType.name+
+                            "/" +InformationDeathAband.vehicleType.namelocal
                           }`
                         : InformationDeathAband.DeathPlace.code === "PUBLIC_PLACES"
                         ? t(InformationDeathAband.DeathPlaceLocalityMl) +
