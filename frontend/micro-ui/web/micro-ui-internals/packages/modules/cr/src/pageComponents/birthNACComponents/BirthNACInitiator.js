@@ -524,6 +524,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         uploadedFile3,
         uploadedFile4,
         uploadedFile5,
+        aadressFile,
+        proofFile,
+        certificateFile,
+        motherIdFile,
+        fatherIdFile,
+        medicalFile,
       });
     }
   };
@@ -572,14 +578,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           ownerState[0].childNameMl === "" ||
           ownerState[0].sex === "" ||
           ownerState[0].nacorderofChildren === "" ||
-          ownerState[0].isAlive === ""
-          // ||
-          // !aadressFile ||
-          // !proofFile ||
-          // !certificateFile ||
-          // !motherIdFile ||
-          // !fatherIdFile ||
-          // !medicalFile
+          ownerState[0].isAlive === "" ||
+          !aadressFile ||
+          !proofFile ||
+          !certificateFile ||
+          !motherIdFile ||
+          !fatherIdFile ||
+          !medicalFile
         }
       >
         <div>

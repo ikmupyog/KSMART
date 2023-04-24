@@ -92,6 +92,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
 
   const handleDownloadPdf = async () => {
     const { Licenses = [] } = mutation.data;
+    console.log(mutation.data, "mutation.data");
     const License = (Licenses && Licenses[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
