@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loader, CheckBox, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
   // console.log(JSON.stringify(formData));
@@ -744,7 +745,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="nationalityname"
                       isMandatory={false}
-                      option={cmbNation}
+                      option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
                       selected={motherNationality}
                       select={setSelectMotherNationality}
                       disable={isDisableEdit}
@@ -757,7 +758,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="i18nKey"
                       isMandatory={false}
-                      option={cmbMaritalStatus}
+                      option={sortDropdownNames(cmbMaritalStatus ? cmbMaritalStatus : [],"code",t)}
                       selected={motherMaritalStatus}
                       select={setSelectMotherMaritalStatus}
                       disable={isDisableEdit}
@@ -828,7 +829,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="name"
                       isMandatory={false}
-                      option={cmbQualification}
+                      option={sortDropdownNames(cmbQualification ? cmbQualification : [],"name",t)}
                       selected={motherEducation}
                       select={setSelectMotherEducation}
                       disable={isDisableEdit}
@@ -841,7 +842,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="name"
                       isMandatory={false}
-                      option={cmbProfession}
+                      option={sortDropdownNames(cmbProfession ? cmbProfession : [],"name",t)}
                       selected={motherProfession}
                       select={setSelectMotherProfession}
                       disable={isDisableEdit}
@@ -943,7 +944,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="nationalityname"
                       isMandatory={false}
-                      option={cmbNation}
+                      option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
                       selected={fatherNationality}
                       select={setSelectFatherNationality}
                       disable={isDisableEdit}
@@ -956,7 +957,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="name"
                       isMandatory={false}
-                      option={cmbQualification}
+                      option={sortDropdownNames(cmbQualification ? cmbQualification : [],"name",t)}
                       selected={fatherEducation}
                       select={setSelectFatherEducation}
                       disable={isDisableEdit}
@@ -969,7 +970,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       t={t}
                       optionKey="name"
                       isMandatory={false}
-                      option={cmbProfession}
+                      option={sortDropdownNames(cmbProfession ? cmbProfession : [],"name",t)}
                       selected={fatherProfession}
                       select={setSelectFatherProfession}
                       disable={isDisableEdit}
@@ -996,7 +997,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbReligion}
+                  option={sortDropdownNames(cmbReligion ? cmbReligion : [],"name",t)}
                   selected={Religion}
                   select={setSelectReligion}
                   disable={isDisableEdit}

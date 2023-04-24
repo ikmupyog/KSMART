@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Toast, TextArea } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
@@ -33,7 +33,7 @@ const DeathOutsideJurisdiction = ({
   const { t } = useTranslation();
   let validation = {};
   const [isDisableStatus, setDisableStatus] = useState(true);
-
+  const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
@@ -51,8 +51,14 @@ const DeathOutsideJurisdiction = ({
   // const [GeneralRemarks, setGeneralRemarks] = useState(formData?.DeathOutsideJurisdiction?.GeneralRemarks);
   PlaceOfBurialMl;
   let cmbNation = [];
+  let cmbCountry = [];
   let cmbState = [];
   let cmbDistrict = [];
+  Country &&
+  Country["common-masters"] && Country["common-masters"].Country &&
+  Country["common-masters"].Country.map((ob) => {
+      cmbCountry.push(ob);
+  });
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country.map((ob) => {
@@ -143,7 +149,16 @@ const DeathOutsideJurisdiction = ({
       setGeneralRemarks(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
-
+ let cmbfilterNation =[];
+  useEffect(() => {
+    if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+      if (stateId === "kl" && cmbCountry.length > 0) {
+        cmbfilterNation = cmbCountry.filter((cmbCountry) => cmbCountry.name.includes("India"));
+        setSelectDeathPlaceCountry(cmbfilterNation[0]);
+        console.log("cmbfilterNation[0]");
+      }
+    }
+  });
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
     // sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
@@ -198,10 +213,10 @@ const DeathOutsideJurisdiction = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbNation}
+                option={cmbCountry}
                 selected={DeathPlaceCountry}
                 select={selectDeathPlaceCountry}
-                disable={isDisableStatus}
+             disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_COUNTRY")}`}
               />
             </div>

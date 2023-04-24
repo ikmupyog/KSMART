@@ -132,6 +132,8 @@ const Urls = {
     create: "/birth-services/cr/createnac",
     search: "/birth-services/cr/searchnac",
     update: "/birth-services/cr/updatenac",
+    registry_download: "/birth-services/cr/registrynac/_download",
+    registry_search_nac_birth: "/birth-services/cr/searchnac",
   },
   crbornoutsideindiabirth: {
     create: "/birth-services/cr/createbornoutside",
@@ -141,7 +143,7 @@ const Urls = {
   crabandonedbirth: {
     create: "/birth-services/cr/createabandoned",
     search: "/birth-services/cr/searchabandoned",
-    update: "/birth-services/cr/updatebornoutside",
+    update: "/birth-services/cr/updateabandoned",
   },
   crnacdeath: {
     create: "/death-services/v1/deathdetails/_createdeathnac",
