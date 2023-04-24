@@ -208,12 +208,12 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
 
     if (validFlag == true) {
       onSelect(config.key, {
-        motherFirstNameEn,
-        motherFirstNameMl,
+        motherFirstNameEn: motherFirstNameEn.trim(),
+        motherFirstNameMl: motherFirstNameMl.trim(),
         motherAadhar,
         fatherAadhar,
-        fatherFirstNameEn,
-        fatherFirstNameMl,
+        fatherFirstNameEn: fatherFirstNameEn.trim(),
+        fatherFirstNameMl: fatherFirstNameMl.trim(),
       });
     }
   };
