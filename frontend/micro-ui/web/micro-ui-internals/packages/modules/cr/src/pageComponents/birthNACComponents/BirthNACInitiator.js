@@ -511,13 +511,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
     if (validFlag == true) {
       onSelect(config.key, {
-        initiatorNameEn,
+        initiatorNameEn: initiatorNameEn.trim(),
         initiatorAadhar,
         initiatorMobile,
         initiatorDesi,
         initiatorAddress,
         ownerState,
-        careofapplicant,
+        careofapplicant: careofapplicant.trim(),
         uploadedFile,
         uploadedFile1,
         uploadedFile2,
@@ -1047,9 +1047,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     : initiatorAddressError
                     ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
                     : DobMissmatchError
-                    ? "DOB MISSMATCH"
+                    ? t(`BIRTH_NAC_DOB_MISSMATCH`)
                     : OrderofBirthMissmatchError
-                    ? "ORDER OF BIRTH MISSMATCH"
+                    ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
                     : setToast(false)
                   : setToast(false)
               }
