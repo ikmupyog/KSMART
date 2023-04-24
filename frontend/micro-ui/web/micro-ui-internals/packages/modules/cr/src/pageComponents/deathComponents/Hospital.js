@@ -35,10 +35,10 @@ const Hospital = ({
       cmbhospital.push(ob);
     });
   if (isEditDeath) {
-    if (formData?.InformationDeath?.hospitalNameEn != null) {
+    if (formData?.InformationDeath?.DeathPlaceTypecode != null) {
       if (cmbhospital.length > 0 && (hospitalNameEn === undefined || hospitalNameEn === "")) {
-        selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn)[0]);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn)[0];
+        selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode)[0]);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
@@ -47,9 +47,9 @@ const Hospital = ({
   useEffect(() => {
    
     // if (isInitialRender) {
-      if (formData?.InformationDeath?.hospitalNameEn) {
+      if (formData?.InformationDeath?.DeathPlaceTypecode) {
         // selectHospitalNameMl(HospitalNameMl);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn.code);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       } else {
@@ -61,7 +61,7 @@ const Hospital = ({
       }
      }
     // }
-  }, [cmbhospitalMl]);
+  }, [cmbhospitalMl,isInitialRender]);
 
   const onSkip = () => onSelect();
   function setselecthospitalNameEn(value) {

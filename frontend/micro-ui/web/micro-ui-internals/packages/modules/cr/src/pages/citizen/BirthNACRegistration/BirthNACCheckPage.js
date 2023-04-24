@@ -13,7 +13,7 @@ import {
   Toast,
   CheckBox,
 } from "@egovernments/digit-ui-react-components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Timeline from "../../../components/NACTimeline";
@@ -26,6 +26,7 @@ const ActionButton = ({ jumpTo }) => {
     sessionStorage.setItem("isDirectRenewal", false);
     history.push(jumpTo);
   }
+
   return (
     <LinkButton
       label={t("CS_COMMON_CHANGE")}
@@ -55,6 +56,15 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
   const [toast, setToast] = useState(false);
   const { ChildDetails, BirthNACInitiator, BirthNACDetails, BirthNACParentsDetails, AddressBirthDetails } = value;
   const ownerState = useState(BirthNACInitiator?.ownerState);
+
+  const uploadedImages = [
+    BirthNACInitiator.uploadedFile,
+    BirthNACInitiator.uploadedFile1,
+    BirthNACInitiator.uploadedFile2,
+    BirthNACInitiator.uploadedFile3,
+    BirthNACInitiator.uploadedFile4,
+    BirthNACInitiator.uploadedFile5,
+  ];
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -62,6 +72,23 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
     }`;
   }
   let routeLink = "";
+  useEffect(() => {
+    if (uploadedImages?.length > 0) {
+      fetchImage();
+    }
+  }, []);
+  const [imagesThumbs, setImagesThumbs] = useState(null);
+  const [imageZoom, setImageZoom] = useState(null);
+
+  const fetchImage = async () => {
+    setImagesThumbs(null);
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    setImagesThumbs(newThumbnails);
+  };
 
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
@@ -1547,6 +1574,68 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
             );
           }
         })}
+
+        <Accordion
+          expanded={false}
+          title={t("CR_DOCUMENTS")}
+          content={
+            <StatusTable>
+              {uploadedImages.length > 0 && (
+                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {uploadedImages.length > 0 && (
+                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                  <div
+                    className="col-md-12"
+                    style={{
+                      display: "flex",
+                      marginLeft: "15px",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {imagesThumbs &&
+                      imagesThumbs.map((thumbnail, index) => {
+                        return (
+                          <div key={index}>
+                            {thumbnail.type == "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                  height={120}
+                                  data={thumbnail.pdfUrl}
+                                  alt={`upload-thumbnails-${index}`}
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                height={120}
+                                src={thumbnail.small}
+                                alt={`upload-thumbnails-${index}`}
+                                onClick={() => setImageZoom(thumbnail.large)}
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+            </StatusTable>
+          }
+        />
+        {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">

@@ -301,6 +301,13 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.MarriageDetails?.marriageDOM ? false : false);
+  const [marriageDistrictidError, setMarriageDistrictidError] = useState(false);
+  const [marriageTalukIDError, setmarriageTalukIDError] = useState(false);
+  const [marriageVillageNameError, setmarriageVillageNameError] = useState(false);
+  const [marriageLBtypeError, setMarriageLBtypeError] = useState(false);
+  const [marriageTenantidError, setMarriageTenantidError] = useState(false);
+  const [marriageWardCodeError, setMarriageWardCodeError] = useState(false);
+  const [marriagePlaceTypeError, setMarriagePlacetypeError] = useState(false);
 
   const onSkip = () => onSelect();
   // React.useEffect(() => {
@@ -487,6 +494,89 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   let validFlag = true;
   const goNext = () => {
+    
+    if (marriageDistrictid == null || marriageDistrictid == undefined) {
+      setMarriageDistrictidError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setMarriageDistrictidError(false);
+    }
+    if (marriageTalukID == null || marriageTalukID == undefined || marriageTalukID == "") {
+      setmarriageTalukIDError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setmarriageTalukIDError(false);
+    }
+    if (marriageVillageName == null || marriageVillageName == undefined || marriageVillageName == "") {
+      setmarriageVillageNameError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setmarriageVillageNameError(false);
+    }
+    if (marriageLBtype == null || marriageLBtype == undefined || marriageLBtype == "") {
+      setMarriageLBtypeError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setMarriageLBtypeError(false);
+    }
+    if (marriageWardCode == null || marriageWardCode == undefined || marriageWardCode == "") {
+      setMarriageWardCodeError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setMarriageWardCodeError(false);
+    }
+    if (marriageTenantid == null || marriageTenantid == undefined || marriageTenantid == "") {
+      setMarriageTenantidError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setMarriageTenantidError(false);
+    }
+    if (marriagePlaceType == null || marriagePlaceType == undefined || marriagePlaceType == "") {
+      setMarriagePlacetypeError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+    } else {
+      setMarriagePlacetypeError(false);
+    }
+    // if(marriagePlacetype.code === "RELIGIOUS_INSTITUTION"){
+    //   if (marriagePlacenameEn == null || marriagePlacenameEn == undefined || marriagePlacenameEn == "") {
+    //     setMarriagePlacetypeError(true);
+    //     validFlag = false;
+    //     setToast(true);
+    //     setTimeout(() => {
+    //         setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setMarriagePlacetypeError(false);
+    //   }
+    // }
     if (validFlag == true) {
       // sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
       // sessionStorage.setItem("marriageDistrictid", marriageDistrictid ? marriageDistrictid : null);
@@ -915,14 +1005,42 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           </div>
           {toast && (
             <Toast
-              error={DOBError || AgeValidationMsg}
+              error={DOBError || 
+                marriageDistrictidError ||
+                marriageTalukIDError ||
+                marriageVillageNameError ||
+                marriageLBtypeError ||
+                marriageTenantidError ||
+                marriageWardCodeError ||
+                marriagePlaceTypeError
+          
+              }
               label={
-                DOBError || AgeValidationMsg
+                DOBError || 
+                marriageDistrictidError ||
+                marriageTalukIDError ||
+                marriageVillageNameError ||
+                marriageLBtypeError ||
+                marriageTenantidError ||
+                marriageWardCodeError ||
+                marriagePlaceTypeError
                   ? DOBError
                     ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
-                    : AgeValidationMsg
-                    ? t(`CR_INVALID_AGE`)
-                    : setToast(false)
+                    : marriageDistrictidError
+                      ? t(`CR_INVALID_DISTRICT`)
+                      : marriageTalukIDError
+                        ? t(`CR_INVALID_TALUK`)
+                        : marriageVillageNameError
+                          ? t(`CR_INVALID_VILLAGE_NAME`)
+                          : marriageLBtypeError
+                            ? t(`CR_INVALID_LB_TYPE`)
+                            : marriageTenantidError
+                              ? t(`CR_INVALID_LB`)
+                              : marriageWardCodeError
+                                ? t(`CR_INVALID_WARD`)
+                                : marriagePlaceTypeError
+                                  ? t(`CR_INVALID_MARRIAGE_PLACE_TYPE`)
+                                  : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
