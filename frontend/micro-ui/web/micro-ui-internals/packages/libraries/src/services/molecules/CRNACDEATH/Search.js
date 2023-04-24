@@ -101,22 +101,54 @@ export const CRNACDeathsearch = {
             || "NA",
         },
         {
-          title: "PDF_CR_NAME_WIFE_HUSBAND",
-          value: response?.InformationDeath?.SpouseNameEn + " / " + response?.InformationDeath?.SpouseNameML || "NA ",
+          title: "Aadhar Number",
+          value: response?.InformationDeath?.DeceasedAadharNumber + "," || "NA",
         },
+          {
+            title: "PDF_CR_NAME_WIFE_HUSBAND",
+            value: response?.InformationDeath?.SpouseNameEn + " / " + response?.InformationDeath?.SpouseNameML || "NA ",
+          },
+          {
+            title: "Aadhar Number",
+            value: response?.InformationDeath?.SpouseAadhaar  || "NA ",
+          },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
           value: response?.InformationDeath?.FatherNameEn + " / " + response?.InformationDeath?.FatherNameMl || "NA",
         },
         {
+          title: "Aadhar Number",
+          value: response?.InformationDeath?.FatherAadharNo  || "NA ",
+        },
+        {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
           value: response?.InformationDeath?.MotherNameEn + " / " + response?.InformationDeath?.MotherNameMl || "NA",
         },
-        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA" },
+        {
+          title: "Aadhar Number",
+          value: response?.InformationDeath?.MotherAadharNo  || "NA ",
+        },
+        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace  || "NA" },
 
         // ...(InformationDeath.DeathPlace.code === "HOSPITAL" && {
 
         // }),
+      ],
+    };
+    const ApplicantDetail = {
+      title: "Applicant Details",
+      asSectionHeader: true,
+      values: [
+        {
+          title: "Applicant Name",
+          value:
+            response?.DeathApplicantDtls?.ApplicantName || "NA",
+        },
+
+        { title: "Applicant Aadhar", value: response?.DeathApplicantDtls?.ApplicantAadhaarNo || "NA" },
+        { title: "Applicant Mobile", value: response?.DeathApplicantDtls?.ApplicantMobileNo || "NA"},
+        { title: "Applicant Relation", value: response?.DeathApplicantDtls?.ApplicantRelation || "NA",},
+        { title: "Applicant Address", value: response?.DeathApplicantDtls?.ApplicantAddress  || "NA ",},
       ],
     };
     const Docdetails = {
@@ -128,7 +160,7 @@ export const CRNACDeathsearch = {
 
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
-    // response && employeeResponse.push(DeathPlaceHome);
+    response && employeeResponse.push(ApplicantDetail);
     // response && employeeResponse.push(FamilyInformationDeath);
     // response && employeeResponse.push(statisticalInfo);
 
