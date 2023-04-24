@@ -364,17 +364,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   } 
   function setSelectGroomMiddlenameMal(e) {
-   if(groomMiddlenameEn != null && groomMiddlenameEn != ""){
-    console.log(groomMiddlenameEn);
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setGroomMiddlenameMl("");
     } else {
       setGroomMiddlenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      console.log(groomMiddlenameMl);
     }
-   }
   }
   function setSelectGroomFirstnameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -485,6 +481,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     } else {
     setGroomGuardianAadharNo(newValue);
+    console.log(gfjghf+groomGuardianAadharNo);
      }
   }
   function setSelectGroomMotherAdharNo(e) {
@@ -536,58 +533,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       setAadharError(false);
     }
   }
-    if (groomFatherAadharNo.trim() == null || groomFatherAadharNo.trim() == '' || groomFatherAadharNo.trim() == undefined) {
-      setGroomFatherAadharNo("");
-    } else if (groomFatherAadharNo != null && groomFatherAadharNo != "") {
-      let adharLength = groomFatherAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    }else {
-      setAadharError(false);
-    }
-    
-    if (groomMotherAadharNo.trim() == null || groomMotherAadharNo.trim() == '' || groomMotherAadharNo.trim() == undefined) {
-      setGroomMotherAadharNo("");
-    } else if (groomMotherAadharNo != null && groomMotherAadharNo != "") {
-      let adharLength = groomMotherAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    }else {
-      setAadharError(false);
-    }
-    if (groomGuardianAadharNo.trim() == null || groomGuardianAadharNo.trim() == '' || groomGuardianAadharNo.trim() == undefined) {
-      setGroomGuardianAadharNo("");
-    } else if (groomGuardianAadharNo != null && groomGuardianAadharNo != "") {
-      let adharLength = groomGuardianAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    }else {
-      setAadharError(false);
-    }
     // if(groomPassportNo != null && groomPassportNo != ""){  
     //   let pasportLength = groomPassportNo;
     //     if (pasportLength.length < 8 || pasportLength.length > 8) {
@@ -659,20 +604,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setGroomFirstnameMlError(false);
     }
-  if(groomMiddlenameEn != null && groomMiddlenameEn != ""){
-    if (groomMiddlenameEn.trim() == null || groomMiddlenameEn.trim() == '' || groomMiddlenameEn.trim() == undefined) {
-      validFlag = false;
-      setGroomMiddlenameEn("");
-      setGroomMiddlenameEnError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setGroomMiddlenameEnError(false);
-    }
-  }
-  if(groomMiddlenameMl != null && groomMiddlenameMl != ""){
+  if(groomMiddlenameEn.trim() == null || groomMiddlenameEn.trim() == '' || groomMiddlenameEn.trim() == undefined){
+    setGroomMiddlenameEn("");
+  }else{
     if (groomMiddlenameMl.trim() == null || groomMiddlenameMl.trim() == '' || groomMiddlenameMl.trim() == undefined) {
       validFlag = false;
       setGroomMiddlenameMl("");
@@ -685,20 +619,25 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       setGroomMiddlenameMlError(false);
     }
   }
-  if(groomLastnameEn != null && groomLastnameEn != ""){
-    if (groomLastnameEn.trim() == null || groomLastnameEn.trim() == '' || groomLastnameEn.trim() == undefined) {
+  if(groomMiddlenameMl.trim() == null || groomMiddlenameMl.trim() == '' || groomMiddlenameMl.trim() == undefined){
+    setGroomMiddlenameMl("");
+    setGroomMiddlenameEnError(false);
+  }else{
+    if (groomMiddlenameEn.trim() == null || groomMiddlenameEn.trim() == '' || groomMiddlenameEn.trim() == undefined) {
       validFlag = false;
-      setGroomLastnameEn("");
-      setGroomLastnameEnError(true);
+      setGroomMiddlenameEn("");
+      setGroomMiddlenameEnError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setGroomLastnameEnError(false);
+      setGroomMiddlenameEnError(false);
     }
   }
-  if(groomLastnameMl != null && groomLastnameMl != ""){
+  if(groomLastnameEn.trim() == null || groomLastnameEn.trim() == '' || groomLastnameEn.trim() == undefined){
+    setGroomLastnameEn("");
+  }else{
     if (groomLastnameMl.trim() == null || groomLastnameMl.trim() == '' || groomLastnameMl.trim() == undefined) {
       validFlag = false;
       setGroomLastnameMal("");
@@ -711,7 +650,59 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       setGroomLastnameMalError(false);
     }
   }
+  if(groomLastnameMl.trim() == null || groomLastnameMl.trim() == '' || groomLastnameMl.trim() == undefined){
+    setGroomLastnameMal("");
+    setGroomLastnameEnError(false);
+  }else{  
+    if (groomLastnameEn.trim() == null || groomLastnameEn.trim() == '' || groomLastnameEn.trim() == undefined) {
+      validFlag = false;
+      setGroomLastnameEn("");
+      setGroomLastnameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setGroomLastnameEnError(false);
+    }
+  }
   if(groomParentGuardian === "PARENT"){
+
+    if (groomFatherAadharNo.trim() == null || groomFatherAadharNo.trim() == '' || groomFatherAadharNo.trim() == undefined) {
+      setGroomFatherAadharNo("");
+    } else if (groomFatherAadharNo != null && groomFatherAadharNo != "") {
+      let adharLength = groomFatherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    }else {
+      setAadharError(false);
+    }
+    
+    if (groomMotherAadharNo.trim() == null || groomMotherAadharNo.trim() == '' || groomMotherAadharNo.trim() == undefined) {
+      setGroomMotherAadharNo("");
+    } else if (groomMotherAadharNo != null && groomMotherAadharNo != "") {
+      let adharLength = groomMotherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    }else {
+      setAadharError(false);
+    }
     if (groomFathernameEn.trim() == null || groomFathernameEn.trim() == '' || groomFathernameEn.trim() == undefined) {
       validFlag = false;
       setGroomFathernameEn("");
@@ -758,6 +749,23 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   if(groomParentGuardian === "GUARDIAN"){
+    if (groomGuardianAadharNo.trim() == null || groomGuardianAadharNo.trim() == '' || groomGuardianAadharNo.trim() == undefined) {
+      setGroomGuardianAadharNo("");
+    } else if (groomGuardianAadharNo != null && groomGuardianAadharNo != "") {
+      let adharLength = groomGuardianAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    }else {
+      setAadharError(false);
+    }
     if (groomGuardiannameEn.trim() == null || groomGuardiannameEn.trim() == '' || groomGuardiannameEn.trim() == undefined) {
       validFlag = false;
       setGroomGuardiannameEn("");
@@ -1550,6 +1558,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           {toast && (
             <Toast
               error={AadharError || 
+                    DOBError ||
                     AgeValidationMsg ||
                     AdhaarDuplicationError ||
                     groomPassportNoError ||
@@ -1572,6 +1581,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   }
               label={
                 AadharError || 
+                DOBError ||
                 AgeValidationMsg ||
                 AdhaarDuplicationError ||
                 groomPassportNoError ||
@@ -1593,45 +1603,27 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 groomMaritalstatusIDError
                  ? AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                    : AgeValidationMsg
-                      ? t(`CR_INVALID_GROOM_AGE`)
-                      : AdhaarDuplicationError
-                        ? t(`DUPLICATE_AADHAR_NO`)
-                        : groomPassportNoError
-                          ? t(`CR_INVALID_PASSPORT_NO`)
-                          : groomSocialSecurityNoError
-                            ? t(`CR_INVALID_SOCIAL_SECURITY_NO`)
-                            : groomFirstnameEnError
-                              ? t(`CR_INVALID_FIRST_NAME_EN`)
-                              : groomFirstnameMlError
-                                ? t(`CR_INVALID_FIRST_NAME_ML`)
-                                : groomMiddlenameEnError
-                                  ? t(`CR_INVALID_MIDDLE_NAME_EN`)
-                                  : groomMiddlenameMlError
-                                    ? t(`CR_INVALID_MIDDLE_NAME_ML`)
-                                    : groomLastnameEnError
-                                      ? t(`CR_INVALID_LAST_NAME_EN`)
-                                      : groomLastnameMlError
-                                        ? t(`CR_INVALID_LAST_NAME_ML`)
-                                        : groomFathernameEnError
-                                          ? t(`CR_INVALID_FATHER_NAME_EN`)
-                                          : groomFathernameMlError
-                                            ? t(`CR_INVALID_FATHER_NAME_ML`)
-                                            : groomMothernameEnError
-                                              ? t(`CR_INVALID_MOTHER_NAME_EN`)
-                                              : groomMothernameMlError
-                                                ? t(`CR_INVALID_MOTHER_NAME_ML`)
-                                                : groomGuardiannameEnError
-                                                  ? t(`CR_INVALID_GUARDIAN_NAME_EN`)
-                                                  : groomGuardiannameMlError
-                                                    ? t(`CR_INVALID_GUARDIAN_NAME_ML`)
-                                                    : groomMobileError
-                                                      ? t(`CR_INVALID_MOBILE_NO`)
-                                                      : groomGenderError
-                                                        ? t(`CR_INVALID_GENDER`)
-                                                        : groomMaritalstatusIDError
-                                                          ? t(`CR_INVALID_MARITAL_STATUS`)
-                                                          : setToast(false)
+                    : DOBError ? t(`CR_DOB_ERROR`)
+                      : AgeValidationMsg ? t(`CR_INVALID_GROOM_AGE`)   
+                        : AdhaarDuplicationError ? t(`DUPLICATE_AADHAR_NO`)                        
+                          : groomPassportNoError ? t(`CR_PASSPORT_NO_ERROR`)                          
+                            : groomSocialSecurityNoError ? t(`CR_SOCIAL_SECURITY_NO_ERROR`)                            
+                              : groomFirstnameEnError ? t(`CR_FIRST_NAME_EN_ERROR`)                               
+                                : groomFirstnameMlError ? t(`CR_FIRST_NAME_ML_ERROR`)                                
+                                  : groomMiddlenameEnError ? t(`CR_MIDDLE_NAME_EN_ERROR`)                                  
+                                    : groomMiddlenameMlError ? t(`CR_MIDDLE_NAME_ML_ERROR`)                                    
+                                      : groomLastnameEnError ? t(`CR_LAST_NAME_EN_ERROR`)                                     
+                                        : groomLastnameMlError ? t(`CR_LAST_NAME_ML_ERROR`)                                        
+                                          : groomFathernameEnError ? t(`CR_FATHER_NAME_EN_ERROR`)                                         
+                                            : groomFathernameMlError ? t(`CR_FATHER_NAME_ML_ERROR`)                                           
+                                              : groomMothernameEnError ? t(`CR_MOTHER_NAME_EN_ERROR`)                                              
+                                                : groomMothernameMlError ? t(`CR_MOTHER_NAME_ML_ERROR`)                                                
+                                                  : groomGuardiannameEnError ? t(`CR_GUARDIAN_NAME_EN_ERROR`)                                                  
+                                                    : groomGuardiannameMlError ? t(`CR_GUARDIAN_NAME_ML_ERROR`)                                                   
+                                                      : groomMobileError ? t(`CR_MOBILE_NO_ERROR`)                                                      
+                                                        : groomGenderError ? t(`CR_INVALID_GENDER_CHOOSE`)                                                       
+                                                          : groomMaritalstatusIDError ? t(`CR_INVALID_MARITAL_STATUS_CHOOSE`)                                                       
+                                                            : setToast(false)
                  : setToast(false)
               }
               onClose={() => setToast(false)}
