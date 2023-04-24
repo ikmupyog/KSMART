@@ -171,7 +171,7 @@
 
 .submit-bar-disabled {
   @apply h-10 bg-primary-main text-center outline-none opacity-50;
-  width: 15%;
+  width: 100%;
   float: right;
 
   &:focus {
@@ -186,7 +186,7 @@
 @screen dt {
   .submit-bar,
   .submit-bar-disabled {
-    width: 15%;
+    width: 100%;
   }
 
   .card {

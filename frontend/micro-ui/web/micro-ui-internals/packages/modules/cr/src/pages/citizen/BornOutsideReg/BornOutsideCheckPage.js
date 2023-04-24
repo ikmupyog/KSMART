@@ -507,6 +507,46 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode}</CardText>
                     </div>
+                    <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
                   </div>
                 </div>
                 <div className="row">
@@ -540,16 +580,16 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName.name}</CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaWardNo.namecmb}</CardText>
                     </div>
                   </div>
@@ -665,22 +705,22 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.orderofChildren}</CardText>
                     </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.relation}</CardText>
-                    </div>
                       </div>
                       </div>
-
+                      <div className="row">
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMANT_DETAILS")}`}</span>
+                    </h1>
+                  </div>
+                </div>
                     <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAadhar}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.relation}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME")}`} :</CardText>
@@ -691,6 +731,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                 </div>
+               
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAadhar}</CardText>
                 </div>

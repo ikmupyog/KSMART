@@ -9,6 +9,7 @@ import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
+import { sortDropdownNames } from "../../utils";
 // import _ from "lodash";
 // import { STATE_CODE } from "../../config/constants";
 
@@ -24,9 +25,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
   const [workFlowAmount, setWorkFlowAmount] = useState(formData?.InformationDeath?.workFlowAmount);
-  const [isPayment, setIsPayment] = useState(formData?.InformationDeath?.isPayment);
-
- 
+  const [isPayment, setIsPayment] = useState(formData?.InformationDeath?.isPayment); 
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -373,35 +372,65 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
 
-  const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
-  const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
-  const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
-  const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(formData?.InformationDeath?.DeceasedFirstNameEn ? false : false);
-  const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(formData?.InformationDeath?.DeceasedFirstNameMl ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.hospitalNameEn ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.institution ? false : false);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
-  const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
-  const [AgeUnitError, setAgeUnitError] = useState(formData?.InformationDeath?.AgeUnit ? false : false);
-  const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
+  const [sexError, setsexError] = useState(false);
+  const [DOBError, setDOBError] = useState(false);
+  const [AadharError, setAadharError] = useState(false);
+  const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(false);
+  const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(false);
+  const [HospitalError, setHospitalError] = useState(false);
+  const [InstitutionError, setInstitutionError] = useState(false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(false);
+  const [AgeError, setAgeError] = useState(false);
+  const [AgeUnitError, setAgeUnitError] = useState(false);
+  const [WardNameError, setWardNameError] = useState(false);
 
-  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false);
-  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false);
-  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false);
-  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false);
-  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false);
-  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false);
-  const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(formData?.InformationDeath?.VehicleFromplaceEn ? false : false);
-  const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
-  const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
-  const [vehicleTypeError, setvehicleTypeError] = useState(formData?.InformationDeath?.vehicleType ? false : false);
+  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(false);
+  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(false);
+  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(false);
+  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(false);
+  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(false);
+  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(false);
+  const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(false);
+  const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(false);
+  const [VehicleNumberError, setvVehicleNumberError] = useState(false);
+  const [vehicleTypeError, setvehicleTypeError] = useState(false);
   const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
-  const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(formData?.InformationDeath?.VehicleFirstHaltEn ? false : false);
-  const [GeneralRemarksError, setGeneralRemarksError] = useState(formData?.InformationDeath?.GeneralRemarks ? false : false);
-  const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
-  const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
-  const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
+  const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(false);
+  const [GeneralRemarksError, setGeneralRemarksError] = useState(false);
+  const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(false);
+  const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(false);
+  const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(false);
   
+  // const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
+  // const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
+  // const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
+  // const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(formData?.InformationDeath?.DeceasedFirstNameEn ? false : false);
+  // const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(formData?.InformationDeath?.DeceasedFirstNameMl ? false : false);
+  // const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.hospitalNameEn ? false : false);
+  // const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.institution ? false : false);
+  // const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
+  // const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
+  // const [AgeUnitError, setAgeUnitError] = useState(formData?.InformationDeath?.AgeUnit ? false : false);
+  // const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
+
+  // const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false);
+  // const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false);
+  // const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false);
+  // const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false);
+  // const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false);
+  // const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false);
+  // const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(formData?.InformationDeath?.VehicleFromplaceEn ? false : false);
+  // const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
+  // const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
+  // const [vehicleTypeError, setvehicleTypeError] = useState(formData?.InformationDeath?.vehicleType ? false : false);
+  // const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
+  // const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(formData?.InformationDeath?.VehicleFirstHaltEn ? false : false);
+  // const [GeneralRemarksError, setGeneralRemarksError] = useState(formData?.InformationDeath?.GeneralRemarks ? false : false);
+  // const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
+  // const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
+  // const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
+   const [access, setAccess] = React.useState(true);
+
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -1399,7 +1428,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPlace}
+                  option={sortDropdownNames(cmbPlace ? cmbPlace : [],"name",t)}
+                  // option={cmbPlace}
                   selected={DeathPlace}
                   select={selectDeathPlace}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
@@ -1791,7 +1821,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={menu}
+                  option={sortDropdownNames(menu ? menu : [],"code",t)}
+                 // option={menu}
                   selected={DeceasedGender}
                   select={selectDeceasedGender}
                   placeholder={`${t("CR_GENDER")}`}

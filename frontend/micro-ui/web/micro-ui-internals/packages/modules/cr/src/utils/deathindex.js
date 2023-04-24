@@ -611,7 +611,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,
           DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType?.code : null,
           hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
-          //hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
+         // DeathPlaceHospitalNameEn: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.DeathPlaceHospitalNameEn.hospitalName : null,
           hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
          // hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
           DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId?.code : null,
