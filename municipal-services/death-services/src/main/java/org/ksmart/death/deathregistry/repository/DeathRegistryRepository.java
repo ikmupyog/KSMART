@@ -1486,6 +1486,48 @@ public class DeathRegistryRepository {
         try {
             pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
 
+                Object mdmsData = util.mDMSNACCertificate(pdfApplicationRequest.getRequestInfo()
+                                , cert.getDeathBasicInfo().getTenantId());
+
+                 Map<String,List<String>> masterData = getAttributeValuesNAC(mdmsData);
+
+                 String lbName = masterData.get(DeathRegistryConstants.TENANTS).toString();
+                 lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
+                 cert.getDeathBasicInfo().setLocalBodyName(lbName);   
+                
+                 Object mdmsTaluk = util.mDMSCallCertificateLBTaluk(pdfApplicationRequest.getRequestInfo()
+                            , cert.getDeathBasicInfo().getTenantId());
+                 Map<String,List<String>> masterDataTaluk = getAttributeValuesVehicle(mdmsTaluk);
+
+                 String lbTalukMaster = masterDataTaluk.get(DeathRegistryConstants.TENANTS).toString();
+                 lbTalukMaster = lbTalukMaster.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 Object mdmsTalukEn = util.mDMSCallCertificateLBTalukEn(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getDeathBasicInfo().getTenantId()
+                                      ,lbTalukMaster);
+                 Map<String,List<String>> masterDataTalukEn = getAttributeValues(mdmsTalukEn);
+
+                 String lbTalukEn = masterDataTalukEn.get(DeathRegistryConstants.TALUK).toString();
+                 lbTalukEn = lbTalukEn.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.getDeathBasicInfo().setLbTalukEn(lbTalukEn);
+
+                 Object mdmsDistrict = util.mDMSCallCertificateLBDistrict(pdfApplicationRequest.getRequestInfo()
+                            , cert.getDeathBasicInfo().getTenantId());
+                 Map<String,List<String>> masterDataDistrict = getAttributeValuesVehicle(mdmsDistrict);
+
+                 String lbDistrictMaster = masterDataDistrict.get(DeathRegistryConstants.TENANTS).toString();
+                 lbDistrictMaster = lbDistrictMaster.replaceAll("[\\[\\]\\(\\)]", "");
+                
+                 Object mdmsDistrictEn = util.mDMSCallCertificateLBDistrictEn(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getDeathBasicInfo().getTenantId()
+                                      ,lbDistrictMaster);
+                 Map<String,List<String>> masterDataDistrictEn = getAttributeValues(mdmsDistrictEn);
+
+                 String lbDistrictEn = masterDataDistrictEn.get(DeathRegistryConstants.DISTRICT).toString();
+                 lbDistrictEn = lbDistrictEn.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.getDeathBasicInfo().setLbDistrictEn(lbDistrictEn);
             });
             // log.info(new Gson().toJson(pdfApplicationRequest));
             NACPdfApplicationRequest req = NACPdfApplicationRequest.builder().deathNACCertificate(pdfApplicationRequest.getDeathNACCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
@@ -1511,5 +1553,25 @@ public class DeathRegistryRepository {
 			throw new CustomException("PDF_ERROR","Error in generating PDF");
 		}
 		return result;
+    }
+
+     //Rakhi S ikm on 11.02.2023
+     private Map<String, List<String>> getAttributeValuesNAC(Object mdmsdata){
+        List<String> modulepaths = Arrays.asList(DeathRegistryConstants.TENANT_JSONPATH);
+        final Map<String, List<String>> mdmsResMap = new HashMap<>();
+       
+        modulepaths.forEach(modulepath -> {
+            try {
+                mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
+                log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
+            } catch (Exception e) {
+                log.error("Error while fetching MDMS data",e);
+                throw new CustomException(DeathRegistryConstants.INVALID_TENANT_ID_MDMS_KEY,
+                DeathRegistryConstants.INVALID_TENANT_ID_MDMS_MSG);
+            }
+           
+        });
+        // System.out.println("mdmsResMap"+mdmsResMap);
+        return mdmsResMap;
     }
 }

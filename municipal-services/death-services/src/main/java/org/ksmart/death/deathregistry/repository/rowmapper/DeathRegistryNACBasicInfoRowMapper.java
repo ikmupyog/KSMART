@@ -2,6 +2,9 @@ package org.ksmart.death.deathregistry.repository.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.ksmart.death.deathregistry.web.models.DeathRegistryBasicInfo;
 import org.springframework.dao.DataAccessException;
@@ -16,6 +19,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeathRegistryNACBasicInfoRowMapper implements ResultSetExtractor  , BaseRowMapper{
     public DeathRegistryBasicInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar calenderBefore = Calendar.getInstance(), calenderAfter = Calendar.getInstance();
+        Date date = new Date(rs.getLong("dateofdeath"));
+        calenderBefore.setTime(date);
+        calenderAfter.setTime(date);
+        calenderBefore.add(Calendar.YEAR, -3);
+        calenderAfter.add(Calendar.YEAR, 3);
+        Date beforeDate = calenderBefore.getTime();
+        Date afterDate = calenderAfter.getTime();
+
         return DeathRegistryBasicInfo.builder()
         .id(rs.getString("id"))
         .tenantId(rs.getString("tenantid"))
@@ -63,6 +76,7 @@ public class DeathRegistryNACBasicInfoRowMapper implements ResultSetExtractor  ,
         .spouseType(rs.getString("spouse_type"))
         .spouseNameEn(rs.getString("spouse_name_en"))
         .spouseNameML(rs.getString("spouse_name_ml"))
+        .period(dateFormat.format(beforeDate) + " to " + dateFormat.format(afterDate))
         .build();
     }    
 }

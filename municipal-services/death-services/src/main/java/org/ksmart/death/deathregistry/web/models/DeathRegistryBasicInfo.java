@@ -524,4 +524,8 @@ public class DeathRegistryBasicInfo {
 
    @JsonProperty("publicPlaceType")
    private String  publicPlaceType ;
+
+   @JsonProperty("period")
+   private String  period ;
+   
 }

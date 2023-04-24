@@ -1626,4 +1626,32 @@ public Object mDMSCallCertificateLBDistrictMl(RequestInfo requestInfo
                 // System.out.println("mdmsreq2"+mdmsCriteriaReq);
                 return mdmsCriteriaReq;
         }
+
+//         //RAkhi S ikm on 23.12.2022
+    public Object mDMSNACCertificate(RequestInfo requestInfo
+                , String tenantId
+              ) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSNACCertificate(requestInfo
+                                , tenantId);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+
+          //RAkhi S ikm on 12.02.2023
+    private MdmsCriteriaReq getMDMSNACCertificate(RequestInfo requestInfo
+                , String tenantId) {
+                ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);     
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+                return mdmsCriteriaReq;
+      }
+
+     
 }
