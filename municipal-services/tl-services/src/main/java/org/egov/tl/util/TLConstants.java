@@ -443,6 +443,8 @@ public class TLConstants {
 
         public static final String FUN_MODULE_CORRECTION = "BFIFLC";
 
+        public static final String LICENSE_CERTIFICATE_CAPTION = "CERT";
+
         public TLConstants() {
         }
 

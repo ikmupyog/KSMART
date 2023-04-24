@@ -188,10 +188,10 @@ public class EnrichmentService {
             } else {
                 funModule = TLConstants.FUN_MODULE_RENEWALL;
             }
-            List<String> ackNoDetails = getIdList(requestInfo, tradeLicense.getTenantId(),
+            List<String> appNoDetails = getIdList(requestInfo, tradeLicense.getTenantId(),
                     config.getApplicationNumberIdgenNameTL(), funModule,
                     TLConstants.APP_NUMBER_CAPTION, tradeLicenseRequest.getLicenses().size());
-            ListIterator<String> itr = ackNoDetails.listIterator();
+            ListIterator<String> itr = appNoDetails.listIterator();
             tradeLicenseRequest.getLicenses().forEach(License -> {
                 License.setApplicationNumber(itr.next());
             });
@@ -552,8 +552,14 @@ public class EnrichmentService {
                         // licenseNumbers = getIdList(requestInfo, tenantId,
                         // config.getLicenseNumberIdgenNameTL(),
                         // config.getLicenseNumberIdgenFormatTL(), count);
+                        String FunModuleName = licenses.get(0).getApplicationType().toString()
+                                .equals(TLConstants.APPLICATION_TYPE_RENEWAL) ? TLConstants.FUN_MODULE_RENEWALL
+                                        : TLConstants.FUN_MODULE_NEWL;
+                        licenseNumbers = getIdList(requestInfo, tenantId,
+                                config.getLicenseNumberIdgenNameTL(), FunModuleName,
+                                TLConstants.LICENSE_CERTIFICATE_CAPTION,
+                                request.getLicenses().size());
                         break;
-
                     case businessService_BPA:
                         // licenseNumbers = getIdList(requestInfo, tenantId,
                         // config.getLicenseNumberIdgenNameBPA(),
@@ -720,5 +726,23 @@ public class EnrichmentService {
         date.append("-").append(month).append("-").append(day);
         return date.toString();
     }
+
+    // tradeLicense.getTradeLicenseDetail().getTradeUnits().forEach(tradeUnit -> {
+    // if (tradeUnit.getId() == null and active=true) {
+    // tradeUnit.setTenantId(tradeLicense.getTenantId());
+    // tradeUnit.setId(UUID.randomUUID().toString());
+    // tradeUnit.setActive(true);
+    // }
+    // if (tradeUnit.getId() != null and active=true) {
+    // tradeUnit.setTenantId(tradeLicense.getTenantId());
+    // tradeUnit.setId(getid);
+    // tradeUnit.setActive(true);
+    // }
+    // if (tradeUnit.getId() != null and active=false) {
+    // tradeUnit.setTenantId(tradeLicense.getTenantId());
+    // tradeUnit.setId(getid);
+    // tradeUnit.setActive(true);
+    // }
+    // });
 
 }
