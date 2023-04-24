@@ -10,42 +10,42 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   console.log("Informer",formData);
 
   const [IsDeclarationInformant, setIsDeclarationInformant] = useState(
-    formData?.InformantDetails?.IsDeclarationInformant ? formData?.InformantDetails?.IsDeclarationInformant : false
+    formData?.InitiatorAbandoned?.IsDeclarationInformant ? formData?.InitiatorAbandoned?.IsDeclarationInformant : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
-  //   formData?.InformantDetails?.isDeclarationInfotwo ? formData?.InformantDetails?.isDeclarationInfotwo : false
+  //   formData?.InitiatorAbandoned?.isDeclarationInfotwo ? formData?.InitiatorAbandoned?.isDeclarationInfotwo : false
   // );
   const [InformantAadharNo, setInformantAadharNo] = useState(
-    formData?.InformantDetails?.InformantAadharNo ? formData?.InformantDetails?.InformantAadharNo : ""
+    formData?.InitiatorAbandoned?.InformantAadharNo ? formData?.InitiatorAbandoned?.InformantAadharNo : ""
   );
   const [InformantNameEn, setInformantNameEn] = useState(
-    formData?.InformantDetails?.InformantNameEn ? formData?.InformantDetails?.InformantNameEn : ""
+    formData?.InitiatorAbandoned?.InformantNameEn ? formData?.InitiatorAbandoned?.InformantNameEn : ""
   );
   const [InformantMobileNo, setInformantMobileNo] = useState(
-    formData?.InformantDetails?.InformantMobileNo ? formData?.InformantDetails?.InformantMobileNo : ""
+    formData?.InitiatorAbandoned?.InformantMobileNo ? formData?.InitiatorAbandoned?.InformantMobileNo : ""
   );
   const [DeathSignedOfficerDesignation, setDeathSignedOfficerDesignation] = useState(
-    formData?.InformantDetails?.DeathSignedOfficerDesignation ? formData?.InformantDetails?.DeathSignedOfficerDesignation : ""
+    formData?.InitiatorAbandoned?.DeathSignedOfficerDesignation ? formData?.InitiatorAbandoned?.DeathSignedOfficerDesignation : ""
   );
   const [InformantAddress, setInformantAddress] = useState(
-    formData?.InformantDetails?.InformantAddress ? formData?.InformantDetails?.InformantAddress : ""
+    formData?.InitiatorAbandoned?.InformantAddress ? formData?.InitiatorAbandoned?.InformantAddress : ""
   );
   const [InformantOfficeAuthority, setInformantOfficeAuthority] = useState(
-    formData?.InformantDetails?.InformantOfficeAuthority ? formData?.InformantDetails?.InformantOfficeAuthority : ""
+    formData?.InitiatorAbandoned?.InformantOfficeAuthority ? formData?.InitiatorAbandoned?.InformantOfficeAuthority : ""
   );
   const [InformantPENNo, setInformantPENNo] = useState(
-    formData?.InformantDetails?.InformantPENNo ? formData?.InformantDetails?.InformantPENNo : ""
+    formData?.InitiatorAbandoned?.InformantPENNo ? formData?.InitiatorAbandoned?.InformantPENNo : ""
   );
   const [InformantOfficeAddress, setInformantOfficeAddress] = useState(
-    formData?.InformantDetails?.InformantOfficeAddress ? formData?.InformantDetails?.InformantOfficeAddress : ""
+    formData?.InitiatorAbandoned?.InformantOfficeAddress ? formData?.InitiatorAbandoned?.InformantOfficeAddress : ""
   );
 
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
-  const [infomantNameError, setinfomantNameError] = useState(formData?.InformantDetails?.InformantNameEn ? false : false);
-  const [infomantAadharError, setinfomantAadharError] = useState(formData?.InformantDetails?.infomantAadhar ? false : false);
-  const [infomantMobileError, setinfomantMobileError] = useState(formData?.InformantDetails?.InformantMobileNo ? false : false);
-  const [informerDesiError, setinformerDesiError] = useState(formData?.InformantDetails?.DeathSignedOfficerDesignation ? false : false);
+  const [infomantNameError, setinfomantNameError] = useState(formData?.InitiatorAbandoned?.InformantNameEn ? false : false);
+  const [infomantAadharError, setinfomantAadharError] = useState(formData?.InitiatorAbandoned?.infomantAadhar ? false : false);
+  const [infomantMobileError, setinfomantMobileError] = useState(formData?.InitiatorAbandoned?.InformantMobileNo ? false : false);
+  const [informerDesiError, setinformerDesiError] = useState(formData?.InitiatorAbandoned?.DeathSignedOfficerDesignation ? false : false);
   const onSkip = () => onSelect();
   const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -54,12 +54,12 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const [uploadedFile3, setUploadedFile3] = useState(null);
   const [uploadedFile4, setUploadedFile4] = useState(null);
   const [uploadedFile5, setUploadedFile5] = useState(null);
-  const [file, setFile] = useState(formData?.InformantDetails?.file);
-  const [file1, setFile1] = useState(formData?.InformantDetails?.file1);
-  const [file2, setFile2] = useState(formData?.InformantDetails?.file2);
-  const [file3, setFile3] = useState(formData?.InformantDetails?.file3);
-  const [file4, setFile4] = useState(formData?.InformantDetails?.file4);
-  const [file5, setFile5] = useState(formData?.InformantDetails?.file5);
+  const [file, setFile] = useState(formData?.InitiatorAbandoned?.file);
+  const [file1, setFile1] = useState(formData?.InitiatorAbandoned?.file1);
+  const [file2, setFile2] = useState(formData?.InitiatorAbandoned?.file2);
+  const [file3, setFile3] = useState(formData?.InitiatorAbandoned?.file3);
+  const [file4, setFile4] = useState(formData?.InitiatorAbandoned?.file4);
+  const [file5, setFile5] = useState(formData?.InitiatorAbandoned?.file5);
 
   function selectfile(e) {
     setFile(e.target.files[0]);
@@ -345,24 +345,24 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("IsDeclarationInformant", IsDeclarationInformant ? IsDeclarationInformant : null);
-      // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
-      sessionStorage.setItem("InformantNameEn", InformantNameEn ? InformantNameEn : null);
-      sessionStorage.setItem("InformantAadharNo", InformantAadharNo ? InformantAadharNo : null);
+      // sessionStorage.setItem("IsDeclarationInformant", IsDeclarationInformant ? IsDeclarationInformant : null);
+      // // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
+      // sessionStorage.setItem("InformantNameEn", InformantNameEn ? InformantNameEn : null);
+      // sessionStorage.setItem("InformantAadharNo", InformantAadharNo ? InformantAadharNo : null);
 
-      sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
-      sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
-      sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);
-      // 
-      sessionStorage.setItem("InformantOfficeAuthority",InformantOfficeAuthority ?InformantOfficeAuthority : null);
-      sessionStorage.setItem("InformantPENNo", InformantPENNo ? InformantPENNo : null);
-      sessionStorage.setItem("InformantOfficeAddress", InformantOfficeAddress ? InformantOfficeAddress : null);
-      sessionStorage.setItem("file", file ? file : null);
-      sessionStorage.setItem("file1", file1 ? file1 : null);
-      sessionStorage.setItem("file2", file2 ? file2 : null);
-      sessionStorage.setItem("file3", file3 ? file3 : null);
-      sessionStorage.setItem("file4", file4 ? file4 : null);
-      sessionStorage.setItem("file5", file5 ? file5 : null);
+      // sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
+      // sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
+      // sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);
+      // // 
+      // sessionStorage.setItem("InformantOfficeAuthority",InformantOfficeAuthority ?InformantOfficeAuthority : null);
+      // sessionStorage.setItem("InformantPENNo", InformantPENNo ? InformantPENNo : null);
+      // sessionStorage.setItem("InformantOfficeAddress", InformantOfficeAddress ? InformantOfficeAddress : null);
+      // sessionStorage.setItem("file", file ? file : null);
+      // sessionStorage.setItem("file1", file1 ? file1 : null);
+      // sessionStorage.setItem("file2", file2 ? file2 : null);
+      // sessionStorage.setItem("file3", file3 ? file3 : null);
+      // sessionStorage.setItem("file4", file4 ? file4 : null);
+      // sessionStorage.setItem("file5", file5 ? file5 : null);
       onSelect(config.key, {
         IsDeclarationInformant,
         // isDeclarationInfotwo,
@@ -379,7 +379,13 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
         uploadedFile2,
         uploadedFile3,
         uploadedFile4,
-        uploadedFile5
+        uploadedFile5,
+        file,
+        file1,
+        file2,
+        file3,
+        file4,
+        file5
 
       });
     }
@@ -563,7 +569,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`DOCUMENTS`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`CR_DOCUMENTS`}</span>
             </h1>
           </div>
         </div>

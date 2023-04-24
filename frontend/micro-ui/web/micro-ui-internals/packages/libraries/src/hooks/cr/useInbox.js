@@ -9,8 +9,8 @@ const useCRInbox = ({ tenantId, filters, config }) => {
     const _filters = {
         tenantId,
 		processSearchCriteria: {
-            moduleName: "CR",
-			businessService: ["WFBIRTH21DAYS"],
+            moduleName: "birth-services",
+			businessService: ["BIRTHHOSP21"],
             ...(applicationStatus?.length > 0 ? {status: applicationStatus} : {}),
             ...(uuid && Object.keys(uuid).length > 0 ? {assignee: uuid.code === "ASSIGNED_TO_ME" ? USER_UUID : ""} : {}),
         },
@@ -29,11 +29,11 @@ const useCRInbox = ({ tenantId, filters, config }) => {
         select: (data) =>({
             statuses: data.statusMap,
             table: data?.items.map( application => ({
-                applicationId: application.ChildDetails.applicationNumber,
-                date: application.ChildDetails.applicationDate,
+                applicationId: application.businessObject.applicationNumber,
+                date: application.businessObject.applicationDate,
                 businessService: application?.ProcessInstance?.businessService,
-                locality: `${application.ChildDetails?.tenantId?.toUpperCase()?.split(".")?.join("_")}_REVENUE_${application.businessObject?.ChildDetails?.address?.locality?.code?.toUpperCase()}`,
-                status: application.ChildDetails.status,
+                locality: `${application.businessObject?.tenantId?.toUpperCase()?.split(".")?.join("_")}_REVENUE_${application.businessObject?.tradeLicenseDetail?.address?.locality?.code?.toUpperCase()}`,
+                status: application.businessObject.status,
                 owner: application.ProcessInstance?.assigner?.name,
                 sla: Math.round(application.ProcessInstance?.businesssServiceSla / (24 * 60 * 60 * 1000))
             })),
