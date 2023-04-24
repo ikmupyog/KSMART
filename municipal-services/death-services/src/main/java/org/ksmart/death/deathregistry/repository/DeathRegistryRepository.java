@@ -1486,6 +1486,9 @@ public class DeathRegistryRepository {
         try {
             pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
 
+                Long currentTime = Long.valueOf(System.currentTimeMillis());
+                cert.getDeathBasicInfo().setDateofissue(currentTime);
+
                 Object mdmsData = util.mDMSNACCertificate(pdfApplicationRequest.getRequestInfo()
                                 , cert.getDeathBasicInfo().getTenantId());
 
@@ -1531,7 +1534,6 @@ public class DeathRegistryRepository {
             });
             // log.info(new Gson().toJson(pdfApplicationRequest));
             NACPdfApplicationRequest req = NACPdfApplicationRequest.builder().deathNACCertificate(pdfApplicationRequest.getDeathNACCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
-         
             pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
                 String uiHost = config.getEgovPdfHost();
                 String deathCertPath = config.getEgovPdfDeathNACEndPoint();
