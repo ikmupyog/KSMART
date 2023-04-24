@@ -620,16 +620,16 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-12">
-                  <div className="col-md-2">
+                  <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherAadhar}</CardText>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CR_MOTHER_ADDRESS")}`} :</CardText>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.addressOfMother}</CardText>
                     </div>                    
                   </div>

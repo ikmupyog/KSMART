@@ -206,7 +206,11 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
         disableSortBy: true,
         accessor: (row) =>
           GetCell(
-            row.InformationDeathAbandoned?.DeceasedFirstNameEn + row.InformationDeathAbandoned?.DeceasedMiddleNameEn + row.InformationDeathAbandoned?.DeceasedLastNameEn ||
+           ( row.InformationDeathAbandoned?.DeceasedFirstNameEn==="Not Recorded")&&
+             + (row.InformationDeathAbandoned?.DeceasedMiddleNameEn==="Not Recorded")&& + 
+            ( row.InformationDeathAbandoned?.DeceasedLastNameEn==="Not Recorded")? t("CR_NOT_RECORDED")
+            : row.InformationDeathAbandoned?.DeceasedFirstNameEn+row.InformationDeathAbandoned?.DeceasedMiddleNameEn+row.InformationDeathAbandoned?.DeceasedLastNameEn
+             ||
             t("CR_NOT_RECORDED")
           ),
       },
