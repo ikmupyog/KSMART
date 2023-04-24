@@ -163,20 +163,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "No", code: false },
   ];
   function selectgroomResidenship(event) {
-    console.log(event.target.value, "e");
     setGroomResidentShip(event.target.value);
-    // setValueRad(value.code);
-    // setisInitialRenderRadioButtons(true);
   }
-  // useEffect(() => {
-  //   if (isInitialRenderRadioButtons) {
-  //     setisInitialRenderRadioButtons(false);
-  //     if (selectedValueRadio) {
-  //       // setIsInitialRenderRadio(false);
-  //       setValueRad(selectedValueRadio.code);
-  //     }
-  //   }
-  // }, [isInitialRenderRadioButtons]);
+
   const groomTypeRadio = [
     { i18nKey: "CR_RESIDENT_INDIAN", code: "INDIAN" },
     { i18nKey: "CR_NRI", code: "NRI" },
