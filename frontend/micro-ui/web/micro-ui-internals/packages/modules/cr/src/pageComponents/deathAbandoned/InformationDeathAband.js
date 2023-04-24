@@ -1060,7 +1060,11 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
         PlaceOfBurialMl,
         PlaceOfBurialEn,
         DeceasedDescription,
-        BurialDescription
+        BurialDescription,
+        hospitalNameEn,
+        institution,
+        vehicleType,
+        publicPlaceType
       });
     }
   };
