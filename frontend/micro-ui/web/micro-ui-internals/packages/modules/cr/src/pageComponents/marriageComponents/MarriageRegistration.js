@@ -19,6 +19,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import MarriageInstitution from "./MarriageInstitution";
 import MarriagePublicPlace from "./MarriagePublicPlace";
 import { useQueryClient } from "react-query";
+import _ from "lodash";
 // import { TimePicker } from '@material-ui/pickers';
 
 const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
@@ -193,6 +194,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     marriagePlaceId["egov-location"].MarriagePlace.map((ob) => {
       cmbMarriagePlaceIds.push(ob);
     });
+
+  const uniquecmbWards = _.uniqWith(cmbWardNoFinal,(value1, value2) => value1.name === value2.name)
+  console.log({uniquecmbWards});
+
+  const cmbSortedWards = uniquecmbWards.sort((a, b) => a.wardno - b.wardno);
+  console.log({cmbSortedWards});
 
   const cmbPlaceNameReligious = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
   console.log({ cmbPlaceNameReligious });
@@ -504,13 +511,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   let validFlag = true;
   const goNext = () => {
-    
     if (marriageDistrictid == null || marriageDistrictid == undefined) {
       setMarriageDistrictidError(true);
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setMarriageDistrictidError(false);
@@ -520,7 +526,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setmarriageTalukIDError(false);
@@ -530,7 +536,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setmarriageVillageNameError(false);
@@ -540,7 +546,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setMarriageLBtypeError(false);
@@ -550,7 +556,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setMarriageWardCodeError(false);
@@ -560,7 +566,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setMarriageTenantidError(false);
@@ -570,7 +576,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       validFlag = false;
       setToast(true);
       setTimeout(() => {
-          setToast(false);
+        setToast(false);
       }, 2000);
     } else {
       setMarriagePlacetypeError(false);
@@ -833,7 +839,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     optionKey="namecmb"
                     isMandatory={true}
                     placeholder={t("CS_COMMON_WARD")}
-                    option={cmbWardNoFinal}
+                    option={cmbSortedWards}
                     selected={marriageWardCode}
                     select={setSelectmarriageWardCode}
                     {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
@@ -1016,7 +1022,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           </div>
           {toast && (
             <Toast
-              error={DOBError || 
+              error={
+                DOBError ||
                 marriageDistrictidError ||
                 marriageTalukIDError ||
                 marriageVillageNameError ||
@@ -1024,10 +1031,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                 marriageTenantidError ||
                 marriageWardCodeError ||
                 marriagePlaceTypeError
-          
               }
               label={
-                DOBError || 
+                DOBError ||
                 marriageDistrictidError ||
                 marriageTalukIDError ||
                 marriageVillageNameError ||
@@ -1038,20 +1044,20 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   ? DOBError
                     ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
                     : marriageDistrictidError
-                      ? t(`CR_ERROR_DISTRICT_CHOOSE`)
-                      : marriageTalukIDError
-                        ? t(`CR_ERROR_TALUK_CHOOSE`)
-                        : marriageVillageNameError
-                          ? t(`CR_ERROR_VILLAGE_NAME_CHOOSE`)
-                          : marriageLBtypeError
-                            ? t(`CR_ERROR_LB_TYPE_CHOOSE`)
-                            : marriageTenantidError
-                              ? t(`CR_ERROR_LB_CHOOSE`)
-                              : marriageWardCodeError
-                                ? t(`CR_ERROR_WARD_CHOOSE`)
-                                : marriagePlaceTypeError
-                                  ? t(`CR_ERROR_MARRIAGE_PLACE_TYPE_CHOOSE`)
-                                  : setToast(false)
+                    ? t(`CR_ERROR_DISTRICT_CHOOSE`)
+                    : marriageTalukIDError
+                    ? t(`CR_ERROR_TALUK_CHOOSE`)
+                    : marriageVillageNameError
+                    ? t(`CR_ERROR_VILLAGE_NAME_CHOOSE`)
+                    : marriageLBtypeError
+                    ? t(`CR_ERROR_LB_TYPE_CHOOSE`)
+                    : marriageTenantidError
+                    ? t(`CR_ERROR_LB_CHOOSE`)
+                    : marriageWardCodeError
+                    ? t(`CR_ERROR_WARD_CHOOSE`)
+                    : marriagePlaceTypeError
+                    ? t(`CR_ERROR_MARRIAGE_PLACE_TYPE_CHOOSE`)
+                    : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
