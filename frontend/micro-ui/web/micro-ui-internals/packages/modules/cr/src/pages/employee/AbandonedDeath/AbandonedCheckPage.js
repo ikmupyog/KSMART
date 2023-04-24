@@ -81,7 +81,6 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
   }
 
   useEffect(() => {
-    console.log("uploadedImages",uploadedImages)
     if (uploadedImages?.length > 0) {
       fetchImage()
     }

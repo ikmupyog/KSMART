@@ -9,10 +9,11 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
+import { sortDropdownNames } from "../../utils";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
-  // console.log(formData);
+  console.log(formData);
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
@@ -40,10 +41,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
+  const [hospitalCode, sethospitalCode] = useState(formData?.ChildDetails?.hospitalCode);
+
   // console.log(Digit.UserService.getUser().info);
   const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
-  console.log(roletemp);
   // const [isDisableEdit, setisDisableEdit] = useState((userRole === "HOSPITAL_OPERATOR") && isEditBirth ? false : false);
 
 
@@ -82,7 +84,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   let workFlowData = []
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
-  let hospitalCode = "";
+  // let hospitalCode = "";
   let institutionTypeCode = "";
   let institutionNameCode = "";
   let wardNameEn = "";
@@ -275,36 +277,60 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     // { enabled: !action?.isTerminateState }
   );
 
-  const operatorwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
-  const appwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("TL_PDEAPPROVER"));
+  // const operatorward = [];
+  // const appward = [];
+  // operatorwardtemp?.map((ob) => {
+  //   console.log(ob);
+  //   operatorward.push(...ob.jurisdictionChilds);
 
-  const operatorward = [];
-  const appward = [];
-  operatorwardtemp?.map((ob) => {
-    console.log(ob);
-    operatorward.push(...ob.jurisdictionChilds);
+  // });
 
-  });
-
+  const getHospitalCode = () => {
+    if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+      const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const tempArray = operatorHospDet?.map((ob) => {
+        return ob.hospitalCode;
+      });
+      return tempArray?.[0];
+    } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+      const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const tempArray = approverHospDet?.map((ob) => {
+        return ob.hospitalCode
+      });
+      return tempArray?.[0];
+    }
+  }
 
   useEffect(() => {
     if (isInitialRenderRoles) {
       if (userRoles.length > 0) {
         if (userRoles[0].code === "HOSPITAL_OPERATOR") {
           if (cmbPlaceMaster.length > 0) {
+            const operatorHospCode = getHospitalCode();
+            if (operatorHospCode != null) {
+              sethospitalCode(operatorHospCode);              
+            }
             selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
             setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
-            setisDisableEditRole(true)
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+          if (cmbPlaceMaster.length > 0) {
+            const approverHospCode = getHospitalCode();
+            if (approverHospCode != null) {
+              sethospitalCode(approverHospCode);     
+            }
+            selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);            
+            setisDisableEditRole(true);
             setInitialRenderRoles(false);
           }
         }
       }
     }
   }, [cmbPlaceMaster, isInitialRenderRoles]);
-  // if(roles[0].code === "HOSPITAL_OPERATOR"){
-  //   const { data: { HospDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.hrms.useHRMSSearch({ tenantId, filters: payload, config })
-  //   console.log(searchResult);
-  // }
+
   React.useEffect(() => {
     if (isInitialRenderPlace) {
       if (birthPlace) {
@@ -316,6 +342,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           <BirthPlaceHospital
             hospitalName={hospitalName}
             hospitalNameMl={hospitalNameMl}
+            hospitalCode={hospitalCode}
+            isDisableEditRole = {isDisableEditRole}
+            setisDisableEditRole={setisDisableEditRole}
+            userRoles={userRoles}
           />;
         }
         if (placeOfBirth === "INSTITUTION") {
@@ -753,7 +783,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           setToast(false);
         }, 2000);
       } else {
-        hospitalCode = hospitalName.code;
+        sethospitalCode(hospitalName.code);
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
@@ -1323,7 +1353,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={menu}
+                  option={sortDropdownNames(menu ? menu : [],"code",t)}
                   selected={gender}
                   select={setselectGender}
                   disable={isDisableEdit}
@@ -1371,7 +1401,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPlaceMaster}
+                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [],"name",t)}
                   selected={birthPlace}
                   disable={isDisableEditRole}
                   select={setselectBirthPlace}
@@ -1389,6 +1419,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
                 isEditBirth={isEditBirth}
+                hospitalCode={hospitalCode}
+                isDisableEditRole ={isDisableEditRole}
+                setisDisableEditRole={setisDisableEditRole}
               />
             </div>
           )}
@@ -1670,7 +1703,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAttDeliverySub}
+                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [],"name",t)}
                   selected={medicalAttensionSub}
                   select={setSelectMedicalAttensionSub}
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
@@ -1716,7 +1749,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbDeliveryMethod}
+                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [],"name",t)}
                   selected={deliveryMethods}
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}
