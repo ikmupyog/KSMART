@@ -286,6 +286,7 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
         SpouseNameEN,
         SpouseNameMl,
         SpouseAadhaar,
+        SpouseUnavailable,
       });
     }
   };

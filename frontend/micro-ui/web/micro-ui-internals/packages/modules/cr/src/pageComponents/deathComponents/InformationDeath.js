@@ -1237,8 +1237,37 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       } else {
         setDeathPlaceHomehoueNameMlError(false);
       }
-  }
-  else if (DeathPlace.code === "VEHICLE") {   
+      if (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined) {
+        setAdrsStreetNameEn("");
+      } else {
+        if (DeathPlaceHomeStreetNameEn != null && (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined)) {
+          validFlag = false;
+          setDeathPlaceHomestreetNameMl("");
+          setDeathPlaceHomestreetNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setDeathPlaceHomestreetNameMlError(false);
+        }
+      }
+      if (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined) {
+        setAdrsStreetNameMl("");
+      } else {
+        if (DeathPlaceHomeStreetNameMl != null && (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined)) {
+          validFlag = false;
+          setDeathPlaceHomestreetNameEn("");
+          setDeathPlaceHomeStreetNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setDeathPlaceHomeStreetNameEnError(false);
+        }
+      }
+  }  else if (DeathPlace.code === "VEHICLE") {   
 
     if (vehicleType == null || vehicleType == "" || vehicleType == undefined) {
       validFlag = false;
@@ -1320,12 +1349,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         tenantId,
         DateOfDeath,
         TimeOfDeath,
-        DeceasedFirstNameEn,
-        DeceasedMiddleNameEn,
-        DeceasedLastNameEn,
-        DeceasedFirstNameMl,
-        DeceasedMiddleNameMl,
-        DeceasedLastNameMl,
+        DeceasedFirstNameEn : DeceasedFirstNameEn.trim(),
+        DeceasedMiddleNameEn :DeceasedMiddleNameEn.trim(),
+        DeceasedLastNameEn : DeceasedLastNameEn.trim(),
+        DeceasedFirstNameMl :DeceasedFirstNameMl.trim(),
+        DeceasedMiddleNameMl :DeceasedMiddleNameMl.trim(),
+        DeceasedLastNameMl:DeceasedLastNameMl.trim(),
         Age,
         DeceasedAadharNotAvailable,
         DeceasedAadharNumber,
@@ -1349,12 +1378,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         DeathPlaceInstId,
         InstitutionIdMl,
         institutionNameCode,
-        DeathPlaceHomeHoueNameEn,
-        DeathPlaceHomehoueNameMl,
-        DeathPlaceHomeLocalityEn,
-        DeathPlaceHomeLocalityMl,
-        DeathPlaceHomeStreetNameEn,
-        DeathPlaceHomeStreetNameMl,
+        DeathPlaceHomeHoueNameEn :DeathPlaceHomeHoueNameEn.trim(),
+        DeathPlaceHomehoueNameMl:DeathPlaceHomehoueNameMl.trim(),
+        DeathPlaceHomeLocalityEn :DeathPlaceHomeLocalityEn.trim(),
+        DeathPlaceHomeLocalityMl:DeathPlaceHomeLocalityMl.trim(),
+        DeathPlaceHomeStreetNameEn :DeathPlaceHomeStreetNameEn.trim(),
+        DeathPlaceHomeStreetNameMl:DeathPlaceHomeStreetNameMl.trim(),
         DeathPlaceHomePostofficeId,
         DeathPlaceHomeWardId,
         DeathPlaceHomePincode,
@@ -2026,9 +2055,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError ||vehiDesDetailsEnError ||AgeValidationMsg }
+              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
+                || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError ||vehiDesDetailsEnError ||AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError }
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError||vehiDesDetailsEnError ||AgeValidationMsg
+                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError 
+                || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
+                || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError||vehiDesDetailsEnError ||AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
@@ -2039,6 +2071,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                     ? t(`DECEASED_FIRST_NAME_EN`)
                     : DeceasedFirstNameMlError
                     ? t(`DECEASED_FIRST_NAME_ML`)
+                    : DeceasedMiddleNameEnError
+                    ? t(`DECEASED_MIDDLE_NAME_EN`)                    
+                    : DeceasedMiddleNameMlError
+                    ? t(`DECEASED_MIDDLE_NAME_ML`)
+                    :DeceasedLastNameEnError
+                    ? t(`DECEASED_LAST_NAME_EN`)
+                    :DeceasedLastNameMlError
+                    ? t(`DECEASED_LAST_NAME_ML`)
                     : AgeValidationMsg
                      ? t(`CR_DECEASED_AGE_WARNING`)
                     : HospitalError
@@ -2052,6 +2092,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                     : WardNameError
                     ? t(`CR_ERROR_WARD_CHOOSE`)
                     : vehiDesDetailsEnError ? t(`DEATH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                    : DeathPlaceHomeStreetNameEnError 
+                    ? t(`DEATH_ERROR_HOME_STREET_NAME_EN`)
+                      : DeathPlaceHomestreetNameMlError 
+                      ? t(`DEATH_ERROR_HOME_STREET_NAME_ML`)
                     : setToast(false)
                   : setToast(false)
               }
