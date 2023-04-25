@@ -486,27 +486,27 @@ export const convertToNACRegistration = (data = {}) => {
         BirthNACDocuments: [
           {
             DocumentType: "Address proof of parents at the time of birth",
-            filestoreId: data?.BirthNACDocuments?.uploadedFile,
+            filestoreId: data?.BirthNACInitiator?.uploadedFile,
           },
           {
             DocumentType: "Proof of birth showing the date/place/details of parents",
-            filestoreId: data?.BirthNACDocuments?.uploadedFile1,
+            filestoreId: data?.BirthNACInitiator?.uploadedFile1,
           },
           {
             DocumentType: "School certificate of child if above 6 years",
-            filestoreId: data?.BirthNACDocuments?.uploadedFile2,
+            filestoreId: data?.BirthNACInitiator?.uploadedFile2,
           },
           {
             DocumentType: "ID proof of mother at the time of birth",
-            filestoreId: data?.BirthNACDocuments?.uploadedFile3,
+            filestoreId: data?.BirthNACInitiator?.uploadedFile3,
           },
           {
             DocumentType: "ID proof of father at the time of birth",
-            filestoreId: data?.BirthNACDocuments?.uploadedFile4,
+            filestoreId: data?.BirthNACInitiator?.uploadedFile4,
           },
           {
             DocumentType: "Medical certificate, if child is differently abled",
-            filestoreId: data?.BirthNACDocuments?.uploadedFile5,
+            filestoreId: data?.BirthNACInitiator?.uploadedFile5,
           },
         ],
       },
