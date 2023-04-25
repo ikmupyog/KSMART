@@ -292,7 +292,7 @@ private static final String NAC_QUERY = new StringBuilder().append("SELECT id, t
                 .append("      , death_home_housename_en, death_home_housename_ml, death_home_postoffice_id, death_home_pincode, death_home_ward")  
                 .append("      , place_of_burial_en, father_name_en, father_name_ml, father_aadharno, mother_name_en, mother_name_ml, mother_aadharno")
                 .append("      , spouse_unavailable, spouse_type, spouse_name_en, spouse_name_ml, spouse_aadhaar, applicant_name,applicant_aadhar_no,applicant_relation,applicant_address,applicant_mobile_no,applicant_email")  
-                .append("      , ack_no, application_date, funcion_uid, certificate_no, certificate_date, certificate_no_id, filestoreid, dateofissue,created_by,createdtime,lastmodifiedby,lastmodifiedtime") 
+                .append("      , ack_no, application_date, funcion_uid, certificate_no, certificate_date, certificate_no_id, filestoreid, dateofissue,created_by,createdtime,lastmodifiedby,lastmodifiedtime,is_nac,is_nia") 
                 .append(" FROM eg_death_nac_registry ")                                                             
                 .toString();
 

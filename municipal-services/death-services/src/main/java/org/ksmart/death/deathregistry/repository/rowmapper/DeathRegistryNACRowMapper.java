@@ -35,7 +35,7 @@ public class DeathRegistryNACRowMapper implements ResultSetExtractor<List<DeathR
         while (rs.next()) {   
             result.add(DeathRegistryNACDtls.builder()
             .deathBasicInfo(basicInfoRowMapper.extractData(rs))      
-            .deathApplicantDtls(applicantInfoRowMapper.extractData(rs))              
+            .deathApplicantDtls(applicantInfoRowMapper.extractData(rs))    
             .deathAuditDetails(getAuditDetails(rs))
             .build());            
         }

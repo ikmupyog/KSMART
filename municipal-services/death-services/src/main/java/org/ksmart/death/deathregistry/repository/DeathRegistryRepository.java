@@ -1575,5 +1575,5 @@ public class DeathRegistryRepository {
         });
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
-    }
+    }   
 }

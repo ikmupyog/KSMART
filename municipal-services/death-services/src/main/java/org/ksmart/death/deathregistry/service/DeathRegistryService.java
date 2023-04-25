@@ -177,6 +177,7 @@ public class DeathRegistryService {
 
         List<DeathRegistryNACDtls> deathDtls = repository.getDeathNACApplication(criteria,requestInfo);     
         NACPdfApplicationRequest applicationRequest = NACPdfApplicationRequest.builder().requestInfo(requestInfo).deathNACCertificate(deathDtls).build();
+
         NACPdfResp pdfResp = repository.saveDeathNACPdf(applicationRequest);
         nacCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
         return nacCertificate;
@@ -191,8 +192,9 @@ public class DeathRegistryService {
    public List<DeathRegistryNACDtls> searchNAC(DeathNACCriteria criteria, RequestInfo requestInfo) {
 
     return repository.getDeathNACApplication(criteria,requestInfo);
- }
     
+ }
+   
 }
  //           /********************************************* */
 

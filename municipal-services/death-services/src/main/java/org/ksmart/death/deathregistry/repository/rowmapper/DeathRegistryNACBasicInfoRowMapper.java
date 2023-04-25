@@ -77,6 +77,8 @@ public class DeathRegistryNACBasicInfoRowMapper implements ResultSetExtractor  ,
         .spouseNameEn(rs.getString("spouse_name_en"))
         .spouseNameML(rs.getString("spouse_name_ml"))
         .period(dateFormat.format(beforeDate) + " to " + dateFormat.format(afterDate))
+        .isDeathNAC(rs.getBoolean("is_nac"))
+        .isDeathNIA(rs.getBoolean("is_nia"))
         .build();
     }    
 }
