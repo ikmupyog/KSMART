@@ -1434,7 +1434,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             </div>
           {value === "HOSPITAL" && (
             // <div>
-              <Hospital
+              <DeathPlaceHospital
                 formData={formData}
                 isEditDeath={isEditDeath}
                 // selectDeathPlaceType={selectDeathPlaceType}
@@ -1448,7 +1448,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
           )}
           {value === "INSTITUTION" && (
             <div>
-              <Institution
+              <DeathPlaceInstitution
                 formData={formData}
                 isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
@@ -1468,7 +1468,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
           )}
           {value === "HOME" && (
             <div>
-              <DeathPlaceHome1
+              <DeathPlaceHome
                   formData={formData}
                   isEditDeath={isEditDeath}
                   DeathPlaceWardId={DeathPlaceWardId}
@@ -1496,7 +1496,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
           )}
           {value === "VEHICLE" && (
               <div>
-                <DeathPlaceVehicle1
+                {/* <DeathPlaceVehicle1
                   formData={formData}
                   // isEditAbandonedDeath={isEditAbandonedDeath}
                   vehicleType={vehicleType}
@@ -1524,13 +1524,39 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
 
                   DeathPlaceType={DeathPlaceType}
                   selectDeathPlaceType={selectDeathPlaceType}
+                /> */}
+                <DeathPlaceVehicle
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  vehicleType={vehicleType}
+                  selectvehicleType={selectvehicleType}
+                  VehicleNumber={VehicleNumber}
+                  setVehicleNumber={setVehicleNumber}
+                  VehicleFromplaceEn={VehicleFromplaceEn}
+                  setVehicleFromplaceEn={setVehicleFromplaceEn}
+                  VehicleToPlaceEn={VehicleToPlaceEn}
+                  setVehicleToPlaceEn={setVehicleToPlaceEn}
+                  GeneralRemarks={GeneralRemarks}
+                  setGeneralRemarks={setGeneralRemarks}
+                  VehicleFirstHaltEn={VehicleFirstHaltEn}
+                  setVehicleFirstHaltEn={setVehicleFirstHaltEn}
+                  VehicleFirstHaltMl={VehicleFirstHaltMl}
+                  setVehicleFirstHaltMl={setVehicleFirstHaltMl}
+                  VehicleHospitalEn={VehicleHospitalEn}
+                  setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  VehicleFromplaceMl={VehicleFromplaceMl}
+                  setVehicleFromplaceMl={setVehicleFromplaceMl}
+                  VehicleToPlaceMl={VehicleToPlaceMl}
+                  setVehicleToPlaceMl={setVehicleToPlaceMl}
                 />
               </div>
             )}
           
           {value === "PUBLIC_PLACES" && (
             <div>
-              <DeathPublicPlace
+              {/* <DeathPublicPlace
                 formData={formData}
                 isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
@@ -1549,7 +1575,25 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 setDeathPlaceWardId={setDeathPlaceWardId}
                 GeneralRemarks={GeneralRemarks}
                 setGeneralRemarks={setGeneralRemarks}
-              />
+              /> */}
+              <DeathPublicPlace
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  publicPlaceType={publicPlaceType}
+                  selectpublicPlaceType={selectpublicPlaceType}
+                  DeathPlaceLocalityEn={DeathPlaceLocalityEn}
+                  setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
+                  DeathPlaceLocalityMl={DeathPlaceLocalityMl}
+                  setDeathPlaceLocalityMl={setDeathPlaceLocalityMl}
+                  DeathPlaceStreetEn={DeathPlaceStreetEn}
+                  setDeathPlaceStreetEn={setDeathPlaceStreetEn}
+                  DeathPlaceStreetMl={DeathPlaceStreetMl}
+                  setDeathPlaceStreetMl={setDeathPlaceStreetMl}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  GeneralRemarks={GeneralRemarks}
+                  setGeneralRemarks={setGeneralRemarks}
+                />
             </div>
           )}
           </div>
