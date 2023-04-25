@@ -111,6 +111,7 @@ import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicl
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import DeathCorrectionAcknowledgement from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionAcknowledgement";
+import DeathCorrectionSummary from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
 import Informer from "./pageComponents/deathComponents/Informer";
 // AbandonedInitiater
 import AbandonedInitiater from "./pageComponents/deathAbandoned/AbandonedInformer";
@@ -299,6 +300,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 const componentsToRegister = {
   BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,
+  DeathCorrectionSummary,
   CrFlowApp,
   ScrFlowApp,
   CreateBornOutsideEmp,
