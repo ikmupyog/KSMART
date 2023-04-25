@@ -44,7 +44,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const { data: Profession = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: State = {}, isStateLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { uuid: uuid } = Digit.UserService.getUser().info;
+  //const { uuid: uuid } = Digit.UserService.getUser().info;
+  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
+  const [isDisableEditRole, setisDisableEditRole] = useState(false);
+  const [hospitalCode, sethospitalCode] = useState(formData?.ChildDetails?.hospitalCode);
+  const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -370,13 +375,20 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
+ const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
+  const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
+ // const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
+  const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
 
   const [sexError, setsexError] = useState(false);
   const [DOBError, setDOBError] = useState(false);
   const [AadharError, setAadharError] = useState(false);
   const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(false);
   const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(false);
+  const [DeceasedMiddleNameEnError, setDeceasedMiddleNameEnError] = useState(false);
+  const [DeceasedMiddleNameMlError, setDeceasedMiddleNameMlError] = useState(false);
+  const [DeceasedLastNameEnError, setDeceasedLastNameEnError] = useState(false);
+  const [DeceasedLastNameMlError, setDeceasedLastNameMlError] = useState(false);
   const [HospitalError, setHospitalError] = useState(false);
   const [InstitutionError, setInstitutionError] = useState(false);
   const [InstitutionNameError, setInstitutionNameError] = useState(false);
@@ -440,7 +452,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           setSelectedNationality(cmbfilterNation[0]);
         }
       }
-
+      
+  
       // if (Religion == null || Religion == "") {
       //   if (stateId === "kl" && cmbReligion.length > 0) {
       //     cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
@@ -465,6 +478,69 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }, [Nation, isInitialRender]);
 
+  const roleall = [];
+  roleall.push(...roletemp);
+  const rolecombine = [];
+  roleall?.map?.((e) => {
+    rolecombine.push(e.code);
+  });
+  const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: rolecombine?.map?.((e) => ({ code: e })),
+      isActive: true,
+      uuids: uuid,
+      rolecodes: rolecombine?.map?.((e) => (e)).join(",")
+    }
+    // { enabled: !action?.isTerminateState }
+  );
+
+  const getHospitalCode = () => {
+    if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+      const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const tempArray = operatorHospDet?.map((ob) => {
+        return ob.hospitalCode;
+      });
+      return tempArray?.[0];
+    } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+      const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const tempArray = approverHospDet?.map((ob) => {
+        return ob.hospitalCode
+      });
+      return tempArray?.[0];
+    }
+  }
+
+
+  useEffect(() => {
+    if (isInitialRenderRoles) {
+      if (userRoles.length > 0) {
+        if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+          if (cmbPlace.length > 0) {
+            const operatorHospCode = getHospitalCode();
+            if (operatorHospCode != null) {
+              sethospitalCode(operatorHospCode);              
+            }
+            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0]);
+            setValue(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+          if (cmbPlace.length > 0) {
+            const approverHospCode = getHospitalCode();
+            if (approverHospCode != null) {
+              sethospitalCode(approverHospCode);     
+            }
+            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0]);
+            setValue(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);            
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        }
+      }
+    }
+  }, [cmbPlace, isInitialRenderRoles]);
   // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
   // setAdrsStateName(cmbFilterState[0]);
 
@@ -483,7 +559,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         if (naturetype === "HOSPITAL") {
           <Hospital 
           hospitalNameEn={hospitalNameEn} 
-          HospitalNameMl={HospitalNameMl} />;
+          HospitalNameMl={HospitalNameMl} 
+          hospitalCode={hospitalCode}
+          isDisableEditRole = {isDisableEditRole}
+          setisDisableEditRole={setisDisableEditRole}
+          userRoles={userRoles}
+          />;
         }
         if (naturetype === "INSTITUTION") {
           <Institution
@@ -973,6 +1054,38 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setDeceasedFirstNameEnError(false);
     }
+    if (DeceasedMiddleNameEn.trim() == null || DeceasedMiddleNameEn.trim() == '' || DeceasedMiddleNameEn.trim() == undefined) {
+      setDeceasedMiddleNameEn("");
+    } else {
+      if (DeceasedMiddleNameMl.trim() == null || DeceasedMiddleNameMl.trim() == '' || DeceasedMiddleNameMl.trim() == undefined) {
+        validFlag = false;
+        setDeceasedMiddleNameMl("");
+        setDeceasedMiddleNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedMiddleNameMlError(false);
+      }
+    }
+
+    if (DeceasedLastNameEn.trim() == null || DeceasedLastNameEn.trim() == '' || DeceasedLastNameEn.trim() == undefined) {
+      setDeceasedLastNameEn("");
+    } else {
+      if (DeceasedLastNameMl.trim() == null || DeceasedLastNameMl.trim() == '' || DeceasedLastNameMl.trim() == undefined) {
+        validFlag = false;
+        setDeceasedLastNameMl("");
+        setDeceasedLastNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedLastNameMlError(false);
+      }
+    }
+
     if (DeceasedFirstNameMl.trim() == null || DeceasedFirstNameMl.trim() == '' || DeceasedFirstNameMl.trim() == undefined) {
       validFlag = false;
       setDeceasedFirstNameMl("");
@@ -984,6 +1097,42 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setDeceasedFirstNameMlError(false);
     }  
+    if (DeceasedMiddleNameMl.trim() == null || DeceasedMiddleNameMl.trim() == '' || DeceasedMiddleNameMl.trim() == undefined) {
+      setDeceasedMiddleNameMl("");
+      setDeceasedMiddleNameEnError(false);
+    } else {
+      if (DeceasedMiddleNameEn.trim() == null || DeceasedMiddleNameEn.trim() == '' || DeceasedMiddleNameEn.trim() == undefined) {
+        validFlag = false;
+        setDeceasedMiddleNameEn("");
+        setDeceasedMiddleNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedMiddleNameEnError(false);
+      }
+    }
+
+    if (DeceasedLastNameMl.trim() == null || DeceasedLastNameMl.trim() == '' || DeceasedLastNameMl.trim() == undefined) {
+      setDeceasedLastNameMl("");
+      setDeceasedLastNameEnError(false);
+    } else {
+      if (DeceasedLastNameEn.trim() == null || DeceasedLastNameEn.trim() == '' || DeceasedLastNameEn.trim() == undefined) {
+        validFlag = false;
+        setDeceasedLastNameEn("");
+        setDeceasedLastNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedLastNameEnError(false);
+      }
+    }
+  
+
+
     if (Age == null || Age == "" || Age == undefined) {
       validFlag = false;
       setAgeError(true);
@@ -1234,7 +1383,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         PlaceOfBurialMl,
         PlaceOfBurialEn,
         isWorkflow,
-        DifferenceInTime
+        DifferenceInTime,
+        hospitalCode
       });
     }
   };
