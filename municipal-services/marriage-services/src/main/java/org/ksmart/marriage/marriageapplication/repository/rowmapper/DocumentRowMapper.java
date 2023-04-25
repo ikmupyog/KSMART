@@ -18,7 +18,7 @@ public interface DocumentRowMapper {
                 .documentName(rs.getString("document_name"))
                 .documentType(rs.getString("document_type"))
                 .fileStoreId(rs.getString("filestoreid"))
-                .documentlink(rs.getString("document_link"))
+                .fileURL(rs.getString("document_link"))
                 .marriageId(rs.getString("marriageid"))
                 .documentOwner(rs.getString("bride_groom"))
                 .active(rs.getBoolean("active"))

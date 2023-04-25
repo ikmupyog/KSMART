@@ -42,8 +42,8 @@ public class MarriageDocument {
     @JsonProperty("documentOwner") 
     private String documentOwner ;
 
-     @JsonProperty("documentlink")
-     private String documentlink;
+     @JsonProperty("fileURL")
+     private String fileURL;
 
     @JsonProperty("applicationNumber")
     private String applicationNumber ;

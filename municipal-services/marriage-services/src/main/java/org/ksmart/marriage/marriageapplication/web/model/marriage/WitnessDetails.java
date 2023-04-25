@@ -97,11 +97,11 @@ public class WitnessDetails {
     private  Boolean witness2Esigned;
 
     //Jasmine 06.04.2023
-    @Size(max = 200)
+    @Size(max = 2000)
     @JsonProperty("brideUrl")
     private String brideUrl;
 
-    @Size(max = 200)
+    @Size(max = 2000)
     @JsonProperty("groomUrl")
     private String groomUrl;
 
