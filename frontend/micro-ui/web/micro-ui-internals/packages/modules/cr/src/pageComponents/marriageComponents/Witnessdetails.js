@@ -164,6 +164,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [groomImageURL, setGroomImageURL] = useState(formData?.WitnessDetails?.groomImageURL ? formData?.WitnessDetails?.groomImageURL : null);
   const [brideImageURL, setBrideImageURL] = useState(formData?.WitnessDetails?.brideImageURL ? formData?.WitnessDetails?.brideImageURL : null);
 
+  console.log({groomImageURL})
+
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";

@@ -12,7 +12,7 @@ const Hospital = ({
   selectHospitalNameMl,
   isEditDeath,
 }) => {
-  const { t } = useTranslation();  
+  const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -30,38 +30,37 @@ const Hospital = ({
   let cmbhospital = [];
   let cmbhospitalMl = [];
   hospitalData &&
-    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
+    hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
   if (isEditDeath) {
-    if (formData?.InformationDeath?.DeathPlaceTypecode != null) {
+    if (formData?.InformationDeath?.hospitalNameEn != null) {
       if (cmbhospital.length > 0 && (hospitalNameEn === undefined || hospitalNameEn === "")) {
-        selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode)[0]);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode)[0];
+        selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn)[0]);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
   }
-  
   useEffect(() => {
-   
     // if (isInitialRender) {
-      if (formData?.InformationDeath?.DeathPlaceTypecode) {
-        // selectHospitalNameMl(HospitalNameMl);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode);
-        selectHospitalNameMl(cmbhospitalMl[0]);
-        setIsInitialRender(false);
-      } else {
-        if (hospitalNameEn != null) {
-          console.log(hospitalNameEn);
+    if (formData?.InformationDeath?.DeathPlaceTypecode) {
+      // selectHospitalNameMl(HospitalNameMl);
+      cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode);
+      selectHospitalNameMl(cmbhospitalMl[0]);
+      setIsInitialRender(false);
+    } else {
+      if (hospitalNameEn != null) {
+        console.log(hospitalNameEn);
         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalNameEn.code);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       }
-     }
+    }
     // }
-  }, [cmbhospitalMl,isInitialRender]);
+  }, [cmbhospitalMl, isInitialRender]);
 
   const onSkip = () => onSelect();
   function setselecthospitalNameEn(value) {
@@ -71,14 +70,12 @@ const Hospital = ({
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
   }
-  const goNext = () => {  
-  };
+  const goNext = () => {};
   if (isLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
-      
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalNameEn}> */}
         <div className="col-md-12">
           <div className="row">
@@ -109,7 +106,7 @@ const Hospital = ({
               <div className="col-md-6">
                 <CardLabel>
                   {`${t("CR_HOSPITAL_ML")}`}
-                 <span className="mandatorycss">*</span> 
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   t={t}
@@ -124,7 +121,7 @@ const Hospital = ({
               </div>
             </div>
           </div>
-          </div>
+        </div>
 
         {/* </FormStep> */}
       </React.Fragment>
