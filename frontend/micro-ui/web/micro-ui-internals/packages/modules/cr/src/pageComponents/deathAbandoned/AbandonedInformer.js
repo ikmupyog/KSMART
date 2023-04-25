@@ -589,7 +589,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                     onDelete={() => {
                       setUploadedFile(null);
                     }}
-                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -607,7 +607,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                     onDelete={() => {
                       setUploadedFile1(null);
                     }}
-                    message={uploadedFile1 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -625,7 +625,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                     onDelete={() => {
                       setUploadedFile2(null);
                     }}
-                    message={uploadedFile2 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile2 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -643,7 +643,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                     onDelete={() => {
                       setUploadedFile3(null);
                     }}
-                    message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile3 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -661,7 +661,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                     onDelete={() => {
                       setUploadedFile4(null);
                     }}
-                    message={uploadedFile4 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile4 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -679,7 +679,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                     onDelete={() => {
                       setUploadedFile5(null);
                     }}
-                    message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile5 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>

@@ -49,6 +49,7 @@ const getPath = (path, params) => {
 };
 
 const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
+  console.log({formData});
   let isEdit = window.location.href.includes("renew-trade");
 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
@@ -106,7 +107,6 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
   console.log("abc", MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE");
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
@@ -398,7 +398,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`} :
+                          {`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`} :
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -440,7 +440,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`} :
+                          {`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -3821,7 +3821,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     type={"text"}
                     optionKey="i18nKey"
                     name="husbandname"
-                    value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
+                    value={`${GroomDetails?.groomFirstnameEn} ${GroomDetails?.groomMiddlenameEn} ${GroomDetails?.groomLastnameEn}`}
                     placeholder={t("CR_HUSBAND_NAME")}
                   />
                 </div>
@@ -3857,7 +3857,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     type={"text"}
                     optionKey="i18nKey"
                     name="wifename"
-                    value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
+                    value={`${BrideDetails?.brideFirstnameEn} ${BrideDetails?.brideMiddlenameEn} ${BrideDetails?.brideLastnameEn}`}
                     placeholder={t("CR_WIFE_NAME")}
                   />
                 </div>
@@ -3918,10 +3918,10 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               // disablebleEdit}
             />
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
-            </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
           </div>
         </div>
       </Card>

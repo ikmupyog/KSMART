@@ -54,6 +54,7 @@ const DeathOutsideJurisdiction = ({
   let cmbCountry = [];
   let cmbState = [];
   let cmbDistrict = [];
+  let cmbFilterState = [];
   Country &&
   Country["common-masters"] && Country["common-masters"].Country &&
   Country["common-masters"].Country.map((ob) => {
@@ -158,7 +159,47 @@ const DeathOutsideJurisdiction = ({
         console.log("cmbfilterNation[0]");
       }
     }
+    if (DeathPlaceState == null || DeathPlaceState == "") {
+      if (stateId === "kl" && cmbState.length > 0) {
+        cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
+        SelectDeathPlaceState(cmbFilterState);
+      }
+    }
   });
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     // if (Nationality == null || Nationality == "") {
+  //     //   if (stateId === "kl" && cmbNation.length > 0) {
+  //     //     cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
+  //     //     setSelectedNationality(cmbfilterNation[0]);
+  //     //   }
+  //     // }
+      
+  
+  //     // if (Religion == null || Religion == "") {
+  //     //   if (stateId === "kl" && cmbReligion.length > 0) {
+  //     //     cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
+  //     //     setSelectedReligion(cmbfilterReligion[0]);
+  //     //   }
+  //     // }
+
+  //     // }
+
+  //     if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+  //       if (stateId === "kl" && cmbNation.length > 0) {
+  //         cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
+  //         setSelectDeathPlaceCountry(cmbfilterNationI[0]);
+  //       }
+  //     }
+  //     if (DeathPlaceState == null || DeathPlaceState == "") {
+  //       if (stateId === "kl" && cmbState.length > 0) {
+  //         cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
+  //         SelectDeathPlaceState(cmbFilterState);
+  //       }
+  //     }
+  //   }
+  // }, [Nation, isInitialRender]);
+  
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
     // sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
