@@ -267,7 +267,7 @@ public class MarriageRegistryRepository {
                     throw new CustomException("PDF_ERROR"," Marriage Place Type is Empty");
                 }
 
-                StringBuilder groomAddr = new StringBuilder();
+//                StringBuilder groomAddr = new StringBuilder();
                 //Setting Groom Address data from MDMS
 //                Object mdmsGroomAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
 //                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()

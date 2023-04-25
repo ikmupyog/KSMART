@@ -291,8 +291,8 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                 }
 
                 if (marriage.getGroomAddressDetails().getCountryIdPermanent() != null && marriage.getGroomAddressDetails().getStateIdPermanent() != null) {
-                    if (marriage.getGroomAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
-                        if (marriage.getGroomAddressDetails().getStateIdPermanent().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                    if (marriage.getGroomAddressDetails().getCountryIdPermanent().equalsIgnoreCase(MarriageConstants.COUNTRY_CODE)) {
+                        if (marriage.getGroomAddressDetails().getStateIdPermanent().equalsIgnoreCase(MarriageConstants.STATE_CODE_SMALL)) {
 
                             //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent, marriage.getGroomAddressDetails().getPermtaddressCountry());
                             //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrTalukId,marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
@@ -360,8 +360,8 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                     }
 
                     if (marriage.getBrideAddressDetails().getCountryIdPermanent() != null && marriage.getBrideAddressDetails().getStateIdPermanent() != null) {
-                        if (marriage.getBrideAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
-                            if (marriage.getBrideAddressDetails().getStateIdPermanent().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                        if (marriage.getBrideAddressDetails().getCountryIdPermanent().equalsIgnoreCase(MarriageConstants.COUNTRY_CODE)) {
+                            if (marriage.getBrideAddressDetails().getStateIdPermanent().equalsIgnoreCase(MarriageConstants.STATE_CODE_SMALL)) {
 
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());

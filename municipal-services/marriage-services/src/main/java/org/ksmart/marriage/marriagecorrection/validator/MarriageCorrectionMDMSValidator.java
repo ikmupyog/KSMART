@@ -33,11 +33,11 @@ public class MarriageCorrectionMDMSValidator {
             errorMap.put("INVALID TENAND ID", "The tenand id  " + correctionRequest.getMarriageCorrectionDetails().get(0).getTenantid() +
                     " does not exists");
 
-        correctionRequest.getMarriageCorrectionDetails().forEach(correctionDtls -> {
+        /*correctionRequest.getMarriageCorrectionDetails().forEach(correctionDtls -> {
             correctionDtls.getCorrectionField().forEach(correctionField -> {
                 correctionField.getCorrectionFieldValue().forEach(field -> {
                     // MASTER DETAILS VALIDATION
-                    /*if (field.getField().equalsIgnoreCase("marriagePlacetype")) {
+                    *//*if (field.getField().equalsIgnoreCase("marriagePlacetype")) {
                         if (field.getNewValue() != null) {
                             if (!masterData.get(MarriageConstants.MARRIAGE_PLACE_TYPE).contains(field.getNewValue()))
                                 errorMap.put(" MARRIAGE PLACE TYPE INVALID ", "The marriage place type " +
@@ -67,10 +67,10 @@ public class MarriageCorrectionMDMSValidator {
                                 errorMap.put(" LBTYPE INVALID", "The LBTYpe  of marriage place " +
                                         field.getNewValue() + " is invalid");
                         }
-                    }*/
+                    }*//*
 
                     //GROOM PERMANENT ADDRESS DETAILS VALIDATION
-                    /*if (field.getField().equalsIgnoreCase("GroomAddressDetails.permtaddressCountry")) {
+                    *//*if (field.getField().equalsIgnoreCase("GroomAddressDetails.permtaddressCountry")) {
                         if (field.getNewValue() != null) {
                             if (!masterData.get(MarriageConstants.COUNTRY).contains(field.getNewValue()))
                                 errorMap.put("GROOM PERMANENT ADDRESS: COUNTRY NAME INVALID", "The country name of  groom " +
@@ -118,10 +118,10 @@ public class MarriageCorrectionMDMSValidator {
                                 errorMap.put("GROOM PERMANENT ADDRESS: POST OFFICE INVALID", "groom post office inside kerala is invalid" +
                                         field.getNewValue() + " is invalid");
                         }
-                    }*/
+                    }*//*
 
                     //BRIDE PERMANENT ADDRESS DETAILS VALIDATION
-                    /*else if (field.getField().equalsIgnoreCase("BrideAddressDetails.permtaddressCountry")) {
+                    *//*else if (field.getField().equalsIgnoreCase("BrideAddressDetails.permtaddressCountry")) {
                         if (field.getNewValue() != null) {
                             if (!masterData.get(MarriageConstants.COUNTRY).contains(field.getNewValue()))
                                 errorMap.put("BRIDE PERMANENT ADDRESS: COUNTRY NAME INVALID", "The country name of  bride " +
@@ -169,10 +169,10 @@ public class MarriageCorrectionMDMSValidator {
                                 errorMap.put("BRIDE PERMANENT ADDRESS: POST OFFICE INVALID", "bride post office inside kerala " +
                                         field.getNewValue()+ " is invalid");
                         }
-                    }*/
+                    }*//*
                 });
             });
-        });
+        });*/
 
         if (!CollectionUtils.isEmpty(errorMap))
             throw new CustomException(errorMap);

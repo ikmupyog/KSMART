@@ -95,7 +95,7 @@ public class MarriageCorrectionService {
         this.marriageCorrectionMDMSValidator = marriageCorrectionMDMSValidator;
         this.marriageDetailsEnrichment = marriageDetailsEnrichment;
     }
-//req for testing
+    //req for testing
     public List<MarriageCorrectionDetails> createCorrection(MarriageCorrectionRequest request) {
 
         //WorkFlowCheck wfc = new WorkFlowCheck();
@@ -108,40 +108,38 @@ public class MarriageCorrectionService {
         criteria.setId(request.getMarriageCorrectionDetails().get(0).getRegisterId());
         criteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
         List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
-        if (!marriageRegistryDetails.isEmpty()) {
-            MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
-            marriageCorrectionEnrichment.enrichCreate(request, marriageApplicationDetail);
-            List<MarriageApplicationDetails> marriageApplicationDetailsList = new ArrayList<>();
-            marriageApplicationDetailsList.add(marriageApplicationDetail);
-            request.setMarriageDetails(marriageApplicationDetailsList);
+        marriageCorrectionApplnValidator.validateCorrectionRegistrySearch(marriageRegistryDetails);
 
-            MarriageDetailsRequest marriageDetailsRequest=new MarriageDetailsRequest();
-            marriageDetailsRequest.setMarriageDetails(marriageApplicationDetailsList);
-            marriageCorrectionApplnValidator.validateCommonFields(marriageDetailsRequest);
-            //validatorService.validateCommonFields( marriageDetailsRequest);
-            //mdmsValidator.validateMarriageMDMSData(marriageDetailsRequest,mdmsData);
-            //validatorService.ruleEngineMarriage(marriageDetailsRequest, wfc, mdmsData);
+        MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
+        marriageCorrectionEnrichment.enrichCreate(request, marriageApplicationDetail);
+        List<MarriageApplicationDetails> marriageApplicationDetailsList = new ArrayList<>();
+        marriageApplicationDetailsList.add(marriageApplicationDetail);
+        request.setMarriageDetails(marriageApplicationDetailsList);
 
-            producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
+        MarriageDetailsRequest marriageDetailsRequest=new MarriageDetailsRequest();
+        marriageDetailsRequest.setMarriageDetails(marriageApplicationDetailsList);
+        marriageCorrectionApplnValidator.validateCommonFields(marriageDetailsRequest);
+        //validatorService.validateCommonFields( marriageDetailsRequest);
+        //mdmsValidator.validateMarriageMDMSData(marriageDetailsRequest,mdmsData);
+        //validatorService.ruleEngineMarriage(marriageDetailsRequest, wfc, mdmsData);
 
-            /*if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
-                workflowIntegrator.callCorrectionWorkFlow(request);
-            }
-            request.getMarriageDetails().forEach(marriage->{
-                if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
-                    List<Demand> demands = new ArrayList<>();
-                    Demand demand = new Demand();
-                    demand.setTenantId(marriage.getTenantid());
-                    demand.setConsumerCode(marriage.getApplicationNumber());
-                    demands.add(demand);
-                    marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
-                }
-            });*/
+        producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
 
-        }else{
-            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
-                    "Marriage registration(s) not found in database.");
+        /*if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
+            workflowIntegrator.callCorrectionWorkFlow(request);
         }
+        request.getMarriageDetails().forEach(marriage->{
+            if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
+                List<Demand> demands = new ArrayList<>();
+                Demand demand = new Demand();
+                demand.setTenantId(marriage.getTenantid());
+                demand.setConsumerCode(marriage.getApplicationNumber());
+                demands.add(demand);
+                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
+            }
+        });*/
+
+
         return request.getMarriageCorrectionDetails();
     }
 

@@ -878,3 +878,19 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedBy
 
             - jsonPath: $.MarriageDetails.*.id
+
+        - query: INSERT INTO public.eg_marriage_certificate_audit SELECT * FROM  public.eg_marriage_certificate WHERE registrydetailsid = ?;
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+        - query: UPDATE public.eg_marriage_certificate
+            set lastmodifiedtime=?, lastmodifiedby=? , count=0 where registrydetailsid=?;
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
+
+            - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.id
