@@ -10,9 +10,9 @@ import {
   SubmitBar,
   BackButton,
   Accordion,
-  ImageViewer
+  ImageViewer,
 } from "@egovernments/digit-ui-react-components";
-import React ,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -53,7 +53,15 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { InformationDeathAband, FamilyAbandonedDeath, AddressBirthDetails, StatisticalInfoAbandoned,InitiatorAbandoned,isEditProperty, cpt } = value;
+  const {
+    InformationDeathAband,
+    FamilyAbandonedDeath,
+    AddressBirthDetails,
+    StatisticalInfoAbandoned,
+    InitiatorAbandoned,
+    isEditProperty,
+    cpt,
+  } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -68,7 +76,14 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
   //   routeLink = routeLink.replace("/check", "");
   // }
 
-  const uploadedImages = [InitiatorAbandoned.uploadedFile,InitiatorAbandoned.uploadedFile1,InitiatorAbandoned.uploadedFile2,InitiatorAbandoned.uploadedFile3,InitiatorAbandoned.uploadedFile4,InitiatorAbandoned.uploadedFile5]
+  const uploadedImages = [
+    InitiatorAbandoned.uploadedFile,
+    InitiatorAbandoned.uploadedFile1,
+    InitiatorAbandoned.uploadedFile2,
+    InitiatorAbandoned.uploadedFile3,
+    InitiatorAbandoned.uploadedFile4,
+    InitiatorAbandoned.uploadedFile5,
+  ];
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
   } else {
@@ -82,21 +97,21 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
 
   useEffect(() => {
     if (uploadedImages?.length > 0) {
-      fetchImage()
+      fetchImage();
     }
-  }, [])
+  }, []);
   const [imagesThumbs, setImagesThumbs] = useState(null);
   const [imageZoom, setImageZoom] = useState(null);
-  console.log("imagesThumbs",imagesThumbs)
+  console.log("imagesThumbs", imagesThumbs);
   const fetchImage = async () => {
-    setImagesThumbs(null)
+    setImagesThumbs(null);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
     const newThumbnails = fileStoreIds.map((key) => {
-      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url)
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
     });
     setImagesThumbs(newThumbnails);
-  }
+  };
 
   console.log(value);
   const convertEpochToDate = (dateEpoch) => {
@@ -167,8 +182,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                       {InformationDeathAband.DeathPlace.code === "HOSPITAL"
-                        ?  InformationDeathAband.hospitalNameEn.hospitalName + "," +
-                        InformationDeathAband.hospitalNameEn.hospitalNamelocal
+                        ? InformationDeathAband.hospitalNameEn.hospitalName + "," + InformationDeathAband.hospitalNameEn.hospitalNamelocal
                         : InformationDeathAband.DeathPlace.code === "INSTITUTION"
                         ? t(InformationDeathAband.DeathPlaceInstId.institutionName) +
                           "," +
@@ -198,11 +212,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                           "," +
                           InformationDeathAband.DeathPlaceHomePostofficeId.pincode
                         : InformationDeathAband.DeathPlace.code === "VEHICLE"
-                        ? `${
-                           
-                            InformationDeathAband.vehicleType.name+
-                            "/" +InformationDeathAband.vehicleType.namelocal
-                          }`
+                        ? `${InformationDeathAband.vehicleType.name + "/" + InformationDeathAband.vehicleType.namelocal}`
                         : InformationDeathAband.DeathPlace.code === "PUBLIC_PLACES"
                         ? t(InformationDeathAband.DeathPlaceLocalityMl) +
                           "," +
@@ -528,7 +538,6 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
           }
         />
 
-        {/* CR_MORE_INFO */}
         <Accordion
           expanded={false}
           title={t("CR_MORE_INFO")}
@@ -638,14 +647,13 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
           }
         />
 
-
-<Accordion
+        <Accordion
           expanded={false}
           title={t("CR_INFORMENT_DETAILS")}
           content={
             <StatusTable>
-            {/*CR_INFORMANT_DETAILS  */}
-            <div className="row">
+              {/*CR_INFORMANT_DETAILS  */}
+              <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-12">
                     <h1 className="summaryheadingh">
@@ -657,9 +665,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_INFORMER_AUTHORITY")}`} :
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_AUTHORITY")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -667,9 +673,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_INFORMER_DESIGNATION")}`} :
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_DESIGNATION")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -677,9 +681,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_INFORMANT_NAME")}`} :
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -691,10 +693,8 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_PEN_NO")}`} :
-                    </CardText>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PEN_NO")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -702,9 +702,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CS_COMMON_AADHAAR")}`} :
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -712,25 +710,19 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_MOBILE_NO")}`} :
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                       {t(InitiatorAbandoned.InformantMobileNo ? InitiatorAbandoned.InformantMobileNo : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
-
-               
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-12">
-                <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_OFFICE_ADDRESS")}`} :
-                    </CardText>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_OFFICE_ADDRESS")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -738,9 +730,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_PERSONAL_ADDRESS")}`} :
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PERSONAL_ADDRESS")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -749,11 +739,15 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
-              </StatusTable>
-          }/>
-            <Accordion expanded={false} title={t("CR_DOCUMENTS")}
-            content={<StatusTable >
-              {uploadedImages.length > 0 &&
+            </StatusTable>
+          }
+        />
+        <Accordion
+          expanded={false}
+          title={t("CR_DOCUMENTS")}
+          content={
+            <StatusTable>
+              {uploadedImages.length > 0 && (
                 <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
                   <div className="col-md-12">
                     <div className="col-md-12">
@@ -762,27 +756,50 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                       </h1>
                     </div>
                   </div>
-                </div>}
-              {uploadedImages.length > 0 &&
+                </div>
+              )}
+              {uploadedImages.length > 0 && (
                 <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
-                  <div className="col-md-12" style={{display: 'flex',marginLeft: '15px',flexWrap: 'wrap',justifyContent: 'center',alignContent: 'center',
-                  alignItems: 'center'}}>
-                    {imagesThumbs && imagesThumbs.map((thumbnail, index) => {
-                      return (
-                        <div key={index}>
-                          {thumbnail.type == "pdf" ?
-                            <React.Fragment>
-                              <object style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} data={thumbnail.pdfUrl}
-                                alt={`upload-thumbnails-${index}`} />
-                            </React.Fragment> :
-                            <img style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} src={thumbnail.small}
-                              alt={`upload-thumbnails-${index}`} onClick={() => setImageZoom(thumbnail.large)} />}
-                        </div>
-                      );
-                    })}
+                  <div
+                    className="col-md-12"
+                    style={{
+                      display: "flex",
+                      marginLeft: "15px",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {imagesThumbs &&
+                      imagesThumbs.map((thumbnail, index) => {
+                        return (
+                          <div key={index}>
+                            {thumbnail.type == "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                  height={120}
+                                  data={thumbnail.pdfUrl}
+                                  alt={`upload-thumbnails-${index}`}
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                height={120}
+                                src={thumbnail.small}
+                                alt={`upload-thumbnails-${index}`}
+                                onClick={() => setImageZoom(thumbnail.large)}
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
                   </div>
-                </div>}
-           
+                </div>
+              )}
+
               {/* <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-6">
@@ -790,9 +807,10 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div> */}
-            </StatusTable>}
-          />
-            {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
+            </StatusTable>
+          }
+        />
+        {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
     </React.Fragment>
