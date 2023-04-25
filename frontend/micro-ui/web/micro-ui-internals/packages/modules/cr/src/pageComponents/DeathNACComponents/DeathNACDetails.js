@@ -3,14 +3,20 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackBut
 import Timeline from "../../components/NACDRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-import Hospital from "../deathComponents/Hospital";
-import Institution from "../deathComponents/Institution";
-import DeathPlaceHome from "../deathComponents/DeathPlaceHome";
-import DeathPlaceVehicle from "../deathComponents/DeathPlaceVehicle";
-import DeathPublicPlace from "../deathComponents/DeathPublicPlace";
-import DeathOutsideJurisdiction from "../deathComponents/DeathOutsideJurisdiction ";
+// import Hospital from "../deathComponents/Hospital";
+// import Institution from "../deathComponents/Institution";
+// import DeathPlaceHome from "../deathComponents/DeathPlaceHome";
+// import DeathPlaceVehicle from "../deathComponents/DeathPlaceVehicle";
+// import DeathPublicPlace from "../deathComponents/DeathPublicPlace";
+// import DeathOutsideJurisdiction from "../deathComponents/DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import DeathPlaceHome from "./DeathPlaceHome";
+import DeathPublicPlace from "./DeathPublicPlace";
+import DeathPlaceHospital from "./DeathPlaceHospital";
+import DeathPlaceInstitution from "./DeathPlaceInstitution";
+import DeathPlaceVehicle from "./DeathPlaceVehicle"
+
 
 
 const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath }) => {
@@ -326,8 +332,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   const [DeathPlaceHomeStreetNameMl, setDeathPlaceHomestreetNameMl] = useState(
     formData?.DeathNACDetails?.DeathPlaceHomeStreetNameMl ? formData?.DeathNACDetails?.DeathPlaceHomeStreetNameMl : null
   );
-  const [DeathPlaceHomeHoueNameMl, setDeathPlaceHomehoueNameMl] = useState(
-    formData?.DeathNACDetails?.DeathPlaceHomeHoueNameMl ? formData?.DeathNACDetails?.DeathPlaceHomeHoueNameMl : null
+  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(
+    formData?.DeathNACDetails?.DeathPlaceHomehoueNameMl ? formData?.DeathNACDetails?.DeathPlaceHomehoueNameMl : null
   );
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   //
@@ -342,9 +348,9 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.DeathNACDetails?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData?.DeathNACDetails?.DeathPlaceWardId);
   const [DeathPlaceHomeWardId, setDeathPlaceHomeWardId] = useState(formData?.DeathNACDetails?.DeathPlaceHomeWardId);
-  const [vehicleType, selectvehicleType] = useState(formData?.DeathNACDetails?.DeathPlaceType?.code
-      ? formData?.DeathNACDetails?.DeathPlaceType
-      : formData?.DeathNACDetails?.DeathPlaceType
+  const [vehicleType, selectvehicleType] = useState(formData?.DeathNACDetails?.vehicleType?.code
+      ? formData?.DeathNACDetails?.vehicleType
+      : formData?.DeathNACDetails?.vehicleType
       ? ""
       : ""
   );
@@ -438,17 +444,17 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         naturetype = DeathPlace.code;
         setValue(naturetype);
         if (naturetype === "HOSPITAL") {
-          <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} hospitalNameEn={hospitalNameEn} />;
+          // <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} hospitalNameEn={hospitalNameEn} />;
+          <DeathPlaceHospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
-          <Institution
-            DeathPlaceType={DeathPlaceType}
+          <DeathPlaceInstitution 
+          DeathPlaceType={DeathPlaceType}
             DeathPlaceInstId={DeathPlaceInstId}
             InstitutionIdMl={InstitutionIdMl}
-            institution={institution}
             InstitutionFilterList={InstitutionFilterList}
             isInitialRenderInstitutionList={isInitialRenderInstitutionList}
-          />;
+            />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -457,13 +463,12 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
             DeathPlaceHomepincode={DeathPlaceHomepincode}
             DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
-            DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
+            DeathPlaceHomehoueNameMl={DeathPlaceHomehoueNameMl}
             DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
             DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
             DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
             DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
             PostOfficevalues={PostOfficevalues}
-            DeathPlaceHomeWardId={DeathPlaceHomeWardId}
           />;
         }
         if (naturetype === "VEHICLE") {
@@ -492,20 +497,6 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             GeneralRemarks={GeneralRemarks}
           />;
         }
-        // if (naturetype === "OUTSIDE_JURISDICTION") {
-        //   <DeathOutsideJurisdiction
-        //     DeathPlaceCountry={DeathPlaceCountry}
-        //     DeathPlaceState={DeathPlaceState}
-        //     DeathPlaceDistrict={DeathPlaceDistrict}
-        //     DeathPlaceCity={DeathPlaceCity}
-        //     DeathPlaceRemarksEn={DeathPlaceRemarksEn}
-        //     DeathPlaceRemarksMl={DeathPlaceRemarksMl}
-        //     PlaceOfBurialMl={PlaceOfBurialMl}
-        //     PlaceOfBurialEn={PlaceOfBurialEn}
-        //     GeneralRemarks={GeneralRemarks}
-        //     DeathPlaceWardId={DeathPlaceWardId}
-        //   />;
-        // }
       }
     }
   }, [isInitialRenderDeathPlace]);
@@ -756,199 +747,199 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
     if (currentWorkFlow.length > 0) {
       setWorkFlowCode(currentWorkFlow[0].WorkflowCode);
     }
-    // workFlowCode = currentWorkFlow[0].WorkflowCode;
-    // if (value.code === "HOSPITAL") {
-    //   //Institution
-    //   setSelectedDeathPlaceInstId(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionFilterList(null);
-    //   // setIsInitialRenderInstitutionList
-    //   //Home
-    //   setDeathPlaceHomepostofficeId(null);
-    //   setDeathPlaceHomepincode(null);
-    //   setDeathPlaceHomehoueNameEn(null);
-    //   setDeathPlaceHomehoueNameMl(null);
-    //   setDeathPlaceHomelocalityEn(null);
-    //   setDeathPlaceHomelocalityMl(null);
-    //   setDeathPlaceHomestreetNameEn(null);
-    //   setDeathPlaceHomestreetNameMl(null);
-    //   setDeathPlaceWardId(null);
-    //   setPostOfficevalues(null);
-    //   //Vehicle
-    //   setVehicleNumber(null);
-    //   setVehicleFromplaceEn(null);
-    //   setVehicleToPlaceEn(null);
-    //   setGeneralRemarks(null);
-    //   setVehicleFirstHaltEn(null);
-    //   setVehicleFirstHaltMl(null);
-    //   setSelectedVehicleHospitalEn(null);
-    //   setVehicleFromplaceMl(null);
-    //   setVehicleToPlaceMl(null);
-    //   //PublicPlace
-    //   setDeathPlaceLocalityEn(null);
-    //   setDeathPlaceLocalityMl(null);
-    //   setDeathPlaceStreetEn(null);
-    //   setDeathPlaceStreetMl(null);
-    //   //DeathOutsideJurisdiction
-    //   setSelectDeathPlaceCountry(null);
-    //   SelectDeathPlaceState(null);
-    //   SelectDeathPlaceDistrict(null);
-    //   SelectDeathPlaceCity(null);
-    //   SelectDeathPlaceRemarksEn(null);
-    //   SelectDeathPlaceRemarksMl(null);
-    //   SelectPlaceOfBurialEn(null);
-    //   SelectPlaceOfBurialMl(null);
-    // } else if (value.code === "INSTITUTION") {
-    //   //Hospital
-    //   selectHospitalNameMl(null);
-    //   //Home
-    //   setDeathPlaceHomepostofficeId(null);
-    //   setDeathPlaceHomepincode(null);
-    //   setDeathPlaceHomehoueNameEn(null);
-    //   setDeathPlaceHomehoueNameMl(null);
-    //   setDeathPlaceHomelocalityEn(null);
-    //   setDeathPlaceHomelocalityMl(null);
-    //   setDeathPlaceHomestreetNameEn(null);
-    //   setDeathPlaceHomestreetNameMl(null);
-    //   setDeathPlaceWardId(null);
-    //   setPostOfficevalues(null);
-    //   //Vehicle
-    //   selectDeathPlaceType(null);
-    //   setVehicleNumber(null);
-    //   setVehicleFromplaceEn(null);
-    //   setVehicleToPlaceEn(null);
-    //   setGeneralRemarks(null);
-    //   setVehicleFirstHaltEn(null);
-    //   setVehicleFirstHaltMl(null);
-    //   setSelectedVehicleHospitalEn(null);
-    //   setVehicleFromplaceMl(null);
-    //   setVehicleToPlaceMl(null);
-    //   //PublicPlace
-    //   setDeathPlaceLocalityEn(null);
-    //   setDeathPlaceLocalityMl(null);
-    //   setDeathPlaceStreetEn(null);
-    //   setDeathPlaceStreetMl(null);
-    //   //DeathOutsideJurisdiction
-    //   setSelectDeathPlaceCountry(null);
-    //   SelectDeathPlaceState(null);
-    //   SelectDeathPlaceDistrict(null);
-    //   SelectDeathPlaceCity(null);
-    //   SelectDeathPlaceRemarksEn(null);
-    //   SelectDeathPlaceRemarksMl(null);
-    //   SelectPlaceOfBurialEn(null);
-    //   SelectPlaceOfBurialMl(null);
-    // } else if (value.code === "VEHICLE") {
-    //   //Hospital
-    //   // selectDeathPlaceType(null);
-    //   selectHospitalNameMl(null);
-    //   //Institution
-    //   selectDeathPlaceType(null);
-    //   setSelectedDeathPlaceInstId(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionFilterList(null);
-    //   //Home
-    //   setDeathPlaceHomepostofficeId(null);
-    //   setDeathPlaceHomepincode(null);
-    //   setDeathPlaceHomehoueNameEn(null);
-    //   setDeathPlaceHomehoueNameMl(null);
-    //   setDeathPlaceHomelocalityEn(null);
-    //   setDeathPlaceHomelocalityMl(null);
-    //   setDeathPlaceHomestreetNameEn(null);
-    //   setDeathPlaceHomestreetNameMl(null);
-    //   setDeathPlaceWardId(null);
-    //   setPostOfficevalues(null);
-    //   //PublicPlace
-    //   setDeathPlaceLocalityEn(null);
-    //   setDeathPlaceLocalityMl(null);
-    //   setDeathPlaceStreetEn(null);
-    //   setDeathPlaceStreetMl(null);
-    //   setGeneralRemarks(null);
-    //   //DeathOutsideJurisdiction
-    //   setSelectDeathPlaceCountry(null);
-    //   SelectDeathPlaceState(null);
-    //   SelectDeathPlaceDistrict(null);
-    //   SelectDeathPlaceCity(null);
-    //   SelectDeathPlaceRemarksEn(null);
-    //   SelectDeathPlaceRemarksMl(null);
-    //   SelectPlaceOfBurialEn(null);
-    //   SelectPlaceOfBurialMl(null);
-    // }
-    // if (value.code === "PUBLIC_PLACES") {
-    //   //Hospital
-    //   selectDeathPlaceType(null);
-    //   selectHospitalNameMl(null);
-    //   //Institution
-    //   setSelectedDeathPlaceInstId(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionFilterList(null);
-    //   // setIsInitialRenderInstitutionList
-    //   //Home
-    //   setDeathPlaceHomepostofficeId(null);
-    //   setDeathPlaceHomepincode(null);
-    //   setDeathPlaceHomehoueNameEn(null);
-    //   setDeathPlaceHomehoueNameMl(null);
-    //   setDeathPlaceHomelocalityEn(null);
-    //   setDeathPlaceHomelocalityMl(null);
-    //   setDeathPlaceHomestreetNameEn(null);
-    //   setDeathPlaceHomestreetNameMl(null);
-    //   setPostOfficevalues(null);
-    //   //Vehicle
-    //   setVehicleNumber(null);
-    //   setVehicleFromplaceEn(null);
-    //   setVehicleToPlaceEn(null);
-    //   setVehicleFirstHaltEn(null);
-    //   setVehicleFirstHaltMl(null);
-    //   setSelectedVehicleHospitalEn(null);
-    //   setVehicleFromplaceMl(null);
-    //   setVehicleToPlaceMl(null);
-    //   setDeathPlaceWardId(null);
-    //   //DeathOutsideJurisdiction
-    //   setSelectDeathPlaceCountry(null);
-    //   SelectDeathPlaceState(null);
-    //   SelectDeathPlaceDistrict(null);
-    //   SelectDeathPlaceCity(null);
-    //   SelectDeathPlaceRemarksEn(null);
-    //   SelectDeathPlaceRemarksMl(null);
-    //   SelectPlaceOfBurialEn(null);
-    //   SelectPlaceOfBurialMl(null);
-    //   setGeneralRemarks(null);
-    // }
-    // if (value.code === "OUTSIDE_JURISDICTION") {
-    //   //Hospital
-    //   // selectDeathPlaceType(null);
-    //   selectHospitalNameMl(null);
-    //   //Institution
-    //   setSelectedDeathPlaceInstId(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionFilterList(null);
-    //   // setIsInitialRenderInstitutionList
-    //   //Home
-    //   setDeathPlaceHomepostofficeId(null);
-    //   setDeathPlaceHomepincode(null);
-    //   setDeathPlaceHomehoueNameEn(null);
-    //   setDeathPlaceHomehoueNameMl(null);
-    //   setDeathPlaceHomelocalityEn(null);
-    //   setDeathPlaceHomelocalityMl(null);
-    //   setDeathPlaceHomestreetNameEn(null);
-    //   setDeathPlaceHomestreetNameMl(null);
-    //   setPostOfficevalues(null);
-    //   //Vehicle
-    //   setVehicleNumber(null);
-    //   setVehicleFromplaceEn(null);
-    //   setVehicleToPlaceEn(null);
-    //   setVehicleFirstHaltEn(null);
-    //   setVehicleFirstHaltMl(null);
-    //   setSelectedVehicleHospitalEn(null);
-    //   setVehicleFromplaceMl(null);
-    //   setVehicleToPlaceMl(null);
-    //   //PublicPlace
-    //   setDeathPlaceLocalityEn(null);
-    //   setDeathPlaceLocalityMl(null);
-    //   setDeathPlaceStreetEn(null);
-    //   setDeathPlaceStreetMl(null);
-    //   setGeneralRemarks(null);
-    //   setDeathPlaceWardId(null);
-    // }
+      // workFlowCode = currentWorkFlow[0].WorkflowCode;
+      // if (value.code === "HOSPITAL") {
+      //   //Institution
+      //   setSelectedDeathPlaceInstId(null);
+      //   setInstitutionIdMl(null);
+      //   setInstitutionFilterList(null);
+      //   // setIsInitialRenderInstitutionList
+      //   //Home
+      //   setDeathPlaceHomepostofficeId(null);
+      //   setDeathPlaceHomepincode(null);
+      //   setDeathPlaceHomehoueNameEn(null);
+      //   setDeathPlaceHomehoueNameMl(null);
+      //   setDeathPlaceHomelocalityEn(null);
+      //   setDeathPlaceHomelocalityMl(null);
+      //   setDeathPlaceHomestreetNameEn(null);
+      //   setDeathPlaceHomestreetNameMl(null);
+      //   setDeathPlaceWardId(null);
+      //   setPostOfficevalues(null);
+      //   //Vehicle
+      //   setVehicleNumber(null);
+      //   setVehicleFromplaceEn(null);
+      //   setVehicleToPlaceEn(null);
+      //   setGeneralRemarks(null);
+      //   setVehicleFirstHaltEn(null);
+      //   setVehicleFirstHaltMl(null);
+      //   setSelectedVehicleHospitalEn(null);
+      //   setVehicleFromplaceMl(null);
+      //   setVehicleToPlaceMl(null);
+      //   //PublicPlace
+      //   setDeathPlaceLocalityEn(null);
+      //   setDeathPlaceLocalityMl(null);
+      //   setDeathPlaceStreetEn(null);
+      //   setDeathPlaceStreetMl(null);
+      //   //DeathOutsideJurisdiction
+      //   setSelectDeathPlaceCountry(null);
+      //   SelectDeathPlaceState(null);
+      //   SelectDeathPlaceDistrict(null);
+      //   SelectDeathPlaceCity(null);
+      //   SelectDeathPlaceRemarksEn(null);
+      //   SelectDeathPlaceRemarksMl(null);
+      //   SelectPlaceOfBurialEn(null);
+      //   SelectPlaceOfBurialMl(null);
+      // } else if (value.code === "INSTITUTION") {
+      //   //Hospital
+      //   selectHospitalNameMl(null);
+      //   //Home
+      //   setDeathPlaceHomepostofficeId(null);
+      //   setDeathPlaceHomepincode(null);
+      //   setDeathPlaceHomehoueNameEn(null);
+      //   setDeathPlaceHomehoueNameMl(null);
+      //   setDeathPlaceHomelocalityEn(null);
+      //   setDeathPlaceHomelocalityMl(null);
+      //   setDeathPlaceHomestreetNameEn(null);
+      //   setDeathPlaceHomestreetNameMl(null);
+      //   setDeathPlaceWardId(null);
+      //   setPostOfficevalues(null);
+      //   //Vehicle
+      //   selectDeathPlaceType(null);
+      //   setVehicleNumber(null);
+      //   setVehicleFromplaceEn(null);
+      //   setVehicleToPlaceEn(null);
+      //   setGeneralRemarks(null);
+      //   setVehicleFirstHaltEn(null);
+      //   setVehicleFirstHaltMl(null);
+      //   setSelectedVehicleHospitalEn(null);
+      //   setVehicleFromplaceMl(null);
+      //   setVehicleToPlaceMl(null);
+      //   //PublicPlace
+      //   setDeathPlaceLocalityEn(null);
+      //   setDeathPlaceLocalityMl(null);
+      //   setDeathPlaceStreetEn(null);
+      //   setDeathPlaceStreetMl(null);
+      //   //DeathOutsideJurisdiction
+      //   setSelectDeathPlaceCountry(null);
+      //   SelectDeathPlaceState(null);
+      //   SelectDeathPlaceDistrict(null);
+      //   SelectDeathPlaceCity(null);
+      //   SelectDeathPlaceRemarksEn(null);
+      //   SelectDeathPlaceRemarksMl(null);
+      //   SelectPlaceOfBurialEn(null);
+      //   SelectPlaceOfBurialMl(null);
+      // } else if (value.code === "VEHICLE") {
+      //   //Hospital
+      //   // selectDeathPlaceType(null);
+      //   selectHospitalNameMl(null);
+      //   //Institution
+      //   selectDeathPlaceType(null);
+      //   setSelectedDeathPlaceInstId(null);
+      //   setInstitutionIdMl(null);
+      //   setInstitutionFilterList(null);
+      //   //Home
+      //   setDeathPlaceHomepostofficeId(null);
+      //   setDeathPlaceHomepincode(null);
+      //   setDeathPlaceHomehoueNameEn(null);
+      //   setDeathPlaceHomehoueNameMl(null);
+      //   setDeathPlaceHomelocalityEn(null);
+      //   setDeathPlaceHomelocalityMl(null);
+      //   setDeathPlaceHomestreetNameEn(null);
+      //   setDeathPlaceHomestreetNameMl(null);
+      //   setDeathPlaceWardId(null);
+      //   setPostOfficevalues(null);
+      //   //PublicPlace
+      //   setDeathPlaceLocalityEn(null);
+      //   setDeathPlaceLocalityMl(null);
+      //   setDeathPlaceStreetEn(null);
+      //   setDeathPlaceStreetMl(null);
+      //   setGeneralRemarks(null);
+      //   //DeathOutsideJurisdiction
+      //   setSelectDeathPlaceCountry(null);
+      //   SelectDeathPlaceState(null);
+      //   SelectDeathPlaceDistrict(null);
+      //   SelectDeathPlaceCity(null);
+      //   SelectDeathPlaceRemarksEn(null);
+      //   SelectDeathPlaceRemarksMl(null);
+      //   SelectPlaceOfBurialEn(null);
+      //   SelectPlaceOfBurialMl(null);
+      // }
+      // if (value.code === "PUBLIC_PLACES") {
+      //   //Hospital
+      //   selectDeathPlaceType(null);
+      //   selectHospitalNameMl(null);
+      //   //Institution
+      //   setSelectedDeathPlaceInstId(null);
+      //   setInstitutionIdMl(null);
+      //   setInstitutionFilterList(null);
+      //   // setIsInitialRenderInstitutionList
+      //   //Home
+      //   setDeathPlaceHomepostofficeId(null);
+      //   setDeathPlaceHomepincode(null);
+      //   setDeathPlaceHomehoueNameEn(null);
+      //   setDeathPlaceHomehoueNameMl(null);
+      //   setDeathPlaceHomelocalityEn(null);
+      //   setDeathPlaceHomelocalityMl(null);
+      //   setDeathPlaceHomestreetNameEn(null);
+      //   setDeathPlaceHomestreetNameMl(null);
+      //   setPostOfficevalues(null);
+      //   //Vehicle
+      //   setVehicleNumber(null);
+      //   setVehicleFromplaceEn(null);
+      //   setVehicleToPlaceEn(null);
+      //   setVehicleFirstHaltEn(null);
+      //   setVehicleFirstHaltMl(null);
+      //   setSelectedVehicleHospitalEn(null);
+      //   setVehicleFromplaceMl(null);
+      //   setVehicleToPlaceMl(null);
+      //   setDeathPlaceWardId(null);
+      //   //DeathOutsideJurisdiction
+      //   setSelectDeathPlaceCountry(null);
+      //   SelectDeathPlaceState(null);
+      //   SelectDeathPlaceDistrict(null);
+      //   SelectDeathPlaceCity(null);
+      //   SelectDeathPlaceRemarksEn(null);
+      //   SelectDeathPlaceRemarksMl(null);
+      //   SelectPlaceOfBurialEn(null);
+      //   SelectPlaceOfBurialMl(null);
+      //   setGeneralRemarks(null);
+      // }
+      // if (value.code === "OUTSIDE_JURISDICTION") {
+      //   //Hospital
+      //   // selectDeathPlaceType(null);
+      //   selectHospitalNameMl(null);
+      //   //Institution
+      //   setSelectedDeathPlaceInstId(null);
+      //   setInstitutionIdMl(null);
+      //   setInstitutionFilterList(null);
+      //   // setIsInitialRenderInstitutionList
+      //   //Home
+      //   setDeathPlaceHomepostofficeId(null);
+      //   setDeathPlaceHomepincode(null);
+      //   setDeathPlaceHomehoueNameEn(null);
+      //   setDeathPlaceHomehoueNameMl(null);
+      //   setDeathPlaceHomelocalityEn(null);
+      //   setDeathPlaceHomelocalityMl(null);
+      //   setDeathPlaceHomestreetNameEn(null);
+      //   setDeathPlaceHomestreetNameMl(null);
+      //   setPostOfficevalues(null);
+      //   //Vehicle
+      //   setVehicleNumber(null);
+      //   setVehicleFromplaceEn(null);
+      //   setVehicleToPlaceEn(null);
+      //   setVehicleFirstHaltEn(null);
+      //   setVehicleFirstHaltMl(null);
+      //   setSelectedVehicleHospitalEn(null);
+      //   setVehicleFromplaceMl(null);
+      //   setVehicleToPlaceMl(null);
+      //   //PublicPlace
+      //   setDeathPlaceLocalityEn(null);
+      //   setDeathPlaceLocalityMl(null);
+      //   setDeathPlaceStreetEn(null);
+      //   setDeathPlaceStreetMl(null);
+      //   setGeneralRemarks(null);
+      //   setDeathPlaceWardId(null);
+      // }
   }
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
@@ -1112,7 +1103,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
       //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
       //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       //   sessionStorage.setItem("DeathPlaceHomeHoueNameEn", DeathPlaceHomeHoueNameEn ? DeathPlaceHomeHoueNameEn : null);
-      //   sessionStorage.setItem("DeathPlaceHomeHoueNameMl", DeathPlaceHomeHoueNameMl ? DeathPlaceHomeHoueNameMl : null);
+      //   sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
       //   sessionStorage.setItem("DeathPlaceHomeLocalityEn", DeathPlaceHomeLocalityEn ? DeathPlaceHomeLocalityEn : null);
       //   sessionStorage.setItem("DeathPlaceHomeLocalityMl", DeathPlaceHomeLocalityMl ? DeathPlaceHomeLocalityMl : null);
       //   sessionStorage.setItem("DeathPlaceHomeStreetNameEn", DeathPlaceHomeStreetNameEn ? DeathPlaceHomeStreetNameEn : null);
@@ -1196,7 +1187,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         institution,
         institutionNameCode,
         DeathPlaceHomeHoueNameEn,
-        DeathPlaceHomeHoueNameMl,
+        DeathPlaceHomehoueNameMl,
         DeathPlaceHomeLocalityEn,
         DeathPlaceHomeLocalityMl,
         DeathPlaceHomeStreetNameEn,
@@ -1477,66 +1468,66 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
           )}
           {value === "HOME" && (
             <div>
-              <DeathPlaceHome
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-                DeathPlaceHomeWardId={DeathPlaceHomeWardId}
-                setDeathPlaceHomeWardId={setDeathPlaceHomeWardId}
-                DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
-                setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
-                DeathPlaceHomepincode={DeathPlaceHomepincode}
-                setDeathPlaceHomepincode={setDeathPlaceHomepincode}
-                DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
-                setDeathPlaceHomehoueNameEn={setDeathPlaceHomehoueNameEn}
-                DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
-                setDeathPlaceHomehoueNameMl={setDeathPlaceHomehoueNameMl}
-                DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
-                setDeathPlaceHomelocalityEn={setDeathPlaceHomelocalityEn}
-                DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
-                setDeathPlaceHomelocalityMl={setDeathPlaceHomelocalityMl}
-                DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
-                setDeathPlaceHomestreetNameEn={setDeathPlaceHomestreetNameEn}
-                DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
-                setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl}
-                PostOfficevalues={PostOfficevalues}
-                setPostOfficevalues={setPostOfficevalues}
-              />
+              <DeathPlaceHome1
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
+                  setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
+                  DeathPlaceHomepincode={DeathPlaceHomepincode}
+                  setDeathPlaceHomepincode={setDeathPlaceHomepincode}
+                  DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
+                  setDeathPlaceHomehoueNameEn={setDeathPlaceHomehoueNameEn}
+                  DeathPlaceHomehoueNameMl={DeathPlaceHomehoueNameMl}
+                  setDeathPlaceHomehoueNameMl={setDeathPlaceHomehoueNameMl}
+                  DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
+                  setDeathPlaceHomelocalityEn={setDeathPlaceHomelocalityEn}
+                  DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
+                  setDeathPlaceHomelocalityMl={setDeathPlaceHomelocalityMl}
+                  DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
+                  setDeathPlaceHomestreetNameEn={setDeathPlaceHomestreetNameEn}
+                  DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
+                  setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl}
+                  PostOfficevalues={PostOfficevalues}
+                  setPostOfficevalues={setPostOfficevalues}
+                />
             </div>
           )}
           {value === "VEHICLE" && (
-            <div>
-              <DeathPlaceVehicle
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceType={DeathPlaceType}
-                selectDeathPlaceType={selectDeathPlaceType}
-                vehicleType={vehicleType}
-                selectvehicleType={selectvehicleType}
-                VehicleNumber={VehicleNumber}
-                setVehicleNumber={setVehicleNumber}
-                VehicleFromplaceEn={VehicleFromplaceEn}
-                setVehicleFromplaceEn={setVehicleFromplaceEn}
-                VehicleToPlaceEn={VehicleToPlaceEn}
-                setVehicleToPlaceEn={setVehicleToPlaceEn}
-                GeneralRemarks={GeneralRemarks}
-                setGeneralRemarks={setGeneralRemarks}
-                VehicleFirstHaltEn={VehicleFirstHaltEn}
-                setVehicleFirstHaltEn={setVehicleFirstHaltEn}
-                VehicleFirstHaltMl={VehicleFirstHaltMl}
-                setVehicleFirstHaltMl={setVehicleFirstHaltMl}
-                VehicleHospitalEn={VehicleHospitalEn}
-                setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-                VehicleFromplaceMl={VehicleFromplaceMl}
-                setVehicleFromplaceMl={setVehicleFromplaceMl}
-                VehicleToPlaceMl={VehicleToPlaceMl}
-                setVehicleToPlaceMl={setVehicleToPlaceMl}
-              />
-            </div>
-          )}
+              <div>
+                <DeathPlaceVehicle1
+                  formData={formData}
+                  // isEditAbandonedDeath={isEditAbandonedDeath}
+                  vehicleType={vehicleType}
+                  selectvehicleType={selectvehicleType}
+                  VehicleNumber={VehicleNumber}
+                  setVehicleNumber={setVehicleNumber}
+                  VehicleFromplaceEn={VehicleFromplaceEn}
+                  setVehicleFromplaceEn={setVehicleFromplaceEn}
+                  VehicleToPlaceEn={VehicleToPlaceEn}
+                  setVehicleToPlaceEn={setVehicleToPlaceEn}
+                  GeneralRemarks={GeneralRemarks}
+                  setGeneralRemarks={setGeneralRemarks}
+                  VehicleFirstHaltEn={VehicleFirstHaltEn}
+                  setVehicleFirstHaltEn={setVehicleFirstHaltEn}
+                  VehicleFirstHaltMl={VehicleFirstHaltMl}
+                  setVehicleFirstHaltMl={setVehicleFirstHaltMl}
+                  VehicleHospitalEn={VehicleHospitalEn}
+                  setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  VehicleFromplaceMl={VehicleFromplaceMl}
+                  setVehicleFromplaceMl={setVehicleFromplaceMl}
+                  VehicleToPlaceMl={VehicleToPlaceMl}
+                  setVehicleToPlaceMl={setVehicleToPlaceMl}
+
+                  DeathPlaceType={DeathPlaceType}
+                  selectDeathPlaceType={selectDeathPlaceType}
+                />
+              </div>
+            )}
+          
           {value === "PUBLIC_PLACES" && (
             <div>
               <DeathPublicPlace
