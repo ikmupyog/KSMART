@@ -19,6 +19,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import MarriageInstitution from "./MarriageInstitution";
 import MarriagePublicPlace from "./MarriagePublicPlace";
 import { useQueryClient } from "react-query";
+import _ from "lodash";
 // import { TimePicker } from '@material-ui/pickers';
 
 const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
@@ -194,7 +195,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       cmbMarriagePlaceIds.push(ob);
     });
 
-  let currentLB = [];
+  const uniquecmbWards = _.uniqWith(cmbWardNoFinal,(value1, value2) => value1.name === value2.name)
+  console.log({uniquecmbWards});
+
+  const cmbSortedWards = uniquecmbWards.sort((a, b) => a.wardno - b.wardno);
+  console.log({cmbSortedWards});
+
   const cmbPlaceNameReligious = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
   console.log({ cmbPlaceNameReligious });
   const cmbPlaceNameMandapam = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
@@ -275,7 +281,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   const stateDist = cmbDistrict?.filter((dist) => dist.statecode == "kl");
 
-  const filteredLBType = cmbLBType?.filter((lbType) => lbType.name === "Municipality" || lbType.name === "Corporation");
+  const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
 
   function handleChange(e) {
     setFile(URL.createObjectURL(e.target.files[0]));
@@ -301,6 +307,13 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.MarriageDetails?.marriageDOM ? false : false);
+  const [marriageDistrictidError, setMarriageDistrictidError] = useState(false);
+  const [marriageTalukIDError, setmarriageTalukIDError] = useState(false);
+  const [marriageVillageNameError, setmarriageVillageNameError] = useState(false);
+  const [marriageLBtypeError, setMarriageLBtypeError] = useState(false);
+  const [marriageTenantidError, setMarriageTenantidError] = useState(false);
+  const [marriageWardCodeError, setMarriageWardCodeError] = useState(false);
+  const [marriagePlaceTypeError, setMarriagePlacetypeError] = useState(false);
 
   const onSkip = () => onSelect();
   // React.useEffect(() => {
@@ -325,11 +338,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   }
   // });
   function setSelectmarriageDOM(value) {
-    setMarriageDistrictid("");
-    setmarriageTalukID("");
     setmarriageVillageName("");
-    setMarriageLBtype("");
-    setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
@@ -352,12 +361,13 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
   function setSelectMarriageDistrictid(value) {
+    console.log({ value });
     setMarriageDistrictid(value);
     setLbs(null);
     districtid = value.districtid;
     setTenantboundary(true);
     if (cmbLB.length > 0) {
-      currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
+      const currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
       setLbs(currentLB);
       cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
       setLbsTalukvalue(cmbFilterTaluk);
@@ -375,6 +385,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidMl("");
   }
   function setSelectmarriageTalukID(value) {
+    console.log("taluk", value);
     setmarriageTalukID(value);
     setmarriageVillageName("");
     setMarriageLBtype("");
@@ -386,8 +397,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
-    setMarriageLBtype("");
-    setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
@@ -402,6 +411,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidMl("");
   }
   function setSelectmarriageTenantid(value) {
+    console.log("tenant", value);
     setIsWardChange(true);
     setMarriageWardCode(null);
     setTenantWard(value.code);
@@ -456,12 +466,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
 
   function setCSLB(selectedLBType) {
-    const localbodies = lbs.filter((LB) => LB.city.districtid === marriageDistrictid.districtid);
-    if (selectedLBType.name === "Municipality") {
-      const filteredMunicipality = localbodies.filter((LB) => LB.city.lbtypecode.split("_")[2] === "MUNICIPALITY");
+    const localbodies = lbs?.filter((LB) => LB?.city?.districtid === marriageDistrictid?.districtid);
+    if (selectedLBType?.name === "Municipality") {
+      const filteredMunicipality = localbodies?.filter((LB) => LB?.city?.lbtypecode?.split("_")[2] === "MUNICIPALITY");
       return filteredMunicipality;
-    } else if (selectedLBType.name === "Corporation") {
-      const filteredCorporation = localbodies.filter((LB) => LB.city.lbtypecode.split("_")[2] === "CORPORATION");
+    } else if (selectedLBType?.name === "Corporation") {
+      const filteredCorporation = localbodies?.filter((LB) => LB?.city?.lbtypecode.split("_")[2] === "CORPORATION");
       return filteredCorporation;
     }
   }
@@ -475,18 +485,114 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
 
-  // useEffect(() => {
-  //   console.log({ cmbLB });
-  //   if (cmbLB?.length > 0) {
-  //     console.log("Hi");
-  //     currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-  //     console.log({ currentLB });
-  //     setMarriageTenantid(currentLB);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (cmbLB?.length > 0) {
+      console.log("Hi");
+      const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+      setMarriageTenantid(currentLB[0]);
+      console.log({ currentLB });
+      const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
+      console.log({ currentDistrict });
+      setMarriageDistrictid(currentDistrict[0]);
+      districtid = currentDistrict[0].districtid;
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      console.log({ cmbFilterTaluk });
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+      setLbsVillagevalue(cmbFilterVillage);
+      console.log({ cmbFilterVillage });
+      const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
+      setMarriageLBtype(currentLBType[0]);
+      const currentTaluk = cmbFilterTaluk?.filter((taluk) => taluk.code === currentLB[0].city.talukcode);
+      setmarriageTalukID(currentTaluk[0]);
+      console.log({ currentTaluk });
+    }
+  }, [cmbLB.length]);
 
   let validFlag = true;
   const goNext = () => {
+    if (marriageDistrictid == null || marriageDistrictid == undefined) {
+      setMarriageDistrictidError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMarriageDistrictidError(false);
+    }
+    if (marriageTalukID == null || marriageTalukID == undefined || marriageTalukID == "") {
+      setmarriageTalukIDError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setmarriageTalukIDError(false);
+    }
+    if (marriageVillageName == null || marriageVillageName == undefined || marriageVillageName == "") {
+      setmarriageVillageNameError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setmarriageVillageNameError(false);
+    }
+    if (marriageLBtype == null || marriageLBtype == undefined || marriageLBtype == "") {
+      setMarriageLBtypeError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMarriageLBtypeError(false);
+    }
+    if (marriageWardCode == null || marriageWardCode == undefined || marriageWardCode == "") {
+      setMarriageWardCodeError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMarriageWardCodeError(false);
+    }
+    if (marriageTenantid == null || marriageTenantid == undefined || marriageTenantid == "") {
+      setMarriageTenantidError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMarriageTenantidError(false);
+    }
+    if (marriagePlaceType == null || marriagePlaceType == undefined || marriagePlaceType == "") {
+      setMarriagePlacetypeError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMarriagePlacetypeError(false);
+    }
+    // if(marriagePlacetype.code === "RELIGIOUS_INSTITUTION"){
+    //   if (marriagePlacenameEn == null || marriagePlacenameEn == undefined || marriagePlacenameEn == "") {
+    //     setMarriagePlacetypeError(true);
+    //     validFlag = false;
+    //     setToast(true);
+    //     setTimeout(() => {
+    //         setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setMarriagePlacetypeError(false);
+    //   }
+    // }
     if (validFlag == true) {
       // sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
       // sessionStorage.setItem("marriageDistrictid", marriageDistrictid ? marriageDistrictid : null);
@@ -548,6 +654,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   console.log("Registration", formData);
   console.log({ marriageType });
+  console.log({ marriageTenantid });
 
   if (
     isLoading ||
@@ -732,7 +839,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     optionKey="namecmb"
                     isMandatory={true}
                     placeholder={t("CS_COMMON_WARD")}
-                    option={cmbWardNoFinal}
+                    option={cmbSortedWards}
                     selected={marriageWardCode}
                     select={setSelectmarriageWardCode}
                     {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
@@ -839,10 +946,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                 )}
                 {(marriagePlacetype.code === "PUBLIC_PLACE" || marriagePlacetype.code === "PRIVATE_PLACE") && (
                   <MarriagePublicPlace
-                    marriagePlacenameEn={marriagePublicOrPrivateNamePlaceEn}
-                    setmarriagePlacenameEn={setmarriagePublicOrPrivateNamePlaceEn}
-                    marriagePlacenameMl={marriagePublicOrPrivateNamePlaceMl}
-                    setmarriagePlacenameMl={setmarriagePublicOrPrivateNamePlaceMl}
+                    marriagePlacenameEn={marriagePlacenameEn}
+                    setmarriagePlacenameEn={setmarriagePlacenameEn}
+                    marriagePlacenameMl={marriagePlacenameMl}
+                    setmarriagePlacenameMl={setmarriagePlacenameMl}
                     marriageLocalityEn={marriageLocalityEn}
                     setmarriageLocalityEn={setmarriageLocalityEn}
                     marriageLocalityMl={marriageLocalityMl}
@@ -915,13 +1022,41 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           </div>
           {toast && (
             <Toast
-              error={DOBError || AgeValidationMsg}
+              error={
+                DOBError ||
+                marriageDistrictidError ||
+                marriageTalukIDError ||
+                marriageVillageNameError ||
+                marriageLBtypeError ||
+                marriageTenantidError ||
+                marriageWardCodeError ||
+                marriagePlaceTypeError
+              }
               label={
-                DOBError || AgeValidationMsg
+                DOBError ||
+                marriageDistrictidError ||
+                marriageTalukIDError ||
+                marriageVillageNameError ||
+                marriageLBtypeError ||
+                marriageTenantidError ||
+                marriageWardCodeError ||
+                marriagePlaceTypeError
                   ? DOBError
                     ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
-                    : AgeValidationMsg
-                    ? t(`CR_INVALID_AGE`)
+                    : marriageDistrictidError
+                    ? t(`CR_ERROR_DISTRICT_CHOOSE`)
+                    : marriageTalukIDError
+                    ? t(`CR_ERROR_TALUK_CHOOSE`)
+                    : marriageVillageNameError
+                    ? t(`CR_ERROR_VILLAGE_NAME_CHOOSE`)
+                    : marriageLBtypeError
+                    ? t(`CR_ERROR_LB_TYPE_CHOOSE`)
+                    : marriageTenantidError
+                    ? t(`CR_ERROR_LB_CHOOSE`)
+                    : marriageWardCodeError
+                    ? t(`CR_ERROR_WARD_CHOOSE`)
+                    : marriagePlaceTypeError
+                    ? t(`CR_ERROR_MARRIAGE_PLACE_TYPE_CHOOSE`)
                     : setToast(false)
                   : setToast(false)
               }

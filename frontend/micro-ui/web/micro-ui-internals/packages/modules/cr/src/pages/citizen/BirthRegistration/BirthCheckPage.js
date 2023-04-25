@@ -56,8 +56,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   console.log(AddressBirthDetails);
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-      }`;
+    return `${
+      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+    }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -1713,7 +1714,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     onChange={setDeclarationInfo}
                     value={isInitiatorDeclaration}
                     checked={isInitiatorDeclaration}
-                  // disable={isDisableEdit}
+                    // disable={isDisableEdit}
                   />
                 </div>
               </div>
@@ -1721,13 +1722,13 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           </div>
         )}
 
-        {toast && (
+        {/* {toast && (
           <Toast
             error={InitiatorDeclareError}
             label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
-        )}
+        )} */}
         {""}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
       </Card>

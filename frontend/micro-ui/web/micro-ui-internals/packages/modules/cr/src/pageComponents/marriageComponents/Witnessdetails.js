@@ -164,6 +164,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [groomImageURL, setGroomImageURL] = useState(formData?.WitnessDetails?.groomImageURL ? formData?.WitnessDetails?.groomImageURL : null);
   const [brideImageURL, setBrideImageURL] = useState(formData?.WitnessDetails?.brideImageURL ? formData?.WitnessDetails?.brideImageURL : null);
 
+  console.log({groomImageURL})
+
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -1053,59 +1055,61 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       </h1>
                     </div>
                   </div>
-                  <div className="col-md-4">
-                    <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="husbandname"
-                      value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
-                      placeholder={t("CR_HUSBAND_NAME")}
-                      {...(validation = { isRequired: true })}
-                    />
+                  <div className="row">
+                    <div className="col-md-4">
+                      <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="husbandname"
+                        value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
+                        placeholder={t("CR_HUSBAND_NAME")}
+                        {...(validation = { isRequired: true })}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel>
+                        {`${t("CR_EXPIRATION")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <CheckBox
+                        label={t("CR_EXPIRATION_TYPE")}
+                        onChange={setSelectExpirationTypeHusband}
+                        value={isExpiredHusband}
+                        checked={isExpiredHusband}
+                        disable={isDisableEdit}
+                        style={{ marginBottom: "40px" }}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="wifename"
+                        value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
+                        placeholder={t("CR_WIFE_NAME")}
+                        {...(validation = { isRequired: true })}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel>
+                        {`${t("CR_EXPIRATION")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <CheckBox
+                        label={t("CR_EXPIRATION_TYPE")}
+                        onChange={setSelectExpirationTypeWife}
+                        value={isExpiredWife}
+                        checked={isExpiredWife}
+                        disable={isDisableEdit}
+                      />
+                    </div>
                   </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_EXPIRATION")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <CheckBox
-                      label={t("CR_EXPIRATION_TYPE")}
-                      onChange={setSelectExpirationTypeHusband}
-                      value={isExpiredHusband}
-                      checked={isExpiredHusband}
-                      disable={isDisableEdit}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="wifename"
-                      value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
-                      placeholder={t("CR_WIFE_NAME")}
-                      {...(validation = { isRequired: true })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_EXPIRATION")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <CheckBox
-                      label={t("CR_EXPIRATION_TYPE")}
-                      onChange={setSelectExpirationTypeWife}
-                      value={isExpiredWife}
-                      checked={isExpiredWife}
-                      disable={isDisableEdit}
-                    />
-                  </div>
-
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">

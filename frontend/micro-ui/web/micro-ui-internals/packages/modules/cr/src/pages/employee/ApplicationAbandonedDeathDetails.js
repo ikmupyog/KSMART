@@ -76,7 +76,7 @@ const ApplicationAbandonedDeathDetails = () => {
       
       if(data.action == "EDIT") {
         data.redirectionUrl = {
-          pathname: `/digit-ui/employee/cr/death-flow/abandoned-information-death`,
+          pathname: `/digit-ui/employee/cr/death-flow/abandoned-death-information`,
           state: applicationDetails
         },
         data.tenantId = stateId

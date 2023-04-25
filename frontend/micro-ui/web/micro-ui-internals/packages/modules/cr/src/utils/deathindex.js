@@ -408,6 +408,7 @@ export const convertToDeathRegistration = (data = {}) => {
           presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
           presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideIndiaProvinceMl: data?.AddressBirthDetails?.presentOutSideIndiaProvinceMl,          
           presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry.code : null,
           presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
             ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
@@ -463,6 +464,7 @@ export const convertToDeathRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
           permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaprovinceMl :data?.AddressBirthDetails?.permntOutsideIndiaprovinceMl,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
             ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code
             : null,
@@ -610,10 +612,11 @@ export const convertToEditDeathRegistration = (data = {}) => {
           tenantid: data?.InformationDeath?.tenantId,     
           DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,
           DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType?.code : null,
-          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
-          //hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
+          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.hospitalName : null,
+          //DeathPlaceHospitalNameEn: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalName : null,
+         // DeathPlaceHospitalNameMl :data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
           hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
-         // hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
+         hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
           DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId?.code : null,
           VehicleNumber: data?.InformationDeath?.VehicleNumber,
           VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
@@ -723,6 +726,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
           presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideIndiaProvinceMl: data?.AddressBirthDetails?.presentOutSideIndiaProvinceMl,
           presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry?.code : null,
           presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
             ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code
@@ -778,6 +782,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
           permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaprovinceMl: data?.AddressBirthDetails?.permntOutsideIndiaprovinceMl,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
             ? data?.AddressBirthDetails?.permntOutsideIndiaVillage?.code
             : null,

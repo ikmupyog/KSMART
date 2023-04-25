@@ -9,6 +9,7 @@ import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
+import { sortDropdownNames } from "../../utils";
 // import _ from "lodash";
 // import { STATE_CODE } from "../../config/constants";
 
@@ -24,9 +25,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
   const [workFlowAmount, setWorkFlowAmount] = useState(formData?.InformationDeath?.workFlowAmount);
-  const [isPayment, setIsPayment] = useState(formData?.InformationDeath?.isPayment);
-
- 
+  const [isPayment, setIsPayment] = useState(formData?.InformationDeath?.isPayment); 
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -45,7 +44,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const { data: Profession = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: State = {}, isStateLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { uuid: uuid } = Digit.UserService.getUser().info;
+  //const { uuid: uuid } = Digit.UserService.getUser().info;
+  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
+  const [isDisableEditRole, setisDisableEditRole] = useState(false);
+  const [hospitalCode, sethospitalCode] = useState(formData?.ChildDetails?.hospitalCode);
+  const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -371,37 +375,74 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
+ const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
+  const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
+ // const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
+  const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
 
-  const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
-  const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
-  const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
-  const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(formData?.InformationDeath?.DeceasedFirstNameEn ? false : false);
-  const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(formData?.InformationDeath?.DeceasedFirstNameMl ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.hospitalNameEn ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.institution ? false : false);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
-  const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
-  const [AgeUnitError, setAgeUnitError] = useState(formData?.InformationDeath?.AgeUnit ? false : false);
-  const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
+  const [sexError, setsexError] = useState(false);
+  const [DOBError, setDOBError] = useState(false);
+  const [AadharError, setAadharError] = useState(false);
+  const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(false);
+  const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(false);
+  const [DeceasedMiddleNameEnError, setDeceasedMiddleNameEnError] = useState(false);
+  const [DeceasedMiddleNameMlError, setDeceasedMiddleNameMlError] = useState(false);
+  const [DeceasedLastNameEnError, setDeceasedLastNameEnError] = useState(false);
+  const [DeceasedLastNameMlError, setDeceasedLastNameMlError] = useState(false);
+  const [HospitalError, setHospitalError] = useState(false);
+  const [InstitutionError, setInstitutionError] = useState(false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(false);
+  const [AgeError, setAgeError] = useState(false);
+  const [AgeUnitError, setAgeUnitError] = useState(false);
+  const [WardNameError, setWardNameError] = useState(false);
 
-  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false);
-  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false);
-  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false);
-  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false);
-  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false);
-  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false);
-  const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(formData?.InformationDeath?.VehicleFromplaceEn ? false : false);
-  const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
-  const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
-  const [vehicleTypeError, setvehicleTypeError] = useState(formData?.InformationDeath?.vehicleType ? false : false);
+  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(false);
+  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(false);
+  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(false);
+  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(false);
+  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(false);
+  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(false);
+  const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(false);
+  const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(false);
+  const [VehicleNumberError, setvVehicleNumberError] = useState(false);
+  const [vehicleTypeError, setvehicleTypeError] = useState(false);
   const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
-  const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(formData?.InformationDeath?.VehicleFirstHaltEn ? false : false);
-  const [GeneralRemarksError, setGeneralRemarksError] = useState(formData?.InformationDeath?.GeneralRemarks ? false : false);
-  const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
-  const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
-  const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
+  const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(false);
+  const [GeneralRemarksError, setGeneralRemarksError] = useState(false);
+  const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(false);
+  const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(false);
+  const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(false);
   
+  // const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
+  // const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
+  // const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
+  // const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(formData?.InformationDeath?.DeceasedFirstNameEn ? false : false);
+  // const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(formData?.InformationDeath?.DeceasedFirstNameMl ? false : false);
+  // const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.hospitalNameEn ? false : false);
+  // const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.institution ? false : false);
+  // const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
+  // const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
+  // const [AgeUnitError, setAgeUnitError] = useState(formData?.InformationDeath?.AgeUnit ? false : false);
+  // const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
+
+  // const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false);
+  // const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false);
+  // const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false);
+  // const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false);
+  // const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false);
+  // const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false);
+  // const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(formData?.InformationDeath?.VehicleFromplaceEn ? false : false);
+  // const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
+  // const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
+  // const [vehicleTypeError, setvehicleTypeError] = useState(formData?.InformationDeath?.vehicleType ? false : false);
+  // const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
+  // const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(formData?.InformationDeath?.VehicleFirstHaltEn ? false : false);
+  // const [GeneralRemarksError, setGeneralRemarksError] = useState(formData?.InformationDeath?.GeneralRemarks ? false : false);
+  // const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
+  // const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
+  // const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
+   const [access, setAccess] = React.useState(true);
+
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -411,7 +452,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           setSelectedNationality(cmbfilterNation[0]);
         }
       }
-
+      
+  
       // if (Religion == null || Religion == "") {
       //   if (stateId === "kl" && cmbReligion.length > 0) {
       //     cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
@@ -436,6 +478,69 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }, [Nation, isInitialRender]);
 
+  const roleall = [];
+  roleall.push(...roletemp);
+  const rolecombine = [];
+  roleall?.map?.((e) => {
+    rolecombine.push(e.code);
+  });
+  const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: rolecombine?.map?.((e) => ({ code: e })),
+      isActive: true,
+      uuids: uuid,
+      rolecodes: rolecombine?.map?.((e) => (e)).join(",")
+    }
+    // { enabled: !action?.isTerminateState }
+  );
+
+  const getHospitalCode = () => {
+    if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+      const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const tempArray = operatorHospDet?.map((ob) => {
+        return ob.hospitalCode;
+      });
+      return tempArray?.[0];
+    } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+      const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const tempArray = approverHospDet?.map((ob) => {
+        return ob.hospitalCode
+      });
+      return tempArray?.[0];
+    }
+  }
+
+
+  useEffect(() => {
+    if (isInitialRenderRoles) {
+      if (userRoles.length > 0) {
+        if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+          if (cmbPlace.length > 0) {
+            const operatorHospCode = getHospitalCode();
+            if (operatorHospCode != null) {
+              sethospitalCode(operatorHospCode);              
+            }
+            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0]);
+            setValue(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+          if (cmbPlace.length > 0) {
+            const approverHospCode = getHospitalCode();
+            if (approverHospCode != null) {
+              sethospitalCode(approverHospCode);     
+            }
+            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0]);
+            setValue(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);            
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        }
+      }
+    }
+  }, [cmbPlace, isInitialRenderRoles]);
   // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
   // setAdrsStateName(cmbFilterState[0]);
 
@@ -454,7 +559,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         if (naturetype === "HOSPITAL") {
           <Hospital 
           hospitalNameEn={hospitalNameEn} 
-          HospitalNameMl={HospitalNameMl} />;
+          HospitalNameMl={HospitalNameMl} 
+          hospitalCode={hospitalCode}
+          isDisableEditRole = {isDisableEditRole}
+          setisDisableEditRole={setisDisableEditRole}
+          userRoles={userRoles}
+          />;
         }
         if (naturetype === "INSTITUTION") {
           <Institution
@@ -944,6 +1054,38 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setDeceasedFirstNameEnError(false);
     }
+    if (DeceasedMiddleNameEn.trim() == null || DeceasedMiddleNameEn.trim() == '' || DeceasedMiddleNameEn.trim() == undefined) {
+      setDeceasedMiddleNameEn("");
+    } else {
+      if (DeceasedMiddleNameMl.trim() == null || DeceasedMiddleNameMl.trim() == '' || DeceasedMiddleNameMl.trim() == undefined) {
+        validFlag = false;
+        setDeceasedMiddleNameMl("");
+        setDeceasedMiddleNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedMiddleNameMlError(false);
+      }
+    }
+
+    if (DeceasedLastNameEn.trim() == null || DeceasedLastNameEn.trim() == '' || DeceasedLastNameEn.trim() == undefined) {
+      setDeceasedLastNameEn("");
+    } else {
+      if (DeceasedLastNameMl.trim() == null || DeceasedLastNameMl.trim() == '' || DeceasedLastNameMl.trim() == undefined) {
+        validFlag = false;
+        setDeceasedLastNameMl("");
+        setDeceasedLastNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedLastNameMlError(false);
+      }
+    }
+
     if (DeceasedFirstNameMl.trim() == null || DeceasedFirstNameMl.trim() == '' || DeceasedFirstNameMl.trim() == undefined) {
       validFlag = false;
       setDeceasedFirstNameMl("");
@@ -955,6 +1097,42 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     } else {
       setDeceasedFirstNameMlError(false);
     }  
+    if (DeceasedMiddleNameMl.trim() == null || DeceasedMiddleNameMl.trim() == '' || DeceasedMiddleNameMl.trim() == undefined) {
+      setDeceasedMiddleNameMl("");
+      setDeceasedMiddleNameEnError(false);
+    } else {
+      if (DeceasedMiddleNameEn.trim() == null || DeceasedMiddleNameEn.trim() == '' || DeceasedMiddleNameEn.trim() == undefined) {
+        validFlag = false;
+        setDeceasedMiddleNameEn("");
+        setDeceasedMiddleNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedMiddleNameEnError(false);
+      }
+    }
+
+    if (DeceasedLastNameMl.trim() == null || DeceasedLastNameMl.trim() == '' || DeceasedLastNameMl.trim() == undefined) {
+      setDeceasedLastNameMl("");
+      setDeceasedLastNameEnError(false);
+    } else {
+      if (DeceasedLastNameEn.trim() == null || DeceasedLastNameEn.trim() == '' || DeceasedLastNameEn.trim() == undefined) {
+        validFlag = false;
+        setDeceasedLastNameEn("");
+        setDeceasedLastNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeceasedLastNameEnError(false);
+      }
+    }
+  
+
+
     if (Age == null || Age == "" || Age == undefined) {
       validFlag = false;
       setAgeError(true);
@@ -1059,8 +1237,37 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       } else {
         setDeathPlaceHomehoueNameMlError(false);
       }
-  }
-  else if (DeathPlace.code === "VEHICLE") {   
+      if (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined) {
+        setAdrsStreetNameEn("");
+      } else {
+        if (DeathPlaceHomeStreetNameEn != null && (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined)) {
+          validFlag = false;
+          setDeathPlaceHomestreetNameMl("");
+          setDeathPlaceHomestreetNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setDeathPlaceHomestreetNameMlError(false);
+        }
+      }
+      if (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined) {
+        setAdrsStreetNameMl("");
+      } else {
+        if (DeathPlaceHomeStreetNameMl != null && (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined)) {
+          validFlag = false;
+          setDeathPlaceHomestreetNameEn("");
+          setDeathPlaceHomeStreetNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setDeathPlaceHomeStreetNameEnError(false);
+        }
+      }
+  }  else if (DeathPlace.code === "VEHICLE") {   
 
     if (vehicleType == null || vehicleType == "" || vehicleType == undefined) {
       validFlag = false;
@@ -1142,12 +1349,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         tenantId,
         DateOfDeath,
         TimeOfDeath,
-        DeceasedFirstNameEn,
-        DeceasedMiddleNameEn,
-        DeceasedLastNameEn,
-        DeceasedFirstNameMl,
-        DeceasedMiddleNameMl,
-        DeceasedLastNameMl,
+        DeceasedFirstNameEn : DeceasedFirstNameEn.trim(),
+        DeceasedMiddleNameEn :DeceasedMiddleNameEn.trim(),
+        DeceasedLastNameEn : DeceasedLastNameEn.trim(),
+        DeceasedFirstNameMl :DeceasedFirstNameMl.trim(),
+        DeceasedMiddleNameMl :DeceasedMiddleNameMl.trim(),
+        DeceasedLastNameMl:DeceasedLastNameMl.trim(),
         Age,
         DeceasedAadharNotAvailable,
         DeceasedAadharNumber,
@@ -1171,12 +1378,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         DeathPlaceInstId,
         InstitutionIdMl,
         institutionNameCode,
-        DeathPlaceHomeHoueNameEn,
-        DeathPlaceHomehoueNameMl,
-        DeathPlaceHomeLocalityEn,
-        DeathPlaceHomeLocalityMl,
-        DeathPlaceHomeStreetNameEn,
-        DeathPlaceHomeStreetNameMl,
+        DeathPlaceHomeHoueNameEn :DeathPlaceHomeHoueNameEn.trim(),
+        DeathPlaceHomehoueNameMl:DeathPlaceHomehoueNameMl.trim(),
+        DeathPlaceHomeLocalityEn :DeathPlaceHomeLocalityEn.trim(),
+        DeathPlaceHomeLocalityMl:DeathPlaceHomeLocalityMl.trim(),
+        DeathPlaceHomeStreetNameEn :DeathPlaceHomeStreetNameEn.trim(),
+        DeathPlaceHomeStreetNameMl:DeathPlaceHomeStreetNameMl.trim(),
         DeathPlaceHomePostofficeId,
         DeathPlaceHomeWardId,
         DeathPlaceHomePincode,
@@ -1205,7 +1412,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         PlaceOfBurialMl,
         PlaceOfBurialEn,
         isWorkflow,
-        DifferenceInTime
+        DifferenceInTime,
+        hospitalCode
       });
     }
   };
@@ -1399,7 +1607,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPlace}
+                  option={sortDropdownNames(cmbPlace ? cmbPlace : [],"name",t)}
+                  // option={cmbPlace}
                   selected={DeathPlace}
                   select={selectDeathPlace}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
@@ -1791,7 +2000,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={menu}
+                  option={sortDropdownNames(menu ? menu : [],"code",t)}
+                 // option={menu}
                   selected={DeceasedGender}
                   select={selectDeceasedGender}
                   placeholder={`${t("CR_GENDER")}`}
@@ -1845,9 +2055,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError ||vehiDesDetailsEnError ||AgeValidationMsg }
+              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
+                || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError ||vehiDesDetailsEnError ||AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError }
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError||vehiDesDetailsEnError ||AgeValidationMsg
+                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError 
+                || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
+                || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError||vehiDesDetailsEnError ||AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
@@ -1858,6 +2071,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                     ? t(`DECEASED_FIRST_NAME_EN`)
                     : DeceasedFirstNameMlError
                     ? t(`DECEASED_FIRST_NAME_ML`)
+                    : DeceasedMiddleNameEnError
+                    ? t(`DECEASED_MIDDLE_NAME_EN`)                    
+                    : DeceasedMiddleNameMlError
+                    ? t(`DECEASED_MIDDLE_NAME_ML`)
+                    :DeceasedLastNameEnError
+                    ? t(`DECEASED_LAST_NAME_EN`)
+                    :DeceasedLastNameMlError
+                    ? t(`DECEASED_LAST_NAME_ML`)
                     : AgeValidationMsg
                      ? t(`CR_DECEASED_AGE_WARNING`)
                     : HospitalError
@@ -1871,6 +2092,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                     : WardNameError
                     ? t(`CR_ERROR_WARD_CHOOSE`)
                     : vehiDesDetailsEnError ? t(`DEATH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                    : DeathPlaceHomeStreetNameEnError 
+                    ? t(`DEATH_ERROR_HOME_STREET_NAME_EN`)
+                      : DeathPlaceHomestreetNameMlError 
+                      ? t(`DEATH_ERROR_HOME_STREET_NAME_ML`)
                     : setToast(false)
                   : setToast(false)
               }
