@@ -1,9 +1,9 @@
 export const getFilteredMarriagePlaceWardData = (selectedData, inclusionData, wards) => {
 
-    let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
+    let filteredDocuments = getFilteredDocuments(selectedData, inclusionData);
     // const computedValue = computeInitialValue(selectedData?.marriageWardCode, wards);
     const computedInitialValue = computeInitialValue(selectedData?.marriageWardCode, wards);
-  const computedCurrentValue = computeCurrentValue(selectedData?.marriageWardCode, wards);
+    const computedCurrentValue = computeCurrentValue(selectedData?.marriageWardCode, wards);
     let selectedDomObj = {
       initialValue: computedInitialValue,
       curValue: computedCurrentValue,
@@ -35,10 +35,11 @@ export const getFilteredMarriagePlaceWardData = (selectedData, inclusionData, wa
   
   const getFilteredDocuments = (selectedData,inclusionData) => {
     let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    if (selectedData?.marriagePlacetype === "RELIGIOUS_INSTITUTION") {
+      filteredData = inclusionData?.filter((item) => item.conditionCode === "RELIGIOUS_INSTITUTION");
     } else {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+      filteredData = inclusionData?.filter((item) => item.conditionCode === "MANDAPAM_HALL_AND_OTHER");
     }
-    return filteredData;
+    console.log("filter===",inclusionData, filteredData);
+    return {documentData:filteredData};
   };

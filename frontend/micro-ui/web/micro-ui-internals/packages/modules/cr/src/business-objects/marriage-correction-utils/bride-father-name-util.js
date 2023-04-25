@@ -1,9 +1,10 @@
 export const getFilteredBrideFatherNameData = (selectedData, inclusionData) => {
-    let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.BrideDetails);
+    let filteredDocuments = getFilteredDocuments(inclusionData);
+    const computedInitialValue = computeInitialValue(selectedData?.BrideDetails);
+    const computedCurrentValue = computeCurrentValue(selectedData?.BrideDetails);
     let selectedDomObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisable: true,
       isEditable: false,
       isFocused: false,
@@ -20,13 +21,17 @@ export const getFilteredBrideFatherNameData = (selectedData, inclusionData) => {
     };
     return initialValue;
   };
+
+  const computeCurrentValue = (brideDetails) => {
+    const currentValue = {
+      brideFatherNameEn: brideDetails?.brideFathernameEn,
+      brideFatherNameMl: brideDetails?.brideFathernameMl,
+    };
+    return currentValue;
+  };
   
-  const getFilteredDocuments = (selectedData,inclusionData) => {
-    let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-    } else {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-    }
-    return filteredData;
+  const getFilteredDocuments = (inclusionData) => {
+    let filteredData  = inclusionData;
+    console.log("filtered data ===", filteredData);
+    return {documentData:filteredData, docFlag: "BRIDE_FATHER"};  
   };

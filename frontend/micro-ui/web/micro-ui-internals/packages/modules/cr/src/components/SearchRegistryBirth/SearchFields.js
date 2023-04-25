@@ -1,26 +1,16 @@
-import React,{Fragment} from "react";
+import React, { Fragment } from "react";
 import { Controller } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 
-let validation={};
+let validation = {};
 
-const SearchFields = ({ register, control, reset, previousPage }) => {
+const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
   const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
-  const { data: hospitalData = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  let cmbhospital = [];
-  hospitalData &&
-    hospitalData["egov-location"] &&
-    hospitalData["egov-location"].hospitalList.map((ob) => {
-      cmbhospital.push(ob);
-    });
-  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  let menu = [];
-  Menu &&
-    Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-    });
+  const { data: hospitalData = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
+  const { data: genderData = [] } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
 
   return (
     <Fragment>
@@ -66,7 +56,7 @@ const SearchFields = ({ register, control, reset, previousPage }) => {
               selected={props.value}
               select={props.onChange}
               onBlur={props.onBlur}
-              option={menu}
+              option={genderData.map((genderDetails) => ({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` })) || []}
               optionKey="code"
               t={t}
               placeholder={`${t("SEX")}`}
@@ -99,7 +89,7 @@ const SearchFields = ({ register, control, reset, previousPage }) => {
         />
       </SearchField>
       <SearchField>
-        <label>{`${t("HOSPITAL_NAME")}`}</label>
+        <label> {t("TEMPLATE_NAME", { type: t("HOSPITAL") })}</label>
         <Controller
           control={control}
           name="hospitalId"
@@ -108,16 +98,16 @@ const SearchFields = ({ register, control, reset, previousPage }) => {
               selected={props.value}
               select={props.onChange}
               onBlur={props.onBlur}
-              option={cmbhospital}
-              optionKey="code"
+              option={_.get(hospitalData, "egov-location.hospitalList", [])}
+              optionKey="hospitalName"
               t={t}
-              placeholder={`${t("HOSPITAL_NAME")}`}
+              placeholder={t("TEMPLATE_NAME", { type: t("HOSPITAL") })}
             />
           )}
         />
       </SearchField>
       <SearchField>
-        <label>{t("REGISTRATION_NUMBER")}</label>
+        <label> {t("TEMPLATE_NUMBER", { type: t("REGISTRATION") })}</label>
         <TextInput name="registrationNo" inputRef={register({})} />
       </SearchField>
       <SearchField className="submit">
@@ -131,11 +121,11 @@ const SearchFields = ({ register, control, reset, previousPage }) => {
               nameOfMother: "",
               nameOfFather: "",
               hospitalId: "",
-              registrationNo:""
-              //   offset: 0,
-              //   limit: 10,
-              //   sortBy: "birthDate",
-              //   sortOrder: "DESC",
+              registrationNo: "",
+              offset: 0,
+              limit: 10,
+              sortBy: "birthDate",
+              sortOrder: "DESC",
             });
             previousPage();
           }}

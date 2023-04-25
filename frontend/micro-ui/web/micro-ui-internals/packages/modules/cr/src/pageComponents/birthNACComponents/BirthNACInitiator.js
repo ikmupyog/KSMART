@@ -58,15 +58,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [uploadedFile3, setUploadedFile3] = useState(null);
   const [uploadedFile4, setUploadedFile4] = useState(null);
   const [uploadedFile5, setUploadedFile5] = useState(null);
-  const [aadressFile, setAadressFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [proofFile, setProofFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [certificateFile, setCertificateFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [motherIdFile, setMotherIdFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [fatherIdFile, setFatherIdFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [medicalFile, setMedicalFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [aadressFile, setAadressFile] = useState(formData?.BirthNACInitiator?.uploadedFile);
+  const [proofFile, setProofFile] = useState(formData?.BirthNACInitiator?.uploadedFile1);
+  const [certificateFile, setCertificateFile] = useState(formData?.BirthNACInitiator?.uploadedFile2);
+  const [motherIdFile, setMotherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile3);
+  const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
+  const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
 
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
+  const [OrderofBirthMissmatchError, setOrderofBirthMissmatchError] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.BirthNACInitiator?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.BirthNACInitiator?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.BirthNACInitiator?.initiatorMobile ? false : false);
@@ -157,13 +158,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
   const initowner = () => {
     if (formData?.BirthNACInitiator?.ownerState) {
-      let ownerStates = formData?.BirthNACInitiator?.ownerState.map((item) => {
-        let newValue = item;
-        newValue.dob = new Date(item.dob);
-        newValue.sex = item.sex;
-        return newValue;
-      });
-      return ownerStates;
+      return formData?.BirthNACInitiator?.ownerState;
     } else {
       return [
         {
@@ -496,38 +491,45 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     } else {
       setinitiatorAddressError(false);
     }
-    if (formData?.BirthNACDetails?.childDOB !== ownerState[0].dob) {
-      // alert("mismatch");
+    const dobDate = new Date(ownerState[0].dob).toISOString().split("T")[0];
+    if (new Date(formData?.BirthNACDetails?.childDOB).getTime() != new Date(dobDate).getTime()) {
+      validFlag = false;
       setDOBMissmatchError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     }
-    const newOwnerState = ownerState.map((item) => {
-      let newVal = item;
-      newVal.dob = Date.parse(item.dob);
-      newVal.nacorderofChildren = parseInt(item.nacorderofChildren);
-      newVal.sex = item.sex?.code;
-      newVal.isAlive = item.isAlive?.value;
-      return newVal;
-    });
+    if (parseInt(formData?.BirthNACDetails?.nacorderofChildren) !== parseInt(ownerState[0].nacorderofChildren)) {
+      validFlag = false;
+      setOrderofBirthMissmatchError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }
 
     if (validFlag == true) {
       onSelect(config.key, {
-        initiatorNameEn,
+        initiatorNameEn: initiatorNameEn.trim(),
         initiatorAadhar,
         initiatorMobile,
         initiatorDesi,
         initiatorAddress,
-        ownerState: newOwnerState,
-        careofapplicant,
+        ownerState,
+        careofapplicant: careofapplicant.trim(),
         uploadedFile,
         uploadedFile1,
         uploadedFile2,
         uploadedFile3,
         uploadedFile4,
         uploadedFile5,
+        aadressFile,
+        proofFile,
+        certificateFile,
+        motherIdFile,
+        fatherIdFile,
+        medicalFile,
       });
     }
   };
@@ -1021,9 +1023,21 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
           {toast && (
             <Toast
-              error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError || DobMissmatchError}
+              error={
+                infomantFirstNmeEnError ||
+                initiatorAadharError ||
+                initiatorMobileError ||
+                initiatorAddressError ||
+                DobMissmatchError ||
+                OrderofBirthMissmatchError
+              }
               label={
-                infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError
+                infomantFirstNmeEnError ||
+                initiatorAadharError ||
+                initiatorMobileError ||
+                initiatorAddressError ||
+                DobMissmatchError ||
+                OrderofBirthMissmatchError
                   ? infomantFirstNmeEnError
                     ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                     : initiatorAadharError
@@ -1033,7 +1047,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     : initiatorAddressError
                     ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
                     : DobMissmatchError
-                    ? "DOSB MISSMATCH"
+                    ? t(`BIRTH_NAC_DOB_MISSMATCH`)
+                    : OrderofBirthMissmatchError
+                    ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
                     : setToast(false)
                   : setToast(false)
               }

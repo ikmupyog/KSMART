@@ -48,7 +48,16 @@ function DeathCorrectionEditPage({  sex, cmbPlace , DeathCorrectionDocuments ,na
   const formatDod = (date) => {
     return date;
   };
+  const onBackButtonEvent = () => {
+    setParams({});
+  };
 
+  useEffect(() => {
+    window.addEventListener("popstate", onBackButtonEvent);
+    return () => {
+      window.removeEventListener("popstate", onBackButtonEvent);
+    };
+  }, []);
   
 
  useEffect(async () => {
@@ -207,6 +216,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                 <TextInput
                   t={t}
                   type={"text"}
+                  name="AadharNumber"
                   max="12"
                   isMandatory={false}
                   disabled={deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled}

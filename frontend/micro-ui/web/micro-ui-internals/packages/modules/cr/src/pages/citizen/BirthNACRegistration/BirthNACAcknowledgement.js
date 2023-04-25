@@ -42,7 +42,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade");
-  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_NACBIRTH_EDIT_FLAG") ? true : false);
+  let isEditBirthNAC = sessionStorage.getItem("CR_NACBIRTH_EDIT_FLAG") ? true : false;
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
 
   const mutation = Digit.Hooks.cr.useCivilRegistrationNACBIRTHAPI(tenantId, isEditBirthNAC ? false : true);
@@ -61,6 +61,19 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
       // };
       try {
         setIsInitialRender(false);
+        const ownerState = data.BirthNACInitiator.ownerState;
+        delete data.BirthNACInitiator.ownerState;
+        let newPayload = { ...data };
+        const newOwnerState = ownerState.map((item) => {
+          let newVal = item;
+          newVal.dob = Date.parse(item.dob);
+          newVal.nacorderofChildren = parseInt(item.nacorderofChildren);
+          newVal.sex = item.sex?.code;
+          newVal.isAlive = item.isAlive?.value;
+          return newVal;
+        });
+        newPayload.BirthNACInitiator.ownerState = newOwnerState;
+
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
@@ -78,8 +91,8 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
   }, [mutation]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data;
-    const License = (Licenses && Licenses[0]) || {};
+    const { nacDetails = [] } = mutation.data;
+    const License = (nacDetails && nacDetails[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
     const data = getPDFData({ ...res }, tenantInfo, t);

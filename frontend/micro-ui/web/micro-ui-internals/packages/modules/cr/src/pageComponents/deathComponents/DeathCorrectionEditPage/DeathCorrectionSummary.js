@@ -10,8 +10,9 @@ import {
     LinkButton,
     Carousel,
     Accordion,
+    SubmitBar,
   } from "@egovernments/digit-ui-react-components";
-  import React, { Fragment, useEffect } from "react";
+  import React, { Fragment, useEffect, useState } from "react";
   import { useTranslation } from "react-i18next";
   import { Link, useLocation } from "react-router-dom";
   import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
@@ -32,9 +33,31 @@ import {
     let location = useLocation();
     let navData = location?.state?.navData;
     let deathCorrectionData = location?.state?.deathCorrectionData?.CorrectionDetails?.[0]?.CorrectionField;
-    ;
     
+
+    const carouselItems = [
+        {
+          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature2.jpg",
+          caption: "",
+        },
+        {
+          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature4.jpg",
+          caption: "Caption One",
+        },
+        {
+          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature1.jpg",
+          caption: "",
+        },
+        {
+          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature6.jpg",
+          caption: "Caption Three",
+        },
+      ];
+    const [imagesThumbs, setImagesThumbs] = useState(carouselItems);
+    const tenantId = Digit.ULBService.getCurrentTenantId();
   
+  
+
     useEffect(() => {
       console.log("navigated data==", navData, deathCorrectionData);
       // if (uploadedImages?.length > 0) {
@@ -42,19 +65,36 @@ import {
       // }
     }, []);
   
-    const fetchImage = async () => {
-      setImagesThumbs(null);
-      const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
-      const newThumbnails = fileStoreIds.map((key) => {
-        const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-        return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
-      });
-      setImagesThumbs(newThumbnails);
-    };
+    const fetchImage = async (uploadedImages) => {
+        setImagesThumbs(null);
+        const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
+        const newThumbnails = fileStoreIds.map((key) => {
+          const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+          return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+        });
+        console.log("newThumbnails==", newThumbnails);
+        const formattedImageThumbs =
+          newThumbnails?.length > 0 &&
+          newThumbnails.map((item, index) => {
+            const tempObj = {
+              image: item.small,
+              caption: `Caption ${index}`,
+            };
+            return tempObj;
+          });
+        console.log("formattedImageThumbs==", formattedImageThumbs);
+        setImagesThumbs(formattedImageThumbs);
+      };
   
     function OpenImage(imageSource, index, thumbnailsToShow) {
       window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }
+
+
+    const setDocumentsView = (documentData) => {
+        const documentIds = documentData?.map((item) => item.filestoreId);
+        fetchImage(documentIds);
+      };
   
     // const getTimelineCaptions = (checkpoint) => {
     //     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
@@ -147,11 +187,7 @@ import {
         return fieldValue;
     }
   
-    const setDocumentsView = (documentIds) =>{
-    console.log("documentIds==");
-    }
-  
-    const renderCardDetail = (value,fieldName) =>{
+    const renderCardDetail = (value,fieldName, documentData) =>{
       console.log("value in card==",value, fieldName);
       const type = (fieldName === 'DECEASED_DOB') ? 'date': "text";
           return (
@@ -171,7 +207,7 @@ import {
                   </h4>
                 </div>
                 <div className="col-md-1">
-                  <LinkButton label="View" onClick={setDocumentsView(value.CorrectionDocument)}/>
+                  <LinkButton label="View" onClick={() => setDocumentsView(documentData)}/>
                 </div>
               </div>
             </div>
@@ -206,33 +242,17 @@ import {
                               </div>
                             </div>
                           </div>
-                          {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value,detail.correctionFieldName))}
+                          {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value,detail.correctionFieldName, detail.CorrectionDocument))}
                         </StatusTable>
                       }
+                      
                     />
                 </div>
               </React.Fragment>
-            )
+            )   
     }
   
-    const carouselItems = [
-      {
-        image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature2.jpg",
-        caption: "",
-      },
-      {
-        image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature4.jpg",
-        caption: "Caption One",
-      },
-      {
-        image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature1.jpg",
-        caption: "",
-      },
-      {
-        image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature6.jpg",
-        caption: "Caption Three",
-      },
-    ];
+   
   
     return (
       <>
@@ -240,10 +260,18 @@ import {
           <div className={"cr-wrapper-app"}>
             {deathCorrectionData?.length > 0 &&
              deathCorrectionData?.map((detail, index) => renderSummaryCard(detail,index))}
+              {deathCorrectionData?.length > 0 && (
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: "2rem" }}>
+              <SubmitBar label={t("CS_COMMON_BACK")} />
+              <SubmitBar label={t("CS_COMMON_SUBMIT")} />
+            </div>
+          )}
           </div>
+         
           <div className={"cr-timeline-wrapper"}>
-            <Carousel {...{ carouselItems }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
-  
+          {imagesThumbs?.length > 0 && (
+            <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+          )}
             {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
               <React.Fragment>
                 {(workflowDetails?.isLoading || isDataLoading) && <Loader />}
@@ -288,8 +316,11 @@ import {
                 )}
               </React.Fragment>
             )}
+           
           </div>
+       
         </div>
+     
       </>
     );
   }

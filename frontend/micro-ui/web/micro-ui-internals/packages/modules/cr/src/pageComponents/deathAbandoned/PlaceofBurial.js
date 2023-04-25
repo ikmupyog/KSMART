@@ -137,73 +137,30 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
   }, [District, LBType, localbodies, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
 
   if (isEditAbandonedDeath) {
-    if (formData?.InformationDeathAbandoned?.BurialDistrict != null) {
+    if (formData?.InformationDeathAband?.BurialDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
-        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.InformationDeathAbandoned?.BurialDistrict)[0]);
+        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.InformationDeathAband?.BurialDistrict)[0]);
       }
     }
-    if (formData?.InformationDeathAbandoned?.BurialLBName != null) {
+    if (formData?.InformationDeathAband?.BurialLBName != null) {
       if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
-        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.InformationDeathAbandoned?.BurialLBName)[0]);
+        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.InformationDeathAband?.BurialLBName)[0]);
       }
     }
-    // if (formData?.InformationDeathAbandoned?.permntInKeralaAdrTaluk != null) {
-    //   if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
-    //     setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.InformationDeathAbandoned?.permntInKeralaAdrTaluk)[0]);
-    //   }
-    // }
-    // if (formData?.InformationDeathAbandoned?.permntInKeralaAdrVillage != null) {
-    //   if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
-    //     setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.InformationDeathAbandoned?.permntInKeralaAdrVillage)[0]);
-    //   }
-    // }
-    if (formData?.InformationDeathAbandoned?.BurialLBWard != null) {
+ 
+    if (formData?.InformationDeathAband?.BurialLBWard != null) {
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAbandoned?.BurialLBWard)[0]);
+        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAband?.BurialLBWard)[0]);
       }
     }
-    if (formData?.InformationDeathAbandoned?.permntInKeralaAdrPostOffice != null) {
+    if (formData?.InformationDeathAband?.permntInKeralaAdrPostOffice != null) {
       if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
-        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.InformationDeathAbandoned?.permntInKeralaAdrPostOffice)[0]);
-        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.InformationDeathAbandoned?.permntInKeralaAdrPostOffice)[0];
+        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.InformationDeathAband?.permntInKeralaAdrPostOffice)[0]);
+        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.InformationDeathAband?.permntInKeralaAdrPostOffice)[0];
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
   }
-  //  else if (isEditAbandonedDeath) {
-  //   if (formData?.permntInKeralaAdrDistrict != null) {
-  //     if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
-  //       setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.permntInKeralaAdrDistrict)[0]);
-  //     }
-  //   }
-  //   if (formData?.permntInKeralaAdrLBName != null) {
-  //     if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
-  //       setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.permntInKeralaAdrLBName)[0]);
-  //     }
-  //   }
-  //   if (formData?.permntInKeralaAdrTaluk != null) {
-  //     if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
-  //       setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.permntInKeralaAdrTaluk)[0]);
-  //     }
-  //   }
-  //   if (formData?.permntInKeralaAdrVillage != null) {
-  //     if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
-  //       setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.permntInKeralaAdrVillage)[0]);
-  //     }
-  //   }
-  //   if (formData?.permntInKeralaWardNo != null) {
-  //     if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
-  //       setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.permntInKeralaWardNo)[0]);
-  //     }
-  //   }
-  //   if (formData?.permntInKeralaAdrPostOffice != null) {
-  //     if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
-  //       setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.permntInKeralaAdrPostOffice)[0]);
-  //       let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.permntInKeralaAdrPostOffice)[0];
-  //       setpermntInKeralaAdrPincode(pin.pincode);
-  //     }
-  //   }
-  // }
   const onSkip = () => onSelect();
 
   function setSelectpermntInKeralaAdrDistrict(value) {
@@ -340,16 +297,6 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
     }
   }
 
-  // useEffect(() => {
-  //     if (isInitialRender) {
-  //         console.log("presentInsideKeralaDistrict" + districtid);
-  //         console.log(localbodies);
-  //         if (presentInsideKeralaDistrict) {
-  //             setIsInitialRender(false);
-  //             setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === presentInsideKeralaDistrict.districtid));
-  //         }
-  //     }
-  // }, [lbs, isInitialRender]);
   const goNext = () => {
 
   };
@@ -362,6 +309,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
       {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
         <div className="row">
+          <div className="col-md-12">
           <div className="col-md-3">
             <CardLabel>
               {t("CS_COMMON_DISTRICT")}
@@ -376,7 +324,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
               disable={isDisableEdit}
             />
           </div>
-
+         
           <div className="col-md-3" >
                     <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                     <Dropdown
@@ -396,7 +344,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
             <Dropdown
               t={t}
               optionKey="name"
-              option={lbs}
+              option={cmbLB}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
               placeholder={`${t("CS_COMMON_LB_NAME")}`}
@@ -418,9 +366,12 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
               {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })}
             />
           </div>
+          </div>
+
         </div>
         
         <div className="row">
+        <div className="col-md-12">
         <div className="col-md-3">
               <CardLabel>
                 {t("CR_PLACE_BURIAL_EN")}
@@ -469,6 +420,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
                 placeholder={`${t("CR_DESCRIPTION_OF_PLACE_OF_BURIAL")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
+            </div>
             </div>
         </div>
       {/* </FormStep> */}

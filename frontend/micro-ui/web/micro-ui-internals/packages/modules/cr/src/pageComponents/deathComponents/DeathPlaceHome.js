@@ -11,7 +11,7 @@ const DeathPlaceHome = ({
   formData,
   DeathPlaceHomePostofficeId,
   setDeathPlaceHomepostofficeId,
-  DeathPlaceHomepincode,
+  DeathPlaceHomePincode,
   setDeathPlaceHomepincode,
   DeathPlaceHomeHoueNameEn,
   setDeathPlaceHomehoueNameEn,
@@ -25,8 +25,8 @@ const DeathPlaceHome = ({
   setDeathPlaceHomestreetNameEn,
   DeathPlaceHomeStreetNameMl,
   setDeathPlaceHomestreetNameMl,
-  DeathPlaceWardId,
-  setDeathPlaceWardId,
+  DeathPlaceHomeWardId,
+  setDeathPlaceHomeWardId,
   PostOfficevalues,
   setPostOfficevalues,
   isEditDeath,
@@ -62,7 +62,7 @@ const DeathPlaceHome = ({
   // const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomelocalityMl);
   // const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameEn);
   // const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameMl);
-  // const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.DeathPlaceHome?.DeathPlaceWardId);
+  // const [DeathPlaceHomeWardId, setDeathPlaceHomeWardId] = useState(formData.DeathPlaceHome?.DeathPlaceHomeWardId);
   PostOffice &&
     PostOffice["common-masters"] &&
     PostOffice["common-masters"].PostOffice &&
@@ -114,9 +114,9 @@ const DeathPlaceHome = ({
         setDeathPlaceHomepincode(pin.pincode);
       }
     }
-    if (formData?.InformationDeath?.DeathPlaceWardId != null) {
-      if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
-        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeath?.DeathPlaceWardId)[0]);
+    if (formData?.InformationDeath?.DeathPlaceHomeWardId != null) {
+      if (cmbWardNo.length > 0 && (DeathPlaceHomeWardId === undefined || DeathPlaceHomeWardId === "")) {
+        setDeathPlaceHomeWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeath?.DeathPlaceHomeWardId)[0]);
       }
     }
   }
@@ -139,6 +139,8 @@ const DeathPlaceHome = ({
     );
     setDeathPlaceHomepostofficeId(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   };
+
+  
   function setSelectDeathPlaceHomehoueNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
       setDeathPlaceHomehoueNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -219,8 +221,8 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
         e.preventDefault();
     }
 }
-  function setSelectDeathPlaceWardId(value) {
-    setDeathPlaceWardId(value);
+  function setSelectDeathPlaceHomeWardId(value) {
+    setDeathPlaceHomeWardId(value);
   }
   let validFlag = true;
 
@@ -254,8 +256,8 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 t={t}
                 optionKey="namecmb"
                 option={cmbWardNoFinal}
-                selected={DeathPlaceWardId}
-                select={setSelectDeathPlaceWardId}
+                selected={DeathPlaceHomeWardId}
+                select={setSelectDeathPlaceHomeWardId}
                 disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
@@ -286,8 +288,8 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathPlaceHomepincode"
-                value={DeathPlaceHomepincode}
+                name="DeathPlaceHomePincode"
+                value={DeathPlaceHomePincode}
                 onChange={setSelectDeathPlaceHomepincode}
                 disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}

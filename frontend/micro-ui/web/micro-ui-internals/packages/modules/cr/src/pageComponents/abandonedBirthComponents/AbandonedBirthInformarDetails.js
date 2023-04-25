@@ -78,7 +78,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   }  
   function setSelectcaretakerAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
       setcaretakerAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }   
@@ -108,7 +108,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   }   
   function setSelectinformerAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
       setinformerAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   } 
@@ -244,7 +244,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
 
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}

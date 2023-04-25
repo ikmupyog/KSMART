@@ -53,12 +53,10 @@ const MarriageCorrection = () => {
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
-    console.log("data api==", data,payload);
     setEnableConfig({ enabled: true });
     const params = {
       filters: payload,
     };
-    console.log("marriageSearch ===", params);
    
   }
 
