@@ -946,10 +946,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                 )}
                 {(marriagePlacetype.code === "PUBLIC_PLACE" || marriagePlacetype.code === "PRIVATE_PLACE") && (
                   <MarriagePublicPlace
-                    marriagePlacenameEn={marriagePublicOrPrivateNamePlaceEn}
-                    setmarriagePlacenameEn={setmarriagePublicOrPrivateNamePlaceEn}
-                    marriagePlacenameMl={marriagePublicOrPrivateNamePlaceMl}
-                    setmarriagePlacenameMl={setmarriagePublicOrPrivateNamePlaceMl}
+                    marriagePlacenameEn={marriagePlacenameEn}
+                    setmarriagePlacenameEn={setmarriagePlacenameEn}
+                    marriagePlacenameMl={marriagePlacenameMl}
+                    setmarriagePlacenameMl={setmarriagePlacenameMl}
                     marriageLocalityEn={marriageLocalityEn}
                     setmarriageLocalityEn={setmarriageLocalityEn}
                     marriageLocalityMl={marriageLocalityMl}
