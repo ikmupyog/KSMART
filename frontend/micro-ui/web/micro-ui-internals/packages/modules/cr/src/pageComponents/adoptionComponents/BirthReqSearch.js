@@ -1,5 +1,5 @@
 import React from "react";
-import { CardLabel, TextInput, Modal, SearchField, SubmitBar, DatePicker, Table } from "@egovernments/digit-ui-react-components";
+import { CardLabel,Card, TextInput, Modal, SearchField, SubmitBar, DatePicker, Table ,Loader} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 // import Search from '../../components/SearchApplicationBirth'
@@ -92,7 +92,8 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
       // sortBy: "applicationNumber",
       // sortOrder: "DESC",
       ...getValues,
-      applicationNumber: applicationNum,
+      registrationNo: applicationNum,
+      // applicationNumber: applicationNum,
       fromDate: fromDate,
       toDate: toData,
       MotherName: MotherName,
@@ -175,7 +176,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
                     setSearchRegId(row.original), setBirthRegPopup(false);
                   }}
                 >
-                  {row.original.applicationNumber}
+                  {row.original.registrationNo}
                 </Link>
               </span>
             </div>
@@ -198,21 +199,21 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
       //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
       // },
       {
-        Header: t("CR_COMMON_COL_MOTHER_NAME"),
+        Header: t("CR_GENDER"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"] || "-"),
+        accessor: (row) => GetCell(row.gender|| "-"),
       },
       {
-        Header: t("CR_COMMON_COL_FATHER_NAME"),
+        Header: t("CR_PLACE_OF_BIRTH"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"] || "-"),
+        accessor: (row) => GetCell(row.birthPlace || "-"),
       },
     ],
     []
   );
-  // const Search = Digit.ComponentRegistryService.getComponent("SearchCrApplication");
+  // const Search = Digit.ComponentRegistryService.getComponent("SearchCrApplication"); useSearch ChildDetails
   if (window.location.href.includes("/adoption-child-details") == true) {
-    const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({
+    const { data: { ChildDetails : searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchAdoption({
       tenantId,
       filters: payload,
       config,
@@ -230,7 +231,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
           <div className="col-md-12">
             <div className="col-md-3">
               <label>
-                {t("CR_SEARCH_APP_NO_LABEL")}
+                {t("CR_ADOPTION_REG_NO")}
                 <span className="mandatorycss">*</span>
               </label>
               <TextInput
@@ -238,11 +239,11 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="applicationNumber"
+                name="registrationNo"
                 value={applicationNum}
                 //  disable={isDisableEdit}
                 onChange={(e) => setApplicationNum(e.target.value)}
-                placeholder={`${t("CR_SEARCH_APP_NO_LABEL")}`}
+                placeholder={`${t("CR_ADOPTION_REG_NO")}`}
                 //  inputProps={{
                 //    maxLength: 12,
                 //  }}
@@ -314,7 +315,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
           </div>
         </div>
         <div className="row">
-          {searchResult !== "" && searchResult?.length > 0 && (
+          {isLoading ? <Loader /> : searchResult !== "" && searchResult?.length > 0 ? (
             <Table
               styles={{ marginLeft: "7px", width: "98.9%" }}
               paginationStyle={{ marginLeft: "7px", width: "98.9%" }}
@@ -341,7 +342,11 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
               disableSort={false}
               sortParams={[{ id: getValues.sortBy, desc: getValues.sortOrder === "DESC" ? true : false }]}
             />
-          )}
+          ): <Card style={{ marginTop: 20 , marginLeft:'10px', width:'99.2%'}}>
+          <p style={{ textAlign: "center" }}>
+            {t("ES_COMMON_NO_DATA")}
+          </p>
+        </Card>}
         </div>
       </Modal>
     );

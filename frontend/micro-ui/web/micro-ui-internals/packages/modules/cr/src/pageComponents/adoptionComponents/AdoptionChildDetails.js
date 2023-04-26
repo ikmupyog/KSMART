@@ -355,9 +355,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         SearchRegId?.childLastNameMl ? setChildLastNameMl(SearchRegId.childLastNameMl):setChildLastNameMl('')
         SearchRegId?.birthPlace ? selectBirthPlace((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === SearchRegId?.birthPlace)[0])):selectBirthPlace('')
         SearchRegId?.birthPlace ? setValue(SearchRegId?.birthPlace):setValue('') 
-        // console.log(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]?.pincode);
+        // console.log(SearchRegId?.hospitalCode,cmbhospital,(cmbhospital.filter(cmbhospital => cmbhospital.code == SearchRegId?.hospitalCode )[0]));
         SearchRegId?.hospitalCode ? selectHospitalName((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0])): selectHospitalName('')
-        SearchRegId?.hospitalNameMl ? selectHospitalNameMl((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0]).hospitalNamelocal):selectHospitalNameMl('')
+        SearchRegId?.hospitalCode ? selectHospitalNameMl((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0])?.hospitalNamelocal):selectHospitalNameMl('')
         SearchRegId?.wardNo ?setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === SearchRegId?.wardNo )[0]):setWardNo([])
         SearchRegId?.adrsPostOffice?setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]):''
         SearchRegId?.adrsPostOffice?setAdrsPincode(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]?.pincode):''
