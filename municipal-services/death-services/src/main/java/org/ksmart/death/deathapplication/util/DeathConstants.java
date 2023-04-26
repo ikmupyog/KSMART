@@ -158,5 +158,9 @@ public class DeathConstants {
 
 
     public static final String NOT_APPLICABLE = "NOT_APPLICABLE";
-
+    public static final String TALUK = "Taluk";
+    public static final String POSTOFFICE = "PostOffice";
+    public static final String VILLAGE = "Village";
+    public static final String COMMON_MASTERS_MODULE = "common-masters";
+    public static final String PO_EN = "P O";
 }

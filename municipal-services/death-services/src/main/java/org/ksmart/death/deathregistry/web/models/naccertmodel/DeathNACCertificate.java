@@ -115,4 +115,8 @@ public class DeathNACCertificate {
 
   @JsonProperty("ackNo")
   private String ackNo;
+
+  @JsonProperty("consumerCode")
+  private String  consumerCode;
+
 }

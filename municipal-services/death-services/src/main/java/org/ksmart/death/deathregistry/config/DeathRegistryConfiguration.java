@@ -112,7 +112,14 @@ public class DeathRegistryConfiguration {
 
     //RAkhi S on 08.04.2023 NAC Certificate End point
     @Value("${egov.pdf.deathnac.createEndPoint}")
-     private String	egovPdfDeathNACEndPoint;   
+     private String	egovPdfDeathNACEndPoint; 
+     
+     //RAkhi S on 26.04.2023 NIA Certificate End point
+    @Value("${egov.pdf.deathnia.createEndPoint}")
+    private String	egovPdfDeathNIAEndPoint;
+
+    @Value("${persister.update.deathnaccertificate.topic}")
+    private String updateDeathNACCertificateTopic;
       
 	
 }

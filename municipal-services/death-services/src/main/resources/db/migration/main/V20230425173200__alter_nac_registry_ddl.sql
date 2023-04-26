@@ -1,0 +1,1 @@
+ALTER TABLE eg_death_nac_registry add column IF NOT EXISTS permanent_address character varying(1000);

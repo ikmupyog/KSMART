@@ -32,6 +32,7 @@ import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfApplicationRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfResp;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACCertRequest;
 import org.ksmart.death.deathregistry.web.models.naccertmodel.NACPdfApplicationRequest;
 import org.ksmart.death.deathregistry.web.models.naccertmodel.NACPdfResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1556,6 +1557,82 @@ public class DeathRegistryRepository {
 		}
 		return result;
     }
+    //Rakhi S on 26.04.2023
+ public NACPdfResp saveDeathNIAPdf(NACPdfApplicationRequest pdfApplicationRequest) {
+    NACPdfResp  result= new NACPdfResp();
+        try {
+            pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
+
+                Long currentTime = Long.valueOf(System.currentTimeMillis());
+                cert.getDeathBasicInfo().setDateofissue(currentTime);
+
+                Object mdmsData = util.mDMSNACCertificate(pdfApplicationRequest.getRequestInfo()
+                                , cert.getDeathBasicInfo().getTenantId());
+
+                 Map<String,List<String>> masterData = getAttributeValuesNAC(mdmsData);
+
+                 String lbName = masterData.get(DeathRegistryConstants.TENANTS).toString();
+                 lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
+                 cert.getDeathBasicInfo().setLocalBodyName(lbName);   
+                
+                 Object mdmsTaluk = util.mDMSCallCertificateLBTaluk(pdfApplicationRequest.getRequestInfo()
+                            , cert.getDeathBasicInfo().getTenantId());
+                 Map<String,List<String>> masterDataTaluk = getAttributeValuesVehicle(mdmsTaluk);
+
+                 String lbTalukMaster = masterDataTaluk.get(DeathRegistryConstants.TENANTS).toString();
+                 lbTalukMaster = lbTalukMaster.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 Object mdmsTalukEn = util.mDMSCallCertificateLBTalukEn(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getDeathBasicInfo().getTenantId()
+                                      ,lbTalukMaster);
+                 Map<String,List<String>> masterDataTalukEn = getAttributeValues(mdmsTalukEn);
+
+                 String lbTalukEn = masterDataTalukEn.get(DeathRegistryConstants.TALUK).toString();
+                 lbTalukEn = lbTalukEn.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.getDeathBasicInfo().setLbTalukEn(lbTalukEn);
+
+                 Object mdmsDistrict = util.mDMSCallCertificateLBDistrict(pdfApplicationRequest.getRequestInfo()
+                            , cert.getDeathBasicInfo().getTenantId());
+                 Map<String,List<String>> masterDataDistrict = getAttributeValuesVehicle(mdmsDistrict);
+
+                 String lbDistrictMaster = masterDataDistrict.get(DeathRegistryConstants.TENANTS).toString();
+                 lbDistrictMaster = lbDistrictMaster.replaceAll("[\\[\\]\\(\\)]", "");
+                
+                 Object mdmsDistrictEn = util.mDMSCallCertificateLBDistrictEn(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getDeathBasicInfo().getTenantId()
+                                      ,lbDistrictMaster);
+                 Map<String,List<String>> masterDataDistrictEn = getAttributeValues(mdmsDistrictEn);
+
+                 String lbDistrictEn = masterDataDistrictEn.get(DeathRegistryConstants.DISTRICT).toString();
+                 lbDistrictEn = lbDistrictEn.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.getDeathBasicInfo().setLbDistrictEn(lbDistrictEn);
+            });
+            // log.info(new Gson().toJson(pdfApplicationRequest));
+            NACPdfApplicationRequest req = NACPdfApplicationRequest.builder().deathNACCertificate(pdfApplicationRequest.getDeathNACCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
+            pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
+                String uiHost = config.getEgovPdfHost();
+                String deathCertPath = config.getEgovPdfDeathNIAEndPoint();
+                String tenantId = cert.getDeathBasicInfo().getTenantId().split("\\.")[0];
+                deathCertPath = deathCertPath.replace("$tenantId",tenantId);
+                String pdfFinalPath = uiHost + deathCertPath;
+                // log.info(new Gson().toJson(req));
+                DeathPdfResp response = restTemplate.postForObject(pdfFinalPath, req, DeathPdfResp.class);
+    
+                if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
+                    throw new CustomException("EMPTY_FILESTORE_IDS_FROM_PDF_SERVICE",
+                            "No file store id found from pdf service");
+                }
+                result.setFilestoreIds(response.getFilestoreIds());
+                });	
+        }
+        catch(Exception e) {
+			e.printStackTrace();
+			throw new CustomException("PDF_ERROR","Error in generating PDF");
+		}
+		return result;
+    }
 
      //Rakhi S ikm on 11.02.2023
      private Map<String, List<String>> getAttributeValuesNAC(Object mdmsdata){
@@ -1576,4 +1653,9 @@ public class DeathRegistryRepository {
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }   
+
+     //Rakhi S ikm on 26.04.2023
+     public void updateNACCertificate(NACCertRequest deathCertRequest) {     
+        producer.push(config.getUpdateDeathNACCertificateTopic(), deathCertRequest);
+  }
 }

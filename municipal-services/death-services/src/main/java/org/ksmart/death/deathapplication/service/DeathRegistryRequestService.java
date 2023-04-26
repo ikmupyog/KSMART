@@ -1,8 +1,12 @@
 package org.ksmart.death.deathapplication.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.egov.tracer.model.CustomException;
+import org.ksmart.death.deathapplication.util.DeathConstants;
+import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
@@ -32,32 +36,25 @@ import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
-
-
-
-
-
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-/**
-     * Creates CrDeathRegistryRequestService
-     * Jasmine 
-     * on 19/01/2023
-     */
+import com.jayway.jsonpath.JsonPath;
+
 @Slf4j
 @Service
 public class DeathRegistryRequestService {
-
-    public DeathRegistryRequest createRegistryRequest( DeathDtlRequest deathrequest ){
-
+    @Autowired
+    DeathMdmsUtil util;
+    
+    public DeathRegistryRequest createRegistryRequest( DeathDtlRequest deathrequest ){        
         RequestInfo requestInfo = deathrequest.getRequestInfo();
         DeathRegistryRequest request = new DeathRegistryRequest();
         List<DeathDtl> deathDtls = deathrequest.getDeathCertificateDtls();
@@ -711,6 +708,143 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
 
             if  (deathdet.getDeathBasicInfo()!=null){
                 deathRegistryReading.setDeathBasicInfo(createRegistryNACBasicInfo(deathrequest));
+                if  (deathdet.getDeathAddressInfo()!=null){
+                    Object mdmsDataPermanent = util.mDMSCallCertificateP(deathrequest.getRequestInfo()
+                                , deathdet.getDeathBasicInfo().getTenantId()                           
+                                , deathdet.getDeathAddressInfo().getPermanentAddrDistrictId()
+                                , deathdet.getDeathAddressInfo().getPermanentAddrStateId()
+                                , deathdet.getDeathAddressInfo().getPermanentAddrCountryId()
+                                , deathdet.getDeathAddressInfo().getPermanentAddrPostofficeId()
+                                , deathdet.getDeathAddressInfo().getPermanentAddrVillageId()
+                                , deathdet.getDeathAddressInfo().getPermanentAddrTalukId());
+
+                    Map<String,List<String>> masterDataPermanent = getAttributeValues(mdmsDataPermanent);
+                    String permanentAddDistrict = masterDataPermanent.get(DeathConstants.DISTRICT).toString();
+                    permanentAddDistrict = permanentAddDistrict.replaceAll("[\\[\\]\\(\\)]", "");
+                    deathdet.getDeathAddressInfo().setPermanentAddrDistrictId(permanentAddDistrict);
+
+                    String permanentAddState = masterDataPermanent.get(DeathConstants.STATE).toString();
+                    permanentAddState = permanentAddState.replaceAll("[\\[\\]\\(\\)]", "");
+                    deathdet.getDeathAddressInfo().setPermanentAddrStateId(permanentAddState);
+
+                    String permanentAddCountry = masterDataPermanent.get(DeathConstants.COUNTRY).toString();
+                    permanentAddCountry = permanentAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
+                    deathdet.getDeathAddressInfo().setPermanentAddrCountryId(permanentAddCountry);
+                    
+                    String permanentAddPO = masterDataPermanent.get(DeathConstants.POSTOFFICE).toString();
+                    permanentAddPO = permanentAddPO.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    if (null != permanentAddPO && !permanentAddPO.isEmpty()){
+                    permanentAddPO=permanentAddPO+" "+DeathConstants.PO_EN;
+                   if(deathdet.getDeathAddressInfo().getPermanentAddrPincode() != null){
+                         permanentAddPO = permanentAddPO+" "+deathdet.getDeathAddressInfo().getPermanentAddrPincode();
+                     }
+                     deathdet.getDeathAddressInfo().setPermanentAddrPostofficeNameEn(permanentAddPO);
+                    }
+                    String permanentAddVillage = masterDataPermanent.get(DeathConstants.VILLAGE).toString();
+                    permanentAddVillage = permanentAddVillage.replaceAll("[\\[\\]\\(\\)]", "");
+                     if (null != permanentAddVillage && !permanentAddVillage.isEmpty()){
+                        deathdet.getDeathAddressInfo().setPermanentAddrVillageNameEn(permanentAddVillage);
+                        }
+                    String permanentAddTaluk = masterDataPermanent.get(DeathConstants.TALUK).toString();
+                    permanentAddTaluk = permanentAddTaluk.replaceAll("[\\[\\]\\(\\)]", "");
+                    if (null != permanentAddTaluk && !permanentAddTaluk.isEmpty()){
+                        deathdet.getDeathAddressInfo().setPermanentAddrTalukNameEn(permanentAddTaluk);
+                    }
+
+                      //permanant
+                if(deathdet.getDeathAddressInfo().getPermanentAddrResidenceAsscNo() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrResidenceAsscNo(deathdet.getDeathAddressInfo().getPermanentAddrResidenceAsscNo()+", ");
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrResidenceAsscNo("");
+                }
+                if(deathdet.getDeathAddressInfo().getPermanentAddrHouseNo() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrHouseNo(deathdet.getDeathAddressInfo().getPermanentAddrHouseNo()+", ");
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrHouseNo("");
+                }
+                if(deathdet.getDeathAddressInfo().getPermanentAddrHoueNameEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrHoueNameEn(deathdet.getDeathAddressInfo().getPermanentAddrHoueNameEn());
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrHoueNameEn("");
+                }
+				 if(deathdet.getDeathAddressInfo().getPermanentAddrStreetNameEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrStreetNameEn(", "+deathdet.getDeathAddressInfo().getPermanentAddrStreetNameEn());
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrStreetNameEn("");
+                }
+				if(deathdet.getDeathAddressInfo().getPermanentAddrCityEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrCityEn(", "+deathdet.getDeathAddressInfo().getPermanentAddrCityEn());
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrCityEn("");
+                }
+				 if(deathdet.getDeathAddressInfo().getPermanentAddrLocalityEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrLocalityEn(", "+deathdet.getDeathAddressInfo().getPermanentAddrLocalityEn());
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrLocalityEn("");
+                }
+				 if(deathdet.getDeathAddressInfo().getPermanentAddrPostofficeNameEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrPostofficeNameEn(", "+deathdet.getDeathAddressInfo().getPermanentAddrPostofficeNameEn());
+                }
+                else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrPostofficeNameEn("");
+                }
+				
+				 if(deathdet.getDeathAddressInfo().getPermanentAddrVillageNameEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrVillageNameEn(", "+deathdet.getDeathAddressInfo().getPermanentAddrVillageNameEn());
+                 }
+                 else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrVillageNameEn("");
+                 }
+				  if(deathdet.getDeathAddressInfo().getPermanentAddrTalukNameEn() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrTalukNameEn(", "+deathdet.getDeathAddressInfo().getPermanentAddrTalukNameEn());
+                 }
+                 else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrTalukNameEn("");
+                 }
+				  if(deathdet.getDeathAddressInfo().getPermanentAddrDistrictId() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrDistrictId(", "+deathdet.getDeathAddressInfo().getPermanentAddrDistrictId());
+                 }
+                 else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrDistrictId("");
+                 }
+
+                 if(deathdet.getDeathAddressInfo().getPermanentAddrStateId() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrStateId(", "+deathdet.getDeathAddressInfo().getPermanentAddrStateId());
+                 }
+                 else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrStateId("");
+                 }
+				  if(deathdet.getDeathAddressInfo().getPermanentAddrCountryId() != null){
+                    deathdet.getDeathAddressInfo().setPermanentAddrCountryId(", "+deathdet.getDeathAddressInfo().getPermanentAddrCountryId());
+                 }
+                 else{
+                    deathdet.getDeathAddressInfo().setPermanentAddrCountryId("");
+                 }
+
+                 deathdet.getDeathBasicInfo().setPermanentAddressFullEn(deathdet.getDeathAddressInfo().getPermanentAddrResidenceAsscNo() +
+                        deathdet.getDeathAddressInfo().getPermanentAddrHouseNo()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrHoueNameEn()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrStreetNameEn()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrLocalityEn()+ 
+                        // cert.getDeathAddressInfo().getPermanentAddrCityEn()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrPostofficeNameEn()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrVillageNameEn()+
+                        deathdet.getDeathAddressInfo().getPermanentAddrTalukNameEn()+
+                        deathdet.getDeathAddressInfo().getPermanentAddrDistrictId()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrStateId()+ 
+                        deathdet.getDeathAddressInfo().getPermanentAddrCountryId());
+
+                // System.out.println("addressnac"+ deathdet.getDeathBasicInfo().getPermanentAddressFullEn());
+                deathRegistryReading.getDeathBasicInfo().setPermanentAddressFullEn(deathdet.getDeathBasicInfo().getPermanentAddressFullEn()); 
+
+                }
             }           
             if  (deathdet.getDeathAddressInfo()!=null){
                 deathRegistryReading.setDeathAddressInfo(createRegistryNACAddress(deathrequest));
@@ -874,5 +1008,25 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
         registryInformantDtls.setApplicantAddress(deathInformantDtls.getApplicantAddress());
         registryInformantDtls.setApplicantRelation(deathInformantDtls.getApplicantRelation());
         return registryInformantDtls;
+    }
+     //Rakhi S ikm on 25.04.2023
+     private Map<String, List<String>> getAttributeValues(Object mdmsdata){
+        List<String> modulepaths = Arrays.asList(DeathConstants.TENANT_JSONPATH, 
+        DeathConstants.COMMON_MASTER_JSONPATH);
+        final Map<String, List<String>> mdmsResMap = new HashMap<>();
+       
+        modulepaths.forEach(modulepath -> {
+            try {
+                mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
+                log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
+            } catch (Exception e) {
+                log.error("Error while fetching MDMS data",e);
+                throw new CustomException(DeathConstants.INVALID_TENANT_ID_MDMS_KEY,
+                DeathConstants.INVALID_TENANT_ID_MDMS_MSG);
+            }
+           
+        });
+        // System.out.println("mdmsResMap"+mdmsResMap);
+        return mdmsResMap;
     }
 }

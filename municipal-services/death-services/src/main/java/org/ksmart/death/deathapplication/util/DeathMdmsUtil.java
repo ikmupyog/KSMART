@@ -418,4 +418,112 @@ public class DeathMdmsUtil {
 
                return (crDeathModuleDtls);
        }
+       //RAkhi S ikm on 25.04.2023
+     public Object mDMSCallCertificateP(RequestInfo requestInfo  
+                                , String tenantId   
+                                , String permanentAddressDistrict
+                                , String permanentAddressState
+                                , String permanentAddressCountry
+                                , String permanentPostOfficeId
+                                , String permanentVillage
+                                , String permanentTaluk) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateP(requestInfo   
+                                                , tenantId
+                                                , permanentAddressDistrict
+                                                , permanentAddressState
+                                                , permanentAddressCountry
+                                                , permanentPostOfficeId
+                                                , permanentVillage
+                                                , permanentTaluk);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+        }
+        private MdmsCriteriaReq getMDMSRequestCertificateP(RequestInfo requestInfo    
+                            , String tenantId                       
+                            , String permanentAddressDistrict
+                            , String permanentAddressState
+                            , String permanentAddressCountry
+                            , String permanentPostOfficeId
+                            , String permanentVillage
+                            , String permanentTaluk) {
+
+        ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        List<ModuleDetail> commonMasterRequest = getcommonMasterRequestP(
+                                 tenantId
+                                ,permanentAddressDistrict
+                                ,permanentAddressState
+                                ,permanentAddressCountry
+                                ,permanentPostOfficeId
+                                ,permanentVillage
+                                ,permanentTaluk);  
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        moduleDetails.addAll(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                        .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        //  System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+        }
+        private List<ModuleDetail> getcommonMasterRequestP( String tenantId
+                                        , String permanentAddressDistrict
+                                        , String permanentAddressState
+                                        , String permanentAddressCountry
+                                        , String permanentPostOfficeId
+                                        , String permanentVillage
+                                        , String permanentTaluk) {
+
+        // master details for death certificate
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
+        final String perAddrfilterCode = "$.[?(@.code=='"+permanentAddressDistrict+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.DISTRICT).filter(perAddrfilterCode).build());  
+        
+        final String perAddrfilterCodeState = "$.[?(@.code=='"+permanentAddressState+"')].name"; 
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.STATE).filter(perAddrfilterCodeState).build());        
+                
+        final String perAddrfilterCodeCountry = "$.[?(@.code=='"+permanentAddressCountry+"')].name"; 
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.COUNTRY).filter(perAddrfilterCodeCountry).build()); 
+
+        final String filterCodePostOffice = "$.[?(@.code=='"+permanentPostOfficeId+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.POSTOFFICE).filter(filterCodePostOffice).build()); 
+        //Rakhi S ikm on 12.02.2023
+        final String filterCodeVillage = "$.[?(@.code=='"+permanentVillage+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.VILLAGE).filter(filterCodeVillage).build());
+
+        final String filterCodeTaluk= "$.[?(@.code=='"+permanentTaluk+"')].name";
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathConstants.TALUK).filter(filterCodeTaluk).build());
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.COMMON_MASTERS_MODULE).build();
+
+               
+         return Arrays.asList(crDeathModuleDtls);
+    }
+     //RAkhi S ikm on 25.04.2023
+     private ModuleDetail getTenantIdCertificate(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data            
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.TENANT_MODULE_NAME).build();
+
+       
+        return crDeathModuleDtls;
+    }
 }

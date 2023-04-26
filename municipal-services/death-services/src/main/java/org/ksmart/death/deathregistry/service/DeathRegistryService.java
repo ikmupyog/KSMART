@@ -177,9 +177,29 @@ public class DeathRegistryService {
 
         List<DeathRegistryNACDtls> deathDtls = repository.getDeathNACApplication(criteria,requestInfo);     
         NACPdfApplicationRequest applicationRequest = NACPdfApplicationRequest.builder().requestInfo(requestInfo).deathNACCertificate(deathDtls).build();
-
-        NACPdfResp pdfResp = repository.saveDeathNACPdf(applicationRequest);
-        nacCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
+        if (null != deathDtls && !deathDtls.isEmpty()){
+          if(deathDtls.get(0).getDeathBasicInfo().getFilestoreId() != null){
+            nacCertificate.setFilestoreid(deathDtls.get(0).getDeathBasicInfo().getFilestoreId());
+            nacCertificate.setConsumerCode(deathDtls.get(0).getDeathBasicInfo().getDeathACKNo());
+          }
+          else{
+              if(deathDtls.get(0).getDeathBasicInfo().isDeathNAC()){
+                NACPdfResp pdfResp = repository.saveDeathNACPdf(applicationRequest);
+                nacCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
+                Long currentSystemTime = Long.valueOf(System.currentTimeMillis());
+                nacCertificate.setDateofissue(currentSystemTime);
+                repository.updateNACCertificate(nacCertRequest);
+              }
+              else if(deathDtls.get(0).getDeathBasicInfo().isDeathNIA()){
+                NACPdfResp pdfResp = repository.saveDeathNIAPdf(applicationRequest);
+                nacCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
+                Long currentSystemTime = Long.valueOf(System.currentTimeMillis());
+                nacCertificate.setDateofissue(currentSystemTime);
+                repository.updateNACCertificate(nacCertRequest);
+              }       
+          }
+        }
+        
         return nacCertificate;
       }
       catch(Exception e) {

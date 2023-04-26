@@ -746,8 +746,8 @@ serviceMaps:
           applicant_relation, applicant_address, applicant_mobile_no, applicant_email, status,
           created_by, createdtime, lastmodifiedby, lastmodifiedtime, workflowcode, businessservice,
           action, comment, assignee, appl_type, ack_no, application_date, funcion_uid,
-          certificate_no, certificate_date, certificate_no_id, is_nac, is_nia)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          certificate_no, certificate_date, certificate_no_id, is_nac, is_nia, permanent_address)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
       basePath: deathNACDtls.*
       jsonMaps:
@@ -824,3 +824,18 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.InformationDeath.certificateNoId    
       - jsonPath: $.deathNACDtls.*.InformationDeath.isDeathNAC
       - jsonPath: $.deathNACDtls.*.InformationDeath.isDeathNIA
+      - jsonPath: $.deathNACDtls.*.InformationDeath.permanentAddressFullEn
+
+  - version: 1.0
+    description: Persists death NAC and NIA certificate details in eg_death_nac_registry table      
+    fromTopic: update-deathnaccertificate-topic
+    isTransaction: true   
+    queryMaps:       
+    - query: UPDATE public.eg_death_nac_registry
+                SET  filestoreid=?, dateofissue=?
+                WHERE id=?;
+      basePath: deathNACCertificate
+      jsonMaps:            
+      - jsonPath: $.deathNACCertificate.filestoreid           
+      - jsonPath: $.deathNACCertificate.dateofissue
+      - jsonPath: $.deathNACCertificate.deathDtlId

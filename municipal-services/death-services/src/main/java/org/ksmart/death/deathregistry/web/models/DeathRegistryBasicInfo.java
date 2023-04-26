@@ -527,5 +527,11 @@ public class DeathRegistryBasicInfo {
 
    @JsonProperty("period")
    private String  period ;
+
+   @JsonProperty("filestoreId")
+   private String  filestoreId ;
+
+   @JsonProperty("consumerCode")
+   private String  consumerCode ;
    
 }

@@ -489,5 +489,23 @@ public class DeathAddressInfo {
     @JsonProperty("PermanentAddrCityOrVillageEn")
     private String permanentAddrCityOrVillageEn ;
 
-    
+    @JsonProperty("PermanentAddrPostofficeNameEn")
+    private String permanentAddrPostofficeNameEn ;
+
+    @JsonProperty("PermanentAddrVillageNameEn")
+    private String permanentAddrVillageNameEn ;
+	
+	@JsonProperty("PermanentAddrTalukNameEn")
+    private String permanentAddrTalukNameEn ;
+	
+	@JsonProperty("PermanentAddrResidenceAsscNo")
+    private String permanentAddrResidenceAsscNo ;
+	
+	
+    @JsonProperty("PermanentAddrHouseNo")
+    private String permanentAddrHouseNo ;
+	
+	@JsonProperty("PermanentAddrCityEn")
+    private String permanentAddrCityEn;
+	
 }

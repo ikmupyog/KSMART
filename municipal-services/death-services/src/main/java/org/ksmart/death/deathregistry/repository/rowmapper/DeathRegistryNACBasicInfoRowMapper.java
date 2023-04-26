@@ -79,6 +79,10 @@ public class DeathRegistryNACBasicInfoRowMapper implements ResultSetExtractor  ,
         .period(dateFormat.format(beforeDate) + " to " + dateFormat.format(afterDate))
         .isDeathNAC(rs.getBoolean("is_nac"))
         .isDeathNIA(rs.getBoolean("is_nia"))
+        .permanentAddressFullEn(rs.getString("permanent_address"))
+        .filestoreId(rs.getString("filestoreid"))
+        .dateofissue(rs.getLong("dateofissue"))
+        .consumerCode(rs.getString("ack_no"))
         .build();
     }    
 }

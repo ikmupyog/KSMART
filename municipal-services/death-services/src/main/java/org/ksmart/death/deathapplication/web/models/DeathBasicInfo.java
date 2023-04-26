@@ -452,4 +452,8 @@ public class DeathBasicInfo {
 
    @JsonProperty("isDeathNIA")
    private boolean isDeathNIA ;
+
+   
+   @JsonProperty("permanentAddressFullEn")
+   private String  permanentAddressFullEn ;
 }
