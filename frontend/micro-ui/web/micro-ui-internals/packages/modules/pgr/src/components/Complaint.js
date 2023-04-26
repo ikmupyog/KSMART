@@ -28,7 +28,7 @@ const Complaint = ({ data, path }) => {
 
         <KeyNote keyValue={t(`${LOCALIZATION_KEY.CS_COMMON}_COMPLAINT_NO`)} note={serviceRequestId} />
 
-        <div className={`status-highlight ${closedStatus.includes(applicationStatus) ? "success" : ""}`}>
+        <div className={`status-highlight ${closedStatus.includes(applicationStatus) ? "success" : ""}`} style={{ cursor: "pointer" }}>
           <p>{(closedStatus.includes(applicationStatus) ? t("CS_COMMON_CLOSED") : t("CS_COMMON_OPEN")).toUpperCase()}</p>
         </div>
 
