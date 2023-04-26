@@ -55,7 +55,7 @@ const CRBreadCrumb = ({ location }) => {
   const isAdoptionAddressdDetails = location?.pathname?.includes("/create-adoption/adoption-address-birth");
   const isDeathFlow = location?.pathname?.includes("death-flow");
   const isDeathDetails = location?.pathname?.includes("information-death");
-  const isAbandonedDeathDetails = location?.pathname?.includes("abandoned-information-death");
+  const isAbandonedDeathDetails = location?.pathname?.includes("abandoned-death-information");
   const isAbandonedChildDetails = location?.pathname?.includes("abandoned-child-details");
   const isSearchRegistry = location?.pathname?.includes("search-registry");
 
@@ -137,13 +137,13 @@ const CRBreadCrumb = ({ location }) => {
     },
     {
       path: "/digit-ui/employee/cr/death-flow/information-death",
-      content: t("Child Details"),
+      content: t("Death Information"),
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails,
     },
     {
-      path: "/digit-ui/employee/cr/death-flow/abandoned-information-death",
-      content: t("Death Registration"),
-      show:  isAbandonedDeathDetails,
+      path: "/digit-ui/employee/cr/death-flow/abandoned-death-information",
+      content: t("Abandoned Death"),
+      show:  breadCrumbUrls.includes("death-flow/abandoned-death-information")||isAbandonedDeathDetails,
     },
     {
       path: "/digit-ui/employee/cr/search-flow/birthsearch/application",

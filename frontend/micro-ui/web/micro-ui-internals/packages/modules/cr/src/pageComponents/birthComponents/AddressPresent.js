@@ -10,6 +10,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
+    console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
@@ -53,9 +54,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     let cmbFilterCountry = [];
     let cmbFilterState = [];
     let cmbFilterVillage = [];
-
     useEffect(() => {
         if (isInitialRender && countryvalue === "IND" && value === "kl" &&
+            isEditBirth === false && isEditDeath === false && isEditAdoption === false && isEditBirthNAC === false && isEditStillBirth === false &&
             (formData?.AddressBirthDetails?.presentaddressStateName === null || formData?.AddressBirthDetails?.presentaddressStateName === "" ||
                 formData?.AddressBirthDetails?.presentaddressStateName === undefined)) {
             if (cmbLB.length > 0) {
@@ -84,8 +85,11 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 // }
                 setIsInitialRender(false);
             }
-        } else if (isInitialRender && countryvalue === "IND" && value === "kl" && formData?.AddressBirthDetails?.presentaddressStateName != null) {
-     
+        } else if (isInitialRender && countryvalue === "IND" && value === "kl" &&
+            isEditBirth === false && isEditDeath === false && isEditAdoption === false && isEditBirthNAC === false && isEditStillBirth === false &&
+            formData?.AddressBirthDetails?.presentaddressStateName != "" &&
+            formData?.AddressBirthDetails?.presentaddressStateName != null &&
+            formData?.AddressBirthDetails?.presentaddressStateName != undefined) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 //console.log(currentLB);
@@ -112,14 +116,19 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 // }
                 setIsInitialRender(false);
             }
+        } else {
+            setIsInitialRender(false);
         }
-    }, [cmbLB]);
+    }, [cmbLB, isInitialRender]);
 
     if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
-                setCountryValue(formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
+                if (cmbFilterCountry.length > 0) {
+                    setaddressCountry(cmbFilterCountry[0]);
+                    setCountryValue(cmbFilterCountry[0].countrycode);
+                }
             }
         }
         if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
@@ -131,8 +140,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     } else if (isEditAdoption !== false) {
         if (formData?.AdoptionAddressBasePage?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.presentaddressCountry)[0]);
-                setCountryValue(formData?.AdoptionAddressBasePage?.presentaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.presentaddressCountry);
+                setaddressCountry(cmbFilterCountry[0]);
+                setCountryValue(cmbFilterCountry[0].countrycode);
             }
         }
         if (formData?.AdoptionAddressBasePage?.presentaddressStateName != null) {
@@ -144,8 +154,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     } else if (isEditDeath) {
         if (formData?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry)[0]);
-                setCountryValue(formData?.AddressBirthDetails?.presentaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry);
+                setaddressCountry(cmbFilterCountry[0]);
+                setCountryValue(cmbFilterCountry[0].countrycode);
             }
         }
         if (formData?.AddressBirthDetails?.presentaddressStateName != null) {
@@ -157,8 +168,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     } else if (isEditStillBirth) {
         if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
-                setCountryValue(formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry);
+                setaddressCountry(cmbFilterCountry[0]);
+                setCountryValue(cmbFilterCountry[0].countrycode);
             }
         }
         if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
@@ -219,7 +231,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                             t={t}
                             optionKey="name"
                             isMandatory={false}
-                            option={sortDropdownNames(cmbCountry ? cmbCountry : [],"code",t)}
+                            option={sortDropdownNames(cmbCountry ? cmbCountry : [], "code", t)}
                             selected={presentaddressCountry}
                             select={setSelectaddressCountry}
                             disable={isDisableEdit}
@@ -235,7 +247,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={sortDropdownNames(cmbState ? cmbState : [],"code",t)}
+                                option={sortDropdownNames(cmbState ? cmbState : [], "code", t)}
                                 selected={presentaddressStateName}
                                 select={setSelectaddressStateName}
                                 disable={isDisableEdit}

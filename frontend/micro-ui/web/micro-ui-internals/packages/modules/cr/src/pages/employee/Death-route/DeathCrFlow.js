@@ -19,7 +19,7 @@ const DeathCrFlow = ({ data, path }) => {
       title: "New Registration",
       subTitle: "New Death Registration Abandoned",
       // img: <BankIcon />,
-      link: `${path}/abandoned-information-death`,
+      link: `${path}/abandoned-death-information`,
     },
   
     // {

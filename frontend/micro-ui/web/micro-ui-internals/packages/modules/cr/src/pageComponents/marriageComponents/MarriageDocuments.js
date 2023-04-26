@@ -28,22 +28,23 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   // const groomResidentShip = "INDIAN";
   // const brideResidentShip = "NRI";
 
-  // const groomResidentShip = formData?.GroomDetails?.groomResidentShip;
-  const groomResidentShip = "INDIAN";
-  // const brideResidentShip = formData?.BrideDetails?.brideResidentShip;
-  const brideResidentShip = "NRI";
-  // const marriageType = formData?.MarriageDetails?.marriageType;
-  const marriageType = { code: "MARRIAGE_TYPE_HINDU" };
-  // const groomMaritalstatusID = formData?.GroomDetails?.groomMaritalstatusID;
-  const groomMaritalstatusID = { code: "MARRIED" };
-  // const brideMaritalstatusID = formData?.BrideDetails?.brideMaritalstatusID;
-  const brideMaritalstatusID = { code: "MARRIED" };
-  // const isExpiredHusband = formData?.WitnessDetails?.isExpiredHusband;
-  const isExpiredHusband = true;
-  // const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
-  const isExpiredWife = true;
+  const groomResidentShip = formData?.GroomDetails?.groomResidentShip;
+  // const groomResidentShip = "INDIAN";
+  const brideResidentShip = formData?.BrideDetails?.brideResidentShip;
+  // const brideResidentShip = "NRI";
+  const marriageType = formData?.MarriageDetails?.marriageType;
+  // const marriageType = { code: "MARRIAGE_TYPE_HINDU" };
+  const groomMaritalstatusID = formData?.GroomDetails?.groomMaritalstatusID;
+  // const groomMaritalstatusID = { code: "MARRIED" };
+  const brideMaritalstatusID = formData?.BrideDetails?.brideMaritalstatusID;
+  // const brideMaritalstatusID = { code: "MARRIED" };
+  const isExpiredHusband = formData?.WitnessDetails?.isExpiredHusband;
+  // const isExpiredHusband = true;
+  const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
+  // const isExpiredWife = true;
 
   console.log(groomResidentShip);
+
 
   const crAgeDocuments = [
     {
@@ -620,6 +621,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     setWitness2AadharDocumentType("Aadhar");
     setWitness2AadharDocumentOwner("W");
   }
+  
 
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
@@ -1493,8 +1495,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
           ((groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") &&
             !groomDivorceAnnulledDecreeCertificateDocument) ||
           ((brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") &&
-            brideDivorceAnnulledDecreeCertificateDocument) ||
-          (isExpiredHusband && groomExpirationCertificateDocument) ||
+            !brideDivorceAnnulledDecreeCertificateDocument) ||
+          (isExpiredHusband && !groomExpirationCertificateDocument) ||
           (isExpiredWife && !brideExpirationCertificateDocument) ||
           !witness1AadharDocument ||
           !witness2AadharDocument
