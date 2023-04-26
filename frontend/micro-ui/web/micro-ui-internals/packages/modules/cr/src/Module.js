@@ -28,7 +28,7 @@ import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionP
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
 import BirthInclusionAcknowledgement from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionAcknowledgement";
-
+import BirthInclusionSummary from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionSummary";
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
 import DownloadMarriageCertificate from "./components/DownloadMarriageCertificate";
@@ -297,6 +297,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  BirthInclusionSummary,
   BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,
   CrFlowApp,
