@@ -12,8 +12,8 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 import { sortDropdownNames } from "../../utils";
 
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
-  // console.log(JSON.stringify(formData));
-  // console.log(formData);
+  console.log(JSON.stringify(formData));
+  console.log(formData);
   // console.log(isEditStillBirth);
   sessionStorage.removeItem("applicationNumber");
   const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
