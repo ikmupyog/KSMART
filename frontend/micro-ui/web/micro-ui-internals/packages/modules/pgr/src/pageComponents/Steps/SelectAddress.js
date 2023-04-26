@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CardLabel, Dropdown, FormStep, TextArea } from "@egovernments/digit-ui-react-components";
 import PGRTimeline from "../../components/PGRTimeline";
+import { arraySort } from "../../constants/utils";
 
 const SelectAddress = ({ t, config, onSelect, value }) => {
   const allCities = Digit.Hooks.pgr.useTenants();
@@ -82,7 +83,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CS_COMMON_LOCAL_BODY")} <span className="mandatorycss">*</span></CardLabel>
-              <Dropdown isMandatory selected={selectedCity} option={cities} select={selectCity} optionKey="i18nKey" t={t} disable={true} />
+              <Dropdown isMandatory selected={selectedCity} option={arraySort(cities ? cities : [], "name", t)} select={selectCity} optionKey="i18nKey" t={t} disable={true} />
               {/*
             <RadioButtons selectedOption={selectedCity} options={cities} optionsKey="i18nKey" onSelect={selectCity} disabled={true} />
           */}
@@ -90,7 +91,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
             {selectedCity && localities ? (
               <div className="col-md-6">
                 <CardLabel>{t("CS_COMMON_WARD")} <span className="mandatorycss">*</span></CardLabel>
-                <Dropdown isMandatory selected={selectedLocality} optionKey="i18nkey" option={localities} select={selectLocality} t={t} />
+                <Dropdown isMandatory selected={selectedLocality} optionKey="i18nkey" option={arraySort(localities ? localities : [], "name", t)} select={selectLocality} t={t} />
               </div>
             ) : <div className="col-md-6"></div>}
           </div>
