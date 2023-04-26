@@ -1,8 +1,6 @@
 import { DropIcon, EmployeeModuleCard, PopUp, EditButton, UploadFile,Loader } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { checkForEmployee } from "../utils";
-import UploadDoc from "../../../../react-components/src/atoms/UploadDoc";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../config/constants";
 
 const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocs, selectedDocData }) => {
@@ -19,7 +17,8 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [error, setError] = useState(null);
+  const [errorDocIds, setErrorDocIds] =useState([])
+  const [error, setError] = useState([]);
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
 
 
@@ -68,6 +67,21 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     setFile(e.target.files[0]);
   }
 
+  const setFileUploadFieldError = (errorObj) =>{
+    const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
+    console.log("error in upload==",error);
+    if (errorIndex === -1) {
+      setError([...error, errorObj]);
+      const docIds = [...errorDocIds,errorObj.fieldId]?.filter((item)=> item !== "");
+      setErrorDocIds(docIds);
+    } else {
+      let tempError = [...error];
+      let tempDocIds = tempError.splice(errorIndex, 1,errorObj.fieldId).filter((item)=> item !== "")
+      setErrorDocIds(tempDocIds);
+      setError(tempError.splice(errorIndex, 1, errorObj));
+    }
+  }
+
   useEffect(() => {
     (async () => {
      
@@ -76,11 +90,17 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
         setError(null);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
           setIsLoading(false);
-          setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
+          let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
+          setFileUploadFieldError(tempObj);
+          
         } else if (file.size >= 2000000) {
           setIsLoading(false);
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          let tempObj = { message: t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"), fieldId: docuploadedId };
+          setFileUploadFieldError(tempObj);
+          
         } else {
+          let tempObj = { message: "", fieldId: "" };
+          setFileUploadFieldError(tempObj);
           // try {
           const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
           if (response?.data?.files?.length > 0) {
@@ -93,45 +113,39 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
               type: file.type,
               size: file.size,
             };
-            // let tempfiles=uploadedFiles;
-            // const removeindex = tempfiles.findIndex(element => {
-            //   return element.documentType ===temp.documentType
-            // });
-            // if(removeindex !== -1){
-            //   tempfiles=tempfiles.splice(removeindex,1);
-            //   setUploadedFiles(tempfiles);
-            //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
-            // }
 
-            // const changeStatusIndex = formDetails?.findIndex((element) => {
-            //   return element.DocumentId === docuploadedId;
-            // });
+  if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
+    uploadedFiles.push(temp);
+  }
+  setUploadedFile(response?.data?.files[0]?.fileStoreId);
+  setIsLoading(false);
+} else {
+  setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
+  setIsLoading(false);
+}
+// } catch (err) {}
+}
+}
+})();
+}, [file, uploadedFiles]);
 
-            // formDetails?.[changeStatusIndex]?.isUploaded = false;
-            // formDetails?.[changeStatusIndex]?.uploadedDocId = null;
-            if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
-              setUploadedFiles([...uploadedFiles, temp]);
-            }
-            setUploadedFile(response?.data?.files[0]?.fileStoreId);
-            await setIsLoading(false);
-            // formDetails.isUploaded = true;
-            // formDetails.uploadedDoc = response?.data?.files[0]?.fileStoreId
-          } else {
-            setError(t("PT_FILE_UPLOAD_ERROR"));
-            setIsLoading(false);
-          }
-          // } catch (err) {}
-        }
-      }
-    })();
-  }, [file, uploadedFiles]);
+  const getFileUploadFieldError = (item) => {
+    console.log("looped---item", item);
+    let errorMessage = "";
+    const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
+    if (fieldErrorIndex > -1) {
+      errorMessage = error[fieldErrorIndex]?.message;
+    }
+    console.log("errorMessage==",fieldErrorIndex,errorMessage);
+    return errorMessage;
+  };
 
  
   const renderLoader = (details) => {
     if (isLoading && (details.DocumentId.toString() === docuploadedId)) {
       return (
         <div style={{margin:0}}>
-          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+          <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
         </div>
       );
     }
@@ -168,12 +182,12 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
                       setUploadedFile(null);
                     }}
                     message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    error={error}
+                    iserror={getFileUploadFieldError(item)} 
                   />
-               
+                   
+                   {renderLoader(item)}
                 </div>
-               
-                {renderLoader(item)}
+           
               </div>
             )}
           </div>
