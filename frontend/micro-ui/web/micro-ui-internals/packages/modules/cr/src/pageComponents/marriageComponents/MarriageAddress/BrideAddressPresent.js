@@ -87,7 +87,7 @@ const BrideAddressPresent = ({
         formData?.BrideAddressDetails?.presentaddressStateName === "" ||
         formData?.BrideAddressDetails?.presentaddressStateName === undefined)
     ) {
-      if (cmbLB.length > 0) {
+      if (cmbLB.length > 0 && cmbCountry.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         //console.log(currentLB);
         // setAdrsLBName(currentLB[0]);
@@ -141,7 +141,7 @@ const BrideAddressPresent = ({
         setIsInitialRender(false);
       }
     }
-  }, [cmbLB]);
+  }, [cmbLB.length, cmbCountry.length]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
