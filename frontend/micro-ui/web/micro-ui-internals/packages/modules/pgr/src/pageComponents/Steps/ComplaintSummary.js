@@ -5,6 +5,11 @@ import React, { useEffect, useState } from "react";
 import PGRTimeline from "../../components/PGRTimeline";
 import EmpTimeLine from "../../components/EmpPGRTimeline"
 
+
+const rowStyle = {
+  borderBottom: "none", paddingBottom: "1px", marginBottom: "1px"
+}
+
 const ComplaintSummary = ({ t, config, onSelect, value }) => {
   const [declarationError, setDeclarationError] = useState(false);
   const [declaration, setDeclaration] = useState(false);
@@ -77,16 +82,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
         <Card>
           <Accordion expanded={true} title={t("CS_ADDCOMPLAINT_DETAILS")}
             content={<StatusTable >
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CS_ADDCOMPLAINT_COMPLAINT_TYPE")}`}</span>{" "}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
+              <div className="row" style={rowStyle}>
                 <div className="col-md-12">
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMPLAINT_DETAILS_COMPLAINT_TYPE")}`} :</CardText>
@@ -107,7 +103,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
 
           <Accordion expanded={false} title={t("CS_ADDCOMPLAINT_LOCATION")}
             content={<StatusTable >
-              <div className="row">
+              <div className="row" style={rowStyle}>
                 <div className="col-md-12">
                   {district && <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :
@@ -154,7 +150,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
 
           {userType == "employee" && <Accordion expanded={false} title={t("CS_ADDCOMPLAINT_INFORMER")}
             content={<StatusTable >
-              <div className="row">
+              <div className="row" style={rowStyle}>
                 <div className="col-md-12">
                   {anonymous && <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t("CS_ADDCOMPLAINT_ANONYMOUS")} : {anonymous ? 'Yes' : 'No'}</CardText>
@@ -176,7 +172,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
           <Accordion expanded={false} title={t("CS_ADDCOMPLAINT_COMPLAINT_DETAILS")}
             content={<StatusTable >
               {uploadedImages.length > 0 &&
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                <div className="row" style={rowStyle}>
                   <div className="col-md-12">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
@@ -186,7 +182,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
                   </div>
                 </div>}
               {uploadedImages.length > 0 &&
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                <div className="row" style={rowStyle}>
                   <div className="col-md-12" style={{ display: "flex", marginLeft: "15px" }}>
                     {imagesThumbs && imagesThumbs.map((thumbnail, index) => {
                       return (
@@ -203,7 +199,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
                     })}
                   </div>
                 </div>}
-              <div className="row">
+              <div className="row" style={rowStyle}>
                 <div className="col-md-12">
                   <div className="col-md-12">
                     <h1 className="summaryheadingh">
@@ -212,7 +208,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
                   </div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row" style={rowStyle}>
                 <div className="col-md-12">
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{details ? details : "N/A"}</CardText>
@@ -222,7 +218,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
             </StatusTable>}
           />
 
-          <div className="row">
+          <div className="row" style={rowStyle}>
             <div className="col-md-12">
               <div className="col-md-12" style={{ marginTop: "20px" }}>
                 <CheckBox
