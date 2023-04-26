@@ -87,12 +87,16 @@ const GroomAddressPresent = ({
         formData?.GroomAddressDetails?.presentaddressStateName === "" ||
         formData?.GroomAddressDetails?.presentaddressStateName === undefined)
     ) {
-      if (cmbLB.length > 0) {
+      if (cmbLB.length > 0 && cmbCountry.length>0) {
+        console.log("Hi from if")
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-        //console.log(currentLB);
+        console.log({currentLB});
+        console.log({cmbCountry})
         // setAdrsLBName(currentLB[0]);
         if (cmbCountry.length > 0 && currentLB.length > 0) {
+          
           cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+          console.log({cmbFilterCountry})
           setaddressCountry(cmbFilterCountry[0]);
           if (isPrsentAddress) {
             setpermtaddressCountry(cmbFilterCountry[0]);
@@ -141,7 +145,7 @@ const GroomAddressPresent = ({
         setIsInitialRender(false);
       }
     }
-  }, [cmbLB]);
+  }, [cmbLB.length, cmbCountry.length]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {

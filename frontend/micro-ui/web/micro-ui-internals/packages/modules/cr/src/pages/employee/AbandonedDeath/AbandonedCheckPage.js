@@ -457,7 +457,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(FamilyAbandonedDeath.FatherNameEn ? FamilyAbandonedDeath.FatherNameEn?.name : "CR_NOT_RECORDED")}
+                      {t(FamilyAbandonedDeath.FatherNameEn ? FamilyAbandonedDeath.FatherNameEn : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                   {/* CS_COMMON_DISTRICT */}
@@ -488,7 +488,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(FamilyAbandonedDeath.MotherNameEn ? FamilyAbandonedDeath.MotherNameEn?.name : "CR_NOT_RECORDED")}
+                      {t(FamilyAbandonedDeath.MotherNameEn ? FamilyAbandonedDeath.MotherNameEn : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                   {/* CS_COMMON_DISTRICT */}
@@ -559,7 +559,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(StatisticalInfoAbandoned.MedicalAttentionType ? StatisticalInfoAbandoned.MedicalAttentionType : "CR_NOT_RECORDED")}
+                      {t(StatisticalInfoAbandoned.MedicalAttentionType ? StatisticalInfoAbandoned.MedicalAttentionType?.name : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                 </div>
@@ -612,7 +612,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(StatisticalInfoAbandoned.MannerOfDeath ? StatisticalInfoAbandoned.MannerOfDeath : "CR_NOT_RECORDED")}
+                      {t(StatisticalInfoAbandoned.MannerOfDeath ? StatisticalInfoAbandoned.MannerOfDeath?.name : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                 </div>
@@ -637,7 +637,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(StatisticalInfoAbandoned.DeathMedicallyCertified ? StatisticalInfoAbandoned.DeathMedicallyCertified : "CR_NOT_RECORDED")}
+                      {t(StatisticalInfoAbandoned.DeathMedicallyCertified ? StatisticalInfoAbandoned.DeathMedicallyCertified.i18nKey : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                 </div>
