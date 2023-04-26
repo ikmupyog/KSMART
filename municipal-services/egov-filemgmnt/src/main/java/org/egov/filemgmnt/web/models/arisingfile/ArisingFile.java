@@ -87,13 +87,15 @@ public class ArisingFile {
     // @NotBlank(message = "Assignee is required")
     @Size(max = 64, message = "Assignee length cannot exceed 64 characters")
     @JsonProperty("assignee")
-    private String assignee;
+    private String assignees;
 
     @Schema(type = "string", description = "Action")
     // @NotBlank(message = "Action is required")
     @Size(max = 64, message = "Action length cannot exceed 64 characters")
     @JsonProperty("action")
     private String action;
+
+    private String comments;
 
     @Schema(type = "string", description = "File status")
     @Size(max = 64, message = "File status length cannot exceed 64 characters")

@@ -40,10 +40,9 @@ public class ArisingFileController {
         }
 
         final ArisingFile arisingFileDetails = arisingFileService.createArisingFile(request);
-
         return ResponseEntity.ok(ArisingFileResponse.builder()
                                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                        Boolean.TRUE))
+                                                                                                                      Boolean.TRUE))
                                                     .arisingFileDetail(arisingFileDetails)
                                                     .build());
     }

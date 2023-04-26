@@ -11,6 +11,7 @@ import org.egov.filemgmnt.validators.ArisingFileValidator;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
+import org.egov.filemgmnt.workflow.ArisingFileWorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,14 +31,17 @@ public class ArisingFileService {
 
     private final ArisingFileValidator validator;
 
+    private final ArisingFileWorkflowIntegrator arWorkFlowIntegrator;
+
     ArisingFileService(ArisingFileValidator validator, ArisingFileEnrichment fileEnrichment,
                        @Qualifier("fmProducer") Producer producer, FMConfiguration fmConfig,
-                       ArisingFileRepository repository) {
+                       ArisingFileRepository repository, ArisingFileWorkflowIntegrator arWorkFlowIntegrator) {
         this.validator = validator;
         this.fileEnrichment = fileEnrichment;
         this.producer = producer;
         this.fmConfig = fmConfig;
         this.repository = repository;
+        this.arWorkFlowIntegrator = arWorkFlowIntegrator;
     }
 
     public ArisingFile createArisingFile(ArisingFileRequest request) {
@@ -47,6 +51,8 @@ public class ArisingFileService {
         fileEnrichment.enrichAriseFileCreate(request);
 
         producer.push(fmConfig.getSaveArisingFileTopic(), request);
+        // create workflow
+        arWorkFlowIntegrator.callAriseFileWorkflow(request);
         return request.getArisingFile();
     }
 
