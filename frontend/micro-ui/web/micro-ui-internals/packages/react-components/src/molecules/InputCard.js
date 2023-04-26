@@ -10,18 +10,8 @@ import CardCaption from "../atoms/CardCaption";
 import TextInput from "../atoms/TextInput";
 
 const InputCard = ({
-  t,
-  children,
-  texts = {},
-  submit = false,
-  inputs = [],
-  inputRef,
-  onNext,
-  onSkip,
-  isDisable,
-  onAdd,
-  isMultipleAllow = false,
-  cardStyle = {},
+  t, children, texts = {}, submit = false, inputs = [], inputRef, onNext, onSkip, isDisable,
+  isSkip = true, onAdd, isMultipleAllow = false, cardStyle = {}
 }) => {
   const isMobile = window.Digit.Utils.browser.isMobile();
   // TODO: inputs handle
@@ -45,13 +35,13 @@ const InputCard = ({
       {texts?.cardText && <CardText>{t(texts.cardText)}</CardText>}  */}
       {children}
       <div className="buttonContainerN">
-      <FormBackButton disabled={isDisable}>{t("CS_COMMON_BACK")}</FormBackButton>
+        <FormBackButton disabled={isDisable}>{t("CS_COMMON_BACK")}</FormBackButton>
 
-{texts.submitBarLabel ? <SubmitBar disabled={isDisable} submit={submit} label={t(texts.submitBarLabel)} onSubmit={onNext} /> : null}
+        {texts.submitBarLabel ? <SubmitBar disabled={isDisable} submit={submit} label={t(texts.submitBarLabel)} onSubmit={onNext} /> : null}
       </div>
-      
-      {texts.skipLabel ? <CardText style={{ marginTop: "10px", textAlign: isMobile ? "center" : "left" }}> {t(texts.skipLabel)} </CardText> : null}
-      {texts.skipText ? <LinkButton label={t(texts.skipText)} onClick={onSkip} /> : null}
+
+      {isSkip && texts.skipLabel ? <CardText style={{ marginTop: "10px", textAlign: isMobile ? "center" : "left" }}> {t(texts.skipLabel)} </CardText> : null}
+      {isSkip && texts.skipText ? <LinkButton label={t(texts.skipText)} onClick={onSkip} /> : null}
       {isMultipleAllow && texts.addMultipleText ? <LinkButton label={t(texts.addMultipleText)} onClick={onAdd} /> : null}
     </Card>
   );

@@ -14,7 +14,7 @@ import {
   } from "@egovernments/digit-ui-react-components";
   import React, { Fragment, useEffect, useState } from "react";
   import { useTranslation } from "react-i18next";
-  import { Link, useLocation } from "react-router-dom";
+  import { Link, useHistory, useLocation } from "react-router-dom";
   import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
   import moment from "moment";
   
@@ -31,39 +31,21 @@ import {
   }) {
     const { t } = useTranslation();
     let location = useLocation();
+    const history = useHistory();
     let navData = location?.state?.navData;
+    const deathCorrectionFormsObj = location?.state?.deathCorrectionData;
     let deathCorrectionData = location?.state?.deathCorrectionData?.CorrectionDetails?.[0]?.CorrectionField;
-    
-
-    const carouselItems = [
-        {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature2.jpg",
-          caption: "",
-        },
-        {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature4.jpg",
-          caption: "Caption One",
-        },
-        {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature1.jpg",
-          caption: "",
-        },
-        {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature6.jpg",
-          caption: "Caption Three",
-        },
-      ];
-    const [imagesThumbs, setImagesThumbs] = useState(carouselItems);
+    const [imagesThumbs, setImagesThumbs] = useState([]);
     const tenantId = Digit.ULBService.getCurrentTenantId();
-  
-  
-
-    useEffect(() => {
-      console.log("navigated data==", navData, deathCorrectionData);
-      // if (uploadedImages?.length > 0) {
-      //   fetchImage()
-      // }
-    }, []);
+    const mutation = Digit.Hooks.cr.useDeathCorrectionAction(tenantId);
+    
+     const scrollToTop = (behavior = 'auto') => {
+        // scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior,
+        });
+      }
   
     const fetchImage = async (uploadedImages) => {
         setImagesThumbs(null);
@@ -84,12 +66,12 @@ import {
           });
         console.log("formattedImageThumbs==", formattedImageThumbs);
         setImagesThumbs(formattedImageThumbs);
+        scrollToTop();
       };
   
     function OpenImage(imageSource, index, thumbnailsToShow) {
       window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }
-
 
     const setDocumentsView = (documentData) => {
         const documentIds = documentData?.map((item) => item.filestoreId);
@@ -124,6 +106,30 @@ import {
     //         return <TLCaption data={caption} />;
     //     }
     // };
+
+
+    useEffect(() => {
+    
+        if (deathCorrectionData?.length > 0) {
+          console.log("navigated data==", deathCorrectionData);
+          setDocumentsView(deathCorrectionData?.[0]?.CorrectionDocument);
+        }
+      }, []);
+
+
+    const navigateAcknowledgement = (data) =>{
+        console.log("reached ackno....", data );
+        history.push({
+          pathname: `/digit-ui/citizen/cr/death-correction-acknowledgement`,
+          state: { navData, deathCorrectionData: data }
+        });
+      }
+    
+      const submitDeathCorrection = () =>{
+        console.log("birth inclusion===123");
+        const resp = mutation.mutate(deathCorrectionFormsObj,{ onSuccess: navigateAcknowledgement });
+        console.log("resap==",resp);
+      }
   
     const getTranslatedValues = (dataValue, isNotTranslated) => {
       if (dataValue) {
@@ -262,63 +268,16 @@ import {
              deathCorrectionData?.map((detail, index) => renderSummaryCard(detail,index))}
               {deathCorrectionData?.length > 0 && (
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: "2rem" }}>
-              <SubmitBar label={t("CS_COMMON_BACK")} />
-              <SubmitBar label={t("CS_COMMON_SUBMIT")} />
+              <SubmitBar label={t("CS_COMMON_BACK")} onSubmit={() => history.goBack()}/>
+              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={submitDeathCorrection} />
             </div>
           )}
           </div>
-         
-          <div className={"cr-timeline-wrapper"}>
           {imagesThumbs?.length > 0 && (
+          <div className={"cr-timeline-wrapper"}>
             <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
-          )}
-            {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
-              <React.Fragment>
-                {(workflowDetails?.isLoading || isDataLoading) && <Loader />}
-                {!workflowDetails?.isLoading && !isDataLoading && (
-                  <Fragment>
-                    <CardSectionHeader>
-                      {/* {t("ES_APPLICATION_DETAILS_APPLICATION_TIMELINE")} */}
-                      {t("Activities")}
-                    </CardSectionHeader>
-                    <BreakLine />
-                    {workflowDetails?.data?.timeline && workflowDetails?.data?.timeline?.length === 1 ? (
-                      <CheckPoint
-                        isCompleted={true}
-                        label={t(`${timelineStatusPrefix}${workflowDetails?.data?.timeline[0]?.state}`)}
-                        // customChild={getTimelineCaptions(workflowDetails?.data?.timeline[0])}
-                        customChild={""}
-                      />
-                    ) : (
-                      <ConnectingCheckPoints>
-                        {workflowDetails?.data?.timeline &&
-                          workflowDetails?.data?.timeline.map((checkpoint, index, arr) => {
-                            return (
-                              <React.Fragment key={index}>
-                                <CheckPoint
-                                  keyValue={index}
-                                  isCompleted={index === 0}
-                                  info={checkpoint.comment}
-                                  label={t(
-                                    `${timelineStatusPrefix}${
-                                      checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
-                                    }`
-                                  )}
-                                  // customChild={getTimelineCaptions(checkpoint)}
-                                  customChild={""}
-                                />
-                              </React.Fragment>
-                            );
-                          })}
-                      </ConnectingCheckPoints>
-                    )}
-                  </Fragment>
-                )}
-              </React.Fragment>
-            )}
-           
           </div>
-       
+             )}
         </div>
      
       </>
