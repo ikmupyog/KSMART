@@ -22,10 +22,10 @@
 const computeInitialValue = (data) => {
  const initialValue = {
    firstNameEn: data?.InformationDeath?.DeceasedFirstNameEn,
-   middleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
-   lastNameEn:data?.InformationDeath?.DeceasedLastNameEn,
    firstNameMl: data?.InformationDeath?.DeceasedFirstNameMl,
+   middleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
    middleNameMl: data?.InformationDeath?.DeceasedMiddleNameMl,
+   lastNameEn:data?.InformationDeath?.DeceasedLastNameEn,
    lastNameMl:data?.InformationDeath?.DeceasedLastNameMl
  };
  return initialValue;
@@ -34,10 +34,10 @@ const computeInitialValue = (data) => {
 const computeCurrentValue = (data) => {
  const currentValue = {
   firstNameEn: data?.InformationDeath?.DeceasedFirstNameEn,
+  firstNameMl: data?.InformationDeath?.DeceasedFirstNameMl,
    middleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
-   lastNameEn:data?.InformationDeath?.DeceasedLastNameEn,
-   firstNameMl: data?.InformationDeath?.DeceasedFirstNameMl,
    middleNameMl: data?.InformationDeath?.DeceasedMiddleNameMl,
+   lastNameEn:data?.InformationDeath?.DeceasedLastNameEn,
    lastNameMl:data?.InformationDeath?.DeceasedLastNameMl
  };
  return currentValue;

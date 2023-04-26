@@ -208,12 +208,12 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
 
     if (validFlag == true) {
       onSelect(config.key, {
-        motherFirstNameEn,
-        motherFirstNameMl,
+        motherFirstNameEn: motherFirstNameEn.trim(),
+        motherFirstNameMl: motherFirstNameMl.trim(),
         motherAadhar,
         fatherAadhar,
-        fatherFirstNameEn,
-        fatherFirstNameMl,
+        fatherFirstNameEn: fatherFirstNameEn.trim(),
+        fatherFirstNameMl: fatherFirstNameMl.trim(),
       });
     }
   };
@@ -256,7 +256,10 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
                     value={motherAadhar}
                     onChange={setSelectMotherAadhar}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
 
@@ -329,7 +332,10 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
                     value={fatherAadhar}
                     onChange={setSelectFatherAadhar}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
 

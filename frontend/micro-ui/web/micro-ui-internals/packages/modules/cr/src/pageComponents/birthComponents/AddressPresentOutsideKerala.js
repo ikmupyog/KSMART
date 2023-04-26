@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, presentOutsideKeralaDistrict, setoutsideKeralaDistrict,
   presentOutsideKeralaTaluk, setoutsideKeralaTaluk, presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn,
@@ -367,7 +368,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbFilterDistrict}
+              option={sortDropdownNames(cmbFilterDistrict ? cmbFilterDistrict : [],"name",t)}
               selected={presentOutsideKeralaDistrict}
               select={setSelectoutsideKeralaDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
@@ -407,7 +408,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
             <Dropdown
               t={t}
               optionKey="i18nKey"
-              option={cmbUrbanRural}
+              option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
               selected={presentOutsideKeralaVillage}
               select={setSelectoutsideKeralaVillage}
               disable={isDisableEdit}

@@ -46,7 +46,7 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
     config = config.concat(obj.body.filter((a) => !a. hideInEmployee));
   });
   config.indexRoute = "information-death";
-  config.indexRouteA = "abandoned-information-death";
+  config.indexRouteA = "abandoned-death-information";
 
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),

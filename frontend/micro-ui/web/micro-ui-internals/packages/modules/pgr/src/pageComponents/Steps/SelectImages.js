@@ -56,7 +56,7 @@ const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={3} /> : null}
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={uploadedFile.length === 0}>
+      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={uploadedFile.length === 0} isSkip={uploadedFile.length === 0}>
         <CardLabel>{`${t("CS_IMAGES")}`}<span> {t("PGR_IMAGE_LIMIT")}</span></CardLabel>
         <ImageUploadHandler tenantId={value.city_complaint?.code} uploadedImages={uploadedImages} onPhotoChange={handleUpload} />
         {window.location.href.includes("/employee") && <div style={{ marginBottom: "20px" }}>

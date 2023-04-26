@@ -31,7 +31,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick }) => {
+const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoading }) => {
 
   const history = useHistory();
   const {path} = useRouteMatch();
@@ -142,6 +142,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick }) => {
           <SearchFields {...{ register, control, reset, previousPage, t }} />
         </SearchForm>
       </div>
+      {isLoading && <Loader/>}
       {
         data !== "" && (
           <React.Fragment>

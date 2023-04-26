@@ -164,6 +164,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [groomImageURL, setGroomImageURL] = useState(formData?.WitnessDetails?.groomImageURL ? formData?.WitnessDetails?.groomImageURL : null);
   const [brideImageURL, setBrideImageURL] = useState(formData?.WitnessDetails?.brideImageURL ? formData?.WitnessDetails?.brideImageURL : null);
 
+  console.log({groomImageURL})
+
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -767,7 +769,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     return (
       <React.Fragment>
         <div className="row">
-          <div className="column-md-12">
+          <div className="col-md-12">
             {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
             {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
             <FormStep
@@ -802,131 +804,127 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       </h1>
                     </div>
                   </div>
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS1_ADHAR_NO")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness1AadharNo"
-                        value={witness1AadharNo}
-                        onChange={setSelectwitness1AadharNo}
-                        onKeyPress={setCheckSpecialChar}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
-                        inputProps={{
-                          maxLength: 12,
-                        }}
-                        {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS1_NAME")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness1NameEn"
-                        value={witness1NameEn}
-                        onChange={setSelectwitness1NameEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS1_NAME")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
-                        //{...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS1_AGE")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness1Age"
-                        value={witness1Age}
-                        onChange={setSelectwitness1Age}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS1_AGE")}`}
-                        inputProps={{
-                          maxLength: 2,
-                        }}
-                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
-                      />
-                    </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS1_ADHAR_NO")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness1AadharNo"
+                      value={witness1AadharNo}
+                      onChange={setSelectwitness1AadharNo}
+                      onKeyPress={setCheckSpecialChar}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
+                      inputProps={{
+                        maxLength: 12,
+                      }}
+                      {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    />
                   </div>
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      <CardLabel>
-                        CR_WITNESS1_ADDRESS
-                        {`${t("")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextArea
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness1AddressEn"
-                        value={witness1AddressEn}
-                        onChange={setSelectwitness1AddressEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
-                      />
-                    </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS1_NAME")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness1NameEn"
+                      value={witness1NameEn}
+                      onChange={setSelectwitness1NameEn}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS1_NAME")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
+                      //{...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS1_AGE")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness1Age"
+                      value={witness1Age}
+                      onChange={setSelectwitness1Age}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS1_AGE")}`}
+                      inputProps={{
+                        maxLength: 2,
+                      }}
+                      {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      CR_WITNESS1_ADDRESS
+                      {`${t("")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextArea
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness1AddressEn"
+                      value={witness1AddressEn}
+                      onChange={setSelectwitness1AddressEn}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
+                    />
+                  </div>
 
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS1_MOBILE_NO")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness1Mobile"
-                        value={witness1Mobile}
-                        onChange={setSelectwitness1Mobile}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
-                        {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-2">
-                      <TextInput
-                        t={t}
-                        type={"button"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        style={{
-                          backgroundColor: "#ea3d32",
-                          borderRadius: "5px",
-                          fontSize: "18px",
-                          color: "#fff",
-                          marginTop: "40px",
-                          padding: "5px 10px",
-                          cursor: "pointer",
-                        }}
-                        name="eSign"
-                        value="E-sign"
-                        onChange={setSelectwitness1Esigned}
-                        disable={isDisableEdit}
-                        // {...(validation = { isRequired: true })}
-                      />
-                    </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS1_MOBILE_NO")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness1Mobile"
+                      value={witness1Mobile}
+                      onChange={setSelectwitness1Mobile}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
+                      {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-2">
+                    <TextInput
+                      t={t}
+                      type={"button"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      style={{
+                        backgroundColor: "#ea3d32",
+                        borderRadius: "5px",
+                        fontSize: "18px",
+                        color: "#fff",
+                        marginTop: "40px",
+                        padding: "5px 10px",
+                        cursor: "pointer",
+                      }}
+                      name="eSign"
+                      value="E-sign"
+                      onChange={setSelectwitness1Esigned}
+                      disable={isDisableEdit}
+                      // {...(validation = { isRequired: true })}
+                    />
                   </div>
 
                   <div className="col-md-12">
@@ -934,125 +932,121 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_2_DETAILS")}`}</span>{" "}
                     </h1>
                   </div>
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS2_ADHAR_NO")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"number"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness2AadharNo"
-                        value={witness2AadharNo}
-                        onChange={setSelectwitness2AadharNo}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
-                        inputProps={{
-                          maxLength: 12,
-                        }}
-                        {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS2_NAME")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness2NameEn"
-                        value={witness2NameEn}
-                        onChange={setSelectwitness2NameEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS2_NAME")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS2_AGE")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        isMandatory={false}
-                        optionKey="i18nKey"
-                        name="witness2Age"
-                        value={witness2Age}
-                        onChange={setSelectwitness2Age}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS2_AGE")}`}
-                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
-                      />
-                    </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS2_ADHAR_NO")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"number"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness2AadharNo"
+                      value={witness2AadharNo}
+                      onChange={setSelectwitness2AadharNo}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
+                      inputProps={{
+                        maxLength: 12,
+                      }}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    />
                   </div>
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS2_ADDRESS")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextArea
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness2AddressEn"
-                        value={witness2AddressEn}
-                        onChange={setSelectwitness2AddressEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
-                      />
-                    </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS2_NAME")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness2NameEn"
+                      value={witness2NameEn}
+                      onChange={setSelectwitness2NameEn}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS2_NAME")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS2_AGE")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      isMandatory={false}
+                      optionKey="i18nKey"
+                      name="witness2Age"
+                      value={witness2Age}
+                      onChange={setSelectwitness2Age}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS2_AGE")}`}
+                      {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS2_ADDRESS")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextArea
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness2AddressEn"
+                      value={witness2AddressEn}
+                      onChange={setSelectwitness2AddressEn}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
+                    />
+                  </div>
 
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_WITNESS2_MOBILE_NO")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        name="witness2Mobile"
-                        value={witness2Mobile}
-                        onChange={setSelectwitness2Mobile}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
-                        {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-2">
-                      <TextInput
-                        t={t}
-                        type={"button"}
-                        optionKey="i18nKey"
-                        isMandatory={false}
-                        style={{
-                          backgroundColor: "#ea3d32",
-                          borderRadius: "5px",
-                          fontSize: "18px",
-                          color: "#fff",
-                          marginTop: "40px",
-                          padding: "5px 10px",
-                          cursor: "pointer",
-                        }}
-                        name="eSign"
-                        value="E-sign"
-                        onChange={setSelectwitness2Esigned}
-                        disable={isDisableEdit}
-                        // {...(validation = { isRequired: true })}
-                      />
-                    </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_WITNESS2_MOBILE_NO")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      name="witness2Mobile"
+                      value={witness2Mobile}
+                      onChange={setSelectwitness2Mobile}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
+                      {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-2">
+                    <TextInput
+                      t={t}
+                      type={"button"}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      style={{
+                        backgroundColor: "#ea3d32",
+                        borderRadius: "5px",
+                        fontSize: "18px",
+                        color: "#fff",
+                        marginTop: "40px",
+                        padding: "5px 10px",
+                        cursor: "pointer",
+                      }}
+                      name="eSign"
+                      value="E-sign"
+                      onChange={setSelectwitness2Esigned}
+                      disable={isDisableEdit}
+                      // {...(validation = { isRequired: true })}
+                    />
                   </div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1061,7 +1055,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       </h1>
                     </div>
                   </div>
-                  <div className="col-md-12">
+                  <div className="row">
                     <div className="col-md-4">
                       <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
                       <TextInput
@@ -1075,7 +1069,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         {...(validation = { isRequired: true })}
                       />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
                         <span className="mandatorycss">*</span>
@@ -1086,10 +1080,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         value={isExpiredHusband}
                         checked={isExpiredHusband}
                         disable={isDisableEdit}
+                        style={{ marginBottom: "40px" }}
                       />
                     </div>
-                  </div>
-                  <div className="col-md-12">
                     <div className="col-md-4">
                       <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
                       <TextInput
@@ -1103,7 +1096,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         {...(validation = { isRequired: true })}
                       />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
                         <span className="mandatorycss">*</span>

@@ -1,10 +1,10 @@
 import React from "react";
-import { CardLabel, TextInput, Modal, SearchField, SubmitBar, DatePicker,Table } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Modal, SearchField, SubmitBar, DatePicker, Table } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 // import Search from '../../components/SearchApplicationBirth'
 
-const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, closePopup,setBirthRegPopup }) => {
+const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, closePopup, setBirthRegPopup }) => {
   const { t } = useTranslation();
   let tenantId = Digit.ULBService.getCurrentTenantId();
   let validation = "";
@@ -25,14 +25,12 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
   };
   const mobileView = Digit.Utils.browser.isMobile() ? true : false;
   const [payload, setPayload] = React.useState({});
-  const [getValues, setValues] = React.useState(
-    {
-      offset: 0,
-      limit: 10,
-      sortBy: "applicationNumber",
-      sortOrder: "DESC"
-  }
-  );
+  const [getValues, setValues] = React.useState({
+    offset: 0,
+    limit: 10,
+    sortBy: "applicationNumber",
+    sortOrder: "DESC",
+  });
   const [applicationNum, setApplicationNum] = React.useState("");
   const [fromDate, setFromDate] = React.useState("");
   const [toData, setToDate] = React.useState("");
@@ -49,37 +47,51 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
   // } else {
   //   setSearchRegId("");
   // }
-  const onSort = React.useCallback((args) => { 
-    // console.log(args); 
-    if (args.length === 0) return
-    let tmp =getValues
-    tmp.sortBy =args.id
-    tmp.sortOrder = args.desc ? "DESC" : "ASC"
-    setValues(tmp)
+  const onSort = React.useCallback((args) => {
+    // console.log(args);
+    if (args.length === 0) return;
+    let tmp = getValues;
+    tmp.sortBy = args.id;
+    tmp.sortOrder = args.desc ? "DESC" : "ASC";
+    setValues(tmp);
+
     // setValues((pre)=>pre.sortBy = args.id)
     // setValues((pre)=> pre.sortOrder= args.desc ? "DESC" : "ASC")
-  }, [])
+  }, []);
 
-  function onPageSizeChange(e){
-      setValues((pre)=>pre.limit=Number(e.target.value))
-      // handleSubmit(onSubmit)()
+  function onPageSizeChange(e) {
+    let tmp = getValues;
+    tmp.limit = Number(e.target.value);
+    setValues(tmp);
+    onSubmit();
+    // setValues((pre)=>pre.limit=Number(e.target.value))
+    // handleSubmit(onSubmit)()
   }
 
-  function nextPage () {
-      setValues((pre)=>pre.offset = getValues((pre)=>pre.offset) + getValues((pre)=>pre.limit))
-      // handleSubmit(onSubmit)()
+  function nextPage() {
+    let tmp = getValues;
+    tmp.offset = tmp.offset + tmp.limit;
+    setValues(tmp);
+    onSubmit();
+    // setValues((pre)=>pre.offset = getValues((pre)=>pre.offset) + getValues((pre)=>pre.limit))
+    // handleSubmit(onSubmit)()
   }
-  function previousPage () {
-      setValues((pre)=>pre.offset= getValues((pre)=>pre.offset) - getValues((pre)=>pre.limit) )
-      // handleSubmit(onSubmit)()
+  function previousPage() {
+    let tmp = getValues;
+    tmp.offset = tmp.offset - tmp.limit;
+    setValues(tmp);
+    onSubmit();
+    // setValues((pre)=>pre.offset= getValues((pre)=>pre.offset) - getValues((pre)=>pre.limit) )
+    // handleSubmit(onSubmit)()
   }
-// console.log(getValues);
+  // console.log(getValues);
   function onSubmit() {
     let _data = {
-      offset: 0,
-      limit: 10,
-      sortBy: "applicationNumber",
-      sortOrder: "DESC",
+      // offset: 0,
+      // limit: 10,
+      // sortBy: "applicationNumber",
+      // sortOrder: "DESC",
+      ...getValues,
       applicationNumber: applicationNum,
       fromDate: fromDate,
       toDate: toData,
@@ -122,6 +134,16 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
       return null;
     }
   };
+  const handleClear = () => {
+    setApplicationNum(""), setFromDate(""), setToDate(""), setMotherName("");
+    setValues({
+      offset: 0,
+      limit: 10,
+      sortBy: "applicationNumber",
+      sortOrder: "DESC",
+    });
+    onSubmit();
+  };
 
   const Close = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
@@ -132,13 +154,14 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
 
   const CloseBtn = (props) => {
     return (
-      <div className="icon-bg-secondary" style={{cursor:"pointer"}} onClick={props.onClick}>
+      <div className="icon-bg-secondary" style={{ cursor: "pointer" }} onClick={props.onClick}>
         <Close />
       </div>
     );
   };
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-  const columns = React.useMemo( () => ([
+  const columns = React.useMemo(
+    () => [
       {
         Header: t("CR_COMMON_COL_APP_NO"),
         accessor: "applicationNumber",
@@ -146,11 +169,14 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link" style={{color:"#626ad3"}} >
-                <Link  onClick={()=>{setSearchRegId(row.original ),  setBirthRegPopup(false)}}>
-                {row.original.applicationNumber}
+              <span className="link" style={{ color: "#626ad3" }}>
+                <Link
+                  onClick={() => {
+                    setSearchRegId(row.original), setBirthRegPopup(false);
+                  }}
+                >
+                  {row.original.applicationNumber}
                 </Link>
-               
               </span>
             </div>
           );
@@ -162,9 +188,9 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
         accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
       },
       {
-          Header: t("CR_COMMON_COL_DOB"),
-          disableSortBy: true,            
-          accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+        Header: t("CR_COMMON_COL_DOB"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
       },
       // {
       //     Header: t("TL_APPLICATION_TYPE_LABEL"),
@@ -174,16 +200,16 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
       {
         Header: t("CR_COMMON_COL_MOTHER_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"]  || "-"),
-      
+        accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"] || "-"),
       },
       {
-          Header: t("CR_COMMON_COL_FATHER_NAME"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"]  || "-"),
+        Header: t("CR_COMMON_COL_FATHER_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"] || "-"),
       },
-      
-    ]), [] )
+    ],
+    []
+  );
   // const Search = Digit.ComponentRegistryService.getComponent("SearchCrApplication");
   if (window.location.href.includes("/adoption-child-details") == true) {
     const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({
@@ -194,7 +220,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
     // console.log(searchResult);
     return (
       <Modal
-        headerBarMain={<Heading t={t} heading={"Search birth Applications"} />}
+        headerBarMain={<Heading t={t} heading={"CR_SEARCH_BR_APPLICATIONS"} />}
         headerBarEnd={<CloseBtn onClick={closePopup} />}
         popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto" }}
         formId="modal-action"
@@ -274,43 +300,24 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
             <div className="col-md-3"></div>
           </div>
         </div>
-     
-          <div className=" row search-form-wrapper" style={{marginLeft:'14px'}}>
-            <div className="form-field submit">
-              <SubmitBar label={t("ES_COMMON_SEARCH")} onSubmit={onSubmit} />
-              <p
-                onClick={() => {
-                        setApplicationNum(''),
-                      setFromDate(''),
-                     setToDate(''),
-                  setMotherName('')
-                  setValues(
-                    {
-                      offset: 0,
-                      limit: 10,
-                      sortBy: "applicationNumber",
-                      sortOrder: "DESC"
-                  }
-                  )
-                  // reset({
-                
-                  //     offset: 0,
-                  //     limit: 10,
-                  //     sortBy: "dateOfBirth",
-                  //     sortOrder: "DESC"
-                  // });
-                  // previousPage();
-                }}
-              >
-                {t(`ES_COMMON_CLEAR_ALL`)}
-              </p>
-            </div>
+
+        <div className=" row search-form-wrapper" style={{ marginLeft: "14px" }}>
+          <div className="form-field submit">
+            <SubmitBar label={t("ES_COMMON_SEARCH")} onSubmit={onSubmit} />
+            <p
+              onClick={() => {
+                handleClear();
+              }}
+            >
+              {t(`ES_COMMON_CLEAR_ALL`)}
+            </p>
+          </div>
         </div>
         <div className="row">
-        {searchResult !== ""&&searchResult?.length>0 && (
+          {searchResult !== "" && searchResult?.length > 0 && (
             <Table
-            styles={{marginLeft: "7px" , width: "98.9%"}}
-            paginationStyle={{marginLeft: "7px" , width: "98.9%"}}
+              styles={{ marginLeft: "7px", width: "98.9%" }}
+              paginationStyle={{ marginLeft: "7px", width: "98.9%" }}
               t={t}
               data={searchResult}
               totalRecords={count}
@@ -325,14 +332,14 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
                   },
                 };
               }}
-              // onPageSizeChange={onPageSizeChange}
-              // currentPage={getValues["offset"] / getValues["limit"]}
-              // onNextPage={nextPage}
-              // onPrevPage={previousPage}
-              // pageSizeLimit={getValues["limit"]}
-              // onSort={onSort}
+              onPageSizeChange={onPageSizeChange}
+              currentPage={getValues["offset"] / getValues["limit"]}
+              onNextPage={nextPage}
+              onPrevPage={previousPage}
+              pageSizeLimit={getValues["limit"]}
+              onSort={onSort}
               disableSort={false}
-              // sortParams={[{ id: getValues.sortBy, desc: getValues.sortOrder === "DESC" ? true : false }]}
+              sortParams={[{ id: getValues.sortBy, desc: getValues.sortOrder === "DESC" ? true : false }]}
             />
           )}
         </div>

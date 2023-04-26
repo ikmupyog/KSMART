@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 // import { sleep } from "react-query/types/core/utils";
 
 const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
@@ -223,7 +224,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={cmbWardNoFinal}
+                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
@@ -239,7 +240,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={PostOfficevalues}
+                option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [],"name",t)}
                 selected={adrsPostOffice}
                 select={setSelectAdrsPostOffice}
                 disable={isDisableEdit}

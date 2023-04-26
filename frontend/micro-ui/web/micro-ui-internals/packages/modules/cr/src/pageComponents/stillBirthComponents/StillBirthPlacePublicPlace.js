@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea, } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
   localityNameEn, setlocalityNameEn, localityNameMl, setlocalityNameMl, streetNameEn, setstreetNameEn,
@@ -133,7 +134,7 @@ const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publ
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={cmbOtherplace}
+                option={sortDropdownNames(cmbOtherplace ? cmbOtherplace : [],"name",t)}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}
                 disable={isDisableEdit}
@@ -148,7 +149,7 @@ const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publ
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={cmbWardNoFinal}
+                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
                 selected={wardNo}
                 select={setSelectWard}
                 disable={isDisableEdit}

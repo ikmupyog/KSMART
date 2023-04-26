@@ -296,7 +296,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
         adrsStreetNameEn: data?.StillBirthChildDetails?.adrsStreetNameEn,
         adrsStreetNameMl: data?.StillBirthChildDetails?.adrsStreetNameMl,
         adrsPostOffice: data?.StillBirthChildDetails?.adrsPostOffice ? data?.StillBirthChildDetails?.adrsPostOffice.code : null,
-        adrsPincode: data?.StillBirthChildDetails?.adrsPincode ? data?.StillBirthChildDetails?.adrsPincode.code : null,
+        adrsPincode: data?.StillBirthChildDetails?.adrsPincode ? data?.StillBirthChildDetails?.adrsPincode : null,
         vehicleType: data?.StillBirthChildDetails?.vehicleType ? data?.StillBirthChildDetails?.vehicleType.code : null,
         vehicleHaltPlace: data?.StillBirthChildDetails?.vehicleHaltPlace,
         vehicleHaltPlaceMl: data?.StillBirthChildDetails?.vehicleHaltPlaceMl,
@@ -366,7 +366,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code

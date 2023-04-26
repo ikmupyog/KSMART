@@ -779,7 +779,7 @@ export const newConfig = [
     body: [
       {
         type: "component",
-        route: "abandoned-information-death",
+        route: "abandoned-death-information",
         component: "InformationDeathAband",
         texts: {
           headerCaption: "",

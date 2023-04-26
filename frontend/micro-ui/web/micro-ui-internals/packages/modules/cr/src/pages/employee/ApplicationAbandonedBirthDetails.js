@@ -13,7 +13,7 @@ const ApplicationAbandonedBirthDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("BIRTHABANDONED"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
@@ -29,7 +29,7 @@ const ApplicationAbandonedBirthDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationAbandondBirthDetail(tenantId);
+  } = Digit.Hooks.cr.useApplicationAbandonedBirthActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -38,7 +38,7 @@ const ApplicationAbandonedBirthDetails = () => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    role: "BND_CEMP" || "OFFICIAL_NOTIFIER",
     config: {},
   });
 
@@ -87,7 +87,7 @@ const ApplicationAbandonedBirthDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter((item) => {
-    if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN") return true;
+    if ((item.code == "OFFICIAL_NOTIFIER" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "EMPLOYEE") return true;
   });
 
   const rolecheck = rolearray.length > 0 ? true : false;

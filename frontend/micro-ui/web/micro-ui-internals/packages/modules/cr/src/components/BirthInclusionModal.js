@@ -1,4 +1,13 @@
-import { DropIcon, EmployeeModuleCard, PopUp, EditButton, UploadFile, RadioButtons, DatePicker } from "@egovernments/digit-ui-react-components";
+import {
+  DropIcon,
+  EmployeeModuleCard,
+  PopUp,
+  EditButton,
+  UploadFile,
+  RadioButtons,
+  DatePicker,
+  Loader,
+} from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { checkForEmployee } from "../utils";
@@ -7,7 +16,7 @@ import { BIRTH_INCLUSION_FIELD_NAMES, BIRTH_INCLUSION_DOC_FLAGS } from "../confi
 import moment from "moment";
 import { convertEpochToDate } from "../utils";
 
-const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocs, selectedBirthData }) => {
+const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocs, selectedDocData, selectedBirthData }) => {
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
@@ -29,6 +38,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [checkCorrectionCondition, setCheckCorrectionCondition] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [certificateDob, setCertificateDob] = useState("");
+  const [hasError, setHasError] = useState(false);
+  const [errorDocIds, setErrorDocIds] = useState([]);
 
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   let conditionalComponent = "";
@@ -36,6 +47,20 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   useEffect(() => {
     setSelectedDocuments(selectedConfig?.documentData);
   }, [selectedConfig?.documentData]);
+
+  useEffect(() => {
+    if (selectedDocuments?.length === 1) {
+      const existingDocIds = selectedDocuments?.[0]?.Documents?.map((item) => {
+        if (selectedDocs.includes(item.DocumentId?.toString())) {
+          return item.DocumentId?.toString();
+        }
+      });
+
+      const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
+      console.log("initial value==", selectedDocuments?.[0]?.Documents, selectedDocData, selectedDocs, filteredData, existingDocIds);
+      setUploadedFiles([...filteredData]);
+    }
+  }, [selectedDocuments]);
 
   console.log("selectedConfig", selectedConfig);
   // const handleUploadDoc = (file, docType) => {
@@ -69,40 +94,39 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     setFile(e.target.files[0]);
   }
 
+  const setFileUploadFieldError = (errorObj) =>{
+    const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
+    
+    if (errorIndex === -1) {
+      setError([...error, errorObj]);
+      const docIds = [...errorDocIds,errorObj.fieldId]?.filter((item)=> item !== "");
+      setErrorDocIds(docIds);
+    } else {
+      let tempError = [...error];
+      let tempDocIds = tempError.splice(errorIndex, 1,errorObj.fieldId).filter((item)=> item !== "")
+      setErrorDocIds(tempDocIds);
+      setError(tempError.splice(errorIndex, 1, errorObj));
+    }
+  }
+
   useEffect(() => {
     console.log("selectedConfig?.documentData==", selectedDocs, selectedConfig?.documentData);
     (async () => {
-      setIsLoading(true);
       // setError([]);
       console.log("uploaded files==", file, file?.type);
       if (file && file?.type) {
-        console.log("file.size >= 2000000==", file.size, file.size >= 2000000);
+        setIsLoading(true);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
-          // setError({message:t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"),fieldId:docuploadedId});
-          const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
+          setIsLoading(false);
           let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
-          if (errorIndex === -1) {
-            setError([...error, tempObj]);
-          } else {
-            let tempError = [...error];
-            setError(tempError.splice(errorIndex, 1, tempObj));
-          }
+          setFileUploadFieldError(tempObj);
         } else if (file.size >= 2000000) {
-          // setError({message:t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"),fieldId:docuploadedId});
-          const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
-          let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
-          if (errorIndex === -1) {
-            setError([...error, tempObj]);
-          } else {
-            let tempError = [...error];
-            setError(tempError.splice(errorIndex, 1, tempObj));
-          }
+          setIsLoading(false);
+          let tempObj = { message: t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"), fieldId: docuploadedId };
+          setFileUploadFieldError(tempObj);
         } else {
-          const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
-          if (errorIndex > -1) {
-            let tempError = [...error];
-            setError(tempError.splice(errorIndex, 1));
-          }
+          let tempObj = { message: "", fieldId: "" };
+          setFileUploadFieldError(tempObj);
           // try {
           const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
           if (response?.data?.files?.length > 0) {
@@ -420,7 +444,67 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     setFileDocError("");
   };
 
-  console.log("selectedDocuments---", selectedDocuments, error, fileDocError);
+  const renderLoader = (details) => {
+    if (isLoading && details.DocumentId.toString() === docuploadedId) {
+      return (
+        <div style={{ margin: 0 }}>
+          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+        </div>
+      );
+    }
+  };
+
+  const getFileUploadFieldError = (item) => {
+    console.log("looped---item",error, item);
+    let errorMessage = "";
+    const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
+    if (fieldErrorIndex > -1) {
+      errorMessage = error[fieldErrorIndex]?.message;
+    }
+    console.log("errorMessage==",fieldErrorIndex,errorMessage);
+    return errorMessage;
+  };
+
+  const getUploadFileMessage = () =>{
+    let uploadFileMessage = "";
+    if(uploadedFile){
+      uploadFileMessage = `${t(`TL_ACTION_FILEUPLOADED`)}`;
+    } else {
+      uploadFileMessage =  `${t(`TL_ACTION_NO_FILEUPLOADED`)}`;
+    } 
+    return uploadFileMessage;
+  }
+
+  const getUploadedFileName = (fileItem) =>{
+    let fileName = "";
+    const fileNameIndex = uploadedFiles?.findIndex((e) => fileItem.DocumentId?.toString() === e.documentId);
+    if (fileNameIndex > -1) {
+      fileName = uploadedFiles[fileNameIndex]?.documentName;
+    }
+    console.log("fileName==",fileNameIndex,fileName);
+    return {name:fileName};
+  }
+
+  const hasUploadError = (item) =>{
+    const hasError = errorDocIds.includes(item.DocumentId?.toString());
+    if(hasError){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // useEffect(()=>{
+  //   const errorIndex = error.findIndex((e)=> e.fieldId === item.DocumentId);
+  //   console.log("inside has error==",errorIndex,error);
+  //   if(errorIndex > -1){
+  //     return true;
+  //   } else{
+  //     return false;
+  //   }
+  // },[error])
+
+  console.log("selectedDocuments---", selectedDocuments, error, fileDocError,uploadedFiles);
   return (
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
@@ -451,9 +535,12 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                           onDeleteown(item.DocumentId);
                           setUploadedFile(null);
                         }}
-                        message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        iserror={error.findIndex((e) => item.DocumentId === e.fieldId) > -1 ? error.message : ""}
+                        file={getUploadedFileName(item)}
+                        message={getUploadFileMessage()}
+                        error={hasUploadError(item)}
+                        iserror={getFileUploadFieldError(item)}
                       />
+                      {renderLoader(item)}
                     </div>
                   </div>
                 )}
@@ -468,12 +555,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           onClick={() => {
             console.log("selectedDocuments in save--", selectedDocuments);
             if (selectedDocuments?.length === 1) {
-              if (selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
+              if (!isLoading && selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
                 resetFields();
                 onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
               } else {
                 setFileDocError("You have to upload following documents to make changes in the field");
               }
+            } else {
+              setFileDocError("Please select an option");
             }
           }}
         />

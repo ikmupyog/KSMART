@@ -141,8 +141,12 @@ const EmployeeSideBar = () => {
           </div>
           {first === "Home1" ? (
             <div style={navStyle} className="nav_drop">
-              <li style={navLi}>{t("reports.rainmaker-pgr.status.open")}</li>
-              <li style={navLi}>{t("reports.rainmaker-pgr.status.closed")} </li>
+              <li style={navLi}>
+                <Link to="/digit-ui/employee/pgr/inbox">{t("ES_COMMON_INBOX")}</Link>
+              </li>
+              <li style={navLi}>
+                <Link to="/digit-ui/employee/pgr/complaint/create">{t("ES_CREATECOMPLAINT_NEW_COMPLAINT")}</Link>
+              </li>
             </div>
           ) : null}
         </Link>
