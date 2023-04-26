@@ -69,7 +69,7 @@ const BrideAddressPermanent = ({
   let cmbFilterState = [];
   useEffect(() => {
     if (isPrsentAddress && isInitialRender) {
-      if (cmbLB.length > 0) {
+      if (cmbLB.length > 0 && cmbCountry.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setAdrsLBName(currentLB[0]);
         if (cmbCountry.length > 0 && currentLB.length > 0) {
@@ -135,7 +135,7 @@ const BrideAddressPermanent = ({
         setIsInitialRender(false);
       }
     }
-  }, [isPrsentAddress, localbodies, isInitialRender]);
+  }, [isPrsentAddress, localbodies, isInitialRender, cmbLB.length, cmbCountry.length]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {

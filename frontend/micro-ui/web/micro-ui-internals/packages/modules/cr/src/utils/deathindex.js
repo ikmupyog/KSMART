@@ -408,6 +408,7 @@ export const convertToDeathRegistration = (data = {}) => {
           presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
           presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideIndiaProvinceMl: data?.AddressBirthDetails?.presentOutSideIndiaProvinceMl,          
           presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry.code : null,
           presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
             ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
@@ -463,6 +464,7 @@ export const convertToDeathRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
           permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaprovinceMl :data?.AddressBirthDetails?.permntOutsideIndiaprovinceMl,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
             ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code
             : null,
@@ -724,6 +726,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
           presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideIndiaProvinceMl: data?.AddressBirthDetails?.presentOutSideIndiaProvinceMl,
           presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry?.code : null,
           presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
             ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code
@@ -779,6 +782,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
           permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaprovinceMl: data?.AddressBirthDetails?.permntOutsideIndiaprovinceMl,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
             ? data?.AddressBirthDetails?.permntOutsideIndiaVillage?.code
             : null,

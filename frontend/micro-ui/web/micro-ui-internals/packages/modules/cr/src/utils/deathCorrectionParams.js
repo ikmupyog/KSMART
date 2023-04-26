@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const formFielColumns = {
     DECEASED_DOB: "CR_DECEASED_DOB",
     DECEASED_SEX:"CR_DECEASED_SEX",
@@ -89,7 +91,7 @@ const formFielColumns = {
           {
             column: formFielColumns[item?.CorrectionField],
             oldValue: item.initialValue,
-            newValue:  item.curValue && Date.now(item.curValue),
+            newValue:  item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
             // newValue: item.curValue && new Date(item.curValue).getTime(),
           },
         ];
@@ -121,8 +123,8 @@ const formFielColumns = {
             const correctionFieldValues = getCorrectionFieldValues(item);
             const correctionDocs = getCorrectionDocuments(item.Documents);
             const tempObj = {
-              correctionFieldName: item?.documentData?.[0]?.CorrectionField,
-              conditionCode: item.documentCondition,
+              correctionFieldName: item?.CorrectionField,
+              conditionCode: item.conditionCode,
               specificCondition: null,
               correctionFieldValue: correctionFieldValues,
               CorrectionDocument: correctionDocs,
@@ -154,8 +156,8 @@ const formFielColumns = {
           registrationNo: userData?.InformationDeath.registrationNo,
           registrationDate: null,
           applicationStatus: "INITIATED",
-          InformationDeathCorrection: {
-            tenantId: "kl.cochin"
+          InformationDeathCorrection: { 
+            tenantId: userData?.StatisticalInfo.TenantId
         },
           CorrectionField: correctionFieldData,
         },

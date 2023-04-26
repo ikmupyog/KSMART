@@ -481,7 +481,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     } else {
     setGroomGuardianAadharNo(newValue);
-    console.log(gfjghf+groomGuardianAadharNo);
+    console.log(groomGuardianAadharNo);
      }
   }
   function setSelectGroomMotherAdharNo(e) {
@@ -582,7 +582,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
     if (groomFirstnameEn.trim() == null || groomFirstnameEn.trim() == '' || groomFirstnameEn.trim() == undefined) {
-      console.log("gfgjhgjh"+groomFirstnameEn);
+      console.log(groomFirstnameEn);
       validFlag = false;
       setGroomFirstnameEn("");
       setGroomFirstnameEnError(true);
