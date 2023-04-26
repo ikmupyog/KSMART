@@ -1,58 +1,62 @@
 import { AppContainer, BackButton, PrivateRoute } from "@egovernments/digit-ui-react-components";
 import React from "react";
-import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
+import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
 import ChildDetails from "../../pageComponents/birthComponents/ChildDetails";
 import StillBirthChildDetails from "../../pageComponents/stillBirthComponents/StillBirthChildDetails";
 import BornOutsideChildDetails from "../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import InformationDeath from "../../pageComponents/deathComponents/InformationDeath";
 import BirthCertificateSearch from "./BirthCertificate";
+import BirthNacCertificateSearch from "./BirthNacCertificate";
+
 import DeathCertificate from "./Certificate/DeathCertificate";
 import DeathCertificateSearch from "./Certificate";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../config/config";
 import CrCitizenFlowApp from "./BirthRegistration";
 // import CreateBirthCertificate from "./Create";
-// import CreateDeathCertificate from "./DeathReg"; 
+// import CreateDeathCertificate from "./DeathReg";
 import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+import DeathCorrectionSummary from "../../pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
+  const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
   const ApplicationDetails = Digit.ComponentRegistryService.getComponent("CRCitizenApplicationDetails");
   const ApplicationDeathDetails = Digit.ComponentRegistryService.getComponent("CRDeathApplicationDetails");
-  
 
+  const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateBirthRegistration");
+  const CreateBirthNACRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateBirthNACRegistration");
+  const CRCreateDeathNACRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateDeathNACRegistration");
+  const CreateAdoption = Digit?.ComponentRegistryService?.getComponent("CRCreateAdoptions");
+  const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateStillBirthRegistration");
+  const CreateAbandonedBirth = Digit?.ComponentRegistryService?.getComponent("CRCreateAbandonedBirth");
+  const CreateBornOutsideRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateBornOutsideRegistration");
+  const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateDeathRegistration");
+  const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent("CRCreateMarriageRegistration");
+  const MyCRApplications = Digit?.ComponentRegistryService?.getComponent("MyCRApplications");
+  const MyCRDeathApplications = Digit?.ComponentRegistryService?.getComponent("MyCRDeathApplications");
+  const CRBirthInclusions = Digit?.ComponentRegistryService?.getComponent("CRBirthInclusions");
+  const CRDeathInclusions = Digit?.ComponentRegistryService?.getComponent("CRDeathInclusions");
+  const CRDeathCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent("CRDeathCorrectionEditPage");
 
-  const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
-  const CreateBirthNACRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthNACRegistration');
-  const CRCreateDeathNACRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathNACRegistration');
-  const CreateAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
-  const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
-  const CreateAbandonedBirth =  Digit?.ComponentRegistryService?.getComponent('CRCreateAbandonedBirth');
-  const CreateBornOutsideRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBornOutsideRegistration');
-  const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
-  const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
-  const MyCRApplications = Digit?.ComponentRegistryService?.getComponent('MyCRApplications');
-  const MyCRDeathApplications = Digit?.ComponentRegistryService?.getComponent('MyCRDeathApplications');
-  const CRBirthInclusions = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusions');
-  const CRDeathInclusions = Digit?.ComponentRegistryService?.getComponent('CRDeathInclusions');
-  const CRDeathCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('CRDeathCorrectionEditPage');
-
-  const CRMarriageCorrection = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrection');
+  const CRMarriageCorrection = Digit?.ComponentRegistryService?.getComponent("CRMarriageCorrection");
   // const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
   const CRMarriageCorrectionLoadPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionLoadPage');
   const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
   const DownloadMarriageCertificate = Digit?.ComponentRegistryService?.getComponent('DownloadMarriageCertificate');
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
   const DeathCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionAcknowledgement');
+  const DeathCorrectionSummary = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionSummary');
   const BirthInclusionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('BirthInclusionAcknowledgement');
   const BirthInclusionSummary = Digit?.ComponentRegistryService?.getComponent('BirthInclusionSummary');
+  const MarriageCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent("MarriageCorrectionAcknowledgement");
+  
 
-React.useEffect(()=>{
-  setFlag(false)
-},[])
+  React.useEffect(() => {
+    setFlag(false);
+  }, []);
   // const getBackPageNumber = () => {
   //   let goBacktoFromProperty = -1;
   //   if (
@@ -67,11 +71,11 @@ React.useEffect(()=>{
   //   return goBacktoFromProperty;
   // };
 
-
   return (
     <span className={"cr-citizen"}>
       <Switch>
       <AppContainer>
+      <PrivateRoute path={`${path}/marriage-correction-acknowledgement`} component={MarriageCorrectionAcknowledgement} />
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
         <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
@@ -79,6 +83,7 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/birth-inclusion-acknowledgement`} component={BirthInclusionAcknowledgement} />
         <PrivateRoute path={`${path}/birth-inclusion-summary`} component={BirthInclusionSummary} />
         <PrivateRoute path={`${path}/death-correction-acknowledgement`} component={DeathCorrectionAcknowledgement} />
+        <PrivateRoute path={`${path}/death-correction-summary`} component={DeathCorrectionSummary} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-death-nac`} component={CRCreateDeathNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
@@ -99,7 +104,9 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
         <PrivateRoute parentRoute={path} path={`${path}/death-correction-edit`} component={CRDeathCorrectionEditPage} /> 
-       </AppContainer>
+        <PrivateRoute parentRoute={path} path={`${path}/nac-birth-certificate`} component={() => <BirthNacCertificateSearch parentUrl={path} />} />
+          
+        </AppContainer>
       </Switch>
     </span>
   );

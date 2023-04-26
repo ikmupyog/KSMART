@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, presentOutSideIndiaAdressEn, setAdressEn,
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
@@ -269,7 +270,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               <Dropdown
                 t={t}
                 optionKey="i18nKey"
-                option={cmbUrbanRural}
+                option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
                 disable={isDisableEdit}

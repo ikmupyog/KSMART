@@ -2,6 +2,7 @@ import { TypeSelectCard } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
 import PGRTimeline from "../../components/PGRTimeline";
 import EmpTimeLine from "../../components/EmpPGRTimeline"
+import { arraySort } from "../../constants/utils";
 
 const SelectSubType = ({ t, config, onSelect, value }) => {
   const [subType, setSubType] = useState(() => {
@@ -25,7 +26,7 @@ const SelectSubType = ({ t, config, onSelect, value }) => {
   const configNew = {
     ...config.texts,
     ...{ headerCaption: t(`SERVICEDEFS.${complaintType.key.toUpperCase()}`) },
-    ...{ menu: menu },
+    ...{ menu: arraySort(menu ? menu : [], "name", t) },
     ...{ optionsKey: "name" },
     ...{ selected: selectedValue },
     ...{ selectedOption: subType },

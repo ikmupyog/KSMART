@@ -111,6 +111,7 @@ import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicl
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import DeathCorrectionAcknowledgement from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionAcknowledgement";
+import DeathCorrectionSummary from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
 import Informer from "./pageComponents/deathComponents/Informer";
 // AbandonedInitiater
 import AbandonedInitiater from "./pageComponents/deathAbandoned/AbandonedInformer";
@@ -147,6 +148,7 @@ import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowl
 import StillBirthAcknowledgement from "./pages/citizen/StillBirthRegistration/StillBirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
 import BirthCertificate from "./pages/citizen/Certificate/BirthCertificate";
+import BirthNacCertificate from "./pages/citizen/BirthNacCertificate";
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
 // import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
@@ -172,6 +174,7 @@ import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePub
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 
+import MarriageCorrectionAcknowledgement from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionAcknowledgement";
 import MarriageCorrectionEditPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionEditPage";
 import MarriageCorrectionLoadPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/index";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
@@ -271,6 +274,11 @@ export const CRLinks = ({ matchPath, userType }) => {
       section: "birth",
     },
     {
+      link: `${matchPath}/nac-birth-certificate`,
+      i18nKey: t("NAC_BIRTH_CERTIFICATE"),
+      section: "birth",
+    },
+    {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("CR_DEATH_REGISTRATION"),
       section: "death",
@@ -300,6 +308,7 @@ const componentsToRegister = {
   BirthInclusionSummary,
   BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,
+  DeathCorrectionSummary,
   CrFlowApp,
   ScrFlowApp,
   CreateBornOutsideEmp,
@@ -452,6 +461,7 @@ const componentsToRegister = {
   CRMarriageCorrectionLoadPage: MarriageCorrectionLoadPage,
   StillBirthAcknowledgement,
   BirthCertificate,
+  BirthNacCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
   CRResponse: Response,
   CRDocuments,
@@ -462,6 +472,7 @@ const componentsToRegister = {
   AbandonedChildDetails,
   AbandonedBirthInformarDetails,
   //Marriage
+  MarriageCorrectionAcknowledgement,
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
   BrideDetails,

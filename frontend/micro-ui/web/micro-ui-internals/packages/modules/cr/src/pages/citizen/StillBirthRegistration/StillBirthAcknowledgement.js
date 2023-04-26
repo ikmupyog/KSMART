@@ -6,6 +6,7 @@ import { convertToStillBirthRegistration,convertToEditStillBirthRegistration  } 
 import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
 import { useHistory } from "react-router-dom";
 
+
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {
@@ -24,12 +25,14 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   if (props.isSuccess && sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")) {
-    //console.log(JSON.stringify(props));
+    console.log(JSON.stringify(props));
     sessionStorage.setItem("applicationNumber", props.data?.StillBirthChildDetails[0]?.applicationNumber);
     // console.log(sessionStorage.getItem("applicationNumber"));
-    // if (sessionStorage.getItem("applicationNumber") != null) {
-    //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
-    // }
+    if (sessionStorage.getItem("applicationNumber") != null && props.isSuccess) {
+      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+    } else {
+      sessionStorage.removeItem("applicationNumber");
+    }
   } else {
     return (
       <Banner
@@ -56,15 +59,14 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
- 
   const [isEditStillBirth, setIsEditStilllBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG") ? true : false);
+
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
   // console.log(applicationNumber);
   //console.log("isEditBirth" + isEditBirth);
   const mutation = Digit.Hooks.cr.useCivilRegistrationStillBirthAPI(
     tenantId, isEditStillBirth ? false : true
   );
-
   useEffect(() => {
     if (isInitialRender && applicationNumber === null) {
       // const onSuccessedit = () => {

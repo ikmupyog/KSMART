@@ -29,7 +29,8 @@ const Table = ({
   sortParams = [],
   showAutoSerialNo=false,
   customTableWrapperClassName="",
-  styles={}
+  styles={},
+  paginationStyle={}
 }) => {
   const {
     getTableProps,
@@ -139,7 +140,7 @@ const Table = ({
       </table>
       </span>
       {isPaginationRequired && (
-        <div className="pagination dss-white-pre" >
+        <div className="pagination dss-white-pre" style={paginationStyle}>
           {`${t("CS_COMMON_ROWS_PER_PAGE")} :`}
           <select
             className="cp"

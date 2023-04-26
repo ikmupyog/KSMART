@@ -19,22 +19,22 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/CRTimeline";
 
-// const ActionButton = ({ jumpTo }) => {
-//   const { t } = useTranslation();
-//   const history = useHistory();
-//   function routeTo() {
-//     sessionStorage.setItem("isDirectRenewal", false);
-//     history.push(jumpTo);
-//   }
-//   return (
-//     <LinkButton
-//       label={t("CS_COMMON_CHANGE")}
-//       className="check-page-link-button"
-//       style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
-//       onClick={routeTo}
-//     />
-//   );
-// };
+const ActionButton = ({ jumpTo }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  function routeTo() {
+    sessionStorage.setItem("isDirectRenewal", false);
+    history.push(jumpTo);
+  }
+  return (
+    <LinkButton
+      label={t("CS_COMMON_CHANGE")}
+      className="check-page-link-button"
+      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      onClick={routeTo}
+    />
+  );
+};
 
 const getPath = (path, params) => {
   params &&
@@ -56,15 +56,16 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   console.log(AddressBirthDetails);
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-      }`;
+    return `${
+      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+    }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
-  //   routeLink = `${getPath(match.path, match.params)}`;
-  //   routeLink = routeLink.replace("/check", "");
+    routeLink = `${getPath(match.path, match.params)}`;
+    routeLink = routeLink.replace("/check", "");
   // }
 
   if (window.location.href.includes("/citizen") == "citizen") {
@@ -195,6 +196,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameEn}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                   </div>
                 </div>
               </div>
@@ -1710,7 +1714,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     onChange={setDeclarationInfo}
                     value={isInitiatorDeclaration}
                     checked={isInitiatorDeclaration}
-                  // disable={isDisableEdit}
+                    // disable={isDisableEdit}
                   />
                 </div>
               </div>
@@ -1718,13 +1722,13 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           </div>
         )}
 
-        {toast && (
+        {/* {toast && (
           <Toast
             error={InitiatorDeclareError}
             label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
-        )}
+        )} */}
         {""}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
       </Card>

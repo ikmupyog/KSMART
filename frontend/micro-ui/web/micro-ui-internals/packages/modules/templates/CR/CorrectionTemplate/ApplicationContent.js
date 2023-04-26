@@ -5,20 +5,20 @@ import {
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import BPADocuments from "../ApplicationDetails/components/BPADocuments";
-import InspectionReport from "../ApplicationDetails/components/InspectionReport";
-import NOCDocuments from "../ApplicationDetails/components/NOCDocuments";
-import PermissionCheck from "../ApplicationDetails/components/PermissionCheck";
-import PropertyDocuments from "../ApplicationDetails/components/PropertyDocuments";
-import PropertyEstimates from "../ApplicationDetails/components/PropertyEstimates";
-import PropertyFloors from "../ApplicationDetails/components/PropertyFloors";
-import PropertyOwners from "../ApplicationDetails/components/PropertyOwners";
-import ScruntinyDetails from "../ApplicationDetails/components/ScruntinyDetails";
-import SubOccupancyTable from "../ApplicationDetails/components/SubOccupancyTable";
-import TLCaption from "../ApplicationDetails/components/TLCaption";
-import TLTradeAccessories from "../ApplicationDetails/components/TLTradeAccessories";
-import TLTradeUnits from "../ApplicationDetails/components/TLTradeUnits";
-import DocumentsPreview from "../ApplicationDetails/components/DocumentsPreview";
+import BPADocuments from "../../ApplicationDetails/components/BPADocuments";
+import InspectionReport from "../../ApplicationDetails/components/InspectionReport";
+import NOCDocuments from "../../ApplicationDetails/components/NOCDocuments";
+import PermissionCheck from "../../ApplicationDetails/components/PermissionCheck";
+import PropertyDocuments from "../../ApplicationDetails/components/PropertyDocuments";
+import PropertyEstimates from "../../ApplicationDetails/components/PropertyEstimates";
+import PropertyFloors from "../../ApplicationDetails/components/PropertyFloors";
+import PropertyOwners from "../../ApplicationDetails/components/PropertyOwners";
+import ScruntinyDetails from "../../ApplicationDetails/components/ScruntinyDetails";
+import SubOccupancyTable from "../../ApplicationDetails/components/SubOccupancyTable";
+import TLCaption from "../../ApplicationDetails/components/TLCaption";
+import TLTradeAccessories from "../../ApplicationDetails/components/TLTradeAccessories";
+import TLTradeUnits from "../../ApplicationDetails/components/TLTradeUnits";
+import DocumentsPreview from "../../ApplicationDetails/components/DocumentsPreview";
 
 function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading, applicationData,
     businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
@@ -243,7 +243,8 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                 </div>
                 <div className={"cr-timeline-wrapper"}>
                     <Carousel {...{ carouselItems }}
-                        containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }}
+                    imageHeight="300px"
+                        containerStyle={{ height: "300px", width: "auto", overflow: "scroll" }}
                     />
 
                     {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (

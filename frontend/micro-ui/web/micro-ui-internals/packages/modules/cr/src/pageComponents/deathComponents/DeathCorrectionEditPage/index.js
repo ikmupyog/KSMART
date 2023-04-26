@@ -19,11 +19,14 @@ function DeathCorrectionPage() {
   const { data: place = {}, isLoading: isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: Sex, isLoading: isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
 
-  const createProperty = async () => {
+
+
+  const navigateAcknowledgement = ({deathCorrectionFormsObj,navigationData}) =>{
     history.push({
-      pathname: `/digit-ui/citizen/cr/death-correction-acknowledgement`
+      pathname: `/digit-ui/citizen/cr/death-correction-summary`,
+      state: { navData: navigationData, deathCorrectionData: deathCorrectionFormsObj }
     });
-  };
+  }
 
 
   let cmbPlace = [];
@@ -58,7 +61,7 @@ function DeathCorrectionPage() {
         cmbPlace={cmbPlace}
         DeathCorrectionDocuments={DeathCorrectionDocuments}
         navigationData={navigationData}
-        onSubmitAcknowledgement={createProperty}
+        navigateAcknowledgement={navigateAcknowledgement}
         />
         );
       } else {

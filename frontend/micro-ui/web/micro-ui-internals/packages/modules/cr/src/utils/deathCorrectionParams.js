@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const formFielColumns = {
     DECEASED_DOB: "CR_DECEASED_DOB",
     DECEASED_SEX:"CR_DECEASED_SEX",
@@ -84,12 +86,12 @@ const formFielColumns = {
     ];
     break;
     case "DECEASED_DOB":
-        console.log("DECEASED_DOB",Date(item.curValue),Date(item.curValue).getTime());
+        // console.log("DECEASED_DOB",Date(item.curValue),Date(item.curValue).getTime());
         fieldValues =  [
           {
             column: formFielColumns[item?.CorrectionField],
             oldValue: item.initialValue,
-            newValue:  item.curValue && Date.parse(item.curValue),
+            newValue:  item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
             // newValue: item.curValue && new Date(item.curValue).getTime(),
           },
         ];
@@ -121,8 +123,8 @@ const formFielColumns = {
             const correctionFieldValues = getCorrectionFieldValues(item);
             const correctionDocs = getCorrectionDocuments(item.Documents);
             const tempObj = {
-              correctionFieldName: item?.documentData?.[0]?.CorrectionField,
-              conditionCode: item.documentCondition,
+              correctionFieldName: item?.CorrectionField,
+              conditionCode: item.conditionCode,
               specificCondition: null,
               correctionFieldValue: correctionFieldValues,
               CorrectionDocument: correctionDocs,
@@ -145,7 +147,7 @@ const formFielColumns = {
       CorrectionDetails: [
         {
           id: userData?.id,
-          tenantid: "kl.cochin",
+        //   tenantid: "kl.cochin",
           applicationtype: "CRBRCN",
           businessservice: "birth-services",
           workflowcode: "BIRTHHOSP21",
@@ -154,6 +156,9 @@ const formFielColumns = {
           registrationNo: userData?.InformationDeath.registrationNo,
           registrationDate: null,
           applicationStatus: "INITIATED",
+          InformationDeathCorrection: { 
+            tenantId: userData?.StatisticalInfo.TenantId
+        },
           CorrectionField: correctionFieldData,
         },
       ],

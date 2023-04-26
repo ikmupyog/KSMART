@@ -183,7 +183,7 @@ export const CRDeathsearch = {
               " , " +
               response?.AddressBirthDetails.presentaddressCountry || "CR_NOT_RECORDED",
         },
-        { title: "CR_PROFESSIONAL", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || "NA" },
+       
       ],
     };
     // const AddressBirthDetails = {

@@ -1,9 +1,10 @@
 export const getFilteredBrideNameData = (selectedData, inclusionData) => {
-    let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.BrideDetails);
+    let filteredDocuments = getFilteredDocuments(inclusionData);
+    const computedInitialValue = computeInitialValue(selectedData?.BrideDetails);
+    const computedCurrentValue = computeCurrentValue(selectedData?.BrideDetails);
     let selectedDomObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisable: true,
       isEditable: false,
       isFocused: false,
@@ -23,13 +24,19 @@ export const getFilteredBrideNameData = (selectedData, inclusionData) => {
       };
     return brideName;
   };
+
+  const computeCurrentValue = (brideDetails) => {
+    const brideName = {firstNameEn:brideDetails?.brideFirstnameEn,
+        middleNameEn:brideDetails?.brideMiddlenameEn,
+        lastNameEn:brideDetails?.brideLastnameEn,
+        firstNameMl:brideDetails?.brideFirstnameMl,
+        middleNameMl:brideDetails?.brideMiddlenameMl,
+        lastNameMl:brideDetails?.brideLastnameMl,
+      };
+    return brideName;
+  };
   
-  const getFilteredDocuments = (selectedData,inclusionData) => {
-    let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-    } else {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-    }
-    return filteredData;
+  const getFilteredDocuments = (correctionData) => {
+    let filteredData  = correctionData;
+    return {documentData:filteredData, docFlag: "BRIDE_NAME"};
   };
