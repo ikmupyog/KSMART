@@ -100,11 +100,11 @@ public class WitnessRegistryDetails {
 
     @JsonProperty("witness2Esigned")
     private  Boolean witness2Esigned;
-    @Size(max = 200)
+    @Size(max = 2000)
     @JsonProperty("brideUrl")
     private String brideUrl;
 
-    @Size(max = 200)
+    @Size(max = 2000)
     @JsonProperty("groomUrl")
     private String groomUrl;
 
