@@ -309,13 +309,13 @@ public class MarriageRegistryRepository {
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsBrideAddressMap));
 
 
-//            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
-//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
-//
-//            }
-//            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
-//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
-//            }
+            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
+
+            }
+            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
+            }
                 marriageCertPDFRequest.getMarriageCertificate().forEach(cert->{
                     String uiHost = marriageApplicationConfiguration.getUiAppHost();
                     String marriageCertPath = StringUtils.replaceEach(marriageApplicationConfiguration.getMarriageCertLink(),
