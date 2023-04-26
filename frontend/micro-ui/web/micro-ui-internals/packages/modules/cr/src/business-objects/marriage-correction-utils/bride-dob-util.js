@@ -23,9 +23,9 @@ const computeInitialValue = (brideDetails) => {
 const getFilteredDocuments = (selectedData,inclusionData) => {
   let filteredData  = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_INSTITUTIONAL");
   } else {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
   }
   return filteredData;
 };

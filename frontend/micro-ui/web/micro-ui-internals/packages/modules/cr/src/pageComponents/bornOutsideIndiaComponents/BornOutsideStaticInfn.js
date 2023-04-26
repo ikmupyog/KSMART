@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
 const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
-
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBornOutsideIndia ? isEditBornOutsideIndia : false);
 
@@ -43,7 +42,6 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
 
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
-  
 
   AttentionOfDelivery &&
     AttentionOfDelivery["birth-death-service"] &&
@@ -58,30 +56,42 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
       cmbDeliveryMethod.push(ob);
     });
 
-    const cmbRelation = [
-      { i18nKey: "Father", code: "FATHER" },
-      { i18nKey: "Mother", code: "MOTHER" },
-      { i18nKey: "Others", code: "OTHERS" },
-    ];  
-    const [pregnancyDuration, setPregnancyDuration] = useState(
-      formData?.BornOutsideStaticInfn?.pregnancyDuration ? formData?.BornOutsideStaticInfn?.pregnancyDuration : null
-    );
-    const [medicalAttensionSub, setMedicalAttensionSub] = useState(
-      formData?.BornOutsideStaticInfn?.medicalAttensionSub ? formData?.BornOutsideStaticInfn?.medicalAttensionSub : null
-    );
-    const [deliveryMethods, setDeliveryMethod] = useState(
-      formData?.BornOutsideStaticInfn?.deliveryMethods ? formData?.BornOutsideStaticInfn?.deliveryMethods : null
-    );
+  const cmbRelation = [
+    { i18nKey: "Father", code: "FATHER" },
+    { i18nKey: "Mother", code: "MOTHER" },
+    { i18nKey: "Others", code: "OTHERS" },
+  ];
+  const [pregnancyDuration, setPregnancyDuration] = useState(
+    formData?.BornOutsideStaticInfn?.pregnancyDuration ? formData?.BornOutsideStaticInfn?.pregnancyDuration : null
+  );
+  const [medicalAttensionSub, setMedicalAttensionSub] = useState(
+    formData?.BornOutsideStaticInfn?.medicalAttensionSub ? formData?.BornOutsideStaticInfn?.medicalAttensionSub : null
+  );
+  const [deliveryMethods, setDeliveryMethod] = useState(
+    formData?.BornOutsideStaticInfn?.deliveryMethods ? formData?.BornOutsideStaticInfn?.deliveryMethods : null
+  );
   //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.BornOutsideStaticInfn?.IsEditChangeScreen === false || formData?.BornOutsideStaticInfn?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.BornOutsideStaticInfn?.deliveryMethods)[0]) : formData?.BornOutsideStaticInfn?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.BornOutsideStaticInfn?.birthWeight ? formData?.BornOutsideStaticInfn?.birthWeight : null);
   const [orderofChildren, setOrderofChildren] = useState(
     formData?.BornOutsideStaticInfn?.orderofChildren ? formData?.BornOutsideStaticInfn?.orderofChildren : ""
   );
   const [relation, setrelation] = useState(formData?.BornOutsideStaticInfn?.relation ? formData?.BornOutsideStaticInfn?.relation : null);
-  const [informarNameEn, setinformarNameEn] =useState(formData?.BornOutsideStaticInfn?.informarNameEn ? formData?.BornOutsideStaticInfn?.informarNameEn : null);
-  const [informarAadhar, setinformarAadhar] = useState(formData?.BornOutsideStaticInfn?.informarAadhar ? formData?.BornOutsideStaticInfn?.informarAadhar : null);
-  const [informarMobile, setinformarMobile] = useState(formData?.BornOutsideStaticInfn?.informarMobile ? formData?.BornOutsideStaticInfn?.informarMobile : null);
-  const [informarAddress, setinformarAddress] = useState(formData?.BornOutsideStaticInfn?.informarAddress ? formData?.BornOutsideStaticInfn?.informarAddress : formData?.BornOutsideStaticInfn?.BornOutsideStaticInfn?.informarAddress ? formData?.BornOutsideStaticInfn?.BornOutsideStaticInfn?.informarAddress : "");
+  const [informarNameEn, setinformarNameEn] = useState(
+    formData?.BornOutsideStaticInfn?.informarNameEn ? formData?.BornOutsideStaticInfn?.informarNameEn : null
+  );
+  const [informarAadhar, setinformarAadhar] = useState(
+    formData?.BornOutsideStaticInfn?.informarAadhar ? formData?.BornOutsideStaticInfn?.informarAadhar : null
+  );
+  const [informarMobile, setinformarMobile] = useState(
+    formData?.BornOutsideStaticInfn?.informarMobile ? formData?.BornOutsideStaticInfn?.informarMobile : null
+  );
+  const [informarAddress, setinformarAddress] = useState(
+    formData?.BornOutsideStaticInfn?.informarAddress
+      ? formData?.BornOutsideStaticInfn?.informarAddress
+      : formData?.BornOutsideStaticInfn?.BornOutsideStaticInfn?.informarAddress
+      ? formData?.BornOutsideStaticInfn?.BornOutsideStaticInfn?.informarAddress
+      : ""
+  );
   const [toast, setToast] = useState(false);
 
   const [BirthWeightError, setBirthWeightError] = useState(formData?.BornOutsideStaticInfn?.birthWeight ? false : false);
@@ -100,54 +110,6 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
 
   const onSkip = () => onSelect();
 
-  function setSelectChildFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildMiddleNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setChildMiddleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildLastNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setChildLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!e.key.match(pattern)) {
-      e.preventDefault();
-    }
-  }
-  function setSelectChildFirstNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setChildFirstNameMl("");
-    } else {
-      setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildMiddleNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setChildMiddleNameMl("");
-    } else {
-      setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildLastNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setChildLastNameMl("");
-    } else {
-      setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
   function setSelectPregnancyDuration(e) {
     setPregnancyDuration(
       e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
@@ -186,8 +148,8 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
     }
   }
   function setSelectinformarAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinformarAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setinformarAddress(e.target.value.length <= 250 ? e.target.value : e.target.value.substring(0, 250));
     }
   }
   function setSelectinformarAadhar(e) {
@@ -339,28 +301,14 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
         deliveryMethods,
         orderofChildren,
         relation,
-        informarNameEn,
+        informarNameEn: informarNameEn.trim(),
         informarAadhar,
         informarMobile,
-        informarAddress,
+        informarAddress: informarAddress.trim(),
         IsEditChangeScreen,
       });
     }
   };
-  // if (isEditBirth && isEditBirthPageComponents === false && (formData?.BornOutsideStaticInfn?.IsEditChangeScreen === false || formData?.BornOutsideStaticInfn?.IsEditChangeScreen === undefined)) {
-
-  //   if (formData?.BornOutsideStaticInfn?.medicalAttensionSub != null) {
-  //     if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-  //       setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.BornOutsideStaticInfn?.medicalAttensionSub)[0]);
-  //     }
-  //   }
-
-  //   if (formData?.BornOutsideStaticInfn?.deliveryMethods != null) {
-  //     if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-  //       setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.BornOutsideStaticInfn?.deliveryMethods)[0]);
-  //     }
-  //   }
-  // }
 
   if (isAttentionOfDeliveryLoading || isDeliveryMethodListLoading) {
     return <Loader></Loader>;
@@ -405,8 +353,9 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
               </div>
 
               <div className="col-md-3">
-                <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}
-                <span className="mandatorycss">*</span>
+                <CardLabel>
+                  {`${t("CR_PREGNANCY_DURATION")}`}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -543,44 +492,42 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
                 />
               </div>
               <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_MOBILE_NO")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"number"}
-                optionKey="i18nKey"
-                name="informarMobile"
-                value={informarMobile}
-                onChange={setSelectinformarMobile}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
-              />
-            </div>
+                <CardLabel>
+                  {`${t("CR_MOBILE_NO")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  type={"number"}
+                  optionKey="i18nKey"
+                  name="informarMobile"
+                  value={informarMobile}
+                  onChange={setSelectinformarMobile}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CR_MOBILE_NO")}`}
+                  {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
+                />
               </div>
-
-             
+            </div>
           </div>
           <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
-              <TextArea
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="informarAddress"
-                value={informarAddress}
-                onChange={setSelectinformarAddress}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
-              />
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+                <TextArea
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="informarAddress"
+                  value={informarAddress}
+                  onChange={setSelectinformarAddress}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                />
+              </div>
             </div>
           </div>
-        </div>
           {toast && (
             <Toast
               error={

@@ -2,7 +2,7 @@ import {Banner, Card, CardText, LinkButton, Loader, SubmitBar, toast } from "@eg
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToDeathRegistration} from "../../../utils/deathindex";
+import { convertToDeathRegistration,convertToEditDeathRegistration} from "../../../utils/deathindex";
 import getPDFData from "../../../utils/getCRDeathAcknowledgementData";
 // import getPDFData from "../../../utils/getTLAcknowledgementData";
 import { useHistory } from "react-router-dom";

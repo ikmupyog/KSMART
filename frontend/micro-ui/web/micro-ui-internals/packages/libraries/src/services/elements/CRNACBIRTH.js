@@ -25,7 +25,7 @@ export const CRNACBirthService = {
     }),
   CRRegistrySearchBirth: ({ filters }) =>
     Request({
-      url: Urls.crnacbirth.registry_search_birth,
+      url: Urls.crnacbirth.registry_search_nac_birth,
       useCache: false,
       method: "POST",
       auth: true,

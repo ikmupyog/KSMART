@@ -9,6 +9,7 @@ import StillBirthPlaceHome from "../../pageComponents/stillBirthComponents/Still
 import StillBirthPlaceVehicle from "../../pageComponents/stillBirthComponents/StillBirthPlaceVehicle";
 import StillBirthPlacePublicPlace from "../../pageComponents/stillBirthComponents/StillBirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
+import { sortDropdownNames } from "../../utils";
 
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   // console.log(JSON.stringify(formData));
@@ -1192,7 +1193,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={menu}
+                  option={sortDropdownNames(menu ? menu : [],"code",t)}
                   selected={gender}
                   select={setselectGender}
                    disable={isDisableEdit}
@@ -1222,7 +1223,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPlaceMaster}
+                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [],"name",t)}
                   selected={birthPlace}
                   disable={isDisableEdit}
                   select={setselectBirthPlace}
@@ -1361,7 +1362,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAttDeliverySub}
+                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [],"name",t)}
                   selected={medicalAttensionSub}
                   select={setSelectMedicalAttensionSub}
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
@@ -1397,7 +1398,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbDeliveryMethod}
+                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [],"name",t)}
                   selected={deliveryMethods}
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}
@@ -1412,7 +1413,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbFoetalDeath}
+                  option={sortDropdownNames(cmbFoetalDeath ? cmbFoetalDeath : [],"name",t)}
                   selected={causeFoetalDeath}
                   select={setSelectcauseFoetalDeath}
                   //  disable={isDisableEdit}

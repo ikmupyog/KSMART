@@ -155,30 +155,33 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   }, [Nation]);
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherFirstNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''['  0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMotherFirstNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectMotherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherFirstNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern)) && e.target.value.trim() !== " ") {
+      e.preventDefault();
+      setMotherFirstNameMl('');
+    }
+    else {
+      setMotherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   function setSelectPassportNo(e) {
     if (e.target.value.length === 21) {
       return false;
@@ -277,16 +280,16 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     }
   }
   function setSelectFatherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setFatherFirstNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setFatherFirstNameMl('');
+    }
+    else {
+      setFatherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
+  
   let validFlag = true;
   const goNext = () => {
     if (motherEducation == null || motherEducation == "" || motherEducation == undefined) {
@@ -400,8 +403,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       // sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
 
       onSelect(config.key, {
-        motherFirstNameEn,
-        motherFirstNameMl,
+        motherFirstNameEn : motherFirstNameEn.trim(),
+        motherFirstNameMl: motherFirstNameMl.trim(),
         motherPassportNo,
 
         motherMarriageAge,
@@ -411,8 +414,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
         motherNationality,
         ismotherInfo,
 
-        fatherFirstNameEn,
-        fatherFirstNameMl,
+        fatherFirstNameEn: fatherFirstNameEn.trim(),
+        fatherFirstNameMl: fatherFirstNameMl.trim(),
 
         fatherNationality,
         fatherPassportNo,
@@ -459,6 +462,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     name="motherFirstNameEn"
                     value={motherFirstNameEn}
                     onChange={setSelectMotherFirstNameEn}
+                    onKeyPress={setCheckSpecialCharSpace}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
@@ -477,6 +481,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     optionKey="i18nKey"
                     name="motherFirstNameMl"
                     value={motherFirstNameMl}
+                    onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectMotherFirstNameMl}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -558,6 +563,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     optionKey="i18nKey"
                     name="fatherFirstNameMl"
                     value={fatherFirstNameMl}
+                    onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectFatherFirstNameMl}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}

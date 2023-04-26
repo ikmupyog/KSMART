@@ -779,7 +779,7 @@ export const newConfig = [
     body: [
       {
         type: "component",
-        route: "abandoned-information-death",
+        route: "abandoned-death-information",
         component: "InformationDeathAband",
         texts: {
           headerCaption: "",
@@ -1006,6 +1006,46 @@ export const newConfig = [
         nextStep: "address-death",
         type: "component",
         hideInEmployee: true,
+      },
+    ],
+  },
+
+  {
+    head: "Marriage Correction Routing",
+    body: [
+      {
+        type: "component",
+        route: "marriage-correction-edit",
+        isMandatory: true,
+        component: "MarriageCorrectionEditPage",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "MarriageDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "marriage-correction-summary",
+      },
+      {
+        type: "component",
+        route: "marriage-correction-summary",
+        isMandatory: true,
+        component: "MarriagecorrectionSummary",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "GroomDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: null,
       },
     ],
   },

@@ -1,9 +1,10 @@
 export const getFilteredGroomNameData = (selectedData, inclusionData) => {
-    let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.GroomDetails);
+    let filteredDocuments = getFilteredDocuments(inclusionData);
+    const computedInitialValue = computeInitialValue(selectedData?.GroomDetails);
+    const computedCurrentValue = computeCurrentValue(selectedData?.GroomDetails);
     let selectedDomObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisable: true,
       isEditable: false,
       isFocused: false,
@@ -14,22 +15,30 @@ export const getFilteredGroomNameData = (selectedData, inclusionData) => {
   
   //TODO need validation to check dob is null
   const computeInitialValue = (groomDetails) => {
-    const groomName = {firstNameEn:groomDetails?.groomFirstnameEn,
-        middleNameEn:groomDetails?.groomMiddlenameEn,
-        lastNameEn:groomDetails?.groomLastnameEn,
+    const groomName = {
+        firstNameEn:groomDetails?.groomFirstnameEn,
         firstNameMl:groomDetails?.groomFirstnameMl,
+        middleNameEn:groomDetails?.groomMiddlenameEn,
         middleNameMl:groomDetails?.groomMiddlenameMl,
+        lastNameEn:groomDetails?.groomLastnameEn,
+        lastNameMl:groomDetails?.groomLastnameMl,
+      };
+    return groomName;
+  };
+
+  const computeCurrentValue = (groomDetails) => {
+    const groomName = {
+        firstNameEn:groomDetails?.groomFirstnameEn,
+        firstNameMl:groomDetails?.groomFirstnameMl,
+        middleNameEn:groomDetails?.groomMiddlenameEn,
+        middleNameMl:groomDetails?.groomMiddlenameMl,
+        lastNameEn:groomDetails?.groomLastnameEn,
         lastNameMl:groomDetails?.groomLastnameMl,
       };
     return groomName;
   };
   
-  const getFilteredDocuments = (selectedData,inclusionData) => {
-    let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-    } else {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-    }
-    return filteredData;
+  const getFilteredDocuments = (correctionData) => {
+    let filteredData  = correctionData;
+    return {documentData:filteredData, docFlag: "GROOM_NAME"};
   };

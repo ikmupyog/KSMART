@@ -97,7 +97,7 @@ import useMcollectSearchBill from "./mcollect/useMcollectSearchBill";
 import usemcollectTenants from "./mcollect/useTenants";
 import useMCollectCount from "./mcollect/useMCollectCount";
 import useMCollectCategory from "./mcollect/useMcollectCategory";
-import useMCollectCategoryTypes from './mcollect/useMcollectCategoryTypes';
+import useMCollectCategoryTypes from "./mcollect/useMcollectCategoryTypes";
 import useMCollectTaxHeads from "./mcollect/useMcollectTaxHeads";
 import useMcollectFormConfig from "./mcollect/useMcollectFormConfig";
 
@@ -134,6 +134,7 @@ import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOu
 import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
 import useApplicationMarriageActions from "./cr/useApplicationMarriageActions";
+import useCRCommonPaymentUpdate from "./cr/useCRCommonPaymentUpdate";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -165,8 +166,10 @@ import useBirthNACSearch from "./cr/useBirthNACSearch";
 import useBornOutSideBirthSearch from "./cr/useBornOutSideBirthSearch";
 import useAdoptionSearch from "./cr/useAdoptionSearch";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
-import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
+import useResistryDownloadBirth from "./cr/useResistryDownloadBirth";
+import useResistryDownloadNacBirth from "./cr/useResistryDownloadNacBirth";
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
+import useRegistryNacSearchBirth from "./cr/useRegistryNacSearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 import useSearchMarriage, { getMarriageRegistryFileSourceDetails } from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
@@ -176,7 +179,6 @@ import useDeathNACSearch from "./cr/useDeathNACSearch";
 import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 import useMarriageSearch from "./cr/useMarriageSearch";
-
 
 import useSearchDeath from "./cr/useSearchDeath";
 // useSearchAbandonedDeath
@@ -221,12 +223,12 @@ import useBPAREGApplicationActions from "./obps/useBPAREGApplicationActions";
 import useBPADetailsPage from "./obps/useBPADetailsPage";
 import useBPAInbox from "./obps/useBPAInbox";
 import useEDCRInbox from "./obps/useEDCRInbox";
-import useBPAApplicationActions from "./obps/useApplicationActions"
+import useBPAApplicationActions from "./obps/useApplicationActions";
 import useArchitectInbox from "./obps/useArchitectInbox";
 import useBPAREGSearch from "./obps/useBPAREGSearch";
 import useEmpBPAREGSearch from "./obps/useEmpBPAREGSearch";
-import useServiceTypeFromApplicationType from "./obps/useServiceTypeFromApplicationType"
-import useBusinessServiceBasedOnServiceType from "./obps/useBusinessServiceBasedOnServiceType"
+import useServiceTypeFromApplicationType from "./obps/useServiceTypeFromApplicationType";
+import useBusinessServiceBasedOnServiceType from "./obps/useBusinessServiceBasedOnServiceType";
 import useBusinessServiceData from "./obps/useBusinessServiceData";
 import useBPATaxDocuments from "./obps/useBPATaxDocuments";
 
@@ -258,9 +260,9 @@ import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
 import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
 import { getBirthFileSourceDetails } from "./cr/birth";
+import { getNacBirthFileSourceDetails } from "./cr/birthNac";
 
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
-
 
 const pgr = {
   useComplaintDetails,
@@ -323,7 +325,7 @@ const pt = {
   useGenderMDMS,
   usePTGenderMDMS,
   useMyPropertyPayments,
-  useGenericViewProperty
+  useGenericViewProperty,
 };
 
 const dss = {
@@ -373,14 +375,16 @@ const tl = {
   useTLApplicationDetails,
   useTradeLicensePdeAPI,
   useSearchPde,
-  useTradeLicenseCorrectionAPI
+  useTradeLicenseCorrectionAPI,
 };
 const cr = {
   getBirthFileSourceDetails,
+  getNacBirthFileSourceDetails,
   useBirthCorrectionAction,
   useDeathCorrectionAction,
   useMarriageCorrectionAction,
   useApplicationMarriageActions,
+  useCRCommonPaymentUpdate,
   useRegSearchDeath,
   getDeathFileSourceDetails,
   useCivilRegMDMS,
@@ -409,7 +413,9 @@ const cr = {
   useRegistrySearchDeath,
   useRegistryDownloadDeath,
   useResistryDownloadBirth,
+  useResistryDownloadNacBirth,
   useRegistrySearchBirth,
+  useRegistryNacSearchBirth,
   useRegistrySearchMarriage,
   useSearchDeath,
   useSearchAbandonedDeath,
@@ -426,11 +432,11 @@ const cr = {
   useApplicationDEATHNACActions,
   useApplicationDEATHNACDetail,
   useApplicationBornOutsideIndiaBirthDetail,
-  
+
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions: useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions: useCRStillBirthApplicationActions,
-  useApplicationAbandonedBirthActions,
+  useApplicationAbandonedBirthActions: useApplicationAbandonedBirthActions,
   useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
@@ -441,7 +447,7 @@ const cr = {
   useCRSearchApplication,
   useCRDeathSearchApplication,
   useCRApplicationDetails,
-  useCRApplicationDeathDetails
+  useCRApplicationDeathDetails,
 };
 const dfm = {
   useTenants: useTenantsDFM,
@@ -485,14 +491,14 @@ const obps = {
   useOBPSSearch,
   useBusinessServiceBasedOnServiceType,
   useBusinessServiceData,
-  useBPATaxDocuments
+  useBPATaxDocuments,
 };
 
 const events = {
   useInbox: useEventInbox,
   useCreateEvent,
   useEventDetails,
-  useUpdateEvent
+  useUpdateEvent,
 };
 
 const engagement = {
@@ -511,21 +517,21 @@ const survey = {
   useSubmitResponse: useSurveySubmitResponse,
   useShowResults: useSurveyShowResults,
   useSurveyInbox,
-}
+};
 
 const noc = {
   useNOCDetails,
   useNOCApplicationActions,
   useInbox: useNOCInbox,
-  useNOCSearchApplication
-}
+  useNOCSearchApplication,
+};
 
 const ws = {
   WSSearchMdmsTypes,
   usewsTenants,
   useWaterSearch,
-  useSewarageSearch
-}
+  useSewarageSearch,
+};
 
 const Hooks = {
   useSessionStorage,
@@ -572,7 +578,7 @@ const Hooks = {
   engagement,
   survey,
   noc,
-  ws
+  ws,
 };
 
 export default Hooks;

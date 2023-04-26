@@ -45,8 +45,8 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
   });
 
   useEffect(() => {
-    // register("offset", 0);
-    // register("limit", 10);
+    register("offset", 0);
+    register("limit", 10);
     // register("sortBy", "dateofmarriage");
     // register("sortOrder", "DESC");
   }, [register]);
@@ -83,7 +83,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
   const columns = useMemo(
     () => [
       {
-        Header: t("CR_REGISTRATION NO"),
+        Header: t("CR_REGISTRATION_NO"),
         accessor: "marriageApplicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
@@ -107,7 +107,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
         accessor: (row) => GetCell(`${row.GroomDetails.groomFirstnameEn} ${row.GroomDetails.groomMiddlenameEn} ${row.GroomDetails.groomLastnameEn}` || "-"),
       },
       {
-          Header: t("TL_NAME_OF_WIFE"),
+          Header: t("CR_NAME_OF_WIFE"),
           disableSortBy: true,
           accessor: (row) => GetCell(`${row.BrideDetails.brideFirstnameEn} ${row.BrideDetails.brideMiddlenameEn} ${row.BrideDetails.brideLastnameEn}` || "-"),
       },
@@ -126,7 +126,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("MARRIAGE CERTIFICATE")}</h1>
+        <h1 style={hstyle}>{t("CR_MARRIAGE_CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
