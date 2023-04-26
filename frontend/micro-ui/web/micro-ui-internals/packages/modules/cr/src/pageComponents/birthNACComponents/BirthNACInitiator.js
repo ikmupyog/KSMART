@@ -207,39 +207,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     [disptachowner]
   );
 
-  const handleAppInputField = useCallback(
-    (index, e, key, length = 100) => {
-      if (e.length === 0) {
-        dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: "" } });
-        if (formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]) {
-          let jsonString = [];
-          jsonString["index"] = index;
-          jsonString["key"] = ownerappmap[key];
-          jsonString["value"] = "";
-
-          disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { ...jsonString } });
-        }
-        return;
-      }
-      if (e.trim() === "" || e.trim() === ".") {
-        return;
-      }
-      if (e.length <= length) {
-        dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: e } });
-        if (formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]) {
-          let jsonString = [];
-          jsonString["index"] = index;
-          jsonString["key"] = ownerappmap[key];
-          jsonString["value"] = e;
-
-          let peyloadtemp = { index, key, value: e };
-
-          disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { ...jsonString } });
-        }
-      } else return;
-    },
-    [dispatchapplicant, disptachowner]
-  );
   const onSkip = () => onSelect();
   Menu &&
     Menu.map((genderDetails) => {
@@ -511,19 +478,25 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
     if (validFlag == true) {
       onSelect(config.key, {
-        initiatorNameEn,
+        initiatorNameEn: initiatorNameEn.trim(),
         initiatorAadhar,
         initiatorMobile,
         initiatorDesi,
         initiatorAddress,
         ownerState,
-        careofapplicant,
+        careofapplicant: careofapplicant.trim(),
         uploadedFile,
         uploadedFile1,
         uploadedFile2,
         uploadedFile3,
         uploadedFile4,
         uploadedFile5,
+        aadressFile,
+        proofFile,
+        certificateFile,
+        motherIdFile,
+        fatherIdFile,
+        medicalFile,
       });
     }
   };
@@ -572,14 +545,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           ownerState[0].childNameMl === "" ||
           ownerState[0].sex === "" ||
           ownerState[0].nacorderofChildren === "" ||
-          ownerState[0].isAlive === ""
-          // ||
-          // !aadressFile ||
-          // !proofFile ||
-          // !certificateFile ||
-          // !motherIdFile ||
-          // !fatherIdFile ||
-          // !medicalFile
+          ownerState[0].isAlive === "" ||
+          !aadressFile ||
+          !proofFile ||
+          !certificateFile ||
+          !motherIdFile ||
+          !fatherIdFile ||
+          !medicalFile
         }
       >
         <div>
@@ -809,7 +781,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <TextInput
                       t={t}
                       //isMandatory={true}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="nacorderofChildren"
                       value={field?.nacorderofChildren}
@@ -818,7 +790,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                   </div>
                   <div className="col-md-3">
                     <CardLabel>
-                      Alive? Yes/No<span className="mandatorycss">*</span>
+                      {`${t("CR_ALIVE")}`}
+                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     {/* <CheckBox
                         t={t}
@@ -894,7 +867,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1" style={{ marginTop: "30px" }}>
-                <span style={{ background: "#fff", padding: "0 10px" }}>File Upload</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_SUPPORTING_DOC")}`}</span>{" "}
               </h1>
             </div>
           </div>
@@ -915,7 +888,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     onDelete={() => {
                       setUploadedFile(null);
                     }}
-                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -934,7 +907,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     onDelete={() => {
                       setUploadedFile1(null);
                     }}
-                    message={uploadedFile1 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -953,7 +926,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     onDelete={() => {
                       setUploadedFile2(null);
                     }}
-                    message={uploadedFile2 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile2 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -972,7 +945,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     onDelete={() => {
                       setUploadedFile3(null);
                     }}
-                    message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile3 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -990,7 +963,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     onDelete={() => {
                       setUploadedFile4(null);
                     }}
-                    message={uploadedFile4 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile4 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -1009,7 +982,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     onDelete={() => {
                       setUploadedFile5(null);
                     }}
-                    message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile5 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -1042,9 +1015,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     : initiatorAddressError
                     ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
                     : DobMissmatchError
-                    ? "DOB MISSMATCH"
+                    ? t(`BIRTH_NAC_DOB_MISSMATCH`)
                     : OrderofBirthMissmatchError
-                    ? "ORDER OF BIRTH MISSMATCH"
+                    ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
                     : setToast(false)
                   : setToast(false)
               }

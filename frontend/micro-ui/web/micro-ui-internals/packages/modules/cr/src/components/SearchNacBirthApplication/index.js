@@ -111,15 +111,10 @@ const SearchNacRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count })
         disableSortBy: true,
         accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : "-"),
       },
-      // {
-      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-      // },
       {
         Header: t("CR_COMMON_MOTHER_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.motherFirstNameEn || "-"),
+        accessor: (row) => GetCell(row?.ParentsDetails.motherFirstNameEn || "-"),
       },
       {
         Header: t("CR_COMMON_GENDER"),

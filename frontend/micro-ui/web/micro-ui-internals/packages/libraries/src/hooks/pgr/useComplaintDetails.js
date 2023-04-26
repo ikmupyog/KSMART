@@ -52,6 +52,8 @@ const transformDetails = ({ id, service, workflow, thumbnails, complaintType }) 
 
 const fetchComplaintDetails = async (tenantId, id) => {
   var serviceDefs = await Digit.MDMSService.getServiceDefs(tenantId, "PGR");
+  const newData = await Digit.PGRService.search(tenantId, { serviceRequestId: id })
+  console.log("first", newData)
   const { service, workflow } = (await Digit.PGRService.search(tenantId, { serviceRequestId: id })).ServiceWrappers[0] || {};
   Digit.SessionStorage.set("complaintDetails", { service, workflow });
   if (service && workflow && serviceDefs) {

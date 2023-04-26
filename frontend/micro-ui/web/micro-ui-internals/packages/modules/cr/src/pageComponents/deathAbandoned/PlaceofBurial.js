@@ -344,7 +344,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
             <Dropdown
               t={t}
               optionKey="name"
-              option={lbs}
+              option={cmbLB}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
               placeholder={`${t("CS_COMMON_LB_NAME")}`}

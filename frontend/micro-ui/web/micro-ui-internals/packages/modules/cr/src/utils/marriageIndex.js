@@ -462,8 +462,8 @@ export const convertToMarriageRegistration = (data = {}) => {
           witness2Esigned: data?.WitnessDetails?.witness2Esigned ? data?.WitnessDetails?.witness2Esigned : false,
           groomFileStoreId: data?.WitnessDetails?.uploadedGroomImageId ? data?.WitnessDetails?.uploadedGroomImageId[0] : null,
           brideFileStoreId: data?.WitnessDetails?.uploadedBrideImageId ? data?.WitnessDetails?.uploadedBrideImageId[0] : null,
-          groomImageUrl: data?.WitnessDetails?.groomImageURL ? data?.WitnessDetails?.groomImageURL : null,
-          brideImageUrl: data?.WitnessDetails?.brideImageURL ? data?.WitnessDetails?.brideImageURL : null,
+          groomUrl: data?.WitnessDetails?.groomImageURL ? data?.WitnessDetails?.groomImageURL?.split(",")[1] : null,
+          brideUrl: data?.WitnessDetails?.brideImageURL ? data?.WitnessDetails?.brideImageURL?.split(",")[1] : null,
         },
         BrideAddressDetails: {
           presentaddressCountry: data?.BrideAddressDetails?.presentaddressCountry ? data?.BrideAddressDetails?.presentaddressCountry?.code : null,

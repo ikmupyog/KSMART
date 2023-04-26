@@ -12,10 +12,13 @@ import {
   Accordion,
   CheckBox,
   Toast,
+  TextInput,
+  DatePicker,
 } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import CustomTimePicker from "../../../components/CustomTimePicker";
 import Timeline from "../../../components/MARRIAGETimeline";
 import _ from "lodash";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -45,11 +48,24 @@ const getPath = (path, params) => {
   return path;
 };
 
-const MarriageCheckPage = ({ onSubmit, value, userType }) => {
+const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
+  console.log({formData});
   let isEdit = window.location.href.includes("renew-trade");
 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
+  const [meetingScheduleValue, setMeetingScheduleValue] = useState("ONSPOT");
+
+  const meetingSchedule = [
+    { i18nKey: "CR_ON_SPOT", code: "ONSPOT" },
+    { i18nKey: "CR_OFFLINE", code: "OFFLINE" },
+    { i18nKey: "CR_ONLINE", code: "ONLINE" },
+  ];
+  const meetingScheduleOptions = meetingSchedule.map((type) => type.code);
+
+  function selectMeetingSchedule(event) {
+    setMeetingScheduleValue(event.target.value);
+  }
 
   const { t } = useTranslation();
   const history = useHistory();
@@ -79,11 +95,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
   };
 
   function setDeclarationInfo(e) {
-    if (e.target.checked == false) {
-      setisInitiatorDeclaration(e.target.checked);
-    } else {
-      setisInitiatorDeclaration(e.target.checked);
-    }
+    setisInitiatorDeclaration(e.target.checked);
   }
 
   if (window.location.href.includes("/citizen") == "citizen") {
@@ -95,7 +107,6 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
   console.log("abc", MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE");
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
@@ -387,7 +398,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`} :
+                          {`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`} :
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -429,7 +440,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`} :
+                          {`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -3744,18 +3755,6 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
           }
         />
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_MARRIAGE_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                // disable={isDisableEdit}
-              />
-            </div>
-          </div>
-
           {toast && (
             <Toast
               error={InitiatorDeclareError}
@@ -3764,7 +3763,166 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
             />
           )}
           {""}
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <div className="row">
+                <div className="col-md-12">
+                  <CardLabel>{t("CR_MEETING_SCHEDULE")}</CardLabel>
+
+                  <div className="radios">
+                    {meetingScheduleOptions?.map((type, index) => (
+                      <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+                        <input
+                          className="schedule-meeting"
+                          type="radio"
+                          name="sheduleMeeting"
+                          style={{ height: "20px", width: "20px" }}
+                          onChange={selectMeetingSchedule}
+                          value={type}
+                          checked={meetingScheduleValue === type}
+                        />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          {type}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <DatePicker
+                    // date={scheduleDate}
+                    isMandatory={false}
+                    name="scheduleDate"
+                    max={convertEpochToDate(new Date())}
+                    // onChange={setSelectmarriageDOM}
+                    inputFormat="DD-MM-YYYY"
+                    placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
+                    //{...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <CustomTimePicker
+                    name="scheduleTime"
+                    // value={scheduleTime}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-6">
+              <div className="row">
+                <div className="col-md-9">
+                  <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="husbandname"
+                    value={`${GroomDetails?.groomFirstnameEn} ${GroomDetails?.groomMiddlenameEn} ${GroomDetails?.groomLastnameEn}`}
+                    placeholder={t("CR_HUSBAND_NAME")}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <TextInput
+                    t={t}
+                    type={"button"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    style={{
+                      backgroundColor: "#ea3d32",
+                      borderRadius: "5px",
+                      fontSize: "18px",
+                      color: "#fff",
+                      margin: "40px 5px",
+                      padding: "5px 10px",
+                      cursor: "pointer",
+                    }}
+                    name="eSign"
+                    value="E-sign"
+                    // onChange={setSelectwitness2Esigned}
+                    disable={GroomDetails?.isExpiredHusband}
+                    // {...(validation = { isRequired: true })}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-9">
+                  <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="wifename"
+                    value={`${BrideDetails?.brideFirstnameEn} ${BrideDetails?.brideMiddlenameEn} ${BrideDetails?.brideLastnameEn}`}
+                    placeholder={t("CR_WIFE_NAME")}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <TextInput
+                    t={t}
+                    type={"button"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    style={{
+                      backgroundColor: "#ea3d32",
+                      borderRadius: "5px",
+                      fontSize: "18px",
+                      color: "#fff",
+                      marginTop: "40px",
+                      padding: "5px 10px",
+                      cursor: "pointer",
+                      height: "100%",
+                    }}
+                    name="eSign"
+                    value="E-sign"
+                    // onChange={setSelectwitness2Esigned}
+                    disable={BrideDetails?.isExpiredWife}
+                    // {...(validation = { isRequired: true })}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-2">
+              <TextInput
+                t={t}
+                type={"button"}
+                optionKey="i18nKey"
+                isMandatory={false}
+                style={{
+                  backgroundColor: "#ea3d32",
+                  borderRadius: "5px",
+                  fontSize: "18px",
+                  color: "#fff",
+                  marginTop: "40px",
+                  padding: "5px 10px",
+                  cursor: "pointer",
+                }}
+                name="remitFee"
+                value="Remit Fee"
+                // onChange={setSelectwitness2Esigned}
+                // disable={GroomDetails?.isExpiredWife}
+                // {...(validation = { isRequired: true })}
+              />
+            </div>
+          </div>
+          <div className="col-md-12">
+            <CheckBox
+              label={t("CR_MARRIAGE_DECLARATION_STATEMENT")}
+              onChange={setDeclarationInfo}
+              value={isInitiatorDeclaration}
+              checked={isInitiatorDeclaration}
+              // disablebleEdit}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
+          </div>
         </div>
       </Card>
     </React.Fragment>

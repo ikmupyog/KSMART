@@ -7,22 +7,24 @@ const FormBackButton = ({ history, style, isSuccessScreen, isCommonPTPropertyScr
   const { t } = useTranslation();
 
   return (
-    <div
-      className={`back-btn-form ${className}`}
-      style={style ? style : {}}
-      onClick={() => {
-        !isSuccessScreen ? (!isCommonPTPropertyScreen ? history.goBack() : history.go(getBackPageNumber())) : null;
-      }}
-    >
-      {/* {variant == "black" ? ( */}
-        <React.Fragment>
-          {/* <ArrowLeft /> */}
-          <p>{t("CS_COMMON_BACK")}</p>
-        </React.Fragment>
-      {/* ) : (
+    <React.Fragment>
+      <div
+        className={`back-btn-form ${className}`}
+        style={style ? style : {}}
+        onClick={() => {
+          !isSuccessScreen ? (!isCommonPTPropertyScreen ? history.goBack() : history.go(getBackPageNumber())) : null;
+        }}
+      >
+        {/* {variant == "black" ? ( */}
+
+        {/* <ArrowLeft /> */}
+        <p>{t("CS_COMMON_BACK")}</p>
+
+        {/* ) : (
         <ArrowLeftWhite />
       )} */}
-    </div>
+      </div>
+    </React.Fragment>
   );
 };
 export default withRouter(FormBackButton);

@@ -209,7 +209,7 @@ export const CRNACsearch = {
       title: "Document SUMMARY DETAILS",
       documents: true,
       tenentId: Digit.ULBService.getStateId(),
-      values: response.BirthNACDocuments.map((doc) => doc?.birthdtlid),
+      values: response.BirthNACDocuments.map((doc) => doc?.fileStoreId),
     };
 
     response && employeeResponse.push(Birthdetails);

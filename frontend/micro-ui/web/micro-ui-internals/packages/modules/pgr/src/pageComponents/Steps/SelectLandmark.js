@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormStep, CardLabel, Dropdown, Loader, TextArea, TextInput } from "@egovernments/digit-ui-react-components";
 import EmpTimeLine from "../../components/EmpPGRTimeline"
 import { useQueryClient } from "react-query";
+import { arraySort } from "../../constants/utils";
 
 const SelectLandmark = ({ t, config, onSelect, value }) => {
   const { complaint_details } = value;
@@ -161,19 +162,19 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
           <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_DISTRICT")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" option={cmbDistrict} placeholder={`${t("CS_COMMON_DISTRICT")}`}
+              <Dropdown t={t} optionKey="name" option={arraySort(cmbDistrict || [], "name", t)} placeholder={`${t("CS_COMMON_DISTRICT")}`}
                 selected={selected.district} select={districtChange}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_LOCAL_BODY")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" option={cmbLB} placeholder={`${t("CS_COMMON_LOCAL_BODY")}`}
+              <Dropdown t={t} optionKey="name" option={arraySort(cmbLB || [], "name", t)} placeholder={`${t("CS_COMMON_LOCAL_BODY")}`}
                 selected={selected.lbName} select={(val) => handleChange("LB", val)}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="namecmb" option={cmbWardNoFinal} placeholder={`${t("CS_COMMON_WARD")}`}
+              <Dropdown t={t} optionKey="namecmb" option={arraySort(cmbWardNoFinal || [], "namecmb", t)} placeholder={`${t("CS_COMMON_WARD")}`}
                 selected={selected.ward} select={(val) => handleChange("Ward", val)}
               />
             </div>
@@ -183,13 +184,13 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
           <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_VILLAGE")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" placeholder={`${t("BIRTH_ERROR_VILLAGE_CHOOSE")}`} option={cmbVillage}
-                selected={selected.village} select={(val) => handleChange("Village", val)}
+              <Dropdown t={t} optionKey="name" placeholder={`${t("BIRTH_ERROR_VILLAGE_CHOOSE")}`} selected={selected.village}
+                option={arraySort(cmbVillage || [], "name", t)} select={(val) => handleChange("Village", val)}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_POST_OFFICE")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" option={cmbPostOffice} placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              <Dropdown t={t} optionKey="name" option={arraySort(cmbPostOffice || [], "name", t)} placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 selected={selected.postOffice} select={(val) => handleChange("PO", val)}
               />
             </div>

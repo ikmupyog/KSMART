@@ -539,6 +539,56 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
+              {
+                DeathNACParentsDetails?.SpouseUnavailable === false && (
+                  <div>
+                    <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>Spouse Details</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-6">
+                    <CardLabel style={{ lineHeight: "auto" }}>Name
+                    </CardLabel>
+                  </div>
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                      :{" "}
+                      {t(DeathNACParentsDetails.SpouseNameMl ? DeathNACParentsDetails?.SpouseNameMl : "CR_NOT_RECORDED") +
+                        "/" +
+                        " " +
+                        (DeathNACParentsDetails.SpouseNameEN ? DeathNACParentsDetails?.SpouseNameEN : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                  <div className="col-md-6">
+                    <CardLabel style={{ lineHeight: "auto"}}>Relation
+                    </CardLabel>
+                  </div>
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                      : {t(DeathNACParentsDetails.SpouseType.name ? DeathNACParentsDetails?.SpouseType?.name : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                  <div className="col-md-6">
+                    <CardLabel style={{ lineHeight: "auto"}}>Aadhar
+                    </CardLabel>
+                  </div>
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                      : {t(DeathNACParentsDetails.SpouseAadhaar ? DeathNACParentsDetails?.SpouseAadhaar : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+                  </div>
+                )
+              }
             </StatusTable>
           }
         />

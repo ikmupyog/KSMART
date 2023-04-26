@@ -28,7 +28,7 @@ import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionP
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
 import BirthInclusionAcknowledgement from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionAcknowledgement";
-
+import BirthInclusionSummary from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionSummary";
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
 import DownloadMarriageCertificate from "./components/DownloadMarriageCertificate";
@@ -111,6 +111,7 @@ import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicl
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import DeathCorrectionAcknowledgement from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionAcknowledgement";
+import DeathCorrectionSummary from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
 import Informer from "./pageComponents/deathComponents/Informer";
 // AbandonedInitiater
 import AbandonedInitiater from "./pageComponents/deathAbandoned/AbandonedInformer";
@@ -304,8 +305,10 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  BirthInclusionSummary,
   BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,
+  DeathCorrectionSummary,
   CrFlowApp,
   ScrFlowApp,
   CreateBornOutsideEmp,

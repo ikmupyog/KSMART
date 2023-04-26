@@ -330,7 +330,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(InformationDeath.Age) + "  " + t(InformationDeath?.AgeUnit.name)}
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(InformationDeath?.Age) + "  " + t(InformationDeath?.AgeUnit.name)}
                     </CardText>
                 </div>
                 {/* <div className="col-md-2">
@@ -1833,7 +1833,7 @@ content={<StatusTable >
               </div>
             </div> 
 
-            {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" && (
+            {InformationDeath?.DeceasedGender.code == "FEMALE" && (
     <div>
       <div className="row">
         <div className="col-md-12">
