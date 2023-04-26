@@ -2,58 +2,20 @@ import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../../utils";
 
-const GroomAddressPresentOutsideIndia = ({
-  config,
-  onSelect,
-  userType,
-  formData,
-  presentOutSideIndiaAdressEn,
-  setAdressEn,
-  presentOutSideIndiaAdressMl,
-  setAdressMl,
-  presentOutSideIndiaAdressEnB,
-  setAdressEnB,
-  presentOutSideIndiaAdressMlB,
-  setAdressMlB,
-  presentOutSideIndiaProvinceEn,
-  setProvinceEn,
-  presentOutSideIndiaProvinceMl,
-  setProvinceMl,
-  presentOutSideIndiaadrsVillage,
-  setadrsVillage,
-  presentOutSideIndiaadrsCityTown,
-  setadrsCityTown,
-  presentOutSideIndiaPostCode,
-  setPostCode,
+const GroomAddressPresentOutsideIndia = ({ config, onSelect, userType, formData, presentOutSideIndiaAdressEn, setAdressEn,
+  presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
+  setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
+  presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode,
   //  presentOutSideCountry,  setOutSideCountry, countryvalue, setCountryValue,
-  isPrsentAddress,
-  setIsPrsentAddress,
-  permntOutsideIndiaLineoneEn,
-  setadrsPermntOutsideIndiaLineoneEn,
-  permntOutsideIndiaLineoneMl,
-  setadrsPermntOutsideIndiaLineoneMl,
-  permntOutsideIndiaLinetwoEn,
-  setadrsPermntOutsideIndiaLinetwoEn,
-  permntOutsideIndiaLinetwoMl,
-  setadrsPermntOutsideIndiaLinetwoMl,
-  permntOutsideIndiaprovinceEn,
-  setPermntOutsideIndiaprovinceEn,
-  permntOutsideIndiaprovinceMl,
-  setPermntOutsideIndiaprovinceMl,
-  permntOutsideIndiaVillage,
-  setadrsPermntOutsideIndiaVillage,
-  permntOutsideIndiaCityTown,
-  setadrsPermntOutsideIndiaCityTown,
-  permanentOutsideIndiaPostCode,
-  setPermantpostCode,
-  permntOutsideIndiaCountry,
-  setPermntOutsideIndiaCountry,
-  isEditBirth = false,
-  isEditDeath = false,
-  isEditAdoption,
-  isEditStillBirth = false,
-  isEditBirthNAC = false,
+  isPrsentAddress, setIsPrsentAddress, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
+  permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
+  permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
+  permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
+  permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
+  permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry, isEditBirth = false, isEditDeath = false,isEditAdoption,
+  isEditStillBirth = false,isEditBirthNAC=false
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -69,8 +31,7 @@ const GroomAddressPresentOutsideIndia = ({
 
   let cmbCountry = [];
   Country &&
-    Country["common-masters"] &&
-    Country["common-masters"].Country &&
+    Country["common-masters"] && Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
@@ -82,37 +43,25 @@ const GroomAddressPresentOutsideIndia = ({
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
-        setadrsVillage(
-          cmbUrbanRural.filter(
-            (cmbUrbanRural) => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-          )[0]
-        );
+        setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]);
       }
     }
-  } else if (isEditAdoption !== false) {
+  } else if (isEditAdoption!==false){
     if (formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
-        setadrsVillage(
-          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage)[0]
-        );
+        setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage)[0]);
       }
     }
-  } else if (isEditDeath) {
+  }else if (isEditDeath) {
     if (formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
-        setadrsVillage(
-          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage)[0]
-        );
+        setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage)[0]);
       }
     }
   } else if (isEditStillBirth) {
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
-        setadrsVillage(
-          cmbUrbanRural.filter(
-            (cmbUrbanRural) => cmbUrbanRural.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-          )[0]
-        );
+        setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]);
       }
     }
   }
@@ -122,18 +71,18 @@ const GroomAddressPresentOutsideIndia = ({
     setadrsVillage(value);
     if (isPrsentAddress) {
       setadrsPermntOutsideIndiaVillage(value);
-    }
+    } 
     // else {
     //   setadrsPermntOutsideIndiaVillage('');
     // }
   }
 
   function setSelectadrsCityTown(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setadrsCityTown(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setadrsCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setadrsPermntOutsideIndiaCityTown('');
       // }
@@ -141,22 +90,22 @@ const GroomAddressPresentOutsideIndia = ({
   }
 
   function setSelectAdressEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setAdressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setAdressEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setadrsPermntOutsideIndiaLineoneEn('');
       // }
     }
   }
   function setSelectAdressEnB(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setAdressEnB(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setAdressEnB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setadrsPermntOutsideIndiaLinetwoEn('');
       // }
@@ -165,14 +114,15 @@ const GroomAddressPresentOutsideIndia = ({
 
   function setSelectAdressMlB(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setAdressMlB("");
-    } else {
-      setAdressMlB(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setAdressMlB('');
+    }
+    else {
+      setAdressMlB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setadrsPermntOutsideIndiaLinetwoMl('');
       // }
@@ -180,14 +130,15 @@ const GroomAddressPresentOutsideIndia = ({
   }
   function setSelectAdressMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setAdressMl("");
-    } else {
-      setAdressMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setAdressMl('');
+    }
+    else {
+      setAdressMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setadrsPermntOutsideIndiaLineoneMl('');
       // }
@@ -195,11 +146,11 @@ const GroomAddressPresentOutsideIndia = ({
   }
 
   function setSelectProvinceEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setProvinceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setProvinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setPermntOutsideIndiaprovinceEn('');
       // }
@@ -207,14 +158,15 @@ const GroomAddressPresentOutsideIndia = ({
   }
   function setSelectProvinceMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setProvinceMl("");
-    } else {
-      setProvinceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setProvinceMl('');
+    }
+    else {
+      setProvinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-      }
+        setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
       // else {
       //   setPermntOutsideIndiaprovinceMl('');
       // }
@@ -233,43 +185,38 @@ const GroomAddressPresentOutsideIndia = ({
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
     if (isPrsentAddress) {
-      setPermantpostCode(
-        e.target.value.trim().length <= 6
-          ? e.target.value.trim().replace(/[^0-9]/gi, "")
-          : e.target.value
-              .trim()
-              .replace(/[^0-9]/gi, "")
-              .substring(0, 6)
-      );
+      setPermantpostCode(e.target.value.trim().length <= 6 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 6));
     }
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!e.key.match(pattern)) {
+    if (!(e.key.match(pattern))) {
       e.preventDefault();
     }
   }
-  const goNext = () => {};
+  const goNext = () => {
+
+  };
   if (isCountryLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}> */}
-        {/* <header className="card-header" style={{ fontSize: "35px" }}>
+          {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
-            </h1>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
+              </h1>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          {/* <div className="col-md-4">
+          <div className="row">
+            {/* <div className="col-md-4">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
               <span className="mandatorycss">*</span>
@@ -283,185 +230,165 @@ const GroomAddressPresentOutsideIndia = ({
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
           </div> */}
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaProvinceEn"
-              value={presentOutSideIndiaProvinceEn}
-              onChange={setSelectProvinceEn}
-              placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-              disable={isDisableEdit}
-              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
-            />
+            <div className="col-md-6">
+              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaProvinceEn"
+                value={presentOutSideIndiaProvinceEn}
+                onChange={setSelectProvinceEn}
+                placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
+                disable={isDisableEdit}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")} <span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaProvinceMl"
+                value={presentOutSideIndiaProvinceMl}
+                onKeyPress={setCheckMalayalamInputField}
+                onChange={setSelectProvinceMl}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              /> 
+            </div>
           </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_STATE_REGION_PROVINCE_ML")} <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaProvinceMl"
-              value={presentOutSideIndiaProvinceMl}
-              onKeyPress={setCheckMalayalamInputField}
-              onChange={setSelectProvinceMl}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
-                isRequired: true,
-                type: "text",
-                title: t("CR_INVALID_STATE_REGION_PROVINCE_EN"),
-              })}
-            />
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CR_TOWN_VILLAGE_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="i18nKey"
-              option={cmbUrbanRural}
-              selected={presentOutSideIndiaadrsVillage}
-              select={setSelectadrsVillage}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
-            />
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CR_TOWN_VILLAGE_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="i18nKey"
+                option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
+                selected={presentOutSideIndiaadrsVillage}
+                select={setSelectadrsVillage}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaadrsCityTown"
+                value={presentOutSideIndiaadrsCityTown}
+                onChange={setSelectadrsCityTown}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_CITY_TOWN_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaPostCode"
+                value={presentOutSideIndiaPostCode}
+                onChange={setSelectPostCode}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_ZIP_CODE")}`}
+                {...(validation = {
+                  pattern: "^[0-9]*$",
+                  isRequired: true,
+                  type: "text",
+                  maxLength: 6,
+                  minLength: 6,
+                  title: t("CR_INVALID_ZIP_CODE"),
+                })}
+              />
+            </div>
           </div>
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaadrsCityTown"
-              value={presentOutSideIndiaadrsCityTown}
-              onChange={setSelectadrsCityTown}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_CITY_TOWN_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
-            />
-          </div>
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CR_ZIP_CODE")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaPostCode"
-              value={presentOutSideIndiaPostCode}
-              onChange={setSelectPostCode}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_ZIP_CODE")}`}
-              {...(validation = {
-                pattern: "^[0-9]*$",
-                isRequired: true,
-                type: "text",
-                maxLength: 6,
-                minLength: 6,
-                title: t("CR_INVALID_ZIP_CODE"),
-              })}
-            />
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_ADDRES_LINE_ONE_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaAdressEn"
-              value={presentOutSideIndiaAdressEn}
-              onChange={setSelectAdressEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaAdressEn"
+                value={presentOutSideIndiaAdressEn}
+                onChange={setSelectAdressEn}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaAdressEnB"
+                value={presentOutSideIndiaAdressEnB}
+                onChange={setSelectAdressEnB}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
+              />
+            </div>
+
           </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaAdressEnB"
-              value={presentOutSideIndiaAdressEnB}
-              onChange={setSelectAdressEnB}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaAdressMl"
+                value={presentOutSideIndiaAdressMl}
+                onKeyPress={setCheckMalayalamInputField}
+                onChange={setSelectAdressMl}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
+                })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="presentOutSideIndiaAdressMlB"
+                value={presentOutSideIndiaAdressMlB}
+                onKeyPress={setCheckMalayalamInputField}
+                onChange={setSelectAdressMlB}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
+                })}
+              />
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_ADDRES_LINE_ONE_ML")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaAdressMl"
-              value={presentOutSideIndiaAdressMl}
-              onKeyPress={setCheckMalayalamInputField}
-              onChange={setSelectAdressMl}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
-                type: "text",
-                title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
-              })}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_ADDRES_LINE_TWO_ML")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaAdressMlB"
-              value={presentOutSideIndiaAdressMlB}
-              onKeyPress={setCheckMalayalamInputField}
-              onChange={setSelectAdressMlB}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
-                type: "text",
-                title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
-              })}
-            />
-          </div>
-        </div>
         {/* </FormStep> */}
       </React.Fragment>
     );
