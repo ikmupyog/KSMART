@@ -509,8 +509,8 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         if (registryDetails.getGroomAddressDetails() != null) {
 
 //            if (registryDetails.getGroomAddressDetails().getPermtaddressCountry() != null && registryDetails.getGroomAddressDetails().getPermtaddressStateName() != null) {
-                if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
-                    if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
+                if (StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressCountry())&&registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
+                    if (StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressStateName())&&registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
                         Object mdmsGroomAddressData = util.mDMSCallGetAddress(req
                                 , registryDetails.getGroomAddressDetails().getPermntInKeralaAdrLBName()
                                 , registryDetails.getGroomAddressDetails().getDistrictIdPermanent()
@@ -667,8 +667,8 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         StringBuilder brideAddressBuilder = new StringBuilder();
         if (registryDetails.getBrideAddressDetails() != null) {
             if (registryDetails.getBrideAddressDetails().getPermtaddressCountry() != null && registryDetails.getBrideAddressDetails().getPermtaddressStateName() != null) {
-                if (registryDetails.getBrideAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
-                    if (registryDetails.getBrideAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
+                if (StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressCountry())&&registryDetails.getBrideAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
+                    if (StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressStateName())&&registryDetails.getBrideAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
                         Object mdmsBrideAddressData = util.mDMSCallGetAddress(req
                                 , registryDetails.getBrideAddressDetails().getPermntInKeralaAdrLBName()
