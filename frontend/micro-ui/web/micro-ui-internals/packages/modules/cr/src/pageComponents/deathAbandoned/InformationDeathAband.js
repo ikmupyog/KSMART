@@ -744,6 +744,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
       SelectPlaceOfBurialMl(null);
     } else if (value.code === "INSTITUTION") {
       //Hospital
+      selecthospitalNameEn(null);
       selectHospitalNameMl(null);
       //Home
       setDeathPlaceHomepostofficeId(null);
@@ -784,6 +785,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
     } else if (value.code === "VEHICLE") {
       //Hospital
       // selectDeathPlaceType(null);
+      selecthospitalNameEn(null);
       selectHospitalNameMl(null);
       //Institution
       selectDeathPlaceType(null);
@@ -820,6 +822,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
     if (value.code === "PUBLIC_PLACES") {
       //Hospital
       selectDeathPlaceType(null);
+      selecthospitalNameEn(null);
       selectHospitalNameMl(null);
       //Institution
       setSelectedDeathPlaceInstId(null);

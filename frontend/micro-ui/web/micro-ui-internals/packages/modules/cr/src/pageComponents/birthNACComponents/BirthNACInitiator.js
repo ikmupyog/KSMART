@@ -207,39 +207,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     [disptachowner]
   );
 
-  const handleAppInputField = useCallback(
-    (index, e, key, length = 100) => {
-      if (e.length === 0) {
-        dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: "" } });
-        if (formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]) {
-          let jsonString = [];
-          jsonString["index"] = index;
-          jsonString["key"] = ownerappmap[key];
-          jsonString["value"] = "";
-
-          disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { ...jsonString } });
-        }
-        return;
-      }
-      if (e.trim() === "" || e.trim() === ".") {
-        return;
-      }
-      if (e.length <= length) {
-        dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: e } });
-        if (formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]) {
-          let jsonString = [];
-          jsonString["index"] = index;
-          jsonString["key"] = ownerappmap[key];
-          jsonString["value"] = e;
-
-          let peyloadtemp = { index, key, value: e };
-
-          disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { ...jsonString } });
-        }
-      } else return;
-    },
-    [dispatchapplicant, disptachowner]
-  );
   const onSkip = () => onSelect();
   Menu &&
     Menu.map((genderDetails) => {
@@ -814,7 +781,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <TextInput
                       t={t}
                       //isMandatory={true}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="nacorderofChildren"
                       value={field?.nacorderofChildren}
