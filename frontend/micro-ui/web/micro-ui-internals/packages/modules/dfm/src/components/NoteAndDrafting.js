@@ -924,14 +924,14 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                         </div> */}
                     {/* /////////////////////////save textarea//////////// */}
-                    {/* <div class="custom-draft-button">
+                    <div class="custom-draft-button">
 
-                            <CustomButton
-                                onClick={saveNote}
-                                text={t("SAVE")}
+                        <CustomButton
+                            onClick={saveNote}
+                            text={t("SAVE")}
 
-                            ></CustomButton>
-                        </div> */}
+                        ></CustomButton>
+                    </div>
                     {/* /////////////////////////save textarea//////////// */}
 
                     {/* <div className="row">

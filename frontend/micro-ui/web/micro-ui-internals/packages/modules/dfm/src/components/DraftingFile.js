@@ -150,24 +150,16 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                         <Modal
                             headerBarEnd={<CloseBtn onClick={closeModal} />}
                             actionCancelOnSubmit={closeModal}
+                            actionSaveLabel={t("SUBMIT")}
                         >
-
                             <Card>
 
                                 <React.Fragment>
-                                    <CardLabel>{t("CS_REOPEN_COMPLAINT")}</CardLabel>
+                                    <CardLabel>{t("PHONE_NUMBER")}</CardLabel>
                                     <Dropdown />
                                 </React.Fragment>
-                                <CardLabel>{t("CS_COMMON_EMPLOYEE_COMMENTS")}</CardLabel>
+                                <CardLabel>{t("DRAFT_LINK")}</CardLabel>
                                 <TextArea />
-                                <CardLabel>{t("CS_ACTION_SUPPORTING_DOCUMENTS")}</CardLabel>
-
-                                <UploadFile
-                                    id={"pgr-doc"}
-                                    accept=".jpg"
-
-
-                                />
                             </Card>
                         </Modal>}
                     <div className="row wrapper-file" >
@@ -203,10 +195,10 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </div>
                             <div className="col-md-1 col-sm-12 col-xs-12" style={{ display: "flex" }} >
 
-                                <div style={{ width: "25px", height: "25px", cursor: "pointer" }} onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>
+                                <div style={{ width: "20px", height: "20px", cursor: "pointer" }} onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" /></svg>
                                 </div>
-                                <div style={{ width: "25px", height: "25px", cursor: "pointer", marginLeft: "20px", marginTop: "3px" }} onClick={sendSMS}>
+                                <div style={{ width: "20px", height: "20px", cursor: "pointer", marginLeft: "20px", marginTop: "3px" }} onClick={sendSMS}>
 
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
                                         <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />

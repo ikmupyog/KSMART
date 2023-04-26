@@ -193,6 +193,7 @@ import useDFMSearch from "./dfm/useSearch";
 import useApplicationDrafting from "./dfm/useApplicationDrafting";
 import useApplicationNoteDrafting from "./dfm/useApplicationNoteDrafting";
 import useApplicationFetchDraft from "./dfm/useApplicationFetchDraft";
+import useApplicationArisingFile from "./dfm/useApplicationArisingFile";
 
 import useHRMSSearch from "./hrms/useHRMSsearch";
 import useHrmsMDMS from "./hrms/useHRMSMDMS";
@@ -263,6 +264,7 @@ import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
 import { getBirthFileSourceDetails } from "./cr/birth";
 
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
+
 
 
 const pgr = {
@@ -429,7 +431,7 @@ const cr = {
   useApplicationDEATHNACActions,
   useApplicationDEATHNACDetail,
   useApplicationBornOutsideIndiaBirthDetail,
-  
+
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions: useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions: useCRStillBirthApplicationActions,
@@ -457,7 +459,8 @@ const dfm = {
   useApplicationActions: useDFMApplicationActions,
   useApplicationDrafting,
   useApplicationNoteDrafting,
-  useApplicationFetchDraft
+  useApplicationFetchDraft,
+  useApplicationArisingFile
 };
 const receipts = {
   useReceiptsMDMS,

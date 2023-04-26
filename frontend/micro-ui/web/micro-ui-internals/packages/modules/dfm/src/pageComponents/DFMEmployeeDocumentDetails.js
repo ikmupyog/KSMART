@@ -1,8 +1,8 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup, RemoveableTag,Dropdown } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup, RemoveableTag, Dropdown } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
-const containerStyle ={
+const containerStyle = {
   display: "flex",
   flexWrap: "unset",
 }
@@ -94,6 +94,7 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
+            console.log("res", response)
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
             } else {

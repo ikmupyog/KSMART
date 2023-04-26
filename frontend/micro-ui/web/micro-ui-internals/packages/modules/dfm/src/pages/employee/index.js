@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, useLocation, Link } from "react-router-dom";
+import { Switch, useLocation, Link, Route } from "react-router-dom";
 import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Inbox from "./Inbox";
@@ -248,6 +248,8 @@ const EmployeeApp = ({ path, url, userType }) => {
   const MajorFunctionAdding = Digit?.ComponentRegistryService?.getComponent('MajorFunctionAdding')
   const SubFunctionAdding = Digit?.ComponentRegistryService?.getComponent('SubFunctionAdding')
   const ServiceAdding = Digit?.ComponentRegistryService?.getComponent('ServiceAdding')
+  const ArisingFileAcknowledgement = Digit?.ComponentRegistryService?.getComponent('ArisingFileAcknowledgement')
+  const ArisingFileSummery = Digit?.ComponentRegistryService?.getComponent('ArisingFileSummery')
 
   return (
     <Switch>
@@ -270,6 +272,9 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/major-function-adding`} component={() => <MajorFunctionAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/sub-function-adding`} component={() => <SubFunctionAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/service-adding`} component={() => <ServiceAdding parentRoute={path} />} />
+          <PrivateRoute path={`${path}/arising-file-acknowledgement`} component={() => <ArisingFileAcknowledgement parentRoute={path} />} />
+          <PrivateRoute path={`${path}/arising-file-summery`} component={() => <ArisingFileSummery parentRoute={path} />} />
+
         </div>
       </React.Fragment>
     </Switch>

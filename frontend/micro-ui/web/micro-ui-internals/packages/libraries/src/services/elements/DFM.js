@@ -84,6 +84,17 @@ export const DFMService = {
       userService: true,
       params: { fileCode },
     }),
+  arising_file: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.arising_file,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
   // billingslab: ({ tenantId, filters, auth }) =>
   //   Request({
   //     url: Urls.tl.billingslab,
