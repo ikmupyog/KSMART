@@ -48,18 +48,18 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const [informerDesiError, setinformerDesiError] = useState(formData?.InitiatorAbandoned?.DeathSignedOfficerDesignation ? false : false);
   const onSkip = () => onSelect();
   const [error, setError] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [uploadedFile1, setUploadedFile1] = useState(null);
-  const [uploadedFile2, setUploadedFile2] = useState(null);
-  const [uploadedFile3, setUploadedFile3] = useState(null);
-  const [uploadedFile4, setUploadedFile4] = useState(null);
-  const [uploadedFile5, setUploadedFile5] = useState(null);
-  const [file, setFile] = useState(formData?.InitiatorAbandoned?.file);
-  const [file1, setFile1] = useState(formData?.InitiatorAbandoned?.file1);
-  const [file2, setFile2] = useState(formData?.InitiatorAbandoned?.file2);
-  const [file3, setFile3] = useState(formData?.InitiatorAbandoned?.file3);
-  const [file4, setFile4] = useState(formData?.InitiatorAbandoned?.file4);
-  const [file5, setFile5] = useState(formData?.InitiatorAbandoned?.file5);
+  const [uploadedFile, setUploadedFile] = useState(formData?.InitiatorAbandoned?.uploadedFile);
+  const [uploadedFile1, setUploadedFile1] = useState(formData?.InitiatorAbandoned?.uploadedFile1);
+  const [uploadedFile2, setUploadedFile2] = useState(formData?.InitiatorAbandoned?.uploadedFile2);
+  const [uploadedFile3, setUploadedFile3] = useState(formData?.InitiatorAbandoned?.uploadedFile3);
+  const [uploadedFile4, setUploadedFile4] = useState(formData?.InitiatorAbandoned?.uploadedFile4);
+  const [uploadedFile5, setUploadedFile5] = useState(formData?.InitiatorAbandoned?.uploadedFile5);
+  const [file, setFile] = useState(formData?.InitiatorAbandoned?.uploadedFile);
+  const [file1, setFile1] = useState(formData?.InitiatorAbandoned?.uploadedFile1);
+  const [file2, setFile2] = useState(formData?.InitiatorAbandoned?.uploadedFile2);
+  const [file3, setFile3] = useState(formData?.InitiatorAbandoned?.uploadedFile3);
+  const [file4, setFile4] = useState(formData?.InitiatorAbandoned?.uploadedFile4);
+  const [file5, setFile5] = useState(formData?.InitiatorAbandoned?.uploadedFile5);
 
   function selectfile(e) {
     setFile(e.target.files[0]);
