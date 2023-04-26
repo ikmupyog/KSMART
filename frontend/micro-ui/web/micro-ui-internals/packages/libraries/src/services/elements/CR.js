@@ -65,6 +65,15 @@ export const CRService = {
       userService: false,
       params: { ...filters },
     }),
+  CRRegistrySearchAdoption: ({ filters }) =>
+    Request({
+      url: Urls.cr.registry_search_Adoption,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { ...filters },
+    }),
   CRResistryDownloadBirth: (id, source) =>
     Request({
       url: Urls.cr.registry_download,

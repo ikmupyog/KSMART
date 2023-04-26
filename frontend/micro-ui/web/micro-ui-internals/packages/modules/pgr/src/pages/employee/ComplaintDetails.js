@@ -1,33 +1,8 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
-  BreakLine,
-  Card,
-  CardLabel,
-  CardLabelDesc,
-  CardSubHeader,
-  ConnectingCheckPoints,
-  CheckPoint,
-  DisplayPhotos,
-  MediaRow,
-  LastRow,
-  Row,
-  StatusTable,
-  PopUp,
-  HeaderBar,
-  ImageViewer,
-  TextInput,
-  TextArea,
-  UploadFile,
-  ButtonSelector,
-  Toast,
-  ActionBar,
-  Menu,
-  SubmitBar,
-  Dropdown,
-  Loader,
-  Modal,
-  SectionalDropdown,
+  Card, CardLabel, CardLabelDesc, CardSubHeader, DisplayPhotos, MediaRow, Row, StatusTable, PopUp, HeaderBar, ImageViewer,
+  TextArea, UploadFile, Toast, ActionBar, Menu, SubmitBar, Dropdown, Loader, Modal, SectionalDropdown
 } from "@egovernments/digit-ui-react-components";
 
 import { Close } from "../../Icons";
@@ -162,8 +137,21 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     setSelectedEmployee(employee);
   }
 
-  function addComment(e) {
-    setComments(e.target.value);
+  const locale = Digit.SessionStorage.get("locale");
+
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C 0-9!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+  let en_pattern = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+
+  const addComment = (e) => {
+    if (e.target.value.trim().length <= 50) {
+      if (locale === "ml_IN") {
+        if (e.target.value.match(ml_pattern)) {
+          setComments(e.target.value.substring(0, 50));
+        }
+      } else if (e.target.value.match(en_pattern)) {
+        setComments(e.target.value.substring(0, 50));
+      }
+    }
   }
 
   function selectfile(e) {
@@ -224,7 +212,7 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
             <Dropdown selected={selectedReopenReason} option={reopenReasonMenu} select={onSelectReopenReason} />
           </React.Fragment>
         ) : null}
-        <CardLabel>{t("CS_COMMON_EMPLOYEE_COMMENTS")}</CardLabel>
+        <CardLabel>{t("CS_COMMON_EMPLOYEE_COMMENTS")} <span>{t("CS_COMMON_EMPLOYEE_COMMENTS_LIMIT")} </span></CardLabel>
         <TextArea name="comment" onChange={addComment} value={comments} />
         <CardLabel>{t("CS_ACTION_SUPPORTING_DOCUMENTS")}</CardLabel>
         <CardLabelDesc>{t(`CS_UPLOAD_RESTRICTIONS`)}</CardLabelDesc>

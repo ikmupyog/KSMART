@@ -24,6 +24,7 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
+  console.log("pro[pss",props);
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -38,7 +39,8 @@ const MarriageCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, 
   const { t } = useTranslation();
 
   let location = useLocation();
-  let navigationData = location?.state?.navData;
+  // let navigationData = location?.state?.navData;
+  let marriageCorrectionData = location?.state?.marriageCorrectionData;
 
   if (false) {
     return (
@@ -58,7 +60,7 @@ const MarriageCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, 
     if (true) {
       return (
         <Card>
-          <BannerPicker t={t} data={navigationData} isSuccess={"success"} />
+          <BannerPicker t={t} data={marriageCorrectionData} isSuccess={"success"} />
           {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
            */}
           <LinkButton

@@ -119,6 +119,7 @@ const Urls = {
     registry_search_birth: "/birth-services/cr/registry/_search",
     create_adoption: "/birth-services/cr/createadoption",
     correct_update: "/birth-services/cr/createbirthcorrection",
+    registry_search_Adoption: "/birth-services/cr/registry/_searchAdoption",
   },
   crcommonpayment: {
     update: "/birth-services/cr/common/updatepaywf",

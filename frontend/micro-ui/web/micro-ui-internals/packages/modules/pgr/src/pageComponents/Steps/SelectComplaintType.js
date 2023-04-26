@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PGRTimeline from "../../components/PGRTimeline";
 import EmpTimeLine from "../../components/EmpPGRTimeline"
 import { TypeSelectCard, CardLabel } from "@egovernments/digit-ui-react-components";
+import { arraySort } from "../../constants/utils";
 
 const SelectComplaintType = ({ t, config, onSelect, value }) => {
   const [complaintType, setComplaintType] = useState(() => {
@@ -38,7 +39,7 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
       <TypeSelectCard
         {...mystyle}
         {...textParams}
-        {...{ menu: complaintMenu }}
+        {...{ menu: arraySort(complaintMenu ? complaintMenu : [], "name", t) }}
         {...{ optionsKey: "name" }}
         {...{ selected: selectedValue }}
         {...{ selectedOption: complaintType }}

@@ -1,3 +1,4 @@
+import moment from "moment";
 const formFielColumns = {
   CHILD_DOB: "CR_DATE_OF_BIRTH_TIME",
   CHILD_SEX:"CR_GENDER",
@@ -70,11 +71,12 @@ const getCorrectionFieldValues = (item) => {
   let fieldValues = [];
   switch(item?.selectedDocType){
   case "CHILD_DOB":
+    console.log("child dob==",item.curValue);
   fieldValues =  [
     {
       column: formFielColumns[item?.selectedDocType],
       oldValue: item.initialValue,
-      newValue: item.curValue && Date.parse(item.curValue),
+      newValue: item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
     },
   ];
   break;
