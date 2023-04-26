@@ -125,10 +125,21 @@ const TLApplicationDetails = () => {
             doorNo: strutPlace.doorNo, doorNoSub: strutPlace.doorNoSub, stallNo: strutPlace.stallNo,
             blockNo: null, surveyNo: null, subDivisionNo: null, partitionNo: null, vehicleNo: null, vesselNo: null
           };
-          index === 0 ? tempString += strutPlace?.doorNo ? strutPlace?.doorNo : "" +
-            strutPlace?.doorNoSub ? tempString += "/" + strutPlace?.doorNoSub : ""
-            : tempString += ", " + strutPlace?.doorNo ? strutPlace?.doorNo : "" + strutPlace?.doorNoSub ? tempString += "/" + strutPlace?.doorNoSub : "";
-          index === 0 ? tempString += ", " + "Stall Nos : " + strutPlace?.stallNo ? strutPlace?.stallNo : "" : tempString += ", " + strutPlace?.stallNo;
+          if(index === 0) { 
+            tempString += strutPlace?.doorNo ? strutPlace?.doorNo : "" ;
+            strutPlace?.doorNoSub ? tempString += "/" + strutPlace?.doorNoSub : "";
+          }
+          else {
+            tempString += ", " + strutPlace?.doorNo ? strutPlace?.doorNo : "";
+            tempString += strutPlace?.doorNoSub ? tempString += "/" + strutPlace?.doorNoSub : "";
+          }
+          if((index === 0) &&(strutPlace?.stallNo)){
+            tempString += ", Stall Nos : " ;
+            tempString += strutPlace?.stallNo ? strutPlace?.stallNo : "";
+          }  
+          else{
+             tempString += ", " + strutPlace?.stallNo;
+          }
 
           structurePlaceV.push(tempStructurePlace);
         });

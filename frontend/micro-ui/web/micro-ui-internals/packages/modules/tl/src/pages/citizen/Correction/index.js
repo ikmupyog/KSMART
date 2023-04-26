@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
+import { Toast} from "@egovernments/digit-ui-react-components";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { newConfig as newConfigTL } from "../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
 
 const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
-  console.log("some is ok");
   const queryClient = useQueryClient();
   const match = useRouteMatch();
   const { t } = useTranslation();
@@ -17,37 +17,44 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("TL_CORRECTION_TRADE", {}); //: Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
   const [paramscorrected,setParamcorrected]= Digit.Hooks.useSessionStorage("TL_CORRECTED_TRADE", {});
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
-
+  const [toast, setToast] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const [errorMessage, setErrorMessage] = useState("");
+  // const [validation, setValidation] = useState(true);
   let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
 
+  let validation = true;
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
-    console.log("safmsdkssssfff");
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    if (typeof nextStep == "object" && nextStep != null) {
-      let validation = true;
-      console.log("safmsdkfff");
-      paramscorrected?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(tUnit => {
-        console.log("safmsdkf"+JSON.stringify(tUnit));
-        if(tUnit?.businessType.code === ""){
-          setErrorMessage(t("TL_INVALID_BUSINESS_TYPE"));
-          validation = false;
-          return validation;
-        }
-        if(tUnit?.businessSubtype.code === ""){
-          setErrorMessage(t("TL_INVALID_BUSINESS_SUBTYPE"));
-          validation = false;
-          return validation;
-        }
-      });
-      
-    }
-    
+
+    paramscorrected?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(tUnit => {
+      if(tUnit?.businessType === "" || tUnit?.businessType === null || tUnit?.businessType === undefined ){
+        // setValidation(false);
+        setErrorMessage(t("TL_INVALID_BUSINESS_TYPE"));
+        validation = false;
+      }
+      if(tUnit?.businessSubtype === "" || tUnit?.businessSubtype === null || tUnit?.businessSubtype === undefined){
+        setErrorMessage(t("TL_INVALID_BUSINESS_SUBTYPE"));
+        // setValidation(false);
+        validation = false;
+      }
+    });
     let redirectWithHistory = history.push;
+    if(!validation){
+      setToast(true)
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+      return redirectWithHistory(`${match.path}/license-correction-root`);
+    }
+    else{
+      setErrorMessage("");
+      // setValidation(true);
+    }
+
     if (skipStep) {
       redirectWithHistory = history.replace;
     }
@@ -63,6 +70,8 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
     }
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
+    
+    
   };
 
   const createProperty = async () => {
@@ -70,10 +79,10 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
-    if(key!==""){
-    setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
-    }
+    if(key !== ""){
+      setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
+      setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
+     }
     if(key === "isSkip" && data === true)
     {
       goNext(skipStep, index, isAddMultiple, key, true);
@@ -84,8 +93,7 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
     }
   }
 
-  function handleeditSelect(key, data, skipStep, index, isAddMultiple = false) {
-
+  function handleeditSelect(key, data, skipStep, index, isAddMultiple = false ) {
     setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
    // setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     // if(key === "isSkip" && data === true)
@@ -129,7 +137,7 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
         return (
           <Route path={`${match.path}/${routeObj.route}`} key={index}>
             <Component
-              config={{ texts, inputs, key, isSkipEnabled }}
+              config={{ texts, inputs, key, isSkipEnabled}}
               onSelect={handleSelect}
               onEditSelect={handleeditSelect}
               onSkip={handleSkip}
@@ -138,7 +146,16 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
               formDataEdit={paramscorrected}
               onAdd={handleMultiple}
               userType="citizen"
+              errorMessage = {errorMessage}
+              validation = {validation}
             />
+          {toast && (
+              <Toast
+                  error={toast}
+                  label={errorMessage}
+                  onClose={() => setToast(false)}
+              />
+          )}{""}
           </Route>
         );
       })}

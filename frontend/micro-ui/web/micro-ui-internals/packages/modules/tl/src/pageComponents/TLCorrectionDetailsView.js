@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Modal, LinkButton, Card, StatusTable, CardText, FormStep, FormComposer, ButtonSelector, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { Toast, Modal, LinkButton, Card, StatusTable, CardText, FormStep, FormComposer, ButtonSelector, SubmitBar } from "@egovernments/digit-ui-react-components";
 import Timeline from "../components/TLTimeline";
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
@@ -19,12 +19,9 @@ const CloseBtn = (props) => {
     </div>
   );
 };
-const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,formDataEdit}) => {
-console.log("formDataEdit Main"+JSON.stringify(formDataEdit));
-console.log("formData Main"+JSON.stringify(formData));
+const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,formDataEdit , errorMessage , validation}) => {
   const history = useHistory();
   const match = useRouteMatch();
-  console.log("main firing main firing main firng");
   const TLCorrectionApplicant = Digit.ComponentRegistryService.getComponent("TLCorrectionApplicant");
   // const TLCorrectionOwner = Digit.ComponentRegistryService.getComponent("TLCorrectionOwner");
   const TLCorrectionActivity = Digit.ComponentRegistryService.getComponent("TLCorrectionActivity");
@@ -34,6 +31,7 @@ console.log("formData Main"+JSON.stringify(formData));
   const [tlcategory, setTlcategory] = useState(false);
   const [tlplace, setTlplace] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [toast, setToast] = useState(false);
   const ActionButton = ({ component }) => {
     // const { t } = useTranslation();
     // const history = useHistory();
@@ -77,7 +75,13 @@ console.log("formData Main"+JSON.stringify(formData));
       />
     );
   };
-
+  if (validation === false) {
+    setToast(true)
+    setTimeout(() => {
+      setToast(false);
+    }, 2000);
+  }
+ 
 
   const closeModal = () => {
     //setSelectedAction(null);
@@ -89,11 +93,9 @@ console.log("formData Main"+JSON.stringify(formData));
   }
   const onSkip = () => onSelect();
   function submit(data) {
-    console.log("ya firing amin");
   }
 
   const handleNextPage = () => {
-    console.log("yes firing");
     history.push(`${match.path}/check`);
   }
   return (
@@ -107,6 +109,13 @@ console.log("formData Main"+JSON.stringify(formData));
           <TLCorrectionApplicant t={t} config={config} onSelect={onSelect} formData={formData} onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionApplicant>
           {/* <TLCorrectionOwner t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionOwner> */}
         </div>
+        {toast && (
+              <Toast
+                  error={toast}
+                  label={errorMessage}
+                  onClose={() => setToast(false)}
+              />
+          )}{""}
       </FormStep>
     </React.Fragment>
 
