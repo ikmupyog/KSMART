@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToAbandonedDeathRegistration,convertToEditAbandonedDeathRegistration } from "../../../utils/abandoneddeathindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRAbandonedDeathACknowledgementData";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -92,28 +92,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
             // }
             );
           
-          // else{
-          //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
-          //   {
-          //     mutation2.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          //   else
-          //   {
-          //     mutation1.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          // }
-
-          // !isEdit ? mutation.mutate(formdata, {
-          //   onSuccess,
-          // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
-          //   onSuccess,
-          // }) :mutation1.mutate(formdata, {
-          //   onSuccess,
-          // }));
+         
         } else {
           // let formdata = convertToResubmitTrade(data);
           // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
@@ -138,84 +117,32 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
   //   }
   // }, [mutation.isSuccess, mutation1.isSuccess]);
 
+
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data;
-    const License = (Licenses && Licenses[0]) || {};
+    console.log("mutation.data",mutation.data)
+    const { deathAbandonedDtls = [] } = mutation.data
+    const License = (deathAbandonedDtls && deathAbandonedDtls[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-  // let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
-  // if(enableLoader)
-  // {return (<Loader />)}
-  // else if( ((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false )) && !isDirectRenewal && !resubmit)
-  // {
-  //   return (
-  //   <Card>
-  //     <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
-  //     {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
-  //     <Link to={`/digit-ui/citizen`}>
-  //       <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-  //     </Link>
-  //   </Card>)
-  // }
-  // else if(mutation2.isLoading || mutation2.isIdle ){
-  //   return (<Loader />)
-  // }
-  // else
-  // if (mutation.isSuccess && mutation?.isError === null) {
-  //   return (
-  //     <Card>
-  //       <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
-  //       {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText> */}
-
-  //       <LinkButton
-  //         label={
-  //           <div className="response-download-button">
-  //             <span>
-  //               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-  //                 <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-  //               </svg>
-  //             </span>
-  //             <span className="download-button">{t("Acknowledgment454545")}</span>
-  //           </div>
-  //         }
-  //         //style={{ width: "100px" }}
-  //         onClick={handleDownloadPdf}
-  //       />
-  //       {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
-  //     {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
-  //     {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
-  //     {!isEdit && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
-  //     {(mutation2.isSuccess) && isEdit && (
-  //       <LinkButton
-  //         label={
-  //           <div className="response-download-button">
-  //             <span>
-  //               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-  //                 <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-  //               </svg>
-  //             </span>
-  //             <span className="download-button">{t("TL_DOWNLOAD_ACK_FORM")}</span>
-  //           </div>
-  //         }
-  //         //style={{ width: "100px" }}
-  //         onClick={handleDownloadPdf}
-  //       />)}
-  //     {mutation2?.data?.Licenses[0]?.status === "PENDINGPAYMENT" && <Link to={{
-  //       pathname: `/digit-ui/citizen/payment/collect/${mutation2.data.Licenses[0].businessService}/${mutation2.data.Licenses[0].applicationNumber}`,
-  //       state: { tenantId: mutation2.data.Licenses[0].tenantId },
-  //     }}>
-  //       <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-  //     </Link>}
-  //     <Link to={`/digit-ui/citizen`}>
-  //       <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-  //     </Link> */}
-  //     </Card>
-  //   );
-  // } 
-  if (mutation.isSuccess && mutation?.isError === null) {
+  let enableLoader = mutation.isIdle || mutation.isLoading; 
+  if (enableLoader) {
+     if ( mutation?.isLoading === false && 
+      mutation?.isSuccess === false &&
+       mutation?.isError == false &&
+        mutation?.isIdle === true && mutation.data?.deathAbandonedDtls[0]?.InformationDeathAbandoned?.DeathACKNo != null ) {
+           return (
+             <Card> 
+              <Link to={`/digit-ui/citizen`}> 
+              <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} /> 
+              </Link> </Card> );
+               }
+                else if (mutation.isIdle || mutation.isLoading)
+                 { return <Loader />; } 
+                }  
+                  else if (mutation.isSuccess && mutation?.isError === null) {
     console.log({formdata, isEditAbandonedDeath});
     if (isEditAbandonedDeath) {
       history.push(`/digit-ui/employee/cr/application-abandoneddeathdetails/${formdata.InformationDeathAbandoned["DeathACKNo"]}`);
@@ -223,6 +150,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
       return (
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
+        
           <LinkButton
             label={
               <div className="response-download-button">
@@ -231,21 +159,37 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                   </svg>
                 </span>
-                <span className="download-button">{t("Acknowledgment454545")}</span>
+                <span className="download-button">{t("Acknowledgment")}</span>
               </div>
             }
+          
             onClick={handleDownloadPdf}
           />
+     
         </Card>
       );
     }
   }
   else {
-    console.log("else (mutation.isSuccess && mutation?.isError === null)",mutation.data)
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
         {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+        
+        <LinkButton
+            label={
+              <div className="response-download-button">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                  </svg>
+                </span>
+                <span className="download-button">{t("Acknowledgment")}</span>
+              </div>
+            }
+          
+            onClick={handleDownloadPdf}
+          />
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>

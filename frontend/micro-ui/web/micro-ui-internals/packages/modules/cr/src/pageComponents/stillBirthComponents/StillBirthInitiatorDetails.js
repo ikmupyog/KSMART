@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Timeline from "../../components/SBRTimeline";
+import { sortDropdownNames } from "../../utils";
 
 const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -270,15 +271,6 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       }, 2000);
     }
     if (validFlag == true) {
-      // sessionStorage.setItem("relation", relation ? relation : null);
-      // sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
-      // sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
-
-      // sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
-      // sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
-      // sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
-      // sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
-      // sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
 
       onSelect(config.key, {
         relation,
@@ -402,7 +394,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
                   t={t}
                   optionKey="i18nKey"
                   isMandatory={false}
-                  option={cmbRelation}
+                  option={sortDropdownNames(cmbRelation ? cmbRelation : [],"code",t)}
                   selected={relation}
                   select={setSelectrelation}
                   disable={isDisableEdit}

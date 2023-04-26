@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
@@ -109,21 +110,27 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
-                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry)[0]);
-                setCountryValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry);
+                if (cmbFilterCountry.length > 0) {
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
             }
         }
         if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName != null) {
             if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
                 setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName)[0]);
-                setValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
+                setValuePermanent(formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
             }
         }
     } else if (isEditAdoption !== false) {
         if (formData?.AdoptionAddressBasePage?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
-                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.permtaddressCountry)[0]);
-                setCountryValuePermanent(value.formData?.AdoptionAddressBasePage?.permtaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.permtaddressCountry);
+                if (cmbFilterCountry.length > 0) {
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
             }
         }
         if (formData?.AdoptionAddressBasePage?.permtaddressStateName != null) {
@@ -135,27 +142,33 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     } else if (isEditDeath) {
         if (formData?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
-                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.permtaddressCountry)[0]);
-                setCountryValuePermanent(value.formData?.AddressBirthDetails?.permtaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.permtaddressCountry);
+                if (cmbFilterCountry.length > 0) {
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
             }
         }
         if (formData?.AddressBirthDetails?.permtaddressStateName != null) {
             if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
                 setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AddressBirthDetails?.permtaddressStateName)[0]);
-                setValuePermanent(value.formData?.AddressBirthDetails?.permtaddressStateName);
+                setValuePermanent(formData?.AddressBirthDetails?.permtaddressStateName);
             }
         }
     } else if (isEditStillBirth) {
         if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
-                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry)[0]);
-                setCountryValuePermanent(value.formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry);
+                cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry);
+                if (cmbFilterCountry.length > 0) {
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
             }
         }
         if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName != null) {
             if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
                 setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName)[0]);
-                setValuePermanent(value.formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName);
+                setValuePermanent(formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName);
             }
         }
     }
@@ -190,7 +203,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             t={t}
                             optionKey="name"
                             isMandatory={false}
-                            option={cmbCountry}
+                            option={sortDropdownNames(cmbCountry ? cmbCountry : [], "name", t)}
                             selected={permtaddressCountry}
                             select={setSelectaddressCountry}
                             disable={isDisableEdit}
@@ -206,7 +219,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbState}
+                                option={sortDropdownNames(cmbState ? cmbState : [], "name", t)}
                                 selected={permtaddressStateName}
                                 select={setSelectaddressStateName}
                                 disable={isDisableEdit}

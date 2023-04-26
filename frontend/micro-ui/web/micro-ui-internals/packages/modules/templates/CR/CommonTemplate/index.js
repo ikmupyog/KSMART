@@ -4,13 +4,13 @@ import { useQueryClient } from "react-query";
 
 import { Loader } from "@egovernments/digit-ui-react-components";
 
-import ActionModal from "../ApplicationDetails/Modal";
 
 import { useHistory, useParams } from "react-router-dom";
 import ApplicationContent from "./ApplicationContent";
-import ApplicationDetailsToast from "../ApplicationDetails/components/ApplicationDetailsToast";
-import ApplicationDetailsActionBar from "../ApplicationDetails/components/ApplicationDetailsActionBar";
-import ApplicationDetailsWarningPopup from "../ApplicationDetails/components/ApplicationDetailsWarningPopup";
+import ActionModal from "../../ApplicationDetails/Modal";
+import ApplicationDetailsToast from "../../ApplicationDetails/components/ApplicationDetailsToast";
+import ApplicationDetailsActionBar from "../../ApplicationDetails/components/ApplicationDetailsActionBar";
+import ApplicationDetailsWarningPopup from "../../ApplicationDetails/components/ApplicationDetailsWarningPopup";
 
 const CRApplicationDetails = (props) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();

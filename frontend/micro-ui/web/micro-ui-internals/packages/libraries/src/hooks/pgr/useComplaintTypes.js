@@ -7,10 +7,9 @@ const useComplaintTypes = ({ stateCode }) => {
 
   useEffect(() => {
     (async () => {
-      const res = await Digit.GetServiceDefinitions.getMenu(stateCode, t);      
+      const res = await Digit.GetServiceDefinitions.getMenu(stateCode, t);
       let menu = res.filter((o) => o.key !== "");
-      console.log(menu);
-      menu.push({ key: "Others", name: t("SERVICEDEFS.OTHERS"),deptCode:"deptCode" });
+      menu.push({ key: "Others", name: t("SERVICEDEFS.OTHERS"), deptCode: "deptCode" });
       setComplaintTypes(menu);
     })();
   }, [t, stateCode]);

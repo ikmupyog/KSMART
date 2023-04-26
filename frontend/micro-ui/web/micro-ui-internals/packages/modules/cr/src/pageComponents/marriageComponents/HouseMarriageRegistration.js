@@ -675,7 +675,7 @@ const HouseMarriageRegistration = ({
             isMandatory={false}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
             {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
               isRequired: true,
               type: "text",
               title: t("CR_INVALID_HOUSENO_NAME_ML"),

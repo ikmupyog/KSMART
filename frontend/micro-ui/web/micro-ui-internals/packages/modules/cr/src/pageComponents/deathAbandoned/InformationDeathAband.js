@@ -98,7 +98,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
    cmbPlace.push(ob);
   }
    });
-   
+
   AgeUnitvalue &&
     AgeUnitvalue["birth-death-service"] &&
     AgeUnitvalue["birth-death-service"].AgeUnit &&
@@ -744,6 +744,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
       SelectPlaceOfBurialMl(null);
     } else if (value.code === "INSTITUTION") {
       //Hospital
+      selecthospitalNameEn(null);
       selectHospitalNameMl(null);
       //Home
       setDeathPlaceHomepostofficeId(null);
@@ -784,6 +785,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
     } else if (value.code === "VEHICLE") {
       //Hospital
       // selectDeathPlaceType(null);
+      selecthospitalNameEn(null);
       selectHospitalNameMl(null);
       //Institution
       selectDeathPlaceType(null);
@@ -820,6 +822,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
     if (value.code === "PUBLIC_PLACES") {
       //Hospital
       selectDeathPlaceType(null);
+      selecthospitalNameEn(null);
       selectHospitalNameMl(null);
       //Institution
       setSelectedDeathPlaceInstId(null);
@@ -895,48 +898,48 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
 
   // 
   
-  const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo?.code ? formData.AddressBirthDetails?.presentWardNo : formData?.ChildDetails?.AddressBirthDetails?.presentWardNo ? "" : "");
-  const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentInsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict ? "" : "");
-  const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName ? formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName : null);
-  const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBName?.code ? formData?.AddressBirthDetails?.presentInsideKeralaLBName : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName ? "" : "");
-  const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentInsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentInsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk ? "" : "");
-  const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentInsideKeralaVillage?.code ? formData?.AddressBirthDetails?.presentInsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage ? "" : "");
-  const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPostOffice?.code ? formData?.AddressBirthDetails?.presentInsideKeralaPostOffice : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice ? "" : "");
-  const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.AddressBirthDetails?.presentInsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode : "");
-  const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : "");
-  const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : "");
-  const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : "");
-  const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : "");
-  const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
-  const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
+  const [presentWardNo, setPresentWardNo] = useState(formData.InformationDeathAband?.presentWardNo?.code ? formData.InformationDeathAband?.presentWardNo.code : formData?.ChildDetails?.InformationDeathAband?.presentWardNo ? "" : "");
+  const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.InformationDeathAband?.presentInsideKeralaDistrict?.code ? formData?.InformationDeathAband?.presentInsideKeralaDistrict.code : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaDistrict ? "" : "");
+  const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.InformationDeathAband?.presentInsideKeralaLBTypeName ? formData?.InformationDeathAband?.presentInsideKeralaLBTypeName.code : null);
+  const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.InformationDeathAband?.presentInsideKeralaLBName?.code ? formData?.InformationDeathAband?.presentInsideKeralaLBName.code : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaLBName ? "" : "");
+  const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.InformationDeathAband?.presentInsideKeralaTaluk?.code ? formData?.InformationDeathAband?.presentInsideKeralaTaluk : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaTaluk ? "" : "");
+  const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.InformationDeathAband?.presentInsideKeralaVillage?.code ? formData?.InformationDeathAband?.presentInsideKeralaVillage : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaVillage ? "" : "");
+  const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.InformationDeathAband?.presentInsideKeralaPostOffice?.code ? formData?.InformationDeathAband?.presentInsideKeralaPostOffice : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaPostOffice ? "" : "");
+  const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.InformationDeathAband?.presentInsideKeralaPincode ? formData?.InformationDeathAband?.presentInsideKeralaPincode : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaPincode ? formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaPincode : "");
+  const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.InformationDeathAband?.presentInsideKeralaHouseNameEn ? formData?.InformationDeathAband?.presentInsideKeralaHouseNameEn : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaHouseNameEn ? formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaHouseNameEn : "");
+  const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.InformationDeathAband?.presentInsideKeralaHouseNameMl ? formData?.InformationDeathAband?.presentInsideKeralaHouseNameMl : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaHouseNameMl ? formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaHouseNameMl : "");
+  const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.InformationDeathAband?.presentInsideKeralaLocalityNameEn ? formData?.InformationDeathAband?.presentInsideKeralaLocalityNameEn : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaLocalityNameEn ? formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaLocalityNameEn : "");
+  const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.InformationDeathAband?.presentInsideKeralaLocalityNameMl ? formData?.InformationDeathAband?.presentInsideKeralaLocalityNameMl : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaLocalityNameMl ? formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaLocalityNameMl : "");
+  const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.InformationDeathAband?.presentInsideKeralaStreetNameEn ? formData?.InformationDeathAband?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaStreetNameEn : "");
+  const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.InformationDeathAband?.presentInsideKeralaStreetNameMl ? formData?.InformationDeathAband?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.InformationDeathAband?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
  
-  const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrDistrict?.code ? formData?.AddressBirthDetails?.permntInKeralaAdrDistrict : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
-  const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName : null);
-  const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBName?.code ? formData?.AddressBirthDetails?.permntInKeralaAdrLBName : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName ? "" : "");
-  const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrTaluk ? formData?.AddressBirthDetails?.permntInKeralaAdrTaluk : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk ? "" : "");
-  const [permntInKeralaAdrVillage, setpermntInKeralaAdrVillage] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrVillage ? formData?.AddressBirthDetails?.permntInKeralaAdrVillage : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage ? "" : "");
-  const [permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice ? formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice ? "" : "");
-  const [permntInKeralaAdrPincode, setpermntInKeralaAdrPincode] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrPincode ? formData?.AddressBirthDetails?.permntInKeralaAdrPincode : "");
-  const [permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn ? formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn : "");
-  const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl ? formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl : "");
-  const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn ? formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn : "");
-  const [permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl ? formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl : "");
-  const [permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn ? formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn : "");
-  const [permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl ? formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl : "");
-  const [permntInKeralaWardNo, setpermntInKeralaWardNo] = useState(formData?.AddressBirthDetails?.permntInKeralaWardNo ? formData?.AddressBirthDetails?.permntInKeralaWardNo : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo ? "" : "");
+  const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.InformationDeathAband?.permntInKeralaAdrDistrict?.code ? formData?.InformationDeathAband?.permntInKeralaAdrDistrict : formData?.ChildDetails?.InformationDeathAband?.permtaddressCountry ? "" : "");
+  const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.InformationDeathAband?.permntInKeralaAdrLBTypeName ? formData?.InformationDeathAband?.permntInKeralaAdrLBTypeName : null);
+  const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(formData?.InformationDeathAband?.permntInKeralaAdrLBName?.code ? formData?.InformationDeathAband?.permntInKeralaAdrLBName : formData?.ChildDetails?.InformationDeathAband?.permntInKeralaAdrLBName ? "" : "");
+  const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.InformationDeathAband?.permntInKeralaAdrTaluk ? formData?.InformationDeathAband?.permntInKeralaAdrTaluk : formData?.ChildDetails?.InformationDeathAband?.permntInKeralaAdrTaluk ? "" : "");
+  const [permntInKeralaAdrVillage, setpermntInKeralaAdrVillage] = useState(formData?.InformationDeathAband?.permntInKeralaAdrVillage ? formData?.InformationDeathAband?.permntInKeralaAdrVillage : formData?.ChildDetails?.InformationDeathAband?.permntInKeralaAdrVillage ? "" : "");
+  const [permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice] = useState(formData?.InformationDeathAband?.permntInKeralaAdrPostOffice ? formData?.InformationDeathAband?.permntInKeralaAdrPostOffice : formData?.ChildDetails?.InformationDeathAband?.permntInKeralaAdrPostOffice ? "" : "");
+  const [permntInKeralaAdrPincode, setpermntInKeralaAdrPincode] = useState(formData?.InformationDeathAband?.permntInKeralaAdrPincode ? formData?.InformationDeathAband?.permntInKeralaAdrPincode : "");
+  const [permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn] = useState(formData?.InformationDeathAband?.permntInKeralaAdrHouseNameEn ? formData?.InformationDeathAband?.permntInKeralaAdrHouseNameEn : "");
+  const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(formData?.InformationDeathAband?.permntInKeralaAdrHouseNameMl ? formData?.InformationDeathAband?.permntInKeralaAdrHouseNameMl : "");
+  const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] = useState(formData?.InformationDeathAband?.permntInKeralaAdrLocalityNameEn ? formData?.InformationDeathAband?.permntInKeralaAdrLocalityNameEn : "");
+  const [permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl] = useState(formData?.InformationDeathAband?.permntInKeralaAdrLocalityNameMl ? formData?.InformationDeathAband?.permntInKeralaAdrLocalityNameMl : "");
+  const [permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn] = useState(formData?.InformationDeathAband?.permntInKeralaAdrStreetNameEn ? formData?.InformationDeathAband?.permntInKeralaAdrStreetNameEn : "");
+  const [permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl] = useState(formData?.InformationDeathAband?.permntInKeralaAdrStreetNameMl ? formData?.InformationDeathAband?.permntInKeralaAdrStreetNameMl : "");
+  const [permntInKeralaWardNo, setpermntInKeralaWardNo] = useState(formData?.InformationDeathAband?.permntInKeralaWardNo ? formData?.InformationDeathAband?.permntInKeralaWardNo : formData?.ChildDetails?.InformationDeathAband?.permntInKeralaWardNo ? "" : "");
 
 
   const goNext = () => {
-    if (Difference_In_DaysRounded <= 21) {
-      if (DeathPlace.code == "HOSPITAL") {
-        workFlowCode = "DEATHHOSP";
-        console.log(workFlowCode);
-      } else {
-        workFlowCode = "21DEATHHHOME";
-      }
-    }
+    // if (Difference_In_DaysRounded <= 21) {
+    //   if (DeathPlace.code == "HOSPITAL") {
+    //     workFlowCode = "DEATHHOSP";
+    //     console.log(workFlowCode);
+    //   } else {
+    //     workFlowCode = "21DEATHHHOME";
+    //   }
+    // }
  if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1060,7 +1063,11 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
         PlaceOfBurialMl,
         PlaceOfBurialEn,
         DeceasedDescription,
-        BurialDescription
+        BurialDescription,
+        hospitalNameEn,
+        institution,
+        vehicleType,
+        publicPlaceType
       });
     }
   };

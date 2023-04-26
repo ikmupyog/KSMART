@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
+import { sortDropdownNames } from "../../utils";
 
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditBirth
+  selectHospitalNameMl, isEditBirth, hospitalCode, isDisableEditRole, setisDisableEditRole
 }) => {
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -42,29 +42,40 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
       }
     }
   }
-
   useEffect(() => {
-
     if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalCode) {
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode);
-        selectHospitalNameMl(cmbhospitalMl[0]);
-        // selectHospitalNameMl(hospitalNameMl);
-        setIsInitialRender(false);
-      } else {
-        if (hospitalName != null) {
-          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalName.code);
+
+      if (formData?.ChildDetails?.hospitalCode != null && formData?.ChildDetails?.hospitalCode != "" && formData?.ChildDetails?.hospitalCode != undefined) {
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode);
+          selectHospitalName(cmbhospitalMl[0]);
           selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
+      } else if (formData?.ChildDetails?.hospitalName != null && formData?.ChildDetails?.hospitalName != "" && formData?.ChildDetails?.hospitalName != undefined) {
+        if (cmbhospital.length > 0) {     
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalName.code);
+          selectHospitalName(cmbhospitalMl[0]);
+          selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
+      } else if (hospitalCode != null) {
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode);
+          selectHospitalName(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
+          selectHospitalNameMl(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
           setIsInitialRender(false);
         }
       }
     }
-  }, [cmbhospitalMl,isInitialRender])
+
+  }, [cmbhospital, isInitialRender])
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
     selectHospitalName(value);
-    setIsInitialRender(true);
+    selectHospitalNameMl(value);
+    // setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
@@ -97,10 +108,10 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 t={t}
                 optionKey="hospitalName"
                 isMandatory={true}
-                option={cmbhospital}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [], "hospitalName", t)}
                 selected={hospitalName}
                 select={setselectHospitalName}
-                disable={isDisableEdit}
+                disable={isDisableEditRole}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
@@ -113,7 +124,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 t={t}
                 optionKey="hospitalNamelocal"
                 isMandatory={true}
-                option={cmbhospital}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [], "hospitalNamelocal", t)}
                 selected={hospitalNameMl}
                 select={setselectHospitalNameMl}
                 placeholder={`${t("CR_HOSPITAL_ML")}`}

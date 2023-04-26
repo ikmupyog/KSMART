@@ -38,7 +38,7 @@ const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, use
   const { t } = useTranslation();
 
   let location = useLocation();
-  let navigationData = location?.state?.navData;
+  let deathCorrectionData = location?.state?.deathCorrectionData;
 
   if (false) {
     return (
@@ -58,7 +58,7 @@ const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, use
     if (true) {
       return (
         <Card>
-          <BannerPicker t={t} data={navigationData} isSuccess={"success"} />
+          <BannerPicker t={t} data={deathCorrectionData} isSuccess={"success"} />
           {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
            */}
           <LinkButton

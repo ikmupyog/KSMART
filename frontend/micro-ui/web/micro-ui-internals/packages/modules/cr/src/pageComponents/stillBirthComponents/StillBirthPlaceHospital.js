@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
+import { sortDropdownNames } from "../../utils";
 
 const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl, isEditStillBirth
@@ -95,7 +96,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 t={t}
                 optionKey="hospitalName"
                 isMandatory={true}
-                option={cmbhospital}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={hospitalName}
                 select={setselectHospitalName}
              //   disable={isDisableEdit}
@@ -111,7 +112,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 t={t}
                 optionKey="hospitalNamelocal"
                 isMandatory={true}
-                option={cmbhospital}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalNamelocal",t)}
                 selected={hospitalNameMl}
                 select={setselectHospitalNameMl}
                 placeholder={`${t("CR_HOSPITAL_ML")}`}

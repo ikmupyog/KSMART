@@ -45,7 +45,7 @@ export const CRAbandonedsearch = {
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRABNBirthService.CRAbandonedsearch({ tenantId, filters });
-    return response.AbandonedChildDetails;
+    return response.AbandonedDetails;
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
@@ -99,7 +99,7 @@ export const CRAbandonedsearch = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [
         { title: "PDF_BIRTH_NATURE_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NA" },
-        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.medicalAttensionSub || "NA" },
+        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.pregnancyDuration || "NA" },
         { title: "PDF_BIRTH_DELIVERYMETHOD", value: response?.deliveryMethods || "NA" },
         { title: "PDF_BIRTH_WEIGHT", value: response?.birthWeight || "NA" },
       ],
@@ -107,10 +107,10 @@ export const CRAbandonedsearch = {
     const childCustodyInfo = {
       title: "CR_CARETAKER_INFORMATION_HEADER",
       values: [
-        { title: "PDF_BIRTH_INSTITUTION", value: response?.caretakerDetails?.caretakerDetails || "NA" },
+        { title: "PDF_BIRTH_INSTITUTION", value: response?.caretakerDetails?.institutionName || "NA" },
         { title: "PDF_BIRTH_CARETAKER_NAME", value: response?.caretakerDetails?.caretakerName || "NA" },
         { title: "PDF_BIRTH_CARETAKER_DESI", value: response?.caretakerDetails?.caretakerDesignation || "NA" },
-        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NA" },
+        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NA" },     
         { title: "PDF_BIRTH_CARETAKER_ADDRESS", value: response?.caretakerDetails?.caretakerAddress || "NA" },
         
       ],
@@ -123,6 +123,7 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NA" },
         { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NA" },
         { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NA" },
+        { title: "CS_COMMON_AADHAAR", value: response?.caretakerDetails?.infomantAadhar || "NA" },  
         { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NA" },
         
       ],
