@@ -208,7 +208,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
     }
   };
 
-  const config = { texts: { submitBarLabel: "Submit" } };
+  const config = { texts: { submitBarLabel: "Next" } };
   const onSubmit = (data) => console.log(data);
 
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
