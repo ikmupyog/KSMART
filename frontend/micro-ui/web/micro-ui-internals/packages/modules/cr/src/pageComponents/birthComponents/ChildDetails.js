@@ -252,6 +252,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const onSkip = () => onSelect();
 
   useEffect(() => {
+    console.log("is initial render==",formData?.ChildDetails?.childDOB);
+
     if (isInitialRender) {
       if (formData?.ChildDetails?.isChildName != null) {
         setIsInitialRender(false);
@@ -266,6 +268,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   roleall?.map?.((e) => {
     rolecombine.push(e.code);
   });
+
   const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
@@ -416,37 +419,37 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   function setselectChildDOB(value) {
 
     setChildDOB(value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const birthDate = new Date(value);
-    birthDate.setHours(0, 0, 0, 0);
+    // const today = new Date();
+    // today.setHours(0, 0, 0, 0);
+    // const birthDate = new Date(value);
+    // birthDate.setHours(0, 0, 0, 0);
 
-    if (birthDate.getTime() <= today.getTime()) {
+    // if (birthDate.getTime() <= today.getTime()) {
 
-      setDOBError(false);
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
-      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
-        }
-      }
-      if (Difference_In_Days >= 365) {
-        setChildAadharHIde(true);
-      } else {
-        setChildAadharHIde(false);
-        setChildAadharNo("");
-      }
-    }
+    //   setDOBError(false);
+    //   // To calculate the time difference of two dates
+    //   let Difference_In_Time = today.getTime() - birthDate.getTime();
+    //   // console.log("Difference_In_Time" + Difference_In_Time);
+    //   setDifferenceInTime(today.getTime() - birthDate.getTime());
+    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //   // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+    //   setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+    //   if (birthPlace) {
+    //     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+    //     if (currentWorgFlow.length > 0) {
+    //       console.log(currentWorgFlow);
+    //       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    //       setIsPayment(currentWorgFlow[0].payment);
+    //       setAmount(currentWorgFlow[0].amount);
+    //     }
+    //   }
+    //   if (Difference_In_Days >= 365) {
+    //     setChildAadharHIde(true);
+    //   } else {
+    //     setChildAadharHIde(false);
+    //     setChildAadharNo("");
+    //   }
+    // }
     // else {
     //   setChildDOB(null);
     //   // setDOBError(true);
