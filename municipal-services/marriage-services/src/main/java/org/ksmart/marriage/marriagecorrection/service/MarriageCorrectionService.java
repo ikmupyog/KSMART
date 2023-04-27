@@ -125,10 +125,10 @@ public class MarriageCorrectionService {
 
         producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
 
-        /*if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
+        if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
             workflowIntegrator.callCorrectionWorkFlow(request);
         }
-        request.getMarriageDetails().forEach(marriage->{
+        /*request.getMarriageDetails().forEach(marriage->{
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
                 Demand demand = new Demand();
@@ -190,7 +190,7 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
     request.setMarriageDetails(searchResult);
 
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()) {
-        //workflowIntegrator.callCorrectionWorkFlow(request);
+        workflowIntegrator.callCorrectionWorkFlow(request);
     }
     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationCorrectionTopic(), request);
 

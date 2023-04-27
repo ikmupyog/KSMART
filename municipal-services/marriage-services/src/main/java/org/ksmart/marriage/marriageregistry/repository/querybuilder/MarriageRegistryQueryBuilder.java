@@ -23,7 +23,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("MD.lbtype as MD_lbtype , MD.tenantid as MD_tenantid ,  MD.placetype as MD_placetype , MD.placeid as MD_placeid ,") 
     .append("MD.placename_en as MD_placename_en , MD.placename_ml as MD_placename_ml ,  MD.housenameno_en as MD_housenameno_en , MD.housenameno_ml as MD_housenameno_ml ,") 
     .append("MD.locality_en as MD_locality_en , MD.locality_ml as MD_locality_ml  , MD.street_name_en as MD_street_name_en ,  MD.street_name_ml as MD_street_name_ml , ")
-    .append("MD.ward_code as MD_ward_code ,  MD.talukid as MD_talukid ,  MD.village_name as MD_village_name ,  MD.marriage_type as MD_marriage_type ,") 
+    .append("MD.ward_code as MD_ward_code ,  MD.talukid as MD_talukid ,  MD.village_name as MD_village_name ,  MD.marriage_type as MD_marriage_type ,MD.oth_marriage_type as MD_oth_marriage_type,")
     .append("MD.landmark as MD_landmark ,  MD.registrationno as MD_registrationno ,  MD.registration_date  as MD_registration_date ,  MD.registration_status as MD_registration_status , ")
     .append("MD.createdtime  as MD_createdtime ,   MD.createdby as MD_createdby ,  MD.lastmodifiedtime  as MD_lastmodifiedtime ,   MD.lastmodifiedby as MD_lastmodifiedby ,") 
     .append("MD.applicationnumber as MD_applicationnumber ,MD.brideurl as MD_brideurl,MD.groomurl as MD_groomurl ,MD.imageuuid as MD_imageuuid ,MD.bride_filestoreid as MD_bride_filestoreid ,MD.groom_filestoreid as MD_groom_filestoreid ,")
@@ -51,7 +51,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("GD.dateofbirth as GD_dateofbirth , 	GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian , GD.fathername_en   as GD_fathername_en,") 
     .append("GD.mothername_en   as GD_mothername_en, GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml, GD.father_aadharno   as GD_father_aadharno  ,") 
     .append("GD.mother_aadharno   as GD_mother_aadharno,GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,GD.guardian_aadharno as GD_guardian_aadharno,") 
-    .append("GD.maritalstatusid   as GD_maritalstatusid,    GD.no_of_spouse_living  as GD_livingspouseNo,  GD.bride_groom   GD_bride_groom ,") 
+    .append("GD.maritalstatusid   as GD_maritalstatusid,    GD.no_of_spouse_living  as GD_livingspouseNo,  GD.bride_groom   GD_bride_groom ,")
     
     .append("GPMA.id as GPMA_id ,GPMA.housename_en as GPMA_housename_en,GPMA.housename_ml as GPMA_housename_ml,GPMA.villageid as GPMA_villageid,GPMA.village_name as GPMA_village_name,")  
     .append("GPMA.talukid as GPMA_talukid  , GPMA.taluk_name as GPMA_taluk_name  ,  GPMA.tenantid as GPMA_tenantid  , GPMA.ward_code as GPMA_ward_code,")  

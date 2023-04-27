@@ -41,6 +41,7 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
             .talukid(rs.getString("MD_talukid"))
             .village_name(rs.getString("MD_village_name"))
             .marriage_type(rs.getString("MD_marriage_type"))
+            .oth_marriage_type(rs.getString("MD_oth_marriage_type"))
             .landmark(rs.getString("MD_landmark"))
             .locality_en(rs.getString("MD_locality_en"))
             .locality_ml(rs.getString("MD_locality_ml"))
