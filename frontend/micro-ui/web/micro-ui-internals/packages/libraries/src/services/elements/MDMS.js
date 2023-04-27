@@ -1019,6 +1019,23 @@ const getCRTalukList = (tenantId, moduleCode) => ({
     ],
   },
 });
+
+const getSubRegistrarList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SubRegistar",
+          },
+        ],
+      },
+    ],
+  },
+});
+
 const getCRReligionlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2508,6 +2525,9 @@ export const MdmsService = {
   },
   getCRTaluk: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRTalukList(tenantId, moduleCode), moduleCode);
+  },
+  getSubRegistrar: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getSubRegistrarList(tenantId, moduleCode), moduleCode);
   },
   getCRTitle: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRTitleList(tenantId, moduleCode), moduleCode);

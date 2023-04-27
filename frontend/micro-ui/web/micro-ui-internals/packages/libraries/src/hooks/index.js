@@ -172,6 +172,7 @@ import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistryNacSearchBirth from "./cr/useRegistryNacSearchBirth";
 import useRegistrySearchAdoption from "./cr/useRegistrySearchAdoption";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
+import useRegistryNacSearchDeath from "./cr/useRegistryNacSearchDeath";
 import useSearchMarriage, { getMarriageRegistryFileSourceDetails } from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
 import useApplicationBIRTHNACDetail from "./cr/useApplicationBIRTHNACDetail";
@@ -262,6 +263,7 @@ import useSearchPde from "./tl/useSearchPde";
 import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
 import { getBirthFileSourceDetails } from "./cr/birth";
 import { getNacBirthFileSourceDetails } from "./cr/birthNac";
+import { getNacDeathFileSourceDetails } from "./cr/deathNac";
 
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
 
@@ -381,6 +383,7 @@ const tl = {
 const cr = {
   getBirthFileSourceDetails,
   getNacBirthFileSourceDetails,
+  getNacDeathFileSourceDetails,
   useBirthCorrectionAction,
   useDeathCorrectionAction,
   useMarriageCorrectionAction,
@@ -418,6 +421,7 @@ const cr = {
   useRegistrySearchBirth,
   useRegistryNacSearchBirth,
   useRegistrySearchAdoption,
+  useRegistryNacSearchDeath,
   useRegistrySearchMarriage,
   useSearchDeath,
   useSearchAbandonedDeath,
