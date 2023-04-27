@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.drafting;
+package org.egov.filemgmnt.web.models.dratfile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DraftFilesSearchCriteria {
+public class DraftFileSearchCriteria {
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
     @Pattern(regexp = FMConstants.PATTERN_TENANT,

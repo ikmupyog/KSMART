@@ -6,7 +6,7 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class DraftFilesEnrichment extends BaseEnrichment {
     @Autowired
     private FMConfiguration fmConfig;
 
-    public void enrichCreateDrafting(DraftFilesRequest request) {
+    public void enrichCreateDrafting(DraftFileRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
@@ -33,7 +33,7 @@ public class DraftFilesEnrichment extends BaseEnrichment {
 
     }
 
-    public void enrichUpdate(DraftFilesRequest request) {
+    public void enrichUpdate(DraftFileRequest request) {
 
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();

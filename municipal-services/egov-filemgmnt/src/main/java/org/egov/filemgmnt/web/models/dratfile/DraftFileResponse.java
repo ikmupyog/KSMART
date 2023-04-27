@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.drafting;
+package org.egov.filemgmnt.web.models.dratfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Drafting service response for create and update")
+@Schema(description = "Draft file response for create and update")
 @Validated
 
 @Getter
@@ -24,15 +24,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 
-public class DraftFilesResponse {
+public class DraftFileResponse {
 
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
     @JsonProperty("Drafting")
-    private List<DraftFiles> drafting;
+    private List<DraftFile> drafting;
 
-    public DraftFilesResponse addDrafting(DraftFiles newDraft) {
+    public DraftFileResponse addDrafting(DraftFile newDraft) {
 
         if (drafting == null) {
             drafting = new ArrayList<>();

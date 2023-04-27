@@ -18,8 +18,8 @@ import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificat
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificateRequest;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
-import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
+import org.egov.filemgmnt.web.models.dratfile.DraftFile;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -48,11 +48,11 @@ public class DraftCertificateService {
         this.validator = validator;
     }
 
-    public DraftCertificateRequest createDraftCertificateRequest(DraftFilesSearchCriteria searchCriteria,
+    public DraftCertificateRequest createDraftCertificateRequest(DraftFileSearchCriteria searchCriteria,
                                                                  RequestInfo requestInfo) {
 
         validator.validateSearchDraftFiles(requestInfo, searchCriteria);
-        final DraftFiles draftDetails = finalDraftDetails(searchCriteria);
+        final DraftFile draftDetails = finalDraftDetails(searchCriteria);
         Assert.notNull(draftDetails, "No Draft file is found for this search");
 
         String eUrl = null;
@@ -148,7 +148,7 @@ public class DraftCertificateService {
 
     }
 
-    private BuildDraftCertificateRequest buildDraftCertificateRequest(final DraftFiles draftDetails,
+    private BuildDraftCertificateRequest buildDraftCertificateRequest(final DraftFile draftDetails,
                                                                       final RequestInfo requestInfo,
                                                                       final String fileCode, final String embeddedUrl) {
         return BuildDraftCertificateRequest.builder()
@@ -159,7 +159,7 @@ public class DraftCertificateService {
                                            .build();
     }
 
-    private BuildDraftCertificate buildDraftCertificateDetails(final DraftFiles draftDetails, final String fileCode,
+    private BuildDraftCertificate buildDraftCertificateDetails(final DraftFile draftDetails, final String fileCode,
                                                                final String embeddedUrl) {
 
         return BuildDraftCertificate.builder()
@@ -172,15 +172,15 @@ public class DraftCertificateService {
                                     .build();
     }
 
-    private DraftFiles finalDraftDetails(final DraftFilesSearchCriteria searchCriteria) {
-        final List<DraftFiles> draftDetails = repository.searchDrafting(searchCriteria);
+    private DraftFile finalDraftDetails(final DraftFileSearchCriteria searchCriteria) {
+        final List<DraftFile> draftDetails = repository.searchDrafting(searchCriteria);
 
         return CollectionUtils.isNotEmpty(draftDetails)
                 ? draftDetails.get(0)
                 : null;
     }
 
-    private String buildEmbeddedUrl(final DraftFiles draftDetails, String urlLink) {
+    private String buildEmbeddedUrl(final DraftFile draftDetails, String urlLink) {
         final String uiHostCert = fmConfig.getUiAppHost();
 
         String resCertPath = urlLink;

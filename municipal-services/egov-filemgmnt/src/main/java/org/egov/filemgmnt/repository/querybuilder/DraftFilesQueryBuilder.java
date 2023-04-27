@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
 import org.springframework.stereotype.Component;
 
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ public class DraftFilesQueryBuilder extends BaseQueryBuilder {
                                                            .append("  FROM eg_fm_drafting dr")
                                                            .toString();
 
-    public String getDraftingSearchQuery(@NotNull final DraftFilesSearchCriteria criteria,
+    public String getDraftingSearchQuery(@NotNull final DraftFileSearchCriteria criteria,
                                          @NotNull List<Object> preparedStmtValues, Boolean isCount) {
         StringBuilder query = new StringBuilder(QUERY);
 

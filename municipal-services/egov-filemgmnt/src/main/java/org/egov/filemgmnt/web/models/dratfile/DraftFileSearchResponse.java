@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.drafting;
+package org.egov.filemgmnt.web.models.dratfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +23,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DraftFilesSearchResponse {
+public class DraftFileSearchResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
-    @JsonProperty("Drafting")
-    private List<DraftFiles> draftings;
 
-    public DraftFilesSearchResponse addDrafting(DraftFiles drafting) {
+    @JsonProperty("Drafting")
+    private List<DraftFile> draftings;
+
+    @Schema(type = "integer", format = "int32", description = "Search result count")
+    @JsonProperty("Count")
+    private int count;
+
+    public DraftFileSearchResponse addDrafting(DraftFile drafting) {
 
         if (draftings == null) {
             draftings = new ArrayList<>();

@@ -4,9 +4,9 @@ import javax.validation.Valid;
 
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesResponse;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchResponse;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileRequest;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileResponse;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchResponse;
 import org.egov.tracer.model.ErrorRes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,39 +22,39 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Draft File ")
 interface DraftingBaseController {
-    @Operation(summary = "Create Drafting Details.",
+    @Operation(summary = "Create draft file.",
                description = "",
                requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                             schema = @Schema(implementation = DraftFilesRequest.class)),
+                                                             schema = @Schema(implementation = DraftFileRequest.class)),
                                           required = true),
                responses = {
                        @ApiResponse(responseCode = "200",
-                                    description = "Draft details created successfully",
-                                    content = @Content(mediaType = "application/json",
-                                                       schema = @Schema(implementation = DraftFilesResponse.class))),
+                                    description = "Draft file created successfully",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = DraftFileResponse.class))),
                        @ApiResponse(responseCode = "400",
-                                    description = "Bad file service request",
+                                    description = "Bad draft file details request",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                        schema = @Schema(implementation = ErrorRes.class))) })
-    ResponseEntity<DraftFilesResponse> create(@Valid DraftFilesRequest request);
+    ResponseEntity<DraftFileResponse> create(@Valid DraftFileRequest request);
 
-    @Operation(summary = "Update Drafting File Details.",
+    @Operation(summary = "Update draft file details.",
                description = "",
                requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                             schema = @Schema(implementation = DraftFilesRequest.class)),
+                                                             schema = @Schema(implementation = DraftFileRequest.class)),
                                           required = true),
                responses = {
                        @ApiResponse(responseCode = "200",
-                                    description = "Drafting details updated successfully",
-                                    content = @Content(mediaType = "application/json",
-                                                       schema = @Schema(implementation = DraftFilesResponse.class))),
+                                    description = "Draft file details updated successfully",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = DraftFileResponse.class))),
                        @ApiResponse(responseCode = "400",
-                                    description = "Bad request",
+                                    description = "Bad draft file details request",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                        schema = @Schema(implementation = ErrorRes.class))) })
-    ResponseEntity<DraftFilesResponse> update(@Valid DraftFilesRequest request);
+    ResponseEntity<DraftFileResponse> update(@Valid DraftFileRequest request);
 
-    @Operation(summary = "Search Drafting File details with the given query parameters.",
+    @Operation(summary = "Search draft file details with the given query parameters.",
                description = "",
                requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                              schema = @Schema(implementation = RequestInfoWrapper.class)),
@@ -72,7 +72,7 @@ interface DraftingBaseController {
                                   name = "uuid",
                                   required = false,
                                   allowEmptyValue = true,
-                                  description = "Drafting id",
+                                  description = "Draft file  id",
                                   schema = @Schema(type = "string",
                                                    pattern = FMConstants.PATTERN_TENANT,
                                                    accessMode = Schema.AccessMode.READ_ONLY)),
@@ -126,13 +126,13 @@ interface DraftingBaseController {
                                                    accessMode = Schema.AccessMode.READ_ONLY)) },
                responses = {
                        @ApiResponse(responseCode = "200",
-                                    description = "Drafting File details retrieved successfully",
+                                    description = "Draft file details retrieved successfully",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                       schema = @Schema(implementation = DraftFilesSearchResponse.class))),
+                                                       schema = @Schema(implementation = DraftFileSearchResponse.class))),
                        @ApiResponse(responseCode = "400",
-                                    description = "Bad Draft file detail search request",
+                                    description = "Bad draft file detail search request",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                        schema = @Schema(implementation = ErrorRes.class))) })
-    ResponseEntity<DraftFilesSearchResponse> searchServices(@Valid RequestInfoWrapper request,
-                                                            @Valid DraftFilesSearchResponse searchCriteria);
+    ResponseEntity<DraftFileSearchResponse> search(@Valid RequestInfoWrapper request,
+                                                   @Valid DraftFileSearchResponse searchCriteria);
 }

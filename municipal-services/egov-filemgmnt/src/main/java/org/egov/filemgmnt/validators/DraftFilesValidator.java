@@ -12,9 +12,9 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.DraftFilesRepository;
 import org.egov.filemgmnt.util.FMUtils;
-import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
+import org.egov.filemgmnt.web.models.dratfile.DraftFile;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileRequest;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -34,19 +34,19 @@ public class DraftFilesValidator {
     @Autowired
     private DraftFilesRepository repository;
 
-    public void validateDraftCreate(DraftFilesRequest request) {
+    public void validateDraftCreate(DraftFileRequest request) {
 
         if (CollectionUtils.isEmpty(request.getDrafting())) {
             throw new CustomException(REQUIRED.getCode(), "Atleast one Draft is required");
 
         }
 
-        for (DraftFiles draftFiles : request.getDrafting()) {
+        for (DraftFile draftFiles : request.getDrafting()) {
             if (StringUtils.isNotBlank(draftFiles.getTenantId()) && StringUtils.isNotBlank(draftFiles.getAssigner())
                     && StringUtils.isNotBlank(draftFiles.getFileCode())
                     && StringUtils.isNotBlank(draftFiles.getDraftType())) {
 
-                DraftFilesSearchCriteria searchCriteria = new DraftFilesSearchCriteria();
+                DraftFileSearchCriteria searchCriteria = new DraftFileSearchCriteria();
 
                 searchCriteria.setAssigner(draftFiles.getAssigner());
                 searchCriteria.setFileCode(draftFiles.getFileCode());
@@ -54,7 +54,7 @@ public class DraftFilesValidator {
                 searchCriteria.setDraftType(draftFiles.getDraftType());
 
                 // final DraftFiles draftDetails = finalDraftDetails(searchCriteria);
-                final List<DraftFiles> draftDetails = repository.searchDrafting(searchCriteria);
+                final List<DraftFile> draftDetails = repository.searchDrafting(searchCriteria);
                 if (!draftDetails.isEmpty()) {
                     throw new CustomException(INVALID_SEARCH.getCode(), "Draft Already Existing");
                 }
@@ -63,8 +63,8 @@ public class DraftFilesValidator {
         }
     }
 
-    public void validateUpdate(DraftFilesRequest request, List<DraftFiles> searchResult) {
-        List<DraftFiles> files = request.getDrafting();
+    public void validateUpdate(DraftFileRequest request, List<DraftFile> searchResult) {
+        List<DraftFile> files = request.getDrafting();
 
         if (CollectionUtils.isEmpty(request.getDrafting())) {
             throw new CustomException(REQUIRED.getCode(), "Draft file is required");
@@ -82,7 +82,7 @@ public class DraftFilesValidator {
     }
 
     public void validateSearchDraftFiles(final RequestInfo requestInfo, // NOPMD
-                                         final DraftFilesSearchCriteria searchCriteria) {
+                                         final DraftFileSearchCriteria searchCriteria) {
         if (StringUtils.isBlank(searchCriteria.getTenantId())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Tenant id is required for draft search.");
         }
@@ -113,7 +113,7 @@ public class DraftFilesValidator {
         }
     }
 
-    private void validateSearchParams(final DraftFilesSearchCriteria searchCriteria, final List<String> allowedParams) {
+    private void validateSearchParams(final DraftFileSearchCriteria searchCriteria, final List<String> allowedParams) {
         final BeanWrapper bw = new BeanWrapperImpl(searchCriteria);
 
         FMUtils.validateSearchParam(bw, "tenantId", allowedParams);

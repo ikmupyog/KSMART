@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.egov.filemgmnt.repository.querybuilder.DraftFilesQueryBuilder;
 import org.egov.filemgmnt.repository.rowmapper.DraftFilesRowMapper;
-import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
+import org.egov.filemgmnt.web.models.dratfile.DraftFile;
+import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -24,7 +24,7 @@ public class DraftFilesRepository {
         this.draftingRowMapper = draftingRowMapper;
     }
 
-    public List<DraftFiles> searchDrafting(final DraftFilesSearchCriteria searchCriteria) {
+    public List<DraftFile> searchDrafting(final DraftFileSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
         final String query = draftingQueryBuilder.getDraftingSearchQuery(searchCriteria,
                                                                          preparedStmtValues,
