@@ -1295,7 +1295,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         streetNameMl: streetNameMl.trim(),
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde
+        uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
+        proceedNoRDO,regNoNAC
       });
     }
   };
