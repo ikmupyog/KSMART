@@ -78,6 +78,9 @@ const App = () => {
     <span className={"cr-citizen"}>
       <Switch>
         <AppContainer>
+        <PrivateRoute path={`${path}/marriage-correction-summary`} component={MarriageCorrectionSummary} />
+        <PrivateRoute path={`${path}/birth-inclusion-summary`} component={BirthInclusionSummary} />
+        <PrivateRoute path={`${path}/death-correction-summary`} component={DeathCorrectionSummary} />
           <PrivateRoute path={`${path}/marriage-correction-acknowledgement`} component={MarriageCorrectionAcknowledgement} />
           <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
           <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
