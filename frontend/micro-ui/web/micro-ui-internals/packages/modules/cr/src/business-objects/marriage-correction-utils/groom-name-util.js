@@ -17,21 +17,22 @@ export const getFilteredGroomNameData = (selectedData, inclusionData) => {
   const computeInitialValue = (groomDetails) => {
     const groomName = {
         firstNameEn:groomDetails?.groomFirstnameEn,
-        middleNameEn:groomDetails?.groomMiddlenameEn,
-        lastNameEn:groomDetails?.groomLastnameEn,
         firstNameMl:groomDetails?.groomFirstnameMl,
+        middleNameEn:groomDetails?.groomMiddlenameEn,
         middleNameMl:groomDetails?.groomMiddlenameMl,
+        lastNameEn:groomDetails?.groomLastnameEn,
         lastNameMl:groomDetails?.groomLastnameMl,
       };
     return groomName;
   };
 
   const computeCurrentValue = (groomDetails) => {
-    const groomName = {firstNameEn:groomDetails?.groomFirstnameEn,
-        middleNameEn:groomDetails?.groomMiddlenameEn,
-        lastNameEn:groomDetails?.groomLastnameEn,
+    const groomName = {
+        firstNameEn:groomDetails?.groomFirstnameEn,
         firstNameMl:groomDetails?.groomFirstnameMl,
+        middleNameEn:groomDetails?.groomMiddlenameEn,
         middleNameMl:groomDetails?.groomMiddlenameMl,
+        lastNameEn:groomDetails?.groomLastnameEn,
         lastNameMl:groomDetails?.groomLastnameMl,
       };
     return groomName;

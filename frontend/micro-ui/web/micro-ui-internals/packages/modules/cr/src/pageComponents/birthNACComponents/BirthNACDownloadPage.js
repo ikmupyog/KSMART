@@ -30,23 +30,22 @@ const BirthNACDownloadPage = ({ config, onSelect }) => {
           <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>NAC Download</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_DOWNLOAD")}`}</span>{" "}
               </h1>
             </div>
           </div>
         </div>
         <div className="row" style={{ marginLeft: "30px" }}>
-          Dear Applicant,
+          {`${t("CR_NAC_APPLICANT")}`}
         </div>
         <div className="row" style={{ marginLeft: "30px" }}>
-          Please Download the forms attached here and be ready to attach the duly signed/attested forms in the attachement window, along with the
-          following documents for submission of application.
+          {`${t("CR_NAC_DOWNLOAD_ATTACHED_DOCUMENTS")}`}
         </div>
         <div className="row" style={{ marginTop: "30px" }}>
           <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>List of Documents</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_LIST_OF_DOCUMENTS")}`}</span>{" "}
               </h1>
             </div>
           </div>

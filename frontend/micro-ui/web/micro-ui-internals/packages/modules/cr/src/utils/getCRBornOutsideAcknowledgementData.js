@@ -77,7 +77,7 @@ const getChildDetails = (application, t) => {
     values: [
       { title: t("Date of Birth"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
       { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
-      { title: t("Birth Place"), value: application?.outsideBirthPlace ? application?.outsideBirthPlace : t("CS_NA") },
+      { title: t("Birth Place"), value: application?.outsideBirthPlaceEn ? application?.outsideBirthPlaceEn : t("CS_NA") },
     //   { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
 
       // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
@@ -119,8 +119,8 @@ const getAddressDetails = (application, t) => {
       // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
       // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
       // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-      { title: t("Locality"), value: application?.BornOutsideAddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.BornOutsideAddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
+      { title: t("Locality"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn || t("CS_NA") },
+      { title: t("House Name"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn || t("CS_NA") }
     ],
   };
 };

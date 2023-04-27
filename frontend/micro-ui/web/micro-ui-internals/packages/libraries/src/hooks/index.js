@@ -170,6 +170,7 @@ import useResistryDownloadBirth from "./cr/useResistryDownloadBirth";
 import useResistryDownloadNacBirth from "./cr/useResistryDownloadNacBirth";
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistryNacSearchBirth from "./cr/useRegistryNacSearchBirth";
+import useRegistrySearchAdoption from "./cr/useRegistrySearchAdoption";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 import useSearchMarriage, { getMarriageRegistryFileSourceDetails } from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
@@ -416,6 +417,7 @@ const cr = {
   useResistryDownloadNacBirth,
   useRegistrySearchBirth,
   useRegistryNacSearchBirth,
+  useRegistrySearchAdoption,
   useRegistrySearchMarriage,
   useSearchDeath,
   useSearchAbandonedDeath,

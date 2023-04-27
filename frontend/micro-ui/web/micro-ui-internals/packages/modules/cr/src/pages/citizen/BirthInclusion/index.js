@@ -23,7 +23,7 @@ const BirthInclusion = () => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   let history = useHistory();
-  const [apiConfig,setApiConfig] = useState({enabled: false})
+  const [apiConfig, setApiConfig] = useState({ enabled: false });
   const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
@@ -42,7 +42,7 @@ const BirthInclusion = () => {
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
-    setApiConfig({enabled:true})
+    setApiConfig({ enabled: true });
   }
   //   const queryClient = useQueryClient();
   // const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -51,17 +51,15 @@ const BirthInclusion = () => {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
 
-  const {
-    data: { RegisterBirthDetails: searchReult, Count: count } = {},
-    isLoading,
-    isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchBirth({ filters: payload, config });
-
+  const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchBirth({
+    filters: payload,
+    config,
+  });
 
   const gotoEditInclusion = async (data) => {
     history.push({
       pathname: `/digit-ui/citizen/cr/birth-inclusion-edit`,
-      state: { inclusionData:data }
+      state: { inclusionData: data, isfetchData: true },
     });
   };
   // const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({ filters: registryPayload, config });
@@ -71,21 +69,21 @@ const BirthInclusion = () => {
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
       {/* <Switch>
         <Route path={`${path}`}> */}
-          <SearchBirthInclusion
-            t={t}
-            onSubmit={onSubmit}
-            data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
-            // filestoreId={storeId}
-            // isSuccess={isSuccess}
-            // isLoading={isLoading}
-            count={count}
-            onInclusionClick={gotoEditInclusion}
-          />
-        {/* </Route> */}
-        {/* <Route path={`${path}/acknowledgement`}>
+      <SearchBirthInclusion
+        t={t}
+        onSubmit={onSubmit}
+        data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
+        // filestoreId={storeId}
+        // isSuccess={isSuccess}
+        isLoading={isLoading}
+        count={count}
+        onInclusionClick={gotoEditInclusion}
+      />
+      {/* </Route> */}
+      {/* <Route path={`${path}/acknowledgement`}>
           <BirthInclusionEditPage />
         </Route> */}
-        {/* <Route>
+      {/* <Route>
           <Redirect to={`${match.path}/${config.indexRoute}`} />
         </Route> */}
       {/* </Switch> */}
