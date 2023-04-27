@@ -327,7 +327,7 @@ export const convertToBirthRegistration = (data = {}) => {
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
         applicationtype: "CRBRNR",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.ChildDetails?.workFlowCode,
         //applicationStatus:"PENDINGPAYEMNT",
         ParentsDetails: {
@@ -575,7 +575,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
         action: "APPLY",
         applicationtype: "CRBRNR",
-        businessservice: "birth-services",
+        businessservice: "CR",
         applicationStatus: "",
         workflowcode: data?.ChildDetails.workflowcode,
         isWorkflow: data?.ChildDetails.isWorkflow,
