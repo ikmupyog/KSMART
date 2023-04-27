@@ -511,6 +511,12 @@ export const convertToBirthRegistration = (data = {}) => {
             },
           },
         ],
+        BirthNACDocuments: [
+          {
+            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            filestoreId: data?.ChildDetails?.uploadedFile,
+          }
+        ],
       },
     ],
   };

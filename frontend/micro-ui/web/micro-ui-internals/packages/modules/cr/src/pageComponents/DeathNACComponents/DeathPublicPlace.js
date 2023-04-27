@@ -63,18 +63,18 @@ const DeathPublicPlace = ({
     cmbWardNoFinal.push(wardmst);
   });
 
-  if (isEditAbandonedDeath) {
-    if (formData?.InformationDeathAband?.publicPlaceType != null) {
-      if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
-        selectpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.InformationDeathAband?.publicPlaceType)[0]);
-      }
-    }
-    if (formData?.InformationDeathAband?.DeathPlaceWardId != null) {
-      if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
-        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAband?.DeathPlaceWardId)[0]);
-      }
-    }
-  }
+  // if (isEditAbandonedDeath) {
+  //   if (formData?.InformationDeathAband?.publicPlaceType != null) {
+  //     if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
+  //       selectpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.InformationDeathAband?.publicPlaceType)[0]);
+  //     }
+  //   }
+  //   if (formData?.InformationDeathAband?.DeathPlaceWardId != null) {
+  //     if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
+  //       setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAband?.DeathPlaceWardId)[0]);
+  //     }
+  //   }
+  // }
 
 
   const onSkip = () => onSelect();

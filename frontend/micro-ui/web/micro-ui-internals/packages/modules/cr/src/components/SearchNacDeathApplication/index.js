@@ -25,12 +25,13 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
-const SearchNacRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) => {
+const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count }) => {
   let tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === STATE_CODE.KL) {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const fileSource = Digit.Hooks.cr.getNacBirthFileSourceDetails({ params: { tenantId } });
+  const fileSource = Digit.Hooks.cr.getNacDeathFileSourceDetails({ params: { tenantId } });
+  console.log("fileSource", fileSource);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -90,50 +91,40 @@ const SearchNacRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count })
                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo}
                   </Link> */}
-                {row.original.applicationNumber}
+                {row.original.InformationDeath.DeathACKNo}
               </span>
             </div>
           );
         },
       },
       {
-        Header: t("CR_COMMON_CHILD_NAME"),
+        Header: t("Decent Name"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.childFirstNameEn ? row?.childFirstNameEn : "-"),
+        accessor: (row) => GetCell(row?.DeathApplicantDtls?.ApplicantName),
       },
       {
         Header: t("CR_COMMON_COL_APP_DATE"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      },
-      {
-        Header: t("CR_COMMON_COL_DOB"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : "-"),
-      },
-      {
-        Header: t("CR_COMMON_MOTHER_NAME"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row?.ParentsDetails.motherFirstNameEn || "-"),
+        accessor: (row) => GetCell(row.InformationDeath.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
       },
       {
         Header: t("CR_COMMON_GENDER"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.gender || "-"),
+        accessor: (row) => GetCell(row.InformationDeath.DeceasedGender || "-"),
       },
       {
         Header: t("Download Certificate"),
         disableSortBy: true,
-        Cell: ({ row }) => {
-          let applicationNumber = row.original.applicationNumber;
+        Cell: ( row ) => {
+          let id = _.get(row, "original.id", null);
           return (
             <div>
-              {applicationNumber !== null && (
+              {id !== null && (
                 <span
                   className="link"
                   onClick={() => {
                     fileSource.mutate(
-                      { filters: { applicationNumber, source: "sms" } },
+                      { filters: { id, source: "sms" } },
                       {
                         onSuccess: (fileDownloadInfo) => {
                           const { filestoreId } = fileDownloadInfo;
@@ -161,7 +152,7 @@ const SearchNacRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count })
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
+        <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, previousPage, t, tenantId }} />
         </SearchForm>
@@ -201,4 +192,4 @@ const SearchNacRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count })
   );
 };
 
-export default SearchNacRegistryBirth;
+export default SearchNacRegistryDeath;
