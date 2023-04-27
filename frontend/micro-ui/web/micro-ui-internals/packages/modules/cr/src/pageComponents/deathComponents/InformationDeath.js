@@ -1238,7 +1238,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setDeathPlaceHomehoueNameMlError(false);
       }
       if (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined) {
-        setAdrsStreetNameEn("");
+        setDeathPlaceHomestreetNameEn("");
       } else {
         if (DeathPlaceHomeStreetNameEn != null && (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined)) {
           validFlag = false;
@@ -1253,7 +1253,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         }
       }
       if (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined) {
-        setAdrsStreetNameMl("");
+        setDeathPlaceHomestreetNameMl("");
       } else {
         if (DeathPlaceHomeStreetNameMl != null && (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined)) {
           validFlag = false;

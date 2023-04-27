@@ -1,9 +1,10 @@
 import { SearchForm, Table } from "@egovernments/digit-ui-react-components";
 import { useForm, Controller } from "react-hook-form";
-import React, { useState,useMemo, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import SearchDeathFields from "./SearchDeathFields";
 import { Link } from "react-router-dom";
 import MobileSearchApplication from "./MobileSearchApplication";
+import _ from "lodash";
 
 const mystyle = {
   bgOpacity: "1",
@@ -21,9 +22,37 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
+const generateActions = (rowData) => {
+  const status = _.get(rowData, "TL_APPLICATION_STATUS", "INITIATED");
+  let response = "";
+  switch (status) {
+    case "CITIZENACTIONREQUIRED":
+      response = <span className="link">
+        <Link to={`/digit-ui/citizen/cr/cr-death-creation/information-death/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+          EDIT
+        </Link>
+      </span>
+      break;
+    case "PENDINGPAYMENT":
+      response = <span className="link">
+        <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+          MAKE PAYMENT
+        </Link>
+      </span>
+      break;
+    default:
+      response = <span className="link">
+        <Link
+          to={`/digit-ui/citizen/cr/cr/death/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+          VIEW DETAILS
+        </Link>
+      </span>
+      break;
+  }
+  return response;
+}
+
 const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading, tenantId }) => {
-  // const { t } = useTranslation();
-  console.log(count);
   const [FileData, setFileData] = useState([]);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
@@ -34,13 +63,6 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
       sortOrder: "",
     },
   });
-
-  // useEffect(() => {
-  //     register("offset", 0);
-  //     register("limit", 10);
-  //     register("sortBy", "TL_COMMON_TABLE_COL_APP_NO");
-  //     register("sortOrder", "DESC");
-  //   }, [register]);
 
   const isMobile = window.Digit.Utils.browser.isMobile();
 
@@ -72,35 +94,11 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
         Header: "Address",
         accessor: (row) => GetCell(row.CR_ADDRESS),
       },
-      // {
-      //     Header: "City",
-      //     accessor : (row) => GetCell(row.TL_COMMON_CITY_NAME),
-      // },
       {
         Header: "Status",
         disableSortBy: true,
         Cell: ({ row }) => {
-          return (
-            <div>
-              {row.original?.TL_APPLICATION_STATUS === "INITIATED" ? (
-                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                  <Link
-                    to={`/digit-ui/citizen/cr/cr/death/application/${row?.original?.TL_COMMON_TABLE_COL_APP_NO}/${row?.original?.TL_COMMON_CITY_NAME}`}
-                  >
-                    VIEW DETAILS
-                  </Link>
-                </span>
-              ) : (
-                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                  <Link
-                    to={`/digit-ui/citizen/cr/cr/death/application/${row?.original?.TL_COMMON_TABLE_COL_APP_NO}/${row?.original?.TL_COMMON_CITY_NAME}`}
-                  >
-                    MAKE PAYMENT
-                  </Link>
-                </span>
-              )}
-            </div>
-          );
+          return (generateActions(row.original));
         },
       },
     ],
@@ -114,11 +112,10 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
     }
     setFileData(tmpData);
   });
-  // console.log("data", data);
   const onSort = useCallback((args) => {
     if (args.length === 0) return;
     setValue("sortBy", args.id);
-    setValue("sortOrder",  "" );
+    setValue("sortOrder", "");
   }, []);
 
   function onPageSizeChange(e) {
@@ -135,7 +132,6 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
     setValue("offset", getValues("offset") - getValues("limit"));
     handleSubmit(onSubmit)();
   }
-  console.log("datasearch", data);
 
   return (
     <React.Fragment>
@@ -147,29 +143,6 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
       </div>
       {FileData !== [] && (
         <React.Fragment>
-          {/* <Table
-            t={t}
-            data={fileData ? fileData : data}
-            totalRecords={count}
-            columns={columns}
-            onPageSizeChange={onPageSizeChange}
-            currentPage={getValues("offset") / getValues("limit")}
-            onNextPage={nextPage}
-            onPrevPage={previousPage}
-            pageSizeLimit={getValues("limit")}
-            onSort={onSort}
-            disableSort={false}
-            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-            getCellProps={() => {
-              return {
-                style: {
-                  minWidth: "240px",
-                  padding: "20px 18px",
-                  fontSize: "16px",
-                },
-              };
-            }}
-          /> */}
           <Table
             t={t}
             data={FileData ? FileData : data}

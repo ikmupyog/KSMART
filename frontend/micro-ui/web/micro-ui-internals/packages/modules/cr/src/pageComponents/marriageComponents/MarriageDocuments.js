@@ -2611,13 +2611,13 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS_1_AADHAR")}`}</span>{" "}
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS1_AADHAR")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
                 <div className="col-md-8">
                   <CardLabel>
-                    {`${t("CR_WITNESS1_AADHAR")}`}
+                    {`${t("CR_WITNESS1_ADHAR")}`}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                   <UploadFile
@@ -2657,13 +2657,13 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS_2_AADHAR")}`}</span>{" "}
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS2_AADHAR")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
                 <div className="col-md-8">
                   <CardLabel>
-                    {`${t("CR_WITNESS2_AADHAR")}`}
+                    {`${t("CR_WITNESS2_ADHAR")}`}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                   <UploadFile

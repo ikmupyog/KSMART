@@ -5,7 +5,7 @@ import { checkForEmployee } from "../utils";
 import UploadDoc from "../../../../react-components/src/atoms/UploadDoc";
 import { MARRIAGE_INCLUSION_FIELD_NAMES } from "../config/constants";
 
-const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig,selectedDocData,selectedDocs }) => {
+const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocData, selectedDocs }) => {
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
@@ -29,31 +29,30 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   };
 
   useEffect(() => {
-    if(selectedDocuments?.length === 1){
-    const existingDocIds = selectedDocuments?.[0]?.Documents?.map((item) => {
-      if (selectedDocs.includes(item.DocumentId?.toString())) {
-        return item.DocumentId?.toString();
-      }
-    });
+    if (selectedDocuments?.length === 1) {
+      const existingDocIds = selectedDocuments?.[0]?.Documents?.map((item) => {
+        if (selectedDocs.includes(item.DocumentId?.toString())) {
+          return item.DocumentId?.toString();
+        }
+      });
 
-    const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
-    console.log("initial value==",selectedDocuments?.[0]?.Documents,selectedDocData,selectedDocs,filteredData,existingDocIds);
-    setUploadedFiles([...filteredData]);
-  }
+      const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
+      setUploadedFiles([...filteredData]);
+    }
   }, [selectedDocuments]);
 
   useEffect(() => {
     setSelectedDocuments(selectedConfig?.documentData);
-    return ()=>{
+    return () => {
       setUploadedFiles([]);
-    }
+    };
   }, [selectedConfig?.documentData]);
 
   function onDeleteown(e) {
     const removeindex = uploadedFiles.findIndex((element) => {
       return element.documentType === e;
     });
-   
+
     if (removeindex === -1) {
       return false;
     }
@@ -62,12 +61,35 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   }
 
   const renderLoader = (details) => {
-    if (isLoading && (details.DocumentId.toString() === docuploadedId)) {
+    if (isLoading && details.DocumentId.toString() === docuploadedId) {
       return (
-        <div style={{margin:0}}>
+        <div style={{ margin: 0 }}>
           <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
         </div>
       );
+    }
+  };
+
+  const getFileUploadFieldError = (item) => {
+    console.log("looped---item", error);
+    let errorMessage = "";
+    const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
+    if (fieldErrorIndex > -1) {
+      errorMessage = error[fieldErrorIndex]?.message;
+    }
+    console.log("errorMessage==", fieldErrorIndex, errorMessage);
+    return errorMessage;
+  };
+
+  const setFileUploadFieldError = (errorObj) => {
+    console.log("error", error);
+    const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
+
+    if (errorIndex === -1) {
+      setError([...error, errorObj]);
+    } else {
+      let tempError = error ? [...error] : [];
+      setError(tempError.splice(errorIndex, 1, errorObj));
     }
   };
 
@@ -81,16 +103,22 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   }
 
   useEffect(() => {
- 
     (async () => {
       setIsLoading(true);
       setError(null);
       if (file && file?.type) {
+        setIsLoading(true);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
-          setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
+          setIsLoading(false);
+          let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
+          setFileUploadFieldError(tempObj);
         } else if (file.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setIsLoading(false);
+          let tempObj = { message: t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"), fieldId: docuploadedId };
+          setFileUploadFieldError(tempObj);
         } else {
+          let tempObj = { message: "", fieldId: "" };
+          setFileUploadFieldError(tempObj);
           // try {
           const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
           if (response?.data?.files?.length > 0) {
@@ -100,7 +128,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
               documentType: docuploadedType,
               fileStoreId: response?.data?.files[0]?.fileStoreId,
               documentName: file.name,
-             
+
               type: file.type,
               size: file.size,
             };
@@ -134,7 +162,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     setSelectedDocuments(filterInclusionDocs);
   }
 
-  
   const resetFields = () => {
     setFileDocError("");
     setUploadedFiles([]);
@@ -153,34 +180,34 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     let menu = [];
     console.log("reached modal==", selectedConfig);
     switch (selectedConfig.docFlag) {
-        case "GROOM_NAME":
-          selectedMenu = [
-            { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "GROOM_NAME_CORRECTION" },
-            { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "GROOM_NAME_CHANGE" },
-          ];
+      case "GROOM_NAME":
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "GROOM_NAME_CORRECTION" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "GROOM_NAME_CHANGE" },
+        ];
         break;
-        case "BRIDE_NAME":
-          selectedMenu = [
-            { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "BRIDE_NAME_CORRECTION" },
-            { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "BRIDE_NAME_CHANGE" },
-          ];
+      case "BRIDE_NAME":
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "BRIDE_NAME_CORRECTION" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "BRIDE_NAME_CHANGE" },
+        ];
         break;
     }
-    if(selectedMenu?.length > 0){
-    return (
-      <div>
-        <h2>Select one of the field</h2>
-        <RadioButtons
-          t={t}
-          optionsKey="i18nKey"
-          // isMandatory={config.isMandatory}
-          options={selectedMenu}
-          selectedOption={conditionalProperty}
-          onSelect={selectConditionalProperty}
-        />
-      </div>
-    );
-    } else{
+    if (selectedMenu?.length > 0) {
+      return (
+        <div>
+          <h2>Select one of the field</h2>
+          <RadioButtons
+            t={t}
+            optionsKey="i18nKey"
+            // isMandatory={config.isMandatory}
+            options={selectedMenu}
+            selectedOption={conditionalProperty}
+            onSelect={selectConditionalProperty}
+          />
+        </div>
+      );
+    } else {
       return null;
     }
   };
@@ -194,35 +221,35 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
         {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
         {selectedDocuments?.length == 1 && (
           <div>
-        <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
-        {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
-        {selectedDocuments?.[0]?.Documents?.map((item, index) => (
-          <div>
-            {!selectedDocs.includes(item.DocumentId?.toString()) && (
-              <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
-                <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
-                  <UploadFile
-                    key={item.DocumentId}
-                    id={item.DocumentId}
-                    name={item.DocumentType}
-                    extraStyleName={"propertyCreate"}
-                    accept=".jpg,.png,.pdf"
-                    onUpload={selectfile}
-                    onDelete={() => {
-                      onDeleteown(item.DocumentId);
-                      setUploadedFile(null);
-                    }}
-                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    error={error}
-                  />
-                  {renderLoader(item)}
-                </div>
+            <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+            {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
+            {selectedDocuments?.[0]?.Documents?.map((item, index) => (
+              <div>
+                {!selectedDocs.includes(item.DocumentId?.toString()) && (
+                  <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
+                    <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
+                    <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
+                      <UploadFile
+                        key={item.DocumentId}
+                        id={item.DocumentId}
+                        name={item.DocumentType}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectfile}
+                        onDelete={() => {
+                          onDeleteown(item.DocumentId);
+                          setUploadedFile(null);
+                        }}
+                        message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        iserror={getFileUploadFieldError(item)}
+                      />
+                      {renderLoader(item)}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            ))}
           </div>
-        ))}
-        </div>
         )}
 
         <EditButton
@@ -232,13 +259,13 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
             // resetFields();
             // onSubmit({fileData:uploadedFiles,documentCondition: selectedDocuments?.[0]?.conditionCode});
             if (selectedDocuments?.length === 1) {
-              if (!isLoading && (selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length)) {
+              if (!isLoading && selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
                 resetFields();
                 onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
               } else {
                 setFileDocError("You have to upload following documents to make changes in the field");
               }
-            } else{
+            } else {
               setFileDocError("Please select an option");
             }
           }}

@@ -174,6 +174,7 @@ import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePub
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 
+import MarriageCorrectionSummary from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionSummary";
 import MarriageCorrectionAcknowledgement from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionAcknowledgement";
 import MarriageCorrectionEditPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionEditPage";
 import MarriageCorrectionLoadPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/index";
@@ -472,6 +473,7 @@ const componentsToRegister = {
   AbandonedChildDetails,
   AbandonedBirthInformarDetails,
   //Marriage
+  MarriageCorrectionSummary,
   MarriageCorrectionAcknowledgement,
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
