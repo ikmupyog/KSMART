@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

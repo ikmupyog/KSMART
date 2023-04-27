@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Major function request for create and update")
+@Schema(description = "Sub function request for create and update")
 @Validated
 
 @Data
@@ -22,12 +22,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class MajorFunctionDetailsRequest {
+public class SubFunctionDetailsRequest {
     @JsonProperty("RequestInfo")
-    private RequestInfo requestInfo;
+    RequestInfo requestInfo;
 
-    @JsonProperty("MajorFunctionDetails")
-    private MajorFunctionDetails majorFunctionDetails;
-
+    @JsonProperty("SubFunctionDetails")
+    private SubFunctionDetails subFunctionDetails;
 }

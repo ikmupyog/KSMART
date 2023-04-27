@@ -1,6 +1,6 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
-import org.egov.common.contract.response.ResponseInfo;
+import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Service response for create and update")
+@Schema(description = "Service request for create and update")
 @Validated
 
 @Data
@@ -22,11 +22,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ServiceDetailsResponse {
+public class ServiceDetailsRequest {
     @JsonProperty("RequestInfo")
-    private ResponseInfo responseInfo;
+    private RequestInfo requestInfo;
 
     @JsonProperty("ServiceDetails")
     private ServiceDetails serviceDetails;
-
 }

@@ -7,24 +7,24 @@ import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.GlobalMasterEnrichment;
 import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.GlobalMasterRepository;
-import org.egov.filemgmnt.web.models.GlobalMaster.MajorFunctionDetails;
-import org.egov.filemgmnt.web.models.GlobalMaster.MajorFunctionDetailsRequest;
-import org.egov.filemgmnt.web.models.GlobalMaster.MajorFunctionSearchCriteria;
-import org.egov.filemgmnt.web.models.GlobalMaster.ModuleDetails;
-import org.egov.filemgmnt.web.models.GlobalMaster.ModuleDetailsRequest;
-import org.egov.filemgmnt.web.models.GlobalMaster.ModuleSearchCriteria;
-import org.egov.filemgmnt.web.models.GlobalMaster.ServiceDetails;
-import org.egov.filemgmnt.web.models.GlobalMaster.ServiceDetailsRequest;
-import org.egov.filemgmnt.web.models.GlobalMaster.ServiceSearchCriteria;
-import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionDetails;
-import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionDetailsRequest;
-import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.MajorFunctionDetails;
+import org.egov.filemgmnt.web.models.masterdata.MajorFunctionDetailsRequest;
+import org.egov.filemgmnt.web.models.masterdata.MajorFunctionSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.ModuleDetails;
+import org.egov.filemgmnt.web.models.masterdata.ModuleDetailsRequest;
+import org.egov.filemgmnt.web.models.masterdata.ModuleSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.ServiceDetails;
+import org.egov.filemgmnt.web.models.masterdata.ServiceDetailsRequest;
+import org.egov.filemgmnt.web.models.masterdata.ServiceSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.SubFunctionDetails;
+import org.egov.filemgmnt.web.models.masterdata.SubFunctionDetailsRequest;
+import org.egov.filemgmnt.web.models.masterdata.SubFunctionSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GlobalMasterServices {
+public class MasterDataService {
 
     private final FMConfiguration fmConfiguration;
     private final GlobalMasterEnrichment enrichment;
@@ -34,7 +34,7 @@ public class GlobalMasterServices {
     @Qualifier("fmProducer")
     private Producer producer;
 
-    GlobalMasterServices(FMConfiguration fmConfiguration, Producer producer, GlobalMasterEnrichment enrichment,
+    MasterDataService(FMConfiguration fmConfiguration, Producer producer, GlobalMasterEnrichment enrichment,
                          GlobalMasterRepository repository) {
         this.fmConfiguration = fmConfiguration;
         this.producer = producer;

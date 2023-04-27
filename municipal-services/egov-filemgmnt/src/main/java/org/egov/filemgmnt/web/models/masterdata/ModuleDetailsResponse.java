@@ -1,7 +1,6 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import org.egov.common.contract.response.ResponseInfo;
-import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,19 +11,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Major Function response for create and update")
-@Validated
+@Schema(description = "Module response for create and update")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class MajorFunctionDetailsResponse {
-
-    @JsonProperty("RequestInfo")
+public class ModuleDetailsResponse {
+    @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("MajorFunctionDetails")
-    private MajorFunctionDetails majorFunctionDetails;
+    @JsonProperty("ModuleDetails")
+    private ModuleDetails moduleDetails;
+
 }
