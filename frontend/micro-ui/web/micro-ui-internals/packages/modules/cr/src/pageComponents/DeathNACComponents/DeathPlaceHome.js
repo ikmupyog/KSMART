@@ -256,6 +256,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 option={cmbWardNoFinal}
                 selected={DeathPlaceWardId}
                 select={setSelectDeathPlaceWardId}
+                placeholder={"Ward"}
                 // disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />

@@ -519,7 +519,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
             </h1>
           </div>
         </div>
-        <div className="row">
+        <div className="row" style={{ clear: "both"}}>
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-6">
@@ -538,7 +538,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
                 <CardLabel>ID card of applicant<span className="mandatorycss">*</span></CardLabel>
               </div>
@@ -555,7 +555,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
                 <CardLabel>ID proof of father/mother/spouse<span className="mandatorycss">*</span></CardLabel>
               </div>
@@ -572,7 +572,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
                 <CardLabel>ID Proof of death <span className="mandatorycss">*</span></CardLabel>
               </div>
@@ -589,9 +589,9 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row" >
+            <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. <span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. Place of Death, and address at the time of death counter signed by gazetted officer<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -606,9 +606,9 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -623,7 +623,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
                 <CardLabel>Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
               </div>
