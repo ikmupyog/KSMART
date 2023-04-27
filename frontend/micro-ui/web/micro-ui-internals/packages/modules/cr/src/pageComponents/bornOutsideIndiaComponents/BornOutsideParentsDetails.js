@@ -183,19 +183,21 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     }
   }
   function setSelectPassportNo(e) {
-    if (e.target.value.length === 21) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setmotherPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)));
+    if (e.target.value.trim().length >= 0) {
+      setmotherPassportNo(
+        e.target.value.length <= 8
+          ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+          : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+      );
     }
   }
   function setSelectfatherPassportNo(e) {
-    if (e.target.value.length === 21) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setfatherPassportNo(e.target.value.length);
+    if (e.target.value.trim().length >= 0) {
+      setfatherPassportNo(
+        e.target.value.length <= 8
+          ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+          : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+      );
     }
   }
 
@@ -509,7 +511,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     //disable={isFatherInfo}
                     placeholder={`${t("CR_PASSPORT_NO")}`}
                     style={{ textTransform: "uppercase" }}
-                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, title: t("CR_INVALID_PASSPORT_NO") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -591,7 +593,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PASSPORT_NO")}`}
                     style={{ textTransform: "uppercase" }}
-                    {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -614,7 +616,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-8">
+              <div className="col-md-8">
                   <CardLabel>
                     {`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span>
                   </CardLabel>
@@ -631,7 +633,11 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     {...(validation = { pattern: "^[0-9]{3}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
                   />
                 </div>
-                <div className="col-md-4">
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-md-12">
+                <div className="col-md-8">
                   <CardLabel>
                     {`${t("CR_MOTHER_AGE_BIRTH")}`}
                     <span className="mandatorycss">*</span>
@@ -649,12 +655,12 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
                   />
                 </div>
+                </div>
               </div>
-            </div>
 
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-3">
+              <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_MOTHER_EDUCATION")}`}
                     <span className="mandatorycss">*</span>
@@ -669,7 +675,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disabled={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_EDUCATION")}`}
                   />
-                </div>
+                  </div>
                 <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_MOTHER_PROFESSIONAL")}`}
