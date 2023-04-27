@@ -154,7 +154,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     console.log("value==", value);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_DOB } = tempObj;
-    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: value, isFocused: false } };
+    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: moment(value,"YYYY-MM-DD").format("DD/MM/YYYY"), isFocused: false } };
     console.log("dob change==", tempObj);
     // birthInclusionFormsObj = {...tempObj};
     setbirthInclusionFormsObj(tempObj);
@@ -259,8 +259,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   max={convertEpochToDate(new Date())}
                   min={convertEpochToDate("1900-01-01")}
                   onChange={onDobChange}
-                  // formattingFn={formatDob}
-                  inputFormat="DD/MM/YYYY"
+                  formattingFn={formatDob}
+                  // inputFormat="DD/MM/YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
