@@ -186,12 +186,12 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
     List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria, request.getRequestInfo());
     correctionValidatorService.validateCorrectionUpdate(request, searchResult);
 
-    marriageCorrectionEnrichment.enrichUpdate(request, searchResult);
-    request.setMarriageDetails(searchResult);
-
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()) {
         workflowIntegrator.callCorrectionWorkFlow(request);
     }
+
+    marriageCorrectionEnrichment.enrichUpdate(request, searchResult);
+    request.setMarriageDetails(searchResult);
     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationCorrectionTopic(), request);
 
     // request.getMarriageDetails().forEach(marriage->{

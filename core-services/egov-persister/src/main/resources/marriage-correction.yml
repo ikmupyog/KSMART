@@ -226,7 +226,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomDetails.groomMaritalstatusID
 
-            - jsonPath: $.MarriageDetails.*.BrideDetails.groomIsSpouseLiving
+            - jsonPath: $.MarriageDetails.*.GroomDetails.groomIsSpouseLiving
 
             - jsonPath: $.MarriageDetails.*.id
 

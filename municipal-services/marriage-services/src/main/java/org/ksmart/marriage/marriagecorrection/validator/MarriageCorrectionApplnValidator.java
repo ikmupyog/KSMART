@@ -60,10 +60,10 @@ public class MarriageCorrectionApplnValidator {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                     "Business Service is required for create correction request.");
         }
-        if (StringUtils.isBlank(correctionApplications.get(0).getStatus())) {
-            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Application Status is required for create correction request.");
-        }
+//        if (StringUtils.isBlank(correctionApplications.get(0).getStatus())) {
+//            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
+//                    "Application Status is required for create correction request.");
+//        }
     }
 
     public void validateCorrectionUpdate(MarriageCorrectionRequest request) {
@@ -112,10 +112,10 @@ public class MarriageCorrectionApplnValidator {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Workflow action is required for update request.");
         }
-        if (StringUtils.isBlank(correctionApplications.get(0).getStatus())) {
-            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                    "Application Status is required for update request.");
-        }
+//        if (StringUtils.isBlank(correctionApplications.get(0).getStatus())) {
+//            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
+//                    "Application Status is required for update request.");
+//        }
         //mdmsValidator.validateMdmsData(request, mdmsData);
     }
 

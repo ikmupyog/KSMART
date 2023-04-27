@@ -56,7 +56,7 @@ public class MarriageCorrectionController {
         List<MarriageCorrectionDetails> marriageapplnDetails = marriageCorrectionService.updateMarriageCorrectionDetails(request);
 
         //Updating Marriage registry if Registrar Approved
-        if(request.getMarriageCorrectionDetails().get(0).getStatus().equals(MarriageConstants.WORKFLOW_STATUS_APPROVED) && (request.getMarriageCorrectionDetails().get(0).getApplicationtype().equals(MarriageConstants.APPLICATION_CORRECTION))) {
+        if(marriageapplnDetails.get(0).getStatus().equals(MarriageConstants.WORKFLOW_STATUS_APPROVED) && (marriageapplnDetails.get(0).getApplicationtype().equals(MarriageConstants.APPLICATION_CORRECTION))) {
 
             List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageRegistryService.updateMarriageRegistry(request);
 
