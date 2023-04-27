@@ -32,6 +32,15 @@ export const CRNACDeathService = {
             userService: false,
             params: { tenantId, ...filters },
         }),
+    CRRegistrySearchDeath: ({ filters }) =>
+    Request({
+      url: Urls.crnacdeath.registry_search_nac_death,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { ...filters },
+    }),
     update: (details, tenantId) =>
         Request({
             url: Urls.crnacdeath.update,

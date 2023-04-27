@@ -104,9 +104,15 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     }
   }
   function setSelectinitiatorEmail(e) {
-    if (e.target.value.trim().length >= 0 && !(e.target.value.includes("@") && e.target.value.includes("."))) {
-      setinitiatorEmail(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinitiatorEmail(e.target.value.trim());
     }
+    // if (e.target.value.trim().length >= 0 && !(e.target.value.includes("@") && e.target.value.includes("."))) {
+    //   setinitiatorEmail(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    // }
     // setinitiatorEmail(e.target.value);
 
     // if(value.length && !(value.includes("@") && value.includes("."))){
@@ -475,7 +481,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
               </CardLabel>
               <TextInput
                 t={t}
-                type={"email"}
+                type="email"
                 optionKey="i18nKey"
                 isMandatory={false}
                 name="initiatorEmail"
@@ -483,8 +489,8 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 onChange={setSelectinitiatorEmail}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_EMAIL")}`}
-              // {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
-              />
+                {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
+                />
             </div>
           </div>
         </div>
