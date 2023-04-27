@@ -33,18 +33,18 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
     <>
      <SearchField>
         <label>
-        <span className="mandatorycss">*</span>{t("REGISTRATION NUMBER")}
+        <span className="mandatorycss">*</span>{t("CR_REGISTRATION_NUMBER")}
         </label>
         <TextInput
           name="registrationNo"
           inputRef={register({})}
-          placeholder={`${t("MARRIAGE_REGISTRATION_NUMBER")}`}
+          placeholder={`${t("CR_REGISTRATION_NUMBER")}`}
           {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
         />
       </SearchField>
     <SearchField>
         <label>
-          {t("DATE_OF_MARRIAGE")}
+          {t("CR_DATE_OF_MARRIAGE")}
         </label>
         <Controller
           render={(props) => (
@@ -79,7 +79,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
       <SearchField>
         <label>
           {/* <span className="mandatorycss">*</span> */}
-          {t("PLACE OF MARRIAGE")}
+          {t("CR_PLACE_OF_MARRIAGE")}
         </label>
         <Controller
           control={control}
@@ -92,7 +92,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
               option={cmbPlaceType}
               optionKey="value"
               t={t}
-              placeholder={`${t("PLACE_OF_MARRIAGE")}`}
+              placeholder={`${t("CR_PLACE_OF_MARRIAGE")}`}
               {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
             />
           )}
@@ -101,12 +101,12 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
       <SearchField>
         <label>
           {/* <span className="mandatorycss">*</span>  */}
-          {t("KEY NO")}
+          {t("CR_KEY_NO")}
         </label>
         <TextInput
           name="id"
           inputRef={register({})}
-          placeholder={`${t("Key No")}`}
+          placeholder={`${t("CR_KEY_NO")}`}
           {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_KEY_NO") })}
         />
       </SearchField>     
