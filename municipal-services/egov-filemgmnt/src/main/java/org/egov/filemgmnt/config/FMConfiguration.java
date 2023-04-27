@@ -1,6 +1,5 @@
 package org.egov.filemgmnt.config;
 
-import org.apache.kafka.common.protocol.types.Field.Str;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -127,7 +126,6 @@ public class FMConfiguration {
     @Value("${egov.url.shortner.endpoint}")
     private String urlShortnerEndpoint;
 
-
     @Value("${egov.pdf.draftcertificate.createEndPoint}")
     private String egovPdfDraftEndPoint;
 
@@ -159,7 +157,7 @@ public class FMConfiguration {
     private String memoCertificateLink;
 
     // Global Mastersettings
-     //Module Master  save,update,delete
+    // Module Master save,update,delete
     @Value("${persister.save.modulemaster.topic:}")
     private String saveModuleMasterTopic;
 
@@ -169,7 +167,7 @@ public class FMConfiguration {
     @Value("${persister.delete.modulemaster.topic:}")
     private String deleteModuleMasterTopic;
 
-    //MajorFuncton save,update,delete
+    // MajorFuncton save,update,delete
     @Value("${persister.save.mfmaster.topic:}")
     private String saveMfMasterTopic;
 
@@ -179,7 +177,7 @@ public class FMConfiguration {
     @Value("${persister.delete.mfmaster.topic:}")
     private String deleteMfMasterTopic;
 
-    //SubFuncton save,update,delete
+    // SubFuncton save,update,delete
 
     @Value("${persister.save.subfunction.topic:}")
     private String SaveSubFunctionTopic;
@@ -190,7 +188,7 @@ public class FMConfiguration {
     @Value("${persister.delete.subfunction.topic:}")
     private String DeleteSubFunctionTopic;
 
-     //Service Master save,update,delete
+    // Service Master save,update,delete
     @Value("${persister.save.servicemaster.topic:}")
     private String saveServiceMasterTopic;
 

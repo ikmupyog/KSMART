@@ -40,8 +40,8 @@ public class DraftCertificateDetails {
     @Schema(type = "string", description = "File Code", example = "KL-KOCHI-C-000015- FMARISING-2023-AR")
     @NotBlank(message = "File Code is required")
     @Size(max = 64, message = "File Code length cannot exceed 64 characters")
-	@JsonProperty("fileCode")
-	private String fileCode;
+    @JsonProperty("fileCode")
+    private String fileCode;
 
     @Schema(type = "string", description = "Certificate number")
     @Size(max = 64, message = "Certificate number length cannot exceed 64 characters")
@@ -65,5 +65,5 @@ public class DraftCertificateDetails {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
-    
+
 }

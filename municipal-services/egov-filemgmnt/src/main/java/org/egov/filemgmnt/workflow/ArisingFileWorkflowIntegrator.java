@@ -1,11 +1,16 @@
 package org.egov.filemgmnt.workflow;
 
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.PathNotFoundException;
-import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_FILE_ACTION;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR_KEY_NOT_FOUND;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -21,10 +26,13 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.*;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR;
+import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 
 @Service
 @Slf4j
@@ -35,15 +43,15 @@ public class ArisingFileWorkflowIntegrator {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void callAriseFileWorkflow(ArisingFileRequest request){
-        final ArisingFile arisingFile=request.getArisingFile();
+    public void callAriseFileWorkflow(ArisingFileRequest request) {
+        final ArisingFile arisingFile = request.getArisingFile();
         Assert.notNull(arisingFile, "Arising file details must not be null");
 
-        final String fileCode= arisingFile.getFileCode();
+        final String fileCode = arisingFile.getFileCode();
         Assert.notNull(arisingFile, "File Code must not be null");
 
         String businessService = arisingFile.getBusinessService();
-        final  String fileAction = arisingFile.getAction();
+        final String fileAction = arisingFile.getAction();
 
         if (StringUtils.isBlank(businessService)) {
             businessService = FMConstants.BUSINESS_SERVICE_FM;
@@ -76,7 +84,7 @@ public class ArisingFileWorkflowIntegrator {
     }
 
     private JSONObject buildJsonObjectForArisingFileWorkflow(final ArisingFile arisingFile,
-                                                  final ArisingFileApplicant arisingFileApplicant) {
+                                                             final ArisingFileApplicant arisingFileApplicant) {
         final JSONObject jsonObj = new JSONObject();
         jsonObj.put(FMConstants.BUSINESSIDKEY, arisingFile.getFileCode());
         jsonObj.put(FMConstants.TENANTIDKEY, arisingFileApplicant.getTenantId());
@@ -87,10 +95,14 @@ public class ArisingFileWorkflowIntegrator {
         // jsonObj.put(FMConstants.DOCUMENTSKEY, fileDetail.getWfDocuments());
 
         // Adding assignes to processInstance
-        final String assignees = arisingFile.getAssignees();
+        System.out.println("****************");
+        System.out.println(jsonObj);
+        final String assignees = arisingFile.getAssignee();
         final List<String> assigneeList;//
-        if (StringUtils.isNotBlank(assignees)) assigneeList = Arrays.asList(assignees.split(","));
-        else assigneeList = Collections.emptyList();
+        if (StringUtils.isNotBlank(assignees))
+            assigneeList = Arrays.asList(assignees.split(","));
+        else
+            assigneeList = Collections.emptyList();
 
         final List<Map<String, String>> uuidMaps = buildUUIDList(assigneeList);
         if (CollectionUtils.isNotEmpty(uuidMaps)) {
@@ -99,7 +111,9 @@ public class ArisingFileWorkflowIntegrator {
 
         return jsonObj;
     }
-    private Map<String, String> arisingFileWorkflowRequest(final RequestInfo requestInfo, final JSONArray wfRequestArray) { // NOPMD
+
+    private Map<String, String> arisingFileWorkflowRequest(final RequestInfo requestInfo,
+                                                           final JSONArray wfRequestArray) { // NOPMD
         // Create WorkflowRequest Json
         final JSONObject request = new JSONObject();
         request.put(FMConstants.REQUESTINFOKEY, requestInfo);
@@ -113,9 +127,9 @@ public class ArisingFileWorkflowIntegrator {
         try {
             // workflow service integration and get response from ws
             response = restTemplate.postForObject(fmConfig.getWfHost()
-                            .concat(fmConfig.getWfTransitionPath()),
-                    request,
-                    String.class);
+                                                          .concat(fmConfig.getWfTransitionPath()),
+                                                  request,
+                                                  String.class);
         } catch (HttpClientErrorException e) {
             // extracting message from client error exception
             final DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
@@ -125,7 +139,7 @@ public class ArisingFileWorkflowIntegrator {
             } catch (PathNotFoundException ex) {
                 if (log.isErrorEnabled()) {
                     log.error(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
-                            " Unable to read the json path in error object : " + ex.getMessage());
+                              " Unable to read the json path in error object : " + ex.getMessage());
                 }
                 throw new CustomException(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
                         " Unable to read the json path in error object : " + ex.getMessage());
@@ -150,11 +164,12 @@ public class ArisingFileWorkflowIntegrator {
         responseArray.forEach(status -> {
             final DocumentContext instanceContext = JsonPath.parse(status);
             idStatusMap.put(instanceContext.read(FMConstants.BUSINESSIDJOSNKEY),
-                    instanceContext.read(FMConstants.STATUSJSONKEY));
+                            instanceContext.read(FMConstants.STATUSJSONKEY));
         });
 
         return idStatusMap;
     }
+
     private List<Map<String, String>> buildUUIDList(final List<String> assignees) {
         final List<Map<String, String>> result = new LinkedList<>();
 
@@ -169,6 +184,5 @@ public class ArisingFileWorkflowIntegrator {
 
         return result;
     }
-
 
 }

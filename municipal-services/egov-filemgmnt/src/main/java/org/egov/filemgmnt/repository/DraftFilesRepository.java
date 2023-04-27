@@ -18,7 +18,8 @@ public class DraftFilesRepository {
     private final DraftFilesQueryBuilder draftingQueryBuilder;
     private final DraftFilesRowMapper draftingRowMapper;
 
-    DraftFilesRepository(final DraftFilesQueryBuilder draftingQueryBuilder, final DraftFilesRowMapper draftingRowMapper) {
+    DraftFilesRepository(final DraftFilesQueryBuilder draftingQueryBuilder,
+                         final DraftFilesRowMapper draftingRowMapper) {
         this.draftingQueryBuilder = draftingQueryBuilder;
         this.draftingRowMapper = draftingRowMapper;
     }

@@ -1,30 +1,26 @@
 package org.egov.filemgmnt.validators;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_CREATE;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_SEARCH;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
+import org.apache.commons.lang3.StringUtils;
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.DraftFilesRepository;
 import org.egov.filemgmnt.util.FMUtils;
-import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.web.models.drafting.DraftFiles;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
 import org.egov.tracer.model.CustomException;
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,22 +41,23 @@ public class DraftFilesValidator {
 
         }
 
-        for(DraftFiles draftFiles : request.getDrafting()){
+        for (DraftFiles draftFiles : request.getDrafting()) {
             if (StringUtils.isNotBlank(draftFiles.getTenantId()) && StringUtils.isNotBlank(draftFiles.getAssigner())
-                && StringUtils.isNotBlank(draftFiles.getFileCode()) && StringUtils.isNotBlank(draftFiles.getDraftType())) {  
-            
-                    DraftFilesSearchCriteria searchCriteria = new DraftFilesSearchCriteria();
+                    && StringUtils.isNotBlank(draftFiles.getFileCode())
+                    && StringUtils.isNotBlank(draftFiles.getDraftType())) {
 
-                    searchCriteria.setAssigner(draftFiles.getAssigner());
-                    searchCriteria.setFileCode(draftFiles.getFileCode());
-                    searchCriteria.setTenantId(draftFiles.getTenantId());
-                    searchCriteria.setDraftType(draftFiles.getDraftType());
+                DraftFilesSearchCriteria searchCriteria = new DraftFilesSearchCriteria();
 
-                   // final DraftFiles draftDetails = finalDraftDetails(searchCriteria);
-                    final List<DraftFiles> draftDetails = repository.searchDrafting(searchCriteria);
-                    if(!draftDetails.isEmpty()){ 
-                        throw new CustomException(INVALID_SEARCH.getCode(), "Draft Already Existing");
-                    } 
+                searchCriteria.setAssigner(draftFiles.getAssigner());
+                searchCriteria.setFileCode(draftFiles.getFileCode());
+                searchCriteria.setTenantId(draftFiles.getTenantId());
+                searchCriteria.setDraftType(draftFiles.getDraftType());
+
+                // final DraftFiles draftDetails = finalDraftDetails(searchCriteria);
+                final List<DraftFiles> draftDetails = repository.searchDrafting(searchCriteria);
+                if (!draftDetails.isEmpty()) {
+                    throw new CustomException(INVALID_SEARCH.getCode(), "Draft Already Existing");
+                }
 
             }
         }
@@ -85,7 +82,7 @@ public class DraftFilesValidator {
     }
 
     public void validateSearchDraftFiles(final RequestInfo requestInfo, // NOPMD
-                                       final DraftFilesSearchCriteria searchCriteria) {
+                                         final DraftFilesSearchCriteria searchCriteria) {
         if (StringUtils.isBlank(searchCriteria.getTenantId())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Tenant id is required for draft search.");
         }
@@ -110,13 +107,13 @@ public class DraftFilesValidator {
         }
 
         if (StringUtils.isNotBlank(searchCriteria.getTenantId()) && StringUtils.isBlank(searchCriteria.getAssigner())
-                && StringUtils.isBlank(searchCriteria.getFileCode()) && StringUtils.isBlank(searchCriteria.getDraftType())) {
+                && StringUtils.isBlank(searchCriteria.getFileCode())
+                && StringUtils.isBlank(searchCriteria.getDraftType())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Search based only on tenant id is not allowed.");
         }
     }
 
-    private void validateSearchParams(final DraftFilesSearchCriteria searchCriteria,
-                                      final List<String> allowedParams) {
+    private void validateSearchParams(final DraftFilesSearchCriteria searchCriteria, final List<String> allowedParams) {
         final BeanWrapper bw = new BeanWrapperImpl(searchCriteria);
 
         FMUtils.validateSearchParam(bw, "tenantId", allowedParams);
@@ -127,6 +124,5 @@ public class DraftFilesValidator {
         FMUtils.validateSearchParam(bw, "uuid", allowedParams);
         FMUtils.validateSearchParam(bw, "moduleName", allowedParams);
     }
-
 
 }

@@ -1,17 +1,8 @@
 package org.egov.filemgmnt.validators;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
-
-import java.util.List;
-
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.ArisingFileRepository;
-import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
-import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
-import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
 

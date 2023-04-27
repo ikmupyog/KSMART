@@ -36,5 +36,5 @@ public class DraftCertificateRequest {
 
         return this;
     }
-    
+
 }

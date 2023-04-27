@@ -1,15 +1,15 @@
 package org.egov.filemgmnt.web.models.GlobalMaster;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-import org.apache.kafka.common.protocol.types.Field;
-import org.egov.filemgmnt.util.FMConstants;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

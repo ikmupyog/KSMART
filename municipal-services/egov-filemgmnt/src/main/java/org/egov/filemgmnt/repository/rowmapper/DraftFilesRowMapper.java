@@ -17,17 +17,17 @@ public class DraftFilesRowMapper implements ResultSetExtractor<List<DraftFiles>>
         List<DraftFiles> result = new ArrayList<>();
         while (rs.next()) {
             result.add(DraftFiles.builder()
-                               .uuid(rs.getString("drafting_id"))
-                               .tenantId(rs.getString("tenantid"))
-                               .businessService(rs.getString("businessService"))
-                               .moduleName(rs.getString("moduleName"))
-                               .fileCode(rs.getString("fileCode"))
-                               .draftType(rs.getString("draftType"))
-                               .draftText(rs.getString("draftText"))
-                               .status(rs.getString("status"))
-                               .assigner(rs.getString("assigner"))
-                               .fileStoreId(rs.getString("filestoreid"))
-                               .build());
+                                 .uuid(rs.getString("drafting_id"))
+                                 .tenantId(rs.getString("tenantid"))
+                                 .businessService(rs.getString("businessService"))
+                                 .moduleName(rs.getString("moduleName"))
+                                 .fileCode(rs.getString("fileCode"))
+                                 .draftType(rs.getString("draftType"))
+                                 .draftText(rs.getString("draftText"))
+                                 .status(rs.getString("status"))
+                                 .assigner(rs.getString("assigner"))
+                                 .fileStoreId(rs.getString("filestoreid"))
+                                 .build());
         }
         return result;
     }

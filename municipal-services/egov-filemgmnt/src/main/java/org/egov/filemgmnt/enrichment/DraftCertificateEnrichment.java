@@ -6,16 +6,15 @@ import java.util.UUID;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
+import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
-import org.springframework.stereotype.Component;
-import org.egov.filemgmnt.config.FMConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DraftCertificateEnrichment extends BaseEnrichment{
+public class DraftCertificateEnrichment extends BaseEnrichment {
 
     @Autowired
     private FMConfiguration fmConfig;
@@ -58,5 +57,4 @@ public class DraftCertificateEnrichment extends BaseEnrichment{
 
     }
 
-    
 }

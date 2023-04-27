@@ -1,8 +1,5 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,7 +20,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class ArisingFileResponse {
 
     @JsonProperty("ResponseInfo")
@@ -31,6 +27,5 @@ public class ArisingFileResponse {
 
     @JsonProperty("ArisingFile")
     private ArisingFile arisingFileDetail;
-
 
 }

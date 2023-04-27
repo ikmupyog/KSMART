@@ -23,21 +23,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class ArisingFileSearchResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
-    @JsonProperty("ArisingFile")
-    private List<ArisingFile> arisingFileDetails;
+
+    @JsonProperty("ArisingFiles")
+    private List<ArisingFile> arisingFiles;
+
     @Schema(type = "integer", format = "int32", description = "Search result count")
     @JsonProperty("Count")
     private int count;
 
     public ArisingFileSearchResponse addArisingFile(final ArisingFile arisingFile) {
-        if (arisingFileDetails == null) {
-            arisingFileDetails = new ArrayList<>();
+        if (arisingFiles == null) {
+            arisingFiles = new ArrayList<>();
         }
-        arisingFileDetails.add(arisingFile);
+
+        arisingFiles.add(arisingFile);
         return this;
     }
 }

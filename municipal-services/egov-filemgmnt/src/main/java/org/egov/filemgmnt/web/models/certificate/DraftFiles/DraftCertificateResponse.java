@@ -1,4 +1,5 @@
 package org.egov.filemgmnt.web.models.certificate.DraftFiles;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class DraftCertificateResponse {
-    
+
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 

@@ -23,18 +23,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1")
-public class ArisingFileController {
+public class ArisingFilesController implements ArisingFilesBaseController {
 
     private final ResponseInfoFactory responseInfoFactory;
     private final ArisingFileService arisingFileService;
 
-    ArisingFileController(final ArisingFileService arisingFileService, final ResponseInfoFactory responseInfoFactory) {
+    ArisingFilesController(final ArisingFileService arisingFileService, final ResponseInfoFactory responseInfoFactory) {
         this.arisingFileService = arisingFileService;
         this.responseInfoFactory = responseInfoFactory;
     }
 
-    @PostMapping("/applicantservices/_createArisingFile")
-    public ResponseEntity<ArisingFileResponse> createArisingFile(@RequestBody final ArisingFileRequest request) {
+    @Override
+    @PostMapping("/arisingfiles/_create")
+    public ResponseEntity<ArisingFileResponse> create(@RequestBody final ArisingFileRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("ArisingFileRequest-create:  \n{}", FMUtils.toJson(request));
         }
@@ -42,12 +43,12 @@ public class ArisingFileController {
         final ArisingFile arisingFileDetails = arisingFileService.createArisingFile(request);
         return ResponseEntity.ok(ArisingFileResponse.builder()
                                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                      Boolean.TRUE))
+                                                                                                                        Boolean.TRUE))
                                                     .arisingFileDetail(arisingFileDetails)
                                                     .build());
     }
 
-//    @PostMapping("/applicantservices/_updateArisingFile")
+//    @PostMapping("/arisingfiles/_update")
 //    public ResponseEntity<ArisingFileResponse> update(@RequestBody ArisingFileRequest request) {
 //
 //        ArisingFile files = arisingFileService.updateArisingFile(request);
@@ -61,9 +62,10 @@ public class ArisingFileController {
 //        return ResponseEntity.ok(response);
 //    }
 
-    @PostMapping("/applicantservice/_searchArisingfile")
-    public ResponseEntity<ArisingFileSearchResponse> searchFile(@RequestBody final RequestInfoWrapper request,
-                                                                @ModelAttribute final ArisingFileSearchCriteria searchCriteria) {
+    @Override
+    @PostMapping("/arisingfiles/_search")
+    public ResponseEntity<ArisingFileSearchResponse> search(@RequestBody final RequestInfoWrapper request,
+                                                            @ModelAttribute final ArisingFileSearchCriteria searchCriteria) {
         if (log.isDebugEnabled()) {
             log.debug("ArisingFile-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
@@ -72,7 +74,7 @@ public class ArisingFileController {
         return ResponseEntity.ok(ArisingFileSearchResponse.builder()
                                                           .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                               Boolean.TRUE))
-                                                          .arisingFileDetails(result)
+                                                          .arisingFiles(result)
                                                           .build());
     }
 }

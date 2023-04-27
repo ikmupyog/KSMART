@@ -82,7 +82,7 @@ public class ApplicantFileDetail {
 //  @NotNull(message = "Financial year is required")
 //    @Size(min = 4, max = 4, message = "Invalid financial year")
     @Size(max = 10)
-//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
+//    @Pattern(regexp = FMConstants.PATTERN_YEAR, message = "Invalid financial year")
     @JsonProperty("financialYear")
     private String financialYear;
 

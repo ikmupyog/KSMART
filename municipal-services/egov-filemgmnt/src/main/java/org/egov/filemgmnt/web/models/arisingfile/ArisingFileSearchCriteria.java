@@ -1,7 +1,5 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -28,13 +26,16 @@ public class ArisingFileSearchCriteria {
              message = "Invalid tenant identification number format, ex: kl.cochin")
     @JsonProperty("tenantId")
     private String tenantId;
+
     @JsonProperty("fileCode")
-    private List<String> fileCode;
+    private String fileCode;
+
     @JsonProperty("fromDate")
     private Long fromDate; // file arising date
 
     @JsonProperty("toDate")
     private Long toDate; // file arising date
+
     @JsonProperty("fileStatus")
-    private List<String> fileStatus;
+    private String fileStatus;
 }

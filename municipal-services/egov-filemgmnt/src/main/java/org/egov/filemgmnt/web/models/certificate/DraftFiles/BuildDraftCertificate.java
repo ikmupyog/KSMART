@@ -15,5 +15,5 @@ public class BuildDraftCertificate {
     private String draftText;
     private String embeddedUrl;
     private Long dateOfIssue;
-    
+
 }

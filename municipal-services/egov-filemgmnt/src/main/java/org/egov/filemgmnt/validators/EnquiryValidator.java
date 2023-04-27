@@ -1,2 +1,4 @@
-package org.egov.filemgmnt.validators;public class EnquiryValidator {
+package org.egov.filemgmnt.validators;
+
+public class EnquiryValidator {
 }
