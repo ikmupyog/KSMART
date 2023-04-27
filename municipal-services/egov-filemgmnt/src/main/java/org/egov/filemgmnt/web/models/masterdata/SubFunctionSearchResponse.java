@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Schema(description = "Sub function master data search response")
 @Validated
 
 @Getter
@@ -23,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class SubFunctionSearchResponse {
+
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 

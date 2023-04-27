@@ -231,14 +231,6 @@ public class MasterDataController implements MasterDataBaseController {
     public ResponseEntity<Void> deleteModule(@RequestBody ModuleDetailsRequest request) {
         return ResponseEntity.noContent()
                              .build();
-
-//        final ModuleDetails moduleDetail = masterDataService.deleteModule(request);
-//
-//        return ResponseEntity.ok(ModuleDetailsResponse.builder()
-//                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-//                                                                                                                          Boolean.TRUE))
-//                                                      .moduleDetails(moduleDetail)
-//                                                      .build());
     }
 
     @Override
@@ -246,13 +238,6 @@ public class MasterDataController implements MasterDataBaseController {
     public ResponseEntity<Void> deleteMajorFunction(@RequestBody MajorFunctionDetailsRequest request) {
         return ResponseEntity.noContent()
                              .build();
-
-//        final MajorFunctionDetails mfDetails = masterDataService.deleteMF(request);
-//        return ResponseEntity.ok(MajorFunctionDetailsResponse.builder()
-//                                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-//                                                                                                                                 Boolean.TRUE))
-//                                                             .majorFunctionDetails(mfDetails)
-//                                                             .build());
     }
 
     @Override
@@ -260,13 +245,6 @@ public class MasterDataController implements MasterDataBaseController {
     public ResponseEntity<Void> deleteSubFunction(@RequestBody SubFunctionDetailsRequest request) {
         return ResponseEntity.noContent()
                              .build();
-
-//        final SubFunctionDetails sfDetails = masterDataService.deleteSF(request);
-//        return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
-//                                                           .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-//                                                                                                                               Boolean.TRUE))
-//                                                           .subFunctionDetails(sfDetails)
-//                                                           .build());
     }
 
     @Override
@@ -274,12 +252,5 @@ public class MasterDataController implements MasterDataBaseController {
     public ResponseEntity<Void> deleteService(@RequestBody ServiceDetailsRequest request) {
         return ResponseEntity.noContent()
                              .build();
-
-//        final ServiceDetails serviceDetails = masterDataService.deleteService(request);
-//        return ResponseEntity.ok(ServiceDetailsResponse.builder()
-//                                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-//                                                                                                                           Boolean.TRUE))
-//                                                       .serviceDetails(serviceDetails)
-//                                                       .build());
     }
 }

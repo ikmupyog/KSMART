@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Module Serach Response")
+@Schema(description = "Module master data search response")
 @Validated
 
 @Getter

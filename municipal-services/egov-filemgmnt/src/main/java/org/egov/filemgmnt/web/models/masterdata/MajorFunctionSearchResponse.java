@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Major Function search results")
+@Schema(description = "Major function master data search response")
 @Validated
 
 @Getter
@@ -24,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class MajorFunctionSearchResponse {
+
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 

@@ -18,11 +18,8 @@ import lombok.Setter;
 @Builder
 public class ServiceSearchCriteria {
 
-    @NotBlank(message = "Service Code is required")
-    @Size(max = 64, message = "Service Code length cannot exceed 64 characters")
+    @NotBlank(message = "Service code is required")
+    @Size(max = 64, message = "Service code length cannot exceed 64 characters")
     @JsonProperty("serviceCode")
     private String serviceCode;
-
-    @JsonProperty("RequestInfo")
-    private String requestInfo;
 }

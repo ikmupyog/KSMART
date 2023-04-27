@@ -15,8 +15,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Module Master Details")
+@Schema(description = "Module master data details")
 @Validated
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,16 +37,19 @@ public class ModuleDetails {
     private String tenantId;
 
     @Schema(type = "string", description = "Module code")
+    @NotBlank(message = "Module code is required")
     @Size(max = 20, message = "Module code length cannot exceed 20 characters")
     @JsonProperty("moduleCode")
     private String moduleCode;
 
     @Schema(type = "string", description = "Module name english")
+    @NotBlank(message = "Module name in english is required")
     @Size(max = 64, message = "Module name english length cannot exceed 64 characters")
     @JsonProperty("moduleNameEnglish")
     private String moduleNameEnglish;
 
     @Schema(type = "string", description = "Module name malayalam")
+    @NotBlank(message = "Module name in malayalam is required")
     @Size(max = 64, message = "Module name malayalam length cannot exceed 64 characters")
     @JsonProperty("moduleNameMalayalam")
     private String moduleNameMalayalam;

@@ -12,14 +12,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Major Function response for create and update")
+@Schema(description = "Major function master data response for create and update")
 @Validated
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class MajorFunctionDetailsResponse {
 
     @JsonProperty("RequestInfo")

@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Service Master search results")
+@Schema(description = "Service master data search response")
 @Validated
 
 @Getter
