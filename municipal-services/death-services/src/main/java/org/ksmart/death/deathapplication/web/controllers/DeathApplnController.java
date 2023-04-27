@@ -226,7 +226,7 @@ public class DeathApplnController {
            String status=request.getDeathNACDtls().get(0).getApplicationStatus();
            String applicationType =request.getDeathNACDtls().get(0).getApplicationType();
    
-        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_TYPE)){         
+        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_TYPE)){  
             DeathRegistryNACRequest registryRequest = deathRegistryRequestService.createRegistryNACRequest(request);
             List<DeathRegistryNACDtls> registryDeathDetails =  deathRegistryService.createNAC(registryRequest);
         }

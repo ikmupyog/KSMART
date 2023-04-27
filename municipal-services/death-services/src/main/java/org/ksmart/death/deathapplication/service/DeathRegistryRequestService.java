@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.death.deathapplication.enrichment.DeathEnrichment;
 import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
@@ -51,8 +52,13 @@ import com.jayway.jsonpath.JsonPath;
 @Slf4j
 @Service
 public class DeathRegistryRequestService {
-    @Autowired
-    DeathMdmsUtil util;
+    private final DeathMdmsUtil util;    
+    private final DeathEnrichment enrichmentService;
+
+    DeathRegistryRequestService(DeathEnrichment enrichmentService,DeathMdmsUtil util){  
+            this.util = util;
+            this.enrichmentService = enrichmentService;
+        }
     
     public DeathRegistryRequest createRegistryRequest( DeathDtlRequest deathrequest ){        
         RequestInfo requestInfo = deathrequest.getRequestInfo();
@@ -869,6 +875,8 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
         DeathRegistryBasicInfo deathRegistryBasicInfo=new DeathRegistryBasicInfo();
         DeathBasicInfo deathBasicInfo = deathrequest.getDeathNACDtls().get(0).getDeathBasicInfo();
         
+        enrichmentService.setNACDeathPlaceTypes(deathrequest);
+
         deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
         deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
         deathRegistryBasicInfo.setDeathPlace(deathBasicInfo.getDeathPlace());

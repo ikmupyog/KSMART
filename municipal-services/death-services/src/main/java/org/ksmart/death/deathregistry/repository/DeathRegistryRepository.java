@@ -1608,8 +1608,131 @@ public class DeathRegistryRepository {
                  lbDistrictEn = lbDistrictEn.replaceAll("[\\[\\]\\(\\)]", "");
 
                  cert.getDeathBasicInfo().setLbDistrictEn(lbDistrictEn);
+
+                 // place of death HOME
+                if(DeathRegistryConstants.DEATH_PLACE_HOME.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+
+                    Object mdmsDataHome = util.mDMSCallCertificateHome(pdfApplicationRequest.getRequestInfo()     
+                                    , cert.getDeathBasicInfo().getTenantId()                           
+                                    , cert.getDeathBasicInfo().getDeathPlaceHomeDistrictId()
+                                    , cert.getDeathBasicInfo().getDeathPlaceHomeStateId()
+                                    , cert.getDeathBasicInfo().getDeathPlaceHomeCountryId()
+                                    , cert.getDeathBasicInfo().getDeathPlaceHomePostofficeId());
+                    Map<String,List<String>> masterDataHome = getAttributeValues(mdmsDataHome);                  
+
+                    String deathPlaceAddDistrict = masterDataHome.get(DeathRegistryConstants.DISTRICT).toString();
+                    deathPlaceAddDistrict = deathPlaceAddDistrict.replaceAll("[\\[\\]\\(\\)]", "");
+                    cert.getDeathBasicInfo().setDeathPlaceHomeDistrictId(deathPlaceAddDistrict);
+
+                    String deathPlaceAddState = masterDataHome.get(DeathRegistryConstants.STATE).toString();
+                    deathPlaceAddState = deathPlaceAddState.replaceAll("[\\[\\]\\(\\)]", "");
+                    cert.getDeathBasicInfo().setDeathPlaceHomeStateId(deathPlaceAddState);
+
+                    String deathPlaceAddCountry = masterDataHome.get(DeathRegistryConstants.COUNTRY).toString();
+                    deathPlaceAddCountry = deathPlaceAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
+                    cert.getDeathBasicInfo().setDeathPlaceHomeCountryId(deathPlaceAddCountry);            
+                                      
+                    String deathPlacePO = masterDataHome.get(DeathRegistryConstants.POSTOFFICE).toString();
+                    deathPlacePO = deathPlacePO.replaceAll("[\\[\\]\\(\\)]", "");
+    
+                    if (null != deathPlacePO && !deathPlacePO.isEmpty()){
+                        deathPlacePO=deathPlacePO+" "+DeathRegistryConstants.PO_EN;
+                       if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != null){
+                        deathPlacePO = deathPlacePO+" "+cert.getDeathBasicInfo().getDeathPlaceHomePincode();
+                       }
+                        cert.getDeathBasicInfo().setDeathPlaceHomePostOfficeEn(deathPlacePO);
+                   }
+                   
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeHoueNameEn(cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeHoueNameEn("");
+                    }                    
+                    
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeStreetNameEn(cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeStreetNameEn("");
+                    }
+                   
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeLocalityEn(cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeLocalityEn("");
+                    }
+                    
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomePostOfficeEn(cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeEn()+" ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomePostOfficeEn("");
+                    }
+                    
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomePincode(cert.getDeathBasicInfo().getDeathPlaceHomePincode()+" ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomePincode("");
+                    }
+
+                    //End
+                    cert.getDeathBasicInfo().setPlaceofDeath(                       
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeEn()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeDistrictId()+ " "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStateId()+ " "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeCountryId());
+                }
+                
+                //Place of Death Hospital
+                else if(DeathRegistryConstants.DEATH_PLACE_HOSPITAL.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+                     Object mdmsDataHospital = util.mDMSCallCertificateHospital(pdfApplicationRequest.getRequestInfo()     
+                                            , cert.getDeathBasicInfo().getTenantId()                           
+                                            , cert.getDeathBasicInfo().getDeathPlaceType());
+                    Map<String,List<String>> masterDataHospital = getAttributeValuesHospital(mdmsDataHospital);                    
+
+                    String deathPlaceHospital = masterDataHospital.get(DeathRegistryConstants.HOSPITAL_LIST).toString();
+                    deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
+                    cert.getDeathBasicInfo().setPlaceofDeath(deathPlaceHospital);
+                }
+                //Place of Death Institution
+                else if(DeathRegistryConstants.DEATH_PLACE_INSTITUTION.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+                    Object mdmsDataInstitution = util.mDMSCallCertificateInstitution(pdfApplicationRequest.getRequestInfo()     
+                                            , cert.getDeathBasicInfo().getTenantId()                           
+                                            , cert.getDeathBasicInfo().getDeathPlaceType());
+                    Map<String,List<String>> masterDataInstitution = getAttributeValuesHospital(mdmsDataInstitution);
+                    
+                    String deathPlaceInstitution = masterDataInstitution.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
+                    deathPlaceInstitution = deathPlaceInstitution.replaceAll("[\\[\\]\\(\\)]", "");                
+                    cert.getDeathBasicInfo().setPlaceofDeath(deathPlaceInstitution);
+                }
+                //Place of Death Vehicle
+                else if(DeathRegistryConstants.DEATH_PLACE_VEHICLE.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+                   
+                    if(cert.getDeathBasicInfo().getVehicleFromplaceEn() != null){
+                        cert.getDeathBasicInfo().setPlaceofDeath(DeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getDeathBasicInfo().getVehicleFromplaceEn()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getDeathBasicInfo().getVehicleToPlaceEn()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+lbName+".");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceOtherEn());
+                    }
+                }
+                //Place of Death Other
+                else if(DeathRegistryConstants.DEATH_PLACE_OTHER_PLACES.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+                    //  if(cert.getDeathBasicInfo().getDeathPlaceStreetMl() != null){
+                        cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceStreetEn()+", "
+                                +cert.getDeathBasicInfo().getDeathPlaceLocalityEn());
+                    // }
+                    // else{
+                    //     cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceOtherMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceOtherEn());
+                    // }
+                }
             });
-            // log.info(new Gson().toJson(pdfApplicationRequest));
+            log.info(new Gson().toJson(pdfApplicationRequest));
             NACPdfApplicationRequest req = NACPdfApplicationRequest.builder().deathNACCertificate(pdfApplicationRequest.getDeathNACCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
             pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
                 String uiHost = config.getEgovPdfHost();

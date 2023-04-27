@@ -213,8 +213,6 @@ public class DeathApplnService {
 
       // //RAkhi S ikm  on 30.03.2023 - Service to update NAC request
       public List<DeathNACDtls> updateNAC(DeathNACRequest request) {
-
-          enrichmentService.setNACDeathPlaceTypes(request);
           enrichmentService.setNACPresentAddress(request);
           enrichmentService.setNACPermanentAddress(request);
           String ackNumber = request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeathACKNo();
@@ -227,6 +225,7 @@ public class DeathApplnService {
           request.getDeathNACDtls().get(0).getDeathBasicInfo().setMotherAadharNo(searchResult.get(0).getDeathBasicInfo().getMotherAadharNo());
           request.getDeathNACDtls().get(0).getDeathBasicInfo().setSpouseAadhaar(searchResult.get(0).getDeathBasicInfo().getSpouseAadhaar());
 
+          enrichmentService.setNACDeathPlaceTypes(request);
           validatorService.validateNACUpdate(request, searchResult);    
           workflowIntegrator.callWorkFlowNAC(request);
           producer.push(deathConfig.getUpdateDeathNACTopic(), request);
