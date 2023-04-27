@@ -60,7 +60,7 @@ const CrFlow = ({ path }) => {
       subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_CEMP"
+      role: "BND_DISTRICT_REGISTRAR"
     },
 
     // BND_LOCAL_REGISTRAR START----------------------------------------------------------
@@ -70,7 +70,7 @@ const CrFlow = ({ path }) => {
       subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_CEMP"
+      role: "BND_LOCAL_REGISTRAR"
     },
 
     // BND_LOCAL_REGISTRAR END----------------------------------------------------------
@@ -82,7 +82,7 @@ const CrFlow = ({ path }) => {
       subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_CEMP"
+      role: "BND_SUB_REGISTRAR"
     },
 
     // BND_SUB_REGISTRAR END-----------------------------------------------------------
@@ -110,7 +110,7 @@ const CrFlow = ({ path }) => {
       subTitle: "CR_BIRTH_NEW_REGISTRATION",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
-      role: "INSTITUTION_OPERATOR"
+      role: "INSTITUTION_APPROVER"
     },
 
     // INSTITUTION_APPROVER END-------------------------------------------------------------------------
@@ -122,7 +122,7 @@ const CrFlow = ({ path }) => {
       subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_CEMP"
+      role: "OFFICIAL_NOTIFIER"
     },
 
     // OFFICIAL_NOTIFIER END-------------------------------------------------------------------------
@@ -169,7 +169,7 @@ const CrFlow = ({ path }) => {
       subTitle: "CR_BIRTH_REG_NEW_ADOPTION",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-adoption`,
-      role: "BND_LOCAL_REGISTRAR"
+      role: "BND_CEMP"
     },
     {
       title: "CR_BIRTH_NAME_INC_CORRECTION",
