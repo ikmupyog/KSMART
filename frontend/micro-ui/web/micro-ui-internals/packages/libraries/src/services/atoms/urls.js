@@ -150,6 +150,8 @@ const Urls = {
     create: "/death-services/v1/deathdetails/_createdeathnac",
     update: "/death-services/v1/deathdetails/_updatedeathnac",
     search: "/death-services/v1/deathdetails/_searchdeathnac",
+    registry_download : "/death-services/v1/deathregistry/_downloaddeathnac",
+    registry_search_nac_death: "/death-services/v1/deathregistry/_searchdeathnac",
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath",
