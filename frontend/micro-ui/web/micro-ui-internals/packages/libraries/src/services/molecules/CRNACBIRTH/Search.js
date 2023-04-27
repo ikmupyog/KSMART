@@ -204,15 +204,15 @@ export const CRNACsearch = {
       ],
     };
 
-    const childInfo = {
-      title: "CR_APPLICANT_OTHER_CHILDREN_HEADER",
-      values: [
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.OtherChildren.childNameEn || "NA" },
-        { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.OtherChildren.dob || "NA" },
-        { title: "PDF_BIRTH_CHILD_SEX", value: response?.OtherChildren.sex || "NA" },
-        { title: "PDF_BIRTH_ORDER", value: response?.OtherChildren.nacorderofChildren || "NA" },
-      ],
-    };
+    // const childInfo = {
+    //   title: "CR_APPLICANT_OTHER_CHILDREN_HEADER",
+    //   values: [
+    //     { title: "PDF_BIRTH_CHILD_NAME", value: response?.OtherChildren.childNameEn || "NA" },
+    //     { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.OtherChildren.dob || "NA" },
+    //     { title: "PDF_BIRTH_CHILD_SEX", value: response?.OtherChildren.sex || "NA" },
+    //     { title: "PDF_BIRTH_ORDER", value: response?.OtherChildren.nacorderofChildren || "NA" },
+    //   ],
+    // };
     const Docdetails = {
       title: "Document SUMMARY DETAILS",
       documents: true,
@@ -226,7 +226,7 @@ export const CRNACsearch = {
     response && employeeResponse.push(PresentAddressBirthDetailsInfo);
     //response && employeeResponse.push(PermanentAddressBirthDetailsInfo);
     response && employeeResponse.push(initiatorInfo);
-    response && employeeResponse.push(childInfo);
+    // response && employeeResponse.push(childInfo);
 
     return {
       tenantId: response.tenantId,
