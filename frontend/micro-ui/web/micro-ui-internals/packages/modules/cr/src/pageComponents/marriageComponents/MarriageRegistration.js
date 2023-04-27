@@ -879,19 +879,19 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         }
       }
     }
-    if (marriageLandmark === null || marriageLandmark.trim() == '' || marriageLandmark.trim() == undefined) {
-      console.log("Hi");
-      validFlag = false;
-      setmarriageLandmark("");
-      setmarriageLandmarkError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setmarriageLandmarkError(false);
-      console.log("Hi from else");
-    }
+    // if (marriageLandmark === null || marriageLandmark.trim() == '' || marriageLandmark.trim() == undefined) {
+    //   console.log("Hi");
+    //   validFlag = false;
+    //   setmarriageLandmark("");
+    //   setmarriageLandmarkError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setmarriageLandmarkError(false);
+    //   console.log("Hi from else");
+    // }
     if (marriageType == null || marriageType == undefined) {
       setmarriageTypeError(true);
       validFlag = false;

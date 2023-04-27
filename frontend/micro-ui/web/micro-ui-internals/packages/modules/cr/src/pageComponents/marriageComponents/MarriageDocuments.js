@@ -616,6 +616,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
 
   function selectWitness2Aadhar(e) {
     const witness2AadharFile = e.target.files[0];
+    console.log({witness2AadharFile});
     setWitness2AadharDocument(witness2AadharFile);
     setWitness2AadharDocumentName(witness2AadharFile.name);
     setWitness2AadharDocumentType("Aadhar");
@@ -1460,7 +1461,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   };
   const onSkip = () => onSelect();
 
-  console.log({ otherMarriageCertificate });
+  console.log({ witness2Aadhar });
+  console.log(witness2AadharDocument);
   console.log({ groomDrivingLicense });
 
   return (
