@@ -37,7 +37,7 @@ public class MarriageCorrectionController {
     }
 
     @PostMapping("/_createmarriagecorrection")
-    public ResponseEntity<MarriageCorrectionResponse> create(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public ResponseEntity<MarriageCorrectionResponse> createCorrection(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageCorrectionService.createCorrection(request);
         MarriageCorrectionResponse response = MarriageCorrectionResponse
@@ -51,7 +51,7 @@ public class MarriageCorrectionController {
 
 
     @PostMapping(value = { "/_updatemarriagecorrection"})
-    public ResponseEntity<MarriageCorrectionResponse> registryUpdate(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public ResponseEntity<MarriageCorrectionResponse> updateCorrection(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         
         List<MarriageCorrectionDetails> marriageapplnDetails = marriageCorrectionService.updateMarriageCorrectionDetails(request);
 
@@ -71,7 +71,7 @@ public class MarriageCorrectionController {
 
 
     @PostMapping(value = {"/_searchmarriagecorrection"})
-    public ResponseEntity<MarriageCorrectionResponse> searchKsmartBirth(@RequestBody MarriageCorrectionRequest request, @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
+    public ResponseEntity<MarriageCorrectionResponse> searchCorrection(@RequestBody MarriageCorrectionRequest request, @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
         List<MarriageApplicationDetails> marriageCorrectionAplnDetails=marriageCorrectionService.searchCorrectionApplinDetails(request, criteria);
         List<MarriageCorrectionDetails> marriageCorrectionDetails =new ArrayList<>();
         if(marriageCorrectionAplnDetails.size()==1) {
