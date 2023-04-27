@@ -121,7 +121,7 @@ const formFielColumns = {
           console.log("items==", item, item?.CorrectionField === "CHILD_DOB");
           if (item?.isEditable) {
             const correctionFieldValues = getCorrectionFieldValues(item);
-            const correctionDocs = getCorrectionDocuments(item.Documents);
+            const correctionDocs = getCorrectionDocuments(item.documentData);
             const tempObj = {
               correctionFieldName: item?.CorrectionField,
               conditionCode: item.conditionCode,

@@ -34,15 +34,15 @@ const DeathPlaceHospital = ({
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-  if (isEditAbandonedDeath) {
-    if (formData?.InformationDeathAband?.hospitalNameEn != null) {
-      if (cmbhospital.length > 0 && (hospitalNameEn === undefined || hospitalNameEn === "")) {
-        selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeathAband?.hospitalNameEn)[0]);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeathAband?.hospitalNameEn)[0];
-        selectHospitalNameMl(cmbhospitalMl);
-      }
-    }
-  }
+  // if (isEditAbandonedDeath) {
+  //   if (formData?.InformationDeathAband?.hospitalNameEn != null) {
+  //     if (cmbhospital.length > 0 && (hospitalNameEn === undefined || hospitalNameEn === "")) {
+  //       selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeathAband?.hospitalNameEn)[0]);
+  //       cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeathAband?.hospitalNameEn)[0];
+  //       selectHospitalNameMl(cmbhospitalMl);
+  //     }
+  //   }
+  // }
   
   useEffect(() => {
    

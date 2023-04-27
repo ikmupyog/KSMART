@@ -861,18 +861,18 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
           structurePlaceCorr.push({
             id : placeOld?.id ? placeOld?.id : null,
             tenantId : dataCorr.tenantId,
-            blockNo : placeNew?.blockNo ? placeNew?.blockNo : null,
-            surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : null,
-            subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : null,
-            partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : null,
-            doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
-            doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : null,
+            blockNo : placeNew?.blockNo && placeNew?.blockNo !== "" ? placeNew?.blockNo : null,
+            surveyNo : placeNew?.surveyNo  && placeNew?.surveyNo !== "" ? placeNew?.surveyNo : null,
+            subDivisionNo : placeNew?.subDivisionNo && placeNew?.subDivisionNo !== "" ? placeNew?.subDivisionNo : null,
+            partitionNo : placeNew?.partitionNo && placeNew?.partitionNo !== "" ? placeNew?.partitionNo : null,
+            doorNo : placeNew?.doorNo && placeNew?.doorNo !== "" ? placeNew?.doorNo : null,
+            doorNoSub : placeNew?.doorNoSub && placeNew?.doorNoSub !== "" ? placeNew?.doorNoSub : null,
             buildingId : null,
-            vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : null,
-            vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : null,
+            vehicleNo : placeNew?.vehicleNo && placeNew?.vehicleNo !== ""? placeNew?.vehicleNo : null,
+            vesselNo : placeNew?.vesselNo && placeNew?.vesselNo !== "" ? placeNew?.vesselNo : null,
             active : true,
             isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
-            stallNo : placeNew?.stallNo ? placeNew?.stallNo : null,
+            stallNo : placeNew?.stallNo && placeNew?.stallNo !== "" ? placeNew?.stallNo : null,
           });
 
           isEdit = true;
