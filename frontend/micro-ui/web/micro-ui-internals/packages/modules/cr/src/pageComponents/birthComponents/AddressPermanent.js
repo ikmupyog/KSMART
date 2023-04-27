@@ -194,38 +194,40 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
                 <div className="row">
-                    <div className="col-md-6">
-                        <CardLabel>
-                            {`${t("CS_COMMON_COUNTRY")}`}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            isMandatory={false}
-                            option={sortDropdownNames(cmbCountry ? cmbCountry : [], "name", t)}
-                            selected={permtaddressCountry}
-                            select={setSelectaddressCountry}
-                            disable={isDisableEdit}
-                        />
-                    </div>
-                    {countryValuePermanent === "IND" && (
+                    <div className="col-md-12">
                         <div className="col-md-6">
                             <CardLabel>
-                                {`${t("CS_COMMON_STATE")}`}
+                                {`${t("CS_COMMON_COUNTRY")}`}
                                 <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={sortDropdownNames(cmbState ? cmbState : [], "name", t)}
-                                selected={permtaddressStateName}
-                                select={setSelectaddressStateName}
+                                option={sortDropdownNames(cmbCountry ? cmbCountry : [], "name", t)}
+                                selected={permtaddressCountry}
+                                select={setSelectaddressCountry}
                                 disable={isDisableEdit}
                             />
                         </div>
-                    )}
+                        {countryValuePermanent === "IND" && (
+                            <div className="col-md-6">
+                                <CardLabel>
+                                    {`${t("CS_COMMON_STATE")}`}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    isMandatory={false}
+                                    option={sortDropdownNames(cmbState ? cmbState : [], "name", t)}
+                                    selected={permtaddressStateName}
+                                    select={setSelectaddressStateName}
+                                    disable={isDisableEdit}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
                 {/* </FormStep> */}
             </React.Fragment>

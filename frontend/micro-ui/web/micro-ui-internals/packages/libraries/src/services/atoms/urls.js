@@ -119,6 +119,7 @@ const Urls = {
     registry_search_birth: "/birth-services/cr/registry/_search",
     create_adoption: "/birth-services/cr/createadoption",
     correct_update: "/birth-services/cr/createbirthcorrection",
+    registry_search_Adoption: "/birth-services/cr/registry/_searchAdoption",
   },
   crcommonpayment: {
     update: "/birth-services/cr/common/updatepaywf",
@@ -149,6 +150,8 @@ const Urls = {
     create: "/death-services/v1/deathdetails/_createdeathnac",
     update: "/death-services/v1/deathdetails/_updatedeathnac",
     search: "/death-services/v1/deathdetails/_searchdeathnac",
+    registry_download : "/death-services/v1/deathregistry/_downloaddeathnac",
+    registry_search_nac_death: "/death-services/v1/deathregistry/_searchdeathnac",
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath",
