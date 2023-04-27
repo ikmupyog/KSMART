@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Module Serach Response")
+@Schema(description = "Sub function master data search response")
 @Validated
 
 @Getter
@@ -23,24 +23,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ModuleSearchResponse {
+public class SubFunctionSearchResponse {
 
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("ModuleDetails")
-    private List<ModuleDetails> moduleDetails;
+    @JsonProperty("SubFunctionDetails")
+    private List<SubFunctionDetails> subFunctionDetails;
 
     @Schema(type = "integer", format = "int32", description = "Search result count")
     @JsonProperty("Count")
     private int count;
 
-    public ModuleSearchResponse addModuleDetails(final ModuleDetails moduleDetail) {
-        if (moduleDetails == null) {
-            moduleDetails = new ArrayList<>();
+    public SubFunctionSearchResponse addSubFunctionDetails(final SubFunctionDetails subFunctionDetail) {
+        if (subFunctionDetails == null) {
+            subFunctionDetails = new ArrayList<>();
         }
-        moduleDetails.add(moduleDetail);
+        subFunctionDetails.add(subFunctionDetail);
         return this;
     }
-
 }

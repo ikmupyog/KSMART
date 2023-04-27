@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -15,8 +15,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Sub function Master Details")
+@Schema(description = "Sub function master data details")
 @Validated
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,31 +37,35 @@ public class SubFunctionDetails {
     private String tenantId;
 
     @Schema(type = "string", description = "Sub function code")
+    @NotBlank(message = "Sub function code is required")
     @Size(max = 20, message = "Sub function code length cannot exceed 20 characters")
     @JsonProperty("subFunctionCode")
     private String subFunctionCode;
 
     @Schema(type = "string", format = "uuid", description = "Major function id")
+    @NotBlank(message = "Major function id is required")
     @Size(max = 64, message = "Major function id length cannot exceed 64 characters")
     @JsonProperty("majorFunctionId")
     private String majorFunctionId;
 
     @Schema(type = "string", description = "Sub function name english")
+    @NotBlank(message = "Sub function name in english is required")
     @Size(max = 64, message = "Sub function name english length cannot exceed 64 characters")
     @JsonProperty("subFunctionNameEnglish")
     private String subFunctionNameEnglish;
 
     @Schema(type = "string", description = "Sub function name malayalam")
+    @NotBlank(message = "Sub function name in malayalam is required")
     @Size(max = 64, message = "Sub function name malayalam length cannot exceed 64 characters")
     @JsonProperty("subFunctionNameMalayalam")
     private String subFunctionNameMalayalam;
-
-    @JsonProperty("auditDetails")
-    private AuditDetails auditDetails;
 
     @Schema(type = "string", description = "status")
     @Size(max = 10, message = "status length cannot exceed 10 characters")
     @JsonProperty("status")
     private String status;
+
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
 
 }

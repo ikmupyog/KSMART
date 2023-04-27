@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Major Function search results")
+@Schema(description = "Module master data search response")
 @Validated
 
 @Getter
@@ -23,18 +23,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MajorFunctionSearchResponse {
+public class ModuleSearchResponse {
+
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("MajorFunctionDetails")
-    private List<MajorFunctionDetails> majorFunctionDetails;
+    @JsonProperty("ModuleDetails")
+    private List<ModuleDetails> moduleDetails;
 
-    public MajorFunctionSearchResponse addMFDetails(final MajorFunctionDetails majorFunctionDetail) {
-        if (majorFunctionDetails == null) {
-            majorFunctionDetails = new ArrayList<>();
+    @Schema(type = "integer", format = "int32", description = "Search result count")
+    @JsonProperty("Count")
+    private int count;
+
+    public ModuleSearchResponse addModuleDetails(final ModuleDetails moduleDetail) {
+        if (moduleDetails == null) {
+            moduleDetails = new ArrayList<>();
         }
-        majorFunctionDetails.add(majorFunctionDetail);
+        moduleDetails.add(moduleDetail);
         return this;
     }
 

@@ -1,4 +1,6 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
+
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,9 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class SubFunctionSearchCriteria {
+
+    @NotBlank(message = "Sub function code is required")
     @JsonProperty("subFunctionCode")
     private String subFunctionCode;
-
-    @JsonProperty("RequestInfo")
-    private String requestInfo;
 }

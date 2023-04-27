@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -17,12 +17,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class MajorFunctionSearchCriteria {
-    @NotBlank(message = "Major Function Code is required")
-    @Size(max = 64, message = "Major Function Code length cannot exceed 64 characters")
+
+    @NotBlank(message = "Major function code is required")
+    @Size(max = 64, message = "Major function code length cannot exceed 64 characters")
     @JsonProperty("majorFunctionCode")
     private String majorFunctionCode;
-
-    @JsonProperty("RequestInfo")
-    private String requestInfo;
 
 }

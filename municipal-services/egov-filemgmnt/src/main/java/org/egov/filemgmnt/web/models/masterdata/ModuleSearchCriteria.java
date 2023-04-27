@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -18,9 +18,6 @@ import lombok.Setter;
 @Builder
 public class ModuleSearchCriteria {
 
-    @JsonProperty("moduleCode")
-    private String moduleCode;
-
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
 //    @Pattern(regexp = FMConstants.PATTERN_TENANT,
@@ -28,6 +25,7 @@ public class ModuleSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @JsonProperty("RequestInfo")
-    private String requestInfo;
+    @NotBlank(message = "Module code is required")
+    @JsonProperty("moduleCode")
+    private String moduleCode;
 }

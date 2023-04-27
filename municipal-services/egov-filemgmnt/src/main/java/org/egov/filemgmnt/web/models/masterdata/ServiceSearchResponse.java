@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.GlobalMaster;
+package org.egov.filemgmnt.web.models.masterdata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Schema(description = "Service master data search response")
 @Validated
 
 @Getter
@@ -22,22 +23,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SubFunctionSearchResponse {
+public class ServiceSearchResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("SubFunctionDetails")
-    private List<SubFunctionDetails> subFunctionDetails;
+    @JsonProperty("ServiceDetails")
+    private List<ServiceDetails> serviceDetails;
 
-    @Schema(type = "integer", format = "int32", description = "Search result count")
-    @JsonProperty("Count")
-    private int count;
-
-    public SubFunctionSearchResponse addSubFunctionDetails(final SubFunctionDetails subFunctionDetail) {
-        if (subFunctionDetails == null) {
-            subFunctionDetails = new ArrayList<>();
+    public ServiceSearchResponse addService(final ServiceDetails serviceDetail) {
+        if (serviceDetails == null) {
+            serviceDetails = new ArrayList<>();
         }
-        subFunctionDetails.add(subFunctionDetail);
+        serviceDetails.add(serviceDetail);
         return this;
     }
+
 }

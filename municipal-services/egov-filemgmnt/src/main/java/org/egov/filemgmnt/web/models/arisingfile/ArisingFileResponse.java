@@ -26,6 +26,6 @@ public class ArisingFileResponse {
     private ResponseInfo responseInfo;
 
     @JsonProperty("ArisingFile")
-    private ArisingFile arisingFileDetail;
+    private ArisingFile arisingFile;
 
 }

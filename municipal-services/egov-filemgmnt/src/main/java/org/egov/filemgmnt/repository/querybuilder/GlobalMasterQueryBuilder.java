@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.egov.filemgmnt.web.models.GlobalMaster.MajorFunctionSearchCriteria;
-import org.egov.filemgmnt.web.models.GlobalMaster.ModuleSearchCriteria;
-import org.egov.filemgmnt.web.models.GlobalMaster.ServiceSearchCriteria;
-import org.egov.filemgmnt.web.models.GlobalMaster.SubFunctionSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.MajorFunctionSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.ModuleSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.ServiceSearchCriteria;
+import org.egov.filemgmnt.web.models.masterdata.SubFunctionSearchCriteria;
 import org.springframework.stereotype.Component;
 
 import lombok.AccessLevel;

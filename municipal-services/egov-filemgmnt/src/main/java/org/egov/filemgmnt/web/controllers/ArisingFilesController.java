@@ -37,14 +37,14 @@ public class ArisingFilesController implements ArisingFilesBaseController {
     @PostMapping("/arisingfiles/_create")
     public ResponseEntity<ArisingFileResponse> create(@RequestBody final ArisingFileRequest request) {
         if (log.isDebugEnabled()) {
-            log.debug("ArisingFileRequest-create:  \n{}", FMUtils.toJson(request));
+            log.debug("arisingfiles-create:  \n{}", FMUtils.toJson(request));
         }
 
-        final ArisingFile arisingFileDetails = arisingFileService.createArisingFile(request);
+        final ArisingFile arisingFile = arisingFileService.createArisingFile(request);
         return ResponseEntity.ok(ArisingFileResponse.builder()
                                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                         Boolean.TRUE))
-                                                    .arisingFileDetail(arisingFileDetails)
+                                                    .arisingFile(arisingFile)
                                                     .build());
     }
 
@@ -67,7 +67,7 @@ public class ArisingFilesController implements ArisingFilesBaseController {
     public ResponseEntity<ArisingFileSearchResponse> search(@RequestBody final RequestInfoWrapper request,
                                                             @ModelAttribute final ArisingFileSearchCriteria searchCriteria) {
         if (log.isDebugEnabled()) {
-            log.debug("ArisingFile-search:  \n{}", FMUtils.toJson(searchCriteria));
+            log.debug("arisingfiles-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
         final List<ArisingFile> result = arisingFileService.searchFile(request.getRequestInfo(), searchCriteria);
 
