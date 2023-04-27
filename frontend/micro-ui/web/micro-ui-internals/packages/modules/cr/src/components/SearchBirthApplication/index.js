@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { SearchForm, Table  } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import SearchFields from "./SearchFields";
@@ -23,32 +23,32 @@ const hstyle = {
 };
 
 const generateActions = (rowData) => {
-const status = _.get(rowData,"TL_APPLICATION_STATUS","INITIATED");
-let response ="";
-switch (status) {
-  case "CITIZENACTIONREQUIRED":
-    response=  <span className="link">
-       <Link to={`/digit-ui/citizen/cr/cr/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}>
-                  EDIT
-                  </Link>
+    const status = _.get(rowData, "TL_APPLICATION_STATUS", "INITIATED");
+    let response = "";
+    switch (status) {
+        case "CITIZENACTIONREQUIRED":
+            response = <span className="link">
+                <Link to={`/digit-ui/citizen/cr/cr-birth-creation/child-details/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+                    EDIT
+                </Link>
             </span>
-  break;
-  case "PENDINGPAYMENT":
-    response= <span className="link">
-      <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
-        MAKE PAYMENT
-      </Link>
-    </span>
-  break;
-  default:
-    response= <span className="link">
-              <Link to={`/digit-ui/citizen/cr/cr/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}>
-                  VIEW DETAILS
-              </Link>
+            break;
+        case "PENDINGPAYMENT":
+            response = <span className="link">
+                <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+                    MAKE PAYMENT
+                </Link>
             </span>
-  break;
-}
-return response;
+            break;
+        default:
+            response = <span className="link">
+                <Link to={`/digit-ui/citizen/cr/cr/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+                    VIEW DETAILS
+                </Link>
+            </span>
+            break;
+    }
+    return response;
 }
 
 const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
@@ -125,9 +125,9 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
         []
     );
     let tmpData = data;
-   
+
     useEffect(() => {
-        if ( isSuccess === true) {
+        if (isSuccess === true) {
             tmpData[0] = { ...data[0], isSuccess };
         }
         setFileData(tmpData);
@@ -140,33 +140,33 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                     <SearchFields {...{ register, control, reset, previousPage, t }} />
                 </SearchForm>
             </div>
-                {FileData !== [] && (
-                    <React.Fragment>
-                        <Table
-                            t={t}
-                            data={FileData ? FileData : data}
-                            totalRecords={count}
-                            columns={columns}
-                            getCellProps={(cellInfo) => {
-                                return {
-                                    style: {
-                                        minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
-                                        padding: "20px 18px",
-                                        fontSize: "16px",
-                                    },
-                                };
-                            }}
-                            onPageSizeChange={onPageSizeChange}
-                            // currentPage={getValues("offset")}
-                            onNextPage={nextPage}
-                            onPrevPage={previousPage}
-                            pageSizeLimit={getValues("limit")}
-                            onSort={onSort}
-                            disableSort={false}
-                            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-                        />
-                    </React.Fragment>
-                )}
+            {FileData !== [] && (
+                <React.Fragment>
+                    <Table
+                        t={t}
+                        data={FileData ? FileData : data}
+                        totalRecords={count}
+                        columns={columns}
+                        getCellProps={(cellInfo) => {
+                            return {
+                                style: {
+                                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                                    padding: "20px 18px",
+                                    fontSize: "16px",
+                                },
+                            };
+                        }}
+                        onPageSizeChange={onPageSizeChange}
+                        // currentPage={getValues("offset")}
+                        onNextPage={nextPage}
+                        onPrevPage={previousPage}
+                        pageSizeLimit={getValues("limit")}
+                        onSort={onSort}
+                        disableSort={false}
+                        sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+                    />
+                </React.Fragment>
+            )}
         </React.Fragment>
     )
 }

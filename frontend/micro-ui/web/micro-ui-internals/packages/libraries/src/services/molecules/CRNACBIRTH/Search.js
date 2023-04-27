@@ -50,9 +50,7 @@ export const CRNACsearch = {
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     const filter = { applicationNumber };
     const response = await CRNACsearch.application(tenantId, filter);
-    // const propertyDetails =
-    //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
-    //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
+
     let numOfApplications = [];
     if (response?.licenseNumber) {
       const birthNumbers = response?.applicationNumber;
@@ -77,7 +75,7 @@ export const CRNACsearch = {
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace || "NA" },
         { title: "PDF_BIRTH_AADHAR_NO", value: response?.childAadharNo || "NA" },
-        { title: "PDF_BIRTH_ORDER", value: response?.orderofBirth || "NA" },
+        { title: "PDF_BIRTH_ORDER", value: response?.nacorderofChildren || "NA" },
       ],
     };
     const parentInfo = {
@@ -202,9 +200,19 @@ export const CRNACsearch = {
         { title: "CR_APPLICANT_AADHAR", value: response?.ApplicantDetails.aadharNo || "NA" },
         { title: "CR_APPLICANT_MOBILE", value: response?.ApplicantDetails.mobileNo || "NA" },
         { title: "CR_APPLICANT_ADDRESS", value: response?.ApplicantDetails.applicantAddressEn || "NA" },
-        { title: "CR_CARE_OF_APPLICATION", value: response?.ApplicantDetails.careofapplication || "NA" },
+        { title: "CR_CARE_OF_APPLICATION", value: response?.ApplicantDetails.careofapplicant || "NA" },
       ],
     };
+
+    // const childInfo = {
+    //   title: "CR_APPLICANT_OTHER_CHILDREN_HEADER",
+    //   values: [
+    //     { title: "PDF_BIRTH_CHILD_NAME", value: response?.OtherChildren.childNameEn || "NA" },
+    //     { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.OtherChildren.dob || "NA" },
+    //     { title: "PDF_BIRTH_CHILD_SEX", value: response?.OtherChildren.sex || "NA" },
+    //     { title: "PDF_BIRTH_ORDER", value: response?.OtherChildren.nacorderofChildren || "NA" },
+    //   ],
+    // };
     const Docdetails = {
       title: "Document SUMMARY DETAILS",
       documents: true,
@@ -218,7 +226,7 @@ export const CRNACsearch = {
     response && employeeResponse.push(PresentAddressBirthDetailsInfo);
     //response && employeeResponse.push(PermanentAddressBirthDetailsInfo);
     response && employeeResponse.push(initiatorInfo);
-    //response && employeeResponse.push(multipleChildInfo);
+    // response && employeeResponse.push(childInfo);
 
     return {
       tenantId: response.tenantId,

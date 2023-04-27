@@ -1011,6 +1011,46 @@ export const newConfig = [
   },
 
   {
+    head: "Marriage Correction Routing",
+    body: [
+      {
+        type: "component",
+        route: "marriage-correction-edit",
+        isMandatory: true,
+        component: "MarriageCorrectionEditPage",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "MarriageDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "marriage-correction-summary",
+      },
+      {
+        type: "component",
+        route: "marriage-correction-summary",
+        isMandatory: true,
+        component: "MarriagecorrectionSummary",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "GroomDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: null,
+      },
+    ],
+  },
+
+  {
     head: "Marriage Routing",
     body: [
       {

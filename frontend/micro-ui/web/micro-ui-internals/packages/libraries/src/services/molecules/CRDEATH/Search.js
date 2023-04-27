@@ -72,35 +72,8 @@ export const CRDeathsearch = {
     const InformationDeath = {
       title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
-      values: [
-        {
-          // title: "PDF_DECEASED_NAME",
-          // value:
-          //   response?.InformationDeath?.DeceasedFirstNameEn
-          // +
-          //   response?.InformationDeath?.DeceasedMiddleNameEn +
-          //   response?.InformationDeath?.DeceasedLastNameEn +
-          //   " / " +
-          //   response?.InformationDeath?.DeceasedFirstNameMl +
-          //   " " +
-          //   response?.InformationDeath?.DeceasedMiddleNameMl +
-          //   " " +
-          //   response?.InformationDeath?.DeceasedLastNameMl || "NA",
-        },
-
-        // { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
-        // {
-        //   title: "PDF_CR_DEATH_OF_DATE",
-        //   value: response?.InformationDeath?.DateOfDeath ? convertEpochToDate(response?.InformationDeath?.DateOfDeath) : "NA",
-        // },
-        // {
-        //   title: "CR_ADDRESS",
-        //   value:
-        //   response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn + "," +
-        //     response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn + "," +
-        //       response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn
-        //        || "NA",
-        // },
+      values: [        
+          
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.InformationDeath?.DeathACKNo || "NA" },
         {
           title: "PDF_CR_DEATH_OF_DATE",
@@ -144,6 +117,7 @@ export const CRDeathsearch = {
     };
 
     const AddressBirthDetails = {
+      
       title: "CR_ADDRESS_INFORMATION_HEADER",
       values: [
         {
@@ -315,6 +289,7 @@ export const CRDeathsearch = {
     //     { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.statisticalInfo.smokingNumYears || "NA" },
     //   ],
     // };
+    
     const permanentAddress = {
       title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
       values: [

@@ -15,22 +15,24 @@ export const getFilteredBrideNameData = (selectedData, inclusionData) => {
   
   //TODO need validation to check dob is null
   const computeInitialValue = (brideDetails) => {
-    const brideName = {firstNameEn:brideDetails?.brideFirstnameEn,
-        middleNameEn:brideDetails?.brideMiddlenameEn,
-        lastNameEn:brideDetails?.brideLastnameEn,
+    const brideName = {
+        firstNameEn:brideDetails?.brideFirstnameEn,
         firstNameMl:brideDetails?.brideFirstnameMl,
+        middleNameEn:brideDetails?.brideMiddlenameEn,
         middleNameMl:brideDetails?.brideMiddlenameMl,
+        lastNameEn:brideDetails?.brideLastnameEn, 
         lastNameMl:brideDetails?.brideLastnameMl,
       };
     return brideName;
   };
 
   const computeCurrentValue = (brideDetails) => {
-    const brideName = {firstNameEn:brideDetails?.brideFirstnameEn,
-        middleNameEn:brideDetails?.brideMiddlenameEn,
-        lastNameEn:brideDetails?.brideLastnameEn,
+    const brideName = {
+        firstNameEn:brideDetails?.brideFirstnameEn,
         firstNameMl:brideDetails?.brideFirstnameMl,
+        middleNameEn:brideDetails?.brideMiddlenameEn,
         middleNameMl:brideDetails?.brideMiddlenameMl,
+        lastNameEn:brideDetails?.brideLastnameEn,
         lastNameMl:brideDetails?.brideLastnameMl,
       };
     return brideName;

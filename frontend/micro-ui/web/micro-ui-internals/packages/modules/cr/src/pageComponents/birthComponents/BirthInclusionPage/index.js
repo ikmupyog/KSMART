@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
@@ -15,10 +15,12 @@ const BirthInclusionPage = () => {
   let location = useLocation();
   let navigationData = location?.state?.inclusionData;
 
-  const navigateAcknowledgement = (navData) =>{
+  
+
+  const navigateAcknowledgement = ({birthInclusionFormsObj,navigationData}) =>{
     history.push({
-      pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
-      state: { navData }
+      pathname: `/digit-ui/citizen/cr/birth-inclusion-summary`,
+      state: { navData: navigationData, birthInclusionData: birthInclusionFormsObj }
     });
   }
   
@@ -71,6 +73,7 @@ const BirthInclusionPage = () => {
         BirthCorrectionDocuments={BirthCorrectionDocuments}
         navigationData={navigationData}
         navigateAcknowledgement={navigateAcknowledgement}
+        fetchData={true}
         // birthInclusionFormData={birthInclusionFormData}
       />
     );

@@ -172,7 +172,7 @@ const MarriagePublicPlace = ({
               value={marriageLandmark}
               onChange={setSelectMarriageLandmark}
               placeholder={`${t("CR_LANDMARK")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LANDMARK") })}
             />
           </div>
         </div>
