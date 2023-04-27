@@ -71,20 +71,20 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
         () => [
             {
                 Header: t("CR_RGISTRATION_NUMBER"),
-                accessor: "birthApplicationNo",
-                disableSortBy: true,
-                Cell: ({ row }) => {
-                    return (
-                        <div>
-                            <span className="link">
-                                {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
-                        {row.original.deathApplicationNo}
-                      </Link> */}
-                                {row.original.TL_COMMON_TABLE_COL_APP_NO}
-                            </span>
-                        </div>
-                    );
-                },
+                accessor: (row) => GetCell(row.TL_COMMON_TABLE_COL_APP_NO),
+                // disableSortBy: true,
+                // Cell: ({ row }) => {
+                //     return (
+                //         <div>
+                //             <span className="link">
+                //                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
+                //         {row.original.deathApplicationNo}
+                //       </Link> */}
+                //                 {row.original.TL_COMMON_TABLE_COL_APP_NO}
+                //             </span>
+                //         </div>
+                //     );
+                // },
             },
             {
                 Header: t("CR_COMMON_MOTHER_NAME"),
