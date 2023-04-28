@@ -90,7 +90,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
     );
   };
 
-  // console.log(formData);
+  console.log(formData);
   // const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const minutes = [
@@ -620,7 +620,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                   />
                 </div>
                
-               
+                {IsAutopsyPerformed === "yes" && (
                 <div className="col-md-6">
                   <CardLabel>{t("CR_WERE_AUTOPSY")}</CardLabel>
                   <RadioButtons
@@ -633,7 +633,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                     handleChange={handleIsAutopsyCompleted}
                   />
                 </div>
-            
+                )}
               </div>
               
             </div>
