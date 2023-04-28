@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.dratfile;
+package org.egov.filemgmnt.web.models.draftfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Draft file response for create and update")
+@Schema(description = "Arising file service response for create and update")
 @Validated
 
 @Getter
@@ -23,21 +23,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class DraftFileResponse {
-
+public class DraftFileSearchResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
     @JsonProperty("Drafting")
-    private List<DraftFile> drafting;
+    private List<DraftFile> draftings;
 
-    public DraftFileResponse addDrafting(DraftFile newDraft) {
+    @Schema(type = "integer", format = "int32", description = "Search result count")
+    @JsonProperty("Count")
+    private int count;
 
-        if (drafting == null) {
-            drafting = new ArrayList<>();
+    public DraftFileSearchResponse addDrafting(DraftFile drafting) {
+
+        if (draftings == null) {
+            draftings = new ArrayList<>();
         }
-        drafting.add(newDraft);
+        draftings.add(drafting);
         return this;
     }
 

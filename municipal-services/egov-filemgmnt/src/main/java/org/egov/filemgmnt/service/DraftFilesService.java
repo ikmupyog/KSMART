@@ -13,9 +13,9 @@ import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.validators.DraftFilesValidator;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
-import org.egov.filemgmnt.web.models.dratfile.DraftFile;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileRequest;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
+import org.egov.filemgmnt.web.models.draftfile.DraftFile;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileRequest;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -54,11 +54,11 @@ public class DraftFilesService {
         draftingEnrichment.enrichCreateDrafting(request);
         producer.push(fmConfig.getSaveDraftingTopic(), request);
 
-        return request.getDrafting();
+        return request.getDraftFiles();
     }
 
     public List<DraftFile> update(DraftFileRequest request) {
-        List<String> draftfiles = request.getDrafting()
+        List<String> draftfiles = request.getDraftFiles()
                                          .stream()
                                          .map(DraftFile::getFileCode)
                                          .collect(Collectors.toCollection(LinkedList::new));
@@ -68,17 +68,17 @@ public class DraftFilesService {
                                     .getUserInfo()
                                     .getUuid();
 
-        for (DraftFile newDraft : request.getDrafting()) {
+        for (DraftFile newDraft : request.getDraftFiles()) {
             fCode = newDraft.getFileCode();
             dType = newDraft.getDraftType();
         }
 
         // search database
         List<DraftFile> searchResult = repository.searchDrafting(DraftFileSearchCriteria.builder()
-                                                                                          .draftType(dType)
-                                                                                          .fileCode(fCode)
-                                                                                          .assigner(assignerUid)
-                                                                                          .build());
+                                                                                        .draftType(dType)
+                                                                                        .fileCode(fCode)
+                                                                                        .assigner(assignerUid)
+                                                                                        .build());
         // validate request
         validator.validateUpdate(request, searchResult);
 
@@ -86,12 +86,12 @@ public class DraftFilesService {
 
         producer.push(fmConfig.getUpdateDraftingTopic(), request);
 
-        return request.getDrafting();
+        return request.getDraftFiles();
 
     }
 
-    public List<DraftFile> updateDraftingStatus(DraftFileRequest statusrequest) {
-        List<String> draftstatus = statusrequest.getDrafting()
+    public List<DraftFile> updateStatus(DraftFileRequest statusrequest) {
+        List<String> draftstatus = statusrequest.getDraftFiles()
                                                 .stream()
                                                 .map(DraftFile::getFileCode)
                                                 .collect(Collectors.toCollection(LinkedList::new));
@@ -99,17 +99,17 @@ public class DraftFilesService {
         String dType = null;
         String assignerUid = null;
 
-        for (DraftFile newDrafts : statusrequest.getDrafting()) {
+        for (DraftFile newDrafts : statusrequest.getDraftFiles()) {
             fCode = newDrafts.getFileCode();
             dType = newDrafts.getDraftType();
             assignerUid = newDrafts.getAssigner();
         }
         // search database
         List<DraftFile> searchResult = repository.searchDrafting(DraftFileSearchCriteria.builder()
-                                                                                          .draftType(dType)
-                                                                                          .fileCode(fCode)
-                                                                                          .assigner(assignerUid)
-                                                                                          .build());
+                                                                                        .draftType(dType)
+                                                                                        .fileCode(fCode)
+                                                                                        .assigner(assignerUid)
+                                                                                        .build());
         // validate request
         validator.validateUpdate(statusrequest, searchResult);
 
@@ -117,7 +117,7 @@ public class DraftFilesService {
 
         producer.push(fmConfig.getUpdateDraftingStatusTopic(), statusrequest);
 
-        return statusrequest.getDrafting();
+        return statusrequest.getDraftFiles();
 
     }
 

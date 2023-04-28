@@ -35,7 +35,7 @@ public class MasterDataService {
     private Producer producer;
 
     MasterDataService(FMConfiguration fmConfiguration, Producer producer, GlobalMasterEnrichment enrichment,
-                         GlobalMasterRepository repository) {
+                      GlobalMasterRepository repository) {
         this.fmConfiguration = fmConfiguration;
         this.producer = producer;
         this.enrichment = enrichment;

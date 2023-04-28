@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.egov.filemgmnt.repository.querybuilder.DraftFilesQueryBuilder;
 import org.egov.filemgmnt.repository.rowmapper.DraftFilesRowMapper;
-import org.egov.filemgmnt.web.models.dratfile.DraftFile;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
+import org.egov.filemgmnt.web.models.draftfile.DraftFile;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

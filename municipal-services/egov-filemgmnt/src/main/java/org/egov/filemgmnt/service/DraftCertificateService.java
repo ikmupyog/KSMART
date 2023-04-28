@@ -18,8 +18,8 @@ import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificat
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificateRequest;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
-import org.egov.filemgmnt.web.models.dratfile.DraftFile;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
+import org.egov.filemgmnt.web.models.draftfile.DraftFile;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -164,7 +164,7 @@ public class DraftCertificateService {
 
         return BuildDraftCertificate.builder()
                                     .embeddedUrl(embeddedUrl)
-                                    .id(draftDetails.getUuid())
+                                    .id(draftDetails.getId())
                                     .tenantId(draftDetails.getTenantId())
                                     .fileCode(draftDetails.getFileCode())
                                     .draftText(draftDetails.getDraftText())
@@ -184,7 +184,7 @@ public class DraftCertificateService {
         final String uiHostCert = fmConfig.getUiAppHost();
 
         String resCertPath = urlLink;
-        resCertPath = resCertPath.replace("$id", draftDetails.getUuid());
+        resCertPath = resCertPath.replace("$id", draftDetails.getId());
         resCertPath = resCertPath.replace("$tenantId", draftDetails.getTenantId());
         resCertPath = resCertPath.replace("$filecode", draftDetails.getFileCode());
 

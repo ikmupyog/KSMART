@@ -19,42 +19,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "Enquiry")
 @Slf4j
 @RestController
 @RequestMapping("/v1")
-public class EnquiryController {
+public class EnquiriesController {
     @Autowired
     private final ResponseInfoFactory responseInfoFactory;
     private final EnquiryService enquiryService;
 
-    public EnquiryController(final ResponseInfoFactory responseInfoFactory, final EnquiryService enquiryService) {
+    public EnquiriesController(final ResponseInfoFactory responseInfoFactory, final EnquiryService enquiryService) {
         this.responseInfoFactory = responseInfoFactory;
         this.enquiryService = enquiryService;
 
     }
 
-    @PostMapping("/applicantservices/_saveEnquiry")
+    @PostMapping("/enquiries/_create")
     public ResponseEntity<EnquiryResponse> saveEnquiry(@RequestBody final EnquiryRequest request) {
         if (log.isDebugEnabled()) {
-            log.debug("Enquiry main-create:  \n{}", FMUtils.toJson(request));
+            log.debug("enquiries-create:  \n{}", FMUtils.toJson(request));
         }
-        final List<Enquiry> enquiryDetails = enquiryService.saveEnquiry(request);
-        final EnquiryResponse response = EnquiryResponse.builder()
-                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                            Boolean.TRUE))
-                                                        .enquiryList(enquiryDetails)
-                                                        .build();
-        return ResponseEntity.ok(response);
+
+        final List<Enquiry> result = enquiryService.saveEnquiry(request);
+        return ResponseEntity.ok(EnquiryResponse.builder()
+                                                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                    Boolean.TRUE))
+                                                .enquiryList(result)
+                                                .build());
     }
 
-    @PostMapping("/applicantservices/_searchEnquiry")
+    @PostMapping("/enquiries/_search")
     public ResponseEntity<EnquirySearchResponse> searchEnquiry(@RequestBody final RequestInfoWrapper request,
                                                                @ModelAttribute final EnquirySearchCriteria enquirySearchCriteria) {
         if (log.isDebugEnabled()) {
-            log.debug("Enquiry-search:  \n{}", FMUtils.toJson(enquirySearchCriteria));
+            log.debug("enquiries-search:  \n{}", FMUtils.toJson(enquirySearchCriteria));
         }
+
         final List<Enquiry> result = enquiryService.searchEnquiry(request.getRequestInfo(), enquirySearchCriteria);
         return ResponseEntity.ok(EnquirySearchResponse.builder()
                                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),

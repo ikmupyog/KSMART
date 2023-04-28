@@ -1,9 +1,9 @@
-package org.egov.filemgmnt.web.models.dratfile;
+package org.egov.filemgmnt.web.models.draftfile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.egov.common.contract.request.RequestInfo;
+import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,40 +11,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
-@Schema(description = "Arising file service request for create and update")
+@Schema(description = "Draft file response for create and update")
 @Validated
 
-@Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class DraftFileRequest {
+public class DraftFileResponse {
 
-    @JsonProperty("RequestInfo")
-    private RequestInfo requestInfo;
+    @JsonProperty("ResponseInfo")
+    private ResponseInfo responseInfo;
 
-    @Valid
-    @NotNull(message = "Draft file is required")
-    @JsonProperty("DraftFiles")
+    @JsonProperty("Drafting")
     private List<DraftFile> drafting;
 
-    public DraftFileRequest addDrafting(DraftFile newDrafting) {
+    public DraftFileResponse addDrafting(DraftFile newDraft) {
 
         if (drafting == null) {
             drafting = new ArrayList<>();
         }
-        drafting.add(newDrafting);
+        drafting.add(newDraft);
         return this;
     }
 

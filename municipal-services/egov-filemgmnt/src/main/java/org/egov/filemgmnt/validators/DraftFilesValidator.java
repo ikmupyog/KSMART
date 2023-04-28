@@ -12,9 +12,9 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.DraftFilesRepository;
 import org.egov.filemgmnt.util.FMUtils;
-import org.egov.filemgmnt.web.models.dratfile.DraftFile;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileRequest;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
+import org.egov.filemgmnt.web.models.draftfile.DraftFile;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileRequest;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -36,12 +36,12 @@ public class DraftFilesValidator {
 
     public void validateDraftCreate(DraftFileRequest request) {
 
-        if (CollectionUtils.isEmpty(request.getDrafting())) {
+        if (CollectionUtils.isEmpty(request.getDraftFiles())) {
             throw new CustomException(REQUIRED.getCode(), "Atleast one Draft is required");
 
         }
 
-        for (DraftFile draftFiles : request.getDrafting()) {
+        for (DraftFile draftFiles : request.getDraftFiles()) {
             if (StringUtils.isNotBlank(draftFiles.getTenantId()) && StringUtils.isNotBlank(draftFiles.getAssigner())
                     && StringUtils.isNotBlank(draftFiles.getFileCode())
                     && StringUtils.isNotBlank(draftFiles.getDraftType())) {
@@ -64,9 +64,9 @@ public class DraftFilesValidator {
     }
 
     public void validateUpdate(DraftFileRequest request, List<DraftFile> searchResult) {
-        List<DraftFile> files = request.getDrafting();
+        List<DraftFile> files = request.getDraftFiles();
 
-        if (CollectionUtils.isEmpty(request.getDrafting())) {
+        if (CollectionUtils.isEmpty(request.getDraftFiles())) {
             throw new CustomException(REQUIRED.getCode(), "Draft file is required");
         }
 

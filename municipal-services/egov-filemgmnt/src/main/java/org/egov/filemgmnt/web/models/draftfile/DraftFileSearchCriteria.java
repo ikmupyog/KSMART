@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.dratfile;
+package org.egov.filemgmnt.web.models.draftfile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -27,8 +27,8 @@ public class DraftFileSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @JsonProperty("uuid")
-    private String uuid;// Drafting id
+    @JsonProperty("draftId")
+    private String draftId;
 
     @JsonProperty("businessService")
     private String businessService;

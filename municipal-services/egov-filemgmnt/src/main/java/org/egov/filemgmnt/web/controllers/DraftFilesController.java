@@ -8,94 +8,93 @@ import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateResponse;
-import org.egov.filemgmnt.web.models.dratfile.DraftFile;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileRequest;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileResponse;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchCriteria;
-import org.egov.filemgmnt.web.models.dratfile.DraftFileSearchResponse;
+import org.egov.filemgmnt.web.models.draftfile.DraftFile;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileRequest;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileResponse;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
+import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 
 @Slf4j
 @RestController
 @RequestMapping("/v1")
-public class DraftFilesController {
+public class DraftFilesController implements DraftFilesBaseController {
     private final ResponseInfoFactory responseInfoFactory;
-    private final DraftFilesService draftingService;
+    private final DraftFilesService draftFileService;
 
-    DraftFilesController(final DraftFilesService draftingService, final ResponseInfoFactory responseInfoFactory) {
-        this.draftingService = draftingService;
+    DraftFilesController(final DraftFilesService draftFileService, final ResponseInfoFactory responseInfoFactory) {
+        this.draftFileService = draftFileService;
         this.responseInfoFactory = responseInfoFactory;
 
     }
 
+    @Override
     @PostMapping("/draftfiles/_create")
-    public ResponseEntity<DraftFileResponse> createDraftingMain(@RequestBody final DraftFileRequest request) {
+    public ResponseEntity<DraftFileResponse> create(@RequestBody final DraftFileRequest request) {
         if (log.isDebugEnabled()) {
-            log.debug("Drafting main-create:  \n{}", FMUtils.toJson(request));
+            log.debug("draftfiles-create:  \n{}", FMUtils.toJson(request));
         }
-        List<DraftFile> draftingDetails = draftingService.create(request);
 
-        DraftFileResponse response = DraftFileResponse.builder()
-                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                            Boolean.TRUE))
-                                                        .drafting(draftingDetails)
-                                                        .build();
-        return ResponseEntity.ok(response);
+        final List<DraftFile> result = draftFileService.create(request);
+
+        return ResponseEntity.ok(DraftFileResponse.builder()
+                                                  .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                      Boolean.TRUE))
+                                                  .drafting(result)
+                                                  .build());
     }
 
-    @PostMapping("/draftfiles/_update")
-    public ResponseEntity<DraftFileResponse> updateDrafting(@RequestBody DraftFileRequest request) {
+    @Override
+    @PutMapping("/draftfiles/_update")
+    public ResponseEntity<DraftFileResponse> update(@RequestBody final DraftFileRequest request,
+                                                    @RequestParam final String mode) {
 
-        List<DraftFile> files = draftingService.update(request);
+        List<DraftFile> result = null;
+        if (StringUtils.equals(mode, "STATUS")) {
+            result = draftFileService.updateStatus(request);
+        } else {
+            result = draftFileService.update(request);
+        }
 
-        DraftFileResponse response = DraftFileResponse.builder()
-                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                            Boolean.TRUE))
-                                                        .drafting(files)
-                                                        .build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(DraftFileResponse.builder()
+                                                  .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                      Boolean.TRUE))
+                                                  .drafting(result)
+                                                  .build());
     }
 
-    @PostMapping("/draftfiles/_updateStatus")
-    public ResponseEntity<DraftFileResponse> updateDraftingStatus(@RequestBody DraftFileRequest request) {
-
-        List<DraftFile> drfiles = draftingService.updateDraftingStatus(request);
-
-        DraftFileResponse response = DraftFileResponse.builder()
-                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                            Boolean.TRUE))
-                                                        .drafting(drfiles)
-                                                        .build();
-        return ResponseEntity.ok(response);
-    }
-
+    @Override
     @PostMapping("/draftfiles/_search")
-    public ResponseEntity<DraftFileSearchResponse> searchDraft(@RequestBody final RequestInfoWrapper request,
-                                                               @ModelAttribute DraftFileSearchCriteria searchCriteria) {
+    public ResponseEntity<DraftFileSearchResponse> search(@RequestBody final RequestInfoWrapper request,
+                                                          @ModelAttribute DraftFileSearchCriteria searchCriteria) {
         if (log.isDebugEnabled()) {
-            log.debug("Drafting-search:  \n{}", FMUtils.toJson(searchCriteria));
+            log.debug("draftfiles-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
-        final List<DraftFile> result = draftingService.search(request.getRequestInfo(), searchCriteria);
+        final List<DraftFile> result = draftFileService.search(request.getRequestInfo(), searchCriteria);
         return ResponseEntity.ok(DraftFileSearchResponse.builder()
-                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                             Boolean.TRUE))
-                                                         .draftings(result)
-                                                         .build());
+                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                            Boolean.TRUE))
+                                                        .draftings(result)
+                                                        .build());
     }
 
-    @PostMapping("/applicantservices/_downloadDraftPdf")
-    public ResponseEntity<DraftCertificateResponse> downloadDraftCertificate(@RequestBody final RequestInfoWrapper request,
-                                                                             @ModelAttribute final DraftFileSearchCriteria searchCriteria) {
+    @Override
+    @PostMapping("/draftfiles/_download")
+    public ResponseEntity<DraftCertificateResponse> download(@RequestBody final RequestInfoWrapper request,
+                                                             @ModelAttribute final DraftFileSearchCriteria searchCriteria) {
 
-        final List<DraftCertificateDetails> certificateDetails = draftingService.downloadDraftCertificate(request.getRequestInfo(),
-                                                                                                          searchCriteria);
+        final List<DraftCertificateDetails> certificateDetails = draftFileService.downloadDraftCertificate(request.getRequestInfo(),
+                                                                                                           searchCriteria);
         return ResponseEntity.ok(DraftCertificateResponse.builder()
                                                          .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                              Boolean.TRUE))
