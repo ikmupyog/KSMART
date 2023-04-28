@@ -21,8 +21,8 @@ public class EnquiryEnrichment extends BaseEnrichment {
 
         request.getEnquiryList()
                .forEach(enquiry -> {
-                   enquiry.setUuid(UUID.randomUUID()
-                                       .toString());
+                   enquiry.setId(UUID.randomUUID()
+                                     .toString());
                    enquiry.setAuditDetails(auditDetails);
                });
 

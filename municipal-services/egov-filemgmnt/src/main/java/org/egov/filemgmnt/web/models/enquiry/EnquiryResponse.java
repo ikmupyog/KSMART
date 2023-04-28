@@ -23,8 +23,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class EnquiryResponse {
+
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 

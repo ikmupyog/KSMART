@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
-@Tag(name = "Enquiry")
 @Slf4j
 @RestController
 @RequestMapping("/v1")
-public class EnquiriesController {
+public class EnquiriesController implements EnquiriesBaseController {
     @Autowired
     private final ResponseInfoFactory responseInfoFactory;
     private final EnquiryService enquiryService;
@@ -37,8 +35,9 @@ public class EnquiriesController {
 
     }
 
+    @Override
     @PostMapping("/enquiries/_create")
-    public ResponseEntity<EnquiryResponse> saveEnquiry(@RequestBody final EnquiryRequest request) {
+    public ResponseEntity<EnquiryResponse> create(@RequestBody final EnquiryRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("enquiries-create:  \n{}", FMUtils.toJson(request));
         }
@@ -51,9 +50,10 @@ public class EnquiriesController {
                                                 .build());
     }
 
+    @Override
     @PostMapping("/enquiries/_search")
-    public ResponseEntity<EnquirySearchResponse> searchEnquiry(@RequestBody final RequestInfoWrapper request,
-                                                               @ModelAttribute final EnquirySearchCriteria enquirySearchCriteria) {
+    public ResponseEntity<EnquirySearchResponse> search(@RequestBody final RequestInfoWrapper request,
+                                                        @ModelAttribute final EnquirySearchCriteria enquirySearchCriteria) {
         if (log.isDebugEnabled()) {
             log.debug("enquiries-search:  \n{}", FMUtils.toJson(enquirySearchCriteria));
         }
