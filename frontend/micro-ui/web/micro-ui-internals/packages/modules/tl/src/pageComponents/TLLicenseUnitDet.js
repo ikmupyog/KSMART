@@ -895,28 +895,28 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     if (result) {
       let combineddoorno = "";
       formStateDoor.map((data) => {
-        combineddoorno = combineddoorno + data.doorNo +
-          (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
-          (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
+        combineddoorno = combineddoorno + data.doorNo?.trim() +
+          (data.doorNoSub !== "" && data.doorNoSub?.trim() !== null ? "/" + data.doorNoSub?.trim() : "") +
+          (data.stallNo !== "" && data.stallNo?.trim() !== null ? "(" + data.stallNo?.trim() + ")" : "") + ",";
       });
       combineddoorno = combineddoorno.slice(0, -1);
 
       let units = fields;
       let address = {
-        "doorNo": combineddoorno,
-        "localityName": locality,
-        "street": street,
-        "landmark": landmark,
-        "buildingName": buildingName,
+        "doorNo": combineddoorno?.trim(),
+        "localityName": locality?.trim(),
+        "street": street?.trim(),
+        "landmark": landmark?.trim(),
+        "buildingName": buildingName?.trim(),
         "zonalId": WardNo.zonecode,
         "wardId": WardNo.code,
         "wardNo": WardNo.wardno,
         "postOffice": postOffice,
         "pincode": pincode,
         "contactNo": contactNo,
-        "email": email,
-        "waterbody": waterbody,
-        "serviceArea": serviceArea
+        "email": email?.trim(),
+        "waterbody": waterbody?.trim(),
+        "serviceArea": serviceArea?.trim()
       };
       let tradeUnits = units[0];
 
