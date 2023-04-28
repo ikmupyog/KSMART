@@ -3,6 +3,7 @@ package org.ksmart.marriage.marriagecorrection.web.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
+import org.ksmart.marriage.marriagecorrection.validator.MarriageCorrectionApplnValidator;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionResponse;
@@ -29,11 +30,13 @@ public class MarriageCorrectionController {
     private final MarriageRegistryService marriageRegistryService;
 
     private final ResponseInfoFactory responseInfoFactory;
+    private final MarriageCorrectionApplnValidator marriageCorrectionApplnValidator;
 
-    public MarriageCorrectionController(MarriageCorrectionService marriageCorrectionService, MarriageRegistryService marriageRegistryService, ResponseInfoFactory responseInfoFactory) {
+    public MarriageCorrectionController(MarriageCorrectionService marriageCorrectionService, MarriageRegistryService marriageRegistryService, ResponseInfoFactory responseInfoFactory, MarriageCorrectionApplnValidator marriageCorrectionApplnValidator) {
         this.marriageCorrectionService = marriageCorrectionService;
         this.marriageRegistryService = marriageRegistryService;
         this.responseInfoFactory = responseInfoFactory;
+        this.marriageCorrectionApplnValidator = marriageCorrectionApplnValidator;
     }
 
     @PostMapping("/_createmarriagecorrection")
@@ -73,11 +76,10 @@ public class MarriageCorrectionController {
     @PostMapping(value = {"/_searchmarriagecorrection"})
     public ResponseEntity<MarriageCorrectionResponse> searchCorrection(@RequestBody MarriageCorrectionRequest request, @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
         List<MarriageApplicationDetails> marriageCorrectionAplnDetails=marriageCorrectionService.searchCorrectionApplinDetails(request, criteria);
-        List<MarriageCorrectionDetails> marriageCorrectionDetails =new ArrayList<>();
-        if(marriageCorrectionAplnDetails.size()==1) {
-            String marriageId = marriageCorrectionAplnDetails.get(0).getId();
-            marriageCorrectionDetails = marriageCorrectionService.searchCorrectionDetails(marriageId);
-        }
+        marriageCorrectionApplnValidator.validateCorrectionApplnSearch(marriageCorrectionAplnDetails);
+        String marriageId = marriageCorrectionAplnDetails.get(0).getId();
+        List<MarriageCorrectionDetails> marriageCorrectionDetails = marriageCorrectionService.searchCorrectionDetails(marriageId);
+
         MarriageCorrectionResponse response=MarriageCorrectionResponse.builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
                 .marriageDetails(marriageCorrectionAplnDetails)
