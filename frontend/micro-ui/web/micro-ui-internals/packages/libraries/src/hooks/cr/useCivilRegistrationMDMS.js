@@ -20,6 +20,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRPermanentAddressTaluk = () => {
     return useQuery("CR_PERMANANT_ADDR_TALUK", () => MdmsService.getCRTaluk(tenantId, moduleCode, type), config);
   };
+  const useSubRegistrar = () => {
+    return useQuery("CR_SUB_REGISTRAR", () => MdmsService.getSubRegistrar(tenantId, moduleCode), config);
+  };
   const useMarriagePlace = () => {
     return useQuery("CR_MARRIAGE_PLACE_TYPE", () => MdmsService.getMarriagePlaceId(tenantId, moduleCode), config);
   };
@@ -325,6 +328,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRPermanentAddressVillage();
     case "PermanantTaluk":
       return useCRPermanentAddressTaluk();
+    case "SubRegistar":
+      return useSubRegistrar();
     case "MarriagePlace":
       return useMarriagePlace();
     case "TypeOfMarriage":
