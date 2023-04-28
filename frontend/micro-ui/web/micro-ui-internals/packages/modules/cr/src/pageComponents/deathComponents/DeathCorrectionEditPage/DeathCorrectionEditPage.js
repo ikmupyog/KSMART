@@ -62,7 +62,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
     console.log("fetchData---flag==", params, Object.keys(params));
     if (Object.keys(params)?.length > 0) {
       let tempParams = {};
-      Object.keys(params).forEach((key, index) => (tempParams[key] = { ...params[key], isDisabled: true, isEditable: false, isFocused: false }));
+      Object.keys(params).forEach((key, index) => (tempParams[key] = { ...params[key], isDisabled: true, isFocused: false }));
       setDeathCorrectionFormsObj({ ...tempParams });
       console.log("params[key]", tempParams);
       // setIsFetchData(false);
