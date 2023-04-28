@@ -24,15 +24,7 @@ import { convertEpochToDate } from "../../../utils";
 import moment from "moment";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
 
-const BirthInclusionEditPage = ({
-  cmbNation,
-  sex,
-  cmbPlace,
-  BirthCorrectionDocuments,
-  navigationData,
-  navigateAcknowledgement,
-  fetchData = false,
-}) => {
+const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocuments, navigationData, navigateAcknowledgement }) => {
   let formData = {};
   let validation = {};
   let birthInclusionFormData = {};
@@ -46,7 +38,7 @@ const BirthInclusionEditPage = ({
   const [birthInclusionFormsObj, setbirthInclusionFormsObj] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState([]);
   const [selectedDocData, setSelectedDocData] = useState([]);
-  const [isFetchData, setIsFetchData] = useState(fetchData);
+  const [selectedDob, setSelectedDob] = useState("");
 
   const [value, setValue] = useState(0);
   const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
@@ -66,21 +58,19 @@ const BirthInclusionEditPage = ({
   }, []);
 
   useEffect(async () => {
-    console.log("fetchData---flag==", fetchData, params, Object.keys(params)?.length > 0);
+    console.log("fetchData---flag==", params, Object.keys(params));
     if (Object.keys(params)?.length > 0) {
-      setbirthInclusionFormsObj(params);
-      setIsFetchData(false);
+      let tempParams = {};
+      Object.keys(params).forEach((key, index) => (tempParams[key] = { ...params[key], isDisabled: true, isEditable: false, isFocused: false }));
+      setbirthInclusionFormsObj({ ...tempParams });
     } else {
       birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments, navigationData, sex, cmbPlace);
       await setbirthInclusionFormsObj(birthInclusionFormData);
     }
   }, [navigationData, BirthCorrectionDocuments]);
 
-  console.log("navigationData", navigationData);
-
   const setBirthInclusionFilterQuery = (fieldId) => {
     let selectedBirthInclusionData = birthInclusionFormsObj[fieldId];
-    console.log("birthInclusionData", birthInclusionFormsObj, fieldId, selectedBirthInclusionData);
     setSelectedFieldType(fieldId);
     setSelectedInclusionItem(selectedBirthInclusionData);
     setShowModal(true);
@@ -102,8 +92,6 @@ const BirthInclusionEditPage = ({
   };
 
   const onUploadDocSubmit = ({ fileData, documentCondition }) => {
-    console.log("upload response==", selectedFieldType, documentCondition, fileData, selectedInclusionItem);
-
     let tempObj = { ...birthInclusionFormsObj };
     let tempFieldType = tempObj[selectedFieldType];
 
@@ -162,13 +150,14 @@ const BirthInclusionEditPage = ({
     console.log(data);
   };
 
-  const onDobChange = async (value) => {
+  const onDobChange = (value) => {
     console.log("value==", value);
-    let tempObj = await { ...birthInclusionFormsObj };
-    let { CHILD_DOB } = await tempObj;
-    tempObj = await { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: value, isFocused: false } };
-    console.log("dob change==",tempObj);
-    await setbirthInclusionFormsObj(tempObj);
+    let tempObj = { ...birthInclusionFormsObj };
+    let { CHILD_DOB } = tempObj;
+    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: value, isFocused: false } };
+    console.log("dob change==", tempObj);
+    // birthInclusionFormsObj = {...tempObj};
+    setbirthInclusionFormsObj(tempObj);
   };
 
   const onDocUploadSuccess = (data) => {
@@ -178,14 +167,19 @@ const BirthInclusionEditPage = ({
 
   const onSubmitBirthInclusion = () => {
     const formattedResp = formatApiParams(birthInclusionFormsObj, navigationData);
-    console.log("formattedResp", formattedResp);
-    setParams(birthInclusionFormsObj);
-    // mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
-    navigateAcknowledgement({ birthInclusionFormsObj: formattedResp, navigationData });
+    if (formattedResp?.CorrectionDetails?.[0]?.CorrectionField?.length > 0) {
+      console.log("formattedResp", formattedResp);
+      setParams(birthInclusionFormsObj);
+      // mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
+      navigateAcknowledgement({ birthInclusionFormsObj: formattedResp, navigationData });
+    } else {
+      alert("Please edit atleast a field before submission");
+    }
   };
 
   const formatDob = (date) => {
-    console.log("date==",date);
+    console.log("date==", date);
+    // return moment(date).format("DD/MM/YYYY");
     return date;
   };
 
@@ -240,7 +234,7 @@ const BirthInclusionEditPage = ({
 
   if (Object.keys(birthInclusionFormsObj)?.length > 0) {
     console.log("birthInclusionFormData??.curValue", birthInclusionFormsObj);
-    const config = { texts: { submitBarLabel: "Submit" } };
+    const config = { texts: { submitBarLabel: "Next" } };
     return (
       <React.Fragment>
         <FormStep onSelect={onSubmitBirthInclusion} config={config}>
@@ -263,7 +257,7 @@ const BirthInclusionEditPage = ({
                   autofocus={birthInclusionFormsObj?.CHILD_DOB?.isFocused}
                   date={birthInclusionFormsObj?.CHILD_DOB?.curValue}
                   max={convertEpochToDate(new Date())}
-                  // min={convertEpochToDate("1900-01-01")}
+                  min={convertEpochToDate("1900-01-01")}
                   onChange={onDobChange}
                   // formattingFn={formatDob}
                   inputFormat="DD/MM/YYYY"
@@ -690,15 +684,17 @@ const BirthInclusionEditPage = ({
             </ButtonContainer>
           </FormFieldContainer> */}
           {/* </form> */}
-          {showModal && <BirthInclusionModal
-            showModal={showModal}
-            selectedDocs={selectedDocs}
-            selectedConfig={selectedInclusionItem}
-            selectedBirthData={navigationData}
-            onSubmit={onUploadDocSubmit}
-            hideModal={_hideModal}
-            selectedDocData={selectedDocData}
-          />}
+          {showModal && (
+            <BirthInclusionModal
+              showModal={showModal}
+              selectedDocs={selectedDocs}
+              selectedConfig={selectedInclusionItem}
+              selectedBirthData={navigationData}
+              onSubmit={onUploadDocSubmit}
+              hideModal={_hideModal}
+              selectedDocData={selectedDocData}
+            />
+          )}
         </FormStep>
       </React.Fragment>
     );

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { DeathNACRegistrationData } from "../../../utils/deathnacindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRDeathNACAcknowledgmentData";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -76,14 +76,14 @@ const DeathNACAcknowledgement = ({ data, onSuccess, userType, }) => {
   }, [mutation]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data
-    const License = (Licenses && Licenses[0]) || {};
+    const { deathNACDtls = [] } = mutation.data
+    const License = (deathNACDtls && deathNACDtls[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-  let enableLoader = (mutation.isIdle || mutation.isLoading);
+  let enableLoader = mutation.isIdle || mutation.isLoading ;
   if (enableLoader) { return (<Loader />) }
   else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     // if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
@@ -97,10 +97,10 @@ const DeathNACAcknowledgement = ({ data, onSuccess, userType, }) => {
       </Card>)
   }
   else
-    if (mutation.isSuccess && mutation?.isError === null) {
+    if (mutation.isSuccess && mutation?.isError === false && mutation?.isIdle === false) {
       return (
         <Card>
-          <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+          <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation?.isLoading)} />
 
           <LinkButton
             label={
@@ -116,6 +116,16 @@ const DeathNACAcknowledgement = ({ data, onSuccess, userType, }) => {
             //style={{ width: "100px" }}
             onClick={handleDownloadPdf}
           />
+          {mutation?.data?.deathNACDtls[0]?.applicationStatus === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.deathNACDtls[0].businessservice}/${mutation.data.deathNACDtls[0].InformationDeath.DeathACKNo}`,
+              state: { tenantId: mutation.data.deathNACDtls[0].InformationDeath.TenantId },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>
+        )}
 
         </Card>
       );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, UploadFile, PopUp, CardText } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -20,6 +20,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
   const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
   const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);
+  const [NACFile, setNACFile] = useState(formData?.ChildDetails?.uploadedFile ? formData?.ChildDetails?.uploadedFile : null);
+  const [uploadedFile, setUploadedFile] = useState(formData?.ChildDetails?.uploadedFile ? formData?.ChildDetails?.uploadedFile : null);
+  const [error, setError] = useState(null);
+  const [popUpState, setpopUpState] = useState(false);
+  const [popUpStateNac, setpopUpStateNac] = useState(false);
+  const [UploadNACHIde, setUploadNACHIde] = useState(formData?.ChildDetails?.UploadNACHIde ? true : false);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -145,6 +151,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender : formData?.ChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
+  const [proceedNoRDO, setproceedNoRDO] = useState(formData?.ChildDetails?.proceedNoRDO ? formData?.ChildDetails?.proceedNoRDO : "");
+  const [regNoNAC, setregNoNAC] = useState(formData?.ChildDetails?.regNoNAC ? formData?.ChildDetails?.regNoNAC : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
   const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
@@ -152,6 +160,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderuploadDoc, setisInitialRenderuploadDoc] = useState(true);
   const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
@@ -252,6 +261,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const onSkip = () => onSelect();
 
   useEffect(() => {
+    console.log("is initial render==",formData?.ChildDetails?.childDOB);
+
     if (isInitialRender) {
       if (formData?.ChildDetails?.isChildName != null) {
         setIsInitialRender(false);
@@ -266,6 +277,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   roleall?.map?.((e) => {
     rolecombine.push(e.code);
   });
+
   const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
@@ -300,7 +312,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return tempArray?.[0];
     }
   }
-
   useEffect(() => {
     if (isInitialRenderRoles) {
       if (userRoles.length > 0) {
@@ -308,7 +319,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           if (cmbPlaceMaster.length > 0) {
             const operatorHospCode = getHospitalCode();
             if (operatorHospCode != null) {
-              sethospitalCode(operatorHospCode);              
+              sethospitalCode(operatorHospCode);
             }
             selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
             setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
@@ -319,10 +330,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           if (cmbPlaceMaster.length > 0) {
             const approverHospCode = getHospitalCode();
             if (approverHospCode != null) {
-              sethospitalCode(approverHospCode);     
+              sethospitalCode(approverHospCode);
             }
             selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
-            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);            
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
             setisDisableEditRole(true);
             setInitialRenderRoles(false);
           }
@@ -343,7 +354,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             hospitalName={hospitalName}
             hospitalNameMl={hospitalNameMl}
             hospitalCode={hospitalCode}
-            isDisableEditRole = {isDisableEditRole}
+            isDisableEditRole={isDisableEditRole}
             setisDisableEditRole={setisDisableEditRole}
             userRoles={userRoles}
           />;
@@ -404,6 +415,27 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }, [isInitialRenderPlace]);
 
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (NACFile) {
+        if (NACFile.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              console.log("test");
+              setUploadedFile(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) { }
+        }
+      }
+    })();
+  }, [NACFile]);
+
   function setselectGender(value) {
     selectGender(value);
   }
@@ -446,24 +478,17 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setChildAadharHIde(false);
         setChildAadharNo("");
       }
-    }
-    // else {
-    //   setChildDOB(null);
-    //   // setDOBError(true);
-    //   // setToast(true);
-    //   // setTimeout(() => {
-    //   //   setToast(false);
-    //   // }, 3000);
-    // }
+      if (Difference_In_Days > 365) {
+        // setUploadNACHIde(true);
+        setpopUpState(true);
+      } else {
+        // setUploadNACHIde(false);
+        setpopUpState(false);
 
-    // const today = new Date();
-    // const birthDate = new Date(value);
-    // let diffdate = birthDate.setMonth(birthDate.getMonth() - 6)
-    // console.log(diffdate);
-    // let age_in_ms = today - birthDate;
-    // let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-    // setMotherAgeMarriage(Math.floor(age_in_years));
+      }
+    }
   }
+    
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -749,6 +774,20 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
     // }
   }
+  function setSelectproceedNoRDO(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setproceedNoRDO(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
+    }
+  }
+  function setSelectregNoNAC(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setregNoNAC(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
+    }
+  }
+  function selectfile(e) {
+    console.log(e.target.files);
+    setNACFile(e.target.files[0]);
+  }
   function setCheckSpecialChar(e) {
     let pattern = /^[0-9]*$/;
     if (!(e.key.match(pattern))) {
@@ -757,6 +796,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
   let validFlag = true;
   const goNext = () => {
+    console.log(UploadNACHIde);
+    console.log(NACFile);
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
     } else if (childAadharNo != null && childAadharNo != "") {
@@ -1258,7 +1299,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         streetNameMl: streetNameMl.trim(),
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid, DifferenceInTime, isWorkflow, isPayment, Amount
+        uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
+        proceedNoRDO,regNoNAC
       });
     }
   };
@@ -1293,7 +1335,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }
-
   if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
   } else {
@@ -1310,7 +1351,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "") : false)
           || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
-          || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""}>
+          || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""
+          || (UploadNACHIde === true ? (NACFile == null || proceedNoRDO === "" || regNoNAC === "") : false)
+        }>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1353,7 +1396,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={sortDropdownNames(menu ? menu : [],"code",t)}
+                  option={sortDropdownNames(menu ? menu : [], "code", t)}
                   selected={gender}
                   select={setselectGender}
                   disable={isDisableEdit}
@@ -1383,6 +1426,69 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 </div>)}
             </div>
           </div>
+          {UploadNACHIde === true && (
+            <div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_RDO_PROCEED_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="proceedNoRDO"
+                      value={proceedNoRDO}
+                      onChange={setSelectproceedNoRDO}
+                      disable={isDisableEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_RDO_PROCEED_NO")}`}
+                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_NAC_REG_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="regNoNAC"
+                      value={regNoNAC}
+                      onChange={setSelectregNoNAC}
+                      disable={isDisableEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_NAC_REG_NO")}`}
+                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_NAC_REG_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_PROCE_CERTIFICATE_UPLOAD")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <UploadFile
+                      extraStyleName={"propertyCreate"}
+                      accept=".jpg,.png,.pdf"
+                      onUpload={selectfile}
+                      onDelete={() => {
+                        setUploadedFile(null);
+                      }}
+                      message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1401,7 +1507,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [],"name",t)}
+                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [], "name", t)}
                   selected={birthPlace}
                   disable={isDisableEditRole}
                   select={setselectBirthPlace}
@@ -1420,7 +1526,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 formData={formData}
                 isEditBirth={isEditBirth}
                 hospitalCode={hospitalCode}
-                isDisableEditRole ={isDisableEditRole}
+                isDisableEditRole={isDisableEditRole}
                 setisDisableEditRole={setisDisableEditRole}
               />
             </div>
@@ -1703,7 +1809,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [],"name",t)}
+                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [], "name", t)}
                   selected={medicalAttensionSub}
                   select={setSelectMedicalAttensionSub}
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
@@ -1749,7 +1855,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [],"name",t)}
+                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [], "name", t)}
                   selected={deliveryMethods}
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}
@@ -1774,6 +1880,67 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               </div>
             </div>
           </div>
+          {(popUpState) && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RDO_PROCED_QUESTION")}`}</CardText>
+                    </div>
+                  </div>
+                  <div className="row" style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button type="button"
+                      style={{ backgroundColor: "orange", padding: "4px 16px", color: "white", borderRadius: "8px", }}
+                      onClick={() => {
+                        setUploadNACHIde(true);
+                        setpopUpState(false);
+                        setpopUpStateNac(false);
+                      }}
+                    >{`${t("COMMON_YES")}`}</button>
+                    <button type="button"
+                      style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                      onClick={() => {
+                        setpopUpState(false);
+                        setpopUpStateNac(true);
+                      }}
+                    >{`${t("COMMON_NO")}`}</button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
+          {(popUpStateNac) && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAC_REQUEST_MSG")}`}
+                      </CardText>
+                    </div>
+                  </div>
+                  <div className="row" style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button type="button"
+                      style={{
+                        backgroundColor: "orange",
+                        padding: "4px 16px",
+                        color: "white",
+                        borderRadius: "8px",
+                      }}
+                      onClick={() => {
+                        setUploadNACHIde(false);
+                        setpopUpStateNac(false);
+                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-birth-nac/nac-download-details`);
+                      }}
+                    >
+                      {`${t("COMMON_OK")}`}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
           {toast && (
             <Toast
               error={

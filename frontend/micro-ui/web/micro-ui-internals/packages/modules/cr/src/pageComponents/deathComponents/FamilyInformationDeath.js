@@ -116,6 +116,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
   const [FatherNameMlError, setFatherNameMlError] = useState(false);
   const [MotherNameEnError, setMotherNameEnError] = useState(false);
   const [MotherNameMlError, setMotherNameMlError] = useState(false);
+    const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const onSkip = () => onSelect();
   // function setFatherUnavailablechecked(e){
   //   if (e.target.checked === true) {
@@ -423,6 +424,42 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
       }, 2000);
     } else {
       setMotherNameMlError(false);
+    }
+
+    if ((MotherAadharNo.trim() == null || MotherAadharNo.trim() == '') && (FatherAadharNo.trim() != null || FatherAadharNo.trim() == '') && (SpouseAadhaar.trim() != null || SpouseAadhaar.trim() == '')) {
+      setMotherAadharNo('');
+      setFatherAadharNo('');
+      setSpouseAadhaar('');
+    } else {
+      if (MotherAadharNo.trim() != null && FatherAadharNo.trim() != null && SpouseAadhaar.trim() != null) {
+        if (MotherAadharNo === FatherAadharNo) {
+          validFlag = false;
+          setAdhaarDuplicationError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } 
+        if (MotherAadharNo === SpouseAadhaar) {
+          validFlag = false;
+          setAdhaarDuplicationError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        }  if (FatherAadharNo === SpouseAadhaar) {
+          validFlag = false;
+          setAdhaarDuplicationError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        }         
+        else {
+          setAdhaarDuplicationError(false);
+        }
+  
+      }
     }
     // sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);

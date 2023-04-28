@@ -764,7 +764,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     setselectedDeceasedGender(value);
   }
   function setSelectDeceasedLastNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setDeceasedLastNameMl("");
@@ -773,7 +773,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }
   function setSelectDeceasedMiddleNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setDeceasedMiddleNameMl("");
@@ -782,7 +782,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }
   function setSelectDeceasedFirstNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setDeceasedFirstNameMl("");
@@ -793,17 +793,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
  
   function setSelectDeceasedFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z @]*$") != null) {
       setDeceasedFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedMiddleNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z @]*$") != null) {
       setDeceasedMiddleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedLastNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z @]*$") != null) {
       setDeceasedLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
@@ -1238,7 +1238,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setDeathPlaceHomehoueNameMlError(false);
       }
       if (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined) {
-        setAdrsStreetNameEn("");
+        setDeathPlaceHomestreetNameEn("");
       } else {
         if (DeathPlaceHomeStreetNameEn != null && (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined)) {
           validFlag = false;
@@ -1253,7 +1253,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         }
       }
       if (DeathPlaceHomeStreetNameMl === null || DeathPlaceHomeStreetNameMl.trim() === '' || DeathPlaceHomeStreetNameMl.trim() === undefined) {
-        setAdrsStreetNameMl("");
+        setDeathPlaceHomestreetNameMl("");
       } else {
         if (DeathPlaceHomeStreetNameMl != null && (DeathPlaceHomeStreetNameEn === null || DeathPlaceHomeStreetNameEn.trim() === '' || DeathPlaceHomeStreetNameEn.trim() === undefined)) {
           validFlag = false;
@@ -1349,12 +1349,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         tenantId,
         DateOfDeath,
         TimeOfDeath,
-        DeceasedFirstNameEn : DeceasedFirstNameEn.trim(),
-        DeceasedMiddleNameEn :DeceasedMiddleNameEn.trim(),
-        DeceasedLastNameEn : DeceasedLastNameEn.trim(),
-        DeceasedFirstNameMl :DeceasedFirstNameMl.trim(),
-        DeceasedMiddleNameMl :DeceasedMiddleNameMl.trim(),
-        DeceasedLastNameMl:DeceasedLastNameMl.trim(),
+        DeceasedFirstNameEn ,
+        DeceasedMiddleNameEn ,
+        DeceasedLastNameEn ,
+        DeceasedFirstNameMl ,
+        DeceasedMiddleNameMl ,
+        DeceasedLastNameMl,
         Age,
         DeceasedAadharNotAvailable,
         DeceasedAadharNumber,
@@ -1378,12 +1378,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         DeathPlaceInstId,
         InstitutionIdMl,
         institutionNameCode,
-        DeathPlaceHomeHoueNameEn :DeathPlaceHomeHoueNameEn.trim(),
-        DeathPlaceHomehoueNameMl:DeathPlaceHomehoueNameMl.trim(),
-        DeathPlaceHomeLocalityEn :DeathPlaceHomeLocalityEn.trim(),
-        DeathPlaceHomeLocalityMl:DeathPlaceHomeLocalityMl.trim(),
-        DeathPlaceHomeStreetNameEn :DeathPlaceHomeStreetNameEn.trim(),
-        DeathPlaceHomeStreetNameMl:DeathPlaceHomeStreetNameMl.trim(),
+        DeathPlaceHomeHoueNameEn,
+        DeathPlaceHomehoueNameMl,
+        DeathPlaceHomeLocalityEn,
+        DeathPlaceHomeLocalityMl,
+        DeathPlaceHomeStreetNameEn ,
+        DeathPlaceHomeStreetNameMl,
         DeathPlaceHomePostofficeId,
         DeathPlaceHomeWardId,
         DeathPlaceHomePincode,
@@ -1848,7 +1848,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   onKeyPress={setCheckSpecialCharSpace}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' @]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1864,7 +1864,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   onKeyPress={setCheckSpecialCharSpace}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' @]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1880,7 +1880,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   onKeyPress={setCheckSpecialCharSpace}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' @]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
               </div>
             </div>

@@ -36,7 +36,7 @@ const MarriageCorrectionEditPage = ({
   cmbWardNoFinal,
   cmbPlaceName,
   onSubmitAcknowledgement,
-  BirthCorrectionDocuments,
+  marriageCorrectionDocuments,
 }) => {
   const { t } = useTranslation();
   let formData = {};
@@ -103,7 +103,6 @@ const MarriageCorrectionEditPage = ({
     let birthInclusionData = marriageCorrectionFormsObj[fieldId];
     setSelectedFieldType(fieldId);
     setSelectedCorrectionItem(birthInclusionData);
-    console.log("birthInclusionData ===", birthInclusionData, fieldId);
     setShowModal(true);
   };
 
@@ -299,14 +298,15 @@ const MarriageCorrectionEditPage = ({
 
 
   useEffect(async () => {
-    console.log("fetchData---flag==",params,Object.keys(params)?.length > 0);
-    if(Object.keys(params)?.length > 0){
-      setMarriageCorrectionFormsObj(params);
-    } else{
-      marriageCorrectionFormData = await initializeMarriageCorrectionObject(BirthCorrectionDocuments, navigationData);
-    await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
+    if (Object.keys(params)?.length > 0) {
+      let tempParams = {}
+      Object.keys(params).forEach((key,index)=> tempParams[key] = {...params[key], isDisable: true, isEditable: false, isFocused: false });
+      setMarriageCorrectionFormsObj({...tempParams});
+    } else {
+      marriageCorrectionFormData = await initializeMarriageCorrectionObject(marriageCorrectionDocuments, navigationData);
+      await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
     }
-  }, [navigationData, BirthCorrectionDocuments]);
+  }, [navigationData, marriageCorrectionDocuments]);
 
   useEffect(() => {
     if (marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue) {
@@ -326,7 +326,6 @@ const MarriageCorrectionEditPage = ({
       });
       setSelectedDocData([...selectedDocData, ...filteredData]);
     }
-    console.log("uploaded documents==", fileData, selectedDocData, selectedDocs);
     selectedDocs;
     let tempObj = { ...marriageCorrectionFormsObj };
     let tempFieldType = tempObj[selectedFieldType];
@@ -351,9 +350,14 @@ const MarriageCorrectionEditPage = ({
   };
   const onSubmitMarriageCorrection = () => {
     const formattedResp = formatApiParams(marriageCorrectionFormsObj, navigationData);
+    if(formattedResp?.CorrectionDetails?.[0]?.CorrectionField.length > 0) {
     setParams(marriageCorrectionFormsObj);
-    // mutation.mutate(formattedResp, { onSuccess: onDocUploadSuccess });
     onSubmitAcknowledgement({marriageCorrectionFormsObj:formattedResp, navigationData});
+    } else {
+      alert("Please edit atleast a field before submit");
+    }
+    // mutation.mutate(formattedResp, { onSuccess: onDocUploadSuccess });
+    
   };
 
   const setMarriageCorrecvtionFilterQuery = (fieldId) => {
@@ -393,9 +397,10 @@ const MarriageCorrectionEditPage = ({
   };
 
   if (Object.keys(marriageCorrectionFormsObj)?.length > 0) {
+    const config = { texts: { submitBarLabel: "Next" }};
     return (
       <React.Fragment>
-        <FormStep>
+        <FormStep config={config} onSelect={onSubmitMarriageCorrection}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -427,7 +432,7 @@ const MarriageCorrectionEditPage = ({
                   // disable={isDisableEdit}
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
+                  // {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
                 />
               </div>
             </FieldComponentContainer>
@@ -1631,7 +1636,7 @@ const MarriageCorrectionEditPage = ({
               </div>
             )}
           </FormFieldContainer>
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
+          {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} /> */}
           <MarriageCorrectionModal
             showModal={showModal}
             selectedConfig={selectedCorrectionItem}
