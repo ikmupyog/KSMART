@@ -6,6 +6,7 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
+import org.egov.filemgmnt.web.models.draftfile.DraftFile;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,28 +22,24 @@ public class DraftFilesEnrichment extends BaseEnrichment {
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
 
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+        final DraftFile draftFile = request.getDraftFile();
 
-        request.getDraftFiles()
-               .forEach(drafting -> {
-                   drafting.setId(UUID.randomUUID()
+        draftFile.setId(UUID.randomUUID()
                                       .toString());
-                   drafting.setAuditDetails(auditDetails);
-
-               });
-
+        draftFile.setAuditDetails(auditDetails);
     }
 
     public void enrichUpdate(DraftFileRequest request) {
 
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
+
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-        request.getDraftFiles()
-               .forEach(draftingfile -> {
-                   draftingfile.setAuditDetails(auditDetails);
-                   draftingfile.getDraftText();
-               });
+        final DraftFile draftFile = request.getDraftFile();
+
+        draftFile.setAuditDetails(auditDetails);
+        draftFile.getDraftText();
     }
 
 }

@@ -1,8 +1,5 @@
 package org.egov.filemgmnt.web.models.draftfile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -17,6 +14,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Schema(description = "Draft file service request for create and update")
 @Validated
@@ -33,18 +33,17 @@ public class DraftFileRequest {
 
     @Valid
     @NotNull(message = "Draft file is required")
-    @JsonProperty("DraftFiles")
-    private List<DraftFile> draftFiles;
+    @JsonProperty("draftFile")
+    private DraftFile draftFile;
 
-    public DraftFileRequest addDraftFile(DraftFile draftFile) {
+    
+//    public DraftFileRequest addDraftFile(DraftFile draftFiles) {
+//
+//        if (draftFile == null) {
+//            draftFile = new ArrayList<>();
+//        }
+//        draftFile.add(draftFiles);
+//        return this;
+//    }
 
-        if (draftFiles == null) {
-            draftFiles = new ArrayList<>();
-        }
-        draftFiles.add(draftFile);
-        return this;
-    }
-//    @Valid
-//    @ArraySchema(minItems = 1, schema = @Schema(implementation = ApplicantDocument.class))
-//    @NotEmpty(message = "Applicant document(s) is required")
 }

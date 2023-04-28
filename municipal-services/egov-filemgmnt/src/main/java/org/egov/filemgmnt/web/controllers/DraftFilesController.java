@@ -45,31 +45,31 @@ public class DraftFilesController implements DraftFilesBaseController {
             log.debug("draftfiles-create:  \n{}", FMUtils.toJson(request));
         }
 
-        final List<DraftFile> result = draftFileService.create(request);
-
+        final DraftFile result = draftFileService.createDraftFile(request);
         return ResponseEntity.ok(DraftFileResponse.builder()
                                                   .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                       Boolean.TRUE))
-                                                  .drafting(result)
+                                                  .draftFile(result)
                                                   .build());
     }
+
 
     @Override
     @PutMapping("/draftfiles/_update")
     public ResponseEntity<DraftFileResponse> update(@RequestBody final DraftFileRequest request,
                                                     @RequestParam final String mode) {
 
-        List<DraftFile> result = null;
+        DraftFile result = null;
         if (StringUtils.equals(mode, "STATUS")) {
             result = draftFileService.updateStatus(request);
         } else {
-            result = draftFileService.update(request);
+            result = draftFileService.updateDraftFile(request);
         }
 
         return ResponseEntity.ok(DraftFileResponse.builder()
                                                   .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                       Boolean.TRUE))
-                                                  .drafting(result)
+                                                  .draftFile(result)
                                                   .build());
     }
 

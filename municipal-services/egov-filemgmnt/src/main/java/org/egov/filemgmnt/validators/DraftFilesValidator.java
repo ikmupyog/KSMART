@@ -5,6 +5,7 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,12 +37,11 @@ public class DraftFilesValidator {
 
     public void validateDraftCreate(DraftFileRequest request) {
 
-        if (CollectionUtils.isEmpty(request.getDraftFiles())) {
+        if (CollectionUtils.isEmpty((Collection<?>) request.getDraftFile())) {
             throw new CustomException(REQUIRED.getCode(), "Atleast one Draft is required");
-
         }
 
-        for (DraftFile draftFiles : request.getDraftFiles()) {
+        final DraftFile draftFiles =  request.getDraftFile();
             if (StringUtils.isNotBlank(draftFiles.getTenantId()) && StringUtils.isNotBlank(draftFiles.getAssigner())
                     && StringUtils.isNotBlank(draftFiles.getFileCode())
                     && StringUtils.isNotBlank(draftFiles.getDraftType())) {
@@ -61,20 +61,20 @@ public class DraftFilesValidator {
 
             }
         }
-    }
+
 
     public void validateUpdate(DraftFileRequest request, List<DraftFile> searchResult) {
-        List<DraftFile> files = request.getDraftFiles();
+         DraftFile files = request.getDraftFile();
 
-        if (CollectionUtils.isEmpty(request.getDraftFiles())) {
+        if (CollectionUtils.isEmpty((Collection<?>) files)) {
             throw new CustomException(REQUIRED.getCode(), "Draft file is required");
         }
 
-        if (files.size() > 1) { // NOPMD
+        if (((Collection<?>) files).size() > 1) { // NOPMD
             throw new CustomException(INVALID_UPDATE.getCode(), "Supports only single draft file update request.");
 
         }
-        if (files.size() != searchResult.size()) {
+        if (((Collection<?>) files).size() != searchResult.size()) {
             throw new CustomException(INVALID_UPDATE.getCode(), "Draft file is  not found in database.");
 
         }

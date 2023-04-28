@@ -1,8 +1,5 @@
 package org.egov.filemgmnt.web.models.draftfile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,16 +26,16 @@ public class DraftFileResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("Drafting")
-    private List<DraftFile> drafting;
+    @JsonProperty("draftFile")
+    private DraftFile draftFile;
 
-    public DraftFileResponse addDrafting(DraftFile newDraft) {
-
-        if (drafting == null) {
-            drafting = new ArrayList<>();
-        }
-        drafting.add(newDraft);
-        return this;
-    }
+//    public DraftFileResponse addDrafting(DraftFile newDraft) {
+//
+//        if (drafting == null) {
+//            drafting = new ArrayList<>();
+//        }
+//        drafting.add(newDraft);
+//        return this;
+//    }
 
 }
