@@ -33,17 +33,17 @@ public class MarriageCorrectionValidator {
 
                 if (CollectionUtils.isEmpty(marriageDetails)) {
                         throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
-                                        "Marriage registration is required.");
+                                        "Marriage Correction Application is required.");
                 }
 
                 if (marriageDetails.size() > 1) { // NOPMD
                         throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                                        "Supports only single Marriage registration update request.");
+                                        "Supports only single Marriage Correction Application update request.");
                 }
 
                 if (marriageDetails.size() != searchResult.size()) {
                         throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
-                                        "Marriage registration(s) not found in database.");
+                                        "Marriage Correction Application(s) not found in database.");
                 }
                 // IMP:Have to enable after URI submission
                // validateCommonFields(request);

@@ -3,6 +3,7 @@ package org.ksmart.marriage.marriagecorrection.web.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.springframework.validation.annotation.Validated;
 
 import javax.swing.text.Document;
@@ -74,4 +75,6 @@ public class MarriageCorrectionDetails {
     private Boolean isWorkflow;
 
 
+    @JsonProperty("Demands")
+    private List<Demand> demands;
 }
