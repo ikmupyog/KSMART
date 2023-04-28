@@ -261,16 +261,16 @@ let ownerappmap ={
 
       let ownerspremise =  ownerState;
       let institution = LicenseeType.code === "INSTITUTION" ? {
-        "institutionName": institutionName, "contactNo": contactNo,
-        "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
-        "email": email, "licenseUnitId": licenseUnitId
+        "institutionName": institutionName?.trim(), "contactNo": contactNo?.trim(),
+        "organisationregistrationno": organisationregistrationno?.trim(), "address": insaddress?.trim(), "natureOfInstitution": natureOfInstitution.code,
+        "email": email?.trim(), "licenseUnitId": licenseUnitId?.trim()
       } : null;
       let licenseeType = LicenseeType;
-      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
+      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment?.trim();
       let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
       let structurePlaceSubtype = formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype;
-      let businessActivityDesc = formDatalocal?.tradeLicenseDetail?.businessActivityDesc;
-      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees;
+      let businessActivityDesc = formDatalocal?.tradeLicenseDetail?.businessActivityDesc?.trim();
+      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees?.trim();
       let ownershipCategory = formDatalocal?.tradeLicenseDetail?.ownershipCategory;
       let address = formDatalocal?.tradeLicenseDetail?.address;
       let structurePlace = formDatalocal?.tradeLicenseDetail?.structurePlace;

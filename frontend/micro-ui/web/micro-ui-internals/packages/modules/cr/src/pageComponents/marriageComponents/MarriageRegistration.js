@@ -64,11 +64,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     "birth-death-service",
     "TypeOfMarriage"
   );
-  const { data: subRegistarOffice = {}, isSubRegistarOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+  const { data: subRegistarOffice = {}, isSubRegistarLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
     "SubRegistar"
   );
+
   const { data: marriagePlaceType = {}, isMarriagePlaceTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -119,7 +120,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   },
   // ];
 
-  console.log({subRegistarOffice});
+  console.log({ subRegistarOffice });
 
   let cmbDistrict = [];
   let cmbTaluk = [];
@@ -188,12 +189,14 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     typeOfMarriage["birth-death-service"].TypeOfMarriage.map((ob) => {
       cmbTypeOfMarriage.push(ob);
     });
-    subRegistarOffice &&
+
+  subRegistarOffice &&
     subRegistarOffice["birth-death-service"] &&
     subRegistarOffice["birth-death-service"].SubRegistar &&
     subRegistarOffice["birth-death-service"].SubRegistar.map((ob) => {
       cmbSubRegistarOffice.push(ob);
     });
+
   marriagePlaceType &&
     marriagePlaceType["birth-death-service"] &&
     marriagePlaceType["birth-death-service"].MarriagePlaceType &&
@@ -315,6 +318,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       return null;
     }
   };
+
+  const filteredSubRegistrarOfficeList = cmbSubRegistarOffice?.filter(sOffice => sOffice.districtCode === marriageDistrictid?.code)
+  console.log({filteredSubRegistrarOfficeList})
+
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.MarriageDetails?.marriageDOM ? false : false);
   const [marriageDistrictidError, setMarriageDistrictidError] = useState(false);
@@ -361,31 +368,22 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   }
   // });
   function setSelectmarriageDOM(value) {
-    setMarriageDistrictid("");
-    setmarriageTalukID("");
-    setmarriageVillageName("");
-    setMarriageLBtype("");
-    setMarriageTenantid("");
-    setMarriageWardCode("");
-    setMarriagePlacetype("");
-    setplaceidEn("");
-    setplaceidMl("");
     setmarriageDOM(value);
     const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } else {
-      setmarriageDOM(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
+    // const birthDate = new Date(value);
+    // if (birthDate.getTime() <= today.getTime()) {
+    //   // To calculate the time difference of two dates
+    //   let Difference_In_Time = today.getTime() - birthDate.getTime();
+    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //   let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    // } else {
+    //   setmarriageDOM(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
   function setSelectMarriageDistrictid(value) {
     setMarriageDistrictid(value);
@@ -502,24 +500,38 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
   function setMarriagePlace(place) {
+    console.log({place})
     if (place.code === "RELIGIOUS_INSTITUTION") {
       return cmbPlaceNameReligious;
     } else if (place.code === "MANDAPAM_HALL_AND_OTHER") {
       return cmbPlaceNameMandapam;
-    } else if (place.type === "SUB_REGISTRAR_OFFICE") {
-      return cmbSubRegistarOffice;
+    } else if (place.code === "SUB_REGISTRAR_OFFICE") {
+      return filteredSubRegistrarOfficeList;
     }
   }
 
-  // useEffect(() => {
-  //   console.log({ cmbLB });
-  //   if (cmbLB?.length > 0) {
-  //     console.log("Hi");
-  //     currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-  //     console.log({ currentLB });
-  //     setMarriageTenantid(currentLB);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (cmbLB?.length > 0) {
+      const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+      setMarriageTenantid(currentLB[0]);
+      console.log({ currentLB });
+      const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
+      console.log({ currentDistrict });
+      setMarriageDistrictid(currentDistrict[0]);
+      districtid = currentDistrict[0].districtid;
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      console.log({ cmbFilterTaluk });
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+      setLbsVillagevalue(cmbFilterVillage);
+      console.log({ cmbFilterVillage });
+      const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
+      setMarriageLBtype(currentLBType[0]);
+      const currentTaluk = cmbFilterTaluk?.filter((taluk) => taluk.code === currentLB[0].city.talukcode);
+      setmarriageTalukID(currentTaluk[0]);
+      console.log({ currentTaluk });
+    }
+  }, [cmbLB.length]);
 
   let validFlag = true;
   const goNext = () => {
@@ -818,8 +830,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   };
 
+  console.log({marriageDistrictid})
   console.log("Registration", formData);
   console.log({ marriageType });
+
 
   if (
     isLoading ||
@@ -1035,7 +1049,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       <Dropdown
                         t={t}
                         type={"text"}
-                        optionKey="name"
+                        optionKey={marriagePlacetype.code==="SUB_REGISTRAR_OFFICE" ? "locationOfOffice" : "name"}
                         option={setMarriagePlace(marriagePlacetype)}
                         selected={placeidEn}
                         select={setSelectPlaceidEn}
@@ -1052,7 +1066,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       <Dropdown
                         t={t}
                         type={"text"}
-                        optionKey="nameLocal"
+                        optionKey={marriagePlacetype.code==="SUB_REGISTRAR_OFFICE" ? "locationOfOffice" : "name"}
                         option={setMarriagePlace(marriagePlacetype)}
                         selected={placeidMl}
                         // select={setSelectPlaceidMl}

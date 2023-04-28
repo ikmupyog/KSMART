@@ -893,20 +893,20 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
       let units = fields;
       let address = {
-        "doorNo": combineddoorno,
-        "localityName": locality,
-        "street": street,
-        "landmark": landmark,
-        "buildingName": buildingName,
+        "doorNo": combineddoorno?.trim(),
+        "localityName": locality?.trim(),
+        "street": street?.trim(),
+        "landmark": landmark?.trim(),
+        "buildingName": buildingName?.trim(),
         "zonalId": WardNo.zonecode,
         "wardId": WardNo.code,
         "wardNo": WardNo.wardno,
         "postOffice": postOffice.name,
         "pincode": pincode,
-        "contactNo": contactNo,
-        "email": email,
-        "waterbody": waterbody,
-        "serviceArea": serviceArea
+        "contactNo": contactNo?.trim(),
+        "email": email?.trim(),
+        "waterbody": waterbody?.trim(),
+        "serviceArea": serviceArea?.trim()
       };
       let tradeUnits =[
         {
