@@ -62,13 +62,13 @@ function MarriageCorrectionSummary({
     "GroomAddressDetails.permntInKeralaAdrLocalityNameEn": "CR_LOCALITY_EN",
     "GroomAddressDetails.permntInKeralaAdrLocalityNameMl": "CR_LOCALITY_ML",
     "GroomAddressDetails.permntInKeralaAdrStreetNameEn": "CR_STREET_EN",
-    "GroomAddressDetails.permntInKeralaAdrStreetNameMl": "CR_STREET_ML",
+    "GroomAddressDetails.permntInKeralaAdrStreetNameMl": "CR_STREET_MAL",
     "GroomAddressDetails.permntOutsideKeralaHouseNameEn": "CR_HOUSE_NO_AND_NAME_EN",
     "GroomAddressDetails.permntOutsideKeralaHouseNameMl": "CR_HOUSE_NO_AND_NAME_MAL",
     "GroomAddressDetails.permntOutsideKeralaLocalityNameEn": "CR_LOCALITY_EN",
     "GroomAddressDetails.permntOutsideKeralaLocalityNameMl": "CR_LOCALITY_ML",
     "GroomAddressDetails.permntOutsideKeralaStreetNameEn": "CR_STREET_EN",
-    "GroomAddressDetails.permntOutsideKeralaStreetNameMl": "CR_STREET_ML",
+    "GroomAddressDetails.permntOutsideKeralaStreetNameMl": "CR_STREET_MAL",
     "GroomAddressDetails.permntOutsideIndiaLineoneEn": "CR_ADDRES_LINE_ONE_EN",
     "GroomAddressDetails.permntOutsideIndiaLineoneMl": "CR_ADDRES_LINE_ONE_ML",
     "GroomAddressDetails.permntOutsideIndiaLinetwoEn": "CR_ADDRES_LINE_TWO_EN",
@@ -240,7 +240,7 @@ function MarriageCorrectionSummary({
   }, []);
 
   const renderCardDetail = (value, fieldName, documentData) => {
-    const type = fieldName === "DOM" ? "date" : "text";
+    const type = (["DOM", "GROOM_AGE", "BRIDE_AGE"].includes(fieldName)) ? "date" : "text";
     return (
       <div className="row">
         <div className="col-md-12">
@@ -249,12 +249,12 @@ function MarriageCorrectionSummary({
           </div>
           <div className="col-md-3">
             <h4>
-              <strong>{getFieldValue(value?.oldValue, type)}</strong>
+              <strong style={{ wordWrap: "break-word"}}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-3">
             <h4>
-              <strong>{getFieldValue(value?.newValue, type)}</strong>
+              <strong style={{ wordWrap: "break-word"}}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-2">
