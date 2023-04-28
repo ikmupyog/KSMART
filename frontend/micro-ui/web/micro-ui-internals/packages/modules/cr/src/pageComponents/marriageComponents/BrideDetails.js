@@ -432,10 +432,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setbrideFatherAadharNo("");
       setAdhaarDuplicationError(true);
@@ -496,10 +496,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setbrideMotherAadharNo("");
       setAdhaarDuplicationError(true);
@@ -527,10 +527,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setbrideGuardianAadharNo("");
       setAdhaarDuplicationError(true);
