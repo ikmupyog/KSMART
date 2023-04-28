@@ -13,13 +13,12 @@ import {
   SubmitBar,
   TextArea,
   PopUp,
-  UploadFile,
-  ImageUploadHandler,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
+import { ImageUploadHandler } from "./ImageCropper/ImageUploadHandler";
 // import { TimePicker } from '@material-ui/pickers';
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
