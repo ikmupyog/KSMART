@@ -19,7 +19,7 @@ public class DraftCertificateEnrichment extends BaseEnrichment {
     @Autowired
     private FMConfiguration fmConfig;
 
-    public void enrichCreateDraftCertificate(final DraftCertificateRequest request) {
+    public void enrichCreate(final DraftCertificateRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
 
@@ -33,10 +33,10 @@ public class DraftCertificateEnrichment extends BaseEnrichment {
                    cert.setAuditDetails(auditDetails);
                });
 
-        setDraftCertificateNumber(request);
+        setCertificateNumber(request);
     }
 
-    private void setDraftCertificateNumber(final DraftCertificateRequest request) {
+    private void setCertificateNumber(final DraftCertificateRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final List<DraftCertificateDetails> certDetails = request.getDraftCertificateDetails();
 

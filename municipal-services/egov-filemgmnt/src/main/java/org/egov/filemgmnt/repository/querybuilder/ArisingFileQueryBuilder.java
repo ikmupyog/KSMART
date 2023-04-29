@@ -14,29 +14,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArisingFileQueryBuilder extends BaseQueryBuilder {
 
-    private static final String QUERY = new StringBuilder().append("SELECT")
-                                                           .append("  id,tenantid, filecode,filearisingmode")
-                                                           .append("  , filearisingdate,financialyear,workflowcode,businessservice")
-                                                           .append("  , assignee, action,filestatus,createdby,createdtime")
-                                                           .append("   ,lastmodifiedby,lastmodifiedtime")
-                                                           .append(" FROM eg_fm_arisingfile ar")
-                                                           .toString();
+    private static final StringBuilder QUERY = new StringBuilder(); // NOPMD
+
+    static {
+        QUERY.append("SELECT") // NOPMD
+             .append("  id, tenantid, filecode, filearisingmode, filearisingdate, financialyear, workflowcode, businessservice")
+             .append("  , assignee, action, filestatus, createdby, createdtime, lastmodifiedby, lastmodifiedtime")
+             .append(" FROM eg_fm_arisingfile");
+    }
 
     public String getArisingFileSearchQuery(@NotNull final ArisingFileSearchCriteria criteria,
-                                            @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+                                            @NotNull final List<Object> preparedStmtValues,
+                                            @NotNull final Boolean isCount) {
+
         StringBuilder query = new StringBuilder(QUERY);
 
-        addFilter("ar.filecode", criteria.getFileCode(), query, preparedStmtValues);
-        // addFilters("ar.filearisingdate", criteria.getFromDate(), query,
+        addFilter("filecode", criteria.getFileCode(), query, preparedStmtValues);
+        // addFilters("filearisingdate", criteria.getFromDate(), query,
         // preparedStmtValues);
-        // addFilters("ar.filearisingdate", criteria.getToDate(), query,
+        // addFilters("filearisingdate", criteria.getToDate(), query,
         // preparedStmtValues);
-        addFilter("ar.filestatus", criteria.getFileStatus(), query, preparedStmtValues);
-        addDateRangeFilter("ar.filearisingdate",
-                           criteria.getFromDate(),
-                           criteria.getToDate(),
-                           query,
-                           preparedStmtValues);
+        addFilter("filestatus", criteria.getFileStatus(), query, preparedStmtValues);
+        addDateRangeFilter("filearisingdate", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
         return query.toString();
     }
 

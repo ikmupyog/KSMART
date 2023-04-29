@@ -40,7 +40,7 @@ public class ArisingFilesController implements ArisingFilesBaseController {
             log.debug("arisingfiles-create:  \n{}", FMUtils.toJson(request));
         }
 
-        final ArisingFile arisingFile = arisingFileService.createArisingFile(request);
+        final ArisingFile arisingFile = arisingFileService.create(request);
         return ResponseEntity.ok(ArisingFileResponse.builder()
                                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                         Boolean.TRUE))
@@ -69,7 +69,7 @@ public class ArisingFilesController implements ArisingFilesBaseController {
         if (log.isDebugEnabled()) {
             log.debug("arisingfiles-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
-        final List<ArisingFile> result = arisingFileService.searchFile(request.getRequestInfo(), searchCriteria);
+        final List<ArisingFile> result = arisingFileService.search(request.getRequestInfo(), searchCriteria);
 
         return ResponseEntity.ok(ArisingFileSearchResponse.builder()
                                                           .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),

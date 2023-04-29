@@ -10,11 +10,17 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnquiryRowMapper implements ResultSetExtractor<List<Enquiry>>, BaseRowMapper {
+
     @Override
     public List<Enquiry> extractData(final ResultSet rs) throws SQLException, DataAccessException {
-        List<Enquiry> result = new ArrayList<>();
+        final List<Enquiry> result = new ArrayList<>();
+
         while (rs.next()) {
             result.add(Enquiry.builder()
                               .moduleName(rs.getString("modulename"))

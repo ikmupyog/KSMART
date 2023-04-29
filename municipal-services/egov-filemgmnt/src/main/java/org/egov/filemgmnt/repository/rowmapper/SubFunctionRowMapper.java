@@ -10,11 +10,17 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SubFunctionRowMapper implements ResultSetExtractor<List<SubFunctionDetails>>, BaseRowMapper {
+
     @Override
     public List<SubFunctionDetails> extractData(final ResultSet rs) throws SQLException, DataAccessException {
-        List<SubFunctionDetails> result = new ArrayList<>();
+        final List<SubFunctionDetails> result = new ArrayList<>();
+
         while (rs.next()) {
             result.add(SubFunctionDetails.builder()
                                          .subFunctionCode(rs.getString("sfcode"))

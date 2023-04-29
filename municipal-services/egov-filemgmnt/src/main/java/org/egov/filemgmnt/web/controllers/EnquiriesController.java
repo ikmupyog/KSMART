@@ -11,7 +11,6 @@ import org.egov.filemgmnt.web.models.enquiry.EnquiryRequest;
 import org.egov.filemgmnt.web.models.enquiry.EnquiryResponse;
 import org.egov.filemgmnt.web.models.enquiry.EnquirySearchCriteria;
 import org.egov.filemgmnt.web.models.enquiry.EnquirySearchResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/v1")
 public class EnquiriesController implements EnquiriesBaseController {
-    @Autowired
+
     private final ResponseInfoFactory responseInfoFactory;
     private final EnquiryService enquiryService;
 
-    public EnquiriesController(final ResponseInfoFactory responseInfoFactory, final EnquiryService enquiryService) {
+    EnquiriesController(final ResponseInfoFactory responseInfoFactory, final EnquiryService enquiryService) {
         this.responseInfoFactory = responseInfoFactory;
         this.enquiryService = enquiryService;
 
@@ -42,7 +41,7 @@ public class EnquiriesController implements EnquiriesBaseController {
             log.debug("enquiries-create:  \n{}", FMUtils.toJson(request));
         }
 
-        final List<Enquiry> result = enquiryService.saveEnquiry(request);
+        final List<Enquiry> result = enquiryService.create(request);
         return ResponseEntity.ok(EnquiryResponse.builder()
                                                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                     Boolean.TRUE))
@@ -58,7 +57,7 @@ public class EnquiriesController implements EnquiriesBaseController {
             log.debug("enquiries-search:  \n{}", FMUtils.toJson(enquirySearchCriteria));
         }
 
-        final List<Enquiry> result = enquiryService.searchEnquiry(request.getRequestInfo(), enquirySearchCriteria);
+        final List<Enquiry> result = enquiryService.search(request.getRequestInfo(), enquirySearchCriteria);
         return ResponseEntity.ok(EnquirySearchResponse.builder()
                                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                           Boolean.TRUE))

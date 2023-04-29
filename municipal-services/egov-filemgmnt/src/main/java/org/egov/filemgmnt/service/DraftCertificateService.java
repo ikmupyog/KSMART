@@ -13,6 +13,7 @@ import org.egov.filemgmnt.repository.DraftFilesRepository;
 import org.egov.filemgmnt.repository.ServiceRequestRepository;
 import org.egov.filemgmnt.validators.DraftFilesValidator;
 import org.egov.filemgmnt.web.enums.CertificateStatus;
+import org.egov.filemgmnt.web.enums.DraftType;
 import org.egov.filemgmnt.web.models.certificate.EgovPdfResponse;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificate;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificateRequest;
@@ -36,81 +37,63 @@ public class DraftCertificateService {
     @Autowired
     private ServiceRequestRepository restRepo;
 
-    private final DraftFilesValidator validator;
     private final DraftFilesRepository repository;
-    private final DraftCertificateEnrichment draftCertificateEnrichment;
+    private final DraftCertificateEnrichment enrichment;
+    private final DraftFilesValidator validator;
 
-    DraftCertificateService(final DraftFilesRepository repository,
-                            final DraftCertificateEnrichment draftCertificateEnrichment,
+    DraftCertificateService(final DraftFilesRepository repository, final DraftCertificateEnrichment enrichment,
                             final DraftFilesValidator validator) {
         this.repository = repository;
-        this.draftCertificateEnrichment = draftCertificateEnrichment;
+        this.enrichment = enrichment;
         this.validator = validator;
     }
 
-    public DraftCertificateRequest createDraftCertificateRequest(DraftFileSearchCriteria searchCriteria,
-                                                                 RequestInfo requestInfo) {
+    public DraftCertificateRequest createDraftCertificateRequest(final DraftFileSearchCriteria searchCriteria,
+                                                                 final RequestInfo requestInfo) {
 
-        validator.validateSearchDraftFiles(requestInfo, searchCriteria);
-        final DraftFile draftDetails = finalDraftDetails(searchCriteria);
-        Assert.notNull(draftDetails, "No Draft file is found for this search");
+        validator.validateSearch(requestInfo, searchCriteria);
 
-        String eUrl = null;
+        final DraftFile draftFile = findDraftFile(searchCriteria);
+        Assert.notNull(draftFile, "No Draft file is found for this search");
+
         String urlLink = null;
         String urlCreateEndPoint = null;
+        String embeddedUrl = null;
 
-// Circular
-        if (draftDetails.getDraftType()
-                        .equals("1")) {
+        String draftType = draftFile.getDraftType();
+        if (DraftType.isCircular(draftType)) {
             urlLink = fmConfig.getCircularCertificateLink();
             urlCreateEndPoint = fmConfig.getEgovPdfCircularEndPoint();
-            eUrl = buildEmbeddedUrl(draftDetails, urlLink);
+            embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        }
-
-// Affidavit
-        if (draftDetails.getDraftType()
-                        .equals("2")) {
+        } else if (DraftType.isAffidavit(draftType)) {
             urlLink = fmConfig.getAffidavitCertificateLink();
             urlCreateEndPoint = fmConfig.getEgovPdfAffidavitEndPoint();
-            eUrl = buildEmbeddedUrl(draftDetails, urlLink);
+            embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        }
-
-// Notice
-        if (draftDetails.getDraftType()
-                        .equals("3")) {
+        } else if (DraftType.isNotice(draftType)) {
             urlLink = fmConfig.getNoticeCertificateLink();
             urlCreateEndPoint = fmConfig.getEgovPdfNoticeEndPoint();
-            eUrl = buildEmbeddedUrl(draftDetails, urlLink);
+            embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        }
-
-// Memo
-        if (draftDetails.getDraftType()
-                        .equals("4")) {
+        } else if (DraftType.isMemo(draftType)) {
             urlLink = fmConfig.getMemoCertificateLink();
             urlCreateEndPoint = fmConfig.getEgovPdfMemoEndPoint();
-            eUrl = buildEmbeddedUrl(draftDetails, urlLink);
+            embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        }
-
-// Certificate
-        if (draftDetails.getDraftType()
-                        .equals("5")) {
+        } else if (DraftType.isCertificate(draftType)) {
             urlLink = fmConfig.getDraftCertificateLink();
             urlCreateEndPoint = fmConfig.getEgovPdfDraftEndPoint();
-            eUrl = buildEmbeddedUrl(draftDetails, urlLink);
+            embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
         }
-
-        final String tenantId = searchCriteria.getTenantId();
-        final String fileCode = searchCriteria.getFileCode();
-        final String embeddedUrl = eUrl;
 
         if (log.isDebugEnabled()) {
             log.debug("Embedded url: {}", embeddedUrl);
         }
+
+        final String tenantId = searchCriteria.getTenantId();
+        final String fileCode = searchCriteria.getFileCode();
 
         // PDF service call
 
@@ -121,7 +104,7 @@ public class DraftCertificateService {
                                                               .append(draftCertificatePath);
 
         // 2. build request
-        final BuildDraftCertificateRequest pdfRequest = buildDraftCertificateRequest(draftDetails,
+        final BuildDraftCertificateRequest pdfRequest = buildDraftCertificateRequest(draftFile,
                                                                                      requestInfo,
                                                                                      fileCode,
                                                                                      embeddedUrl);
@@ -130,8 +113,8 @@ public class DraftCertificateService {
 
         // 3. certificate details
         final DraftCertificateDetails certificate = DraftCertificateDetails.builder()
-                                                                           .tenantId(draftDetails.getTenantId())
-                                                                           .fileCode(draftDetails.getFileCode())
+                                                                           .tenantId(draftFile.getTenantId())
+                                                                           .fileCode(draftFile.getFileCode())
                                                                            // .auditDetails(serviceDetail.getAuditDetails())
                                                                            .filestoreId(pdfResponse.getFilestoreIds()
                                                                                                    .get(0))
@@ -142,7 +125,7 @@ public class DraftCertificateService {
                                                                                   .requestInfo(requestInfo)
                                                                                   .build();
 
-        draftCertificateEnrichment.enrichCreateDraftCertificate(certificateRequest);
+        enrichment.enrichCreate(certificateRequest);
 
         return certificateRequest;
 
@@ -172,11 +155,11 @@ public class DraftCertificateService {
                                     .build();
     }
 
-    private DraftFile finalDraftDetails(final DraftFileSearchCriteria searchCriteria) {
-        final List<DraftFile> draftDetails = repository.searchDrafting(searchCriteria);
+    private DraftFile findDraftFile(final DraftFileSearchCriteria searchCriteria) {
+        final List<DraftFile> result = repository.search(searchCriteria);
 
-        return CollectionUtils.isNotEmpty(draftDetails)
-                ? draftDetails.get(0)
+        return CollectionUtils.isNotEmpty(result)
+                ? result.get(0)
                 : null;
     }
 

@@ -41,30 +41,29 @@ public class DraftFilesValidator {
             throw new CustomException(REQUIRED.getCode(), "Atleast one Draft is required");
         }
 
-        final DraftFile draftFiles =  request.getDraftFile();
-            if (StringUtils.isNotBlank(draftFiles.getTenantId()) && StringUtils.isNotBlank(draftFiles.getAssigner())
-                    && StringUtils.isNotBlank(draftFiles.getFileCode())
-                    && StringUtils.isNotBlank(draftFiles.getDraftType())) {
+        final DraftFile draftFiles = request.getDraftFile();
+        if (StringUtils.isNotBlank(draftFiles.getTenantId()) && StringUtils.isNotBlank(draftFiles.getAssigner())
+                && StringUtils.isNotBlank(draftFiles.getFileCode())
+                && StringUtils.isNotBlank(draftFiles.getDraftType())) {
 
-                DraftFileSearchCriteria searchCriteria = new DraftFileSearchCriteria();
+            DraftFileSearchCriteria searchCriteria = new DraftFileSearchCriteria();
 
-                searchCriteria.setAssigner(draftFiles.getAssigner());
-                searchCriteria.setFileCode(draftFiles.getFileCode());
-                searchCriteria.setTenantId(draftFiles.getTenantId());
-                searchCriteria.setDraftType(draftFiles.getDraftType());
+            searchCriteria.setAssigner(draftFiles.getAssigner());
+            searchCriteria.setFileCode(draftFiles.getFileCode());
+            searchCriteria.setTenantId(draftFiles.getTenantId());
+            searchCriteria.setDraftType(draftFiles.getDraftType());
 
-                // final DraftFiles draftDetails = finalDraftDetails(searchCriteria);
-                final List<DraftFile> draftDetails = repository.searchDrafting(searchCriteria);
-                if (!draftDetails.isEmpty()) {
-                    throw new CustomException(INVALID_SEARCH.getCode(), "Draft Already Existing");
-                }
-
+            // final DraftFiles draftDetails = finalDraftDetails(searchCriteria);
+            final List<DraftFile> draftDetails = repository.search(searchCriteria);
+            if (!draftDetails.isEmpty()) {
+                throw new CustomException(INVALID_SEARCH.getCode(), "Draft Already Existing");
             }
-        }
 
+        }
+    }
 
     public void validateUpdate(DraftFileRequest request, List<DraftFile> searchResult) {
-         DraftFile files = request.getDraftFile();
+        DraftFile files = request.getDraftFile();
 
         if (CollectionUtils.isEmpty((Collection<?>) files)) {
             throw new CustomException(REQUIRED.getCode(), "Draft file is required");
@@ -81,7 +80,7 @@ public class DraftFilesValidator {
 
     }
 
-    public void validateSearchDraftFiles(final RequestInfo requestInfo, // NOPMD
+    public void validateSearch(final RequestInfo requestInfo, // NOPMD
                                          final DraftFileSearchCriteria searchCriteria) {
         if (StringUtils.isBlank(searchCriteria.getTenantId())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Tenant id is required for draft search.");

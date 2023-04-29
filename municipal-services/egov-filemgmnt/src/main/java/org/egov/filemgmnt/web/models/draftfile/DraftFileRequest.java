@@ -15,9 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 @Schema(description = "Draft file service request for create and update")
 @Validated
 
@@ -36,7 +33,6 @@ public class DraftFileRequest {
     @JsonProperty("draftFile")
     private DraftFile draftFile;
 
-    
 //    public DraftFileRequest addDraftFile(DraftFile draftFiles) {
 //
 //        if (draftFile == null) {

@@ -1,7 +1,5 @@
 package org.egov.filemgmnt.enrichment;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -12,7 +10,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
-import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.enums.ErrorCodes;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantChild;
@@ -25,7 +22,6 @@ import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.user.FMUser;
 import org.egov.tracer.model.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
@@ -33,8 +29,8 @@ import org.springframework.util.ObjectUtils;
 @Component
 public class FileManagementEnrichment extends BaseEnrichment {
 
-    @Autowired
-    private FMConfiguration fmConfig;
+//    @Autowired
+//    private FMConfiguration fmConfig;
 
     public void enrichApplicantPersonal(final ApplicantServiceRequest request,
                                         final ApplicantPersonal existingApplicant, final boolean create) {
@@ -314,17 +310,6 @@ public class FileManagementEnrichment extends BaseEnrichment {
             applicantChild.setAuditDetails(childAuditDetails);
             childAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
             childAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
-        }
-    }
-
-    private void validateFileCodes(final List<String> fileCodes, final int count) {
-        if (CollectionUtils.isEmpty(fileCodes)) {
-            throw new CustomException(IDGEN_ERROR.getCode(), "No file code(s) returned from idgen service");
-        }
-
-        if (fileCodes.size() != count) {
-            throw new CustomException(IDGEN_ERROR.getCode(),
-                    "The number of file code(s) returned by idgen service is not equal to the request count");
         }
     }
 }

@@ -17,8 +17,9 @@ public class FMConstants {
     public static final String FM_APPLICANT_ENC_KEY = "FMDetail";
 
     // MDMS
-    public static final String FILEMANAGEMENT_MODULE = "FileManagement";
-    public static final String FILEMANAGEMENT_MODULE_CODE = "FM";
+    public static final String FM_MODULE = "FileManagement";
+    public static final String FM_MODULE_CODE = "FM";
+
     public static final String TENANTS = "tenants";
 
     public static final String TENANT_MODULE_NAME = "tenant";

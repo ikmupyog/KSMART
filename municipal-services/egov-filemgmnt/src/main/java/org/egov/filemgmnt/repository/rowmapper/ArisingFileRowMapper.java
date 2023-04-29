@@ -10,11 +10,17 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ArisingFileRowMapper implements ResultSetExtractor<List<ArisingFile>>, BaseRowMapper {
+
     @Override
     public List<ArisingFile> extractData(final ResultSet rs) throws SQLException, DataAccessException {
         List<ArisingFile> result = new ArrayList<>();
+
         while (rs.next()) {
             result.add(ArisingFile.builder()
                                   .fileCode(rs.getString("filecode"))

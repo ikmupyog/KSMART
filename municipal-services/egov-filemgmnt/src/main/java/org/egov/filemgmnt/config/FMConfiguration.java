@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Configuration
-public class FMConfiguration {
+public class FMConfiguration { // NOPMD
 
     @Value("${app.timezone}")
     private String timeZone;
@@ -72,52 +72,50 @@ public class FMConfiguration {
     private String userSearchEndpoint;
 
     // Communication file config
-    @Value("${persister.save.communicationfile.topic:}")
-    private String saveCommunicationFileTopic;
+//    @Value("${persister.save.communicationfile.topic:}")
+//    private String saveCommunicationFileTopic;
+//
+//    @Value("${persister.update.communicationfile.topic:}")
+//    private String updateCommunicationFileTopic;
 
-    @Value("${persister.update.communicationfile.topic:}")
-    private String updateCommunicationFileTopic;
-
-    // arising file config
-    @Value("${persister.save.arisingfiledetails.topic}")
+    // Arising file config
+    @Value("${persister.save.arisingfile.topic}")
     private String saveArisingFileTopic;
 
-    @Value("${persister.update.arisingfiledetails.topic:}")
-    private String updateArisingFileTopic;
+    @Value("${persister.update.arisingfile.topic:}")
+    private String updateArisingFileTopilc;
 
-    // drafting config
-    @Value("${persister.save.drafting.topic:}")
-    private String saveDraftingTopic;
+    // Draft file config
+    @Value("${persister.save.draftfile.topic:}")
+    private String saveDraftFileTopic;
 
-    @Value("${persister.update.drafting.topic:}")
-    private String updateDraftingTopic;
+    @Value("${persister.update.draftfile.topic:}")
+    private String updateDraftFileTopic;
 
-    @Value("${persister.update.draftingstatus.topic:}")
-    private String updateDraftingStatusTopic;
+    @Value("${persister.update.draftfilestatus.topic:}")
+    private String updateDraftFileStatusTopic;
 
-    @Value("${draftfiles.allowed.search.params}")
+    @Value("${draftfile.allowed.search.params}")
     private String allowedDraftFilesSearchParams;
 
-    // enquiry config
-
+    // Enquiry config
     @Value("${persister.save.enquiry.topic:}")
     private String saveEnquiryTopic;
 
     @Value("${persister.save.draftprocessinstance.topic:}")
-    private String saveDraftProcessInstance;
+    private String saveDraftProcessInstanceTopic;
 
     // PDF Gen
-
     @Value("${egov.pdfservice.host}")
     private String egovPdfHost;
 
-    @Value("${egov.pdf.residentialcert.createEndPoint}")
+    @Value("${egov.pdf.residentialcertificate.createEndPoint}")
     private String egovPdfResidentialEndPoint;
 
     @Value("${egov.ui.app.host}")
     private String uiAppHost;
 
-    @Value("${egov.fm.residentialcert.link}")
+    @Value("${egov.fm.residentialcertificate.link}")
     private String residentialCertLink;
 
     @Value("${egov.url.shortner.host}")
@@ -156,8 +154,9 @@ public class FMConfiguration {
     @Value("${egov.fm.memocertificate.link}")
     private String memoCertificateLink;
 
-    // Global Mastersettings
-    // Module Master save,update,delete
+    // GLOBAL MASTER SETTINGS
+
+    // Module Master save, update, delete
     @Value("${persister.save.modulemaster.topic:}")
     private String saveModuleMasterTopic;
 
@@ -167,28 +166,27 @@ public class FMConfiguration {
     @Value("${persister.delete.modulemaster.topic:}")
     private String deleteModuleMasterTopic;
 
-    // MajorFuncton save,update,delete
-    @Value("${persister.save.mfmaster.topic:}")
-    private String saveMfMasterTopic;
+    // MajorFuncton save, update, delete
+    @Value("${persister.save.majorfunction.topic:}")
+    private String saveMajorFunctionTopic;
 
-    @Value("${persister.update.mfmaster.topic:}")
-    private String updateMfMasterTopic;
+    @Value("${persister.update.majorfunction.topic:}")
+    private String updateMajorFunctionTopic;
 
-    @Value("${persister.delete.mfmaster.topic:}")
-    private String deleteMfMasterTopic;
+    @Value("${persister.delete.majorfunction.topic:}")
+    private String deleteMajorFunctionTopic;
 
-    // SubFuncton save,update,delete
-
+    // SubFuncton save, update, delete
     @Value("${persister.save.subfunction.topic:}")
-    private String SaveSubFunctionTopic;
+    private String saveSubFunctionTopic;
 
     @Value("${persister.update.subfunction.topic:}")
-    private String UpdateSubFunctionTopic;
+    private String updateSubFunctionTopic;
 
     @Value("${persister.delete.subfunction.topic:}")
-    private String DeleteSubFunctionTopic;
+    private String deleteSubFunctionTopic;
 
-    // Service Master save,update,delete
+    // Service master save, update, delete
     @Value("${persister.save.servicemaster.topic:}")
     private String saveServiceMasterTopic;
 

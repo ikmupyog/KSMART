@@ -13,26 +13,22 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ArisingFileRepository {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private final ArisingFileQueryBuilder arisingFileQueryBuilder;
-    private final ArisingFileRowMapper arisingFileRowMapper;
+    private final ArisingFileQueryBuilder queryBuilder;
+    private final ArisingFileRowMapper rowMapper;
 
-    ArisingFileRepository(final ArisingFileQueryBuilder arisingFileQueryBuilder,
-                          final ArisingFileRowMapper arisingFileRowMapper) {
-        this.arisingFileQueryBuilder = arisingFileQueryBuilder;
-        this.arisingFileRowMapper = arisingFileRowMapper;
-
+    ArisingFileRepository(final ArisingFileQueryBuilder queryBuilder, final ArisingFileRowMapper rowMapper) {
+        this.queryBuilder = queryBuilder;
+        this.rowMapper = rowMapper;
     }
 
-    public List<ArisingFile> searchArisingFiles(final ArisingFileSearchCriteria searchCriteria) {
+    public List<ArisingFile> search(final ArisingFileSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
-        final String query = arisingFileQueryBuilder.getArisingFileSearchQuery(searchCriteria,
-                                                                               preparedStmtValues,
-                                                                               Boolean.FALSE);
+        final String query = queryBuilder.getArisingFileSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
 
-        return jdbcTemplate.query(query, preparedStmtValues.toArray(), arisingFileRowMapper);
-
+        return jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
     }
 }

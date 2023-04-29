@@ -10,39 +10,41 @@ import org.egov.filemgmnt.repository.EnquiryRepository;
 import org.egov.filemgmnt.web.models.enquiry.Enquiry;
 import org.egov.filemgmnt.web.models.enquiry.EnquiryRequest;
 import org.egov.filemgmnt.web.models.enquiry.EnquirySearchCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EnquiryService {
 
-    private final FMConfiguration fmConfig;
-    private final EnquiryRepository repository;
+    @Autowired
+    private FMConfiguration fmConfig;
 
+    @Autowired
     @Qualifier("fmProducer")
-    private final Producer producer;
+    private Producer producer;
 
-    private final EnquiryEnrichment enquiryEnrichment;
+    private final EnquiryRepository repository;
+    private final EnquiryEnrichment enrichment;
 
-    public EnquiryService(final FMConfiguration fmConfig, final Producer producer,
-                          final EnquiryEnrichment enquiryEnrichment, final EnquiryRepository repository) {
-        this.fmConfig = fmConfig;
-        this.producer = producer;
-        this.enquiryEnrichment = enquiryEnrichment;
+    EnquiryService(final EnquiryEnrichment enquiryEnrichment, final EnquiryRepository repository) {
+        this.enrichment = enquiryEnrichment;
         this.repository = repository;
     }
 
-    public List<Enquiry> saveEnquiry(final EnquiryRequest request) {
+    public List<Enquiry> create(final EnquiryRequest request) {
 
-        enquiryEnrichment.enrichSaveEnquiry(request);
+        // enrich
+        enrichment.enrichCreate(request);
+
+        // persist
         producer.push(fmConfig.getSaveEnquiryTopic(), request);
+
         return request.getEnquiryList();
 
     }
 
-    public List<Enquiry> searchEnquiry(final RequestInfo requestInfo,
-                                       final EnquirySearchCriteria enquirySearchCriteria) {
-
-        return repository.searchEnquiry(enquirySearchCriteria);
+    public List<Enquiry> search(final RequestInfo requestInfo, final EnquirySearchCriteria enquirySearchCriteria) {
+        return repository.search(enquirySearchCriteria);
     }
 }

@@ -2,7 +2,7 @@ package org.egov.filemgmnt.web.controllers;
 
 import java.util.List;
 
-import org.egov.filemgmnt.service.DraftFilesService;
+import org.egov.filemgmnt.service.DraftFileService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
@@ -30,9 +30,9 @@ import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 @RequestMapping("/v1")
 public class DraftFilesController implements DraftFilesBaseController {
     private final ResponseInfoFactory responseInfoFactory;
-    private final DraftFilesService draftFileService;
+    private final DraftFileService draftFileService;
 
-    DraftFilesController(final DraftFilesService draftFileService, final ResponseInfoFactory responseInfoFactory) {
+    DraftFilesController(final DraftFileService draftFileService, final ResponseInfoFactory responseInfoFactory) {
         this.draftFileService = draftFileService;
         this.responseInfoFactory = responseInfoFactory;
 
@@ -45,14 +45,13 @@ public class DraftFilesController implements DraftFilesBaseController {
             log.debug("draftfiles-create:  \n{}", FMUtils.toJson(request));
         }
 
-        final DraftFile result = draftFileService.createDraftFile(request);
+        final DraftFile result = draftFileService.create(request);
         return ResponseEntity.ok(DraftFileResponse.builder()
                                                   .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                       Boolean.TRUE))
                                                   .draftFile(result)
                                                   .build());
     }
-
 
     @Override
     @PutMapping("/draftfiles/_update")
@@ -63,7 +62,7 @@ public class DraftFilesController implements DraftFilesBaseController {
         if (StringUtils.equals(mode, "STATUS")) {
             result = draftFileService.updateStatus(request);
         } else {
-            result = draftFileService.updateDraftFile(request);
+            result = draftFileService.update(request);
         }
 
         return ResponseEntity.ok(DraftFileResponse.builder()
@@ -93,8 +92,8 @@ public class DraftFilesController implements DraftFilesBaseController {
     public ResponseEntity<DraftCertificateResponse> download(@RequestBody final RequestInfoWrapper request,
                                                              @ModelAttribute final DraftFileSearchCriteria searchCriteria) {
 
-        final List<DraftCertificateDetails> certificateDetails = draftFileService.downloadDraftCertificate(request.getRequestInfo(),
-                                                                                                           searchCriteria);
+        final List<DraftCertificateDetails> certificateDetails = draftFileService.download(request.getRequestInfo(),
+                                                                                           searchCriteria);
         return ResponseEntity.ok(DraftCertificateResponse.builder()
                                                          .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                              Boolean.TRUE))

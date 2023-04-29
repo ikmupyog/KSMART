@@ -13,21 +13,26 @@ import lombok.NoArgsConstructor;
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnquiryQueryBuilder extends BaseQueryBuilder {
-    private static final String QUERY = new StringBuilder().append(" SELECT")
-                                                           .append("  Er.id as Enquiry_id,Er.tenantid,Er.businessservice,Er.modulename ")
-                                                           .append("  Er.filecode,Er.latitude,Er.longitude,Er.assigner,Er.status")
-                                                           .append("  Er.imagefilestoreid,Er.createdby,Er.createdtime,Er.lastmodifiedby,Er.lastmodifiedtime")
-                                                           .append(" FROM eg_fm_enquiry")
-                                                           .toString();
+    private static final StringBuilder QUERY = new StringBuilder(); // NOPMD
+
+    static {
+        QUERY.append(" SELECT") // NOPMD
+             .append("  er.id as Enquiry_id, er.tenantid, er.businessservice, er.modulename, er.filecode, er.latitude")
+             .append("  , er.longitude, er.assigner, er.status, er.imagefilestoreid, er.createdby, er.createdtime")
+             .append("  , er.lastmodifiedby, er.lastmodifiedtime")
+             .append(" FROM eg_fm_enquiry er");
+    }
 
     public String getEnquirySearchQuery(@NotNull final EnquirySearchCriteria criteria,
-                                        @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+                                        @NotNull final List<Object> preparedStmtValues,
+                                        @NotNull final Boolean isCount) {
+
         StringBuilder query = new StringBuilder(QUERY);
-        addFilter("Er.modulename", criteria.getModuleName(), query, preparedStmtValues);
-        addFilter("Er.fileCode", criteria.getFileCode(), query, preparedStmtValues);
-        addFilter("Er.assigner", criteria.getAssigner(), query, preparedStmtValues);
-        addFilter("Er.status", criteria.getStatus(), query, preparedStmtValues);
-        addDateRangeFilter("ER.createdtime", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
+        addFilter("er.modulename", criteria.getModuleName(), query, preparedStmtValues);
+        addFilter("er.fileCode", criteria.getFileCode(), query, preparedStmtValues);
+        addFilter("er.assigner", criteria.getAssigner(), query, preparedStmtValues);
+        addFilter("er.status", criteria.getStatus(), query, preparedStmtValues);
+        addDateRangeFilter("er.createdtime", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
         return query.toString();
     }
 }

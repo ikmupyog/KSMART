@@ -26,56 +26,51 @@ public class ArisingFileService {
     @Qualifier("fmProducer")
     private Producer producer;
 
-    private final ArisingFileEnrichment fileEnrichment;
+    // private final ArisingFileValidator validator;
+    private final ArisingFileEnrichment enrichment;
     private final ArisingFileRepository repository;
+    private final ArisingFileWorkflowIntegrator wfIntegrator;
 
-    private final ArisingFileValidator validator;
-
-    private final ArisingFileWorkflowIntegrator arWorkFlowIntegrator;
-
-    ArisingFileService(ArisingFileValidator validator, ArisingFileEnrichment fileEnrichment,
-                       @Qualifier("fmProducer") Producer producer, FMConfiguration fmConfig,
-                       ArisingFileRepository repository, ArisingFileWorkflowIntegrator arWorkFlowIntegrator) {
-        this.validator = validator;
-        this.fileEnrichment = fileEnrichment;
-        this.producer = producer;
-        this.fmConfig = fmConfig;
+    ArisingFileService(final ArisingFileValidator validator, final ArisingFileEnrichment enrichment,
+                       final ArisingFileRepository repository, final ArisingFileWorkflowIntegrator wfIntegrator) {
+        // this.validator = validator;
+        this.enrichment = enrichment;
         this.repository = repository;
-        this.arWorkFlowIntegrator = arWorkFlowIntegrator;
+        this.wfIntegrator = wfIntegrator;
     }
 
-    public ArisingFile createArisingFile(ArisingFileRequest request) {
-
-        final ArisingFile arisingFile = request.getArisingFile();
+    public ArisingFile create(final ArisingFileRequest request) {
         // enrich request
-        fileEnrichment.enrichAriseFileCreate(request);
+        enrichment.enrichCreateRequest(request);
 
+        // persister save
         producer.push(fmConfig.getSaveArisingFileTopic(), request);
+
         // create workflow
-        arWorkFlowIntegrator.callAriseFileWorkflow(request);
+        wfIntegrator.callAriseFileWorkflow(request);
+
         return request.getArisingFile();
     }
 
-//        public ArisingFile updateArisingFile(ArisingFileRequest request) {
-//        String arisingFileCode = request.getArisingFileDetail().getFileCode();
+//    public ArisingFile update(ArisingFileRequest request) {
+//        String arisingFileCode = request.getArisingFile()
+//                                        .getFileCode();
 //
 //        // search database
-//        List<ArisingFile> searchResult = repository.searchArisingFiles(ArisingFileSearchCriteria.builder()
-//                                                .fileCode(Collections.singletonList(arisingFileCode))
-//                                                .build());
-//
+//        List<ArisingFile> searchResult = repository.search(ArisingFileSearchCriteria.builder()
+//                                                                                    .fileCode(arisingFileCode)
+//                                                                                    .build());
 //        // validate request
-//
 //        validator.validateArisingFileUpdate(request, searchResult);
-//        fileEnrichment.enrichArisingFileUpdate(request);
+//        enrichment.enrichArisingFileUpdate(request);
 //
-//        producer.push(fmConfig.getUpdateArisingFileTopic(), request);
+//        producer.push(fmConfig.getUpdateArisingFileTopilc(), request);
 //
-//        return request.getArisingFileDetail();
+//        return request.getArisingFile();
 //    }
 
-    public List<ArisingFile> searchFile(final RequestInfo requestInfo, final ArisingFileSearchCriteria searchCriteria) {
-        final List<ArisingFile> result = repository.searchArisingFiles(searchCriteria);
-        return (result);
+    public List<ArisingFile> search(final RequestInfo requestInfo, final ArisingFileSearchCriteria searchCriteria) {
+
+        return repository.search(searchCriteria);
     }
 }

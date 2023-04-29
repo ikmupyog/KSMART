@@ -10,12 +10,17 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServiceMasterRowMapper implements ResultSetExtractor<List<ServiceDetails>>, BaseRowMapper {
 
     @Override
-    public List<ServiceDetails> extractData(ResultSet rs) throws SQLException, DataAccessException {
-        List<ServiceDetails> result = new ArrayList<>();
+    public List<ServiceDetails> extractData(final ResultSet rs) throws SQLException, DataAccessException {
+        final List<ServiceDetails> result = new ArrayList<>();
+
         while (rs.next()) {
             result.add(ServiceDetails.builder()
                                      .serviceCode(rs.getString("servicecode"))

@@ -102,7 +102,7 @@ public class MdmsUtil {
 
         final ModuleDetail fmModuleDetail = ModuleDetail.builder()
                                                         .masterDetails(fmMasterDetails)
-                                                        .moduleName(FMConstants.FILEMANAGEMENT_MODULE)
+                                                        .moduleName(FMConstants.FM_MODULE)
                                                         .build();
 
         return Collections.singletonList(fmModuleDetail);

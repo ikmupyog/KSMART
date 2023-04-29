@@ -12,17 +12,22 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DraftFilesQueryBuilder extends BaseQueryBuilder {
-    private static final String QUERY = new StringBuilder().append(" SELECT")
-                                                           // Drafting
-                                                           .append("  dr.id AS drafting_id,dr.tenantId,dr.businessservice,dr.modulename")
-                                                           .append("  ,dr.filecode,dr.drafttype,dr.drafttext,dr.assigner,dr.filestoreid,dr.status ,dr.createdby AS drafting_createdby")
-                                                           .append("  ,dr.createdtime AS drafting_createdtime,dr.lastmodifiedby AS drafting_lastmodifiedby,dr.lastmodifiedtime AS lastmodifiedtime")
-                                                           .append("  FROM eg_fm_drafting dr")
-                                                           .toString();
+public class DraftFileQueryBuilder extends BaseQueryBuilder {
+
+    private static final StringBuilder QUERY = new StringBuilder(); // NOPMD
+
+    static {
+        QUERY.append(" SELECT") // NOPMD
+             .append("  dr.id AS drafting_id, dr.tenantId, dr.businessservice, dr.modulename, dr.filecode, dr.drafttype, dr.drafttext")
+             .append("  , dr.assigner, dr.filestoreid, dr.status, dr.createdby AS drafting_createdby, dr.createdtime AS drafting_createdtime")
+             .append("  , dr.lastmodifiedby AS drafting_lastmodifiedby, dr.lastmodifiedtime AS lastmodifiedtime")
+             .append("  FROM eg_fm_drafting dr");
+    }
 
     public String getDraftingSearchQuery(@NotNull final DraftFileSearchCriteria criteria,
-                                         @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+                                         @NotNull final List<Object> preparedStmtValues,
+                                         @NotNull final Boolean isCount) {
+
         StringBuilder query = new StringBuilder(QUERY);
 
         addFilter("drafting_id", criteria.getDraftId(), query, preparedStmtValues);

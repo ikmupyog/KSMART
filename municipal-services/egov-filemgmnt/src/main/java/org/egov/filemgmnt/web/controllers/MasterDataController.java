@@ -68,7 +68,7 @@ public class MasterDataController implements MasterDataBaseController {
     @PostMapping("/masterdata/majorfunctions/_create")
     public ResponseEntity<MajorFunctionDetailsResponse> createMajorFunction(@RequestBody final MajorFunctionDetailsRequest request) {
 
-        final MajorFunctionDetails majorFunctionDetails = masterDataService.createMF(request);
+        final MajorFunctionDetails majorFunctionDetails = masterDataService.createMajorFunction(request);
         return ResponseEntity.ok(MajorFunctionDetailsResponse.builder()
                                                              .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                                  Boolean.TRUE))
@@ -82,7 +82,7 @@ public class MasterDataController implements MasterDataBaseController {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-subfunctions-create:  \n{}", FMUtils.toJson(request));
         }
-        final SubFunctionDetails subFunctionDetails = masterDataService.createSF(request);
+        final SubFunctionDetails subFunctionDetails = masterDataService.createSubFunction(request);
         return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
                                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                                Boolean.TRUE))
@@ -124,7 +124,7 @@ public class MasterDataController implements MasterDataBaseController {
     @Override
     @PutMapping("/masterdata/majorfunctions/_update")
     public ResponseEntity<MajorFunctionDetailsResponse> updateMajorFunction(@RequestBody MajorFunctionDetailsRequest request) {
-        final MajorFunctionDetails mfDetails = masterDataService.updateMF(request);
+        final MajorFunctionDetails mfDetails = masterDataService.updateMajorFunction(request);
 
         return ResponseEntity.ok(MajorFunctionDetailsResponse.builder()
                                                              .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
@@ -140,7 +140,7 @@ public class MasterDataController implements MasterDataBaseController {
             log.debug("masterdata-subfunctions-update:  \n{}", FMUtils.toJson(request));
         }
 
-        final SubFunctionDetails subFunctionDetail = masterDataService.updateSF(request);
+        final SubFunctionDetails subFunctionDetail = masterDataService.updateSubFunction(request);
 
         return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
                                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
@@ -169,7 +169,7 @@ public class MasterDataController implements MasterDataBaseController {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-modules-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
-        final List<ModuleDetails> result = masterDataService.searchModule(request.getRequestInfo(), searchCriteria);
+        final List<ModuleDetails> result = masterDataService.searchModules(request.getRequestInfo(), searchCriteria);
 
         return ResponseEntity.ok(ModuleSearchResponse.builder()
                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
@@ -185,7 +185,8 @@ public class MasterDataController implements MasterDataBaseController {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-majorfunctions-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
-        final List<MajorFunctionDetails> result = masterDataService.searchMF(request.getRequestInfo(), searchCriteria);
+        final List<MajorFunctionDetails> result = masterDataService.searchMajorFunctions(request.getRequestInfo(),
+                                                                                         searchCriteria);
 
         return ResponseEntity.ok(MajorFunctionSearchResponse.builder()
                                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
@@ -201,7 +202,8 @@ public class MasterDataController implements MasterDataBaseController {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-subfunctions-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
-        final List<SubFunctionDetails> result = masterDataService.searchSF(request.getRequestInfo(), searchCriteria);
+        final List<SubFunctionDetails> result = masterDataService.searchSubFunctions(request.getRequestInfo(),
+                                                                                     searchCriteria);
 
         return ResponseEntity.ok(SubFunctionSearchResponse.builder()
                                                           .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
@@ -217,7 +219,7 @@ public class MasterDataController implements MasterDataBaseController {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-services-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
-        final List<ServiceDetails> result = masterDataService.searchService(request.getRequestInfo(), searchCriteria);
+        final List<ServiceDetails> result = masterDataService.searchServices(request.getRequestInfo(), searchCriteria);
 
         return ResponseEntity.ok(ServiceSearchResponse.builder()
                                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),

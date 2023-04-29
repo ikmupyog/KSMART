@@ -608,7 +608,7 @@ serviceMaps:
 
   - version: 1.0
     description: Persists arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
-    fromTopic: save-fm-arisingfiledetails
+    fromTopic: save-fm-arisingfile
     isTransaction: true
     queryMaps:
     - query: >
@@ -726,7 +726,7 @@ serviceMaps:
 
   - version: 1.0
     description: Update arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
-    fromTopic: update-fm-arisingfiledetails
+    fromTopic: update-fm-arisingfile
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_arisingfile  SET  filearisingmode=?, filearisingdate=?, financialyear=?, workflowcode=?, businessservice=?, assignee=?, action=?, filestatus=? WHERE filecode = ?;
@@ -752,7 +752,7 @@ serviceMaps:
 
   - version: 1.0
     description: Save drafting details in egov_filemgmnt database, eg_fm_drafting table
-    fromTopic: save-fm-drafting
+    fromTopic: save-fm-draftfile
     isTransaction: true
     queryMaps:
     - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -788,7 +788,7 @@ serviceMaps:
 
   - version: 1.0B
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
-    fromTopic: update-fm-drafting
+    fromTopic: update-fm-draftfile
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_drafting  SET  drafttext=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
@@ -804,7 +804,7 @@ serviceMaps:
 
   - version: 1.0
     description: Update drafting status  in egov_filemgmnt database, eg_fm_drafting
-    fromTopic: update-fm-draftingstatus
+    fromTopic: update-fm-draftfilestatus
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_drafting  SET  status=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
