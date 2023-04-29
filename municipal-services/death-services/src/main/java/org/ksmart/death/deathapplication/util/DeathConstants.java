@@ -163,4 +163,22 @@ public class DeathConstants {
     public static final String VILLAGE = "Village";
     public static final String COMMON_MASTERS_MODULE = "common-masters";
     public static final String PO_EN = "P O";
+    
+    public static final String CR_MDMS_COUNTRY_CODE_JSONPATH = "$.MdmsRes.common-masters.Country[*].code";
+    public static final String CR_MDMS_COUNTRY_CODES_JSONPATH = "$.MdmsRes.common-masters.Country";
+
+    public static final String CR_MDMS_STATE_CODE_JSONPATH = "$.MdmsRes.common-masters.State[*].code";
+    public static final String CR_MDMS_STATE_JSONPATH = "$.MdmsRes.common-masters.State";
+
+    public static final String CR_MDMS_DISTRICT_CODE_JSONPATH = "$.MdmsRes.common-masters.District[*].code";
+    public static final String CR_MDMS_DISTRICT_JSONPATH = "$.MdmsRes.common-masters.District";
+
+    public static final String CR_MDMS_TALUK_CODE_JSONPATH = "$.MdmsRes.common-masters.Taluk[*].code";
+    public static final String CR_MDMS_TALUK_JSONPATH = "$.MdmsRes.common-masters.Taluk";
+
+    public static final String CR_MDMS_VILLAGE_CODE_JSONPATH = "$.MdmsRes.common-masters.Village[*].code";
+    public static final String CR_MDMS_VILLAGE_JSONPATH = "$.MdmsRes.common-masters.Village";
+
+    public static final String CR_MDMS_POSTOFFICE_CODE_JSONPATH = "$.MdmsRes.common-masters.PostOffice[*].code";
+    public static final String CR_MDMS_POSTOFFICE_JSONPATH = "$.MdmsRes.common-masters.PostOffice";
 }

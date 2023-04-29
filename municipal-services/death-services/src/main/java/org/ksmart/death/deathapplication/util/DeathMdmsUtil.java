@@ -15,6 +15,8 @@ import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jayway.jsonpath.JsonPath;
+
 /**
      * Creates DeathMdmsUtil 
      * Rakhi S IKM
@@ -526,4 +528,193 @@ public class DeathMdmsUtil {
        
         return crDeathModuleDtls;
     }
+
+    //Rakhi S ikm on 29.04.2023
+    public Object mDMSSearch(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSSearchRequest(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSSearchRequest(RequestInfo requestInfo, String tenantId) {
+        // ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+        ModuleDetail commomMasterRequest = getCommonMastersSearch();
+        List<ModuleDetail> BNDListRequest = getBNDSearch();
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        // moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(commomMasterRequest);
+        moduleDetails.addAll(BNDListRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+        return mdmsCriteriaReq;
+    }
+      /**
+     * Creates request to search  mdms
+     * Rakhi S ikm on 29.04.2023
+     * @return MDMS request for Gender Type
+     */
+    private ModuleDetail getCommonMastersSearch() {
+
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();  
+        //Gender
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.GENDERTYPE)
+                .build());
+        //Death Place Type        
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.DEATH_PLACE_LIST)
+                .build());
+        //District        
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.DISTRICT)
+                .build());   
+        //State        
+        crDeathMasterDetails
+                 .add(MasterDetail.builder().name(DeathConstants.STATE)
+                 .build());    
+        //Country        
+        crDeathMasterDetails
+                 .add(MasterDetail.builder().name(DeathConstants.COUNTRY)
+                 .build());     
+        //Religion        
+        crDeathMasterDetails
+                 .add(MasterDetail.builder().name(DeathConstants.RELIGION)
+                 .build());  
+                 
+        //PostOffice
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathConstants.POSTOFFICE)
+                        .build());  
+                        
+        //Taluk
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathConstants.TALUK)
+                        .build()); 
+        //VILLAGE
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathConstants.VILLAGE)
+                        .build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.COMMON_MASTER_MODULE_NAME).build();
+       
+        return crDeathModuleDtls;
+    }
+    /**
+     * Creates request to search in mdms
+     * Rakhi S ikm on 29.04.2023
+     * @return MDMS request for bnd list
+     */
+    private List<ModuleDetail> getBNDSearch() {
+
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+         crDeathMasterDetails
+                    .add(MasterDetail.builder().name(DeathConstants.DEATH_CAUSE_MAIN)
+                    .build());
+        crDeathMasterDetails
+                           .add(MasterDetail.builder().name(DeathConstants.DEATH_CAUSE_SUB)
+                           .build());        
+         crDeathMasterDetails
+                              .add(MasterDetail.builder().name(DeathConstants.AGE_UNIT)
+                              .build());
+        crDeathMasterDetails
+                            .add(MasterDetail.builder().name(DeathConstants.MEDICAL_ATTENTION_TYPE)
+                            .build());
+       
+        // Add Module workflow
+        crDeathMasterDetails.add(MasterDetail.builder()
+                                                        .name(DeathConstants.CR_MDMS_WORKFLOW_NEW)
+                                                        .build());
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.BND_MODULE_NAME).build();
+
+               
+         return Arrays.asList(crDeathModuleDtls);
+    }
+
+    //Rakhi S on 29.04.2023 Details for Summery Page  
+   
+    private List<String> getCountryCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_COUNTRY_CODE_JSONPATH);
+    }
+    private List<String> getStateCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_STATE_CODE_JSONPATH);
+    }
+    private List<String> getDistrictCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DISTRICT_CODE_JSONPATH);
+    }
+    private List<String> getTalukCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_TALUK_CODE_JSONPATH);
+    }
+    private List<String> getVillageCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_VILLAGE_CODE_JSONPATH);
+    }
+    private List<String> getPOCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_POSTOFFICE_CODE_JSONPATH);
+    }
+    public String getCountryNameEn(Object mdmsData, String CountryId) {
+        List<String> countries  = getCountryCode(mdmsData);
+        int index = countries.indexOf(CountryId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].name");        
+    }
+    public String getCountryNameMl(Object mdmsData, String CountryId) {
+        List<String> countries  = getCountryCode(mdmsData);
+        int index = countries.indexOf(CountryId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].namelocal");        
+    }
+    public String getStateNameEn(Object mdmsData, String StateId) {
+        List<String> states  = getStateCode(mdmsData);
+        int index = states.indexOf(StateId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].name");        
+    }
+    public String getStateNameMl(Object mdmsData, String StateId) {
+        List<String> states  = getStateCode(mdmsData);
+        int index = states.indexOf(StateId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].namelocal");        
+    }
+    public String getDistrictNameEn(Object mdmsData, String DistrictId) {
+        List<String> districts  = getDistrictCode(mdmsData);
+        int index = districts.indexOf(DistrictId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].name");        
+    }    
+    public String getDistrictNameMl(Object mdmsData, String DistrictId) {
+        List<String> districts  = getDistrictCode(mdmsData);
+        int index = districts.indexOf(DistrictId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].namelocal");        
+    }
+    public String getTalukNameEn(Object mdmsData, String TalukId) {
+        List<String> taluks  = getTalukCode(mdmsData);
+        int index = taluks.indexOf(TalukId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].name");        
+    }  
+    public String getTalukNameMl(Object mdmsData, String TalukId) {
+        List<String> taluks  = getTalukCode(mdmsData);
+        int index = taluks.indexOf(TalukId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].namelocal");        
+    }    
+    public String getVillageNameEn(Object mdmsData, String VillageId) {
+        List<String> villages  = getVillageCode(mdmsData);
+        int index = villages.indexOf(VillageId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].name");        
+    }  
+    public String getVillageNameMl(Object mdmsData, String VillageId) {
+        List<String> villages  = getVillageCode(mdmsData);
+        int index = villages.indexOf(VillageId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].namelocal");        
+    }  
+    public String getPONameEn(Object mdmsData, String POId) {
+        List<String> po  = getPOCode(mdmsData);
+        int index = po.indexOf(POId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].name");        
+    }  
+    public String getPONameMl(Object mdmsData, String POId) {
+        List<String> po  = getPOCode(mdmsData);
+        int index = po.indexOf(POId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");        
+    }  
 }

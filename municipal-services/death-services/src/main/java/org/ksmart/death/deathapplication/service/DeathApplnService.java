@@ -93,7 +93,6 @@ public class DeathApplnService {
           return request.getDeathCertificateDtls();
      }
 
-    //Jasmine Search 06.02.2023
     public List<DeathDtl> search(DeathSearchCriteria criteria, RequestInfo requestInfo) {
           criteria.setFuncionUID(DeathConstants.FUN_MODULE_NEWAPPLN);
           return repository.getDeathApplication(criteria, requestInfo);
