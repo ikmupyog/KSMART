@@ -99,7 +99,7 @@ export const CRSearchMarriage = {
     } else if (response?.marriagePlacetype === "OTHER") {
       MarriageDetails.values.push(
         {
-          title: `${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}/${t("CR_RELIGIOUS_INST_OTHER_NAME_MAL")}`,
+          title: `${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}/${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`,
           value: `${response?.marriagePlacenameEn}/${response?.marriagePlacenameMl}`,
         },
         {
@@ -118,7 +118,7 @@ export const CRSearchMarriage = {
     } else if (response?.marriagePlacetype === "HOUSE") {
       MarriageDetails.values.push(
         {
-          title: `${t("CR_HOUSE_NO_AND_NAME_EN")}/${t("CR_HOUSE_NO_AND_NAME_ML")}`,
+          title: `${t("CR_HOUSE_NO_AND_NAME_EN")}/${t("CR_HOUSE_NO_AND_NAME_MAL")}`,
           value: `${response?.marriageHouseNoAndNameEn}/${response?.marriageHouseNoAndNameMl}`,
         },
         {
@@ -186,7 +186,7 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomGender,
         },
         {
-          title: `${t("CR_GROOM_DOB")}`,
+          title: `${t("CR_GROOM_DATE_OF_BIRTH")}`,
           value: response?.GroomDetails?.groomDOB,
         },
         {
@@ -228,7 +228,7 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomFatherAadharNo,
         },
         {
-          title: `${t("CR_GROOM_FATHER_NAME")}`,
+          title: `${t("CR_FATHER_NAME")}`,
           value: `${response?.GroomDetails?.groomFathernameEn} / ${response?.GroomDetails?.groomFathernameMl}`,
         },
         {
@@ -236,7 +236,7 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomMotherAadharNo,
         },
         {
-          title: `${t("CR_GROOM_MOTHER_NAME")}`,
+          title: `${t("CR_MOTHER_NAME")}`,
           value: `${response?.GroomDetails?.groomMothernameEn} / ${response?.GroomDetails?.groomMothernameMl}`,
         }
       );
@@ -247,7 +247,7 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomGuardianAadharNo,
         },
         {
-          title: `${t("CR_GROOM_FATHER_NAME")}`,
+          title: `${t("CR_GUARDIAN_NAME")}`,
           value: `${response?.GroomDetails?.groomGuardiannameEn}/${response?.GroomDetails?.groomGuardiannameMl}`,
         })
       );
@@ -284,7 +284,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideGender,
         },
         {
-          title: `${t("CR_BRIDE_DOB")}`,
+          title: `${t("CR_BRIDE_DATE_OF_BIRTH")}`,
           value: response?.BrideDetails?.brideDOB,
         },
         {
@@ -326,7 +326,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideFatherAadharNo,
         },
         {
-          title: `${t("CR_BRIDE_FATHER_NAME")}`,
+          title: `${t("CR_FATHER_NAME")}`,
           value: `${response?.BrideDetails?.brideFathernameEn} / ${response?.BrideDetails?.brideFathernameMl}`,
         },
         {
@@ -334,7 +334,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideMotherAadharNo,
         },
         {
-          title: `${t("CR_BRIDE_MOTHER_NAME")}`,
+          title: `${t("CR_MOTHER_NAME")}`,
           value: `${response?.BrideDetails?.brideMothernameEn} / ${response?.BrideDetails?.brideMothernameMl}`,
         }
       );
@@ -345,7 +345,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideGuardianAadharNo,
         },
         {
-          title: `${t("CR_BRIDE_GUARDIAN_NAME")}`,
+          title: `${t("CR_GUARDIAN_NAME")}`,
           value: `${response?.BrideDetails?.brideGuardiannameEn} / ${response?.BrideDetails?.brideGuardiannameMl}`,
         }
       );
