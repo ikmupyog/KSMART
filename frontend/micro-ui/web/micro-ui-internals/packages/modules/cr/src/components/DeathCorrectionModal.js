@@ -17,7 +17,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [errorDocIds, setErrorDocIds] =useState([])
+  const [errorDocIds, setErrorDocIds] = useState([])
   const [error, setError] = useState([]);
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
 
@@ -59,7 +59,9 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 
   function selectfile(e) {
     setIsLoading(true);
+    console.log("documentssd==",e,e.target.files,selectedConfig,e.target.id);
     let result = selectedConfig?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
+    console.log("documentssd==",e,e.target.files,result,selectedConfig,e.target.id);
     setDocuploadedName(result[0].DocumentList);
     setDocuploadedType(result[0].DocumentType);
     setDocuploadedId(e?.target?.id);
@@ -142,7 +144,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 
  
   const renderLoader = (details) => {
-    if (isLoading && (details.DocumentId.toString() === docuploadedId)) {
+    if (isLoading && (details.DocumentId?.toString() === docuploadedId)) {
       return (
         <div style={{margin:0}}>
           <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
@@ -151,7 +153,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     }
   };
 
-  console.log("uploaded filess",uploadedFiles,selectedConfig?.Documents,docuploadedId);
+  console.log("uploaded filess",uploadedFiles,selectedConfig,selectedConfig?.Documents,docuploadedId);
 
   if (!showModal) {
     return null;
@@ -166,13 +168,13 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
         {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
         {selectedConfig?.Documents?.map((item, index) => (
           <div>
-            {!selectedDocs.includes(item.DocumentId.toString()) && (
+            {!selectedDocs.includes(item.DocumentId?.toString()) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
                 <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
                   <UploadFile
                     key={item.DocumentId}
-                    id={item.DocumentId}
+                    id={parseInt(item.DocumentId,10)}
                     name={item.DocumentType}
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
