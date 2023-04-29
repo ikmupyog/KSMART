@@ -23,6 +23,16 @@ export const DFMService = {
       params: details,
       auth: true,
     }),
+  modulesearch: (details) =>
+    Request({
+      url: Urls.dfm.modulesearch,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: details,
+      auth: true,
+    }),
   // search_bill: ({ tenantId, filters }) =>
   //   Request({
   //     url: filters.businesService !== "PT" ? Urls.mcollect.search_bill : Urls.mcollect.search_bill_pt,
@@ -87,6 +97,17 @@ export const DFMService = {
   arising_file: (details, tenantId) =>
     Request({
       url: Urls.dfm.arising_file,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+  createmodule: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.createmodule,
       data: details,
       useCache: false,
       setTimeParam: false,

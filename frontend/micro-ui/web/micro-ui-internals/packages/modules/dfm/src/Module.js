@@ -37,7 +37,7 @@ import SubFunctionAdding from "./components/SubFunctionAdding";
 import ServiceAdding from "./components/ServiceAdding";
 import ArisingFileAcknowledgement from "./components/ArisingFileAcknowledgement";
 import ArisingFileSummery from "./components/ArisingFileSummery";
-
+import SearchModuleApplication from "./components/SearchModuleApplication";
 export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -112,6 +112,7 @@ const componentsToRegister = {
   SubFunctionAdding,
   ServiceAdding,
   ArisingFileAcknowledgement,
+  SearchModuleApplication,
   ArisingFileSummery
 };
 

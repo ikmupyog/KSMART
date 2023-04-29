@@ -28,7 +28,7 @@ import { useEvents, useClearNotifications, useNotificationCount } from "./events
 import useCreateEvent from "./events/useCreateEvent";
 import useUpdateEvent from "./events/useUpdateEvent";
 import useNewInboxGeneral from "./useInboxGeneral/useNewInbox";
-
+import useCreateModule from "./dfm/useCreateModule";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -192,6 +192,7 @@ import useDFMApplicationActions from "./dfm/useApplicationActions";
 import useDFMGenderMDMS from "./dfm/useDFMGenderMDMS";
 import useDFMMDMS from "./dfm/useMDMS";
 import useDFMSearch from "./dfm/useSearch";
+import useSearchmodule from "./dfm/useSearchmodule"
 import useApplicationDrafting from "./dfm/useApplicationDrafting";
 import useApplicationNoteDrafting from "./dfm/useApplicationNoteDrafting";
 import useApplicationFetchDraft from "./dfm/useApplicationFetchDraft";
@@ -460,12 +461,14 @@ const dfm = {
   useDFMGenderMDMS,
   useMDMS: useDFMMDMS,
   useSearch: useDFMSearch,
+  useSearchmodule,
   useApplicationDetail: useDFMApplicationDetail,
   useApplicationActions: useDFMApplicationActions,
   useApplicationDrafting,
   useApplicationNoteDrafting,
   useApplicationFetchDraft,
-  useApplicationArisingFile
+  useApplicationArisingFile,
+  useCreateModule
 };
 const receipts = {
   useReceiptsMDMS,
