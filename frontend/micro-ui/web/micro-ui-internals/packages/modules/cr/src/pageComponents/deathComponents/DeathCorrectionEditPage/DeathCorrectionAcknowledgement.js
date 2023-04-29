@@ -39,26 +39,13 @@ const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, use
 
   let location = useLocation();
   let deathCorrectionData = location?.state?.deathCorrectionData;
-
-  if (false) {
-    return (
-      <Card>
-        <BannerPicker
-          t={t}
-          // data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)}
-        />
-        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-        <Link to={`/digit-ui/citizen`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-        </Link>
-      </Card>
-    );
-  } else {
-    // console.log(JSON.stringify(mutation));
-    if (true) {
+  let mutationData = location?.state?.mutationData;
+  
+  
+    if (mutationData?.isSuccess) {
       return (
         <Card>
-          <BannerPicker t={t} data={deathCorrectionData} isSuccess={"success"} />
+          <BannerPicker t={t} data={deathCorrectionData} isSuccess={true} />
           {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
            */}
           <LinkButton
@@ -86,16 +73,15 @@ const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, use
         <Card>
           <BannerPicker
             t={t}
-            //   data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading}
+              data={mutationData.data} isSuccess={mutationData.isSuccess} isLoading={mutationData?.isLoading}
           />
-          {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+          {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>
         </Card>
       );
     }
-  }
 };
 
 export default DeathCorrectionAcknowledgement;

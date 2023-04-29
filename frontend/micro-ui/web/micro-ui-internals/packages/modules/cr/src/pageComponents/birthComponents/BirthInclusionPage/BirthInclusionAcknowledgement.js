@@ -8,12 +8,12 @@ import { useHistory, useLocation } from "react-router-dom";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
-  if (props.isSuccess) {
+  if (props?.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
-  } else if (props.isLoading) {
+  } else if (props?.isLoading) {
     return t("CR_CREATE_APPLICATION_PENDING");
     // !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
-  } else if (!props.isSuccess) {
+  } else if (!props?.isSuccess) {
     return t("CR_CREATE_APPLICATION_FAILED");
   }
 };
@@ -27,7 +27,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.CorrectionApplication[0]?.CorrectionField?.[0]?.appliocationNumber}
+      applicationNumber={props.data?.CorrectionApplication[0]?.CorrectionField?.[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
@@ -39,26 +39,17 @@ const BirthInclusionAcknowledgement = ({ data = {}, onSuccess = () => null, user
 
   let location = useLocation();
   let navigationData = location?.state?.navData;
+  let birthInclusionData = location?.state?.birthInclusionData
+  let mutationData = location?.state?.mutationData;
 
-  if (false) {
-    return (
-      <Card>
-        <BannerPicker
-          t={t}
-          // data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)}
-        />
-        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-        <Link to={`/digit-ui/citizen`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-        </Link>
-      </Card>
-    );
-  } else {
-    // console.log(JSON.stringify(mutation));
-    if (true) {
+  useEffect(()=>{
+  console.log("mutationData==",mutationData);
+  },[mutationData])
+  
+    if (mutationData?.isSuccess) {
       return (
         <Card>
-          <BannerPicker t={t} data={navigationData} isSuccess={"success"} />
+          <BannerPicker t={t} data={birthInclusionData} isSuccess={true} />
           {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
            */}
           <LinkButton
@@ -86,16 +77,15 @@ const BirthInclusionAcknowledgement = ({ data = {}, onSuccess = () => null, user
         <Card>
           <BannerPicker
             t={t}
-            //   data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading}
+              data={mutationData?.data} isSuccess={mutationData?.isSuccess} isLoading={mutationData?.isLoading}
           />
-          {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+          {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>
         </Card>
       );
     }
-  }
 };
 
 export default BirthInclusionAcknowledgement;

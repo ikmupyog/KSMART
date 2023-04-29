@@ -26,6 +26,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useTypeOfMarriage = () => {
     return useQuery("CR_TYPE_OF_MARRIAGE", () => MdmsService.getTypeOfMarriageMaster(tenantId, moduleCode), config);
   };
+  const useSubRegistrar = () => {
+    return useQuery("CR_SUB_REGISTRAR", () => MdmsService.getSubRegistrarMaster(tenantId, moduleCode), config);
+  };
   const useMarriagePlaceType = () => {
     return useQuery("CR_MARRIAGE_PLACE", () => MdmsService.getMarriagePlaceType(tenantId, moduleCode), config);
   };
@@ -329,6 +332,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useMarriagePlace();
     case "TypeOfMarriage":
       return useTypeOfMarriage();
+    case "SubRegistar":
+      return useSubRegistrar();
     case "MarriagePlaceType":
       return useMarriagePlaceType();
     case "MaritalStatus":
