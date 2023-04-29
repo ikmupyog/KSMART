@@ -13,7 +13,7 @@ import { sortDropdownNames } from "../../utils";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
-  console.log(formData);
+  // console.log(formData);
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
@@ -422,7 +422,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
-              console.log("test");
+              // console.log("test");
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
