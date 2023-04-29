@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.certificate.DraftFiles;
+package org.egov.filemgmnt.web.models.certificate.draftfile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

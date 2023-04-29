@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.certificate.DraftFiles;
+package org.egov.filemgmnt.web.models.certificate.draftfile;
 
 import lombok.Builder;
 import lombok.Getter;

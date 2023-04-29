@@ -1,9 +1,9 @@
-package org.egov.filemgmnt.web.models.certificate.DraftFiles;
+package org.egov.filemgmnt.web.models.certificate.draftfile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.egov.common.contract.request.RequestInfo;
+import org.egov.common.contract.response.ResponseInfo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,21 +20,21 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DraftCertificateRequest {
+public class DraftCertificateResponse {
 
-    @JsonProperty("RequestInfo")
-    private RequestInfo requestInfo;
+    @JsonProperty("ResponseInfo")
+    private ResponseInfo responseInfo;
 
     @JsonProperty("DraftCertificateDetails")
     private List<DraftCertificateDetails> draftCertificateDetails;
 
-    public DraftCertificateRequest addCertificateDetails(final DraftCertificateDetails draftCertificateDetail) {
+    public DraftCertificateResponse addCertificateDetails(final DraftCertificateDetails draftCertificateDetail) {
+
         if (draftCertificateDetails == null) {
             draftCertificateDetails = new ArrayList<>();
         }
         draftCertificateDetails.add(draftCertificateDetail);
-
         return this;
-    }
 
+    }
 }

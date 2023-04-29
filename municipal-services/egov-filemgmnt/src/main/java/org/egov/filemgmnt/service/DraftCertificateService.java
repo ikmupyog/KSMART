@@ -15,10 +15,10 @@ import org.egov.filemgmnt.validators.DraftFilesValidator;
 import org.egov.filemgmnt.web.enums.CertificateStatus;
 import org.egov.filemgmnt.web.enums.DraftType;
 import org.egov.filemgmnt.web.models.certificate.EgovPdfResponse;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificate;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.BuildDraftCertificateRequest;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.draftfile.BuildDraftCertificate;
+import org.egov.filemgmnt.web.models.certificate.draftfile.BuildDraftCertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateRequest;
 import org.egov.filemgmnt.web.models.draftfile.DraftFile;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class DraftCertificateService {
         final DraftFile draftFile = findDraftFile(searchCriteria);
         Assert.notNull(draftFile, "No Draft file is found for this search");
 
-        String urlLink = null;
+        String urlLink = null; // NOPMD
         String urlCreateEndPoint = null;
         String embeddedUrl = null;
 
@@ -131,26 +131,27 @@ public class DraftCertificateService {
 
     }
 
-    private BuildDraftCertificateRequest buildDraftCertificateRequest(final DraftFile draftDetails,
+    private BuildDraftCertificateRequest buildDraftCertificateRequest(final DraftFile draftFile,
                                                                       final RequestInfo requestInfo,
                                                                       final String fileCode, final String embeddedUrl) {
         return BuildDraftCertificateRequest.builder()
                                            .requestInfo(requestInfo)
-                                           .buildDraftCertificate(Collections.singletonList(buildDraftCertificateDetails(draftDetails,
+                                           .buildDraftCertificate(Collections.singletonList(buildDraftCertificateDetails(draftFile,
                                                                                                                          fileCode,
                                                                                                                          embeddedUrl)))
                                            .build();
     }
 
-    private BuildDraftCertificate buildDraftCertificateDetails(final DraftFile draftDetails, final String fileCode,
+    private BuildDraftCertificate buildDraftCertificateDetails(final DraftFile draftFile, final String fileCode,
                                                                final String embeddedUrl) {
 
         return BuildDraftCertificate.builder()
                                     .embeddedUrl(embeddedUrl)
-                                    .id(draftDetails.getId())
-                                    .tenantId(draftDetails.getTenantId())
-                                    .fileCode(draftDetails.getFileCode())
-                                    .draftText(draftDetails.getDraftText())
+                                    .id(draftFile.getId())
+                                    .tenantId(draftFile.getTenantId())
+                                    // .fileCode(draftFile.getFileCode())
+                                    .fileCode(fileCode)
+                                    .draftText(draftFile.getDraftText())
                                     .dateOfIssue(Long.valueOf(System.currentTimeMillis()))
                                     .build();
     }

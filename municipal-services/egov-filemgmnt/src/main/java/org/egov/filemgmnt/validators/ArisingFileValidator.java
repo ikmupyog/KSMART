@@ -2,23 +2,21 @@ package org.egov.filemgmnt.validators;
 
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.ArisingFileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Component
 public class ArisingFileValidator {
 
-    private final ArisingFileRepository arisingFileRepository;
-    private final FMConfiguration fmConfig;
+    @Autowired
+    private FMConfiguration fmConfig;
+
+    private final ArisingFileRepository repository;
     private final MdmsValidator mdmsValidator;
 
-    public ArisingFileValidator(ArisingFileRepository arisingFileRepository, FMConfiguration fmConfig,
-                                MdmsValidator mdmsValidator) {
+    ArisingFileValidator(final ArisingFileRepository repository, final MdmsValidator mdmsValidator) {
 
-        this.arisingFileRepository = arisingFileRepository;
-        this.fmConfig = fmConfig;
+        this.repository = repository;
         this.mdmsValidator = mdmsValidator;
     }
 

@@ -9,8 +9,8 @@ import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.DraftFilesRepository;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.validators.DraftFilesValidator;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateRequest;
 import org.egov.filemgmnt.web.models.draftfile.DraftFile;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileRequest;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
@@ -37,7 +37,7 @@ public class DraftFileService {
     private final DraftCertificateService certService;
 
     DraftFileService(final DraftFilesRepository repository, final DraftFileEnrichment enrichment,
-                      final DraftFilesValidator validator, final DraftCertificateService certService) {
+                     final DraftFilesValidator validator, final DraftCertificateService certService) {
         this.repository = repository;
         this.enrichment = enrichment;
         this.validator = validator;
@@ -47,7 +47,7 @@ public class DraftFileService {
     public DraftFile create(final DraftFileRequest request) {
         final DraftFile draftFile = request.getDraftFile();
 
-        validator.validateDraftCreate(request);
+        validator.validateCreate(request);
         enrichment.enrichCreate(request);
 
         producer.push(fmConfig.getSaveDraftFileTopic(), request);

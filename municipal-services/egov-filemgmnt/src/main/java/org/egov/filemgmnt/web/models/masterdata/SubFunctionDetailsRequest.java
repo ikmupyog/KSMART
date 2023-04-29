@@ -23,7 +23,7 @@ import lombok.Setter;
 public class SubFunctionDetailsRequest {
 
     @JsonProperty("RequestInfo")
-    RequestInfo requestInfo;
+    private RequestInfo requestInfo;
 
     @JsonProperty("SubFunctionDetails")
     private SubFunctionDetails subFunctionDetails;

@@ -33,13 +33,4 @@ public class DraftFileRequest {
     @JsonProperty("draftFile")
     private DraftFile draftFile;
 
-//    public DraftFileRequest addDraftFile(DraftFile draftFiles) {
-//
-//        if (draftFile == null) {
-//            draftFile = new ArrayList<>();
-//        }
-//        draftFile.add(draftFiles);
-//        return this;
-//    }
-
 }

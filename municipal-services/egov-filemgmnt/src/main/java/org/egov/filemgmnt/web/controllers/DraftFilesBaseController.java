@@ -4,7 +4,7 @@ import javax.validation.Valid;
 
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateResponse;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateResponse;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileRequest;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileResponse;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
@@ -13,7 +13,6 @@ import org.egov.tracer.model.ErrorRes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -206,6 +205,6 @@ interface DraftFilesBaseController {
                                     description = "Bad draft file certificate download request",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                        schema = @Schema(implementation = ErrorRes.class))) })
-    ResponseEntity<DraftCertificateResponse> download(@RequestBody final RequestInfoWrapper request,
-                                                      @ModelAttribute final DraftFileSearchCriteria searchCriteria);
+    ResponseEntity<DraftCertificateResponse> download(@Valid RequestInfoWrapper request,
+                                                      @Valid DraftFileSearchCriteria searchCriteria);
 }

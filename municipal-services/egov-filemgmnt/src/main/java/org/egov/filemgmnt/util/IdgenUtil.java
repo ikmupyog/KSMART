@@ -20,6 +20,9 @@ import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class IdgenUtil {
 
@@ -56,7 +59,10 @@ public class IdgenUtil {
 
         final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
 
-        System.out.println("id gen service" + uri);
+        if (log.isDebugEnabled()) {
+            log.debug("ID Gen URI = {}", uri);
+        }
+
         final IdGenerationResponse response = objectMapper.convertValue(restRepo.fetchResult(uri, request),
                                                                         IdGenerationResponse.class);
 

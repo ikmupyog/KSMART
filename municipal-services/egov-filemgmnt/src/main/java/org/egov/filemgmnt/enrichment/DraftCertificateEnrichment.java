@@ -8,8 +8,8 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
-import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
