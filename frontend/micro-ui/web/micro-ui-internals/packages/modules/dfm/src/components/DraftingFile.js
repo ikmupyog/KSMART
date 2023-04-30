@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import {
     BackButton,
     PrivateRoute,
@@ -27,13 +27,13 @@ import {
     Card
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
+// import SearchApplication from "./SearchApplication";
+// import Search from "../pages/employee/Search";
+// import BirthSearchInbox from "../../../cr/src/components/inbox/search";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
-import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
+// import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
 
 
 const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
@@ -42,7 +42,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const [draftText, setDraftText] = useState("");
     const { t } = useTranslation();
     const history = useHistory();
-    const state = useSelector((state) => state);
+    // const state = useSelector((state) => state);
     const locale = Digit.SessionStorage.get("locale");
     let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
     let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
