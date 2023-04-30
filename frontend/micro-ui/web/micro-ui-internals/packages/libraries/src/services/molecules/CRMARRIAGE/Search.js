@@ -215,7 +215,7 @@ export const CRSearchMarriage = {
     if (response?.GroomDetails?.groomMaritalstatusID === "MARRIED") {
       GroomDetails.values.push({
         title: `${t("CR_ANY_SPOUSE_LIVING")}`,
-        value: response?.GroomDetails?.groomIsSpouseLiving ? 'Yes' : 'No',
+        value: response?.GroomDetails?.groomIsSpouseLiving ? "Yes" : "No",
       });
     }
     if (response?.GroomDetails?.groomMaritalstatusID === "MARRIED" && response?.GroomDetails?.groomIsSpouseLiving) {
@@ -250,6 +250,44 @@ export const CRSearchMarriage = {
           title: `${t("CR_GUARDIAN_NAME")}`,
           value: `${response?.GroomDetails?.groomGuardiannameEn}/${response?.GroomDetails?.groomGuardiannameMl}`,
         })
+      );
+    }
+
+    const GroomAddressDetails = {
+      title: "CR_GROOM_ADDRESS_DETAILS",
+      asSectionHeader: true,
+      values: [],
+    };
+    if (response?.GroomAddressDetails?.countryIdPermanent === "COUNTRY_INDIA" && response?.GroomAddressDetails?.stateIdPermanent === "kl") {
+      GroomAddressDetails.values.push(
+        {
+          title: `${t("CS_COMMON_COUNTRY")}`,
+          value: response?.GroomAddressDetails?.countryIdPermanent ? response?.GroomAddressDetails?.countryIdPermanent : "NA",
+        },
+        {
+          title: `${t("CS_COMMON_STATE")}`,
+          value: response?.GroomAddressDetails?.stateIdPermanent ? response?.GroomAddressDetails?.stateIdPermanent : "NA",
+        },
+        {
+          title: `${t("CS_COMMON_DISTRICT")}`,
+          value: response?.GroomAddressDetails?.districtIdPermanent ? response?.GroomAddressDetails?.districtIdPermanent : "NA",
+        },
+        {
+          title: `${t("CS_COMMON_TALUK")}`,
+          value: response?.GroomAddressDetails?.presentInsideKeralaTaluk ? response?.GroomAddressDetails?.presentInsideKeralaTaluk : "NA",
+        },
+        {
+          title: `${t("CS_COMMON_VILLAGE")}`,
+          value: response?.GroomAddressDetails?.presentInsideKeralaVillage ? response?.GroomAddressDetails?.presentInsideKeralaVillage : "NA",
+        },
+        {
+          title: `${t("CS_COMMON_LB_NAME")}`,
+          value: response?.GroomAddressDetails?.presentInsideKeralaLBName ? response?.GroomAddressDetails?.presentInsideKeralaLBName : "NA",
+        },
+        {
+          title: `${t("CS_COMMON_WARD")}`,
+          value: response?.GroomAddressDetails?.presentWardNo ? response?.GroomAddressDetails?.presentWardNo : "NA",
+        }
       );
     }
 
@@ -313,7 +351,7 @@ export const CRSearchMarriage = {
     if (response?.BrideDetails?.brideMaritalstatusID === "MARRIED") {
       BrideDetails.values.push({
         title: `${t("CR_ANY_SPOUSE_LIVING")}`,
-        value: response?.BrideDetails?.brideIsSpouseLiving ? 'Yes' : 'No',
+        value: response?.BrideDetails?.brideIsSpouseLiving ? "Yes" : "No",
       });
     }
     if (response?.BrideDetails?.brideMaritalstatusID === "MARRIED" && response?.BrideDetails?.brideIsSpouseLiving) {
@@ -394,11 +432,9 @@ export const CRSearchMarriage = {
         {
           title: `${t("CR_WITNESS2_MOBILE_NO")}`,
           value: response?.WitnessDetails?.witness2Mobile ? response?.WitnessDetails?.witness2Mobile : "NA",
-        }
-      ]
-    }
-
-    
+        },
+      ],
+    };
 
     //Groom groom GROOM
     // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
@@ -417,8 +453,9 @@ export const CRSearchMarriage = {
     response && employeeResponse.push(MarriageSummaryDetails);
     response && employeeResponse.push(MarriageDetails);
     response && employeeResponse.push(GroomDetails);
+    response && employeeResponse.push(GroomAddressDetails);
     response && employeeResponse.push(BrideDetails);
-    response && employeeResponse.push(WitnessDetails)
+    response && employeeResponse.push(WitnessDetails);
 
     return {
       tenantId: response.tenantId,

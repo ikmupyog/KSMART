@@ -3764,7 +3764,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
             />
           )}
           {""}
-          <div className="col-md-12">
+          {/* <div className="col-md-12">
             <div className="col-md-3">
               <div className="row">
                 <div className="col-md-12">
@@ -3909,7 +3909,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                 // {...(validation = { isRequired: true })}
               />
             </div>
-          </div>
+          </div> */}
           <div className="col-md-12">
             <CheckBox
               label={t("CR_MARRIAGE_DECLARATION_STATEMENT")}
