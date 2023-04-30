@@ -65,7 +65,12 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
   //console.log("isEditBirth" + isEditBirth);
   //const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(tenantId, isEditDeath ? false : true  );
   const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true);
-
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {});
+  const [editParams, seEditParams, clearEditParams] = Digit.Hooks.useSessionStorage("CR_EDIT_DEATH_REG", {});
+  useEffect(()=>{
+    clearParams()
+    clearEditParams()
+  },[mutation?.data])
   useEffect(() => {
     if (isInitialRender && applicationNumber === null) {
       // const onSuccessedit = () => {
