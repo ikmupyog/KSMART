@@ -3,7 +3,8 @@ import { Request } from "../atoms/Utils/Request";
 import cloneDeep from "lodash/cloneDeep";
 
 const getThumbnails = async (ids, tenantId, documents = []) => {
-  tenantId = window.location.href.includes("/obps/") ? Digit.ULBService.getStateId() : tenantId;
+  // tenantId = window.location.href.includes("/obps/") ? Digit.ULBService.getStateId() : tenantId;
+  tenantId = Digit.ULBService.getStateId();
   if (window.location.href.includes("/obps/")) {
     if (documents?.length > 0) {
       let workflowsDocs = [];
@@ -196,7 +197,7 @@ export const WorkflowService = {
           };
           return checkPoint;
         });
-
+  
         if (getTripData) {
           try {
             const filters = {
