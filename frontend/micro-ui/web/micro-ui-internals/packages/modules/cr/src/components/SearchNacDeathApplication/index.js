@@ -91,7 +91,7 @@ const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count })
                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo}
                   </Link> */}
-                {row.original.InformationDeath.DeathACKNo}
+                {row.original?.InformationDeath.DeathACKNo}
               </span>
             </div>
           );
@@ -100,23 +100,33 @@ const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count })
       {
         Header: t("Decent Name"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.DeathApplicantDtls?.ApplicantName),
+        accessor: (row) => GetCell(row?.DeathApplicantDtls?.ApplicantName + " " + row?.DeathApplicantDtls?.ApplicantName),
       },
+      // {
+      //   Header: t("Applicant Name"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row?.DeathApplicantDtls?.ApplicantName),
+      // },
       {
         Header: t("CR_COMMON_COL_APP_DATE"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
+        accessor: (row) => GetCell(row?.InformationDeath?.ApplicationDate ? convertEpochToDateDMY(row?.InformationDeath?.ApplicationDate) : ""),
+      },
+      {
+        Header: t("Date of Death"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row?.InformationDeath?.DateOfDeath ? convertEpochToDateDMY(row?.InformationDeath?.DateOfDeath) : ""),
       },
       {
         Header: t("CR_COMMON_GENDER"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DeceasedGender || "-"),
+        accessor: (row) => GetCell(row?.InformationDeath.DeceasedGender || "-"),
       },
       {
         Header: t("Download Certificate"),
         disableSortBy: true,
         Cell: ( row ) => {
-          let id = _.get(row, "original.id", null);
+          let id = row?.data[0]?.InformationDeath?.Id;
           return (
             <div>
               {id !== null && (

@@ -96,7 +96,7 @@ const MarriageCorrectionPage = () => {
         cmbWardNoFinal={cmbWardNoFinal}
         cmbWardNo={cmbWardNo}
         cmbPlaceName={cmbPlaceName}
-        BirthCorrectionDocuments={marriageCorrectionDocs}
+        marriageCorrectionDocuments={marriageCorrectionDocs}
         navigationData={navigationData}
         onSubmitAcknowledgement={createProperty}
       />

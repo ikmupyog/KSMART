@@ -125,15 +125,15 @@ const SearchNacRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count })
         Header: t("Download Certificate"),
         disableSortBy: true,
         Cell: ({ row }) => {
-          let id = _.get(row, "original.id", null);
+          let applicationNumber = row.original.applicationNumber;
           return (
             <div>
-              {id !== null && (
+              {applicationNumber !== null && (
                 <span
                   className="link"
                   onClick={() => {
                     fileSource.mutate(
-                      { filters: { id, source: "sms" } },
+                      { filters: { applicationNumber, source: "sms" } },
                       {
                         onSuccess: (fileDownloadInfo) => {
                           const { filestoreId } = fileDownloadInfo;

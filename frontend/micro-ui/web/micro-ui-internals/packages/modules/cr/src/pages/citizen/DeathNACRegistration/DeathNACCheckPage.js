@@ -117,7 +117,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
         <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{`${t("CR_DEATH_REG_SUMMARY_HEADING")}`}</CardSubHeader>
         <Accordion
           expanded={true}
-          title="Decent Details"
+          title="Deceased Details"
           content={
             <StatusTable>
               {/* <div className="row">
@@ -271,7 +271,8 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                       :{" "} {t(DeathNACDetails.hospitalNameEn.address)} + {t(DeathNACDetails.HospitalNameMl.addressLocal)}
+                       :{" "} {t(DeathNACDetails.hospitalNameEn.address) +
+                        " / " + (DeathNACDetails.HospitalNameMl.addressLocal)}
                       </CardText>
                     </div>
                   </div>
@@ -286,10 +287,8 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        :{" "}
-                        {t(DeathNACDetails.DeathPlaceInstId.institutionName) +
-                          "/" + " " +
-                          DeathNACDetails.DeathPlaceInstId.institutionNamelocal}
+                        :{" "} {t(DeathNACDetails.DeathPlaceInstId.institutionName) +
+                        " / " + (DeathNACDetails.DeathPlaceInstId.institutionNamelocal)}
                       </CardText>
                     </div>
                     </div>
@@ -304,7 +303,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceInstId.mainPlace) +
                           "/" + " " +
-                          DeathNACDetails.DeathPlaceInstId.mainPlaceLocal}
+                          (DeathNACDetails.DeathPlaceInstId.mainPlaceLocal)}
                       </CardText>
                     </div>
                     <div className="col-md-6">
@@ -313,7 +312,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
                         :{" "}
-                        {t(DeathNACDetails.DeathPlaceInstId.place + "/"  + " " + DeathNACDetails.DeathPlaceInstId.placeLocal)}
+                        {t(DeathNACDetails.DeathPlaceInstId.place) + "/"  + " " + (DeathNACDetails.DeathPlaceInstId.placeLocal)}
                       </CardText>
                     </div>
                     </div>
@@ -332,23 +331,23 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) + 
                           "," +
-                          DeathNACDetails.DeathPlaceHomeLocalityEn +
+                          (DeathNACDetails.DeathPlaceHomeLocalityEn) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomeStreetNameEn +
+                          (DeathNACDetails.DeathPlaceHomeStreetNameEn) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomePostofficeId.name +
+                          (DeathNACDetails.DeathPlaceHomePostofficeId.name) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomePostofficeId.pincode +
+                          (DeathNACDetails.DeathPlaceHomePostofficeId.pincode) +
                           "/" +
-                          DeathNACDetails.DeathPlaceHomeHoueNameMl +
+                          (DeathNACDetails.DeathPlaceHomeHoueNameMl) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomeLocalityMl +
+                          (DeathNACDetails.DeathPlaceHomeLocalityMl) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomeStreetNameMl +
+                          (DeathNACDetails.DeathPlaceHomeStreetNameMl) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomePostofficeId.name +
+                          (DeathNACDetails.DeathPlaceHomePostofficeId.name) +
                           "," +
-                          DeathNACDetails.DeathPlaceHomePostofficeId.pincode}
+                          (DeathNACDetails.DeathPlaceHomePostofficeId.pincode)}
                       </CardText>
                     </div>
                   </div>
@@ -431,7 +430,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceLocalityEn) + " " +
                           "/" +
-                          DeathNACDetails.DeathPlaceLocalityMl}
+                          (DeathNACDetails.DeathPlaceLocalityMl)}
                       </CardText>
                     </div>
                     <div className="col-md-6">
@@ -442,7 +441,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       :{" "}
                         {t(DeathNACDetails.DeathPlaceStreetEn) + " " +
                           "/" +
-                          DeathNACDetails.DeathPlaceStreetMl}
+                          (DeathNACDetails.DeathPlaceStreetMl)}
                       </CardText>
                       
                     </div>
@@ -454,7 +453,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       :{" "}
                         {t(DeathNACDetails.DeathPlaceStreetEn) + " " +
                           "/" +
-                          DeathNACDetails.DeathPlaceStreetMl}
+                          (DeathNACDetails.DeathPlaceStreetMl)}
                       </CardText>
                       
                     </div>
@@ -466,7 +465,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
         />
         <Accordion
           expanded={false}
-          title="Decent Family Details"
+          title="Deceased Family Details"
           content={
             <StatusTable>
               <div className="row">
