@@ -3843,7 +3843,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     name="eSign"
                     value="E-sign"
                     // onChange={setSelectwitness2Esigned}
-                    disable={GroomDetails?.isExpiredHusband}
+                    disabled={GroomDetails?.isExpiredHusband}
                     // {...(validation = { isRequired: true })}
                   />
                 </div>
@@ -3880,7 +3880,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     name="eSign"
                     value="E-sign"
                     // onChange={setSelectwitness2Esigned}
-                    disable={BrideDetails?.isExpiredWife}
+                    disabled={BrideDetails?.isExpiredWife}
                     // {...(validation = { isRequired: true })}
                   />
                 </div>
