@@ -3,7 +3,8 @@ import { Request } from "../atoms/Utils/Request";
 import cloneDeep from "lodash/cloneDeep";
 
 const getThumbnails = async (ids, tenantId, documents = []) => {
-  tenantId = window.location.href.includes("/obps/") ? Digit.ULBService.getStateId() : tenantId;
+  // tenantId = window.location.href.includes("/obps/") ? Digit.ULBService.getStateId() : tenantId;
+  tenantId = Digit.ULBService.getStateId();
   if (window.location.href.includes("/obps/")) {
     if (documents?.length > 0) {
       let workflowsDocs = [];
@@ -119,6 +120,7 @@ export const WorkflowService = {
     const getLocationDetails = window.location.href.includes("/obps/") || window.location.href.includes("noc/inbox");
     const moduleCodeData = getLocationDetails ? applicationProcessInstance?.[0]?.businessService : moduleCode;
     const businessServiceResponse = (await Digit.WorkflowService.init(tenantId, moduleCodeData))?.BusinessServices[0]?.states;  
+    console.log("workflow.ProcessInstances",workflow);
     if (workflow && workflow.ProcessInstances) {
       const processInstances = workflow.ProcessInstances;
       const nextStates = processInstances[0]?.nextActions.map((action) => ({ action: action?.action, nextState: processInstances[0]?.state.uuid }));
@@ -195,7 +197,7 @@ export const WorkflowService = {
           };
           return checkPoint;
         });
-
+  
         if (getTripData) {
           try {
             const filters = {
@@ -213,7 +215,9 @@ export const WorkflowService = {
               let disposedAction = [];
               for (const data of tripSearchResp.vehicleTrip) {
                 const resp = await Digit.WorkflowService.getByBusinessId(tenantId, data.applicationNo);
+                console.log("resp in work flow==",resp);
                 resp?.ProcessInstances?.map((instance, ind) => {
+                  console.log("instances==",instance);
                   if (instance.state.applicationStatus === "WAITING_FOR_DISPOSAL") {
                     waitingForDisposedCount++;
                     cretaedTime = Digit.DateUtils.ConvertEpochToDate(instance.auditDetails.createdTime);
@@ -273,6 +277,7 @@ export const WorkflowService = {
 
               let tripTimeline = [];
               const disposalInProgressPosition = timeline.findIndex((data) => data.status === "DISPOSAL_IN_PROGRESS");
+              console.log("disposalInProgressPosition",disposalInProgressPosition);
               if (disposalInProgressPosition !== -1) {
                 timeline[disposalInProgressPosition].numberOfTrips = numberOfTrips;
                 timeline.splice(disposalInProgressPosition + 1, 0, ...waitingForDisposedAction);

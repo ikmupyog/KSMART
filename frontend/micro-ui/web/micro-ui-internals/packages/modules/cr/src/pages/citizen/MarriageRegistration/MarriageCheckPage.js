@@ -103,6 +103,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
   } else {
     userType = "employee";
   }
+  console.log({val1: WitnessDetails?.isExpiredWife, val2: WitnessDetails?.isExpiredHusband});
   console.log(value);
   console.log("abc", MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE");
   return (
@@ -3843,7 +3844,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     name="eSign"
                     value="E-sign"
                     // onChange={setSelectwitness2Esigned}
-                    disable={GroomDetails?.isExpiredHusband}
+                    disable={WitnessDetails?.isExpiredHusband}
                     // {...(validation = { isRequired: true })}
                   />
                 </div>
@@ -3880,7 +3881,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     name="eSign"
                     value="E-sign"
                     // onChange={setSelectwitness2Esigned}
-                    disable={BrideDetails?.isExpiredWife}
+                    disable={WitnessDetails?.isExpiredWife}
                     // {...(validation = { isRequired: true })}
                   />
                 </div>
