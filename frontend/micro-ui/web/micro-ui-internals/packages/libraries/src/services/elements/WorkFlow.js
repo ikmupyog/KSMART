@@ -188,8 +188,8 @@ export const WorkflowService = {
             assignes: instance.assignes,
             caption: instance.assignes ? instance.assignes.map((assignee) => ({ name: assignee.name, mobileNumber: assignee.mobileNumber })) : null,
             auditDetails: {
-              created: Digit.DateUtils.ConvertEpochToDate(instance.auditDetails.createdTime),
-              lastModified: Digit.DateUtils.ConvertEpochToDate(instance.auditDetails.lastModifiedTime),
+              created: Digit.DateUtils.ConvertTimestampToDate(instance.auditDetails.createdTime,"dd-MMM-yyyy hh:mm a"),
+              lastModified: Digit.DateUtils.ConvertTimestampToDate(instance.auditDetails.lastModifiedTime,"dd-MMM-yyyy hh:mm a"),
             },
             timeLineActions: instance.nextActions
               ? instance.nextActions.filter((action) => action.roles.includes(role)).map((action) => action?.action)

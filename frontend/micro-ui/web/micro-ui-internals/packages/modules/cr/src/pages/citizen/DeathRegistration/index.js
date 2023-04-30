@@ -57,11 +57,20 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };
-  
-  const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_DEATH");
+  const onSuccess = (data) => {
+    // console.log(data);
+    // console.log(data?.ChildDetails[0].applicationNumber);
+    if(isEditDeath === false){
+      clearParams();
+    }    
+    // sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("CR_CREATE_DEATH_REG");
+
   };
+  // const onSuccess = () => {
+  //   sessionStorage.removeItem("CurrentFinancialYear");
+  //   queryClient.invalidateQueries("CR_CREATE_DEATH");
+  // };
   const handleSkip = () => {};
   const handleMultiple = () => {};
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");

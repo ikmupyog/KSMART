@@ -68,7 +68,7 @@ function ApplicationDetailsContent({
     } else {
       console.log("reached 33",checkpoint,index);
       const caption = {
-        date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
+        date: checkpoint?.auditDetails?.lastModified,
         // name: checkpoint?.assigner?.name,
         name: checkpoint?.assignes?.[0]?.name,
         // mobileNumber: checkpoint?.assigner?.mobileNumber,
