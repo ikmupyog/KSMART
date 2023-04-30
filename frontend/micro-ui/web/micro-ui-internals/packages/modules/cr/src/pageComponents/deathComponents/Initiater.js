@@ -78,12 +78,26 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
   }
 
 
-  function setSelectInitiatorAadhaar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setInitiatorAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-    }
-   
+  // function setSelectInitiatorAadhaar(e) {
+  //   if (e.target.value.trim().length >= 0) {
+  //     setInitiatorAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+  //   }
+  // }
 
+  function setSelectInitiatorAadhaar(e) {
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if ( newValue === formData?.InformationDeath?.DeceasedAadharNumber) {
+      // If so, clear the Father's Aadhar number field
+      setInitiatorAadhaar("");
+      setInitiaterAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }else
+    {
+      setInitiatorAadhaar(newValue);
+    }      
   }
 
   function setSelectInitiatorMobile(e) {
