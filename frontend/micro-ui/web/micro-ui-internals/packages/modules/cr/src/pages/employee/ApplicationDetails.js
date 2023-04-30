@@ -43,6 +43,10 @@ const ApplicationDetails = () => {
     config: {},
   });
 
+  useEffect(()=>{
+ console.log("workflowDetails==",workflowDetails);
+  },[workflowDetails])
+
   const closeToast = () => {
     setShowToast(null);
   };

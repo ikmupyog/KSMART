@@ -32,21 +32,22 @@ const DeathNACDownloadPage = ({config, onSelect}) => {
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>Instructions for Application Submission</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_APPLICATION_SUBMISSION_INSTRUCTION")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
             </div>
             <div className="row" style={{marginLeft: "20px"}}>
-              Dear Applicant,
+              {`${t("CR_DEAR_APPLICANT")}`}
               </div>
-              <div className="row" style={{marginLeft: "20px"}}>Please keep the following documents and  dully filled / attested downloaded forms for submitting the application.
+              <div className="row" style={{marginLeft: "20px"}}>
+              {`${t("CR_APPLICATION_ATTESTED_DOCUMENTS")}`}
               </div>
               <div className="row" style={{marginTop: "30px"}}>
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>Form downloads and documents</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_APPLICATION_DOWNLOADS_DOCUMENTS")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -55,31 +56,31 @@ const DeathNACDownloadPage = ({config, onSelect}) => {
             <div className="col-md-12" style={{display : "flex", alignItems: "center" }}>
                 {/* <PDFSvg width={85} height={100} style={{ background: "#f6f6f6", padding: "8px", marginLeft: "15px" }}/> */}
                 <ArrowForward />
-                <h1 >ID Card of the Applicant</h1>
+                <h1 >{`${t("CR_ID_APPLICANT")}`}</h1>
             </div>
             </div>
             <div className="row" style={{paddingLeft: "10px", paddingTop: "50px"}}>
             <div className="col-md-12" style={{display : "flex", alignItems: "center" }}>
             <ArrowForward />
-                <h1 >Address proof of deceased at the time of death</h1>
+                <h1 >{`${t("CR_ADDRESS_DECEASED")}`}</h1>
             </div>
             </div>
             <div className="row" style={{paddingLeft: "10px", paddingTop: "50px"}}>
             <div className="col-md-12" style={{display : "flex", alignItems: "center" }}>
             <ArrowForward />
-            <h1 >ID proof of Father/Mother/Spouse</h1>
+            <h1 >{`${t("CR_ID_RELATION")}`}</h1>
             </div>
             </div>
             <div className="row" style={{paddingLeft: "10px", paddingTop: "50px"}}>
             <div className="col-md-12" style={{display : "flex", alignItems: "center" }}>
             <ArrowForward />
-            <h1 >Proof of Death</h1>
+            <h1 >{`${t("CR_PROOF_OF_DEATH")}`}</h1>
             </div>
             </div>
             <div className="row" style={{paddingLeft: "10px", paddingTop: "50px"}}>
                 <div className="col-md-6" style={{display : "flex", alignItems: "center" }}>
                 <ArrowForward />
-                <h1 >Declaration by Applicant, counter signed by gazetted officer</h1>
+                <h1 >{`${t("CR_DECLARTION_APPLICANT")}`}</h1>
                 </div>
                 <div className="col-md-6">
                 <MultiLink
@@ -95,7 +96,7 @@ const DeathNACDownloadPage = ({config, onSelect}) => {
             <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px", paddingBottom: "80px"}}>
                 <div className="col-md-6" style={{display : "flex", alignItems: "center" }}>
                 <ArrowForward />
-                <h1 >Declaration by two different credible persons separately</h1>
+                <h1 >{`${t("CR_DECLARTION_CREDIBLE")}`}</h1>
                 </div>
                 <div className="col-md-6">
                 <MultiLink
