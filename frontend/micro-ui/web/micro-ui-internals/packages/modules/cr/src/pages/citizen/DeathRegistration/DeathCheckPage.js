@@ -107,8 +107,8 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_DEATH_REG_SUMMARY_HEADING")}</CardSubHeader>

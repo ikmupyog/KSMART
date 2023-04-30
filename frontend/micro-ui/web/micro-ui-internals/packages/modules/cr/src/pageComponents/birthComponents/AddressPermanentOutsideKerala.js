@@ -200,7 +200,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setSelectpermntOutsideKeralaHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setpermntOutsideKeralaHouseNameMl('');
@@ -251,7 +251,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setCheckMalayalamInputFieldWithSplChar(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]/;
     if (!(e.key.match(pattern))) {
       e.preventDefault();
     }
@@ -545,7 +545,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               disable={isDisableEdit}
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$",
                 isRequired: true,
                 type: "text",
                 title: t("CR_INVALID_HOUSE_NAME_ML"),
