@@ -549,7 +549,7 @@ const HouseMarriageRegistration = ({
             isMandatory={false}
             disable={isDisableEdit}
             placeholder={`${t("CR_LOCALITY_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_ERROR_LOCALITY_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -567,7 +567,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectmarriageStreetEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_STREET_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -585,7 +585,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectOtherMarriagePlacenameEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSENO_NAME_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: true, type: "text", title: t("CR_ERROR_HOUSE_NAME_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -604,7 +604,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectmarriageLandmark}
             disable={isDisableEdit}
             placeholder={`${t("CR_LANDMARK")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LANDMARK") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_LANDMARK_ERROR") })}
           />
         </div>
       </div>
@@ -630,7 +630,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: true,
               type: "text",
-              title: t("CR_INVALID_LOCALITY_ML"),
+              title: t("CR_ERROR_LOCALITY_ML"),
             })}
           />
         </div>
@@ -654,7 +654,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: false,
               type: "text",
-              title: t("CR_INVALID_STREET_NAME_ML"),
+              title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_ML"),
             })}
           />
         </div>
@@ -678,7 +678,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \- , / ]*$",
               isRequired: true,
               type: "text",
-              title: t("CR_INVALID_HOUSENO_NAME_ML"),
+              title: t("CR_ERROR_HOUSE_NAME_ML"),
             })}
           />
         </div>
