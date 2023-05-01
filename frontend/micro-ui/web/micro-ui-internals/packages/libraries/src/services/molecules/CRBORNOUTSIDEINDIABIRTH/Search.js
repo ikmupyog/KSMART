@@ -90,13 +90,13 @@ export const CRBornOutsideIndiasearch = {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
           value: response?.BornOutsideParentsDetails?.motherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.motherFirstNameMl || "NA",
         },
-        { title: "CR_MOTHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.motherPassportNo },
+        { title: "CR_MOTHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.motherPassport },
         { title: "CR_MOTHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.motherNationality },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
           value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || "NA",
         },
-        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassportNo },
+        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassport },
         { title: "CR_FATHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.fatherNationality },
         { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.BornOutsideParentsDetails?.motherMarriageAge },
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.BornOutsideParentsDetails?.motherMarriageBirth },
@@ -121,7 +121,10 @@ export const CRBornOutsideIndiasearch = {
         // { title: "CR_BIRTH_PERS_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails.presentaddressStateName || "CR_NOT_RECORDED"},
         // { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails.presentaddressCountry || "CR_NOT_RECORDED"},
 
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_HO_NAME_LABEL",  value:
+        response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn +
+          " / " +
+          response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl || "NA", },
         { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED" },
         {
           title: "CR_BIRTH_PERM_LOCALITY_LABEL",
@@ -153,7 +156,7 @@ export const CRBornOutsideIndiasearch = {
               " / " +
               response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB || "NA",
         },
-        { title: "CR_ZIP_CODE", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaPostCode || "CR_NOT_RECORDED" },
+        { title: "CR_ZIP_CODE", value: response?.BornOutsideAddressBirthDetails.permanentOutsideIndiaPostCode || "CR_NOT_RECORDED" },
         { title: "CR_CITY_TOWN_EN", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown || "CR_NOT_RECORDED" },
         { title: "CR_TOWN_VILLAGE_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage || "NA" },
         {
