@@ -13,12 +13,12 @@ import {
   SubmitBar,
   TextArea,
   PopUp,
+  ImageUploadHandler,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
-import { ImageUploadHandler } from "./ImageCropper/ImageUploadHandler";
 // import { TimePicker } from '@material-ui/pickers';
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
@@ -160,10 +160,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [uploadedGroomImageId, setUploadedGroomImageId] = useState(
     formData?.WitnessDetails?.uploadedGroomImageId ? formData?.WitnessDetails?.uploadedGroomImageId : null
   );
-  const [groomImageURL, setGroomImageURL] = useState(formData?.WitnessDetails?.groomImageURL ? formData?.WitnessDetails?.groomImageURL : null);
-  const [brideImageURL, setBrideImageURL] = useState(formData?.WitnessDetails?.brideImageURL ? formData?.WitnessDetails?.brideImageURL : null);
+  const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
+  const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({groomImageURL})
+  console.log({groomURL})
 
   const currentYear = new Date().getFullYear();
 
@@ -511,16 +511,16 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setBrideImageURL(fileStoreIds[0].url);
+    setBrideURL(fileStoreIds && fileStoreIds[0]?.url);
   }
 
   async function handleUploadGroom(id) {
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setGroomImageURL(fileStoreIds[0].url);
+    setGroomURL(fileStoreIds && fileStoreIds[0]?.url);
   }
 
-  console.log({ groomImageURL, brideImageURL });
+  console.log({ groomURL, brideURL });
 
   let validFlag = true;
   const goNext = () => {
@@ -722,8 +722,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2Esigned,
         isExpiredHusband,
         isExpiredWife,
-        brideImageURL,
-        groomImageURL,
+        brideURL,
+        groomURL,
         uploadedBrideImageId,
         uploadedGroomImageId,
       });
@@ -902,7 +902,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -923,7 +923,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
@@ -1024,7 +1024,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -1045,7 +1045,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
                     />
-                  </div>
+                  </div> */}
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
