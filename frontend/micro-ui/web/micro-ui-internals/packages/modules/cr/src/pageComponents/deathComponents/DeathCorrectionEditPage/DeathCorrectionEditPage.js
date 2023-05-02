@@ -119,10 +119,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
     setShowModal(false);
   };
 
-  const { handleSubmit } = useForm({
-    reValidateMode: "onSubmit",
-    mode: "all",
-  });
+  // const { handleSubmit } = useForm({
+  //   reValidateMode: "onSubmit",
+  //   mode: "all",
+  // });
 
   const onDodChange = (value) => {
     let tempObj = { ...deathCorrectionFormsObj };
@@ -209,8 +209,9 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   };
 
   const config = { texts: { submitBarLabel: "Next" } };
-  const onSubmit = (data) => console.log(data);
+ 
 
+  
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
     console.log("deathCorrectionFormsObj==", deathCorrectionFormsObj);
     return (
@@ -229,17 +230,16 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
               </div>
             </div>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
             <FormFieldContainer>
               <FieldComponentContainer>
                 <div className="col-md-5">
                   <CardLabel>{t("CR_AADHAR")}</CardLabel>
                   <TextInput
                     t={t}
-                    type={"text"}
                     name="AadharNumber"
                     max="12"
-                    isMandatory={false}
+                    optionKey="i18nKey"
                     disabled={deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled}
                     autoFocus={deathCorrectionFormsObj?.DECEASED_AADHAR?.isFocused}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
@@ -338,6 +338,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     onBlur={(e) => onNameChange(e, "middleNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title:  t("CR_INVALID_MIDDLE_NAME_ML") })}
                     // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
                 </div>
@@ -630,7 +631,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
               <FieldComponentContainer></FieldComponentContainer>
               <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitDeathCorrection} />
             </FormFieldContainer> */}
-          </form>
+          {/* </form> */}
           <DeathCorrectionModal
             showModal={showModal}
             selectedConfig={selectedCorrectionItem}
