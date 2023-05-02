@@ -95,8 +95,8 @@ export const CRsearch = {
       values: [
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
         { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NA" },
-        { title: "CR_INSTITUTION_NAME_EN", value: response?.hospitalNameMl || "NA" },
-        { title: "CR_INSTITUTION_NAME_ML", value: response?.hospitalNameMl || "NA" },
+        { title: "CR_INSTITUTION_NAME_EN", value:  response?.institutionId ? response?.institutionId : "NA" },
+        { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NA" },
       ],
     };
     const birthPlaceHOMEDetails = {

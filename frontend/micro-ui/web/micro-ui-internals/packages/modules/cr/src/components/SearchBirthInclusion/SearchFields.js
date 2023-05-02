@@ -56,21 +56,17 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("BC_CHILD_NAME")}
         </label>
         <TextInput
           name="fullName"
           inputRef={register({})}
           placeholder={`${t("BC_CHILD_NAME")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}
+          // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}
         />
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("CR_DATE_OF_BIRTH_TIME")}
         </label>
         <Controller
@@ -78,7 +74,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
             <DatePicker
               date={props.value}
               onChange={props.onChange}
-              {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })}
+              // {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })}
             />
           )}
           name="dateofbirth"
@@ -87,7 +83,6 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          <span className="mandatorycss">*</span>
           {t("DC_GENDER")}
         </label>
         <Controller
@@ -102,22 +97,20 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
               optionKey="code"
               t={t}
               placeholder={`${t("DC_GENDER")}`}
-              {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
+              // {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
             />
           )}
         />
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("BC_MOTHER_NAME")}
         </label>
         <TextInput
           name="WifeorMotherName"
           inputRef={register({})}
           placeholder={`${t("DC_NAME_MOTHER_OR_WIFE")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_OR_WIFE") })}
+          // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_OR_WIFE") })}
         />
       </SearchField>
 
@@ -127,7 +120,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           name="HusbandorfatherName"
           inputRef={register({})}
           placeholder={`${t("DC_NAME_FATHER_OR_HUSBAND")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND") })}
+          // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND") })}
         />
       </SearchField>
       <SearchField>
@@ -160,67 +153,9 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           name="deathACKNo"
           inputRef={register({})}
           placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
+          // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
         />
       </SearchField>
-
-      {/* {applicationTypesLoading ? <Loader/> : <SearchField> 
-            <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
-            <Controller
-           
-                    control={control}
-                    name="applicationType"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={applicationTypes}
-                        optionKey="i18nKey"
-                        t={t}
-                        />
-                    )}
-                    />
-        </SearchField>}
-        <SearchField>
-            <label  style={mystyle}>{t("CR_SEARCH_FROM_DATE")}</label>
-            <Controller
-           
-                render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
-                name="fromDate"
-                control={control}
-                />
-        </SearchField>
-        <SearchField>
-            <label style={mystyle}>{t("CR_SEARCH_TO_DATE")}</label>
-            <Controller
-                render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
-                name="toDate"
-                control={control}
-                />
-        </SearchField>
-        { isLoading ? <Loader/> : <SearchField>
-            <label>{t("CR_SEARCH_RESULTS_APP_STATUS_LABEL")}</label>
-            <Controller
-                    control={control}
-                    name="status"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={applicationStatuses}
-                        optionKey="i18nKey"
-                        t={t}
-                        />
-                    )}
-            />
-        </SearchField>}
-        <SearchField>
-            <label>{t("CR_SEARCH_MOTHER_NAME")}</label>
-            <TextInput  name="tradeName" inputRef={register({})}/>
-        </SearchField>
-       */}
       <SearchField className="submit">
         <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
         <p
