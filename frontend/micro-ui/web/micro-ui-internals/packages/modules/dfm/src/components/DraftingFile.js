@@ -299,7 +299,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row">
                         <div className="col-md-12" >
-                            <div className="col-md-3 col-sm-4" >
+                            <div className="button-div" >
                             <FormBackButton >{t("CS_COMMON_BACK")}</FormBackButton>
                             <SubmitBar label={t("SAVE")} />
                             </div>
