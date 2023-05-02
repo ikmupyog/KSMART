@@ -125,7 +125,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_BUSINESS_SECTOR")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.businessSector?.name}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(TradeDetails?.tradeLicenseDetail?.businessSector?.name)}`}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardText>
@@ -148,7 +148,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(stringReplaceAll(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.i18nKey, ".", "_"))}`}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(stringReplaceAll(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code, ".", "_"))}`}</CardText>
                 </div>
               </div>
             </div>
@@ -172,7 +172,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSE_PERIOD")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.desiredLicensePeriod?.name}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(TradeDetails?.desiredLicensePeriod?.name)}`}</CardText>
                 </div>
               </div>
             </div>
@@ -249,7 +249,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_OWNERSHIP_TYPE")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.ownershipCategory?.name}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(TradeDetails?.tradeLicenseDetail?.ownershipCategory?.name)}`}</CardText>
                 </div>
 
               </div>

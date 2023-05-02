@@ -136,6 +136,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [groomMobileError, setGroomMobileError] = useState(false);
   const [groomGenderError, setselectGroomGenderError] = useState(false);
   const [groomMaritalstatusIDError, setGroomMaritalstatusIDError] = useState(false);
+  const [groomEmailidError, setGroomEmailidError] = useState(false);
   // const [valueRad, setValueRad] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
   const [access, setAccess] = React.useState(true);
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
@@ -837,6 +838,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setGroomMaritalstatusIDError(false);
       }
     }
+    if (groomEmailid.trim() == null || groomEmailid.trim() == '' || groomEmailid.trim() == undefined) {
+      validFlag = false;
+      setGroomEmailid("");
+      setGroomEmailidError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setGroomEmailidError(false);
+    }
     
     if (validFlag == true) {
       // sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
@@ -1221,7 +1233,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectGroomEmailid}
                 placeholder={`${t("CR_GROOM_EMAIL")}`}
                 //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
               />
             </div>
           </div>
@@ -1621,8 +1633,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                                                     : groomGuardiannameMlError ? t(`CR_GUARDIAN_NAME_ML_ERROR`)                                                   
                                                       : groomMobileError ? t(`CR_MOBILE_NO_ERROR`)                                                      
                                                         : groomGenderError ? t(`CR_INVALID_GENDER_CHOOSE`)                                                       
-                                                          : groomMaritalstatusIDError ? t(`CR_INVALID_MARITAL_STATUS_CHOOSE`)                                                       
-                                                            : setToast(false)
+                                                          : groomMaritalstatusIDError ? t(`CR_INVALID_MARITAL_STATUS_CHOOSE`)  
+                                                            : groomEmailidError ? t(`CR_EMAIL_ERROR`)                                                    
+                                                              : setToast(false)
                  : setToast(false)
               }
               onClose={() => setToast(false)}
