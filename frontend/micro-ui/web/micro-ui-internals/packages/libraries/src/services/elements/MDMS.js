@@ -94,6 +94,21 @@ const getTypeOfMarriageMasterList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getSubRegistrarMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SubRegistar",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getMaritalStatusMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1013,22 +1028,6 @@ const getCRTalukList = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "Taluk",
-          },
-        ],
-      },
-    ],
-  },
-});
-
-const getSubRegistrarList = (tenantId, moduleCode) => ({
-  details: {
-    tenantId: tenantId,
-    moduleDetails: [
-      {
-        moduleName: moduleCode,
-        masterDetails: [
-          {
-            name: "SubRegistar",
           },
         ],
       },
@@ -2463,6 +2462,9 @@ export const MdmsService = {
   getTypeOfMarriageMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);
   },
+  getSubRegistrarMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getSubRegistrarMasterList(tenantId, moduleCode), moduleCode);
+  },
   getMaritalStatusMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getMaritalStatusMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2525,9 +2527,6 @@ export const MdmsService = {
   },
   getCRTaluk: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRTalukList(tenantId, moduleCode), moduleCode);
-  },
-  getSubRegistrar: (tenantId, moduleCode) => {
-    return MdmsService.getDataByCriteria(tenantId, getSubRegistrarList(tenantId, moduleCode), moduleCode);
   },
   getCRTitle: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRTitleList(tenantId, moduleCode), moduleCode);

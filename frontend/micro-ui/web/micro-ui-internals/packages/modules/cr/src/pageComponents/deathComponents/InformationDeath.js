@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,Loader, BackButton, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,Loader, BackButton,UploadFile, PopUp, Toast,CardText } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -26,6 +26,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
   const [workFlowAmount, setWorkFlowAmount] = useState(formData?.InformationDeath?.workFlowAmount);
   const [isPayment, setIsPayment] = useState(formData?.InformationDeath?.isPayment); 
+
+  const [NACFile, setNACFile] = useState(formData?.InformationDeath?.uploadedFile ? formData?.InformationDeath?.uploadedFile : null);
+  const [uploadedFile, setUploadedFile] = useState(formData?.InformationDeath?.uploadedFile ? formData?.InformationDeath?.uploadedFile : null);
+  const [error, setError] = useState(null);
+  const [popUpState, setpopUpState] = useState(false);
+  const [popUpStateNac, setpopUpStateNac] = useState(false);
+  const [UploadNACHIde, setUploadNACHIde] = useState(formData?.InformationDeath?.UploadNACHIde ? true : false);
+
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -45,9 +53,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: State = {}, isStateLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   //const { uuid: uuid } = Digit.UserService.getUser().info;
-  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
+  const [userRole, setuserRole] = useState(formData?.InformationDeath?.userRole);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
-  const [hospitalCode, sethospitalCode] = useState(formData?.ChildDetails?.hospitalCode);
+  const [hospitalCode, sethospitalCode] = useState(formData?.InformationDeath?.hospitalCode);
   const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
   const convertEpochFormateToDate = (dateEpoch) => {
@@ -209,6 +217,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   );
   const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
+
+const [proceedNoRDO, setproceedNoRDO] = useState(formData?.InformationDeath?.proceedNoRDO ? formData?.InformationDeath?.proceedNoRDO : "");
+  const [regNoNAC, setregNoNAC] = useState(formData?.InformationDeath?.regNoNAC ? formData?.InformationDeath?.regNoNAC : "");
+  const [isInitialRenderuploadDoc, setisInitialRenderuploadDoc] = useState(true);
 
 
   const getAgeUnitOptions = () => {
@@ -477,7 +489,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       }
     }
   }, [Nation, isInitialRender]);
-
+  console.log(userRoles);
   const roleall = [];
   roleall.push(...roletemp);
   const rolecombine = [];
@@ -499,13 +511,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     if (userRoles[0].code === "HOSPITAL_OPERATOR") {
       const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
       const tempArray = operatorHospDet?.map((ob) => {
-        return ob.hospitalCode;
+        return ob.hospitalNameEn;
       });
       return tempArray?.[0];
     } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
       const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
       const tempArray = approverHospDet?.map((ob) => {
-        return ob.hospitalCode
+        return ob.hospitalNameEn
       });
       return tempArray?.[0];
     }
@@ -541,6 +553,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       }
     }
   }, [cmbPlace, isInitialRenderRoles]);
+
+  
   // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
   // setAdrsStateName(cmbFilterState[0]);
 
@@ -647,6 +661,27 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }
  
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (NACFile) {
+        if (NACFile.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              console.log("test");
+              setUploadedFile(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) { }
+        }
+      }
+    })();
+  }, [NACFile]);
+
   function selectFromDate(value) {
     setFromDate(value);
     const today = new Date();
@@ -673,7 +708,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           setAmount(currentWorgFlow[0].amount);
         }
       }
-     
+      
+      // if (Difference_In_Days > 365) {
+      //   setUploadNACHIde(true);
+      //   setpopUpState(true);
+      // } else {
+      //    setUploadNACHIde(false);
+      //   setpopUpState(false);
+
+      // }
     }
   } 
  
@@ -701,7 +744,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setIsPayment(currentWorgFlow[0].payment);
         setAmount(currentWorgFlow[0].amount);
       }
-    }  
+    } 
+    if (Difference_In_Days > 365) {
+      setUploadNACHIde(true);
+      setpopUpState(true);
+    } else {
+       setUploadNACHIde(false);
+      setpopUpState(false);
+
+    } 
   }
   }
   function selectDeathDate(value) {
@@ -730,6 +781,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
         }
        
+      }
+      if (Difference_In_Days > 365) {
+        setUploadNACHIde(true);
+        setpopUpState(true);
+      } else {
+         setUploadNACHIde(false);
+        setpopUpState(false);
+
       }
     }
   }  
@@ -764,7 +823,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     setselectedDeceasedGender(value);
   }
   function setSelectDeceasedLastNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setDeceasedLastNameMl("");
@@ -773,7 +832,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }
   function setSelectDeceasedMiddleNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setDeceasedMiddleNameMl("");
@@ -782,7 +841,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   }
   function setSelectDeceasedFirstNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setDeceasedFirstNameMl("");
@@ -793,17 +852,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
  
   function setSelectDeceasedFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z @]*$") != null) {
       setDeceasedFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedMiddleNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z @]*$") != null) {
       setDeceasedMiddleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedLastNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z @]*$") != null) {
       setDeceasedLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
@@ -994,6 +1053,23 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     setSelectedDeceasedIdproofType(value);
     setIsTextboxEnabled(true);
   }
+
+  function setSelectproceedNoRDO(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setproceedNoRDO(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
+    }
+  }
+  function setSelectregNoNAC(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setregNoNAC(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
+    }
+  }
+  function selectfile(e) {
+    console.log(e.target.files);
+    setNACFile(e.target.files[0]);
+  }
+
+
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -1018,6 +1094,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
   } 
   const goNext = () => {
+
+    console.log(UploadNACHIde);
+    console.log(NACFile);
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1349,12 +1428,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         tenantId,
         DateOfDeath,
         TimeOfDeath,
-        DeceasedFirstNameEn : DeceasedFirstNameEn.trim(),
-        DeceasedMiddleNameEn :DeceasedMiddleNameEn.trim(),
-        DeceasedLastNameEn : DeceasedLastNameEn.trim(),
-        DeceasedFirstNameMl :DeceasedFirstNameMl.trim(),
-        DeceasedMiddleNameMl :DeceasedMiddleNameMl.trim(),
-        DeceasedLastNameMl:DeceasedLastNameMl.trim(),
+        DeceasedFirstNameEn ,
+        DeceasedMiddleNameEn ,
+        DeceasedLastNameEn ,
+        DeceasedFirstNameMl ,
+        DeceasedMiddleNameMl ,
+        DeceasedLastNameMl,
         Age,
         DeceasedAadharNotAvailable,
         DeceasedAadharNumber,
@@ -1378,12 +1457,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         DeathPlaceInstId,
         InstitutionIdMl,
         institutionNameCode,
-        DeathPlaceHomeHoueNameEn :DeathPlaceHomeHoueNameEn.trim(),
-        DeathPlaceHomehoueNameMl:DeathPlaceHomehoueNameMl.trim(),
-        DeathPlaceHomeLocalityEn :DeathPlaceHomeLocalityEn.trim(),
-        DeathPlaceHomeLocalityMl:DeathPlaceHomeLocalityMl.trim(),
-        DeathPlaceHomeStreetNameEn :DeathPlaceHomeStreetNameEn.trim(),
-        DeathPlaceHomeStreetNameMl:DeathPlaceHomeStreetNameMl.trim(),
+        DeathPlaceHomeHoueNameEn,
+        DeathPlaceHomehoueNameMl,
+        DeathPlaceHomeLocalityEn,
+        DeathPlaceHomeLocalityMl,
+        DeathPlaceHomeStreetNameEn ,
+        DeathPlaceHomeStreetNameMl,
         DeathPlaceHomePostofficeId,
         DeathPlaceHomeWardId,
         DeathPlaceHomePincode,
@@ -1413,7 +1492,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         PlaceOfBurialEn,
         isWorkflow,
         DifferenceInTime,
-        hospitalCode
+        hospitalCode,
+        NACFile, 
+        uploadedFile,
+         UploadNACHIde,
+        proceedNoRDO,
+        regNoNAC
       });
     }
   };
@@ -1488,7 +1572,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           || (value === "VEHICLE" ? (!vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === ""
              || !DeathPlaceWardId || GeneralRemarks === "") : false) || 
             (value === "OUTSIDE_JURISDICTION" ? (!DeathPlaceDistrict || DeathPlaceCity == ""|| PlaceOfBurialEn == "" || PlaceOfBurialMl == "" || !DeathPlaceWardId ) : false)
-          || DeceasedFirstNameEn == "" || DeceasedFirstNameMl == "" || !AgeUnit || !Age || !DeceasedGender || !Nationality || !Religion
+          || DeceasedFirstNameEn == "" || DeceasedFirstNameMl == "" || !AgeUnit || !Age || !DeceasedGender || !Nationality || !Religion ||(UploadNACHIde === true ? (NACFile == null || proceedNoRDO === "" || regNoNAC === "") : false)
           }>
           <div className="row">
             <div className="col-md-12">
@@ -1588,6 +1672,73 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
             )}
           </div>
        
+
+          {UploadNACHIde === true && (
+            <div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_RDO_PROCEED_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="proceedNoRDO"
+                      value={proceedNoRDO}
+                      onChange={setSelectproceedNoRDO}
+                      disable={isDisableEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_RDO_PROCEED_NO")}`}
+                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_NAC_REG_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="regNoNAC"
+                      value={regNoNAC}
+                      onChange={setSelectregNoNAC}
+                      disable={isDisableEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_NAC_REG_NO")}`}
+                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_NAC_REG_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_PROCE_CERTIFICATE_UPLOAD")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <UploadFile
+                      extraStyleName={"propertyCreate"}
+                      accept=".jpg,.png,.pdf"
+                      onUpload={selectfile}
+                      onDelete={() => {
+                        setUploadedFile(null);
+                      }}
+                      message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+
+
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -1595,6 +1746,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
               </h1>
             </div>
           </div>
+
 
           <div className="row">
             <div className="col-md-12">
@@ -1610,6 +1762,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   option={sortDropdownNames(cmbPlace ? cmbPlace : [],"name",t)}
                   // option={cmbPlace}
                   selected={DeathPlace}
+                  disable={isDisableEditRole}
                   select={selectDeathPlace}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
                 />
@@ -1624,7 +1777,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                 hospitalNameEn={hospitalNameEn}
                 HospitalNameMl={HospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
+                hospitalCode={hospitalCode}
+                isDisableEditRole={isDisableEditRole}
+                setisDisableEditRole={setisDisableEditRole}
               />
+              
             )}
             {value === "INSTITUTION" && (
               <div>
@@ -1848,7 +2005,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   onKeyPress={setCheckSpecialCharSpace}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' @]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1864,7 +2021,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   onKeyPress={setCheckSpecialCharSpace}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' @]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1880,7 +2037,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                   onKeyPress={setCheckSpecialCharSpace}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' @]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
               </div>
             </div>
@@ -2052,7 +2209,67 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
               </div>
             </div>
           </div>
-
+          {(popUpState) && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RDO_PROCED_QUESTION")}`}</CardText>
+                    </div>
+                  </div>
+                  <div className="row" style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button type="button"
+                      style={{ backgroundColor: "orange", padding: "4px 16px", color: "white", borderRadius: "8px", }}
+                      onClick={() => {
+                        setUploadNACHIde(true);
+                        setpopUpState(false);
+                        setpopUpStateNac(false);
+                      }}
+                    >{`${t("COMMON_YES")}`}</button>
+                    <button type="button"
+                      style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                      onClick={() => {
+                        setpopUpState(false);
+                        setpopUpStateNac(true);
+                      }}
+                    >{`${t("COMMON_NO")}`}</button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
+          {(popUpStateNac) && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAC_REQUEST_MSG")}`}
+                      </CardText>
+                    </div>
+                  </div>
+                  <div className="row" style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button type="button"
+                      style={{
+                        backgroundColor: "orange",
+                        padding: "4px 16px",
+                        color: "white",
+                        borderRadius: "8px",
+                      }}
+                      onClick={() => {
+                        setUploadNACHIde(false);
+                        setpopUpStateNac(false);
+                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-birth-nac/nac-download-details`);
+                      }}
+                    >
+                      {`${t("COMMON_OK")}`}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
           {toast && (
             <Toast
               error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
