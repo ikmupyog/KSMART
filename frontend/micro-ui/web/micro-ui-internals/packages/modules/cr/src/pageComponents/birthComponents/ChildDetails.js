@@ -261,8 +261,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const onSkip = () => onSelect();
 
   useEffect(() => {
-    console.log("is initial render==",formData?.ChildDetails?.childDOB);
-
     if (isInitialRender) {
       if (formData?.ChildDetails?.isChildName != null) {
         setIsInitialRender(false);
@@ -300,12 +298,24 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const getHospitalCode = () => {
     if (userRoles[0].code === "HOSPITAL_OPERATOR") {
       const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const operatorHosward = [];      
+      operatorHospDet?.map((ob) => {
+        operatorHosward.push(...ob.jurisdictionChilds);    
+      });
+      if(operatorHosward.length>0){
+        console.log("operatorHosward" ,operatorHosward[0].wardCode);
+setWardNo(operatorHosward[0].wardCode);
+      }
       const tempArray = operatorHospDet?.map((ob) => {
         return ob.hospitalCode;
       });
       return tempArray?.[0];
     } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
       const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const appHosward = [];      
+      approverHospDet?.map((ob) => {
+        appHosward.push(...ob.jurisdictionChilds);    
+      });
       const tempArray = approverHospDet?.map((ob) => {
         return ob.hospitalCode
       });
