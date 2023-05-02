@@ -237,7 +237,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             </div>
                         </div>
-                        <div class="link-file-sec" >
+                        <div class="link-file" >
 
                             <LinkButton
                                 label={t("+ADD_REFERENCE_HERE")}
@@ -246,7 +246,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             />
                         </div>
-                        <div class="link-file">
+                        <div class="link-file-sec">
                             <LinkButton
                                 label={t("ADD")}
                                 className="file-link-button"
