@@ -610,7 +610,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     if (validFlag == true) {
      
       onSelect(config.key, {
-        motherFirstNameEn : motherFirstNameEn.trim(),
+        motherFirstNameEn : (motherFirstNameEn.toUpperCase()).trim(),
         motherFirstNameMl: motherFirstNameMl.trim(),
         motherAadhar,
         motherMaritalStatus,
@@ -623,7 +623,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
         fatherAadhar,
         isMotherInfo,
         isFatherInfo,
-        fatherFirstNameEn: fatherFirstNameEn.trim(),
+        fatherFirstNameEn: (fatherFirstNameEn.toUpperCase()).trim(),
         fatherFirstNameMl: fatherFirstNameMl.trim(),
         fatherNationality,
         fatherEducation,

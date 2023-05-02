@@ -76,7 +76,7 @@ const getCorrectionFieldValues = (item) => {
     {
       column: formFielColumns[item?.selectedDocType],
       oldValue: item.initialValue,
-      newValue: item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
+      newValue: item.curValue && moment(item.curValue, 'YYYY-MM-DD').valueOf(),
     },
   ];
   break;

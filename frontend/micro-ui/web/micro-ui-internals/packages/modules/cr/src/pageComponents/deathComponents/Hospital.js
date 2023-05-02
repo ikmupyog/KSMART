@@ -11,6 +11,7 @@ const Hospital = ({
   HospitalNameMl,
   selectHospitalNameMl,
   isEditDeath,
+  hospitalCode, isDisableEditRole, setisDisableEditRole
 }) => {
   const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
@@ -44,22 +45,33 @@ const Hospital = ({
       }
     }
   }
+
   useEffect(() => {
-    // if (isInitialRender) {
-    if (formData?.InformationDeath?.DeathPlaceTypecode) {
-      // selectHospitalNameMl(HospitalNameMl);
-      cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode);
-      selectHospitalNameMl(cmbhospitalMl[0]);
-      setIsInitialRender(false);
-    } else {
-      if (hospitalNameEn != null) {
-        console.log(hospitalNameEn);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalNameEn.code);
-        selectHospitalNameMl(cmbhospitalMl[0]);
-        setIsInitialRender(false);
+    if (isInitialRender) {
+      if (formData?.InformationDeath?.hospitalCode != null && formData?.InformationDeath?.hospitalCode != "" && formData?.InformationDeath?.hospitalCode != undefined) {
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode);
+          selecthospitalNameEn(cmbhospitalMl[0]);
+          selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
+      } else if (formData?.InformationDeath?.hospitalNameEn != null && formData?.ChildDetails?.hospitalName != "" && formData?.ChildDetails?.hospitalName != undefined) {
+        // selectHospitalNameMl(HospitalNameMl);
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn.code);
+          selecthospitalNameEn(cmbhospitalMl[0]);
+          selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
+      } else if (hospitalCode != null) {
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode);
+          selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
+          selectHospitalNameMl(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
+          setIsInitialRender(false);
+        }
       }
     }
-    // }
   }, [cmbhospitalMl, isInitialRender]);
 
   const onSkip = () => onSelect();
@@ -70,7 +82,7 @@ const Hospital = ({
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
   }
-  const goNext = () => {};
+  const goNext = () => { };
   if (isLoading) {
     return <Loader></Loader>;
   } else
@@ -99,7 +111,7 @@ const Hospital = ({
                   option={cmbhospital}
                   selected={hospitalNameEn}
                   select={setselecthospitalNameEn}
-                  disable={isDisableEdit}
+                  disable={isDisableEditRole}
                   placeholder={`${t("CR_HOSPITAL_EN")}`}
                 />
               </div>
