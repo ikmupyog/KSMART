@@ -38,15 +38,15 @@ const DeathCrFlowApp = ({ parentUrl,  props, }) => {
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-const abandonedDeathConfig = newConfig?.find((obj) => obj.head === "Abandoned-Death Routing");
+const DeathConfig = newConfig?.find((obj) => obj.head === "Death Routing");
 
-config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmployee));
+config = config.concat(DeathConfig.body.filter((a) => !a. hideInEmployee));
 
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a. hideInEmployee));
   });
   config.indexRoute = "information-death";
-  config.indexRouteA = "abandoned-death-information";
+  // config.indexRouteA = "abandoned-death-information";
 
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
@@ -175,37 +175,16 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
             </Route>
           );
         })}
-{config.indexRouteA?
-  <Route path={`${match.path}/check`}>
-          <AbandonedDeathCheckPage onSubmit={createProperty} value={params1} />
-        </Route>
-        :
-        <Route path={`${match.path}/check`}>
-          <DeathCheckPage onSubmit={createProperty} value={params} />
-        </Route>
-}
-        {/* <Route path={`${match.path}/check`}>
-          <DeathCheckPage onSubmit={createProperty} value={params} />
-        </Route> */}
-        {
-          config.indexRouteA?
-          <Route path={`${match.path}/acknowledgement`}>
-          <AbandonedDeathAcknowledgement data={params1} onSuccess={onSuccessAbandoned} />
-        </Route>
+
+     
+        
           
-          :
-          <Route path={`${match.path}/acknowledgement`}>
-          <DeathAcknowledgement data={params} onSuccess={onSuccess} />
-        </Route>
-        }
-        {/* <Route path={`${match.path}/acknowledgement`}>
-          <DeathAcknowledgement data={params} onSuccess={onSuccess} />
-        </Route> */}
+        
         <Route path={`${path}`} exact>
           <DeathCrFlow path={path} data={params}/>
         </Route>
         <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path}  />} />
-        <PrivateRoute parentRoute={path} path={`${path}/${config.indexRouteA}`} component={() => <InformationDeathAband parentUrl={path}  />} />
+        {/* <PrivateRoute parentRoute={path} path={`${path}/${config.indexRouteA}`} component={() => <InformationDeathAband parentUrl={path}  />} /> */}
         {/* <PrivateRoute parentRoute={path} path={`${path}/${config.indexRouteA}`} component={() => <AddressDeath parentUrl={path}  />} /> */}
         {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
         <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />

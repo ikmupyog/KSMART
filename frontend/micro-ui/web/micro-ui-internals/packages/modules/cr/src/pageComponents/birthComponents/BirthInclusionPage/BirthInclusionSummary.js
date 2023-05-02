@@ -125,8 +125,8 @@ function BirthInclusionSummary({
 
   useEffect(()=>{
   if(mutation?.isError) {
-    console.log("mutatio",mutation);
-    setParams({});
+    console.log("mutation=",mutation);
+    clearParams(); 
     history.push({
         pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
         state: { navData, birthInclusionData: {} ,mutationData:{ data : mutation.data, isSuccess: mutation.isSuccess, isLoading : mutation?.isLoading }}
@@ -135,7 +135,7 @@ function BirthInclusionSummary({
   },[mutation])
 
   const navigateAcknowledgement = (data) =>{
-    setParams({});
+    clearParams();
     history.push({
       pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
       state: { navData, birthInclusionData: data, mutationData:{ data : data, isSuccess: true, isLoading : false } }
@@ -176,12 +176,12 @@ function BirthInclusionSummary({
           </div>
           <div className="col-md-4">
             <h4>
-              <strong>{getFieldValue(value?.oldValue, type)}</strong>
+              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-4">
             <h4>
-              <strong>{getFieldValue(value?.newValue, type)}</strong>
+              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-1">

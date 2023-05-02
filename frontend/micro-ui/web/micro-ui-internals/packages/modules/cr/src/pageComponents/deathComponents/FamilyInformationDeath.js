@@ -153,22 +153,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
   //     );
   //   }
   // }
-  function setSelectFatherAadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-
-    // Check if the new value is the same as the Mother's Aadhar number
-    if (newValue === MotherAadharNo || newValue === SpouseAadhaar) {
-      // If so, clear the Father's Aadhar number field
-      setFatherAadharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
-    } else {
-      setFatherAadharNo(newValue);
-    }
-  }
+ 
 
   function setSelectSpouseType(value) {
     setSpouseType(value);
@@ -237,19 +222,6 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
     }
   }
 
-
-
-  // function setSelectSpouseNameMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setSpouseNameMl(
-  //       e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-  //     );
-  //   }
-  // }
-
     function setSelectSpouseAadhaar(e) {
       const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
       if (newValue === MotherAadharNo|| newValue === FatherAadharNo) {
@@ -260,40 +232,49 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
         setTimeout(() => {
           setToast(false);
         }, 3000);
-      } else {
-        setSpouseAadhaar(newValue);
-      }
-      
-    }
-  // if (e.target.value.trim().length >= 0) {
-    //   setSpouseAadhaar(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
-    // }
+      } else if (
+        newValue === formData?.InformationDeath?.DeceasedAadharNumber
 
-  // function setSelectMotherNameEn(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setMotherNameEn(
-  //       e.target.value.replace(
-  //         /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-  //         ""
-  //       )
-  //     );
-  //   }
-  // }
-  // function setSelectMotherNameMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setMotherNameMl(
-  //       e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-  //     );
-  //   }
-  // }
+        ) {
+        setSpouseAadhaar("");
+        setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }else
+      {
+        setSpouseAadhaar(newValue);
+      }      
+    }
+
+    function setSelectFatherAadharNo(e) {
+      const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+  
+      // Check if the new value is the same as the Mother's Aadhar number
+      if (newValue === MotherAadharNo || newValue === SpouseAadhaar) {
+        // If so, clear the Father's Aadhar number field
+        setFatherAadharNo("");
+        setAadharError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+      } else if (
+        newValue === formData?.InformationDeath?.DeceasedAadharNumber 
+        
+        ) {
+          setFatherAadharNo("");
+          setAadharError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        }  else {
+          setFatherAadharNo(newValue);
+        }
+      }
+    
   function setSelectMotherAadharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -306,15 +287,26 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
       setTimeout(() => {
         setToast(false);
       }, 3000);
-    } else {
-      setMotherAadharNo(newValue);
+    } 
+    else if (
+      newValue === formData?.InformationDeath?.DeceasedAadharNumber 
+
+      ) {
+        setMotherAadharNo("");
+        setAdhaarDuplicationError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }  else {
+        setMotherAadharNo(newValue);
+      }
     }
-    // if (e.target.value.trim().length >= 0) {
-    //   setMotherAadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
+  
+    //  {
+    //   setMotherAadharNo(newValue);
     // }
-  }
+    
   function setSelectFamilyMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
       setFamilyMobileNo(
@@ -522,8 +514,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
   // };
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
 
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!FamilyMobileNo}>
         <div className="row">

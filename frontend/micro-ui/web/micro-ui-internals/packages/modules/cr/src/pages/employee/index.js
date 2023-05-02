@@ -20,6 +20,7 @@ import ApplicationMarriageDetails from "./ApplicationMarriageDetails";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from "./Inbox-route";
+import AbandonedDeathCrFlowApp from "./AbandonedDeath";
 const CRBreadCrumb = ({ location }) => {
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
@@ -143,7 +144,7 @@ const CRBreadCrumb = ({ location }) => {
     {
       path: "/digit-ui/employee/cr/death-flow/abandoned-death-information",
       content: t("Abandoned Death"),
-      show:  breadCrumbUrls.includes("death-flow/abandoned-death-information")||isAbandonedDeathDetails,
+      show:  breadCrumbUrls.includes("death-flow/Abandoned-death/abandoned-death-information")||isAbandonedDeathDetails,
     },
     {
       path: "/digit-ui/employee/cr/search-flow/birthsearch/application",
@@ -278,9 +279,10 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute parentRoute={path} path={`${path}/inbox-flow`} component={() => <SearchInbox parentUrl={url} />} />
           <PrivateRoute parentRoute={path} path={`${path}/cr-flow`} component={() => <CrFlowApp parentUrl={url} />} />
           <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
+          <PrivateRoute parentRoute={path} path={`${path}/death-flow/Abandoned-death`} component={() => <AbandonedDeathCrFlowApp parentUrl={url} />} />
           <PrivateRoute parentRoute={path} path={`${path}/cr-abflow`} component={() => <CrAbFlow parentUrl={url} />} />
           <PrivateRoute parentRoute={path} path={`${path}/cr-adoptionflow`} component={() => <EditAdoption parentUrl={url} />} />
-
+{/*  */}
           <PrivateRoute path={`${path}/create-birth`} component={CreateBirthEmp} />
           <PrivateRoute path={`${path}/create-stillbirth`} component={ScrFlowApp} />
           <PrivateRoute path={`${path}/create-abandonedbirth`} component={CreateAbandonedBirth} />
