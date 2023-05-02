@@ -5,10 +5,7 @@ import { useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const SearchRenewalTrade = ({searchdata,isCancelreq}) => {
-
-
-
+const SearchRenewalTrade = ({searchdata,isCorrectionreq}) => {
     const [searchdatacat, setSearchdatacat] = useState(searchdata);
     const [errorMessage, setErrorMessage] = useState("");
     const [wardmandatory, setWardmandatory] = useState(true);
@@ -63,8 +60,8 @@ const SearchRenewalTrade = ({searchdata,isCancelreq}) => {
      let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("APPROVED")) : [];
     // let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : []) :[];
      if (wardmandatory)
-         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReultFinal?.length > 0 ? searchReultFinal : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
-       // return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
+        //  return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReultFinal?.length > 0 ? searchReultFinal : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
+       return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
     else
         return (
             <div>

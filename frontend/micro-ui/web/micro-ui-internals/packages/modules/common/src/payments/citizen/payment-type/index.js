@@ -21,6 +21,8 @@ import $ from "jquery";
 import { makePayment } from "./payGov";
 
 export const SelectPaymentType = (props) => {
+  const { module } = props;
+  console.log({ link: window.location.href })
   const { state = {} } = useLocation();
   const userInfo = Digit.UserService.getUser();
   const [showToast, setShowToast] = useState(null);
@@ -30,16 +32,17 @@ export const SelectPaymentType = (props) => {
   const history = useHistory();
 
   const { pathname, search } = useLocation();
-  // const menu = ["AXIS"];
+  const menu = ["PAYGOV"];
   const { consumerCode, businessService } = useParams();
   const tenantId = state?.tenantId || __tenantId || Digit.ULBService.getCurrentTenantId();
   const stateTenant = Digit.ULBService.getStateId();
   const { control, handleSubmit } = useForm();
-  const { data: menu, isLoading } = Digit.Hooks.useCommonMDMS(stateTenant, "DIGIT-UI", "PaymentGateway");
+  // const { data: menu, isLoading } = Digit.Hooks.useCommonMDMS(stateTenant, "DIGIT-UI", "PaymentGateway");
   const { data: paymentdetails, isLoading: paymentLoading } = Digit.Hooks.useFetchPayment(
     { tenantId: tenantId, consumerCode: wrkflow === "WNS" ? stringReplaceAll(consumerCode, "+", "/") : consumerCode, businessService },
     {}
   );
+  console.log({ PaymentGateway: menu })
   useEffect(() => {
     if (paymentdetails?.Bill && paymentdetails.Bill.length == 0) {
       setShowToast({ key: true, label: "CS_BILL_NOT_FOUND" });
@@ -53,6 +56,7 @@ export const SelectPaymentType = (props) => {
   const billDetails = paymentdetails?.Bill ? paymentdetails?.Bill[0] : {};
 
   const onSubmit = async (d) => {
+    console.log("inSubmit")
     const filterData = {
       Transaction: {
         tenantId: tenantId,
@@ -76,15 +80,16 @@ export const SelectPaymentType = (props) => {
         // success
         callbackUrl: window.location.href.includes("mcollect")
           ? `${window.location.protocol}//${window.location.host}/digit-ui/citizen/payment/success/${businessService}/${consumerCode}/${tenantId}?workflow=mcollect`
-          : `${window.location.protocol}//${window.location.host}/digit-ui/citizen/payment/success/${businessService}/${consumerCode}/${tenantId}`,
+          : `${window.location.protocol}//${window.location.host}/digit-ui/citizen/payment/success/${businessService}/${consumerCode}/${tenantId}?module=${module}`,
         additionalDetails: {
           isWhatsapp: false,
         },
       },
     };
-
+    console.log({ filterData })
     try {
       const data = await Digit.PaymentService.createCitizenReciept(tenantId, filterData);
+      console.log({ data })
       const redirectUrl = data?.Transaction?.redirectUrl;
       if (d?.paymentType == "AXIS") {
         window.location = redirectUrl;
@@ -107,7 +112,7 @@ export const SelectPaymentType = (props) => {
             method: "POST",
             target: "_top",
           });
-          
+
           const orderForNDSLPaymentSite = [
             "checksum",
             "messageType",
@@ -129,18 +134,21 @@ export const SelectPaymentType = (props) => {
 
           // override default date for UPYOG Custom pay
           gatewayParam["requestDateTime"] = gatewayParam["requestDateTime"]?.split(new Date().getFullYear()).join(`${new Date().getFullYear()} `);
-        
-          gatewayParam["successUrl"]= redirectUrl?.split("successUrl=")?.[1]?.split("eg_pg_txnid=")?.[0]+'eg_pg_txnid=' +gatewayParam?.orderId;
-          gatewayParam["failUrl"]= redirectUrl?.split("failUrl=")?.[1]?.split("eg_pg_txnid=")?.[0]+'eg_pg_txnid=' +gatewayParam?.orderId;
+
+          gatewayParam["successUrl"] = redirectUrl?.split("successUrl=")?.[1]?.split("eg_pg_txnid=")?.[0] + 'eg_pg_txnid=' + gatewayParam?.orderId;
+          gatewayParam["failUrl"] = redirectUrl?.split("failUrl=")?.[1]?.split("eg_pg_txnid=")?.[0] + 'eg_pg_txnid=' + gatewayParam?.orderId;
           // gatewayParam["successUrl"]= data?.Transaction?.callbackUrl;
           // gatewayParam["failUrl"]= data?.Transaction?.callbackUrl;
-          
+
           // var formdata = new FormData();
-          
+
           for (var key of orderForNDSLPaymentSite) {
-           
+
             // formdata.append(key,gatewayParam[key]);
-           
+            console.log({
+              name: key,
+              value: gatewayParam[key]
+            });
             newForm.append(
               $("<input>", {
                 name: key,
@@ -152,7 +160,7 @@ export const SelectPaymentType = (props) => {
           $(document.body).append(newForm);
           newForm.submit();
 
-        
+
           // makePayment(gatewayParam.txURL,formdata);
 
         } catch (e) {
@@ -176,7 +184,7 @@ export const SelectPaymentType = (props) => {
     return <Redirect to={`/digit-ui/citizen/login?from=${encodeURIComponent(pathname + search)}`} />;
   }
 
-  if (isLoading || paymentLoading) {
+  if (paymentLoading) {
     return <Loader />;
   }
 
