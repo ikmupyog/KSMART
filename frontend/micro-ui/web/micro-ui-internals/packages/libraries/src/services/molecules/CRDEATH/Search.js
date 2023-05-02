@@ -105,10 +105,10 @@ export const CRDeathsearch = {
               response?.InformationDeath?.DeceasedLastNameMl || "NA",
         },
         { title: "CR_AADHAR", value: response?.InformationDeath?.DeceasedAadharNumber || "NA" },
-        { title: "CR_AGE", value: response?.InformationDeath?.Age +" "+ response?.InformationDeath?.AgeUnit || "NA" },
+        { title: "CR_AGE", value: response?.InformationDeath?.Age +" "+ response?.InformationDeath?.ageUnitEn +"/"+ response?.InformationDeath?.Age +" "+ response?.InformationDeath?.ageUnitMl || "NA" },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
 
-        { title: "CR_NATIONALITY", value: response?.InformationDeath?.Nationality || "NA" },
+        { title: "CR_NATIONALITY", value: response?.InformationDeath?.nationalityEn +"/"+ response?.InformationDeath?.nationalityMl || "NA" },
 
         { title: "CS_COMMON_RELIGION", value: response?.InformationDeath?.religionEn +"/" + response?.InformationDeath?.religionMl  || "NA" },
         { title: "CR_PROFESSIONAL", value: response?.InformationDeath?.occupationEn  + "/" + response?.InformationDeath?.occupationMl|| "NA" },
@@ -141,7 +141,7 @@ export const CRDeathsearch = {
       values: [
         { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CS_COMMON_WARD", value: response?.InformationDeath?.homeWardEn + " / " + response?.InformationDeath?.homeWardMl || "NA" },
-        { title: "CS_COMMON_POST_OFFICE", value: response?.InformationDeath?.DeathPlaceHomePostofficeId || "NA" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.InformationDeath?.deathPlaceHomePostofficeEn +"/"+response?.InformationDeath?.deathPlaceHomePostofficeMl  || "NA" },
         { title: "CS_COMMON_PIN_CODE", value: response?.InformationDeath?.DeathPlaceHomePincode || "NA" },
         { title: "CR_LOCALITY_EN", value: response?.InformationDeath?.DeathPlaceHomeLocalityEn || "NA" },
         { title: "CR_LOCALITY_ML", value: response?.InformationDeath?.DeathPlaceHomeLocalityMl || "NA" },
@@ -172,7 +172,7 @@ export const CRDeathsearch = {
       asSectionHeader: true,
       values: [
         { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
-        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceType + " / " + response?.publicPlaceTypeMl || "NA" },
+        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceEn + " / " + response?.publicPlaceMl || "NA" },
         { title: "CS_COMMON_WARD", value: response?.DeathPlaceWardId + " / " + response?.DeathPlaceWardIdMl || "NA" },
         { title: "CR_LOCALITY_EN", value: response?.DeathPlaceLocalityEn || "NA" },
         { title: "CR_LOCALITY_ML", value: response?.DeathPlaceLocalityMl || "NA" },
