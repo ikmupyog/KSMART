@@ -129,4 +129,37 @@ public class DeathStatisticalInfo {
 
     @JsonProperty("MPAddress")
     private String mPAddress;
+
+    //Rakhi S ikm on 02.05.2023 for Summery page
+    
+    @JsonProperty("deathCauseMainEn")
+    private String deathCauseMainEn;
+
+    @JsonProperty("deathCauseMainMl")
+    private String deathCauseMainMl;
+    
+    @JsonProperty("deathCauseSubEn")
+    private String deathCauseSubEn;
+
+    @JsonProperty("deathCauseSubMl")
+    private String deathCauseSubMl;
+
+    @JsonProperty("deathCauseSub2En")
+    private String deathCauseSub2En;
+
+    @JsonProperty("deathCauseSub2Ml")
+    private String deathCauseSub2Ml;
+    
+    @JsonProperty("medicalAttentionTypeMl")
+    private String medicalAttentionTypeMl;
+    
+    @JsonProperty("medicalAttentionTypeEn")
+    private String medicalAttentionTypeEn;
+    
+    @JsonProperty("mannerOfDeathEn")
+    private String mannerOfDeathEn;
+
+    @JsonProperty("mannerOfDeathMl")
+    private String mannerOfDeathMl;
+
 }

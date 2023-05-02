@@ -631,6 +631,23 @@ public class DeathAddressInfo {
     private String permntInKeralaAdrPostOfficeEn;
 
     @JsonProperty("permntInKeralaAdrPostOfficeMl")
-    private String permntInKeralaAdrPostOfficeMl;
+    private String permntInKeralaAdrPostOfficeMl;    
 
+    @JsonProperty("presentWardNoEn")
+    private String presentWardNoEn;
+
+    @JsonProperty("presentWardNoMl")
+    private String presentWardNoMl;
+    
+    @JsonProperty("prmttWardNoEn")
+    private String prmttWardNoEn;
+
+    @JsonProperty("prmttWardNoMl")
+    private String prmttWardNoMl;
+
+    @JsonProperty("presentInsideKeralaLBNameEn")
+    private String presentInsideKeralaLBNameEn;
+
+    @JsonProperty("presentInsideKeralaLBNameMl")
+    private String presentInsideKeralaLBNameMl;
 }

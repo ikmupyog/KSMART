@@ -117,6 +117,15 @@ public class DeathApplnRepository {
                     String permanentOutSideCountryNameMl = util.getCountryNameMl(mdmsData,deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCountry());
                     deathDtl.getDeathAddressInfo().setPermanentOutSideCountryNameMl(permanentOutSideCountryNameMl);
                 }
+                //Nationality
+                if(deathDtl.getDeathBasicInfo().getNationality() != null){
+                    String nationalityEn = util.getCountryNameEn(mdmsData, deathDtl.getDeathBasicInfo().getNationality());
+                    deathDtl.getDeathBasicInfo().setNationalityEn(nationalityEn);
+
+                    String nationalityMl = util.getCountryNameMl(mdmsData, deathDtl.getDeathBasicInfo().getNationality());
+                    deathDtl.getDeathBasicInfo().setNationalityMl(nationalityMl);
+                }
+
                 //presentaddressStateName
                 if(deathDtl.getDeathAddressInfo().getPresentaddressStateName() != null){
                     String presentaddressStateNameEn = util.getStateNameEn(mdmsData,deathDtl.getDeathAddressInfo().getPresentaddressStateName());
@@ -234,7 +243,7 @@ public class DeathApplnRepository {
                     String presentInsideKeralaPostOfficeEn = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
                     deathDtl.getDeathAddressInfo().setPresentInsideKeralaPostOfficeEn(presentInsideKeralaPostOfficeEn);
                     
-                    String presentInsideKeralaPostOfficeMl = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
+                    String presentInsideKeralaPostOfficeMl = util.getPONameMl(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
                     deathDtl.getDeathAddressInfo().setPresentInsideKeralaPostOfficeMl(presentInsideKeralaPostOfficeMl);
                 }
                 //permntInKeralaAdrPostOffice
@@ -242,9 +251,134 @@ public class DeathApplnRepository {
                     String permntInKeralaAdrPostOfficeEn = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
                     deathDtl.getDeathAddressInfo().setPermntInKeralaAdrPostOfficeEn(permntInKeralaAdrPostOfficeEn);
                     
-                    String permntInKeralaAdrPostOfficeMl = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
+                    String permntInKeralaAdrPostOfficeMl = util.getPONameMl(mdmsData,deathDtl.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
                     deathDtl.getDeathAddressInfo().setPermntInKeralaAdrPostOfficeMl(permntInKeralaAdrPostOfficeMl);
                 }
+                //DeathPlaceHomePostofficeId
+                if(deathDtl.getDeathBasicInfo().getDeathPlaceHomePostofficeId() != null){
+                    String postofficeEn = util.getPONameEn(mdmsData,deathDtl.getDeathBasicInfo().getDeathPlaceHomePostofficeId());
+                    deathDtl.getDeathBasicInfo().setDeathPlaceHomePostofficeEn(postofficeEn);
+                    
+                    String postofficeMl = util.getPONameMl(mdmsData,deathDtl.getDeathBasicInfo().getDeathPlaceHomePostofficeId());
+                    deathDtl.getDeathBasicInfo().setDeathPlaceHomePostofficeMl(postofficeMl);
+                }
+                 //Statistical Info -Rakhi S on 02.05.2023
+                //DeathCauseMain
+                if(deathDtl.getDeathStatisticalInfo().getDeathCauseMain() != null){
+                    String deathCauseMainEn = util.getDeathCauseMainEn(mdmsData,deathDtl.getDeathStatisticalInfo().getDeathCauseMain());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseMainEn(deathCauseMainEn);
+                    
+                    String deathCauseMainMl = util.getDeathCauseMainMl(mdmsData, deathDtl.getDeathStatisticalInfo().getDeathCauseMain());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseMainMl(deathCauseMainMl);
+                }
+                //DeathCauseSub
+                if(deathDtl.getDeathStatisticalInfo().getDeathCauseSub() != null){
+                    String deathCauseSubEn = util.getDeathCauseSubEn(mdmsData,deathDtl.getDeathStatisticalInfo().getDeathCauseSub());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSubEn(deathCauseSubEn);
+                    
+                    String deathCauseSubMl = util.getDeathCauseSubMl(mdmsData, deathDtl.getDeathStatisticalInfo().getDeathCauseSub());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSubMl(deathCauseSubMl);
+                }
+                //DeathCauseSub2
+                if(deathDtl.getDeathStatisticalInfo().getDeathCauseSub2() != null){
+                    String deathCauseSub2En = util.getDeathCauseSubEn(mdmsData,deathDtl.getDeathStatisticalInfo().getDeathCauseSub2());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSub2En(deathCauseSub2En);
+                    
+                    String deathCauseSub2Ml = util.getDeathCauseSubMl(mdmsData, deathDtl.getDeathStatisticalInfo().getDeathCauseSub2());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSub2Ml(deathCauseSub2Ml);
+                }
+                //MedicalAttentionType
+                if(deathDtl.getDeathStatisticalInfo().getMedicalAttentionType() != null){
+                    String medicalattEn = util.getMedicalAttentionTypeEn(mdmsData,deathDtl.getDeathStatisticalInfo().getMedicalAttentionType());
+                    deathDtl.getDeathStatisticalInfo().setMedicalAttentionTypeEn(medicalattEn);
+                    
+                    String medicalattMl = util.getMedicalAttentionTypeMl(mdmsData, deathDtl.getDeathStatisticalInfo().getMedicalAttentionType());
+                    deathDtl.getDeathStatisticalInfo().setMedicalAttentionTypeMl(medicalattMl);
+                }
+                //MannerOfDeath
+                if(deathDtl.getDeathStatisticalInfo().getMannerOfDeath() != null){
+                    String mannerOfDeathEn = util.getMannerOfDeathEn(mdmsData,deathDtl.getDeathStatisticalInfo().getMannerOfDeath());
+                    deathDtl.getDeathStatisticalInfo().setMannerOfDeathEn(mannerOfDeathEn);
+                    
+                    String mannerOfDeathMl = util.getMannerOfDeathMl(mdmsData, deathDtl.getDeathStatisticalInfo().getMannerOfDeath());
+                    deathDtl.getDeathStatisticalInfo().setMannerOfDeathMl(mannerOfDeathMl);
+                }
+                //Religion
+                if(deathDtl.getDeathBasicInfo().getReligion() != null){
+                    String religionEn = util.getReligionEn(mdmsData,deathDtl.getDeathBasicInfo().getReligion());
+                    deathDtl.getDeathBasicInfo().setReligionEn(religionEn);
+
+                    String religionMl = util.getReligionMl(mdmsData,deathDtl.getDeathBasicInfo().getReligion());
+                    deathDtl.getDeathBasicInfo().setReligionMl(religionMl);
+                }
+                //Occupation
+                if(deathDtl.getDeathBasicInfo().getOccupation() != null){
+                    String occupationEn = util.getOccupationEn(mdmsData,deathDtl.getDeathBasicInfo().getOccupation());
+                    deathDtl.getDeathBasicInfo().setOccupationEn(occupationEn);
+
+                    String occupationMl = util.getOccupationMl(mdmsData,deathDtl.getDeathBasicInfo().getOccupation());
+                    deathDtl.getDeathBasicInfo().setOccupationMl(occupationMl);
+                }
+
+                //MDMS Location Call
+                Object mdmsDataLocation = util.mdmsCallForLocation(requestInfo, deathDtl.getDeathBasicInfo().getTenantId());
+                //presentWardNo
+                if(deathDtl.getDeathAddressInfo().getPresentWardNo() != null){
+                    String presentWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentWardNo());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoEn(presentWardNoEn);
+                    
+                    String presentWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentWardNo());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoMl(presentWardNoMl);
+                }
+                //permntInKeralaWardNo
+                if(deathDtl.getDeathAddressInfo().getPermntInKeralaWardNo() != null){
+                    String prmttWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermntInKeralaWardNo());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoEn(prmttWardNoEn);
+                    
+                    String prmttWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermntInKeralaWardNo());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoMl(prmttWardNoMl);
+                }
+                //getPresentAddrWardId
+                if(deathDtl.getDeathAddressInfo().getPresentAddrWardId() != null){
+                    String presentWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoEn(presentWardNoEn);
+                    
+                    String presentWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoMl(presentWardNoMl);
+                }
+                //getPermanentAddrWardId
+                if(deathDtl.getDeathAddressInfo().getPermanentAddrWardId() != null){
+                    String prmttWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermanentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoEn(prmttWardNoEn);
+                    
+                    String prmttWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermanentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoMl(prmttWardNoMl);
+                }
+                 //DeathPlaceHomeWardId
+                 if(deathDtl.getDeathBasicInfo().getDeathPlaceHomeWardId() != null){
+                    String homeWardEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceHomeWardId());
+                    deathDtl.getDeathBasicInfo().setHomeWardEn(homeWardEn);
+
+                    String religionMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceHomeWardId());
+                    deathDtl.getDeathBasicInfo().setHomeWardMl(religionMl);
+                }
+                //AgeUnit
+                if(deathDtl.getDeathBasicInfo().getAgeUnit() != null){
+                    String ageUnitEn = util.getAgeUnitEn(mdmsData,deathDtl.getDeathBasicInfo().getAgeUnit());
+                    deathDtl.getDeathBasicInfo().setAgeUnitEn(ageUnitEn);
+
+                    String ageUnitMl = util.getAgeUnitMl(mdmsData,deathDtl.getDeathBasicInfo().getAgeUnit());
+                    deathDtl.getDeathBasicInfo().setAgeUnitMl(ageUnitMl);
+                }
+
+                //presentInsideKeralaLBName
+                // if(deathDtl.getDeathAddressInfo().getPresentInsideKeralaLBName() != null){
+                //     String lbNameEn = util.getLBNameMl(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaLBName());
+                //     deathDtl.getDeathAddressInfo().setPresentInsideKeralaLBNameEn(lbNameEn);
+                    
+                //     String lbNameMl = util.getLBNameMl(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaLBName());
+                //     deathDtl.getDeathAddressInfo().setPresentInsideKeralaLBNameMl(lbNameMl);
+                // }
 
                 DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();
                 //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
@@ -324,6 +458,14 @@ public class DeathApplnRepository {
             }
             else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
                 deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                //publicPlaceType
+                if(deathDtl.getDeathBasicInfo().getPublicPlaceType() != null){
+                    String publicPlaceEn = util.getPublicPlaceEn(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
+                    deathDtl.getDeathBasicInfo().setPublicPlaceEn(publicPlaceEn);
+
+                    String publicPlaceMl = util.getPublicPlaceMl(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
+                    deathDtl.getDeathBasicInfo().setPublicPlaceMl(publicPlaceMl);
+                }
             } 
 			});
         }
@@ -468,6 +610,14 @@ public class DeathApplnRepository {
                       String permanentOutSideCountryNameMl = util.getCountryNameMl(mdmsData,deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCountry());
                       deathDtl.getDeathAddressInfo().setPermanentOutSideCountryNameMl(permanentOutSideCountryNameMl);
                   }
+                   //Nationality
+                if(deathDtl.getDeathBasicInfo().getNationality() != null){
+                    String nationalityEn = util.getCountryNameEn(mdmsData, deathDtl.getDeathBasicInfo().getNationality());
+                    deathDtl.getDeathBasicInfo().setNationalityEn(nationalityEn);
+
+                    String nationalityMl = util.getCountryNameMl(mdmsData, deathDtl.getDeathBasicInfo().getNationality());
+                    deathDtl.getDeathBasicInfo().setNationalityMl(nationalityMl);
+                }
                   //presentaddressStateName
                   if(deathDtl.getDeathAddressInfo().getPresentaddressStateName() != null){
                       String presentaddressStateNameEn = util.getStateNameEn(mdmsData,deathDtl.getDeathAddressInfo().getPresentaddressStateName());
@@ -585,7 +735,7 @@ public class DeathApplnRepository {
                       String presentInsideKeralaPostOfficeEn = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
                       deathDtl.getDeathAddressInfo().setPresentInsideKeralaPostOfficeEn(presentInsideKeralaPostOfficeEn);
                       
-                      String presentInsideKeralaPostOfficeMl = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
+                      String presentInsideKeralaPostOfficeMl = util.getPONameMl(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
                       deathDtl.getDeathAddressInfo().setPresentInsideKeralaPostOfficeMl(presentInsideKeralaPostOfficeMl);
                   }
                   //permntInKeralaAdrPostOffice
@@ -593,9 +743,135 @@ public class DeathApplnRepository {
                       String permntInKeralaAdrPostOfficeEn = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
                       deathDtl.getDeathAddressInfo().setPermntInKeralaAdrPostOfficeEn(permntInKeralaAdrPostOfficeEn);
                       
-                      String permntInKeralaAdrPostOfficeMl = util.getPONameEn(mdmsData,deathDtl.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
+                      String permntInKeralaAdrPostOfficeMl = util.getPONameMl(mdmsData,deathDtl.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
                       deathDtl.getDeathAddressInfo().setPermntInKeralaAdrPostOfficeMl(permntInKeralaAdrPostOfficeMl);
                   }
+                  //DeathPlaceHomePostofficeId
+                  if(deathDtl.getDeathBasicInfo().getDeathPlaceHomePostofficeId() != null){
+                    String postofficeEn = util.getPONameEn(mdmsData,deathDtl.getDeathBasicInfo().getDeathPlaceHomePostofficeId());
+                    deathDtl.getDeathBasicInfo().setDeathPlaceHomePostofficeEn(postofficeEn);
+                    
+                    String postofficeMl = util.getPONameMl(mdmsData,deathDtl.getDeathBasicInfo().getDeathPlaceHomePostofficeId());
+                    deathDtl.getDeathBasicInfo().setDeathPlaceHomePostofficeMl(postofficeMl);
+                }
+
+
+                //Statistical Info -Rakhi S on 02.05.2023
+                //DeathCauseMain
+                if(deathDtl.getDeathStatisticalInfo().getDeathCauseMain() != null){
+                    String deathCauseMainEn = util.getDeathCauseMainEn(mdmsData,deathDtl.getDeathStatisticalInfo().getDeathCauseMain());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseMainEn(deathCauseMainEn);
+                    
+                    String deathCauseMainMl = util.getDeathCauseMainMl(mdmsData, deathDtl.getDeathStatisticalInfo().getDeathCauseMain());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseMainMl(deathCauseMainMl);
+                }
+                //DeathCauseSub
+                if(deathDtl.getDeathStatisticalInfo().getDeathCauseSub() != null){
+                    String deathCauseSubEn = util.getDeathCauseSubEn(mdmsData,deathDtl.getDeathStatisticalInfo().getDeathCauseSub());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSubEn(deathCauseSubEn);
+                    
+                    String deathCauseSubMl = util.getDeathCauseSubMl(mdmsData, deathDtl.getDeathStatisticalInfo().getDeathCauseSub());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSubMl(deathCauseSubMl);
+                }
+                //DeathCauseSub2
+                if(deathDtl.getDeathStatisticalInfo().getDeathCauseSub2() != null){
+                    String deathCauseSub2En = util.getDeathCauseSubEn(mdmsData,deathDtl.getDeathStatisticalInfo().getDeathCauseSub2());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSub2En(deathCauseSub2En);
+                    
+                    String deathCauseSub2Ml = util.getDeathCauseSubMl(mdmsData, deathDtl.getDeathStatisticalInfo().getDeathCauseSub2());
+                    deathDtl.getDeathStatisticalInfo().setDeathCauseSub2Ml(deathCauseSub2Ml);
+                }
+                //MedicalAttentionType
+                if(deathDtl.getDeathStatisticalInfo().getMedicalAttentionType() != null){
+                    String medicalattEn = util.getMedicalAttentionTypeEn(mdmsData,deathDtl.getDeathStatisticalInfo().getMedicalAttentionType());
+                    deathDtl.getDeathStatisticalInfo().setMedicalAttentionTypeEn(medicalattEn);
+                    
+                    String medicalattMl = util.getMedicalAttentionTypeMl(mdmsData, deathDtl.getDeathStatisticalInfo().getMedicalAttentionType());
+                    deathDtl.getDeathStatisticalInfo().setMedicalAttentionTypeMl(medicalattMl);
+                }
+                //MannerOfDeath
+                if(deathDtl.getDeathStatisticalInfo().getMannerOfDeath() != null){
+                    String mannerOfDeathEn = util.getMannerOfDeathEn(mdmsData,deathDtl.getDeathStatisticalInfo().getMannerOfDeath());
+                    deathDtl.getDeathStatisticalInfo().setMannerOfDeathEn(mannerOfDeathEn);
+                    
+                    String mannerOfDeathMl = util.getMannerOfDeathMl(mdmsData, deathDtl.getDeathStatisticalInfo().getMannerOfDeath());
+                    deathDtl.getDeathStatisticalInfo().setMannerOfDeathMl(mannerOfDeathMl);
+                }
+                //Religion
+                if(deathDtl.getDeathBasicInfo().getReligion() != null){
+                    String religionEn = util.getReligionEn(mdmsData,deathDtl.getDeathBasicInfo().getReligion());
+                    deathDtl.getDeathBasicInfo().setReligionEn(religionEn);
+
+                    String religionMl = util.getReligionMl(mdmsData,deathDtl.getDeathBasicInfo().getReligion());
+                    deathDtl.getDeathBasicInfo().setReligionMl(religionMl);
+                }
+                //Occupation
+                if(deathDtl.getDeathBasicInfo().getOccupation() != null){
+                    String occupationEn = util.getOccupationEn(mdmsData,deathDtl.getDeathBasicInfo().getOccupation());
+                    deathDtl.getDeathBasicInfo().setOccupationEn(occupationEn);
+
+                    String occupationMl = util.getOccupationMl(mdmsData,deathDtl.getDeathBasicInfo().getOccupation());
+                    deathDtl.getDeathBasicInfo().setOccupationMl(occupationMl);
+                }
+
+                //MDMS Location Call
+                Object mdmsDataLocation = util.mdmsCallForLocation(requestInfo, deathDtl.getDeathBasicInfo().getTenantId());
+                //presentWardNo
+                if(deathDtl.getDeathAddressInfo().getPresentWardNo() != null){
+                    String presentWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentWardNo());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoEn(presentWardNoEn);
+                    
+                    String presentWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentWardNo());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoMl(presentWardNoMl);
+                }
+                //permntInKeralaWardNo
+                if(deathDtl.getDeathAddressInfo().getPermntInKeralaWardNo() != null){
+                    String prmttWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermntInKeralaWardNo());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoEn(prmttWardNoEn);
+                    
+                    String prmttWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermntInKeralaWardNo());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoMl(prmttWardNoMl);
+                }
+                //getPresentAddrWardId
+                if(deathDtl.getDeathAddressInfo().getPresentAddrWardId() != null){
+                    String presentWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoEn(presentWardNoEn);
+                    
+                    String presentWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPresentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPresentWardNoMl(presentWardNoMl);
+                }
+                //getPermanentAddrWardId
+                if(deathDtl.getDeathAddressInfo().getPermanentAddrWardId() != null){
+                    String prmttWardNoEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermanentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoEn(prmttWardNoEn);
+                    
+                    String prmttWardNoMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathAddressInfo().getPermanentAddrWardId());
+                    deathDtl.getDeathAddressInfo().setPrmttWardNoMl(prmttWardNoMl);
+                }
+                 //DeathPlaceHomeWardId
+                 if(deathDtl.getDeathBasicInfo().getDeathPlaceHomeWardId() != null){
+                    String homeWardEn = util.getWardNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceHomeWardId());
+                    deathDtl.getDeathBasicInfo().setHomeWardEn(homeWardEn);
+
+                    String religionMl = util.getWardNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceHomeWardId());
+                    deathDtl.getDeathBasicInfo().setHomeWardMl(religionMl);
+                }
+                // //AgeUnit
+                if(deathDtl.getDeathBasicInfo().getAgeUnit() != null){
+                    String ageUnitEn = util.getAgeUnitEn(mdmsData,deathDtl.getDeathBasicInfo().getAgeUnit());
+                    deathDtl.getDeathBasicInfo().setAgeUnitEn(ageUnitEn);
+
+                    String ageUnitMl = util.getAgeUnitMl(mdmsData,deathDtl.getDeathBasicInfo().getAgeUnit());
+                    deathDtl.getDeathBasicInfo().setAgeUnitMl(ageUnitMl);
+                }
+                //presentInsideKeralaLBName
+                // if(deathDtl.getDeathAddressInfo().getPresentInsideKeralaLBName() != null){
+                //     String lbNameEn = util.getLBNameMl(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaLBName());
+                //     deathDtl.getDeathAddressInfo().setPresentInsideKeralaLBNameEn(lbNameEn);
+                    
+                //     String lbNameMl = util.getLBNameMl(mdmsData,deathDtl.getDeathAddressInfo().getPresentInsideKeralaLBName());
+                //     deathDtl.getDeathAddressInfo().setPresentInsideKeralaLBNameMl(lbNameMl);
+                // }
                   
                 DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
@@ -665,6 +941,14 @@ public class DeathApplnRepository {
                 }
                 else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
                     deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                     //publicPlaceType
+                  if(deathDtl.getDeathBasicInfo().getPublicPlaceType() != null){
+                    String publicPlaceEn = util.getPublicPlaceEn(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
+                    deathDtl.getDeathBasicInfo().setPublicPlaceEn(publicPlaceEn);
+
+                    String publicPlaceMl = util.getPublicPlaceMl(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
+                    deathDtl.getDeathBasicInfo().setPublicPlaceMl(publicPlaceMl);
+                  }
                 } 
 
                criteria.setDeathACKNo(deathDtl.getDeathBasicInfo().getDeathACKNo());

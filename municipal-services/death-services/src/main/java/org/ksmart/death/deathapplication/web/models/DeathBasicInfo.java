@@ -456,4 +456,47 @@ public class DeathBasicInfo {
    
    @JsonProperty("permanentAddressFullEn")
    private String  permanentAddressFullEn ;
+
+   @JsonProperty("religionEn")
+   private String  religionEn ;
+   
+   @JsonProperty("religionMl")
+   private String  religionMl ;
+   
+   @JsonProperty("occupationEn")
+   private String  occupationEn ;
+   
+   @JsonProperty("occupationMl")
+   private String  occupationMl ;
+   
+   @JsonProperty("homeWardEn")
+   private String  homeWardEn ;
+   
+   @JsonProperty("homeWardMl")
+   private String  homeWardMl ;
+   
+   @JsonProperty("nationalityEn")
+   private String  nationalityEn ;
+   
+   @JsonProperty("nationalityMl")
+   private String  nationalityMl ;
+
+   @JsonProperty("deathPlaceHomePostofficeEn")
+   private String deathPlaceHomePostofficeEn  ;
+
+   @JsonProperty("deathPlaceHomePostofficeMl")
+   private String deathPlaceHomePostofficeMl  ;
+
+   @JsonProperty("ageUnitEn")
+   private String  ageUnitEn ;
+
+   @JsonProperty("ageUnitMl")
+   private String  ageUnitMl ;
+   
+   @JsonProperty("publicPlaceEn")
+   private String  publicPlaceEn ;
+
+   @JsonProperty("publicPlaceMl")
+   private String  publicPlaceMl ;
+   
 }

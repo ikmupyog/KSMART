@@ -2,6 +2,7 @@ package org.ksmart.death.deathapplication.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -536,12 +537,12 @@ public class DeathMdmsUtil {
         return result;
     }
     private MdmsCriteriaReq getMDMSSearchRequest(RequestInfo requestInfo, String tenantId) {
-        // ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+        ModuleDetail tenantIdRequest = getTenantDetails(tenantId);
         ModuleDetail commomMasterRequest = getCommonMastersSearch();
         List<ModuleDetail> BNDListRequest = getBNDSearch();
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
-        // moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(tenantIdRequest);
         moduleDetails.add(commomMasterRequest);
         moduleDetails.addAll(BNDListRequest);
 
@@ -584,7 +585,10 @@ public class DeathMdmsUtil {
         crDeathMasterDetails
                  .add(MasterDetail.builder().name(DeathConstants.RELIGION)
                  .build());  
-                 
+        //Occupation        
+        crDeathMasterDetails
+                 .add(MasterDetail.builder().name(DeathConstants.OCCUPATION)
+                 .build());                   
         //PostOffice
         crDeathMasterDetails
                         .add(MasterDetail.builder().name(DeathConstants.POSTOFFICE)
@@ -624,6 +628,12 @@ public class DeathMdmsUtil {
         crDeathMasterDetails
                             .add(MasterDetail.builder().name(DeathConstants.MEDICAL_ATTENTION_TYPE)
                             .build());
+        crDeathMasterDetails
+                            .add(MasterDetail.builder().name(DeathConstants.MANNER_OF_DEATH)
+                            .build());
+        crDeathMasterDetails
+                            .add(MasterDetail.builder().name(DeathConstants.BND_MDMS_PUBLIC_PLACES)
+                            .build());
        
         // Add Module workflow
         crDeathMasterDetails.add(MasterDetail.builder()
@@ -656,6 +666,27 @@ public class DeathMdmsUtil {
     }
     private List<String> getPOCode(Object mdmsData) {
         return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_POSTOFFICE_CODE_JSONPATH);
+    }
+    private List<String> getLBCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_TENANT_CODE_JSONPATH);
+    }
+    private List<String> getDeathCauseMainCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_CAUSE_MAIN_CODE_JSONPATH);
+    }
+    private List<String> getDeathCauseSubCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_CAUSE_SUB_CODE_JSONPATH);
+    }
+    private List<String> getMedicalAttentionTypeCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_MED_ATTENTION_CODE_JSONPATH);
+    }
+    private List<String> getMannerOfDeathCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_MANNER_OF_DEATH_CODE_JSONPATH);
+    }
+    private List<String> getReligionCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_RELIGION_CODE_JSONPATH);
+    }    
+    private List<String> getOccupationCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_OCCUPATION_CODE_JSONPATH);
     }
     public String getCountryNameEn(Object mdmsData, String CountryId) {
         List<String> countries  = getCountryCode(mdmsData);
@@ -717,4 +748,185 @@ public class DeathMdmsUtil {
         int index = po.indexOf(POId);
         return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");        
     }  
+    public String getDeathCauseMainEn(Object mdmsData, String DeathCauseMainId) {
+        List<String> mainCauses  = getDeathCauseMainCode(mdmsData);
+        int index = mainCauses.indexOf(DeathCauseMainId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_CAUSE_MAIN_JSONPATH+"["+index+"].name");        
+    }  
+    public String getDeathCauseMainMl(Object mdmsData, String DeathCauseMainId) {
+        List<String> mainCauses  = getDeathCauseMainCode(mdmsData);
+        int index = mainCauses.indexOf(DeathCauseMainId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_CAUSE_MAIN_JSONPATH+"["+index+"].namelocal");        
+    }     
+    public String getDeathCauseSubEn(Object mdmsData, String DeathCauseSubId) {
+        List<String> subCauses  = getDeathCauseSubCode(mdmsData);
+        int index = subCauses.indexOf(DeathCauseSubId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_CAUSE_SUB_JSONPATH+"["+index+"].name");        
+    }  
+    public String getDeathCauseSubMl(Object mdmsData, String DeathCauseSubId) {
+        List<String> subCauses  = getDeathCauseSubCode(mdmsData);
+        int index = subCauses.indexOf(DeathCauseSubId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_CAUSE_SUB_JSONPATH+"["+index+"].namelocal");        
+    } 
+    public String getMedicalAttentionTypeEn(Object mdmsData, String MedicalAttentionTypeId) {
+        List<String> medicalAttentionTypes  = getMedicalAttentionTypeCode(mdmsData);
+        int index = medicalAttentionTypes.indexOf(MedicalAttentionTypeId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_MED_ATTENTION_JSONPATH+"["+index+"].name");        
+    }  
+    public String getMedicalAttentionTypeMl(Object mdmsData, String MedicalAttentionTypeId) {
+        List<String> medicalAttentionTypes  = getMedicalAttentionTypeCode(mdmsData);
+        int index = medicalAttentionTypes.indexOf(MedicalAttentionTypeId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_MED_ATTENTION_JSONPATH+"["+index+"].namelocal");        
+    }  
+    public String getMannerOfDeathEn(Object mdmsData, String MannerOfDeathId) {
+        List<String> mannerOfDeathTypes  = getMannerOfDeathCode(mdmsData);
+        int index = mannerOfDeathTypes.indexOf(MannerOfDeathId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_MANNER_OF_DEATH_JSONPATH+"["+index+"].name");        
+    } 
+    public String getMannerOfDeathMl(Object mdmsData, String MannerOfDeathId) {
+        List<String> mannerOfDeathTypes  = getMannerOfDeathCode(mdmsData);
+        int index = mannerOfDeathTypes.indexOf(MannerOfDeathId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_MANNER_OF_DEATH_JSONPATH+"["+index+"].namelocal");        
+    } 
+    public String getReligionEn(Object mdmsData, String ReligionId) {
+        List<String> religions  = getReligionCode(mdmsData);
+        int index = religions.indexOf(ReligionId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_RELIGION_CODES_JSONPATH+"["+index+"].name");        
+    } 
+    public String getReligionMl(Object mdmsData, String ReligionId) {
+        List<String> religions  = getReligionCode(mdmsData);
+        int index = religions.indexOf(ReligionId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_RELIGION_CODES_JSONPATH+"["+index+"].namelocal");        
+    }    
+    public String getOccupationEn(Object mdmsData, String OccupationId) {
+        List<String> occupations  = getOccupationCode(mdmsData);
+        int index = occupations.indexOf(OccupationId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_OCCUPATION_CODES_JSONPATH+"["+index+"].name");        
+    } 
+    public String getOccupationMl(Object mdmsData, String OccupationId) {
+        List<String> occupations  = getOccupationCode(mdmsData);
+        int index = occupations.indexOf(OccupationId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_OCCUPATION_CODES_JSONPATH+"["+index+"].namelocal");        
+    }
+    private ModuleDetail getTenantDetails(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();        
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.TENANTS).build());
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.TENANT_MODULE_NAME).build();
+       
+        return crDeathModuleDtls;
+    }
+    public Object mdmsCallForLocation (RequestInfo requestInfo, String tenantId) {
+        // Call MDMS microservice with MdmsCriteriaReq as params
+        MdmsCriteriaReq mdmsCriteriaReq = getLocRequest(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getLocRequest(RequestInfo requestInfo, String tenantId) {
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+
+        moduleDetails.addAll(getBoundaryDetails());
+
+        //Prepare MDMS Criteria wih all modules in birth-death services and common services
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder()
+                .moduleDetails(moduleDetails)
+                .tenantId(tenantId)
+                .build();
+        //Return MDMS criteria request for calling  MDMS microservice
+        return MdmsCriteriaReq.builder()
+                .mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo)
+                .build();
+    }
+
+    public List<ModuleDetail> getBoundaryDetails() {
+        // master details for Boundary
+
+        List<MasterDetail> crMasterDetails = new LinkedList<>();
+
+        List<MasterDetail> masterHospital = Collections.singletonList(MasterDetail.builder()
+                .name(DeathConstants.LOCATION_MDMS_HOSPITAL)
+                .build());
+        crMasterDetails.addAll(masterHospital);
+
+        List<MasterDetail> masterInstitution = Collections.singletonList(MasterDetail.builder()
+                .name(DeathConstants.INSTITUTION_NAME)
+                .build());
+        crMasterDetails.addAll(masterInstitution);
+
+        List<MasterDetail> masterBoundary = Collections.singletonList(MasterDetail.builder()
+                .name(DeathConstants.LOCATION_MDMS_BOUNDARY)
+                .build());
+        crMasterDetails.addAll(masterBoundary);
+
+        ModuleDetail crModuleDetail = ModuleDetail.builder()
+                .masterDetails(crMasterDetails)
+                .moduleName(DeathConstants.TENANT_EGOV_LOCATION)
+                .build();
+
+        return Collections.singletonList(crModuleDetail);
+
+    }
+    private List<String> getBoundaryCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_BOUNDARY_CODE_JSONPATH);
+    }
+    private List<String> getAgeUnitCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_AGE_UNIT_CODE_JSONPATH);
+    }
+    private List<String> getPublicPlaceCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_OTHER_PLACE_CODE_JSONPATH);
+    }
+    public String getWardNameEn(Object mdmsData, String WardId) {
+        List<String> tenants  = getBoundaryCode(mdmsData);
+        int index = tenants.indexOf(WardId);
+        ArrayList<String> names =  JsonPath.read(mdmsData, DeathConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".name");
+        return names.get(index);
+    }
+
+    public String getWardNameMl(Object mdmsData, String WardId) {
+        List<String> tenants  = getBoundaryCode(mdmsData);
+        int index = tenants.indexOf(WardId);
+        ArrayList<String> names =  JsonPath.read(mdmsData, DeathConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".localname");
+        return names.get(index);
+    }
+    public String getAgeUnitEn(Object mdmsData, String AgeUnitId) {
+        List<String> ageUnits  = getAgeUnitCode(mdmsData);
+        int index = ageUnits.indexOf(AgeUnitId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_AGE_UNIT_JSONPATH+"["+index+"].name"); 
+    }
+    public String getAgeUnitMl(Object mdmsData, String AgeUnitId) {
+        List<String> ageUnits  = getAgeUnitCode(mdmsData);
+        int index = ageUnits.indexOf(AgeUnitId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_AGE_UNIT_JSONPATH+"["+index+"].namelocal"); 
+    }
+    public String getPublicPlaceEn(Object mdmsData, String PublicPlaceId) {
+        List<String> publicpalces  = getPublicPlaceCode(mdmsData);
+        int index = publicpalces.indexOf(PublicPlaceId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_OTHER_PLACE_JSONPATH+"["+index+"].name"); 
+    }
+    public String getPublicPlaceMl(Object mdmsData, String PublicPlaceId) {
+        List<String> publicpalces  = getPublicPlaceCode(mdmsData);
+        int index = publicpalces.indexOf(PublicPlaceId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_OTHER_PLACE_JSONPATH+"["+index+"].namelocal"); 
+    }
+
+    // public String getLBNameEn(Object mdmsData, String tenantId) {
+    //     List<String> lbs  = getLBCode(mdmsData);
+    //     int index = lbs.indexOf(tenantId);
+    //     // return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_TENANT_JSONPATH+"["+index+"].name");  
+    //     ArrayList<String> names =  JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_TENANT_JSONPATH+".name");
+    //     return names.get(index);      
+    // }  
+    public String getLBNameMl(Object mdmsData, String tenantId) {
+        List<String> lbs  = getLBCode(mdmsData);
+        int index = lbs.indexOf(tenantId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_TENANT_JSONPATH+"["+index+"].localName");        
+    }  
+
 }
