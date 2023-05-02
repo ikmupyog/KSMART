@@ -89,8 +89,20 @@ public class EnrichmentService {
 //        	}
 //        	
 
-        List<String> customIds = getIdList(requestInfo,tenantId,config.getServiceRequestIdGenName(),config.getServiceRequestIdGenFormat(),1);
-
+//        List<String> customIds = getIdList(requestInfo,tenantId,config.getServiceRequestIdGenName(),config.getServiceRequestIdGenFormat(),1);
+        List<String> customIds = getIds(requestInfo,
+                tenantId,
+                config.getServiceRequestIdGenName(),
+                "PGR",
+                "ACK",
+                1);
+//        
+//        ListIterator<String> itr = customIds.listIterator();
+//        serviceRequest.getService()
+//                .forEach(adoption -> {
+//                	adoption.setApplicationNo(itr.next());
+//                });
+        
         service.setServiceRequestId(customIds.get(0));
 
 
@@ -169,5 +181,14 @@ public class EnrichmentService {
                 .map(IdResponse::getId).collect(Collectors.toList());
     }
 
+    private List<String> getIds(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String  fnType, int count) {
+    	  return idGenRepository.getIdList(requestInfo, tenantId, idName, moduleCode, fnType, count);
+//    	    if (CollectionUtils.isEmpty(idResponses))
+//                throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+//
+//            return idResponses.stream()
+//                    .map(IdResponse::getId).collect(Collectors.toList());
+    }
+    
 
 }
