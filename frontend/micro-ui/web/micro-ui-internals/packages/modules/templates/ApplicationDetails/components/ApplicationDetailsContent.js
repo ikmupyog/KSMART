@@ -45,14 +45,18 @@ function ApplicationDetailsContent({
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
 
-  const getTimelineCaptions = (checkpoint) => {
-    if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
+  const getTimelineCaptions = (checkpoint,index=100) => {
+    if (checkpoint.state === "OPEN" 
+    // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
+    ) {
+      console.log("reached 11",checkpoint,index);
       const caption = {
         date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
         source: applicationData?.channel || "",
       };
       return <TLCaption data={caption} />;
     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
+      console.log("reached 22",checkpoint,index);
       const caption = {
         date: checkpoint?.auditDetails?.lastModified,
         name: checkpoint?.assignes?.[0]?.name,
@@ -63,11 +67,14 @@ function ApplicationDetailsContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
+      console.log("reached 33",checkpoint,index);
       const caption = {
-        date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
+        date: checkpoint?.auditDetails?.lastModified,
         // name: checkpoint?.assigner?.name,
         name: checkpoint?.assignes?.[0]?.name,
         // mobileNumber: checkpoint?.assigner?.mobileNumber,
+        // comment: t(checkpoint?.comment),
+        thumbnailsToShow: checkpoint?.thumbnailsToShow,
         wfComment: checkpoint?.wfComment,
         mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
       };
@@ -293,7 +300,7 @@ function ApplicationDetailsContent({
                                   `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
-                                customChild={getTimelineCaptions(checkpoint)}
+                                customChild={getTimelineCaptions(checkpoint,index)}
                               />
                             </React.Fragment>
                           );

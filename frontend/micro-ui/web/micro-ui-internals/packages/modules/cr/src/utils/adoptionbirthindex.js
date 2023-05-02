@@ -506,6 +506,32 @@ export const convertToAdoptionRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.AdoptionInitiatorDetails?.isInitiatorDeclaration,
           isCaretaker: data?.AdoptionInitiatorDetails?.isCaretaker,
         },
+        AdoptionDocuments: [
+          {
+            DocumentType: "CR_ADOPTION_dOCUMENTS_AND_AADHAAR",
+            filestoreId: data?.AdoptionDocuments?.uploadedFile,
+          },
+          {
+            DocumentType: "CR_ADOPTION_RESIDENCE_OF_PARENTS",
+            filestoreId: data?.AdoptionDocuments?.uploadedFile1,
+          },
+          {
+            DocumentType: "CR_ADOPTION_COURT_ORDER",
+            filestoreId: data?.AdoptionDocuments?.uploadedFile2,
+          },
+          {
+            DocumentType: "CR_ADOPTION_REGISTERED_DEED",
+            filestoreId: data?.AdoptionDocuments?.uploadedFile3,
+          },
+          {
+            DocumentType: "CR_ADOPTION_COPY_OF_BIRTH_CERTIFICATE",
+            filestoreId: data?.AdoptionDocuments?.uploadedFile4,
+          },
+          {
+            DocumentType: "CR_ADOPTION_CERTIFICATE_ISSUED_BY_SURGEON",
+            filestoreId: data?.AdoptionDocuments?.uploadedFile5,
+          },
+        ],
       },
     ],
   };

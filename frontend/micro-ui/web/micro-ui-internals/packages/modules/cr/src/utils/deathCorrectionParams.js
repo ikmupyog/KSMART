@@ -121,7 +121,7 @@ const formFielColumns = {
           console.log("items==", item, item?.CorrectionField === "CHILD_DOB");
           if (item?.isEditable) {
             const correctionFieldValues = getCorrectionFieldValues(item);
-            const correctionDocs = getCorrectionDocuments(item.Documents);
+            const correctionDocs = getCorrectionDocuments(item.documentData);
             const tempObj = {
               correctionFieldName: item?.CorrectionField,
               conditionCode: item.conditionCode,
@@ -148,7 +148,7 @@ const formFielColumns = {
         {
           id: userData?.id,
         //   tenantid: "kl.cochin",
-          applicationtype: "CRBRCN",
+          applicationtype: "CRDRCN",
           businessservice: "birth-services",
           workflowcode: "BIRTHHOSP21",
           action: "",

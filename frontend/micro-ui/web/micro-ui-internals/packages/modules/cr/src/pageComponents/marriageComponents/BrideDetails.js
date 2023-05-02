@@ -422,6 +422,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
+    console.log()
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
     if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo) {
       setbrideFatherAadharNo("");
@@ -431,10 +432,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setbrideFatherAadharNo("");
       setAdhaarDuplicationError(true);
@@ -464,10 +465,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setBrideAadharNo("");
       setAdhaarDuplicationError(true);
@@ -495,10 +496,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setbrideMotherAadharNo("");
       setAdhaarDuplicationError(true);
@@ -526,10 +527,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setToast(false);
       }, 3000);
     } else if (
-      newValue === formData?.BrideDetails?.brideAadharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
     ) {
       setbrideGuardianAadharNo("");
       setAdhaarDuplicationError(true);
@@ -1057,7 +1058,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...(brideResidentShip === "INDIAN" && {
-                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
                   })}
                 />
               </div>
@@ -1083,7 +1084,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       maxLength: 12,
                     }}
                     {...(brideResidentShip === "INDIAN" && {
-                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
                     })}
                   />
                 </div>
@@ -1103,7 +1104,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     onChange={setSelectbridePassportNo}
                     placeholder={`${t("CR_BRIDE_PASSPORT_NO")}`}
                     {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
-                      ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                      ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CR_PASSPORT_NO_ERROR") }),
                     })}
                   />
                 </div>
@@ -1127,7 +1128,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         pattern: "^[A-Z0-9-]{8,12}$",
                         type: "text",
                         isRequired: true,
-                        title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER"),
+                        title: t("CR_SOCIAL_SECURITY_NO_ERROR"),
                       }),
                     })}
                   />
@@ -1157,7 +1158,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 value={brideFirstnameEn}
                 onChange={setSelectbrideFirstnameEn}
                 placeholder={`${t("CR_BRIDE_FIRST_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_FIRST_NAME_EN_ERROR") })}
               />
             </div>
 
@@ -1172,7 +1173,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 value={brideMiddlenameEn}
                 onChange={setSelectbrideMiddlenameEn}
                 placeholder={`${t("CR_BRIDE_MIDDLE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_MIDDLE_NAME_EN_ERROR") })}
               />
             </div>
             <div className="col-md-3">
@@ -1186,7 +1187,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 value={brideLastnameEn}
                 onChange={setSelectbrideLastnameEn}
                 placeholder={`${t("CR_BRIDE_LAST_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_LAST_NAME_EN_ERROR") })}
               />
             </div>
             <div className="col-md-3">
@@ -1203,7 +1204,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 value={brideMobile}
                 onChange={setSelectbrideMobile}
                 placeholder={`${t("CR_BRIDE_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_MOBILE_NO_ERROR") })}
               />
             </div>
           </div>
@@ -1226,7 +1227,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                   isRequired: true,
                   type: "text",
-                  title: t("CR_INVALID_FIRST_NAME_ML"),
+                  title: t("CR_FIRST_NAME_ML_ERROR"),
                 })}
               />
             </div>
@@ -1245,7 +1246,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                   isRequired: false,
                   type: "text",
-                  title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                  title: t("CR_MIDDLE_NAME_ML_ERROR"),
                 })}
               />
             </div>
@@ -1264,7 +1265,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                   isRequired: false,
                   type: "text",
-                  title: t("CR_INVALID_LAST_NAME_ML"),
+                  title: t("CR_LAST_NAME_ML_ERROR"),
                 })}
               />
             </div>
@@ -1283,7 +1284,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 onChange={setSelectbrideEmailid}
                 placeholder={`${t("CR_BRIDE_EMAIL")}`}
                 //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
               />
             </div>
           </div>
@@ -1443,7 +1444,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     value={brideFatherAadharNo}
                     onChange={setSelectbrideFatherAadharNo}
                     placeholder={`${t("CR_BRIDE_FATHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1461,7 +1462,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     value={brideFathernameEn}
                     onChange={setSelectbrideFathernameEn}
                     placeholder={`${t("CR_BRIDE_FATHER_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_FATHER_NAME_EN_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1483,7 +1484,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: true,
                       type: "text",
-                      title: t("CR_INVALID_FATHER_NAME_ML"),
+                      title: t("CR_FATHER_NAME_ML_ERROR"),
                     })}
                   />
                 </div>
@@ -1504,7 +1505,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     value={brideMotherAadharNo}
                     onChange={setSelectbrideMotherAadharNo}
                     placeholder={`${t("CR_BRIDE_MOTHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1523,7 +1524,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     onChange={setSelectbrideMothernameEn}
                     placeholder={`${t("CR_BRIDE_MOTHER_NAME_EN")}`}
                     {...(validation = { isRequired: true })}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_MOTHER_NAME_EN_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1545,7 +1546,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: true,
                       type: "text",
-                      title: t("CR_INVALID_MOTHER_NAME_ML"),
+                      title: t("CR_MOTHER_NAME_ML_ERROR"),
                     })}
                   />
                 </div>
@@ -1569,7 +1570,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     value={brideGuardianAadharNo}
                     onChange={setSelectbrideGuardianAadharNo}
                     placeholder={`${t("CR_BRIDE_GUARDIAN_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1587,7 +1588,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     value={brideGuardiannameEn}
                     onChange={setSelectbrideGuardiannameEn}
                     placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_GUARDIAN_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_GUARDIAN_NAME_EN_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1609,7 +1610,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: true,
                       type: "text",
-                      title: t("CR_INVALID_GUARDIAN_NAME_ML"),
+                      title: t("CR_GUARDIAN_NAME_ML_ERROR"),
                     })}
                   />
                 </div>

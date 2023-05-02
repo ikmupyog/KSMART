@@ -94,6 +94,21 @@ const getTypeOfMarriageMasterList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getSubRegistrarMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SubRegistar",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getMaritalStatusMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1019,6 +1034,7 @@ const getCRTalukList = (tenantId, moduleCode) => ({
     ],
   },
 });
+
 const getCRReligionlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2445,6 +2461,9 @@ export const MdmsService = {
   },
   getTypeOfMarriageMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);
+  },
+  getSubRegistrarMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getSubRegistrarMasterList(tenantId, moduleCode), moduleCode);
   },
   getMaritalStatusMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getMaritalStatusMasterList(tenantId, moduleCode), moduleCode);

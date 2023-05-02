@@ -1,5 +1,6 @@
 import moment from "moment";
 import {BIRTH_INCLUSION_FIELD_NAMES} from "../../config/constants";
+import {convertEpochToDate} from "../../utils";
 
 export const getFilteredChildDobData = (selectedData, inclusionData) => {
   console.log("selectedData==dob", selectedData);
@@ -32,14 +33,14 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
 
 //TODO need validation to check dob is null
 const computeInitialValue = (dob) => {
-  console.log("initial value---",dob);
+  console.log("initial value---dob",convertEpochToDate(dob));
   const initialValue = dob;
 
   return initialValue;
 };
 
 const computeCurrentValue = (dob) => {
-  const currentValue = dob && moment(dob).format("DD/MM/YYYY");
+  const currentValue = dob && convertEpochToDate(dob);
   return currentValue;
 };
 

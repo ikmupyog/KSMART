@@ -627,7 +627,7 @@ const BrideAddressPermanentInsideKerala = ({ config, onSelect, userType, formDat
           <Dropdown
             t={t}
             optionKey="namecmb"
-            option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+            option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"wardno",t)}
             selected={permntInKeralaWardNo}
             select={setSelectWard}
             placeholder={`${t("CS_COMMON_WARD")}`}

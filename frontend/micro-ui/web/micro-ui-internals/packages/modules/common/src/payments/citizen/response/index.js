@@ -127,10 +127,9 @@ export const SuccessfulPayment = (props)=>{
     const applicationDetails = await Digit.TLService.search({ applicationNumber: consumerCode, tenantId });
 
     const generatePdfKeyForTL = "tlcertificate"
-
     if (applicationDetails) {
-      const application = rearrangeApplication(applicationDetails);
-      let response = await Digit.PaymentService.generatePdf(state, { Licenses: application?.Licenses }, generatePdfKeyForTL);
+      const application = rearrangeApplication(applicationDetails?.Licenses);
+      let response = await Digit.PaymentService.generatePdf(state, { Licenses: application }, generatePdfKeyForTL);
       const fileStore = await Digit.PaymentService.printReciept(state, { fileStoreIds: response.filestoreIds[0] });
       window.open(fileStore[response.filestoreIds[0]], "_blank");
     }

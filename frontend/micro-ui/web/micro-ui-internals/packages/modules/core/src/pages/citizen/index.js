@@ -277,8 +277,8 @@ const Home = ({
           Icon: <OBPSIcon />,
           onClick: () =>
             history.push({
-              //pathname: `${matchPath}/nac-birth-certificate`,
-              state: { module: "cr-birth" },
+              pathname: `${matchPath}/nac-death-certificate`,
+              state: { module: "cr-death-" },
             }),
         },
         {

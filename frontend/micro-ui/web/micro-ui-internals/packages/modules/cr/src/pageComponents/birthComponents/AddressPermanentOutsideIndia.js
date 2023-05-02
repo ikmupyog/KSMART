@@ -8,7 +8,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
-  isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false,
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption, isEditBirthNAC = false,
   isPrsentAddress, setIsPrsentAddress
   // isInitialRender, setIsInitialRender
   //isEditBirth ? isEditBirth : isEditDeath ? false :
@@ -55,7 +55,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
       }
     }
-  }if (isEditAdoption !==false) {
+  } if (isEditAdoption !== false) {
     if (formData?.AdoptionAddressBasePage?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntOutsideIndiaVillage)[0]);
@@ -198,17 +198,20 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   return (
     <React.Fragment>
       {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
-        {/* <header className="card-header" style={{ fontSize: "35px" }}>
+      {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
-        <div className="row">
+      <div className="row">
+        <div className="col-md-12">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
             </h1>
           </div>
         </div>
-        <div className="row">
+      </div>
+      <div className="row">
+        <div className="col-md-12">
           {/* <div className="col-md-4">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
@@ -253,8 +256,10 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             />
           </div>
         </div>
+      </div>
 
-        <div className="row">
+      <div className="row">
+        <div className="col-md-12">
           <div className="col-md-4">
             <CardLabel>
               {t("CR_TOWN_VILLAGE_EN")}
@@ -263,7 +268,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             <Dropdown
               t={t}
               optionKey="i18nKey"
-              option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
+              option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [], "code", t)}
               selected={permntOutsideIndiaVillage}
               select={setSelectadrsPermntOutsideIndiaVillage}
               disable={isDisableEdit}
@@ -306,8 +311,10 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             />
           </div>
         </div>
+      </div>
 
-        <div className="row">
+      <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}</CardLabel>
             <TextInput
@@ -342,9 +349,10 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               })}
             />
           </div>
-
         </div>
-        <div className="row">
+      </div>
+      <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
             <TextInput
@@ -379,6 +387,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             />
           </div>
         </div>
+      </div>
       {/* </FormStep> */}
     </React.Fragment>
   );

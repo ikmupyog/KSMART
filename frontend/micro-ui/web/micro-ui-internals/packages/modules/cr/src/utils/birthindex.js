@@ -446,7 +446,7 @@ export const convertToBirthRegistration = (data = {}) => {
             ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
             : null,
           permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk
             : null,
           permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
             ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
@@ -510,6 +510,14 @@ export const convertToBirthRegistration = (data = {}) => {
               HI: "New Birth Digital Payment",
             },
           },
+        ],
+        BirthNACDocuments: [
+          {
+            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            filestoreId: data?.ChildDetails?.uploadedFile,            
+            proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
+            regNoNAC: data?.ChildDetails?.regNoNAC,
+          }
         ],
       },
     ],
