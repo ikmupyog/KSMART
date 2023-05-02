@@ -388,8 +388,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
           informerAddress: data?.AbandonedBirthInformarDetails?.informerAddress,
           informerDesi: data?.AbandonedBirthInformarDetails?.informerDesi,
           infomantinstitution : data?.AbandonedBirthInformarDetails?.infomantinstitution,
-
-          // isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
+          isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
         },
         caretakerDetails: {
           institutionName: data?.AbandonedBirthInformarDetails?.institutionName,

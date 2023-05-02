@@ -400,7 +400,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>Applicant</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_APPLICANT_DETAILS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -517,7 +517,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1" style={{ marginTop: "30px" }}>
-              <span style={{ background: "#fff", padding: "0 10px" }}>File Upload</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ACTION_FILEUPLOADED")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -525,7 +525,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-6">
-                <CardLabel>Address proof of deceased at the time of death<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_ADDRESS_DECEASED")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -535,14 +535,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile(null);
                   }}
-                  message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>ID card of applicant<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_ID_APPLICANT")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -552,14 +552,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile1(null);
                   }}
-                  message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>ID proof of father/mother/spouse<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_ID_RELATION")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -569,14 +569,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile2(null);
                   }}
-                  message={uploadedFile2 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile2 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>ID Proof of death <span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_ID_PROOF_DEATH")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -586,14 +586,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile3(null);
                   }}
-                  message={uploadedFile3 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile3 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. Place of Death, and address at the time of death counter signed by gazetted officer<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_DECLARATION_GAZETTED")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -603,14 +603,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile4(null);
                   }}
-                  message={uploadedFile4 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile4 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_DECLARATION_CREDIBLR_PERSON")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -620,14 +620,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile5(null);
                   }}
-                  message={uploadedFile5 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile5 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row" style={{ clear: "both"}}>
               <div className="col-md-6">
-                <CardLabel>Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("CR_DECLARATION_ANOTHER_CREDIBLE_PERSON")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -637,7 +637,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                   onDelete={() => {
                     setUploadedFile6(null);
                   }}
-                  message={uploadedFile6 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`R_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile6 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
