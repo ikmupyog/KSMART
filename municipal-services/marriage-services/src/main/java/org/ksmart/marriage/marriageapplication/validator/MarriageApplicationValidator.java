@@ -326,22 +326,22 @@ public class MarriageApplicationValidator {
                                                                                                         marriagedtls.getPlacenameMl()
                                                                                                         + " is invalid");
                                                                 }
-                                                                // if (StringUtils.isEmpty(
-                                                                //                 marriagedtls.getLocalityEn())) {
-                                                                //         throw new CustomException(
-                                                                //                         " LOCALITY NAME ENGLISH IS INVALID ",
-                                                                //                         "The  Locality Name English " +
-                                                                //                                         marriagedtls.getLocalityEn()
-                                                                //                                         + " is invalid");
-                                                                // }
-                                                                // if (StringUtils.isEmpty(
-                                                                //                 marriagedtls.getLocalityMl())) {
-                                                                //         throw new CustomException(
-                                                                //                         " LOCALITY NAME MALAYALAM IS INVALID ",
-                                                                //                         "The  Locality Name Malayalam" +
-                                                                //                                         marriagedtls.getLocalityMl()
-                                                                //                                         + " is invalid");
-                                                                // }
+                                                                 if (StringUtils.isEmpty(
+                                                                                 marriagedtls.getLocalityEn())) {
+                                                                         throw new CustomException(
+                                                                                         " LOCALITY NAME ENGLISH IS INVALID ",
+                                                                                         "The  Locality Name English " +
+                                                                                                         marriagedtls.getLocalityEn()
+                                                                                                         + " is invalid");
+                                                                 }
+                                                                 if (StringUtils.isEmpty(
+                                                                                 marriagedtls.getLocalityMl())) {
+                                                                         throw new CustomException(
+                                                                                         " LOCALITY NAME MALAYALAM IS INVALID ",
+                                                                                         "The  Locality Name Malayalam" +
+                                                                                                         marriagedtls.getLocalityMl()
+                                                                                                         + " is invalid");
+                                                                }
                                                         }
                                                 }
 
