@@ -219,12 +219,12 @@ function DeathCorrectionSummary({
           </div>
           <div className="col-md-4">
             <h4>
-              <strong>{getFieldValue(value?.oldValue, type)}</strong>
+              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-3">
             <h4>
-              <strong>{getFieldValue(value?.newValue, type)}</strong>
+              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-1">

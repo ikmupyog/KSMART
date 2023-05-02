@@ -14,7 +14,7 @@ import { sortDropdownNames } from "../../utils";
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   console.log(JSON.stringify(formData));
   console.log(formData);
-  // console.log(isEditStillBirth);
+ console.log(isEditStillBirth);
   sessionStorage.removeItem("applicationNumber");
   const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
