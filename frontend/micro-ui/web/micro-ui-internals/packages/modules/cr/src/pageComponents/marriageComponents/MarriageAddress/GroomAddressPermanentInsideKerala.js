@@ -122,6 +122,9 @@ const GroomAddressPermanentInsideKerala = ({ config, onSelect, userType, formDat
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
+
+  const sortedWards = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
+
   useEffect(() => {
 
     if (isInitialRender && isPrsentAddress && countryValuePermanent === "IND" && valuePermanent === "kl"
@@ -627,7 +630,7 @@ const GroomAddressPermanentInsideKerala = ({ config, onSelect, userType, formDat
           <Dropdown
             t={t}
             optionKey="namecmb"
-            option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"wardno",t)}
+            option={sortedWards}
             selected={permntInKeralaWardNo}
             select={setSelectWard}
             placeholder={`${t("CS_COMMON_WARD")}`}

@@ -163,7 +163,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({groomURL})
+  console.log({ groomURL });
 
   const currentYear = new Date().getFullYear();
 
@@ -506,7 +506,21 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   }
 
-  function sendWitness1OTP() {}
+  async function sendWitness1OTP(stateCode) {
+    console.log("Hi")
+    const data = {
+      mobileNumber: witness1Mobile,
+      tenantId: stateCode,
+      userType: "citizen",
+      type: "login"
+    }
+      try {
+        const res = await Digit.hooks.cr.useESign(data, stateCode);
+        return [res, null];
+      } catch (err) {
+        return [null, err];
+      }
+    };
 
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
@@ -902,8 +916,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                     />
                   </div>
-                  {/* <div className="col-md-2">
-                    <TextInput
+                  <div className="col-md-2">
+                    {/* <TextInput
                       t={t}
                       type={"button"}
                       optionKey="i18nKey"
@@ -919,11 +933,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       }}
                       name="eSign"
                       value="E-sign"
-                      onChange={setSelectwitness1Esigned}
-                      disable={isDisableEdit}
+                      onClick = {()=>console.log("Hoooiiii")}
+                      // onClick = {sendWitness1OTP}
+                      // disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
-                    />
-                  </div> */}
+                    /> */}
+                    <button onClick={sendWitness1OTP}>Button</button>
+                  </div>
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
@@ -1024,7 +1040,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                     />
                   </div>
-                  {/* <div className="col-md-2">
+                  <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -1045,7 +1061,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
                     />
-                  </div> */}
+                  </div>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">

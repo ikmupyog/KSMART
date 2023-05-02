@@ -479,9 +479,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   function setSelectmarriageWardCode(value) {
     setTenantWard(value.code);
     setMarriageWardCode(value);
-    setMarriagePlacetype("");
-    setplaceidEn("");
-    setplaceidMl("");
   }
 
   function setCSLB(selectedLBType) {

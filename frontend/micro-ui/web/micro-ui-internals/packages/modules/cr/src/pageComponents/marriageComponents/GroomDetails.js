@@ -1214,7 +1214,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"email"}
                 optionKey="i18nKey"
                 name="groomEmailid"
                 value={groomEmailid}
