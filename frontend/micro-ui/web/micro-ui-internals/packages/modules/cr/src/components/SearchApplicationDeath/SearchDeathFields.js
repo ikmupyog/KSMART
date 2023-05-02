@@ -65,7 +65,7 @@ const SearchDeathFields = ({register, control, reset, tenantId, t, previousPage 
             <Controller
            
                 render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
-                name="DateOfDeath"
+                name="fromDate"
                 control={control}
                 />
         </SearchField>
@@ -73,7 +73,7 @@ const SearchDeathFields = ({register, control, reset, tenantId, t, previousPage 
             <label style={mystyle}>{t("CR_TO_DATE")}</label>
             <Controller
                 render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
-                name="DateOfDeath1"
+                name="toDate"
                 control={control}
                 />
         </SearchField>
