@@ -179,7 +179,7 @@ export const CRsearch = {
       ],
     };
     const AddressBirthDetailsPresentInfo = {
-      title: "CR_PERMANENT_ADDRESS",
+      title: "CR_ADDRESS_DETAILS",
       values: [
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPresentEn + " / " + (response?.ParentsDetails?.countryIdPresentMl != null ? response?.ParentsDetails?.countryIdPresentMl : "") || "NA" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPresentEn + " / " + response?.AddressBirthDetails.stateIdPresentMl || "NA" },
@@ -216,7 +216,7 @@ export const CRsearch = {
       ]
     }
     const AddressBirthDetailsPresentOutsideKeralaInfo = {
-      title: "CR_PERMANENT_ADDRESS",
+      title: "CR_ADDRESS_DETAILS",
       values: [
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountry || "NA" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails?.presentaddressStateName || "NA" },
@@ -252,7 +252,7 @@ export const CRsearch = {
     // } else if (response?.AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA") {
 
     const AddressBirthDetailsPresentOutsideIndiaInfo = {
-      title: "CR_PERMANENT_ADDRESS",
+      title: "CR_ADDRESS_DETAILS",
       values: [
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountry || "NA" },
         { title: "CR_STATE_REGION_PROVINCE_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaProvinceEn || "NA" },

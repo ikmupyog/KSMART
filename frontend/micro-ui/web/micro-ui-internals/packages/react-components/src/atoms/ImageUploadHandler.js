@@ -46,9 +46,11 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
   useEffect(() => {
     if (imageFile && imageFile.size > 2097152) {
       setError("File is too large");
-    } else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
-      setError("Can't upload multiple images");
-    } else {
+    } 
+    // else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
+    //   setError("Can't upload multiple images");
+    // }
+     else {
       setImage(imageFile);
     }
     // if (module === "marriage") {
