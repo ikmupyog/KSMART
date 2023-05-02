@@ -1,8 +1,8 @@
-import { CRService } from "../../elements/CR";
+import { CRMarriageService } from "../../elements/CRMARRIAGE";
 
 const ApplicationUpdateActions = async (applicationData, tenantId) => {
   try {
-    const response = await CRService.update(applicationData, tenantId);
+    const response = await CRMarriageService.update(applicationData, tenantId);
     return response;
   } catch (error) {
     throw new Error(error?.response?.data?.Errors[0].message);

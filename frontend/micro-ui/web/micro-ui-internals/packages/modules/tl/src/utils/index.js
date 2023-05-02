@@ -310,7 +310,7 @@ export const convertToTrade = (data = {}) => {
           enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,
           structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
           structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
-          businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc,
+          businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc?.trim(),
           licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType?.code,
           noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
           ownershipCategory: data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code,
@@ -715,7 +715,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
     wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
     addressCorr.push({
-      id : data?.tradeLicenseDetail?.address?.id,
+      id : data?.tradeLicenseDetail?.address?.id?.trim(),
       wardNo : dataCorr?.tradeLicenseDetail?.address?.wardNo,
       wardId : dataCorr?.tradeLicenseDetail?.address?.wardId
     });
@@ -756,7 +756,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   if(Subtype.length > 0) {
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
       if(Subtype.filter(subUnit => subUnit.includes(unitOld.businessSubtype)).length === 0 ){
-        tradeUnitCorr.push({id : unitOld.id, active : false});
+        tradeUnitCorr.push({id : unitOld.id?.trim(), active : false});
         isEdit = true;
         unitFlag = true;
       }
@@ -775,21 +775,21 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
         ||(ownerOld.locality !== ownerNew.locality)||(ownerOld.postOffice !== ownerNew.postOffice)||(ownerOld.pincode !== ownerNew.pincode)){
           ownersCorr.push({
             id : ownerNew?.id ? ownerNew?.id : null,
-            uuid : ownerNew?.uuid ? ownerNew?.uuid : null,
-            name: ownerNew?.name ? ownerNew?.name : null,
-            mobileNumber: ownerNew?.mobileNumber ? ownerNew?.mobileNumber : null,
-            emailId: ownerNew?.emailId ? ownerNew?.emailId : null,
-            aadhaarNumber: ownerNew?.aadhaarNumber ? ownerNew?.aadhaarNumber : null,
+            uuid : ownerNew?.uuid ? ownerNew?.uuid?.trim() : null,
+            name: ownerNew?.name ? ownerNew?.name?.trim() : null,
+            mobileNumber: ownerNew?.mobileNumber ? ownerNew?.mobileNumber?.trim() : null,
+            emailId: ownerNew?.emailId ? ownerNew?.emailId?.trim() : null,
+            aadhaarNumber: ownerNew?.aadhaarNumber ? ownerNew?.aadhaarNumber?.trim() : null,
             userActive: true,
-            applicantNameLocal: ownerNew?.applicantNameLocal ? ownerNew?.applicantNameLocal : null,
-            careOf: ownerNew?.careOf ? ownerNew?.careOf : null,
-            careOfName: ownerNew?.careOfName ? ownerNew?.careOfName : null,
-            designation: ownerNew?.designation ? ownerNew?.designation : null,
-            houseName: ownerNew?.houseName ? ownerNew?.houseName : null,
-            street: ownerNew?.street ? ownerNew?.street : null,
-            locality: ownerNew?.locality ? ownerNew?.locality : null,
-            postOffice: ownerNew?.postOffice ? ownerNew?.postOffice : null,
-            pincode: ownerNew?.pincode ? ownerNew?.pincode : null
+            applicantNameLocal: ownerNew?.applicantNameLocal ? ownerNew?.applicantNameLocal?.trim() : null,
+            careOf: ownerNew?.careOf ? ownerNew?.careOf?.trim() : null,
+            careOfName: ownerNew?.careOfName ? ownerNew?.careOfName?.trim() : null,
+            designation: ownerNew?.designation ? ownerNew?.designation?.trim() : null,
+            houseName: ownerNew?.houseName ? ownerNew?.houseName?.trim() : null,
+            street: ownerNew?.street ? ownerNew?.street?.trim() : null,
+            locality: ownerNew?.locality ? ownerNew?.locality?.trim() : null,
+            postOffice: ownerNew?.postOffice ? ownerNew?.postOffice?.trim() : null,
+            pincode: ownerNew?.pincode ? ownerNew?.pincode?.trim() : null
           });
 
           isEdit = true;
@@ -801,20 +801,20 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       ownersCorr.push({
           id : null,
           uuid : null,
-          name: ownerNew?.name ? ownerNew?.name : null,
-          mobileNumber: ownerNew?.mobileNumber ? ownerNew?.mobileNumber : null,
-          emailId: ownerNew?.emailId ? ownerNew?.emailId : null,
-          aadhaarNumber: ownerNew?.aadhaarNumber ? ownerNew?.aadhaarNumber : null,
+          name: ownerNew?.name ? ownerNew?.name?.trim() : null,
+          mobileNumber: ownerNew?.mobileNumber ? ownerNew?.mobileNumber?.trim() : null,
+          emailId: ownerNew?.emailId ? ownerNew?.emailId?.trim() : null,
+          aadhaarNumber: ownerNew?.aadhaarNumber ? ownerNew?.aadhaarNumber?.trim() : null,
           userActive: true,
-          applicantNameLocal: ownerNew?.applicantNameLocal ? ownerNew?.applicantNameLocal : null,
-          careOf: ownerNew?.careOf ? ownerNew?.careOf : null,
-          careOfName: ownerNew?.careOfName ? ownerNew?.careOfName : null,
-          designation: ownerNew?.designation ? ownerNew?.designation : null,
-          houseName: ownerNew?.houseName ? ownerNew?.houseName : null,
-          street: ownerNew?.street ? ownerNew?.street : null,
-          locality: ownerNew?.locality ? ownerNew?.locality : null,
-          postOffice: ownerNew?.postOffice ? ownerNew?.postOffice : null,
-          pincode: ownerNew?.pincode ? ownerNew?.pincode : null
+          applicantNameLocal: ownerNew?.applicantNameLocal ? ownerNew?.applicantNameLocal?.trim() : null,
+          careOf: ownerNew?.careOf ? ownerNew?.careOf?.trim() : null,
+          careOfName: ownerNew?.careOfName ? ownerNew?.careOfName?.trim() : null,
+          designation: ownerNew?.designation ? ownerNew?.designation?.trim() : null,
+          houseName: ownerNew?.houseName ? ownerNew?.houseName?.trim() : null,
+          street: ownerNew?.street ? ownerNew?.street?.trim() : null,
+          locality: ownerNew?.locality ? ownerNew?.locality?.trim() : null,
+          postOffice: ownerNew?.postOffice ? ownerNew?.postOffice?.trim() : null,
+          pincode: ownerNew?.pincode ? ownerNew?.pincode?.trim() : null
       });
       isEdit = true;
       ownerFlag = true;
@@ -859,20 +859,20 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
         ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
         ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
           structurePlaceCorr.push({
-            id : placeOld?.id ? placeOld?.id : null,
+            id : placeOld?.id ? placeOld?.id?.trim() : null,
             tenantId : dataCorr.tenantId,
-            blockNo : placeNew?.blockNo && placeNew?.blockNo !== "" ? placeNew?.blockNo : null,
-            surveyNo : placeNew?.surveyNo  && placeNew?.surveyNo !== "" ? placeNew?.surveyNo : null,
-            subDivisionNo : placeNew?.subDivisionNo && placeNew?.subDivisionNo !== "" ? placeNew?.subDivisionNo : null,
-            partitionNo : placeNew?.partitionNo && placeNew?.partitionNo !== "" ? placeNew?.partitionNo : null,
-            doorNo : placeNew?.doorNo && placeNew?.doorNo !== "" ? placeNew?.doorNo : null,
-            doorNoSub : placeNew?.doorNoSub && placeNew?.doorNoSub !== "" ? placeNew?.doorNoSub : null,
+            blockNo : placeNew?.blockNo && placeNew?.blockNo !== "" ? placeNew?.blockNo?.trim() : null,
+            surveyNo : placeNew?.surveyNo  && placeNew?.surveyNo !== "" ? placeNew?.surveyNo?.trim() : null,
+            subDivisionNo : placeNew?.subDivisionNo && placeNew?.subDivisionNo !== "" ? placeNew?.subDivisionNo?.trim() : null,
+            partitionNo : placeNew?.partitionNo && placeNew?.partitionNo !== "" ? placeNew?.partitionNo?.trim() : null,
+            doorNo : placeNew?.doorNo && placeNew?.doorNo !== "" ? placeNew?.doorNo?.trim() : null,
+            doorNoSub : placeNew?.doorNoSub && placeNew?.doorNoSub !== "" ? placeNew?.doorNoSub?.trim() : null,
             buildingId : null,
-            vehicleNo : placeNew?.vehicleNo && placeNew?.vehicleNo !== ""? placeNew?.vehicleNo : null,
-            vesselNo : placeNew?.vesselNo && placeNew?.vesselNo !== "" ? placeNew?.vesselNo : null,
+            vehicleNo : placeNew?.vehicleNo && placeNew?.vehicleNo !== ""? placeNew?.vehicleNo?.trim() : null,
+            vesselNo : placeNew?.vesselNo && placeNew?.vesselNo !== "" ? placeNew?.vesselNo?.trim() : null,
             active : true,
             isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
-            stallNo : placeNew?.stallNo && placeNew?.stallNo !== "" ? placeNew?.stallNo : null,
+            stallNo : placeNew?.stallNo && placeNew?.stallNo !== "" ? placeNew?.stallNo?.trim() : null,
           });
 
           isEdit = true;
@@ -884,18 +884,18 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       structurePlaceCorr.push({
         id : null,
         tenantId : dataCorr.tenantId,
-        blockNo : placeNew?.blockNo ? placeNew?.blockNo : null,
-        surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : null,
-        subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : null,
-        partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : null,
-        doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
-        doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : null,
+        blockNo : placeNew?.blockNo ? placeNew?.blockNo?.trim() : null,
+        surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo?.trim() : null,
+        subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo?.trim() : null,
+        partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo?.trim() : null,
+        doorNo : placeNew?.doorNo ? placeNew?.doorNo?.trim() : null,
+        doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub?.trim() : null,
         buildingId : null,
-        vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : null,
-        vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : null,
+        vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo?.trim() : null,
+        vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo?.trim() : null,
         active : true,
         isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
-        stallNo : placeNew?.stallNo ? placeNew?.stallNo : null
+        stallNo : placeNew?.stallNo ? placeNew?.stallNo?.trim() : null
       });
       isEdit = true;
       structureplaceFlag = true;
@@ -905,7 +905,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   if(structurePlaceID.length > 0) {
     data?.tradeLicenseDetail?.structurePlace.map((place) => {
       if(structurePlaceID.filter(id => id.includes(place.id)).length === 0 ){
-        structurePlaceCorr.push({id : place.id, active : false});
+        structurePlaceCorr.push({id : place.id?.trim(), active : false});
         isEdit = true;
         structureplaceFlag = true;
       }
@@ -929,10 +929,10 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   applicationDocuments =  dataCorr?.tradeLicenseDetail?.applicationDocuments;
 
   if((data?.tradeName !== dataCorr?.licenseUnitName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
-    tradeNameCorr = dataCorr?.licenseUnitName;
-    licenseUnitNameLocalCorr = dataCorr?.licenseUnitNameLocal;
-    tradeNameHistory = data?.licenseUnitName;
-    licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
+    tradeNameCorr = dataCorr?.licenseUnitName?.trim();
+    licenseUnitNameLocalCorr = dataCorr?.licenseUnitNameLocal?.trim();
+    tradeNameHistory = data?.licenseUnitName?.trim();
+    licenseUnitNameLocalHistory = data?.licenseUnitNameLocal?.trim();
     isEdit = true;
   }
   const formdata = {

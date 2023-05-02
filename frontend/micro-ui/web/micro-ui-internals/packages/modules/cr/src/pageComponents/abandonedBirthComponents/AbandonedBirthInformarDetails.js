@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Timeline from "../../components/CRABTimeline";
 
 const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth=false }) => {
-  const stateId = Digit.ULBService.getStateId();documentList
+  const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : true);
@@ -15,7 +15,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     { "code": "REPORTINGFORM", "description": "ReportingForm" , "label" : "CR_REPORTING_FORM" },
     { "code": "CHILDBIRTHPROOF", "description": "ProofOfIdentity","label" : "CR_CHILDBIRTH_PROOF" },    
   ] 
-  
+  const [isDeclarationInfo, setIsDeclarationInfo] = useState(formData?.AbandonedBirthInformarDetails?.isDeclarationInfo ? formData?.AbandonedBirthInformarDetails?.isDeclarationInfo : false);
   const [institutionName, setinstitutionName] = useState(formData?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedBirthInformarDetails?.institutionName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName : "");
   const [caretakerName, setcaretakerName] = useState(formData?.AbandonedBirthInformarDetails?.caretakerName ? formData?.AbandonedBirthInformarDetails?.caretakerName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerName : "");
   const [caretakerDesignation, setcaretakerDesignation] = useState(formData?.AbandonedBirthInformarDetails?.caretakerDesignation ? formData?.AbandonedBirthInformarDetails?.caretakerDesignation : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerDesignation ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerDesignation : "");
@@ -27,7 +27,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.AbandonedBirthInformarDetails?.infomantFirstNameEn ? formData?.AbandonedBirthInformarDetails?.infomantFirstNameEn : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantFirstNameEn ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantFirstNameEn : "");
   const [infomantMobile, setinfomantMobile] = useState(formData?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedBirthInformarDetails?.infomantMobile : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile : "");
   const [informerAddress, setinformerAddress] = useState(formData?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedBirthInformarDetails?.informerAddress : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress : "");
-
+  const [isInitialRender, setIsInitialRender] = useState(true);
   // const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFiles? formData?.AbandonedDocumentUpload?.uploadedFiles: []);
   // const [docuploadedId, setDocuploadedId] = useState(formData?.AbandonedBirthInformarDetails?.docuploadedId? formData?.AbandonedDocumentUpload?.docuploadedId: "");
   // const [docuploadedName, setDocuploadedName] = useState(formData?.AbandonedBirthInformarDetails?.setDocuploadedName? formData?.AbandonedDocumentUpload?.setDocuploadedName: "");
@@ -69,6 +69,14 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
 
   const [toast, setToast] = useState(false);
   const onSkip = () => onSelect(); 
+  useEffect(() => {
+    if (isInitialRender) {
+      if (formData?.AbandonedBirthInformarDetails?.isDeclarationInfo != null) {
+        setIsInitialRender(false);
+        setIsDeclarationInfo(formData?.AbandonedBirthInformarDetails?.isDeclarationInfo);
+      }
+    }
+  }, [isInitialRender]);
 
   function setSelectinstitutionName(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -132,12 +140,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     setDocuploadedId(e?.target?.id);
     setUploadedFile(null);
     setFile(e.target.files[0]);
-    console.log(result + "MY Documents");  
-
-    // console.log(uploadedFile);  
-  
-
-
+    console.log(result + "MY Documents"); 
+    // console.log(uploadedFile);
   }
   function onDeleteown(e) {
     const removeindex = uploadedFiles.findIndex(element => {
@@ -167,6 +171,13 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   //     setdocumentType(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
   //   }
   // }  
+  function setDeclarationInfo(e) {
+    if (e.target.checked == true) {
+      setIsDeclarationInfo(e.target.checked);     
+    } else {
+      setIsDeclarationInfo(e.target.checked);
+    }
+  }
 
   let validFlag = true;
   const goNext = () => {
@@ -191,22 +202,23 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       // sessionStorage.setItem("informerAddress", informerAddress ? informerAddress : null);    
       // sessionStorage.setItem("documentType", documentType ? documentType : null);
       // sessionStorage.setItem("documentName", documentName ? documentName : null);
-
+      // sessionStorage.setItem("isDeclarationInfo", isDeclarationInfo ? isDeclarationInfo : null);
 
       onSelect(config.key, { 
         documents,
-        institutionName,
-        caretakerName,
-        caretakerDesignation,
-        caretakerMobile,
-        caretakerAddress,
-        infomantinstitution,
-        informerDesi,
-        infomantAadhar, 
-        infomantFirstNameEn, 
-        infomantMobile,  
-        informerAddress,  
+        institutionName: institutionName.trim(),
+        caretakerName: caretakerName.trim(),
+        caretakerDesignation: caretakerDesignation.trim(),
+        caretakerMobile: caretakerMobile.trim(),
+        caretakerAddress: caretakerAddress.trim(),
+        infomantinstitution: infomantinstitution.trim(),
+        informerDesi: informerDesi.trim(),
+        infomantAadhar: infomantAadhar.trim(), 
+        infomantFirstNameEn: infomantFirstNameEn.trim(), 
+        infomantMobile: infomantMobile.trim(),  
+        informerAddress: informerAddress.trim(),
         uploadedFiles,
+        isDeclarationInfo,
         // docuploadedName,
         // file,
         // document,
@@ -262,28 +274,20 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}     >
-        {/* <div className="row">
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}   isDisabled={!isDeclarationInfo}  >
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className="row">
+        <div className="row">
           <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
+            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={isDeclarationInfo} checked={isDeclarationInfo} />
           </div>
-        </div> */}
+        </div>
 
         <div className="row">
           <div className="col-md-12">
@@ -441,8 +445,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
             <div className="col-md-4" >
               <CardLabel>{`${t("CR_INFORMANT_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput 
-              t={t} 
-              isMandatory={true} 
+              t={t}               
               type={"text"} 
               optionKey="i18nKey" 
               name="infomantFirstNameEn"              
@@ -471,7 +474,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <CardLabel>{`${t("CR_ADDRESS")}`} <span className="mandatorycss">*</span></CardLabel>
               <TextArea
                 t={t}
                 type={"text"}
@@ -481,7 +484,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 disable={isEdit}
                 onChange={setSelectinformerAddress}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />
             </div>
           </div>
@@ -495,7 +498,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
         </div>
  
         <div className="col-md-6">
-        <CardLabel>{`${t("CR_DOC_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
+        <CardLabel>{`${t("CR_DOC_TYPE")}`}</CardLabel>
         </div>
 
         <div className="row">
@@ -509,6 +512,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                         <span>
                           {doc.label}
                         </span>
+                        <span className="mandatorycss">*</span>
                       </div>
                       <div className="col-md-6">
                         <UploadFile

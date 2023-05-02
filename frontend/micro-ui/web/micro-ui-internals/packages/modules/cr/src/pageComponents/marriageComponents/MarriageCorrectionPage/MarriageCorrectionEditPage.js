@@ -129,10 +129,10 @@ const MarriageCorrectionEditPage = ({
 
   const onSubmit = (data) => console.log(data);
 
-  const { register, handleSubmit, reset, setValue, getValues, watch, errors } = useForm({
-    reValidateMode: "onSubmit",
-    mode: "all",
-  });
+  // const { register, handleSubmit, reset, setValue, getValues, watch, errors } = useForm({
+  //   reValidateMode: "onSubmit",
+  //   mode: "all",
+  // });
 
   const onDOMChange = (value) => {
     let tempObj = { ...marriageCorrectionFormsObj };
@@ -300,7 +300,7 @@ const MarriageCorrectionEditPage = ({
   useEffect(async () => {
     if (Object.keys(params)?.length > 0) {
       let tempParams = {}
-      Object.keys(params).forEach((key,index)=> tempParams[key] = {...params[key], isDisable: true, isEditable: false, isFocused: false });
+      Object.keys(params).forEach((key,index)=> tempParams[key] = {...params[key], isDisable: true, isFocused: false });
       setMarriageCorrectionFormsObj({...tempParams});
     } else {
       marriageCorrectionFormData = await initializeMarriageCorrectionObject(marriageCorrectionDocuments, navigationData);
@@ -419,8 +419,6 @@ const MarriageCorrectionEditPage = ({
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <DatePicker
-                  // date={childDOB}
-                  // datePickerRef={register}
                   name="marriageDOM"
                   disabled={marriageCorrectionFormsObj?.DOM?.isDisable}
                   autofocus={marriageCorrectionFormsObj?.DOM?.isFocused}
@@ -604,7 +602,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         optionKey="i18nKey"
@@ -621,7 +618,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -638,7 +634,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -670,7 +665,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -687,7 +681,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -704,7 +697,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -728,7 +720,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <DatePicker
                         // date={DateOfDeath}
-                        datePickerRef={register}
                         // max={convertEpochToDate(new Date())}
                         name="groomDOB"
                         disabled={marriageCorrectionFormsObj.GROOM_AGE?.isDisable}
@@ -749,7 +740,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_AGE")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -782,7 +772,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -799,7 +788,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -833,7 +821,6 @@ const MarriageCorrectionEditPage = ({
                       <TextInput
                         t={t}
                         // isMandatory={false}
-                        inputRef={register({})}
                         type={"text"}
                         // optionKey="i18nKey"
                         name="groomFathernameEn"
@@ -849,7 +836,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_FATHER_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -880,7 +866,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_GUARDIAN_NAME_EN")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -897,7 +882,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_GUARDIAN_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1127,7 +1111,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1144,7 +1127,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1161,7 +1143,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1193,7 +1174,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1210,7 +1190,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1227,7 +1206,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1252,7 +1230,6 @@ const MarriageCorrectionEditPage = ({
                       <DatePicker
                         // date={DateOfDeath}
                         // max={convertEpochToDate(new Date())}
-                        datePickerRef={register}
                         name="brideDOB"
                         disabled={marriageCorrectionFormsObj.BRIDE_AGE?.isDisable}
                         autofocus={marriageCorrectionFormsObj.BRIDE_AGE?.isFocused}
@@ -1272,7 +1249,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_AGE")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1305,7 +1281,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1322,7 +1297,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1354,7 +1328,6 @@ const MarriageCorrectionEditPage = ({
                       </CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1371,7 +1344,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_FATHER_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1401,7 +1373,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_GUARDIAN_NAME_EN")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"
@@ -1418,7 +1389,6 @@ const MarriageCorrectionEditPage = ({
                       <CardLabel>{`${t("CR_GUARDIAN_NAME_ML")}`}</CardLabel>
                       <TextInput
                         t={t}
-                        inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
                         // optionKey="i18nKey"

@@ -192,7 +192,7 @@ const MarriagePublicPlace = ({
               name="marriagePublicOrPrivateNamePlaceMl"
               value={marriagePlacenameMl}
               onChange={setSelectOtherMarriagePlacenameMl}
-              placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
+              placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                 isRequired: true,
