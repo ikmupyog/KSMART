@@ -3,7 +3,6 @@ import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocali
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
-
 //  const getTradeDetails = (application, t) => {
 //   return {
 //     title: t("TL_COMMON_TR_DETAILS"),
@@ -69,17 +68,20 @@ const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ")
 //   };
 // };
 const getInformationDeath = (application, t) => {
-  console.log(application);
-  application.owners = application?.deathCertificateDtls?.InformationDeath?.filter((applicationNumber) => applicationNumber.active == true) || [];
+    console.log("application",application)
+  application.owners = application?.deathCertificateDtls?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
- 
+
   return {
     title: "",
     values: [
-      { title: t("Date of Death"), value: application?.InformationDeath?.DateOfDeath ? Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("Gender"), value: application?.InformationDeath?.gender ? application?.InformationDeath?.gender : t("CS_NA") },
-      { title: t("Death Place"), value: application?.InformationDeath?.deathplace ? application?.InformationDeath?.deathplace : t("CS_NA") },
-      { title: t("Death Place Name"), value: application?.InformationDeath?.hospitalNameEn ? application?.InformationDeath?.hospitalNameEn : t("CS_NA") },
+      {
+        title: t("Date of Birth"),
+        value:application?.InformationDeath?.DateOfDeath?Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") : t("CS_NA"),
+      },
+      { title: t("CR_GENDER"), value: application?.InformationDeath?.DeceasedGender ? application?.InformationDeath?.DeceasedGender : t("CS_NA") },
+      { title: t("CR_NATIONALITY"), value: application?.InformationDeath?.Nationality ? application?.InformationDeath?.Nationality : t("CS_NA") },
+      { title: t("CS_COMMON_RELIGION"), value: application?.InformationDeath?.Religion ? application?.InformationDeath?.Religion : t("CS_NA") },
 
       // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
       // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
@@ -91,27 +93,6 @@ const getInformationDeath = (application, t) => {
       // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
     ],
   };
-
-  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
-  //   let values = [];
-  //   application?.tradeLicenseDetail.owners.map((owner) => {
-  //     let indOwner = [
-  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
-  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
-  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
-  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
-  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
-  //     ];
-  //     values.push(...indOwner);
-  //   });
-  //   return {
-  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
-  //     values: values,
-  //   };
-  // }
 };
 const getAddressDetails = (application, t) => {
   return {
@@ -121,17 +102,14 @@ const getAddressDetails = (application, t) => {
       // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
       // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
       { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
+      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") },
     ],
   };
 };
 
 const getCRDeathAcknowledgementData = async (application, tenantInfo, t) => {
-  //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
-  //   let res;
-  //   if (filesArray) {
-  //     res = await Digit.UploadServices.Filefetch(filesArray, Digit.ULBService.getStateId());
-  //   }
+  //console.log(application, "applicationgetCRAbandonedDeathAcknowledgementData");
+
   return {
     t: t,
     tenantId: tenantInfo?.code,
@@ -141,35 +119,17 @@ const getCRDeathAcknowledgementData = async (application, tenantInfo, t) => {
     phoneNumber: "",
     details: [
       {
-        title:t("Acknowledgment Details"),
+        title: t("Acknowledgment Details"),
         values: [
-          { title: t("Application No"), value: application?.applicationNumber },
+          { title: t("Application No"), value: application?.InformationDeath?.DeathACKNo},
           {
             title: t("Application Date"),
-            value: Digit.DateUtils.ConvertTimestampToDate(application?.dateofreport, "dd/MM/yyyy"),
+            value: Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeath?.ApplicationDate, "dd/MM/yyyy"),
           },
         ],
       },
       getInformationDeath(application, t),
       getAddressDetails(application, t),
-      //       getTradeDetails(application, t),
-      //       getTradeUnitsDetails(application, t),
-      //       getAccessoriesDetails(application, t),
-      //       getAddressDetails(application, t),
-      //       getOwnerDetails(application, t),
-      //       {
-      //         title: t("TL_COMMON_DOCS"),
-      //         values:
-      //           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
-      //             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
-      //               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
-      //               return {
-      //                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
-      //                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
-      //               };
-      //             })
-      //             : [],
-      //       },
     ],
   };
 };

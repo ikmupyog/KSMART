@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+// import ApplicationDetailsTemplate from "../../../../templates/CR";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
@@ -41,6 +42,10 @@ const ApplicationDetails = () => {
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config: {},
   });
+
+  useEffect(()=>{
+ console.log("workflowDetails==",workflowDetails);
+  },[workflowDetails])
 
   const closeToast = () => {
     setShowToast(null);

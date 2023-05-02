@@ -491,7 +491,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     //     }
     // }
     function setSelectinsideKeralaHouseNameEn(e) {
-        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z/-0-9 ]*$") != null)) {
             setinsideKeralaHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -499,7 +499,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }
     function setSelectinsideKeralaHouseNameMl(e) {
-        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
         if (!(e.target.value.match(pattern))) {
             e.preventDefault();
             setinsideKeralaHouseNameMl('');
@@ -571,7 +571,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }
     function setCheckMalayalamInputFieldWithSplChar(e) {
-        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]/;
         if (!(e.key.match(pattern))) {
             e.preventDefault();
         }
@@ -588,29 +588,32 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentInsideKeralaDistrict}> */}
                 <div className="row">
                     <div className="col-md-12">
-                        <h1 className="headingh1">
-                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
-                        </h1>
+                        <div className="col-md-12">
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
+                            </h1>
+                        </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-3">
-                        <CardLabel>
-                            {t("CS_COMMON_DISTRICT")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            option={sortDropdownNames(Districtvalues ? Districtvalues : [], "name", t)}
-                            selected={presentInsideKeralaDistrict}
-                            select={setSelectinsideKeralaDistrict}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CS_COMMON_DISTRICT")}`}
-                        />
-                    </div>
+                    <div className="col-md-12">
+                        <div className="col-md-3">
+                            <CardLabel>
+                                {t("CS_COMMON_DISTRICT")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="name"
+                                option={sortDropdownNames(Districtvalues ? Districtvalues : [], "name", t)}
+                                selected={presentInsideKeralaDistrict}
+                                select={setSelectinsideKeralaDistrict}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CS_COMMON_DISTRICT")}`}
+                            />
+                        </div>
 
-                    {/* <div className="col-md-6" >
+                        {/* <div className="col-md-6" >
                     <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                     <Dropdown
                     t={t}
@@ -621,227 +624,232 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                     
                     />
                     </div> */}
-                    <div className="col-md-3">
-                        <CardLabel>
-                            {t("CS_COMMON_TALUK")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            option={sortDropdownNames(Talukvalues ? Talukvalues : [], "name", t)}
-                            selected={presentInsideKeralaTaluk}
-                            select={setSelectinsideKeralaTaluk}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CS_COMMON_TALUK")}`}
-                        />
-                    </div>
-                    <div className="col-md-3">
-                        <CardLabel>
-                            {t("CS_COMMON_VILLAGE")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            option={sortDropdownNames(Villagevalues ? Villagevalues : [], "name", t)}
-                            selected={presentInsideKeralaVillage}
-                            select={setSelectinsideKeralaVillage}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CS_COMMON_VILLAGE")}`}
-                        />
-                    </div>
-                    <div className="col-md-3">
-                        <CardLabel>
-                            {t("CS_COMMON_LB_NAME")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            option={sortDropdownNames(lbs ? lbs : [], "name", t)}
-                            selected={presentInsideKeralaLBName}
-                            select={setSelectinsideKeralaLBName}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CS_COMMON_LB_NAME")}`}
-                        />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {`${t("CS_COMMON_WARD")}`}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="namecmb"
-                            option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
-                            selected={presentWardNo}
-                            select={setSelectWard}
-                            placeholder={`${t("CS_COMMON_WARD")}`}
-                            disable={isDisableEdit}
-                            {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-                        />
-                    </div>
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {t("CS_COMMON_POST_OFFICE")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
-                            selected={presentInsideKeralaPostOffice}
-                            select={setSelectinsideKeralaPostOffice}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-                        />
-                    </div>
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {t("CS_COMMON_PIN_CODE")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaPincode"
-                            value={presentInsideKeralaPincode}
-                            onChange={setSelectinsideKeralaPincode}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-                            {...(validation = {
-                                pattern: "^[0-9]*$",
-                                isRequired: true,
-                                type: "text",
-                                maxLength: 6,
-                                minLength: 6,
-                                title: t("CS_COMMON_INVALID_PIN_CODE"),
-                            })}
-                        />
+                        <div className="col-md-3">
+                            <CardLabel>
+                                {t("CS_COMMON_TALUK")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="name"
+                                option={sortDropdownNames(Talukvalues ? Talukvalues : [], "name", t)}
+                                selected={presentInsideKeralaTaluk}
+                                select={setSelectinsideKeralaTaluk}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CS_COMMON_TALUK")}`}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <CardLabel>
+                                {t("CS_COMMON_VILLAGE")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="name"
+                                option={sortDropdownNames(Villagevalues ? Villagevalues : [], "name", t)}
+                                selected={presentInsideKeralaVillage}
+                                select={setSelectinsideKeralaVillage}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CS_COMMON_VILLAGE")}`}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <CardLabel>
+                                {t("CS_COMMON_LB_NAME")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="name"
+                                option={sortDropdownNames(lbs ? lbs : [], "name", t)}
+                                selected={presentInsideKeralaLBName}
+                                select={setSelectinsideKeralaLBName}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CS_COMMON_LB_NAME")}`}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {t("CR_LOCALITY_EN")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaLocalityNameEn"
-                            value={presentInsideKeralaLocalityNameEn}
-                            onChange={setSelectinsideKeralaLocalityNameEn}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CR_LOCALITY_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
-                        />
+                    <div className="col-md-12">
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {`${t("CS_COMMON_WARD")}`}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="namecmb"
+                                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
+                                selected={presentWardNo}
+                                select={setSelectWard}
+                                placeholder={`${t("CS_COMMON_WARD")}`}
+                                disable={isDisableEdit}
+                                {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {t("CS_COMMON_POST_OFFICE")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="name"
+                                option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
+                                selected={presentInsideKeralaPostOffice}
+                                select={setSelectinsideKeralaPostOffice}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {t("CS_COMMON_PIN_CODE")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaPincode"
+                                value={presentInsideKeralaPincode}
+                                onChange={setSelectinsideKeralaPincode}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+                                {...(validation = {
+                                    pattern: "^[0-9]*$",
+                                    isRequired: true,
+                                    type: "text",
+                                    maxLength: 6,
+                                    minLength: 6,
+                                    title: t("CS_COMMON_INVALID_PIN_CODE"),
+                                })}
+                            />
+                        </div>
                     </div>
-                    <div className="col-md-4">
-                        <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaStreetNameEn"
-                            value={presentInsideKeralaStreetNameEn}
-                            onChange={setSelectinsideKeralaStreetNameEn}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CR_STREET_NAME_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-                        />
-                    </div>
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {t("CR_HOUSE_NAME_EN")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaHouseNameEn"
-                            value={presentInsideKeralaHouseNameEn}
-                            onChange={setSelectinsideKeralaHouseNameEn}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-                        />
-                    </div>
-
                 </div>
                 <div className="row">
-
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {t("CR_LOCALITY_ML")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaLocalityNameMl"
-                            value={presentInsideKeralaLocalityNameMl}
-                            onKeyPress={setCheckMalayalamInputField}
-                            onChange={setSelectinsideKeralaLocalityNameMl}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CR_LOCALITY_ML")}`}
-                            {...(validation = {
-                                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                                isRequired: true,
-                                type: "text",
-                                title: t("CR_INVALID_LOCALITY_ML"),
-                            })}
-                        />
+                    <div className="col-md-12">
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {t("CR_LOCALITY_EN")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaLocalityNameEn"
+                                value={presentInsideKeralaLocalityNameEn}
+                                onChange={setSelectinsideKeralaLocalityNameEn}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CR_LOCALITY_EN")}`}
+                                {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaStreetNameEn"
+                                value={presentInsideKeralaStreetNameEn}
+                                onChange={setSelectinsideKeralaStreetNameEn}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                                {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {t("CR_HOUSE_NAME_EN")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaHouseNameEn"
+                                value={presentInsideKeralaHouseNameEn}
+                                onChange={setSelectinsideKeralaHouseNameEn}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+                                {...(validation = { pattern: "^[a-zA-Z/-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                            />
+                        </div>
                     </div>
-                    <div className="col-md-4">
-                        <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaStreetNameMl"
-                            value={presentInsideKeralaStreetNameMl}
-                            onKeyPress={setCheckMalayalamInputField}
-                            onChange={setSelectinsideKeralaStreetNameMl}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CR_STREET_NAME_ML")}`}
-                            {...(validation = {
-                                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                                isRequired: false,
-                                type: "text",
-                                title: t("CR_INVALID_STREET_NAME_ML"),
-                            })}
-                        />
-                    </div>
-                    <div className="col-md-4">
-                        <CardLabel>
-                            {t("CR_HOUSE_NAME_ML")}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <TextInput
-                            t={t}
-                            type={"text"}
-                            optionKey="i18nKey"
-                            name="presentInsideKeralaHouseNameMl"
-                            value={presentInsideKeralaHouseNameMl}
-                            onKeyPress={setCheckMalayalamInputFieldWithSplChar}
-                            onChange={setSelectinsideKeralaHouseNameMl}
-                            disable={isDisableEdit}
-                            placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-                            {...(validation = {
-                                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
-                                isRequired: true,
-                                type: "text",
-                                title: t("CR_INVALID_HOUSE_NAME_ML"),
-                            })}
-                        />
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {t("CR_LOCALITY_ML")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaLocalityNameMl"
+                                value={presentInsideKeralaLocalityNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
+                                onChange={setSelectinsideKeralaLocalityNameMl}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CR_LOCALITY_ML")}`}
+                                {...(validation = {
+                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                                    isRequired: true,
+                                    type: "text",
+                                    title: t("CR_INVALID_LOCALITY_ML"),
+                                })}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaStreetNameMl"
+                                value={presentInsideKeralaStreetNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
+                                onChange={setSelectinsideKeralaStreetNameMl}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CR_STREET_NAME_ML")}`}
+                                {...(validation = {
+                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                                    isRequired: false,
+                                    type: "text",
+                                    title: t("CR_INVALID_STREET_NAME_ML"),
+                                })}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <CardLabel>
+                                {t("CR_HOUSE_NAME_ML")}
+                                <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <TextInput
+                                t={t}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="presentInsideKeralaHouseNameMl"
+                                value={presentInsideKeralaHouseNameMl}
+                                onKeyPress={setCheckMalayalamInputFieldWithSplChar}
+                                onChange={setSelectinsideKeralaHouseNameMl}
+                                disable={isDisableEdit}
+                                placeholder={`${t("CR_HOUSE_NAME_ML")}`}
+                                {...(validation = {
+                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$",
+                                    isRequired: true,
+                                    type: "text",
+                                    title: t("CR_INVALID_HOUSE_NAME_ML"),
+                                })}
+                            />
+                        </div>
                     </div>
                 </div>
 

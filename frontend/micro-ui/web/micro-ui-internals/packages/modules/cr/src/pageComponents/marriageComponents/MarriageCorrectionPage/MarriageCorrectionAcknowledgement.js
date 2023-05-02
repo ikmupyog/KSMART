@@ -24,6 +24,7 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
+  console.log("pro[pss",props);
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -34,31 +35,33 @@ const BannerPicker = (props) => {
   );
 };
 
-const MarriageCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, userType }) => {
+const MarriageCorrectionAcknowledgement = () => {
   const { t } = useTranslation();
 
   let location = useLocation();
-  let navigationData = location?.state?.navData;
+  // let navigationData = location?.state?.navData;
+  let marriageCorrectionData = location?.state?.marriageCorrectionData;
+  let mutationData = location?.state?.mutationData;
 
-  if (false) {
-    return (
-      <Card>
-        <BannerPicker
-          t={t}
-          // data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)}
-        />
-        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-        <Link to={`/digit-ui/citizen`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-        </Link>
-      </Card>
-    );
-  } else {
+  // if (false) {
+  //   return (
+  //     <Card>
+  //       <BannerPicker
+  //         t={t}
+  //         // data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)}
+  //       />
+  //       {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
+  //       <Link to={`/digit-ui/citizen`}>
+  //         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+  //       </Link>
+  //     </Card>
+  //   );
+  // } else {
     // console.log(JSON.stringify(mutation));
-    if (true) {
+    if (mutationData?.isSuccess) {
       return (
         <Card>
-          <BannerPicker t={t} data={navigationData} isSuccess={"success"} />
+          <BannerPicker t={t} data={marriageCorrectionData} isSuccess={true} />
           {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
            */}
           <LinkButton
@@ -84,18 +87,18 @@ const MarriageCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, 
     } else {
       return (
         <Card>
-          <BannerPicker
-            t={t}
-            //   data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading}
-          />
-          {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
-          <Link to={`/digit-ui/citizen`}>
-            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-          </Link>
-        </Card>
+         <BannerPicker
+          t={t}
+           data={mutationData.data} isSuccess={mutationData.isSuccess} isLoading={(mutationData?.isLoading)}
+         />
+         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
+         <Link to={`/digit-ui/citizen`}>
+           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+         </Link>
+       </Card>
       );
     }
-  }
+  // }
 };
 
 export default MarriageCorrectionAcknowledgement;

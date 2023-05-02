@@ -1,3 +1,4 @@
+import moment from "moment";
 
 const formFielColumns = {
   DOM: "marriageDOM",
@@ -27,10 +28,10 @@ const formFielColumns = {
   },
   GROOM_NAME:{
     firstNameEn: "GroomDetails.groomFirstnameEn",
-    middleNameEn: "GroomDetails.groomMiddlenameEn",
-    lastNameEn: "GroomDetails.groomLastnameEn",
     firstNameMl: "GroomDetails.groomFirstnameMl",
+    middleNameEn: "GroomDetails.groomMiddlenameEn",
     middleNameMl: "GroomDetails.groomMiddlenameMl",
+    lastNameEn: "GroomDetails.groomLastnameEn",
     lastNameMl: "GroomDetails.groomLastnameMl",
   },
   GROOM_AGE:{
@@ -43,10 +44,10 @@ const formFielColumns = {
   },
   BRIDE_NAME:{
     firstNameEn: "BrideDetails.brideFirstnameEn",
-    middleNameEn: "BrideDetails.brideMiddlenameEn",
-    lastNameEn: "BrideDetails.brideLastnameEn",
     firstNameMl: "BrideDetails.brideFirstnameMl",
+    middleNameEn: "BrideDetails.brideMiddlenameEn",
     middleNameMl: "BrideDetails.brideMiddlenameMl",
+    lastNameEn: "BrideDetails.brideLastnameEn", 
     lastNameMl: "BrideDetails.brideLastnameMl",
   },
   GROOM_PERADD: {
@@ -140,7 +141,7 @@ const formFielColumns = {
       {
         column: formFielColumns[item?.selectedDocType],
         oldValue: item.initialValue,
-        newValue: item.curValue && Date.now(item.curValue),
+        newValue: item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
       },
     ];
     break;
@@ -149,7 +150,7 @@ const formFielColumns = {
         {
           column: "GroomDetails.groomDOB",
           oldValue: item.initialValue?.dob,
-          newValue: item.curValue && Date.now(item.curValue?.dob),
+          newValue: item.curValue && moment(item.curValue?.dob, 'DD/MM/YYYY').valueOf(),
         },
         {
           column: "GroomDetails.groomAge",
@@ -163,7 +164,7 @@ const formFielColumns = {
         {
           column: "BrideDetails.brideDOB",
           oldValue: item.initialValue?.dob,
-          newValue: item.curValue && Date.now(item.curValue?.dob),
+          newValue: item.curValue && moment(item.curValue?.dob, 'DD/MM/YYYY').valueOf(),
         },
         {
           column: "BrideDetails.brideAge",
@@ -212,14 +213,16 @@ const formFielColumns = {
     const apiParam = {
       CorrectionDetails: [
         {
-          id: userData?.id,
-          tenantid: "kl.cochin",
+          // id: userData?.id,
+          tenantid: userData?.marriageTenantid,
           applicationType: "corr",
           moduleCode: "CRBRCN",
           businessservice: "marriage-services",
-          workflowcode: "BIRTHHOSP21",
-          action: "",
-          registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
+          workflowcode: "MARRIAGECORRECTION",
+          isWorkflow: true,
+          action: "INITIATE",
+          assignee: [],
+          registerid: userData?.id,
           registrationNo: userData?.registrationno,
           registrationDate: null,
           applicationStatus: "INITIATED",

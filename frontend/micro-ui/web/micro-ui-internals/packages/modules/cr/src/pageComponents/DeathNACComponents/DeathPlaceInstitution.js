@@ -63,25 +63,25 @@ const DeathPlaceInstitution = ({
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
-  if (isEditAbandonedDeath) {
-    if (formData?.InformationDeathAband?.institutionTypeCode != null) {
-      if (cmbinstitutionType.length > 0 && (institution === undefined || institution === "")) {
-        selectinstitution(
-          cmbinstitutionType.filter((cmbinstitutionType) => cmbinstitutionType.code === formData?.InformationDeathAband?.institutionTypeCode)[0]
-        );
-      }
-    }
-    if (formData?.InformationDeathAband?.institutionNameCode != null) {
-      if (cmbInstitutionList.length > 0 && (DeathPlaceInstId === undefined || DeathPlaceInstId === "")) {
-        setSelectedDeathPlaceInstId(
-          cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.code === formData?.InformationDeathAband?.institutionNameCode)[0]
-        );
-        setInstitutionIdMl(
-          cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.code === formData?.InformationDeathAband?.institutionNameCode)[0]
-        );
-      }
-    }
-  }
+  // if (isEditAbandonedDeath) {
+  //   if (formData?.InformationDeathAband?.institutionTypeCode != null) {
+  //     if (cmbinstitutionType.length > 0 && (institution === undefined || institution === "")) {
+  //       selectinstitution(
+  //         cmbinstitutionType.filter((cmbinstitutionType) => cmbinstitutionType.code === formData?.InformationDeathAband?.institutionTypeCode)[0]
+  //       );
+  //     }
+  //   }
+  //   if (formData?.InformationDeathAband?.institutionNameCode != null) {
+  //     if (cmbInstitutionList.length > 0 && (DeathPlaceInstId === undefined || DeathPlaceInstId === "")) {
+  //       setSelectedDeathPlaceInstId(
+  //         cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.code === formData?.InformationDeathAband?.institutionNameCode)[0]
+  //       );
+  //       setInstitutionIdMl(
+  //         cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.code === formData?.InformationDeathAband?.institutionNameCode)[0]
+  //       );
+  //     }
+  //   }
+  // }
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
       if (institution) {

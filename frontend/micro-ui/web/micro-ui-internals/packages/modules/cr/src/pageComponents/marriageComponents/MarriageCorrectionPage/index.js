@@ -65,10 +65,10 @@ const MarriageCorrectionPage = () => {
     setCmbPlaceName(marriagePlace);
   }
 
-  const createProperty = async (navData) => {
+  const createProperty = async ({marriageCorrectionFormsObj, navigationData}) => {
     history.push({
-      pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
-      state: { navData }
+      pathname: `/digit-ui/citizen/cr/marriage-correction-summary`,
+      state: { navData: navigationData, marriageCorrectionData: marriageCorrectionFormsObj }
     });
   };
 
@@ -96,7 +96,7 @@ const MarriageCorrectionPage = () => {
         cmbWardNoFinal={cmbWardNoFinal}
         cmbWardNo={cmbWardNo}
         cmbPlaceName={cmbPlaceName}
-        BirthCorrectionDocuments={marriageCorrectionDocs}
+        marriageCorrectionDocuments={marriageCorrectionDocs}
         navigationData={navigationData}
         onSubmitAcknowledgement={createProperty}
       />

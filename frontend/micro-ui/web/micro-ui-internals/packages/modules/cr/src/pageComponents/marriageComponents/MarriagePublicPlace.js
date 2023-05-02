@@ -172,7 +172,7 @@ const MarriagePublicPlace = ({
               value={marriageLandmark}
               onChange={setSelectMarriageLandmark}
               placeholder={`${t("CR_LANDMARK")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LANDMARK") })}
             />
           </div>
         </div>
@@ -192,7 +192,7 @@ const MarriagePublicPlace = ({
               name="marriagePublicOrPrivateNamePlaceMl"
               value={marriagePlacenameMl}
               onChange={setSelectOtherMarriagePlacenameMl}
-              placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
+              placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                 isRequired: true,

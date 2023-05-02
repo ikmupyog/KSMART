@@ -7,7 +7,7 @@ const mystyle = {
   display: "block",
 };
 
-const SearchFields = ({ register, control, reset, tenantId, t }) => {
+const   SearchFields = ({ register, control, reset, tenantId, t }) => {
   const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.tl.useMDMS.applicationTypes(tenantId);
 
   const applicationType = useWatch({ control, name: "applicationType" });
@@ -39,7 +39,7 @@ const SearchFields = ({ register, control, reset, tenantId, t }) => {
           {t("CR_SEARCH_APP_NO_LABEL")}
           <span className="mandatorycss">*</span>
         </label>
-        <TextInput name="applicationNumber" inputRef={register({})} />
+        <TextInput name="applicationNo" inputRef={register({})} />
       </SearchField>
       {/* {applicationTypesLoading ? <Loader/> : <SearchField>
             <label>{t("TL_LOCALIZATION_APPLICATION_TYPE")}</label>
@@ -77,7 +77,7 @@ const SearchFields = ({ register, control, reset, tenantId, t }) => {
           onClick={() => {
             reset({
               searchAppllication: [],
-              applicationNumber: "",
+              applicationNo: "",
               fromDate: "",
               toDate: "",
               licenseNumbers: "",
@@ -85,7 +85,7 @@ const SearchFields = ({ register, control, reset, tenantId, t }) => {
               tradeName: "",
               offset: 0,
               limit: 10,
-              sortBy: "dateOfBirth",
+              // sortBy: "applicationNo",
               sortOrder: "DESC",
             });
             previousPage();

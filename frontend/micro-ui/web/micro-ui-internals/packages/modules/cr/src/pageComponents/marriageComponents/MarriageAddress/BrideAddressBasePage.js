@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader, CheckBox } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../../components/CRTimeline";
+import Timeline from "../../../components/MARRIAGETimeline";
 import DRTimeline from "../../../components/DRTimeline";
 import AdoptionTimeline from "../../../components/AdoptionTimeline";
 import { useTranslation } from "react-i18next";
@@ -93,10 +93,10 @@ const BrideAddressBasePage = ({
     formData?.BrideAddressDetails?.presentaddressStateName?.code ? formData?.BrideAddressDetails?.presentaddressStateName : ""
   );
   let countrycode = "";
-  if (formData?.BrideAddressDetails?.presentaddressCountry === "COUNTRY_INDIA") {
+  if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA") {
     countrycode = "IND";
   } else {
-    countrycode = formData?.BrideAddressDetails?.presentaddressCountry;
+    countrycode = formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry;
   }
   const [countryvalue, setCountryValue] = useState(
     formData?.BrideAddressDetails?.presentaddressCountry?.code ? formData?.BrideAddressDetails?.presentaddressCountry.countrycode : "IND"
@@ -166,14 +166,14 @@ const BrideAddressBasePage = ({
   const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(
     formData?.BrideAddressDetails?.presentOutsideKeralaTaluk ? formData?.BrideAddressDetails?.presentOutsideKeralaTaluk : ""
   );
-  // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.BrideAddressDetails?.presentOutsideKeralaTaluk?.code ? formData?.BrideAddressDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.BrideAddressDetails?.presentOutsideKeralaTaluk ? "" : "");
+  // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? "" : "");
   const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(
     formData?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn ? formData?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn : ""
   );
   const [presentOutsideKeralaVillage, setoutsideKeralaVillage] = useState(
     formData?.BrideAddressDetails?.presentOutsideKeralaVillage?.code ? formData?.BrideAddressDetails?.presentOutsideKeralaVillage : ""
   );
-  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.BrideAddressDetails?.presentOutsideKeralaPostOffice);
+  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
   const [presentOutsideKeralaPincode, setoutsideKeralaPincode] = useState(
     formData?.BrideAddressDetails?.presentOutsideKeralaPincode ? formData?.BrideAddressDetails?.presentOutsideKeralaPincode : null
   );
@@ -233,7 +233,7 @@ const BrideAddressBasePage = ({
     formData?.BrideAddressDetails?.presentOutSideIndiaPostCode ? formData?.BrideAddressDetails?.presentOutSideIndiaPostCode : ""
   );
 
-  //const [presentOutSideCountry, setOutSideCountry] = useState(formData?.BrideAddressDetails?.presentOutSideCountry ? formData?.BrideAddressDetails?.presentOutSideCountry : null);
+  //const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
 
   //############################################### Same As Above ##################################################################################################
 
@@ -250,10 +250,10 @@ const BrideAddressBasePage = ({
     formData?.BrideAddressDetails?.permtaddressStateName?.code ? formData?.BrideAddressDetails?.permtaddressStateName : ""
   );
   let countryPermcode = "";
-  if (formData?.BrideAddressDetails?.permtaddressCountry === "COUNTRY_INDIA") {
+  if (formData?.ChildDetails?.BrideAddressDetails?.permtaddressCountry === "COUNTRY_INDIA") {
     countryPermcode = "IND";
   } else {
-    countryPermcode = formData?.BrideAddressDetails?.permtaddressCountry;
+    countryPermcode = formData?.ChildDetails?.BrideAddressDetails?.permtaddressCountry;
   }
   const [countryValuePermanent, setCountryValuePermanent] = useState(
     formData?.BrideAddressDetails?.permtaddressCountry?.code ? formData?.BrideAddressDetails?.permtaddressCountry.countrycode : "IND"
@@ -267,7 +267,7 @@ const BrideAddressBasePage = ({
   const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(
     formData?.BrideAddressDetails?.permntInKeralaAdrDistrict?.code ? formData?.BrideAddressDetails?.permntInKeralaAdrDistrict : ""
   );
-  // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.BrideAddressDetails?.permntInKeralaAdrLBTypeName ? formData?.BrideAddressDetails?.permntInKeralaAdrLBTypeName : null);
+  // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName : null);
   const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(
     formData?.BrideAddressDetails?.permntInKeralaAdrLBName?.code ? formData?.BrideAddressDetails?.permntInKeralaAdrLBName : ""
   );
@@ -319,7 +319,7 @@ const BrideAddressBasePage = ({
   const [permntOutsideKeralaVillage, setpermntOutsideKeralaVillage] = useState(
     formData?.BrideAddressDetails?.permntOutsideKeralaVillage ? formData?.BrideAddressDetails?.permntOutsideKeralaVillage : ""
   );
-  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.BrideAddressDetails?.presentOutsideKeralaPostOffice);
+  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
   const [permntOutsideKeralaPincode, setpermntOutsideKeralaPincode] = useState(
     formData?.BrideAddressDetails?.permntOutsideKeralaPincode ? formData?.BrideAddressDetails?.permntOutsideKeralaPincode : ""
   );
@@ -378,7 +378,7 @@ const BrideAddressBasePage = ({
     formData?.BrideAddressDetails?.permanentOutsideIndiaPostCode ? formData?.BrideAddressDetails?.permanentOutsideIndiaPostCode : ""
   );
 
-  //const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.BrideAddressDetails?.permntOutsideIndiaCountry ? formData?.BrideAddressDetails?.permntOutsideIndiaCountry : null);
+  //const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null);
 
   //############################################################# Error Constants #####################################################################################
 
@@ -1660,26 +1660,8 @@ const BrideAddressBasePage = ({
   return (
     <React.Fragment>
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? (
-        <Timeline currentStep={3} />
-      ) : null || window.location.href.includes("employee/cr/cr-flow") ? (
-        <Timeline currentStep={3} />
-      ) : null}
-      {window.location.href.includes("/citizen/cr/cr-adoption/adoption-address-birth") ? (
-        <AdoptionTimeline currentStep={3} />
-      ) : null || window.location.href.includes("employee/cr/cr-adoptionflow") ? (
-        <AdoptionTimeline currentStep={3} />
-      ) : null}
-      {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? (
-        <DRTimeline currentStep={2} />
-      ) : null || window.location.href.includes("employee/cr/death-flow") ? (
-        <DRTimeline currentStep={2} />
-      ) : null}
-      {window.location.href.includes("/citizen/cr/cr-stillbirth-creation/stillbirth-address") ? (
-        <Timeline currentStep={3} />
-      ) : null || window.location.href.includes("employee/cr/cr-flow") ? (
-        <Timeline currentStep={3} />
-      ) : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="accordion-wrapper">
           <BrideAddressPresent
