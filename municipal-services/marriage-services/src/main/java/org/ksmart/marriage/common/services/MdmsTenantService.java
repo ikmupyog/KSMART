@@ -146,4 +146,32 @@ public class MdmsTenantService {
 //        int index = tenants.indexOf(code);
 //        return JsonPath.read(mdmsData, BirthConstants.CR_MDMS_COUNTRY_JSONPATH+"["+index+"].namelocal");
 //    }
+    private List<String> getMarriageType(Object mdmsData) {
+    return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGETYPE_CODE_JSONPATH);
+}
+    private List<String> getPlaceTypes(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACETYPE_CODE_JSONPATH);
+    }
+//localized values
+    public String getMarriageTypesEn(Object mdmsData, String code) {
+        List<String> lists = getMarriageType(mdmsData);
+        int index = lists.indexOf(code);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TYPE_JSONPATH + "[" + index + "].name");
+    }
+    public String getMarriageTypesMl(Object mdmsData, String code) {
+        List<String> lists = getMarriageType(mdmsData);
+        int index = lists.indexOf(code);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TYPE_JSONPATH + "[" + index + "].namelocal");
+    }
+
+    public String getplaceTypesEn(Object mdmsData, String code) {
+        List<String> lists = getPlaceTypes(mdmsData);
+        int index = lists.indexOf(code);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACE_TYPE_JSONPATH + "[" + index + "].name");
+    }
+    public String getplaceTypesMl(Object mdmsData, String code) {
+        List<String> lists = getPlaceTypes(mdmsData);
+        int index = lists.indexOf(code);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACE_TYPE_JSONPATH + "[" + index + "].namelocal");
+    }
 }

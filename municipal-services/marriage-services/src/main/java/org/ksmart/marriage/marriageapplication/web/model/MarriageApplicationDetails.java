@@ -50,6 +50,14 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriagePlacetype")
     private String placetype;
 
+    @Size(max = 200)
+    @JsonProperty("placetypeEn")
+    private String placetypeEn;
+
+    @Size(max = 200)
+    @JsonProperty("placetypeMl")
+    private String placetypeMl;
+
     @Size(max = 1000)
     @JsonProperty("marriagePlacenameEn")
     private String placenameEn;
@@ -93,6 +101,14 @@ public class MarriageApplicationDetails {
     @Size(max = 64)
     @JsonProperty("marriageType")
     private String marriageType;
+
+    @Size(max = 200)
+    @JsonProperty("marriageTypeEn")
+    private String marriageTypeEn;
+
+    @Size(max = 200)
+    @JsonProperty("marriageTypeMl")
+    private String marriageTypeMl;
 
     @Size(max = 200)
     @JsonProperty("othMarriageType")

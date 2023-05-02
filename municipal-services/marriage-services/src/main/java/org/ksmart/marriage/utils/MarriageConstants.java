@@ -6,7 +6,13 @@ public class MarriageConstants {
 
     public static final String GENDERTYPE = "GenderType";
     public static final String COMMON_MASTER_MODULE_NAME = "common-masters";
-     //mdms path codes
+    public static final String CR_MDMS_MARRIAGETYPE_CODE_JSONPATH = "$.MdmsRes.birth-death-service.MarriagePlaceType[*].code";
+    public static final String CR_MDMS_MARRIAGE_TYPE_JSONPATH = "$.MdmsRes.birth-death-service.MarriagePlaceType";
+
+    public static final String CR_MDMS_PLACETYPE_CODE_JSONPATH = "$.MdmsRes.birth-death-service.TypeOfMarriage[*].code";
+    public static final String CR_MDMS_PLACE_TYPE_JSONPATH = "$.MdmsRes.birth-death-service.TypeOfMarriage";
+
+    //mdms path codes
      public static final String COMMON_MASTER_JSONPATH = "$.MdmsRes.common-masters";
      public static final String TENANT_JSONPATH = "$.MdmsRes.tenant";
      public static final String BND_LIST_JSONPATH = "$.MdmsRes.birth-death-service";

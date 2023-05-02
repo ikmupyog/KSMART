@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCodes {
 
-    // Birth Details
+    // marriage Details
     MARRIAGE_DETAILS_REQUIRED("REQUIRED"),
     MARRIAGE_DETAILS_NOT_FOUND("NOT_FOUND"),
     MARRIAGE_DETAILS_INVALID_SEARCH_CRITERIA("INVALID_CRITERIA"),
@@ -17,8 +17,14 @@ public enum ErrorCodes {
     INVALID_SEARCH("INVALID_SEARCH"),
     // Idgen Service
     IDGEN_ERROR("IDGEN_ERROR"),
-    ROW_MAPPER_ERROR("ROW-MAPPER_ERROR");
+    ROW_MAPPER_ERROR("ROW-MAPPER_ERROR"),
+    //common
+    NOT_FOUND("NOT_FOUND");
     private String code;
+
+
+
+
 
 
 
