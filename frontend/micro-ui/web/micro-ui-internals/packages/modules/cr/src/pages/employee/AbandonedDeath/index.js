@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-
 import { newConfig as newConfigCR } from "../../../config/config";
 import InformationDeathAband from "../../../pageComponents/deathAbandoned/InformationDeathAband";
 
@@ -33,7 +32,7 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a. hideInEmployee));
   });
-  config.indexRoute = "information-death";
+
   config.indexRouteA = "abandoned-death-information";
 
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
@@ -92,22 +91,34 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
     <React.Fragment>
       <Switch>
       
-{config.indexRouteA?
+      {config.map((routeObj, index) => {
+          const { component, texts, inputs, key, isSkipEnabled } = routeObj;
+          const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
+          return (
+            <Route path={`${match.path}/${routeObj.route}`} key={index}>
+              <Component
+                config={{ texts, inputs, key, isSkipEnabled }}
+                onSelect={handleSelect}
+                onSkip={handleSkip}
+                t={t}
+                formData={params}
+                onAdd={handleMultiple}
+                userType="employee"
+                isEditDeath={isEditDeath}
+              />
+            </Route>
+          );
+        })}
+
+     
   <Route path={`${match.path}/check`}>
           <AbandonedDeathCheckPage onSubmit={createProperty} value={params1} />
         </Route>
-        :
-      null
-}
-        {
-          config.indexRouteA?
+       
           <Route path={`${match.path}/acknowledgement`}>
           <AbandonedDeathAcknowledgement data={params1} onSuccess={onSuccessAbandoned} />
         </Route>
-          
-          :
-          null
-        }
+      
         <PrivateRoute parentRoute={path} path={`${path}/${config.indexRouteA}`} component={() => <InformationDeathAband parentUrl={path}  />} />
       </Switch>
     </React.Fragment>
