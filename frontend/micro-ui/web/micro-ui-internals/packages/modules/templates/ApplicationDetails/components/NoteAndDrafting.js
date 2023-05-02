@@ -57,7 +57,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   console.log(applDetails);
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
-  const applicationNumber = "KL-Cochin-C-000125-CRBRNR-2023-APPL";
+  const applicationNumber = applDetails?.applicationNumber ;
+//   const applicationNumber = "KL-Cochin-C-000125-CRBRNR-2023-APPL";
   // workflow
   const [businessService, setBusinessService] = useState("BIRTHHOSP21");
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
@@ -68,7 +69,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config: {},
   });
-  console.log("applicationDetails", workflowDetails);
+//   console.log("applicationDetails", workflowDetails);
 
   //workflow end
 
@@ -171,11 +172,11 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     }
   }
   navigator.geolocation.getCurrentPosition(function (position) {
-    console.log("Latitude is :", position.coords.latitude);
-    console.log("Longitude is :", position.coords.longitude);
+    // console.log("Latitude is :", position.coords.latitude);
+    // console.log("Longitude is :", position.coords.longitude);
   });
   const onLocationChange = (code, loc) => {
-    console.log("loc", code, loc);
+    // console.log("loc", code, loc);
     // setPincode(code)
     setLongitude(loc.longitude);
     setLatitude(loc.latitude);
