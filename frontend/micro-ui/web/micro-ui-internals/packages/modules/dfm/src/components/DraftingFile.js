@@ -164,7 +164,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </Card>
                         </Modal>}
                     <div className="row wrapper-file" >
-                        <div className="col-md-12 col-sm-12 col-xs-12" style={{display:'flex'}}>
+                        <div className="col-md-12 col-sm-12 col-xs-12" style={{display:'flex',alignItems:"center"}}>
                             <div className="col-md-2 col-sm-12 col-xs-12"  >
 
                                 <h3 class="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
