@@ -38,7 +38,7 @@ public class IdgenUtil {
     @Autowired
     private ServiceRequestRepository restRepo;
 
-    public List<String> getIdList(final RequestInfo requestInfo, final String tenantId, final String idName,
+    public List<String> getIdList(final RequestInfo requestInfo, final String tenantId, final String idName, // NOPMD
                                   final String moduleCode, final String fnType, final Integer count) {
         final List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {

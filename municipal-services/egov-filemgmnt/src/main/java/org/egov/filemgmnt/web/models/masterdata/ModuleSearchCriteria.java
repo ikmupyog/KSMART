@@ -19,9 +19,7 @@ import lombok.Setter;
 public class ModuleSearchCriteria {
 
     @NotBlank(message = "Tenant identification number is required")
-    @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
-//    @Pattern(regexp = FMConstants.PATTERN_TENANT,
-//            message = "Invalid tenant identification number format, ex: kl.cochin")
+    @Size(max = 15, message = "Tenant identification number length cannot exceed 15 characters")
     @JsonProperty("tenantId")
     private String tenantId;
 

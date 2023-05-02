@@ -1,6 +1,7 @@
 package org.egov.filemgmnt.web.models.enquiry;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.egov.filemgmnt.util.FMConstants;
@@ -35,6 +36,8 @@ public class Enquiry {
             description = "Tenant identification number",
             example = "kl.cochin")
     @NotBlank(message = "Tenant identification number is required")
+    @Pattern(regexp = FMConstants.PATTERN_TENANT,
+             message = "Invalid tenant identification number format, ex: kl.cochin")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
     @JsonProperty("tenantId")
     private String tenantId;

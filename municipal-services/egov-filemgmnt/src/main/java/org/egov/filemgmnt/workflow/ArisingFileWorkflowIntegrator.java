@@ -99,10 +99,11 @@ public class ArisingFileWorkflowIntegrator {
         System.out.println(jsonObj);
         final String assignees = arisingFile.getAssignee();
         final List<String> assigneeList;//
-        if (StringUtils.isNotBlank(assignees))
+        if (StringUtils.isNotBlank(assignees)) {
             assigneeList = Arrays.asList(assignees.split(","));
-        else
+        } else {
             assigneeList = Collections.emptyList();
+        }
 
         final List<Map<String, String>> uuidMaps = buildUUIDList(assigneeList);
         if (CollectionUtils.isNotEmpty(uuidMaps)) {

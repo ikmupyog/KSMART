@@ -44,21 +44,21 @@ public class MasterDataRepository {
 
     public List<ModuleDetails> searchModules(final ModuleSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
-        final String query = queryBuilder.getModuleDetailSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
+        final String query = queryBuilder.getModuleSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
 
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), moduleRowMapper);
     }
 
     public List<SubFunctionDetails> searchSubFunctions(final SubFunctionSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
-        final String query = queryBuilder.getsubFunctionSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
+        final String query = queryBuilder.getSubFunctionSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
 
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), sfRowMapper);
     }
 
     public List<MajorFunctionDetails> searchMajorFunctions(final MajorFunctionSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
-        final String query = queryBuilder.getMFSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
+        final String query = queryBuilder.getMajorFunctionSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), mfRowMapper);
     }
 

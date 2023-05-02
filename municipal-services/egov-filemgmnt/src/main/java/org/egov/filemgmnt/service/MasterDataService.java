@@ -66,14 +66,14 @@ public class MasterDataService { // NOPMD
     }
 
     public ModuleDetails updateModule(ModuleDetailsRequest request) {
-        final ModuleDetails module = request.getModuleDetails();
+//        final ModuleDetails module = request.getModuleDetails();
 
         // search database
-        List<ModuleDetails> results = repository.searchModules(ModuleSearchCriteria.builder()
-                                                                                   .moduleCode(module.getModuleCode())
-                                                                                   .build());
+//        List<ModuleDetails> results = repository.searchModules(ModuleSearchCriteria.builder()
+//                                                                                   .moduleCode(module.getModuleCode())
+//                                                                                   .build());
         // validate
-        // validator.validateUpdate(request, results);
+//        validator.validateUpdate(request, results);
 
         // enrich
         enrichment.enrichUpdateModule(request);
@@ -84,14 +84,14 @@ public class MasterDataService { // NOPMD
     }
 
     public MajorFunctionDetails updateMajorFunction(MajorFunctionDetailsRequest request) {
-        final MajorFunctionDetails majorFunction = request.getMajorFunctionDetails();
+//        final MajorFunctionDetails majorFunction = request.getMajorFunctionDetails();
 
         // search
-        List<MajorFunctionDetails> results = repository.searchMajorFunctions(MajorFunctionSearchCriteria.builder()
-                                                                                                        .majorFunctionCode(majorFunction.getMajorFunctionCode())
-                                                                                                        .build());
+//        List<MajorFunctionDetails> results = repository.searchMajorFunctions(MajorFunctionSearchCriteria.builder()
+//                                                                                                        .majorFunctionCode(majorFunction.getMajorFunctionCode())
+//                                                                                                        .build());
         // validate request
-        // validator.validateUpdate(request, results);
+//        validator.validateUpdate(request, results);
 
         // enrichment
         enrichment.enrichUpdateMajorFunction(request);
@@ -102,12 +102,12 @@ public class MasterDataService { // NOPMD
     }
 
     public SubFunctionDetails updateSubFunction(SubFunctionDetailsRequest request) {
-        final SubFunctionDetails subFunction = request.getSubFunctionDetails();
+//        final SubFunctionDetails subFunction = request.getSubFunctionDetails();
 
         // search
-        List<SubFunctionDetails> results = repository.searchSubFunctions(SubFunctionSearchCriteria.builder()
-                                                                                                  .subFunctionCode(subFunction.getSubFunctionCode())
-                                                                                                  .build());
+//        List<SubFunctionDetails> results = repository.searchSubFunctions(SubFunctionSearchCriteria.builder()
+//                                                                                                  .subFunctionCode(subFunction.getSubFunctionCode())
+//                                                                                                  .build());
         // enrich
         enrichment.enrichUpdateSubFunction(request);
 
@@ -117,14 +117,14 @@ public class MasterDataService { // NOPMD
     }
 
     public ServiceDetails updateService(ServiceDetailsRequest request) {
-        final ServiceDetails service = request.getServiceDetails();
+//        final ServiceDetails service = request.getServiceDetails();
 
         // search
-        List<ServiceDetails> results = repository.searchServices(ServiceSearchCriteria.builder()
-                                                                                      .serviceCode(service.getServiceCode())
-                                                                                      .build());
+//        List<ServiceDetails> results = repository.searchServices(ServiceSearchCriteria.builder()
+//                                                                                      .serviceCode(service.getServiceCode())
+//                                                                                      .build());
         // validate
-        // validator.validateUpdate(request, results);
+//         validator.validateUpdate(request, results);
 
         // enrich
         enrichment.enrichUpdateService(request);
@@ -154,48 +154,48 @@ public class MasterDataService { // NOPMD
     }
 
     public ModuleDetails deleteModule(final ModuleDetailsRequest request) {
-        final ModuleDetails module = request.getModuleDetails();
+//        final ModuleDetails module = request.getModuleDetails();
 
         // search database
-        List<ModuleDetails> results = repository.searchModules(ModuleSearchCriteria.builder()
-                                                                                   .moduleCode(module.getModuleCode())
-                                                                                   .build());
+//        List<ModuleDetails> results = repository.searchModules(ModuleSearchCriteria.builder()
+//                                                                                   .moduleCode(module.getModuleCode())
+//                                                                                   .build());
         enrichment.enrichDeleteModule(request);
         producer.push(fmConfig.getDeleteModuleMasterTopic(), request);
         return request.getModuleDetails();
     }
 
     public MajorFunctionDetails deleteMajorFunction(final MajorFunctionDetailsRequest request) {
-        final MajorFunctionDetails majorFunction = request.getMajorFunctionDetails();
+//        final MajorFunctionDetails majorFunction = request.getMajorFunctionDetails();
 
         // search database
-        List<MajorFunctionDetails> results = repository.searchMajorFunctions(MajorFunctionSearchCriteria.builder()
-                                                                                                        .majorFunctionCode(majorFunction.getMajorFunctionCode())
-                                                                                                        .build());
+//        List<MajorFunctionDetails> results = repository.searchMajorFunctions(MajorFunctionSearchCriteria.builder()
+//                                                                                                        .majorFunctionCode(majorFunction.getMajorFunctionCode())
+//                                                                                                        .build());
         enrichment.enrichDeleteMajorFunction(request);
         producer.push(fmConfig.getDeleteMajorFunctionTopic(), request);
         return request.getMajorFunctionDetails();
     }
 
     public SubFunctionDetails deleteSubFunction(final SubFunctionDetailsRequest request) {
-        final SubFunctionDetails subFunction = request.getSubFunctionDetails();
+//        final SubFunctionDetails subFunction = request.getSubFunctionDetails();
 
         // search database
-        List<SubFunctionDetails> results = repository.searchSubFunctions(SubFunctionSearchCriteria.builder()
-                                                                                                  .subFunctionCode(subFunction.getSubFunctionCode())
-                                                                                                  .build());
+//        List<SubFunctionDetails> results = repository.searchSubFunctions(SubFunctionSearchCriteria.builder()
+//                                                                                                  .subFunctionCode(subFunction.getSubFunctionCode())
+//                                                                                                  .build());
         enrichment.enrichDeleteSubFunction(request);
         producer.push(fmConfig.getDeleteSubFunctionTopic(), request);
         return request.getSubFunctionDetails();
     }
 
     public ServiceDetails deleteService(final ServiceDetailsRequest request) {
-        final ServiceDetails service = request.getServiceDetails();
+//        final ServiceDetails service = request.getServiceDetails();
 
         // search database
-        List<ServiceDetails> results = repository.searchServices(ServiceSearchCriteria.builder()
-                                                                                      .serviceCode(service.getServiceCode())
-                                                                                      .build());
+//        List<ServiceDetails> results = repository.searchServices(ServiceSearchCriteria.builder()
+//                                                                                      .serviceCode(service.getServiceCode())
+//                                                                                      .build());
         enrichment.enrichDeleteService(request);
         producer.push(fmConfig.getDeleteServiceMasterTopic(), request);
         return request.getServiceDetails();

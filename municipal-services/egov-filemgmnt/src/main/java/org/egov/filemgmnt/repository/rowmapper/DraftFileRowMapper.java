@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.egov.filemgmnt.web.enums.DraftType;
 import org.egov.filemgmnt.web.models.draftfile.DraftFile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -28,7 +29,7 @@ public class DraftFileRowMapper implements ResultSetExtractor<List<DraftFile>>, 
                                 .businessService(rs.getString("businessService"))
                                 .moduleName(rs.getString("moduleName"))
                                 .fileCode(rs.getString("fileCode"))
-                                .draftType(rs.getString("draftType"))
+                                .draftType(DraftType.fromValue(rs.getString("draftType")))
                                 .draftText(rs.getString("draftText"))
                                 .status(rs.getString("status"))
                                 .assigner(rs.getString("assigner"))

@@ -45,21 +45,21 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
              .append(" INNER JOIN eg_fm_servicemaster svm ON svm.sfid = sf.id");
     }
 
-    public String getModuleDetailSearchQuery(@NotNull final ModuleSearchCriteria criteria,
-                                             @NotNull final List<Object> preparedStmtValues,
-                                             @NotNull final Boolean isCount) {
+    public String getModuleSearchQuery(@NotNull final ModuleSearchCriteria criteria,
+                                       @NotNull final List<Object> preparedStmtValues, @NotNull final Boolean isCount) {
 
-        StringBuilder query = new StringBuilder(QUERY);
+        StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("md.modulecode", criteria.getModuleCode(), query, preparedStmtValues);
         addFilter("md.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         return query.toString();
     }
 
-    public String getMFSearchQuery(@NotNull final MajorFunctionSearchCriteria criteria,
-                                   @NotNull final List<Object> preparedStmtValues, @NotNull final Boolean isCount) {
+    public String getMajorFunctionSearchQuery(@NotNull final MajorFunctionSearchCriteria criteria,
+                                              @NotNull final List<Object> preparedStmtValues,
+                                              @NotNull final Boolean isCount) {
 
-        StringBuilder query = new StringBuilder(QUERY);
+        StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("mf.mfcode", criteria.getMajorFunctionCode(), query, preparedStmtValues);
         return query.toString();
@@ -69,17 +69,17 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
                                         @NotNull final List<Object> preparedStmtValues,
                                         @NotNull final Boolean isCount) {
 
-        StringBuilder query = new StringBuilder(QUERY);
+        StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("svc.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
         return query.toString();
     }
 
-    public String getsubFunctionSearchQuery(@NotNull final SubFunctionSearchCriteria criteria,
+    public String getSubFunctionSearchQuery(@NotNull final SubFunctionSearchCriteria criteria,
                                             @NotNull final List<Object> preparedStmtValues,
                                             @NotNull final Boolean isCount) {
 
-        StringBuilder query = new StringBuilder(QUERY);
+        StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("sf.sfcode", criteria.getSubFunctionCode(), query, preparedStmtValues);
         return query.toString();

@@ -27,7 +27,7 @@ public class ArisingFileQueryBuilder extends BaseQueryBuilder {
                                             @NotNull final List<Object> preparedStmtValues,
                                             @NotNull final Boolean isCount) {
 
-        StringBuilder query = new StringBuilder(QUERY);
+        StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("filecode", criteria.getFileCode(), query, preparedStmtValues);
         // addFilters("filearisingdate", criteria.getFromDate(), query,

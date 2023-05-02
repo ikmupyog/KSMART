@@ -58,7 +58,7 @@ public class DraftFilesController implements DraftFilesBaseController {
     public ResponseEntity<DraftFileResponse> update(@RequestBody final DraftFileRequest request,
                                                     @RequestParam final String mode) {
 
-        DraftFile result = null;
+        DraftFile result;
         if (StringUtils.equals(mode, "STATUS")) {
             result = draftFileService.updateStatus(request);
         } else {

@@ -37,8 +37,7 @@ public class DraftFilesValidator {
         Assert.notNull(draftFile, "Draft file must not be null.");
 
         if (StringUtils.isNotBlank(draftFile.getTenantId()) && StringUtils.isNotBlank(draftFile.getAssigner())
-                && StringUtils.isNotBlank(draftFile.getFileCode())
-                && StringUtils.isNotBlank(draftFile.getDraftType())) {
+                && StringUtils.isNotBlank(draftFile.getFileCode()) && draftFile.getDraftType() != null) {
 
             DraftFileSearchCriteria criteria = new DraftFileSearchCriteria();
             criteria.setAssigner(draftFile.getAssigner());
@@ -76,7 +75,7 @@ public class DraftFilesValidator {
             throw new CustomException(INVALID_SEARCH.getCode(), "File Code is required for draft search.");
         }
 
-        if (StringUtils.isBlank(criteria.getDraftType())) {
+        if (criteria.getDraftType() == null) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Draft Type is required for draft search.");
         }
 
@@ -88,7 +87,7 @@ public class DraftFilesValidator {
         }
 
         if (StringUtils.isNotBlank(criteria.getTenantId()) && StringUtils.isBlank(criteria.getAssigner())
-                && StringUtils.isBlank(criteria.getFileCode()) && StringUtils.isBlank(criteria.getDraftType())) {
+                && StringUtils.isBlank(criteria.getFileCode()) && criteria.getDraftType() == null) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Search based only on tenant id is not allowed.");
         }
     }

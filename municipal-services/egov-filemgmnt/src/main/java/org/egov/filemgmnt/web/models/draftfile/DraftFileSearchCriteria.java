@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.egov.filemgmnt.util.FMConstants;
+import org.egov.filemgmnt.web.enums.DraftType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -37,7 +38,7 @@ public class DraftFileSearchCriteria {
     private String moduleName;
 
     @JsonProperty("draftType")
-    private String draftType;
+    private DraftType draftType;
 
     @JsonProperty("fileCode")
     private String fileCode;

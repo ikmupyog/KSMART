@@ -27,7 +27,7 @@ public class EnquiryQueryBuilder extends BaseQueryBuilder {
                                         @NotNull final List<Object> preparedStmtValues,
                                         @NotNull final Boolean isCount) {
 
-        StringBuilder query = new StringBuilder(QUERY);
+        StringBuilder query = new StringBuilder(QUERY.toString());
         addFilter("er.modulename", criteria.getModuleName(), query, preparedStmtValues);
         addFilter("er.fileCode", criteria.getFileCode(), query, preparedStmtValues);
         addFilter("er.assigner", criteria.getAssigner(), query, preparedStmtValues);

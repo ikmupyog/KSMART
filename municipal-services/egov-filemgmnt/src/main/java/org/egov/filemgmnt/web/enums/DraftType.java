@@ -2,8 +2,6 @@ package org.egov.filemgmnt.web.enums;
 
 import java.util.Arrays;
 
-import org.apache.commons.codec.binary.StringUtils;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -27,24 +25,24 @@ public enum DraftType {
         return String.valueOf(value);
     }
 
-    public static boolean isCircular(final String type) {
-        return StringUtils.equals(type, CIRCULAR.getValue());
+    public boolean isCircular() {
+        return this == CIRCULAR;
     }
 
-    public static boolean isAffidavit(final String type) {
-        return StringUtils.equals(type, AFFIDAVIT.getValue());
+    public boolean isAffidavit() {
+        return this == AFFIDAVIT;
     }
 
-    public static boolean isNotice(final String type) {
-        return StringUtils.equals(type, NOTICE.getValue());
+    public boolean isNotice() {
+        return this == NOTICE;
     }
 
-    public static boolean isMemo(final String type) {
-        return StringUtils.equals(type, MEMO.getValue());
+    public boolean isMemo() {
+        return this == MEMO;
     }
 
-    public static boolean isCertificate(final String type) {
-        return StringUtils.equals(type, CERTIFICATE.getValue());
+    public boolean isCertificate() {
+        return this == CERTIFICATE;
     }
 
     @JsonCreator

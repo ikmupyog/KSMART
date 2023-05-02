@@ -2,15 +2,11 @@ package org.egov.filemgmnt.service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
-import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.DraftCertificateEnrichment;
 import org.egov.filemgmnt.repository.DraftFilesRepository;
-import org.egov.filemgmnt.repository.ServiceRequestRepository;
 import org.egov.filemgmnt.validators.DraftFilesValidator;
 import org.egov.filemgmnt.web.enums.CertificateStatus;
 import org.egov.filemgmnt.web.enums.DraftType;
@@ -21,7 +17,6 @@ import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateDetai
 import org.egov.filemgmnt.web.models.certificate.draftfile.DraftCertificateRequest;
 import org.egov.filemgmnt.web.models.draftfile.DraftFile;
 import org.egov.filemgmnt.web.models.draftfile.DraftFileSearchCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -29,13 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class DraftCertificateService {
-
-    @Autowired
-    private FMConfiguration fmConfig;
-
-    @Autowired
-    private ServiceRequestRepository restRepo;
+public class DraftCertificateService extends AbstractCertificateService {
 
     private final DraftFilesRepository repository;
     private final DraftCertificateEnrichment enrichment;
@@ -43,6 +32,7 @@ public class DraftCertificateService {
 
     DraftCertificateService(final DraftFilesRepository repository, final DraftCertificateEnrichment enrichment,
                             final DraftFilesValidator validator) {
+        super();
         this.repository = repository;
         this.enrichment = enrichment;
         this.validator = validator;
@@ -54,36 +44,38 @@ public class DraftCertificateService {
         validator.validateSearch(requestInfo, searchCriteria);
 
         final DraftFile draftFile = findDraftFile(searchCriteria);
-        Assert.notNull(draftFile, "No Draft file is found for this search");
+        Assert.notNull(draftFile, "No draft file is found for certificate creation.");
 
         String urlLink = null; // NOPMD
         String urlCreateEndPoint = null;
         String embeddedUrl = null;
 
-        String draftType = draftFile.getDraftType();
-        if (DraftType.isCircular(draftType)) {
-            urlLink = fmConfig.getCircularCertificateLink();
-            urlCreateEndPoint = fmConfig.getEgovPdfCircularEndPoint();
+        DraftType draftType = draftFile.getDraftType();
+        Assert.notNull(draftType, "Draft type must not be null.");
+
+        if (draftType.isCircular()) {
+            urlLink = getFmConfig().getCircularCertificateLink();
+            urlCreateEndPoint = getFmConfig().getEgovPdfCircularEndPoint();
             embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        } else if (DraftType.isAffidavit(draftType)) {
-            urlLink = fmConfig.getAffidavitCertificateLink();
-            urlCreateEndPoint = fmConfig.getEgovPdfAffidavitEndPoint();
+        } else if (draftType.isAffidavit()) {
+            urlLink = getFmConfig().getAffidavitCertificateLink();
+            urlCreateEndPoint = getFmConfig().getEgovPdfAffidavitEndPoint();
             embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        } else if (DraftType.isNotice(draftType)) {
-            urlLink = fmConfig.getNoticeCertificateLink();
-            urlCreateEndPoint = fmConfig.getEgovPdfNoticeEndPoint();
+        } else if (draftType.isNotice()) {
+            urlLink = getFmConfig().getNoticeCertificateLink();
+            urlCreateEndPoint = getFmConfig().getEgovPdfNoticeEndPoint();
             embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        } else if (DraftType.isMemo(draftType)) {
-            urlLink = fmConfig.getMemoCertificateLink();
-            urlCreateEndPoint = fmConfig.getEgovPdfMemoEndPoint();
+        } else if (draftType.isMemo()) {
+            urlLink = getFmConfig().getMemoCertificateLink();
+            urlCreateEndPoint = getFmConfig().getEgovPdfMemoEndPoint();
             embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
-        } else if (DraftType.isCertificate(draftType)) {
-            urlLink = fmConfig.getDraftCertificateLink();
-            urlCreateEndPoint = fmConfig.getEgovPdfDraftEndPoint();
+        } else if (draftType.isCertificate()) {
+            urlLink = getFmConfig().getDraftCertificateLink();
+            urlCreateEndPoint = getFmConfig().getEgovPdfDraftEndPoint();
             embeddedUrl = buildEmbeddedUrl(draftFile, urlLink);
 
         }
@@ -98,7 +90,7 @@ public class DraftCertificateService {
         // PDF service call
 
         // 1. build url
-        final String pdfHost = fmConfig.getEgovPdfHost();
+        final String pdfHost = getFmConfig().getEgovPdfHost();
         final String draftCertificatePath = urlCreateEndPoint.replace("$tenantId", tenantId.split("\\.")[0]);
         final StringBuilder pdfFinalPath = new StringBuilder().append(pdfHost)
                                                               .append(draftCertificatePath);
@@ -109,7 +101,7 @@ public class DraftCertificateService {
                                                                                      fileCode,
                                                                                      embeddedUrl);
 
-        final EgovPdfResponse pdfResponse = restRepo.fetchResult(pdfFinalPath, pdfRequest, EgovPdfResponse.class);
+        final EgovPdfResponse pdfResponse = getRestRepo().fetchResult(pdfFinalPath, pdfRequest, EgovPdfResponse.class);
 
         // 3. certificate details
         final DraftCertificateDetails certificate = DraftCertificateDetails.builder()
@@ -165,7 +157,7 @@ public class DraftCertificateService {
     }
 
     private String buildEmbeddedUrl(final DraftFile draftDetails, String urlLink) {
-        final String uiHostCert = fmConfig.getUiAppHost();
+        final String uiHostCert = getFmConfig().getUiAppHost();
 
         String resCertPath = urlLink;
         resCertPath = resCertPath.replace("$id", draftDetails.getId());
@@ -176,16 +168,4 @@ public class DraftCertificateService {
 
         return getShortenedUrl(embeddedUrl);
     }
-
-    public String getShortenedUrl(final String url) {
-        final StringBuilder buf = new StringBuilder().append(fmConfig.getUrlShortnerHost())
-                                                     .append(fmConfig.getUrlShortnerEndpoint());
-        final Map<String, String> request = Collections.singletonMap("url", url);
-        final String response = restRepo.fetchResult(buf, request, String.class);
-
-        return StringUtils.isNotBlank(response)
-                ? response
-                : url;
-    }
-
 }

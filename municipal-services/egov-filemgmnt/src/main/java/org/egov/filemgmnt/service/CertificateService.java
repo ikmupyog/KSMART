@@ -9,10 +9,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
-import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.CertificateEnrichment;
 import org.egov.filemgmnt.repository.FileManagementRepository;
-import org.egov.filemgmnt.repository.ServiceRequestRepository;
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.util.MdmsUtil;
 import org.egov.filemgmnt.web.enums.CertificateStatus;
@@ -34,19 +32,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class CertificateService {
+public class CertificateService extends AbstractCertificateService {
 
     @Autowired
-    private FMConfiguration fmConfig;
-    @Autowired
     private MdmsUtil mdmsUtil;
-    @Autowired
-    private ServiceRequestRepository restRepo;
 
     private final FileManagementRepository repository;
     private final CertificateEnrichment enrichment;
 
     CertificateService(final FileManagementRepository repository, final CertificateEnrichment enrichment) {
+        super();
         this.repository = repository;
         this.enrichment = enrichment;
     }
@@ -74,9 +69,9 @@ public class CertificateService {
         // PDF service call
 
         // 1. build url
-        final String pdfHost = fmConfig.getEgovPdfHost();
-        final String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint()
-                                                   .replace("$tenantId", tenantId.split("\\.")[0]);
+        final String pdfHost = getFmConfig().getEgovPdfHost();
+        final String residentialCertPath = getFmConfig().getEgovPdfResidentialEndPoint()
+                                                        .replace("$tenantId", tenantId.split("\\.")[0]);
         final StringBuilder pdfFinalPath = new StringBuilder().append(pdfHost)
                                                               .append(residentialCertPath);
 
@@ -87,7 +82,7 @@ public class CertificateService {
                                                                                             lbAddressWithPinCode,
                                                                                             embeddedUrl);
 
-        final EgovPdfResponse pdfResponse = restRepo.fetchResult(pdfFinalPath, pdfRequest, EgovPdfResponse.class);
+        final EgovPdfResponse pdfResponse = getRestRepo().fetchResult(pdfFinalPath, pdfRequest, EgovPdfResponse.class);
 
         // 3. certificate details
         final CertificateDetails certificate = CertificateDetails.builder()
@@ -178,9 +173,9 @@ public class CertificateService {
     }
 
     private String buildEmbeddedUrl(final ApplicantServiceDetail serviceDetail) {
-        final String uiHostCert = fmConfig.getUiAppHost();
+        final String uiHostCert = getFmConfig().getUiAppHost();
 
-        String resCertPath = fmConfig.getResidentialCertLink();
+        String resCertPath = getFmConfig().getResidentialCertLink();
         resCertPath = resCertPath.replace("$id", serviceDetail.getId());
         resCertPath = resCertPath.replace("$tenantId",
                                           serviceDetail.getApplicant()
@@ -192,16 +187,5 @@ public class CertificateService {
         final String embeddedUrl = uiHostCert + resCertPath;
 
         return getShortenedUrl(embeddedUrl);
-    }
-
-    public String getShortenedUrl(final String url) {
-        final StringBuilder buf = new StringBuilder().append(fmConfig.getUrlShortnerHost())
-                                                     .append(fmConfig.getUrlShortnerEndpoint());
-        final Map<String, String> request = Collections.singletonMap("url", url);
-        final String response = restRepo.fetchResult(buf, request, String.class);
-
-        return StringUtils.isNotBlank(response)
-                ? response
-                : url;
     }
 }

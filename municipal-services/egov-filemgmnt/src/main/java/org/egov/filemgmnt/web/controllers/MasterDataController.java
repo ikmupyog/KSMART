@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1")
-public class MasterDataController implements MasterDataBaseController {
+public class MasterDataController implements MasterDataBaseController { // NOPMD
 
     private final ResponseInfoFactory responseInfoFactory;
     private final MasterDataService masterDataService;

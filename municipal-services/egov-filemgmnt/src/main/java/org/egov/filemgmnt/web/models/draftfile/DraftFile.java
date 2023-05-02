@@ -1,10 +1,12 @@
 package org.egov.filemgmnt.web.models.draftfile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.egov.filemgmnt.util.FMConstants;
+import org.egov.filemgmnt.web.enums.DraftType;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
@@ -61,11 +63,12 @@ public class DraftFile {
     @JsonProperty("fileCode")
     private String fileCode;
 
-    @Schema(type = "string", description = "Draft type")
-    @NotBlank(message = "Draft type is required")
-    @Size(max = 64, message = "Draft type length cannot exceed 64 characters")
+    @Schema(type = "string",
+            allowableValues = { "1 (CIRCULAR)", "2 (AFFIDAVIT)", "3 (NOTICE)", "4 (MEMO)", "5 (CERTIFICATE)" },
+            description = "Draft type")
+    @NotNull(message = "Draft type is required")
     @JsonProperty("draftType")
-    private String draftType;
+    private DraftType draftType;
 
     @Schema(type = "string", description = "Draft content")
     @NotBlank(message = "Draft content is required")
