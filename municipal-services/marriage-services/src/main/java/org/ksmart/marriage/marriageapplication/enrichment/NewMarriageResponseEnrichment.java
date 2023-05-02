@@ -21,11 +21,10 @@ public class NewMarriageResponseEnrichment {
     private final MdmsTenantService mdmsTenantService;
 
     @Autowired
-    NewMarriageResponseEnrichment(MdmsTenantService mdmsTenantService, MarriageMdmsUtil mdmsUtil, MarriageMdmsUtil mdmsUtil1, MdmsForNewMarriageService mdmsMarriageService, MarriageMdmsUtil mdmsUtil2, MdmsForNewMarriageService mdmsMarriageService1, MdmsTenantService mdmsTenantService1) {
-
-        this.mdmsUtil = mdmsUtil2;
-        this.mdmsMarriageService = mdmsMarriageService1;
-        this.mdmsTenantService = mdmsTenantService1;
+    NewMarriageResponseEnrichment(MarriageMdmsUtil mdmsUtil, MdmsForNewMarriageService mdmsMarriageService, MdmsTenantService mdmsTenantService) {
+        this.mdmsUtil = mdmsUtil;
+        this.mdmsMarriageService = mdmsMarriageService;
+        this.mdmsTenantService = mdmsTenantService;
     }
 
     public void setNewMarriageRequestData(RequestInfo requestInfo, List<MarriageApplicationDetails> result) {
