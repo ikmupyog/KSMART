@@ -853,7 +853,6 @@ export const convertToMarriageRegistration = (data = {}) => {
       },
     ],
   };
-  console.log(formData, "payload");
   return formData;
 };
 
