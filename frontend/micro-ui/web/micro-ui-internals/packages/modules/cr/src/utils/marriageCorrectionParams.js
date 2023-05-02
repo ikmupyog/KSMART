@@ -216,7 +216,7 @@ const formFielColumns = {
           // id: userData?.id,
           tenantid: userData?.marriageTenantid,
           applicationType: "corr",
-          moduleCode: "CRBRCN",
+          moduleCode: "CRMRCR",
           businessservice: "marriage-services",
           workflowcode: "MARRIAGECORRECTION",
           isWorkflow: true,
