@@ -164,7 +164,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </Card>
                         </Modal>}
                     <div className="row wrapper-file" >
-                        <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-md-12 col-sm-12 col-xs-12" style={{display:'flex'}}>
                             <div className="col-md-2 col-sm-12 col-xs-12"  >
 
                                 <h3 class="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
@@ -181,7 +181,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-5 col-sm-12 col-xs-12"  >
+                            <div className="col-md-5 col-sm-12 col-xs-12" style={{marginTop:'20px', alignItems:'center'}} >
 
                                 <TextInput
 
@@ -237,7 +237,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             </div>
                         </div>
-                        <div class="link-file" >
+                        <div class="link-file-sec" >
 
                             <LinkButton
                                 label={t("+ADD_REFERENCE_HERE")}
