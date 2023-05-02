@@ -282,7 +282,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute parentRoute={path} path={`${path}/death-flow/Abandoned-death`} component={() => <AbandonedDeathCrFlowApp parentUrl={url} />} />
           <PrivateRoute parentRoute={path} path={`${path}/cr-abflow`} component={() => <CrAbFlow parentUrl={url} />} />
           <PrivateRoute parentRoute={path} path={`${path}/cr-adoptionflow`} component={() => <EditAdoption parentUrl={url} />} />
-
+{/*  */}
           <PrivateRoute path={`${path}/create-birth`} component={CreateBirthEmp} />
           <PrivateRoute path={`${path}/create-stillbirth`} component={ScrFlowApp} />
           <PrivateRoute path={`${path}/create-abandonedbirth`} component={CreateAbandonedBirth} />
