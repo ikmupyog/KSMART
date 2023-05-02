@@ -322,15 +322,15 @@ export const CRDeathsearch = {
         { title: "CR_AADHAR", value: response?.FamilyInformationDeath?.MotherAadharNo || "NA" },
         { title: "CR_FAMILY_MOBILE_NO", value: response?.FamilyInformationDeath?.FamilyMobileNo || "NA" },
         { title: "CR_EMAIL_ID", value: response?.FamilyInformationDeath?.FamilyEmailId || "NA" },
-        {
-          title: "PDF_PLACE_OF_DEATH",
-          value:
-            response?.InformationDeath?.DeathPlaceHospitalNameEn +
-              "/" +
-              response?.InformationDeath?.DeathPlaceHospitalNameMl?.response?.InformationDeath?.DeathPlaceInstitutionNameEn +
-              "/" +
-              response?.InformationDeath?.DeathPlaceInstitutionNameMl || "NA",
-        },
+        // {
+        //   title: "PDF_PLACE_OF_DEATH",
+        //   value:
+        //     response?.InformationDeath?.DeathPlaceHospitalNameEn +
+        //       "/" +
+        //       response?.InformationDeath?.DeathPlaceHospitalNameMl?.response?.InformationDeath?.DeathPlaceInstitutionNameEn +
+        //       "/" +
+        //       response?.InformationDeath?.DeathPlaceInstitutionNameMl || "NA",
+        // },
       ],
     };
 
