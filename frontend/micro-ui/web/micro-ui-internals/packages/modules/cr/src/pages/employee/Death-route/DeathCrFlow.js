@@ -2,7 +2,7 @@ import React from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
 import { Switch, useLocation, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { convertToAbandonedDeathRegistration } from "../../../utils/abandoneddeathindex";
+import { convertToDeathRegistration } from "../../../utils/deathindex";
 
 
 const DeathCrFlow = ({ data, path }) => {
@@ -19,7 +19,7 @@ const DeathCrFlow = ({ data, path }) => {
       title: "CR_NEW_REGISTRATION_ABANDONED",
       subTitle: "CR_ABANDONED_DEATH_REG",
       // img: <BankIcon />,
-      link: `${path}/abandoned-death-information`,
+      link: `/digit-ui/employee/cr/death-flow/Abandoned-death/abandoned-death-information`,
     },
   
     // {
@@ -50,7 +50,7 @@ const DeathCrFlow = ({ data, path }) => {
    'CR_NEW_REGISTRATION_ABANDONED':  'crfileadoption', 
   };
   
-  let formdata = !isEdit ? convertToAbandonedDeathRegistration(data):[] ;
+  let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
   console.log(formdata);
   // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
   if(!isEdit)

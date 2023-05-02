@@ -995,7 +995,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     maxLength: 12,
                   }}
                   {...(groomResidentShip === "INDIAN" && {
-                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
                   })}
                 />
               </div>
@@ -1021,7 +1021,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       maxLength: 12,
                     }}
                     {...(groomResidentShip === "INDIAN" && {
-                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
                     })}
                   />
                 </div>
@@ -1381,7 +1381,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     value={groomFatherAadharNo}
                     onChange={setSelectGroomFatherAdharNo}
                     placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1442,7 +1442,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     value={groomMotherAadharNo}
                     onChange={setSelectGroomMotherAdharNo}
                     placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1507,7 +1507,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     value={groomGuardianAadharNo}
                     onChange={setSelectGroomGardianAdhar}
                     placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
