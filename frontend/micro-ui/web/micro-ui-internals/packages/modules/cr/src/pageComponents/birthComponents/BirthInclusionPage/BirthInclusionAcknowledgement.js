@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToStillBirthRegistration, convertToEditStillBirthRegistration } from "../../../utils/stillbirthindex";
-import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
+import getPDFData from "../../../utils/getCRBirthInclusionAcknowledgementData";
 import { useHistory, useLocation } from "react-router-dom";
 
 const GetActionMessage = (props) => {
@@ -24,27 +24,57 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
+  console.log("props in banner ==",props);
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.CorrectionApplication[0]?.CorrectionField?.[0]?.applicationNumber}
+      applicationNumber={props.data?.CorrectionApplication[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
   );
 };
 
-const BirthInclusionAcknowledgement = ({ data = {}, onSuccess = () => null, userType }) => {
+const BirthInclusionAcknowledgement = () => {
   const { t } = useTranslation();
 
   let location = useLocation();
+  let history = useHistory();
   let navigationData = location?.state?.navData;
   let birthInclusionData = location?.state?.birthInclusionData
   let mutationData = location?.state?.mutationData;
 
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+
+  const gotoHome = () =>{
+    history.go(-3);
+  }
+
+  useEffect(() => {
+    window.addEventListener("popstate", gotoHome);
+    return () => {
+      window.removeEventListener("popstate", gotoHome);
+    };
+  }, []);
+
   useEffect(()=>{
-  console.log("mutationData==",mutationData);
+  console.log("mutationData==",mutationData,tenants);
   },[mutationData])
+
+  const handleDownloadPdf = async () => {
+  
+    const { CorrectionApplication = [] } = mutationData.data
+    console.log();
+    const CorrectionData = (CorrectionApplication && CorrectionApplication[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.tenantid);
+    console.log("tenantInfo",tenantInfo,CorrectionData);
+    let res = CorrectionData;
+    console.log({res});
+    const data = getPDFData({ ...res }, tenantInfo, t);
+    console.log("data==",data);
+    data.then((resp) => Digit.Utils.pdf.generate(resp));
+  };
   
     if (mutationData?.isSuccess) {
       return (
@@ -64,7 +94,7 @@ const BirthInclusionAcknowledgement = ({ data = {}, onSuccess = () => null, user
               </div>
             }
             //style={{ width: "100px" }}
-            // onClick={handleDownloadPdf}
+            onClick={handleDownloadPdf}
           />
 
           <Link to={`/digit-ui/citizen`}>

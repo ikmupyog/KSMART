@@ -30,8 +30,8 @@ const cardStyle = {
 const complntSummary = {
   width: "700px",
 };
-const timelineWidth={
-  width:"500px"
+const timelineWidth = {
+  width: "500px"
 }
 const WorkflowComponent = ({ complaintDetails, id, getWorkFlow, zoomImage }) => {
   const tenantId = complaintDetails.service.tenantId;
@@ -143,57 +143,57 @@ const ComplaintDetailsPage = (props) => {
     <React.Fragment>
       {/* <div className="complaint-summary">
         <Header>{t(`${LOCALIZATION_KEY.CS_HEADER}_COMPLAINT_SUMMARY`)}</Header> */}
-     <div style={cardStyle}>
-     <Card >
-        <div style={complntSummary}>
-          <CardSubHeader>{t(`${LOCALIZATION_KEY.CS_HEADER}_COMPLAINT_SUMMARY`)}</CardSubHeader>
-          {Object.keys(complaintDetails).length > 0 ? (
-            <div style={tableStyle}>
-              {/* <Card> */}
-              <CardLabel>{t(`SERVICEDEFS.${complaintDetails.audit.serviceCode.toUpperCase()}`)}</CardLabel>
-              <StatusTable>
-                {Object.keys(complaintDetails.details).map((flag, index, arr) => (
-                  <Row
-                    key={index}
-                    label={t(flag)}
-                    text={
-                      Array.isArray(complaintDetails.details[flag])
-                        ? complaintDetails.details[flag].map((val) => (typeof val === "object" ? t(val?.code) : t(val)))
-                        : t(complaintDetails.details[flag]) || "N/A"
-                    }
-                    last={index === arr.length - 1}
-                  />
-                ))}
-              </StatusTable>
-              {imageShownBelowComplaintDetails?.thumbs ? (
-                <DisplayPhotos srcs={imageShownBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
-              ) : null}
-              {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={onCloseImageZoom} /> : null}
-              {/* </Card>
+      <div style={cardStyle}>
+        <Card >
+          <div style={complntSummary}>
+            <CardSubHeader style={{ fontSize: "26px" }}>{t(`${LOCALIZATION_KEY.CS_HEADER}_COMPLAINT_SUMMARY`)}</CardSubHeader>
+            {Object.keys(complaintDetails).length > 0 ? (
+              <div style={tableStyle}>
+                {/* <Card> */}
+                {/* <CardLabel>{t(`SERVICEDEFS.${complaintDetails.audit.serviceCode.toUpperCase()}`)}</CardLabel> */}
+                <StatusTable>
+                  {Object.keys(complaintDetails.details).map((flag, index, arr) => (
+                    <Row
+                      key={index}
+                      label={t(flag)}
+                      text={
+                        Array.isArray(complaintDetails.details[flag])
+                          ? complaintDetails.details[flag].map((val) => (typeof val === "object" ? t(val?.code) : t(val)))
+                          : t(complaintDetails.details[flag]) || "N/A"
+                      }
+                      last={index === arr.length - 1}
+                    />
+                  ))}
+                </StatusTable>
+                {imageShownBelowComplaintDetails?.thumbs ? (
+                  <DisplayPhotos srcs={imageShownBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
+                ) : null}
+                {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={onCloseImageZoom} /> : null}
+                {/* </Card>
             <Card> */}
 
-              {/* </Card> */}
-              {/* <Card>
+                {/* </Card> */}
+                {/* <Card>
       <CardSubHeader>{t(`${LOCALIZATION_KEY.CS_COMMON}_COMMENTS`)}</CardSubHeader>
       <TextArea value={comment} onChange={(e) => setComment(e.target.value)} name="" />
       <SubmitBar disabled={disableComment || comment.length < 1} onSubmit={submitComment} label={t("CS_PGR_SEND_COMMENT")} />
     </Card> */}
-            </div>
-          ) : (
-            <Loader />
-          )}
-        </div>
-        {/* <div style={borderStyle}></div> */}
-        
-      </Card>
-      <Card>
-      <div style={timelineWidth}>
-          {complaintDetails?.service && (
-            <WorkflowComponent getWorkFlow={onWorkFlowChange} complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
-          )}
-        </div>
-      </Card>
-     </div>
+              </div>
+            ) : (
+              <Loader />
+            )}
+          </div>
+          {/* <div style={borderStyle}></div> */}
+
+        </Card>
+        <Card>
+          <div style={timelineWidth}>
+            {complaintDetails?.service && (
+              <WorkflowComponent getWorkFlow={onWorkFlowChange} complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
+            )}
+          </div>
+        </Card>
+      </div>
       {toast && (
         <Toast
           error={commentError}
