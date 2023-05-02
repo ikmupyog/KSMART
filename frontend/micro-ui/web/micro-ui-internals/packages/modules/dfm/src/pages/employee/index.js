@@ -31,6 +31,7 @@ const DFMBreadCrumb = ({ location }) => {
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
   const isApplicationDetailsPage = location?.pathname?.includes("dfm/searchDetails");
+  const isDrafting = location?.pathname?.includes("dfm/drafting");
   // const isNewApplication = location?.pathname?.includes("tl/new-application");
   // const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -161,6 +162,12 @@ const DFMBreadCrumb = ({ location }) => {
       content: t("TL_DETAILS_HEADER_LABEL"),
       show: isApplicationDetailsPage ||
         breadCrumbUrls.includes("home/search/Details")
+    },
+    {
+      path: "/digit-ui/employee/dfm/drafting",
+      content: t("DFM_DRAFTING"),
+      show: isDrafting ||
+        breadCrumbUrls.includes("home/search/dfm/drafting")
     },
     // {
     //   path: "/digit-ui/employee/tl/inbox",

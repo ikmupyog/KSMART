@@ -4,6 +4,7 @@ import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 
 // import { useSelector } from "react-redux";
 import {
     BackButton,
+    FormBackButton,
     PrivateRoute,
     BreadCrumb,
     CommonDashboard,
@@ -283,7 +284,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                         </div>
-                        <div class="custom-draft-button">
+                        {/* <div class="custom-draft-button">
 
                             {!draftTextValue ? <CustomButton
                                 onClick={saveDraft}
@@ -292,20 +293,26 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             ></CustomButton> :
                                 ""}
-                        </div>
+                        </div> */}
                     </div>
 
 
                     <div className="row">
                         <div className="col-md-12" >
-
                             <div className="col-md-3 col-sm-4" >
-                                <SubmitBar label={t("SAVE")} style={{ marginBottom: "10px" }} />
+                            <FormBackButton >{t("CS_COMMON_BACK")}</FormBackButton>
+                            <SubmitBar label={t("SAVE")} />
                             </div>
+                           
+                            {/* <div className="col-md-3 col-sm-4" >
+                              
+                            </div> */}
+                           
+                          
                             {/* <div className="col-md-3 col-sm-4 " >
                                 <SubmitBar label={t("FORWARD")} style={{ marginBottom: "10px" }} />
                             </div> */}
-                            <div className="col-md-3  col-sm-4"  >
+                            {/* <div className="col-md-3  col-sm-4"  >
                                 <Dropdown
                                     t={t}
                                     type={"text"}
@@ -314,7 +321,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                     placeholder={t("DEFAULT/SELECT")}
                                 />
 
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>

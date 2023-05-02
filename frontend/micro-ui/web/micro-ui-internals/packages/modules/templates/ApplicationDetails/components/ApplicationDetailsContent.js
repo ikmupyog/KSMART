@@ -254,9 +254,9 @@ function ApplicationDetailsContent({
           ))}
         </div>
         <div style={{ position: "relative" }} className={"wrapper-app"}>
-        <Accordion expanded={ true} title={'DOCUMENTS_INFORMATION'}
+        <Accordion expanded={ true} title={'DFM_WORKFLOW'}
                     content={<StatusTable style={getTableStyles()}>
-                       <NoteAndDrafting/> 
+                       <NoteAndDrafting applicationDetails={applicationDetails}/> 
                     </StatusTable>}
                     />
         </div>
