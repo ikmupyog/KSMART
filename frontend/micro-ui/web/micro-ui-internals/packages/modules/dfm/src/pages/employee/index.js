@@ -250,6 +250,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const ServiceAdding = Digit?.ComponentRegistryService?.getComponent('ServiceAdding')
   const ArisingFileAcknowledgement = Digit?.ComponentRegistryService?.getComponent('ArisingFileAcknowledgement')
   const ArisingFileSummery = Digit?.ComponentRegistryService?.getComponent('ArisingFileSummery')
+  const CounterModule = Digit?.ComponentRegistryService?.getComponent('CounterModule')
 
   return (
     <Switch>
@@ -274,6 +275,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/service-adding`} component={() => <ServiceAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-acknowledgement`} component={() => <ArisingFileAcknowledgement parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-summery`} component={() => <ArisingFileSummery parentRoute={path} />} />
+          <PrivateRoute path={`${path}/counter-module`} component={() => <CounterModule parentRoute={path} />} />
 
         </div>
       </React.Fragment>

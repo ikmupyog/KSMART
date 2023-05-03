@@ -511,6 +511,19 @@
     }
 }
 
+.counter-filewrapper {
+    height: 828px;
+
+    @media (max-width: 1050px) {
+        height: 950px;
+
+    }
+
+    @media (max-width: 600px) {
+        height: 1300px;
+
+    }
+}
 
 /* Slideshow container */
 .carousel-container {

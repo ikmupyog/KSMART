@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useHistory, useLocation } from "react-router-dom";
 
 const GetActionMessage = (props) => {
+
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("APPLICATION_SUBMITTED");
@@ -24,10 +25,13 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
+  const location = useLocation();
+  const fileCodeValue = location?.state?.fileCode;
+  console.log("fileCodeValue", fileCodeValue)
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.CorrectionApplication[0]?.CorrectionField?.[0]?.appliocationNumber}
+      applicationNumber={location?.state?.fileCode}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
