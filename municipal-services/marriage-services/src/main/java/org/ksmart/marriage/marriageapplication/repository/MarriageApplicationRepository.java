@@ -401,10 +401,93 @@ public class MarriageApplicationRepository {
                         String permntInKeralaAdrPostOfficeMl = util.getPONameMl(mdmsData,marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
                         marriage.getGroomAddressDetails().setPermntInKeralaAdrPostOfficeMl(permntInKeralaAdrPostOfficeMl);
                     }
+
+                  //  Marriage Details
+                 //   Marriage DistrictId
+                    if(marriage.getDistrictid() != null){
+                        String marriageDistNameEn = util.getDistrictNameEn(mdmsData,marriage.getDistrictid());
+                        marriage.setMarriageDistrictEn(marriageDistNameEn);
+                        
+                        String marriageDistNameMl = util.getDistrictNameMl(mdmsData,marriage.getDistrictid());
+                        marriage.setMarriageDistrictMl(marriageDistNameMl);
+                    }
+                    //Marriage Village
+                    if(marriage.getVillageId() != null){
+                        String marriageVillageEn = util.getVillageNameEn(mdmsData,marriage.getVillageId());
+                        marriage.setMarriageVillageNameEn(marriageVillageEn);
+                        
+                        String marriageVillageMl = util.getVillageNameMl(mdmsData,marriage.getVillageId());
+                        marriage.setMarriageVillageNameMl(marriageVillageMl);
+                    }
+                    if(marriage.getVillageName() != null){
+                        String marriageVillageEn = util.getVillageNameEn(mdmsData,marriage.getVillageName());
+                        marriage.setMarriageVillageNameEn(marriageVillageEn);
+                        
+                        String marriageVillageMl = util.getVillageNameMl(mdmsData,marriage.getVillageName());
+                        marriage.setMarriageVillageNameMl(marriageVillageMl);
+                    }
+                    //Marriage Taluk
+                    if(marriage.getTalukid()!= null){
+                        String marriageTalukNameEn = util.getTalukNameEn(mdmsData,marriage.getTalukid());
+                        marriage.setMarriageTalukNameEn(marriageTalukNameEn);
+                        
+                        String marriageTalukNameMl = util.getTalukNameMl(mdmsData,marriage.getTalukid());
+                        marriage.setMarriageTalukNameMl(marriageTalukNameMl);
+                    }
+                //WARD DETAILS-MDMS Location Call
+                Object mdmsDataLocation = util.mdmsCallForLocation(requestInfo, marriage.getTenantid());
+                //presentWardNo
+                if(marriage.getBrideAddressDetails().getPresentWardNo() != null){
+                    String presentWardNoEn = util.getWardNameEn(mdmsDataLocation,marriage.getBrideAddressDetails().getPresentWardNo());
+                    marriage.getBrideAddressDetails().setPresentWardNoEn(presentWardNoEn);
                     
-                    GroomDetails groomDetails =marriage.getGroomDetails();
-                    GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
-                    groomDetails.setAadharno(groomDetailsDec.getAadharno());
+                    String presentWardNoMl = util.getWardNameMl(mdmsDataLocation,marriage.getBrideAddressDetails().getPresentWardNo());
+                    marriage.getBrideAddressDetails().setPresentWardNoMl(presentWardNoMl);
+                }
+                //permntInKeralaWardNo
+                if(marriage.getBrideAddressDetails().getPermntInKeralaWardNo() != null){
+                    String prmttWardNoEn = util.getWardNameEn(mdmsDataLocation,marriage.getBrideAddressDetails().getPermntInKeralaWardNo());
+                    marriage.getBrideAddressDetails().setPrmttWardNoEn(prmttWardNoEn);
+                    
+                    String prmttWardNoMl = util.getWardNameMl(mdmsDataLocation,marriage.getBrideAddressDetails().getPermntInKeralaWardNo());
+                    marriage.getBrideAddressDetails().setPrmttWardNoMl(prmttWardNoMl);
+                }
+                //Marriage WardCode
+                if(marriage.getWardCode() != null){
+                    String marriageWardCodeEn = util.getWardNameEn(mdmsDataLocation,marriage.getWardCode());
+                    marriage.getBrideAddressDetails().setPresentWardNoEn(marriageWardCodeEn);
+                    
+                    String marriageWardCodeMl = util.getWardNameMl(mdmsDataLocation,marriage.getWardCode());
+                    marriage.getBrideAddressDetails().setPresentWardNoMl(marriageWardCodeMl);
+                }
+                if(marriage.getGroomAddressDetails().getPresentWardNo() != null){
+                    String presentWardNoEn = util.getWardNameEn(mdmsDataLocation,marriage.getGroomAddressDetails().getPresentWardNo());
+                    marriage.getGroomAddressDetails().setPresentWardNoEn(presentWardNoEn);
+                    
+                    String presentWardNoMl = util.getWardNameMl(mdmsDataLocation,marriage.getGroomAddressDetails().getPresentWardNo());
+                    marriage.getGroomAddressDetails().setPresentWardNoMl(presentWardNoMl);
+                }
+                //permntInKeralaWardNo
+                if(marriage.getGroomAddressDetails().getPermntInKeralaWardNo() != null){
+                    String prmttWardNoEn = util.getWardNameEn(mdmsDataLocation,marriage.getGroomAddressDetails().getPermntInKeralaWardNo());
+                    marriage.getGroomAddressDetails().setPrmttWardNoEn(prmttWardNoEn);
+                    
+                    String prmttWardNoMl = util.getWardNameMl(mdmsDataLocation,marriage.getGroomAddressDetails().getPermntInKeralaWardNo());
+                    marriage.getGroomAddressDetails().setPrmttWardNoMl(prmttWardNoMl);
+                }
+                //Marriage WardCode
+                if(marriage.getWardCode() != null){
+                    String marriageWardCodeEn = util.getWardNameEn(mdmsDataLocation,marriage.getWardCode());
+                    marriage.getGroomAddressDetails().setPresentWardNoEn(marriageWardCodeEn);
+                    
+                    String marriageWardCodeMl = util.getWardNameMl(mdmsDataLocation,marriage.getWardCode());
+                    marriage.getGroomAddressDetails().setPresentWardNoMl(marriageWardCodeMl);
+                }
+
+
+                GroomDetails groomDetails =marriage.getGroomDetails();
+                GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
+                groomDetails.setAadharno(groomDetailsDec.getAadharno());
                     if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
                         groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
                         groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());

@@ -197,4 +197,9 @@ public class MarriageConstants {
 
     public static final String CR_MDMS_MARRIAGE_TENANT_CODE_JSONPATH = "$.MdmsRes.tenant.tenants.city[*].code";
     public static final String CR_MDMS_MARRIAGE_TENANT_JSONPATH = "$.MdmsRes.tenant.tenants.city";
+
+    public static final String LOCATION_MDMS_BOUNDARY = "TenantBoundary";
+
+    public static final String CR_MDMS_BOUNDARY_CODE_JSONPATH = "$.MdmsRes.egov-location.TenantBoundary[*].boundary.children[*].children[*].code";
+    public static final String CR_MDMS_BOUNDARY_CODES_JSONPATH = "$.MdmsRes.egov-location.TenantBoundary[*].boundary.children[*].children[*]";
 }

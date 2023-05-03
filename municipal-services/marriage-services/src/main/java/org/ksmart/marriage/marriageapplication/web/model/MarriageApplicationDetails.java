@@ -32,7 +32,6 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriageDOR")
     private Long dateofreporting;
 
-
     @Size(max = 64)
     @JsonProperty("marriageDistrictid")
     private String districtid;
@@ -40,7 +39,6 @@ public class MarriageApplicationDetails {
     @Size(max = 64)
     @JsonProperty("marriageLBtype")
     private String lbtype;
-
 
     @Size(max = 64)
     @JsonProperty("marriageTenantid")
@@ -225,9 +223,32 @@ public class MarriageApplicationDetails {
     private boolean wfdelayedWithinFiveYear ;
     private boolean wfdelayedAfterFiveYear ;
 
+//Jasmine 03.05.2023
 
-    // public void setStatus(String s) {
-    // }
+@JsonProperty("marriageDistrictEn")
+private String marriageDistrictEn;
+
+@JsonProperty("marriageDistrictMl")
+private String marriageDistrictMl;
+
+@JsonProperty("marriageLBtypeEn")
+private String marriageLBtypeEn;
+
+@JsonProperty("marriageLBtypeMl")
+private String marriageLBtypeMl;
+
+@JsonProperty("marriageVillageNameEn")
+private String marriageVillageNameEn;
+
+@JsonProperty("marriageVillageNameMl")
+private String marriageVillageNameMl;
+
+@JsonProperty("marriageTalukNameEn")
+private String marriageTalukNameEn;
+
+@JsonProperty("marriageTalukNameMl")
+private String marriageTalukNameMl;
+
 
 }
 
