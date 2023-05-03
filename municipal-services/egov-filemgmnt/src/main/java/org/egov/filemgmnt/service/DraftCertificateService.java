@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class DraftCertificateService extends AbstractCertificateService {
+public class DraftCertificateService extends BaseCertificateService {
 
     private final DraftFilesRepository repository;
     private final DraftCertificateEnrichment enrichment;

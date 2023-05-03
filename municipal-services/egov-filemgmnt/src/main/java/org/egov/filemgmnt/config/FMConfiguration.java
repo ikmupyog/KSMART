@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Configuration
-public class FMConfiguration { // NOPMD
+public class FMConfiguration {
 
     @Value("${app.timezone}")
     private String timeZone;

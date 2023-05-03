@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Getter;
 
-abstract class AbstractCertificateService { // NOPMD
+class BaseCertificateService {
 
     @Getter
     private FMConfiguration fmConfig;

@@ -34,7 +34,7 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 public class ApplicantPersonal {
 
-    @Schema(type = "string", format = "uuid", description = "Applicant id") // NOPMD
+    @Schema(type = "string", format = "uuid", description = "Applicant id")
     @Size(max = 64, message = "Applicant personal id length cannot exceed 64 characters")
     @JsonProperty("id")
     private String id;

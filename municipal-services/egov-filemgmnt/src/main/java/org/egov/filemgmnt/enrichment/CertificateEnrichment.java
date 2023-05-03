@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.enrichment; // NOPMD
+package org.egov.filemgmnt.enrichment;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CertificateEnrichment extends BaseEnrichment { // NOPMD
+public class CertificateEnrichment extends BaseEnrichment {
 
     @Autowired
     private FMConfiguration fmConfig;

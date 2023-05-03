@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class FileManagementService extends AbstractFileManagementService {
+public class FileManagementService extends BaseFileManagementService {
 
     @Autowired
     private FMConfiguration fmConfig;

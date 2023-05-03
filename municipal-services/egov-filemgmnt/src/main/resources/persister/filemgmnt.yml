@@ -653,7 +653,7 @@ serviceMaps:
 
       - jsonPath: $.ArisingFile.title
 
-      - jsonPath: $.ArisingFile.arisingFileApplicant
+      - jsonPath: $.ArisingFile.description
 
     - query: >
         INSERT INTO public.eg_fm_arisingfileapplicantdetails(id, tenantid, arisingfileid, filecode, applicanttype, firstname, 

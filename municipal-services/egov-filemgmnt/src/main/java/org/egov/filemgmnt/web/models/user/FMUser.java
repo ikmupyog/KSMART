@@ -26,7 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class FMUser { // NOPMD
+public class FMUser {
 
     @JsonProperty("id")
     private Long id;

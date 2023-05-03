@@ -16,7 +16,7 @@ import org.egov.filemgmnt.web.models.masterdata.SubFunctionDetailsRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MasterDataEnrichment extends BaseEnrichment { // NOPMD
+public class MasterDataEnrichment extends BaseEnrichment {
 
     public void enrichCreateModule(final ModuleDetailsRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();

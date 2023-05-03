@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class CertificateService extends AbstractCertificateService {
+public class CertificateService extends BaseCertificateService {
 
     @Autowired
     private MdmsUtil mdmsUtil;

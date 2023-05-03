@@ -43,12 +43,12 @@ public class ArisingFileWorkflowIntegrator {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void callAriseFileWorkflow(ArisingFileRequest request) {
+    public void callWorkflow(final ArisingFileRequest request) {
         final ArisingFile arisingFile = request.getArisingFile();
         Assert.notNull(arisingFile, "Arising file details must not be null");
 
-        final String fileCode = arisingFile.getFileCode();
-        Assert.notNull(arisingFile, "File Code must not be null");
+//        final String fileCode = arisingFile.getFileCode();
+//        Assert.notNull(fileCode, "File Code must not be null");
 
         String businessService = arisingFile.getBusinessService();
         final String fileAction = arisingFile.getAction();
@@ -61,44 +61,42 @@ public class ArisingFileWorkflowIntegrator {
             throw new CustomException(INVALID_FILE_ACTION.getCode(), "File action is required.");
         }
 
-        final ArisingFileApplicant arisingFileApplicant = arisingFile.getArisingFileApplicant();
-        Assert.notNull(arisingFileApplicant, "Arisingfile Applicant  must not be null");
+        final ArisingFileApplicant applicant = arisingFile.getArisingFileApplicant();
+        Assert.notNull(applicant, "Arisingfile applicant  must not be null");
 
         final JSONArray jsonArray = new JSONArray();
         if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
                 || !fileAction.equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
 
             // json Object for workflow transition start
-            final JSONObject jsonObj = buildJsonObjectForArisingFileWorkflow(arisingFile, arisingFileApplicant);
+            final JSONObject jsonObj = buildJsonObjectForWorkflow(arisingFile, applicant);
 
             // create an array for Json-ProcessInstances ( workflow service's request part
             // has two json values 1.RequestInfo,2.ProcessInstances)
             jsonArray.add(jsonObj);
         }
         if (CollectionUtils.isNotEmpty(jsonArray)) {
-            final Map<String, String> idStatusMap = arisingFileWorkflowRequest(request.getRequestInfo(), jsonArray);
+            final Map<String, String> idStatusMap = workflowRequest(request.getRequestInfo(), jsonArray);
 
             // setting the status back to FileDetails object from wf response
             arisingFile.setFileStatus(idStatusMap.get(arisingFile.getFileCode()));
         }
     }
 
-    private JSONObject buildJsonObjectForArisingFileWorkflow(final ArisingFile arisingFile,
-                                                             final ArisingFileApplicant arisingFileApplicant) {
-        final JSONObject jsonObj = new JSONObject();
-        jsonObj.put(FMConstants.BUSINESSIDKEY, arisingFile.getFileCode());
-        jsonObj.put(FMConstants.TENANTIDKEY, arisingFileApplicant.getTenantId());
-        jsonObj.put(FMConstants.BUSINESSSERVICEKEY, arisingFile.getWorkflowCode());
-        jsonObj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
-        jsonObj.put(FMConstants.ACTIONKEY, arisingFile.getAction());
-        jsonObj.put(FMConstants.COMMENTKEY, arisingFile.getComments());
+    private JSONObject buildJsonObjectForWorkflow(final ArisingFile arisingFile, final ArisingFileApplicant applicant) {
+        final JSONObject obj = new JSONObject();
+        obj.put(FMConstants.BUSINESSIDKEY, arisingFile.getFileCode());
+        obj.put(FMConstants.TENANTIDKEY, applicant.getTenantId());
+        obj.put(FMConstants.BUSINESSSERVICEKEY, arisingFile.getWorkflowCode());
+        obj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
+        obj.put(FMConstants.ACTIONKEY, arisingFile.getAction());
+        obj.put(FMConstants.COMMENTKEY, arisingFile.getComments());
         // jsonObj.put(FMConstants.DOCUMENTSKEY, fileDetail.getWfDocuments());
 
         // Adding assignes to processInstance
-        System.out.println("****************");
-        System.out.println(jsonObj);
+
         final String assignees = arisingFile.getAssignee();
-        final List<String> assigneeList;//
+        List<String> assigneeList;//
         if (StringUtils.isNotBlank(assignees)) {
             assigneeList = Arrays.asList(assignees.split(","));
         } else {
@@ -107,14 +105,17 @@ public class ArisingFileWorkflowIntegrator {
 
         final List<Map<String, String>> uuidMaps = buildUUIDList(assigneeList);
         if (CollectionUtils.isNotEmpty(uuidMaps)) {
-            jsonObj.put(FMConstants.ASSIGNEEKEY, uuidMaps);
+            obj.put(FMConstants.ASSIGNEEKEY, uuidMaps);
         }
 
-        return jsonObj;
+        if (log.isDebugEnabled()) {
+            log.debug("Workflow JSON obj = {}", obj);
+        }
+
+        return obj;
     }
 
-    private Map<String, String> arisingFileWorkflowRequest(final RequestInfo requestInfo,
-                                                           final JSONArray wfRequestArray) { // NOPMD
+    private Map<String, String> workflowRequest(final RequestInfo requestInfo, final JSONArray wfRequestArray) {
         // Create WorkflowRequest Json
         final JSONObject request = new JSONObject();
         request.put(FMConstants.REQUESTINFOKEY, requestInfo);

@@ -13,7 +13,7 @@ import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.user.FMUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
-abstract class AbstractFileManagementService { // NOPMD
+class BaseFileManagementService {
 
     private EncryptionUtil encUtil;
     private UserService userService;

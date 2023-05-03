@@ -11,7 +11,7 @@ import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class BaseEnrichment { // NOPMD
+class BaseEnrichment {
 
     private IdgenUtil idgenUtil;
 

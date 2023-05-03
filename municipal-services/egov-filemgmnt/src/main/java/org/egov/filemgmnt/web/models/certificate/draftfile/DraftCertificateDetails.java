@@ -24,7 +24,7 @@ import lombok.Setter;
 @Builder
 public class DraftCertificateDetails {
 
-    @Schema(type = "string", format = "uuid", description = "Certificate id") // NOPMD
+    @Schema(type = "string", format = "uuid", description = "Certificate id")
     @Size(max = 64)
     @JsonProperty("id")
     private String id;

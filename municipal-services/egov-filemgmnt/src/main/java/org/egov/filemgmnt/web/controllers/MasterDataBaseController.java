@@ -36,7 +36,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Master Data")
 @Validated
-public interface MasterDataBaseController { // NOPMD
+public interface MasterDataBaseController {
 
     // MODULES
     @Operation(summary = "Create module master data.",

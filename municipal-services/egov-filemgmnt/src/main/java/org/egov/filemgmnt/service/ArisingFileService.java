@@ -47,7 +47,7 @@ public class ArisingFileService {
         producer.push(fmConfig.getSaveArisingFileTopic(), request);
 
         // create workflow
-        wfIntegrator.callAriseFileWorkflow(request);
+        wfIntegrator.callWorkflow(request);
 
         return request.getArisingFile();
     }
