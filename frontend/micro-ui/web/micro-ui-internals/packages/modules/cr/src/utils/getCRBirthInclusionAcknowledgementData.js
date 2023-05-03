@@ -1,23 +1,27 @@
-import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocality } from "./index";
 
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
 
 const getCorrectionDetails = (application, t) => {
-    const correction = application?.CorrectionField?.[0]?.correctionFieldValue?.[0];
-    const isDate = correction?.correctionFieldName === "CHILD_DOB" ? true : false ;
-  return {
-    title: t(correction?.column),
-    values: [
-      { title: t("old value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
-      { title: t("new value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue,10), "dd/MM/yyyy") : correction?.newValue}
-    ],
-  };
+  console.log("correction details==",application);
+    const {correctionFieldValue = [] ,correctionFieldName} = application?.CorrectionField?.[0];
+    const isDate = correctionFieldName === "CHILD_DOB" ? true : false ;
+    const correctionData = correctionFieldValue?.map((correction)=>{
+        return({title: t(correction?.column),
+        values: [
+          { title: t("old value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
+          { title: t("new value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue,10), "dd/MM/yyyy") : correction?.newValue}
+        ],
+      })
+    });
+    console.log("correctionData==",correctionData);
+    // returnedData = {...correctionData}
+    return correctionData;
 };
 
 const getCRBirthInclusionAcknowledgementData = async (application, tenantInfo, t) => {
-console.log("get data===",application, tenantInfo, t);
+  // const birthInclusionData = ...getCorrectionDetails(application, t)
   return {
     t: t,
     tenantId: tenantInfo?.code,
@@ -38,7 +42,7 @@ console.log("get data===",application, tenantInfo, t);
       },
     //   getChildDetails(application, t),
     //   getAddressDetails(application, t),
-      getCorrectionDetails(application, t)
+    ...getCorrectionDetails(application, t)
     ],
   };
 };

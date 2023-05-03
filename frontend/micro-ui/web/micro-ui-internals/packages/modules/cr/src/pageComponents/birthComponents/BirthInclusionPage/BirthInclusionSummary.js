@@ -56,7 +56,7 @@ function BirthInclusionSummary({
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
     });
-    console.log("newThumbnails==", newThumbnails);
+   
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
@@ -66,7 +66,7 @@ function BirthInclusionSummary({
         };
         return tempObj;
       });
-    console.log("formattedImageThumbs==", formattedImageThumbs);
+
     setImagesThumbs(formattedImageThumbs);
   };
 
@@ -125,7 +125,7 @@ function BirthInclusionSummary({
 
   useEffect(()=>{
   if(mutation?.isError) {
-    console.log("mutation=",mutation);
+
     clearParams(); 
     history.push({
         pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
@@ -143,7 +143,6 @@ function BirthInclusionSummary({
   }
 
   const submitBirthInclusion = () =>{
-    console.log("birth inclusion===123");
     mutation.mutate(birthInclusionFormsObj,{ onSuccess: navigateAcknowledgement });
   }
 
@@ -166,7 +165,6 @@ function BirthInclusionSummary({
   };
 
   const renderCardDetail = (value, fieldName, documentData) => {
-    console.log("value in card==", value, documentData);
     const type = fieldName === "CHILD_DOB" ? "date" : "text";
     return (
       <div className="row">
@@ -193,7 +191,6 @@ function BirthInclusionSummary({
   };
 
   const renderSummaryCard = (detail, index) => {
-    console.log("detail in summary card--", detail, birthInclusionData[detail]);
     //  switch()
     return (
       <React.Fragment key={index}>
