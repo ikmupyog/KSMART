@@ -241,19 +241,4 @@ serviceMaps:
 
       - jsonPath: $.service.informer.id
       
-    - query: UPDATE eg_pgr_Employee_v2 SET employeename=?, empuuid=?, empmob=?, lastmodifiedby=?, lastmodifiedtime=? WHERE id=?;
-      basePath: service.employee
-      jsonMaps:
-
-      - jsonPath: $.service.employee.name
-
-      - jsonPath: $.service.employee.uuid
-
-      - jsonPath: $.service.employee.mobileNumber      
-
-      - jsonPath: $.service.auditDetails.lastModifiedBy
-
-      - jsonPath: $.service.auditDetails.lastModifiedTime
-
-      - jsonPath: $.service.citizen.empId
-      
+   
