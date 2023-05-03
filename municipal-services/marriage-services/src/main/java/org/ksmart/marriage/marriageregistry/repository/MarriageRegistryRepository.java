@@ -86,13 +86,59 @@ public class MarriageRegistryRepository {
         // return result.getMarriageDetails();
 
     // }
-    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
+    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria, RequestInfo requestInfo) {
 
         List<Object> preparedStmtValues = new ArrayList<>();
 
         String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
+
+        if(result != null) {
+            result.forEach(marriage -> {
+                //Neenu 03.05.2023
+                //MDMS for Summery Page
+                Object mdmsData = util.mDMSSearch(requestInfo, marriage.getTenantid());
+                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != null) {
+                    String permanentAddrCountryNameEn = util.getCountryNameEn(mdmsData, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                    marriage.getBrideAddressDetails().setPermanentAddrCountryNameEn(permanentAddrCountryNameEn);
+
+                    String permanentAddrCountryNameMl = util.getCountryNameMl(mdmsData, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                    marriage.getBrideAddressDetails().setPermanentAddrCountryNameMl(permanentAddrCountryNameMl);
+                }
+                //presentaddressCountry
+                if (marriage.getBrideAddressDetails().getPresentaddressCountry() != null) {
+                    String presentaddressCountryNameEn = util.getCountryNameEn(mdmsData, marriage.getBrideAddressDetails().getPresentaddressCountry());
+                    marriage.getBrideAddressDetails().setPresentaddressCountryNameEn(presentaddressCountryNameEn);
+
+                    String presentaddressCountryNameMl = util.getCountryNameMl(mdmsData, marriage.getBrideAddressDetails().getPresentaddressCountry());
+                    marriage.getBrideAddressDetails().setPresentaddressCountryNameMl(presentaddressCountryNameMl);
+                }
+                //presentOutSideCountry
+                if (marriage.getBrideAddressDetails().getPresentOutSideCountry() != null) {
+                    String presentOutSideCountryNameEn = util.getCountryNameEn(mdmsData, marriage.getBrideAddressDetails().getPresentOutSideCountry());
+                    marriage.getBrideAddressDetails().setPresentOutSideCountryNameEn(presentOutSideCountryNameEn);
+
+                    String presentOutSideCountryNameMl = util.getCountryNameMl(mdmsData, marriage.getBrideAddressDetails().getPresentOutSideCountry());
+                    marriage.getBrideAddressDetails().setPresentOutSideCountryNameMl(presentOutSideCountryNameMl);
+                }
+                //permtaddressCountry
+                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != null) {
+                    String permanentAddrCountryNameEn = util.getCountryNameEn(mdmsData, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                    marriage.getBrideAddressDetails().setPermanentAddrCountryNameEn(permanentAddrCountryNameEn);
+
+                    String permanentAddrCountryNameMl = util.getCountryNameMl(mdmsData, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                    marriage.getBrideAddressDetails().setPermanentAddrCountryNameMl(permanentAddrCountryNameMl);
+                }
+                //permntOutsideIndiaCountry
+                if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
+                    String permanentOutSideCountryNameEn = util.getCountryNameEn(mdmsData, marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
+                    marriage.getBrideAddressDetails().setPermanentOutSideCountryNameEn(permanentOutSideCountryNameEn);
+
+                    String permanentOutSideCountryNameMl = util.getCountryNameMl(mdmsData, marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
+                    marriage.getBrideAddressDetails().setPermanentOutSideCountryNameMl(permanentOutSideCountryNameMl);
+                }
+                //
 //
 //        System.out.println("Groom address -------");
 //                String address=marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req, result.get(0));
@@ -100,8 +146,10 @@ public class MarriageRegistryRepository {
 //
 //        System.out.println(address);
 //        System.out.println(address2);
+            });
+        }
 
-        return result;
+                return result;
 
     }
     public int getMarriageRegistryCount(MarriageRegistrySearchCriteria criteria) {
