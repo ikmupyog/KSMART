@@ -35,28 +35,21 @@ const convertEpochToDate = (dateEpoch) => {
 export const CRNACsearch = {
   all: async (tenantId, filters = {}) => {
     const response = await CRNACBirthService.CRNACsearch({ tenantId, filters });
-    console.log(response, "response");
-
     return response;
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRNACBirthService.CRNACsearch({ tenantId, filters });
-    console.log(response, "response");
-
     return response.nacDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRNACBirthService.CRNACsearch({ tenantId, filters });
-    console.log(response, "response");
-
     return response.nacDetails[0];
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     const filter = { applicationNumber };
     const response = await CRNACsearch.application(tenantId, filter);
-    console.log(response, "response");
 
     let numOfApplications = [];
     if (response?.licenseNumber) {
@@ -80,9 +73,73 @@ export const CRNACsearch = {
         },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace || "NA" },
         { title: "PDF_BIRTH_AADHAR_NO", value: response?.childAadharNo || "NA" },
         { title: "PDF_BIRTH_ORDER", value: response?.nacorderofChildren || "NA" },
+      ],
+    };
+    const birthPlaceHospDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_HOSPITAL_EN", value: response?.hospitalName || "NA" },
+        { title: "CR_HOSPITAL_ML", value: response?.hospitalNameMl || "NA" },
+      ],
+    };
+    const birthPlaceINSTITUTIONDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NA" },
+        { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NA" },
+        { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NA" },
+      ],
+    };
+    const birthPlaceHOMEDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.adrsPostOffice || "NA" },
+        { title: "CS_COMMON_PIN_CODE", value: response?.adrsPincode || "NA" },
+        { title: "CR_LOCALITY_EN", value: response?.adrsLocalityNameEn || "NA" },
+        { title: "CR_LOCALITY_ML", value: response?.adrsLocalityNameMl || "NA" },
+        { title: "CR_STREET_NAME_EN", value: response?.adrsStreetNameEn || "NA" },
+        { title: "CR_STREET_NAME_ML", value: response?.adrsStreetNameMl || "NA" },
+        { title: "CR_HOUSE_NAME_EN", value: response?.adrsHouseNameEn || "NA" },
+        { title: "CR_HOUSE_NAME_ML", value: response?.adrsHouseNameMl || "NA" },
+      ],
+    };
+    const birthPlaceVEHICLEDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || "NA" },
+        { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "NA" },
+        { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.vehicleHaltPlace || "NA" },
+        { title: "CR_VEHICLE_FROM_EN", value: response?.vehicleFromEn || "NA" },
+        { title: "CR_VEHICLE_TO_EN", value: response?.vehicleToEn || "NA" },
+        { title: "CR_VEHICLE_FROM_ML", value: response?.vehicleFromMl || "NA" },
+        { title: "CR_VEHICLE_TO_ML", value: response?.vehicleToMl || "NA" },
+        { title: "CR_ADMITTED_HOSPITAL_EN", value: response?.hospitalName || "NA" },
+        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
+      ],
+    };
+    const birthPlacePUBLICPLACESDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceTypeEn + " / " + response?.publicPlaceTypeMl || "NA" },
+        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
+        { title: "CR_LOCALITY_EN", value: response?.localityNameEn || "NA" },
+        { title: "CR_LOCALITY_ML", value: response?.localityNameMl || "NA" },
+        { title: "CR_STREET_NAME_EN", value: response?.streetNameEn || "NA" },
+        { title: "CR_STREET_NAME_ML", value: response?.streetNameMl || "NA" },
+        { title: "CR_DESCRIPTION", value: response?.publicPlaceDecpEn || "NA" },
       ],
     };
     const parentInfo = {
@@ -100,6 +157,7 @@ export const CRNACsearch = {
         { title: "PDF_BIRTH_FATHER_AADHAR", value: response?.ParentsDetails?.fatherAadhar || "NA" },
       ],
     };
+
     const AddressBirthDetailsPresentInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
@@ -145,7 +203,7 @@ export const CRNACsearch = {
           value:
             response?.AddressBirthDetails.countryIdPermanentEn +
               " / " +
-              (response?.ParentsDetails?.countryIdPermanentMl != null ? response?.ParentsDetails?.countryIdPermanentMl : "") || "NA",
+              (response?.AddressBirthDetails?.countryIdPermanentMl != null ? response?.AddressBirthDetails?.countryIdPermanentMl : "") || "NA",
         },
         {
           title: "CS_COMMON_STATE",
@@ -211,103 +269,35 @@ export const CRNACsearch = {
         { title: "CR_HOUSE_NAME_ML", value: response?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl || "NA" },
       ],
     };
-    // const PresentAddressBirthDetailsInfo = {
-    //   title: "CR_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     {
-    //       title: "PDF_BIRTH_PRESENT_ADDRESS",
-    //       value:
-    //         response?.AddressBirthDetails.presentInsideKeralaHouseNameEn +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaStreetNameEn +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaVillage +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaTaluk +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaDistrict +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentaddressStateName +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentaddressCountry +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaPostOffice +
-    //         " , " +
-    //         response?.AddressBirthDetails.presentInsideKeralaPincode,
-    //     },
+    // } else if (response?.AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA") {
 
-    //     {
-    //       value:
-    //         response?.AddressBirthDetails.presentInsideKeralaHouseNameMl +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaStreetNameMl +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaVillage +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaTaluk +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaDistrict +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentaddressStateName +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentaddressCountry +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaPostOffice +
-    //           " , " +
-    //           response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED",
-    //     },
+    const AddressBirthDetailsPresentOutsideIndiaInfo = {
+      title: "CR_ADDRESS_DETAILS",
+      values: [
+        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountry || "NA" },
+        { title: "CR_STATE_REGION_PROVINCE_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaProvinceEn || "NA" },
+        { title: "CR_STATE_REGION_PROVINCE_ML", value: response?.AddressBirthDetails?.presentOutSideIndiaProvinceMl || "NA" },
+        { title: "CR_TOWN_VILLAGE_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaadrsVillage || "NA" },
+        { title: "CR_CITY_TOWN_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown || "NA" },
+        { title: "CR_ZIP_CODE", value: response?.AddressBirthDetails?.presentOutSideIndiaPostCode || "NA" },
+        { title: "CR_ADDRES_LINE_ONE_EN", value: response?.AddressBirthDetails.presentOutSideIndiaAdressEn || "NA" },
+        { title: "CR_ADDRES_LINE_ONE_ML", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressMl || NA },
+        { title: "CR_ADDRES_LINE_TWO_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressEnB || "NA" },
+        { title: "CR_ADDRES_LINE_TWO_ML", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressMlB || "NA" },
 
-    //     {
-    //       title: "PDF_BIRTH_PERMANENT_ADDRESS",
-    //       value:
-    //         response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrVillage +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrTaluk +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrDistrict +
-    //         " , " +
-    //         response?.AddressBirthDetails.permtaddressStateName +
-    //         " , " +
-    //         response?.AddressBirthDetails.permtaddressCountry +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrPostOffice +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrPincode,
-    //     },
-    //     {
-    //       value:
-    //         response?.AddressBirthDetails.permntInKeralaAdrHouseNameMl +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrStreetNameMl +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrVillage +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrTaluk +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrDistrict +
-    //         " , " +
-    //         response?.AddressBirthDetails.permtaddressStateName +
-    //         " , " +
-    //         response?.AddressBirthDetails.permtaddressCountry +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrPostOffice +
-    //         " , " +
-    //         response?.AddressBirthDetails.permntInKeralaAdrPincode,
-    //     },
-    //   ],
-    // };
+        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountry || "NA" },
+        { title: "CR_STATE_REGION_PROVINCE_EN", value: response?.AddressBirthDetails?.permntOutsideIndiaprovinceEn || "NA" },
+        { title: "CR_STATE_REGION_PROVINCE_ML", value: response?.AddressBirthDetails?.permntOutsideIndiaprovinceMl || "NA" },
+        { title: "CR_TOWN_VILLAGE_EN", value: response?.AddressBirthDetails?.permntOutsideIndiaVillage || "NA" },
+        { title: "CR_CITY_TOWN_EN", value: response?.AddressBirthDetails?.permntOutsideIndiaCityTown || "NA" },
+        { title: "CR_ZIP_CODE", value: response?.AddressBirthDetails?.permanentOutsideIndiaPostCode || "NA" },
+        { title: "CR_ADDRES_LINE_ONE_EN", value: response?.AddressBirthDetails.permntOutsideIndiaLineoneEn || "NA" },
+        { title: "CR_ADDRES_LINE_ONE_ML", value: response?.AddressBirthDetails?.permntOutsideIndiaLineoneMl || NA },
+        { title: "CR_ADDRES_LINE_TWO_EN", value: response?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn || "NA" },
+        { title: "CR_ADDRES_LINE_TWO_ML", value: response?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl || "NA" },
+      ],
+    };
+
     const initiatorInfo = {
       title: "CR_APPLICANT_INFORMATION_HEADER",
       values: [
@@ -340,11 +330,29 @@ export const CRNACsearch = {
 
     response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
+    if (response?.birthPlace === "HOSPITAL") {
+      response && employeeResponse.push(birthPlaceHospDetails);
+    } else if (response?.birthPlace === "INSTITUTION") {
+      response && employeeResponse.push(birthPlaceINSTITUTIONDetails);
+    } else if (response?.birthPlace === "HOME") {
+      response && employeeResponse.push(birthPlaceHOMEDetails);
+    } else if (response?.birthPlace === "VEHICLE") {
+      response && employeeResponse.push(birthPlaceVEHICLEDetails);
+    } else if (response?.birthPlace === "PUBLIC_PLACES") {
+      response && employeeResponse.push(birthPlacePUBLICPLACESDetails);
+    }
     response && employeeResponse.push(parentInfo);
-    response && employeeResponse.push(AddressBirthDetailsPresentInfo);
-    response && employeeResponse.push(AddressBirthDetailsPresentOutsideKeralaInfo);
+    if (response?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.presentaddressStateName === "kl") {
+      response && employeeResponse.push(AddressBirthDetailsPresentInfo);
+    } else if (
+      response?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA" &&
+      response?.AddressBirthDetails?.presentaddressStateName != "kl"
+    ) {
+      response && employeeResponse.push(AddressBirthDetailsPresentOutsideKeralaInfo);
+    } else if (response?.AddressBirthDetails?.presentaddressCountry != "COUNTRY_INDIA") {
+      response && employeeResponse.push(AddressBirthDetailsPresentOutsideIndiaInfo);
+    }
     response && employeeResponse.push(initiatorInfo);
-    // response && employeeResponse.push(childInfo);
 
     return {
       tenantId: response.tenantId,
