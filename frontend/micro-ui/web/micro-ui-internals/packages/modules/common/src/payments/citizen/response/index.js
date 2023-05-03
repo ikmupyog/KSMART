@@ -24,7 +24,7 @@ const WrapPaymentComponent = (props) => {
     "", {}, tenantId, { applicationNo: consumerCode }, {}, { enabled: (window.location.href.includes("bpa") || window.location.href.includes("BPA")) }
   );
 
-  if (businessService === "CR" && isSuccess) {
+  if (business_service === "CR" && isSuccess) {
     const mutation = Digit.Hooks.cr.setPaymentStatus();
     mutation.mutate({
       filters: {
