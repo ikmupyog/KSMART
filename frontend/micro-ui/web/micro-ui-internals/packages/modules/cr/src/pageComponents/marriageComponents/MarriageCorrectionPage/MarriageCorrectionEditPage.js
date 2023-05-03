@@ -296,12 +296,11 @@ const MarriageCorrectionEditPage = ({
     };
   }, []);
 
-
   useEffect(async () => {
     if (Object.keys(params)?.length > 0) {
-      let tempParams = {}
-      Object.keys(params).forEach((key,index)=> tempParams[key] = {...params[key], isDisable: true, isFocused: false });
-      setMarriageCorrectionFormsObj({...tempParams});
+      let tempParams = {};
+      Object.keys(params).forEach((key, index) => (tempParams[key] = { ...params[key], isDisable: true, isFocused: false }));
+      setMarriageCorrectionFormsObj({ ...tempParams });
     } else {
       marriageCorrectionFormData = await initializeMarriageCorrectionObject(marriageCorrectionDocuments, navigationData);
       await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
@@ -350,14 +349,13 @@ const MarriageCorrectionEditPage = ({
   };
   const onSubmitMarriageCorrection = () => {
     const formattedResp = formatApiParams(marriageCorrectionFormsObj, navigationData);
-    if(formattedResp?.CorrectionDetails?.[0]?.CorrectionField.length > 0) {
-    setParams(marriageCorrectionFormsObj);
-    onSubmitAcknowledgement({marriageCorrectionFormsObj:formattedResp, navigationData});
+    if (formattedResp?.CorrectionDetails?.[0]?.CorrectionField.length > 0) {
+      setParams(marriageCorrectionFormsObj);
+      onSubmitAcknowledgement({ marriageCorrectionFormsObj: formattedResp, navigationData });
     } else {
       alert("Please edit atleast a field before submit");
     }
     // mutation.mutate(formattedResp, { onSuccess: onDocUploadSuccess });
-    
   };
 
   const setMarriageCorrecvtionFilterQuery = (fieldId) => {
@@ -397,7 +395,7 @@ const MarriageCorrectionEditPage = ({
   };
 
   if (Object.keys(marriageCorrectionFormsObj)?.length > 0) {
-    const config = { texts: { submitBarLabel: "Next" }};
+    const config = { texts: { submitBarLabel: "Next" } };
     return (
       <React.Fragment>
         <FormStep config={config} onSelect={onSubmitMarriageCorrection}>
@@ -412,7 +410,7 @@ const MarriageCorrectionEditPage = ({
           </div>
           {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
-            <FieldComponentContainer>
+            <div className="col-md-10">
               <div className="col-md-5">
                 <CardLabel>
                   {t("CR_DATE_OF_MARRIAGE")}
@@ -433,7 +431,7 @@ const MarriageCorrectionEditPage = ({
                   // {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
                 />
               </div>
-            </FieldComponentContainer>
+            </div>
             <div style={{ marginTop: "2.8rem" }}>
               {marriageCorrectionFormsObj?.DOM?.isDisable && (
                 <div>
@@ -611,7 +609,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onGroomNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -627,7 +625,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onGroomNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -643,7 +641,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onGroomNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -674,7 +672,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameMl}
                         onBlur={(e) => onGroomNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -690,7 +688,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameMl}
                         onBlur={(e) => onGroomNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -706,13 +704,13 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameMl}
                         onBlur={(e) => onGroomNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
                       />
                     </div>
                   </FieldComponentContainer>
                 </FormFieldContainer>
                 <FormFieldContainer>
-                  <FieldComponentContainer>
+                  <div className="col-md-10">
                     <div className="col-md-4">
                       <CardLabel>
                         {t("CR_DATE_OF_BIRTH_TIME")}
@@ -750,10 +748,10 @@ const MarriageCorrectionEditPage = ({
                         // value={DeceasedFirstNameEn}
                         onChange={onGroomDOBChange}
                         placeholder={`${t("CR_AGE")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text" })}
                       />
                     </div>
-                  </FieldComponentContainer>
+                  </div>
                   <div style={{ marginTop: "2.8rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_AGE?.isDisable && (
                       <ButtonContainer>
@@ -781,7 +779,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameEn}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_MOTHER_NAME_EN_ERROR") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -797,7 +795,12 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameMl}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = {
+                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                          isRequired: true,
+                          type: "text",
+                          title: t("CR_MOTHER_NAME_ML_ERROR"),
+                        })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -829,7 +832,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameEn}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_FATHER_NAME_EN_ERROR") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -845,7 +848,11 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameMl}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = {
+                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                          type: "text",
+                          title: t("CR_FATHER_NAME_ML_ERROR"),
+                        })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -875,7 +882,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameEn}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_GUARDIAN_NAME_EN_ERROR") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -891,7 +898,11 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameMl}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = {
+                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                          type: "text",
+                          title: t("CR_GUARDIAN_NAME_ML_ERROR"),
+                        })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -1120,8 +1131,8 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onBrideNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                      />
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        />
                     </div>
                     <div className="col-md-4">
                       <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
@@ -1136,8 +1147,8 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onBrideNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                      />
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                        />
                     </div>
                     <div className="col-md-4">
                       <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
@@ -1152,8 +1163,8 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onBrideNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                      />
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                        />
                     </div>
                   </FieldComponentContainer>
                   <div style={{ marginTop: "2.8rem" }}>
@@ -1183,8 +1194,12 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameMl}
                         onBlur={(e) => onBrideNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                      />
+                        {...(validation = {
+                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                          isRequired: true,
+                          type: "text",
+                          title: t("CR_INVALID_FIRST_NAME_ML"),
+                        })}                      />
                     </div>
                     <div className="col-md-4">
                       <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
@@ -1199,8 +1214,12 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameMl}
                         onBlur={(e) => onBrideNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                      />
+                        {...(validation = {
+                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                          isRequired: false,
+                          type: "text",
+                          title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                        })}                      />
                     </div>
                     <div className="col-md-4">
                       <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
@@ -1215,13 +1234,17 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameMl}
                         onBlur={(e) => onBrideNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
-                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                      />
+                        {...(validation = {
+                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                          isRequired: false,
+                          type: "text",
+                          title: t("CR_INVALID_LAST_NAME_ML"),
+                        })}                      />
                     </div>
                   </FieldComponentContainer>
                 </FormFieldContainer>
                 <FormFieldContainer>
-                  <FieldComponentContainer>
+                  <div className="col-md-10">
                     <div className="col-md-4">
                       <CardLabel>
                         {t("CR_DATE_OF_BIRTH_TIME")}
@@ -1262,7 +1285,7 @@ const MarriageCorrectionEditPage = ({
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
-                  </FieldComponentContainer>
+                  </div>
                   <div style={{ marginTop: "2.8rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_AGE?.isDisable && (
                       <ButtonContainer>

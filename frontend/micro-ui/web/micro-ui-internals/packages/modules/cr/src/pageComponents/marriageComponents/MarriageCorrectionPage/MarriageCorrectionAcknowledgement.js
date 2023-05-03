@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToStillBirthRegistration, convertToEditStillBirthRegistration } from "../../../utils/stillbirthindex";
-import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
+import getPDFData from "../../../utils/getCRMarriageCorrectionAcknowledgementData";
 import { useHistory, useLocation } from "react-router-dom";
+
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -43,6 +44,23 @@ const MarriageCorrectionAcknowledgement = () => {
   let marriageCorrectionData = location?.state?.marriageCorrectionData;
   let mutationData = location?.state?.mutationData;
 
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+
+  const handleDownloadPdf = async () => {
+  
+    const { marriageCorrectionDetails = [] } = mutationData.data
+    console.log("marriageCorrectionDetails", marriageCorrectionDetails);
+    const CorrectionData = (marriageCorrectionDetails && marriageCorrectionDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.tenantid);
+    console.log("tenantInfo",tenantInfo,CorrectionData);
+    let res = CorrectionData;
+    console.log({res});
+    const data = getPDFData({ ...res }, tenantInfo, t);
+    console.log("data==",data);
+    data.then((resp) => Digit.Utils.pdf.generate(resp));
+  };
+
   // if (false) {
   //   return (
   //     <Card>
@@ -76,7 +94,7 @@ const MarriageCorrectionAcknowledgement = () => {
               </div>
             }
             //style={{ width: "100px" }}
-            // onClick={handleDownloadPdf}
+            onClick={handleDownloadPdf}
           />
 
           <Link to={`/digit-ui/citizen`}>

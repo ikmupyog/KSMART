@@ -313,7 +313,6 @@ function MarriageCorrectionSummary({
 
   useEffect(()=>{
   if(mutation?.isError) {
-    console.log("mutatio",mutation);
     setParams({});
     history.push({
         pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
