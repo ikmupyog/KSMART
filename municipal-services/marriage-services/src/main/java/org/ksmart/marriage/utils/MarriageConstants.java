@@ -2,7 +2,8 @@ package org.ksmart.marriage.utils;
 
 public class MarriageConstants {
     public static final String TENANTS = "tenants";
-    public static final String TENANT_MODULE_NAME = "tenant";    
+    public static final String TENANT_MODULE_NAME = "tenant";
+    public static final String CR_MDMS_MARRIAGETYPE = "MarriagePlaceType";
 
     public static final String GENDERTYPE = "GenderType";
     public static final String COMMON_MASTER_MODULE_NAME = "common-masters";

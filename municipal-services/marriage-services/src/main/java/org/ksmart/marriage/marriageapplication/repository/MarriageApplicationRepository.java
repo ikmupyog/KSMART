@@ -9,7 +9,7 @@ import org.ksmart.marriage.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 //import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
-import org.ksmart.marriage.marriageapplication.enrichment.NewMarriageResponseEnrichment;
+//import org.ksmart.marriage.marriageapplication.enrichment.NewMarriageResponseEnrichment;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
@@ -37,7 +37,7 @@ public class MarriageApplicationRepository {
     private final MarriageApplicationRowMapper marriageApplicationRowMapper;
     private final JdbcTemplate jdbcTemplate;
     private final MarriageDocumentRowMapper marriagedocumentRowMapper;
-    private final NewMarriageResponseEnrichment responseEnrichment;
+//    private final NewMarriageResponseEnrichment responseEnrichment;
 
     @Autowired
     EncryptionDecryptionUtil encryptionDecryptionUtil;
@@ -47,24 +47,24 @@ public class MarriageApplicationRepository {
                                          JdbcTemplate jdbcTemplate,
                                          MarriageApplicationQueryBuilder marriageQueryBuilder,
                                          MarriageApplicationRowMapper marriageApplicationRowMapper,
-                                         MarriageDocumentRowMapper marriagedocumentRowMapper, NewMarriageResponseEnrichment responseEnrichment) {
+                                         MarriageDocumentRowMapper marriagedocumentRowMapper) {
         this.producer = producer;
         this.jdbcTemplate = jdbcTemplate;
         this.marriageQueryBuilder = marriageQueryBuilder;
         this.marriageApplicationRowMapper = marriageApplicationRowMapper;
         this.marriagedocumentRowMapper = marriagedocumentRowMapper;
-        this.responseEnrichment = responseEnrichment;
+//        this.responseEnrichment = responseEnrichment;
     }
     //Jasmine 31.03.2023
 
     public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        if (preparedStmtValues.size() == 0) {
-            throw new CustomException(ErrorCodes.NOT_FOUND.getCode(), "No result found.");
-        } else {
+//        if (preparedStmtValues.size() == 0) {
+//            throw new CustomException(ErrorCodes.NOT_FOUND.getCode(), "No result found.");
+//        } else {
             List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
-            responseEnrichment.setNewMarriageRequestData(requestInfo, result);
+//            responseEnrichment.setNewMarriageRequestData(requestInfo, result);
 
             if (result != null) {
                 result.forEach(marriage -> {
@@ -100,7 +100,7 @@ public class MarriageApplicationRepository {
             }
 
             return result;
-        }
+//        }
     }
 
         public List<MarriageDocument> getDocumentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
