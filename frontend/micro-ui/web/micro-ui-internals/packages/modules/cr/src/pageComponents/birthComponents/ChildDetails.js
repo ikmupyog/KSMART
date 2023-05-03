@@ -261,8 +261,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const onSkip = () => onSelect();
 
   useEffect(() => {
-    console.log("is initial render==",formData?.ChildDetails?.childDOB);
-
     if (isInitialRender) {
       if (formData?.ChildDetails?.isChildName != null) {
         setIsInitialRender(false);
@@ -300,12 +298,28 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const getHospitalCode = () => {
     if (userRoles[0].code === "HOSPITAL_OPERATOR") {
       const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const operatorHosward = [];
+      operatorHospDet?.map((ob) => {
+        operatorHosward.push(...ob.jurisdictionChilds);
+      });
+      if (operatorHosward.length > 0) {
+        console.log("operatorHosward", operatorHosward[0].wardCode);
+        setWardNo(operatorHosward[0].wardCode);
+      }
       const tempArray = operatorHospDet?.map((ob) => {
         return ob.hospitalCode;
       });
       return tempArray?.[0];
     } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
       const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const appHosward = [];
+      approverHospDet?.map((ob) => {
+        appHosward.push(...ob.jurisdictionChilds);
+      });
+      if (appHosward.length > 0) {
+        console.log("operatorHosward", appHosward[0].wardCode);
+        setWardNo(appHosward[0].wardCode);
+      }
       const tempArray = approverHospDet?.map((ob) => {
         return ob.hospitalCode
       });
@@ -488,7 +502,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }
-    
+
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -1300,7 +1314,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
         uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
-        proceedNoRDO,regNoNAC
+        proceedNoRDO, regNoNAC
       });
     }
   };

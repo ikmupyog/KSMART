@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useReducer, useEffect } from "react";
 import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker, MultiSelectDropdown, RemoveableTag, Toast } from "@egovernments/digit-ui-react-components";
 import { sortDropdownNames } from "../utils/index";
-import { convertEpochToDate } from '../utils/index';
+import { convertEpochToDate,stringReplaceAll } from '../utils/index';
 import { isUndefined } from "lodash";
 
 const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit }) => {
@@ -41,7 +41,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
           ob?.code.split(".")[0] === BusinessCategory?.code &&
           !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu?.code === `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}`)
         ) {
-          BusinessTypeMenu.push({ i18nKey: `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}`, code: `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}` });
+          BusinessTypeMenu.push({ i18nKey: `${ob?.code.split(".")[0] + "_" + ob?.code.split(".")[1]}`, code: `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}` });
         }
       });
     return BusinessTypeMenu;
@@ -54,7 +54,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
         if (ob.code.split(".")[0] + "." + ob.code.split(".")[1] === BusinessType.code && !BusinessSubTypeMenu.some((BusinessSubTypeMenu) => BusinessSubTypeMenu.code === `${ob.code}`)) {
-          BusinessSubTypeMenu.push({ i18nKey: `${ob.code}`, code: `${ob.code}` });
+          BusinessSubTypeMenu.push({ i18nKey: `${stringReplaceAll(ob.code,'.','_')}`, code: `${ob.code}` });
         }
       });
     return BusinessSubTypeMenu;
@@ -249,8 +249,8 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
 
       let tradeUnitJSON = [...fields];
       let tradeUnitFill = [...fillFields];
-      const businessSubtype = Array.from(
-        new Set(tradeUnitFill.map(type => type.businessSubtype))
+      const businessSubtypeJSON = Array.from(
+        new Set(tradeUnitJSON.map(type => type.businessSubtype))
       ); 
 
       for(let i=0; i<tradeUnitFill.length; i++){
@@ -261,27 +261,26 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         
         tradeUnitFill[i].businessSubtype = tempUnitFill;
       }
-      let unitLength = tradeUnitJSON.length;
-      for(let i = 0; i < unitLength; i++){
-        subUnitSelect.length > 0 ?
-          subUnitSelect.map((selUnit,index) => {
-           tradeUnitJSON[index] =  (selUnit !== null && selUnit?.code === tradeUnitJSON[i].businessSubtype) ? tradeUnitJSON[i]
-            : ({
-                "id": null,
-                "businessCategory": tradeUnitJSON[i].businessCategory,
-                "businessType": tradeUnitJSON[i].businessType, 
-                "businessSubtype": selUnit?.code ? selUnit?.code : null,
-                "active":true,
-                "unit":null,"uom":null
-              })
-          })
-        : tradeUnitJSON[i].businessSubtype = null;
-      }
+
+      if(subUnitSelect.length > 0 )
+        subUnitSelect.map((selUnit,index) => {
+          tradeUnitJSON[index] =  (selUnit !== null && businessSubtypeJSON.includes(selUnit.code)) ? tradeUnitJSON[index]
+          : ({
+              "id": null,
+              "businessCategory": tradeUnitFill[0].businessCategory.code,
+              "businessType": tradeUnitFill[0].businessType.code, 
+              "businessSubtype": selUnit?.code ? selUnit?.code : null,
+              "active":true,
+              "unit":null,"uom":null
+            });
+        })
+
 
       for(let i=0; i<tradeUnitJSON.length; i++){
         subUnitSelect.length > 0 ? ((subUnitSelect.filter(subUnit => subUnit?.code !== "" && subUnit?.code.includes(tradeUnitJSON[i]?.businessSubtype))).length === 0) ? delete tradeUnitJSON[i] : null :null;
       }
-
+      console.log("tradeUnitFill2 :"+JSON.stringify(tradeUnitFill));
+      console.log("tradeUnitJSON2 :"+JSON.stringify(tradeUnitJSON));
       setFillFields(tradeUnitFill);
       setFeilds(tradeUnitJSON);
       Digit.SessionStorage.set("activityedit", true);
@@ -495,7 +494,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
               <div className="tag-container">
                 {field?.businessSubtype?.length > 0 &&
                   field?.businessSubtype.map((value, indexsub) => {
-                    return <RemoveableTag key={indexsub} text={`${t(value && value["code"]).slice(0, 22)} ...`} onClick={() => onRemoved(indexsub, value)} />;
+                    return <RemoveableTag key={indexsub} text={`${t(value && value["i18nKey"]).slice(0, 22)} ...`} onClick={() => onRemoved(indexsub, value)} />;
                 })}
               </div>
             </div>
