@@ -205,21 +205,11 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0) {
       console.log("docCondition", selectedConfig.documentData, docCondition);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
-      console.log("filteredDocs==", filteredDocs);
       setSelectedDocuments(filteredDocs);
     }
   }, [checkStudentCondition, checkCorrectionCondition]);
 
   useEffect(() => {
-    // item.conditionCode === "NAME_GREATER_THAN_SIX_NON_STUDENT"
-    //   || item.conditionCode === "NAME_GREATER_THAN_SIX_STUDENT"
-    //   || item.conditionCode === "NAME_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
-    //   || item.conditionCode === "NAME_INCLUSION_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
-    //   || item.conditionCode === "NAME_CHANGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
-    //   || item.conditionCode === "NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE"
-    //   || item.conditionCode === "NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
-    //   || item.conditionCode === "ADD_HUSBAND_NAME_FOR_FEMALE"
-    console.log("checked conditions==22", selectedBirthData, checkStudentCondition, checkCorrectionCondition);
     let filteredDocs = [];
     let docCondition = "NAME_GREATER_THAN_SIX";
     let childAge = "";
@@ -229,14 +219,12 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       console.log("child age==",childAge);
       if (childAge >= 6 && childAge < 15) {
         docCondition = `${docCondition}_${checkStudentCondition.code}`;
-      } else if (childAge >= 0) {
+      } else if (childAge >= 18) {
         setShowDatePicker(true);
         const certificateDobDifference =
           certificateDob && selectedBirthData?.dateofbirth && moment(selectedBirthData?.dateofbirth).diff(moment(certificateDob), "months");
         const absDobDifference = certificateDobDifference && Math.abs(certificateDobDifference);
         console.log("childaAge--==", checkNameCorrectionCondition, childAge, "--", absDobDifference, "==", certificateDob);
-     
-          console.log("reached==");
           if (certificateDob && absDobDifference >= 10) {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
           } else if(checkNameCorrectionCondition){
@@ -244,7 +232,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           } else {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE`;
           }
-      } else if (childaAge >= 15) {
+      } else if (childAge >= 15) {
         if (absDobDifference >= 10) {
           if (selectedBirthData?.fullName?.trim() === "") {
             docCondition = `NAME_INCLUSION_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
@@ -254,7 +242,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         } else {
           docCondition = `NAME_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE`;
         }
-        console.log("certificateDobDifference==", certificateDobDifference, certificateDob, absDobDifference);
       }
     }
     if (Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "NON_STUDENT") {
@@ -275,6 +262,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   }
 
   const onDobChange = (dob) => {
+    console.log("dob chaznge==",dob);
     setCertificateDob(dob);
   };
 

@@ -65,9 +65,9 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
   const onSuccess = () => {
     // console.log(isEditAbandonedBirth);
    
-    // if(isEditAbandonedBirth === false){
-    //   clearParams();
-    // }  
+    if(isEditAbandonedBirth === false){
+      clearParams();
+    }  
     // sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_ABANDONEDBIRTH_REG");
   };
