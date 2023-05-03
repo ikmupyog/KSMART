@@ -37,7 +37,7 @@ const createComplaint = ({
     deptCode,
     address
   });
-  sessionStorage.clear('Digit.PGR_CITIZEN_CREATE_COMPLAINT')
+  // sessionStorage.clear('Digit.PGR_CITIZEN_CREATE_COMPLAINT')
   dispatch({
     type: CREATE_COMPLAINT,
     payload: response,
