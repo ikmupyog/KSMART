@@ -358,7 +358,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
               </FieldComponentContainer>
             </FormFieldContainer>
             <FormFieldContainer>
-              <div>
+              <div className="col-md-9">
               {/* <FieldComponentContainer> */}
                 <div className="col-md-4">
                   <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
