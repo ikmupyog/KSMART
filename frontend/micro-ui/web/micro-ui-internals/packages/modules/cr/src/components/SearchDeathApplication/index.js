@@ -28,14 +28,14 @@ const generateActions = (rowData) => {
   switch (status) {
     case "CITIZENACTIONREQUIRED":
       response = <span className="link">
-        <Link to={`/digit-ui/citizen/cr/cr-death-creation/information-death/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+        <Link to={`/digit-ui/citizen/cr/cr-death-creation/information-death/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}>
           EDIT
         </Link>
       </span>
       break;
     case "PENDINGPAYMENT":
       response = <span className="link">
-        <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+        <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}?tenantId=${rowData?.TL_COMMON_CITY_NAME}`}>
           MAKE PAYMENT
         </Link>
       </span>
@@ -43,7 +43,7 @@ const generateActions = (rowData) => {
     default:
       response = <span className="link">
         <Link
-          to={`/digit-ui/citizen/cr/cr/death/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+          to={`/digit-ui/citizen/cr/cr/death/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}>
           VIEW DETAILS
         </Link>
       </span>

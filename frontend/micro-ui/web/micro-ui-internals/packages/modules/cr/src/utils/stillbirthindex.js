@@ -433,7 +433,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
             ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
             : null,
           permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk
             : null,
           permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
             ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
