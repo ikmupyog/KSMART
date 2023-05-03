@@ -217,7 +217,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks" style={{ height: "max-content", backgroundColor: "rgb(233, 228, 225) " }}>
         {/* <div className="FileFlowWrapper note-wrapper"  > */}
-        <div className="FileFlowWrapper">
+        <div className="FileFlowWrapper noteandDrafting">
           {/* <div className="row card-document"   >
 
                         <div className="col-md-12 col-sm-12 col-xs-12 card-document-column">

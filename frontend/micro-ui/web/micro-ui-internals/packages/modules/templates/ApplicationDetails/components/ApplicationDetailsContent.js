@@ -139,66 +139,72 @@ function ApplicationDetailsContent({
           {applicationDetails?.applicationDetails?.map((detail, index) => (
             <React.Fragment key={index}>
               <div style={getMainDivStyles()}>
-                {index === 0 ? <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
-                  :
-                  <Accordion expanded={index === 1 ? true : false} title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
-                    content={<StatusTable style={getTableStyles()}>
-                      {detail?.title &&
-                        !detail?.title.includes("NOC") &&
-                        detail?.values?.map((value, index) => {
-                          if (value.map === true && value.value !== "N/A") {
-                            return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
-                          }
-                          if (value?.isLink == true) {
-                            return (
-                              <Row
-                                key={t(value.title)}
-                                label={
-                                  window.location.href.includes("tl") ? (
-                                    <div style={{ width: "200%" }}>
+                {index === 0 ? (
+                  <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
+                ) : (
+                  <Accordion
+                    expanded={index === 1 ? true : false}
+                    title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
+                    content={
+                      <StatusTable style={getTableStyles()}>
+                        {detail?.title &&
+                          !detail?.title.includes("NOC") &&
+                          detail?.values?.map((value, index) => {
+                            if (value.map === true && value.value !== "N/A") {
+                              return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
+                            }
+                            if (value?.isLink == true) {
+                              return (
+                                <Row
+                                  key={t(value.title)}
+                                  label={
+                                    window.location.href.includes("tl") ? (
+                                      <div style={{ width: "200%" }}>
+                                        <Link to={value?.to}>
+                                          <span className="link" style={{ color: "#F47738" }}>
+                                            {t(value?.title)}
+                                          </span>
+                                        </Link>
+                                      </div>
+                                    ) : isNocLocation || isBPALocation ? (
+                                      `${t(value.title)}`
+                                    ) : (
+                                      t(value.title)
+                                    )
+                                  }
+                                  text={
+                                    <div>
                                       <Link to={value?.to}>
                                         <span className="link" style={{ color: "#F47738" }}>
-                                          {t(value?.title)}
+                                          {value?.value}
                                         </span>
                                       </Link>
                                     </div>
-                                  ) : isNocLocation || isBPALocation ? (
-                                    `${t(value.title)}`
-                                  ) : (
-                                    t(value.title)
-                                  )
-                                }
-                                text={
-                                  <div>
-                                    <Link to={value?.to}>
-                                      <span className="link" style={{ color: "#F47738" }}>
-                                        {value?.value}
-                                      </span>
-                                    </Link>
-                                  </div>
-                                }
+                                  }
+                                  last={index === detail?.values?.length - 1}
+                                  caption={value.caption}
+                                  className="border-none"
+                                  rowContainerStyle={getRowStyles()}
+                                />
+                              );
+                            }
+                            return (
+                              <Row
+                                key={t(value.title)}
+                                label={isNocLocation || isBPALocation ? `${t(value.title)}` : t(value.title)}
+                                text={getTextValue(value)}
                                 last={index === detail?.values?.length - 1}
                                 caption={value.caption}
-                                className="border-none"
+                                className=" "
+                                // TODO, Later will move to classes
                                 rowContainerStyle={getRowStyles()}
                               />
                             );
-                          }
-                          return (
-                            <Row
-                              key={t(value.title)}
-                              label={isNocLocation || isBPALocation ? `${t(value.title)}` : t(value.title)}
-                              text={getTextValue(value)}
-                              last={index === detail?.values?.length - 1}
-                              caption={value.caption}
-                              className=" "
-                              // TODO, Later will move to classes
-                              rowContainerStyle={getRowStyles()}
-                            />
-                          );
-                        })}
-                    </StatusTable>} />
-                }
+                          })}
+                      </StatusTable>
+                    }
+                  />
+                )}
               </div>
               {detail?.belowComponent && <detail.belowComponent />}
               {detail?.additionalDetails?.inspectionReport && (
@@ -207,9 +213,6 @@ function ApplicationDetailsContent({
               {applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending?.length > 0 && detail?.additionalDetails?.fiReport && (
                 <InspectionReport fiReport={applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending} />
               )}
-              
-              
-           
               {/* {detail?.additionalDetails?.FIdocuments && detail?.additionalDetails?.values?.map((doc,index) => (
             <div key={index}>
             {doc.isNotDuplicate && <div> 
@@ -261,14 +264,17 @@ function ApplicationDetailsContent({
           ))}
         </div>
         <div style={{ position: "relative" }} className={"wrapper-app"}>
-        <Accordion expanded={ true} title={'WORKFLOW'}
-                    content={<StatusTable style={getTableStyles()}>
-                       <NoteAndDrafting applDetails={applicationDetails?.applicationData}/> 
-                    </StatusTable>}
-                    />
+          <Accordion
+            expanded={true}
+            title={"WORKFLOW"}
+            content={
+              <StatusTable style={getTableStyles()}>
+                <NoteAndDrafting applDetails={applicationDetails?.applicationData} />
+              </StatusTable>
+            }
+          />
         </div>
-       
-       
+
         {/* <div className={"timeline-wrapper"}>
           {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
             <React.Fragment>
