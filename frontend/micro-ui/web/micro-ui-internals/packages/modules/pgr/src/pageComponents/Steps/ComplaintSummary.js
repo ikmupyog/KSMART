@@ -138,10 +138,10 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CORE_COMMON_PINCODE")}`} : {pincode}</CardText>
                   </div>}
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_ADDCOMPLAINT_LANDMARK")}`} : {landmark}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left", overflowWrap: "break-word" }}>{`${t("CS_ADDCOMPLAINT_LANDMARK")}`} : {landmark}</CardText>
                   </div>
                   {street && <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMPLAINT_DETAILS_STREET")}`} : {street}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left", overflowWrap: "break-word" }}>{`${t("CS_COMPLAINT_DETAILS_STREET")}`} : {street}</CardText>
                   </div>}
                 </div>
               </div>
@@ -203,7 +203,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
                 <div className="col-md-12">
                   <div className="col-md-12">
                     <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CS_ADDCOMPLAINT_DETAILS")}`}</span>{" "}
+                      <span style={{ background: "#fff", padding: "0 10px", overflowWrap: "break-word" }}>{`${t("CS_ADDCOMPLAINT_DETAILS")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
