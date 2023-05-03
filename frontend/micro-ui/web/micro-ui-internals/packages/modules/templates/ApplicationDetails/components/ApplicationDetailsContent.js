@@ -26,6 +26,7 @@ import TLCaption from "./TLCaption";
 import TLTradeAccessories from "./TLTradeAccessories";
 import TLTradeUnits from "./TLTradeUnits";
 import DocumentsPreview from "./DocumentsPreview";
+import NoteAndDrafting from './NoteAndDrafting'
 
 function ApplicationDetailsContent({
   applicationDetails,
@@ -130,7 +131,7 @@ function ApplicationDetailsContent({
     else if (value?.isUnit) return value?.value ? `${getTranslatedValues(value?.value, value?.isNotTranslated)} ${t(value?.isUnit)}` : t("N/A");
     else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
   };
-console.log("first",applicationDetails)
+  // const NoteDrafting = Digit?.ComponentRegistryService?.getComponent('NoteDrafting')
   return (
     <>
       <div className="file-main">
@@ -206,6 +207,9 @@ console.log("first",applicationDetails)
               {applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending?.length > 0 && detail?.additionalDetails?.fiReport && (
                 <InspectionReport fiReport={applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending} />
               )}
+              
+              
+           
               {/* {detail?.additionalDetails?.FIdocuments && detail?.additionalDetails?.values?.map((doc,index) => (
             <div key={index}>
             {doc.isNotDuplicate && <div> 
@@ -256,14 +260,23 @@ console.log("first",applicationDetails)
             </React.Fragment>
           ))}
         </div>
-        <div className={"timeline-wrapper"}>
+        <div style={{ position: "relative" }} className={"wrapper-app"}>
+        <Accordion expanded={ true} title={'WORKFLOW'}
+                    content={<StatusTable style={getTableStyles()}>
+                       <NoteAndDrafting applDetails={applicationDetails?.applicationData}/> 
+                    </StatusTable>}
+                    />
+        </div>
+       
+       
+        {/* <div className={"timeline-wrapper"}>
           {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
             <React.Fragment>
               {(workflowDetails?.isLoading || isDataLoading) && <Loader />}
               {!workflowDetails?.isLoading && !isDataLoading && (
                 <Fragment>
                   <CardSectionHeader>
-                    {/* {t("ES_APPLICATION_DETAILS_APPLICATION_TIMELINE")} */}
+                   
                     {t("Activities")}
                   </CardSectionHeader>
                   <BreakLine />
@@ -298,7 +311,7 @@ console.log("first",applicationDetails)
               )}
             </React.Fragment>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );

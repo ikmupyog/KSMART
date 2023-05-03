@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import {
     BackButton,
+    FormBackButton,
     PrivateRoute,
     BreadCrumb,
     CommonDashboard,
@@ -27,13 +28,13 @@ import {
     Card
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
+// import SearchApplication from "./SearchApplication";
+// import Search from "../pages/employee/Search";
+// import BirthSearchInbox from "../../../cr/src/components/inbox/search";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
-import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
+// import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
 
 
 const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
@@ -42,7 +43,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const [draftText, setDraftText] = useState("");
     const { t } = useTranslation();
     const history = useHistory();
-    const state = useSelector((state) => state);
+    // const state = useSelector((state) => state);
     const locale = Digit.SessionStorage.get("locale");
     let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
     let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
@@ -163,7 +164,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </Card>
                         </Modal>}
                     <div className="row wrapper-file" >
-                        <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-md-12 col-sm-12 col-xs-12" style={{display:'flex',alignItems:"center"}}>
                             <div className="col-md-2 col-sm-12 col-xs-12"  >
 
                                 <h3 class="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
@@ -180,7 +181,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-5 col-sm-12 col-xs-12"  >
+                            <div className="col-md-5 col-sm-12 col-xs-12" style={{marginTop:'20px', alignItems:'center'}} >
 
                                 <TextInput
 
@@ -245,7 +246,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             />
                         </div>
-                        <div class="link-file">
+                        <div class="link-file-sec">
                             <LinkButton
                                 label={t("ADD")}
                                 className="file-link-button"
@@ -283,7 +284,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                         </div>
-                        <div class="custom-draft-button">
+                        {/* <div class="custom-draft-button">
 
                             {!draftTextValue ? <CustomButton
                                 onClick={saveDraft}
@@ -292,20 +293,26 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             ></CustomButton> :
                                 ""}
-                        </div>
+                        </div> */}
                     </div>
 
 
                     <div className="row">
                         <div className="col-md-12" >
-
-                            <div className="col-md-3 col-sm-4" >
-                                <SubmitBar label={t("SAVE")} style={{ marginBottom: "10px" }} />
+                            <div className="button-div" >
+                            <FormBackButton >{t("CS_COMMON_BACK")}</FormBackButton>
+                            <SubmitBar label={t("SAVE")} />
                             </div>
+                           
+                            {/* <div className="col-md-3 col-sm-4" >
+                              
+                            </div> */}
+                           
+                          
                             {/* <div className="col-md-3 col-sm-4 " >
                                 <SubmitBar label={t("FORWARD")} style={{ marginBottom: "10px" }} />
                             </div> */}
-                            <div className="col-md-3  col-sm-4"  >
+                            {/* <div className="col-md-3  col-sm-4"  >
                                 <Dropdown
                                     t={t}
                                     type={"text"}
@@ -314,7 +321,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                     placeholder={t("DEFAULT/SELECT")}
                                 />
 
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
