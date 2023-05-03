@@ -812,4 +812,189 @@ public class MarriageMdmsUtil {
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
         return result;
     }
+    //Jasmine 03.05.2023
+    public Object mDMSSearch(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSSearchRequest(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSSearchRequest(RequestInfo requestInfo, String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantDetails(tenantId);
+        ModuleDetail commomMasterRequest = getCommonMastersSearch();
+        List<ModuleDetail> BNDListRequest = getBNDSearch();
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(commomMasterRequest);
+        moduleDetails.addAll(BNDListRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+        return mdmsCriteriaReq;
+    }
+    private ModuleDetail getTenantDetails(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crMarriageMasterDetails = new ArrayList<>();        
+        crMarriageMasterDetails
+                .add(MasterDetail.builder().name(MarriageConstants.TENANTS).build());
+
+        ModuleDetail crMarriageModuleDtls = ModuleDetail.builder().masterDetails(crMarriageMasterDetails)
+                .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
+       
+        return crMarriageModuleDtls;
+    }
+
+    private ModuleDetail getCommonMastersSearch() {
+
+        List<MasterDetail> crMarriageMasterDetails = new ArrayList<>();  
+        //Gender
+        crMarriageMasterDetails
+                .add(MasterDetail.builder().name(MarriageConstants.GENDERTYPE)
+                .build());
+        //District        
+        crMarriageMasterDetails
+                .add(MasterDetail.builder().name(MarriageConstants.DISTRICT)
+                .build());   
+        //State        
+        crMarriageMasterDetails
+                 .add(MasterDetail.builder().name(MarriageConstants.STATE)
+                 .build());    
+        //Country        
+        crMarriageMasterDetails
+                 .add(MasterDetail.builder().name(MarriageConstants.COUNTRY)
+                 .build());     
+        //Religion        
+        crMarriageMasterDetails
+                 .add(MasterDetail.builder().name(MarriageConstants.RELIGION)
+                 .build());                    
+        //PostOffice
+        crMarriageMasterDetails
+                        .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE)
+                        .build());  
+                        
+        //Taluk
+        crMarriageMasterDetails
+                        .add(MasterDetail.builder().name(MarriageConstants.TALUK)
+                        .build()); 
+        //VILLAGE
+        crMarriageMasterDetails
+                        .add(MasterDetail.builder().name(MarriageConstants.VILLAGE)
+                        .build());       
+
+        ModuleDetail crMarriageModuleDtls = ModuleDetail.builder().masterDetails(crMarriageMasterDetails)
+                .moduleName(MarriageConstants.COMMON_MASTER_MODULE_NAME).build();
+       
+        return crMarriageModuleDtls;
+    }
+
+    private List<ModuleDetail> getBNDSearch() {
+
+        List<MasterDetail> crMarriageMasterDetails = new ArrayList<>();
+        crMarriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.MARITAL_STATUS)
+                    .build());
+        crMarriageMasterDetails
+                           .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_PLACE_TYPE)
+                           .build());        
+        crMarriageMasterDetails
+                              .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_TYPE)
+                              .build());       
+        // Add Module workflow
+        crMarriageMasterDetails.add(MasterDetail.builder()
+                                                        .name(MarriageConstants.CR_MDMS_WORKFLOW_NEW)
+                                                        .build());
+
+        ModuleDetail crMarriageModuleDtls = ModuleDetail.builder().masterDetails(crMarriageMasterDetails)
+                .moduleName(MarriageConstants.BND_MODULE_NAME).build();
+
+               
+         return Arrays.asList(crMarriageModuleDtls);
+    }
+
+    public String getCountryNameEn(Object mdmsData, String CountryId) {
+        List<String> countries  = getCountryCode(mdmsData);
+        int index = countries.indexOf(CountryId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].name");        
+    }
+    public String getCountryNameMl(Object mdmsData, String CountryId) {
+        List<String> countries  = getCountryCode(mdmsData);
+        int index = countries.indexOf(CountryId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].namelocal");        
+    }
+    public String getStateNameEn(Object mdmsData, String StateId) {
+        List<String> states  = getStateCode(mdmsData);
+        int index = states.indexOf(StateId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].name");        
+    }
+    public String getStateNameMl(Object mdmsData, String StateId) {
+        List<String> states  = getStateCode(mdmsData);
+        int index = states.indexOf(StateId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].namelocal");        
+    }
+    public String getDistrictNameEn(Object mdmsData, String DistrictId) {
+        List<String> districts  = getDistrictCode(mdmsData);
+        int index = districts.indexOf(DistrictId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].name");        
+    }    
+    public String getDistrictNameMl(Object mdmsData, String DistrictId) {
+        List<String> districts  = getDistrictCode(mdmsData);
+        int index = districts.indexOf(DistrictId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].namelocal");        
+    }
+    public String getTalukNameEn(Object mdmsData, String TalukId) {
+        List<String> taluks  = getTalukCode(mdmsData);
+        int index = taluks.indexOf(TalukId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].name");        
+    }  
+    public String getTalukNameMl(Object mdmsData, String TalukId) {
+        List<String> taluks  = getTalukCode(mdmsData);
+        int index = taluks.indexOf(TalukId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].namelocal");        
+    }    
+    public String getVillageNameEn(Object mdmsData, String VillageId) {
+        List<String> villages  = getVillageCode(mdmsData);
+        int index = villages.indexOf(VillageId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].name");        
+    }  
+    public String getVillageNameMl(Object mdmsData, String VillageId) {
+        List<String> villages  = getVillageCode(mdmsData);
+        int index = villages.indexOf(VillageId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].namelocal");        
+    }  
+    public String getPONameEn(Object mdmsData, String POId) {
+        List<String> po  = getPOCode(mdmsData);
+        int index = po.indexOf(POId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].name");        
+    }  
+    public String getPONameMl(Object mdmsData, String POId) {
+        List<String> po  = getPOCode(mdmsData);
+        int index = po.indexOf(POId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");        
+    }  
+    
+    private List<String> getCountryCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODE_JSONPATH);
+    }
+    private List<String> getStateCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_CODE_JSONPATH);
+    }
+    private List<String> getDistrictCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_CODE_JSONPATH);
+    }
+    private List<String> getTalukCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_CODE_JSONPATH);
+    }
+    private List<String> getVillageCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_CODE_JSONPATH);
+    }
+    private List<String> getPOCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_CODE_JSONPATH);
+    }
+    private List<String> getLBCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TENANT_CODE_JSONPATH);
+    }
 }

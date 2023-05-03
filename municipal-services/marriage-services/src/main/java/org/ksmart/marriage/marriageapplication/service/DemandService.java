@@ -70,7 +70,7 @@ public class DemandService {
         demand.setPayer(requestInfo.getUserInfo());
         demand.setTaxPeriodFrom(System.currentTimeMillis());
         demand.setTaxPeriodTo(System.currentTimeMillis()+86400000);
-        demand.setMinimumAmountPayable(new BigDecimal(12));
+        demand.setMinimumAmountPayable(new BigDecimal(10));
     }
 
     private ModuleDetail getGLCodeRequest() {
