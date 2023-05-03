@@ -42,7 +42,7 @@ public class HRMSUtil {
         StringBuilder url = getHRMSURI(uuids);
 
         RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();
-
+ 
         Object res = serviceRequestRepository.fetchResult(url, requestInfoWrapper);
 
         List<String> departments = null;

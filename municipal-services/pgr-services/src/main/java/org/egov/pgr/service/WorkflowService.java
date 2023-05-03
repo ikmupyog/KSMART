@@ -121,6 +121,7 @@ public class WorkflowService {
 
         // FIX ME FOR BULK SEARCH
         Map<String, List<ServiceWrapper>> tenantIdToServiceWrapperMap = getTenantIdToServiceWrapperMap(serviceWrappers);
+       
 
         List<ServiceWrapper> enrichedServiceWrappers = new ArrayList<>();
 
@@ -134,9 +135,11 @@ public class WorkflowService {
                 serviceRequestIds.add(pgrEntity.getService().getServiceRequestId());
             });
 
+           
             RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();
 
             StringBuilder searchUrl = getprocessInstanceSearchURL(tenantId, StringUtils.join(serviceRequestIds, ','));
+            
             Object result = repository.fetchResult(searchUrl, requestInfoWrapper);
 
 
@@ -147,6 +150,7 @@ public class WorkflowService {
                 throw new CustomException("PARSING ERROR", "Failed to parse response of workflow processInstance search");
             }
 
+           
             if (CollectionUtils.isEmpty(processInstanceResponse.getProcessInstances()) || processInstanceResponse.getProcessInstances().size() != serviceRequestIds.size())
                 throw new CustomException("WORKFLOW_NOT_FOUND", "The workflow object is not found");
 
