@@ -64,7 +64,7 @@ export const CRNACDeathsearch = {
 
     let employeeResponse = [];
     const Deathdetails = {
-      title: "Death SUMMARY DETAILS",
+      title: "CR_DEATH_SUMMARY",
       asSectionHeader: true,
     }
     const InformationDeath = {
@@ -72,7 +72,7 @@ export const CRNACDeathsearch = {
       asSectionHeader: true,
       values: [
         {
-          title: "PDF_DECEASED_NAME",
+          title: "PDF_BIRTH_CHILD_NAME",
           value:
             response?.InformationDeath?.DeceasedFirstNameEn +
 
@@ -101,7 +101,7 @@ export const CRNACDeathsearch = {
             || "NA",
         },
         {
-          title: "Aadhar Number",
+          title: "CS_COMMON_AADHAAR",
           value: response?.InformationDeath?.DeceasedAadharNumber + "," || "NA",
         },
           {
@@ -109,7 +109,7 @@ export const CRNACDeathsearch = {
             value: response?.InformationDeath?.SpouseNameEn + " / " + response?.InformationDeath?.SpouseNameML || "NA ",
           },
           {
-            title: "Aadhar Number",
+            title: "CS_COMMON_AADHAAR",
             value: response?.InformationDeath?.SpouseAadhaar  || "NA ",
           },
         {
@@ -117,7 +117,7 @@ export const CRNACDeathsearch = {
           value: response?.InformationDeath?.FatherNameEn + " / " + response?.InformationDeath?.FatherNameMl || "NA",
         },
         {
-          title: "Aadhar Number",
+          title: "CS_COMMON_AADHAAR",
           value: response?.InformationDeath?.FatherAadharNo  || "NA ",
         },
         {
@@ -125,7 +125,7 @@ export const CRNACDeathsearch = {
           value: response?.InformationDeath?.MotherNameEn + " / " + response?.InformationDeath?.MotherNameMl || "NA",
         },
         {
-          title: "Aadhar Number",
+          title: "CS_COMMON_AADHAAR",
           value: response?.InformationDeath?.MotherAadharNo  || "NA ",
         },
         { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace  || "NA" },
@@ -136,19 +136,19 @@ export const CRNACDeathsearch = {
       ],
     };
     const ApplicantDetail = {
-      title: "Applicant Details",
+      title: "CR_APPLICANT_INFORMATION_HEADER",
       asSectionHeader: true,
       values: [
         {
-          title: "Applicant Name",
+          title: "CR_APPLICANT_NAME",
           value:
             response?.DeathApplicantDtls?.ApplicantName || "NA",
         },
 
-        { title: "Applicant Aadhar", value: response?.DeathApplicantDtls?.ApplicantAadhaarNo || "NA" },
-        { title: "Applicant Mobile", value: response?.DeathApplicantDtls?.ApplicantMobileNo || "NA"},
-        { title: "Applicant Relation", value: response?.DeathApplicantDtls?.ApplicantRelation || "NA",},
-        { title: "Applicant Address", value: response?.DeathApplicantDtls?.ApplicantAddress  || "NA ",},
+        { title: "CR_APPLICANT_AADHAR", value: response?.DeathApplicantDtls?.ApplicantAadhaarNo || "NA" },
+        { title: "CR_APPLICANT_MOBILE", value: response?.DeathApplicantDtls?.ApplicantMobileNo || "NA"},
+        { title: "CR_RELATION_WITH_DECEASED", value: response?.DeathApplicantDtls?.ApplicantRelation || "NA",},
+        { title: "CR_APPLICANT_ADDRESS", value: response?.DeathApplicantDtls?.ApplicantAddress  || "NA ",},
       ],
     };
     const Docdetails = {

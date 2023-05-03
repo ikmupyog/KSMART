@@ -39,6 +39,7 @@ function MarriageCorrectionSummary({
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const history = useHistory();
 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_MARRIAGE_CORRECTION", {});
   
   const marriageFieldLabels = {
     marriageDOM: "CR_DATE_OF_MARRIAGE",
@@ -61,13 +62,13 @@ function MarriageCorrectionSummary({
     "GroomAddressDetails.permntInKeralaAdrLocalityNameEn": "CR_LOCALITY_EN",
     "GroomAddressDetails.permntInKeralaAdrLocalityNameMl": "CR_LOCALITY_ML",
     "GroomAddressDetails.permntInKeralaAdrStreetNameEn": "CR_STREET_EN",
-    "GroomAddressDetails.permntInKeralaAdrStreetNameMl": "CR_STREET_ML",
+    "GroomAddressDetails.permntInKeralaAdrStreetNameMl": "CR_STREET_MAL",
     "GroomAddressDetails.permntOutsideKeralaHouseNameEn": "CR_HOUSE_NO_AND_NAME_EN",
     "GroomAddressDetails.permntOutsideKeralaHouseNameMl": "CR_HOUSE_NO_AND_NAME_MAL",
     "GroomAddressDetails.permntOutsideKeralaLocalityNameEn": "CR_LOCALITY_EN",
     "GroomAddressDetails.permntOutsideKeralaLocalityNameMl": "CR_LOCALITY_ML",
     "GroomAddressDetails.permntOutsideKeralaStreetNameEn": "CR_STREET_EN",
-    "GroomAddressDetails.permntOutsideKeralaStreetNameMl": "CR_STREET_ML",
+    "GroomAddressDetails.permntOutsideKeralaStreetNameMl": "CR_STREET_MAL",
     "GroomAddressDetails.permntOutsideIndiaLineoneEn": "CR_ADDRES_LINE_ONE_EN",
     "GroomAddressDetails.permntOutsideIndiaLineoneMl": "CR_ADDRES_LINE_ONE_ML",
     "GroomAddressDetails.permntOutsideIndiaLinetwoEn": "CR_ADDRES_LINE_TWO_EN",
@@ -119,7 +120,6 @@ function MarriageCorrectionSummary({
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
     });
-    console.log("newThumbnails==", newThumbnails);
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
@@ -129,7 +129,6 @@ function MarriageCorrectionSummary({
         };
         return tempObj;
       });
-    console.log("formattedImageThumbs==", formattedImageThumbs);
     setImagesThumbs(formattedImageThumbs);
   };
 
@@ -216,7 +215,6 @@ function MarriageCorrectionSummary({
   };
 
   const getFieldValue = (data, type = "text") => {
-    console.log("type", type);
     let fieldValue = "";
     switch (type) {
       case "text":
@@ -237,14 +235,12 @@ function MarriageCorrectionSummary({
   useEffect(() => {
     
     if (marriageCorrectionData?.length > 0) {
-      console.log("navigated data==", marriageCorrectionData);
       setDocumentsView(marriageCorrectionData?.[0]?.CorrectionDocument);
     }
   }, []);
 
   const renderCardDetail = (value, fieldName, documentData) => {
-    console.log("value in card==", value);
-    const type = fieldName === "DOM" ? "date" : "text";
+    const type = (["DOM", "GROOM_AGE", "BRIDE_AGE"].includes(fieldName)) ? "date" : "text";
     return (
       <div className="row">
         <div className="col-md-12">
@@ -253,12 +249,12 @@ function MarriageCorrectionSummary({
           </div>
           <div className="col-md-3">
             <h4>
-              <strong>{getFieldValue(value?.oldValue, type)}</strong>
+              <strong style={{ wordWrap: "break-word"}}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-3">
             <h4>
-              <strong>{getFieldValue(value?.newValue, type)}</strong>
+              <strong style={{ wordWrap: "break-word"}}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-2">
@@ -270,7 +266,6 @@ function MarriageCorrectionSummary({
   };
 
   const renderSummaryCard = (detail, index) => {
-    console.log("detail in summary card--", detail, marriageCorrectionData[detail]);
     //  switch()
     return (
       <React.Fragment key={index}>
@@ -308,17 +303,27 @@ function MarriageCorrectionSummary({
 
   const mutation = Digit.Hooks.cr.useMarriageCorrectionAction(tenantId);
 
-  const navigateAcknowledgement = (data) =>{
-    console.log("reached successfully", data, { navData, marriageCorrectionData: marriageCorrectionFormsObj });
+  const navigateAcknowledgement = (data={}) =>{
+    setParams({});
     history.push({
       pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
-      state: { navData, marriageCorrectionData: data }
+      state: { navData, marriageCorrectionData: data,mutationData:{ data : data, isSuccess: true, isLoading : false }}
     });
   }
 
+  useEffect(()=>{
+  if(mutation?.isError) {
+    console.log("mutatio",mutation);
+    setParams({});
+    history.push({
+        pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
+        state: { navData, marriageCorrectionData: {} ,mutationData:{ data : mutation.data, isSuccess: mutation.isSuccess, isLoading : mutation?.isLoading }}
+      });
+  }
+  },[mutation])
+
   const onSubmitMarriageCorrection = () => {
-    console.log("birth inclusion===123");
-    mutation.mutate(marriageCorrectionFormsObj,{ onSuccess: navigateAcknowledgement });
+     mutation.mutate(marriageCorrectionFormsObj,{ onSuccess: navigateAcknowledgement });
   }
 
   return (
@@ -328,7 +333,7 @@ function MarriageCorrectionSummary({
           {marriageCorrectionData?.length > 0 && marriageCorrectionData?.map((detail, index) => renderSummaryCard(detail, index))}
           {marriageCorrectionData?.length > 0 && (
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: "2rem" }}>
-              <SubmitBar label={t("CS_COMMON_BACK")} />
+              <SubmitBar label={t("CS_COMMON_BACK")} onSubmit = {()=> history.goBack()}/>
               <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit = {onSubmitMarriageCorrection} />
             </div>
           )}

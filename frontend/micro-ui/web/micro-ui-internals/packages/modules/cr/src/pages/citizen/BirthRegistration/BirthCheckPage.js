@@ -197,9 +197,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameEn}</CardText>
                   </div>
-                  <div className="col-md-2">
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
-                  </div>
+                  
                 </div>
               </div>
               <div className="row">
@@ -221,7 +219,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
-                  </div>
+                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                  </div>                 
                 </div>
               </div>
             </StatusTable>
@@ -311,8 +310,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {ChildDetails?.hospitalName.hospitalNamelocal}
+                        {ChildDetails?.hospitalName.hospitalNamelocal}                        
                       </CardText>
+                      {<ActionButton style={{Colour: "red !important"}} jumpTo={`${routeLink}/ChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -345,6 +345,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {ChildDetails?.institutionId.institutionNamelocal}
+                          {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                         </CardText>
                       </div>
                     </div>
@@ -420,6 +421,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsHouseNameMl}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -484,6 +486,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleToMl}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -512,6 +515,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-9">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleDesDetailsEn}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -574,7 +578,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-9">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.publicPlaceDecpEn}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                       </div>
+                      <div className="col-md-2">
+                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                  </div>
                     </div>
                   </div>
                 </div>
@@ -625,6 +633,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.birthWeight}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                   </div>
                 </div>
               </div>
@@ -650,6 +659,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {`${t("CR_MOTHER_INFORMATION_MISSING")}`} :
                       </CardText>
+                      {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -737,6 +747,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherProfession.name}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -756,6 +767,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {`${t("CR_FATHER_INFORMATION_MISSING")}`} :
                       </CardText>
+                      {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -844,6 +856,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.fatherEmail}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
                   </div>
                 </div>
               </div>
@@ -989,6 +1002,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
@@ -1120,6 +1134,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
@@ -1227,6 +1242,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
@@ -1367,6 +1383,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
@@ -1498,6 +1515,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntOutsideKeralaHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
@@ -1605,6 +1623,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
@@ -1689,6 +1708,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   )}
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/InitiatorDetails`} />}
                   </div>
                 </div>
               </div>

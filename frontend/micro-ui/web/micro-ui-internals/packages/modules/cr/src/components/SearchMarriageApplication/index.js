@@ -27,7 +27,7 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "applicationNumber",
+      // sortBy: "applicationNo",
       sortOrder: "DESC",
     },
   });
@@ -35,7 +35,7 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "applicationNumber");
+    register("sortBy", "applicationNo");
     register("sortOrder", "DESC");
   }, [register]);
 
@@ -76,7 +76,7 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
     () => [
       {
         Header: t("CR_COMMON_COL_APP_NO"),
-        accessor: "applicationNumber",
+        accessor: "applicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (

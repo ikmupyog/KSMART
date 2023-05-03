@@ -444,7 +444,7 @@ export const convertToDeathRegistration = (data = {}) => {
             ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
             : null,
           permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk
             : null,
           permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
             ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
@@ -585,6 +585,15 @@ export const convertToDeathRegistration = (data = {}) => {
         isPayment: data?.InformationDeath?.isPayment,
         applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
       },
+      
+    ],
+    DeathNACDocuments: [
+      {
+        DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+        filestoreId: data?.ChildDetails?.uploadedFile,            
+        proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
+        regNoNAC: data?.ChildDetails?.regNoNAC,
+      }
     ],
   };
   return formdata;
@@ -762,7 +771,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
             ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict?.code
             : null,
           permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk
             : null,
           permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
             ? data?.AddressBirthDetails?.permntOutsideKeralaVillage?.code

@@ -214,8 +214,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
+      console.log(value);
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
       setbirthDateTime(value);
     }
   };

@@ -54,8 +54,8 @@ const App = () => {
           <PrivateRoute path={`${path}/tradelicence/renewal-list`} component={TLList} />
           <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
           {/* <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} /> */}
-          <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={()=><SearchRenewalTrade isCancelreq={false}/>} />
-          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isCancelreq={true}/>}/>
+          <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={()=><SearchRenewalTrade isCorrectionreq={false}/>} />
+          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isCorrectionreq={true}/>}/>
           <PrivateRoute path={`${path}/tradelicence/license-renewal-pde`}   component={() => <CreateTradeLicence  isRenewal={true}/>} />
            <PrivateRoute path={`${path}/tradelicence/license-correction`} component={() => <CorrectionTradeLicence  isRenewal={false}/>} /> 
           {/* component={() => <CreateTradeLicence  isRenewal={true}/>} />	 */}
