@@ -562,7 +562,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentOutSideIndiaadrsVillage: data?.BrideAddressDetails?.presentOutSideIndiaadrsVillage
             ? data?.BrideAddressDetails?.presentOutSideIndiaadrsVillage?.code
             : null,
-          isPermanentAddress: data?.BrideAddressDetails?.isPermanentAddress ? data?.BrideAddressDetails?.isPermanentAddress : null,
+          isPermanentAddress: data?.BrideAddressDetails?.isPrsentAddress ? data?.BrideAddressDetails?.isPrsentAddress : null,
           permtaddressCountry: data?.BrideAddressDetails?.permtaddressCountry ? data?.BrideAddressDetails?.permtaddressCountry?.code : null,
           permtaddressStateName: data?.BrideAddressDetails?.permtaddressStateName ? data?.BrideAddressDetails?.permtaddressStateName?.code : null,
           permntInKeralaAdrLBName: data?.BrideAddressDetails?.permntInKeralaAdrLBName
@@ -752,7 +752,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentOutSideIndiaadrsVillage: data?.GroomAddressDetails?.presentOutSideIndiaadrsVillage
             ? data?.GroomAddressDetails?.presentOutSideIndiaadrsVillage?.code
             : null,
-          isPermanentAddress: data?.GroomAddressDetails?.isPermanentAddress ? data?.GroomAddressDetails?.isPermanentAddress : null,
+          isPermanentAddress: data?.GroomAddressDetails?.isPrsentAddress ? data?.GroomAddressDetails?.isPrsentAddress : null,
           permtaddressCountry: data?.GroomAddressDetails?.permtaddressCountry ? data?.GroomAddressDetails?.permtaddressCountry?.code : null,
           permtaddressStateName: data?.GroomAddressDetails?.permtaddressStateName ? data?.GroomAddressDetails?.permtaddressStateName?.code : null,
           permntInKeralaAdrLBName: data?.GroomAddressDetails?.permntInKeralaAdrLBName

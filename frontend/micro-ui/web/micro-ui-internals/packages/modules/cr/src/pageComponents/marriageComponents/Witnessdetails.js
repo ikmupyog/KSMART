@@ -163,7 +163,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({groomURL})
+  console.log({ groomURL });
 
   const currentYear = new Date().getFullYear();
 
@@ -506,7 +506,21 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   }
 
-  function sendWitness1OTP() {}
+  // async function sendWitness1OTP(stateCode) {
+  //   console.log("Hi")
+  //   const data = {
+  //     mobileNumber: witness1Mobile,
+  //     tenantId: stateCode,
+  //     userType: "citizen",
+  //     type: "login"
+  //   }
+  //     try {
+  //       const res = await Digit.hooks.cr.useESign(data, stateCode);
+  //       return [res, null];
+  //     } catch (err) {
+  //       return [null, err];
+  //     }
+  //   };
 
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
@@ -919,8 +933,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       }}
                       name="eSign"
                       value="E-sign"
-                      onChange={setSelectwitness1Esigned}
-                      disable={isDisableEdit}
+                      // onClick = {sendWitness1OTP}
+                      // disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
                     />
                   </div> */}
