@@ -220,6 +220,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(false);
+  const [DateTimeError, setDateTimeError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(false);
   const [HospitalError, setHospitalError] = useState(false);
@@ -459,33 +460,49 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
 
-  function setselectChildDOB(value) {
+  useEffect(() => {
+    if (birthPlace && DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+     if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime])
 
+  function setselectChildDOB(value) {
+    setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-
     if (birthDate.getTime() <= today.getTime()) {
-
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
-        }
-      }
+      // if (birthPlace && DifferenceInTime != null) {
+      //   console.log("jetheesh");
+      //   console.log(workFlowData);
+      //   console.log("birthPlaceCode", birthPlace.code);
+      //   console.log("DifferenceInTime" + DifferenceInTime);
+      //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      //   console.log("currentWorgFlow", currentWorgFlow);
+      //   if (currentWorgFlow.length > 0) {
+      //     console.log(currentWorgFlow);
+      //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //     setIsPayment(currentWorgFlow[0].payment);
+      //     setAmount(currentWorgFlow[0].amount);
+      //   }
+      // }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
@@ -812,6 +829,26 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const goNext = () => {
     console.log(UploadNACHIde);
     console.log(NACFile);
+    if (birthDateTime.trim() == null || birthDateTime.trim() == '' || birthDateTime.trim() == undefined) {
+      setbirthDateTime("");
+    } else if (birthDateTime.trim() != null) {
+      console.log("birthDateTime", birthDateTime);
+      let todayDate = new Date(),
+        currentDatetime = todayDate.getHours() + ':' + todayDate.getMinutes();
+      console.log("currentDatetime", currentDatetime);
+      if (birthDateTime > currentDatetime) {
+        alert("Wrong Time");
+        setDateTimeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+        setbirthDateTime("");
+      } else {
+        setDateTimeError(false);
+        // alert("Right Time");
+      }
+    }
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
     } else if (childAadharNo != null && childAadharNo != "") {
