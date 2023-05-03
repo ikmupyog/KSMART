@@ -24,17 +24,17 @@ const WrapPaymentComponent = (props) => {
     "", {}, tenantId, { applicationNo: consumerCode }, {}, { enabled: (window.location.href.includes("bpa") || window.location.href.includes("BPA")) }
   );
 
-  if (business_service === "CR" && isSuccess) {
+  if (business_service === "CR" && isBpaSuccess) {
     const mutation = Digit.Hooks.cr.setPaymentStatus();
     mutation.mutate({
       filters: {
         PaymentDetails: [{
           applicationNumber: consumerCode,
           applicationStatus: "INITIATED",
-          isPaymentSuccess: isSuccess
+          isPaymentSuccess: isBpaSuccess
         }]
       }
-    }, { onSuccess: () => console.log(`status updated as ${isSuccess}`) });
+    }, { onSuccess: () => console.log(`status updated as ${isBpaSuccess}`) });
   }
 
   const { isLoading, data, isError } = Digit.Hooks.usePaymentUpdate({ egId }, business_service, {
