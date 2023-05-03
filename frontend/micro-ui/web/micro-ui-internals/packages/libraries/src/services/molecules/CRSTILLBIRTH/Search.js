@@ -121,7 +121,7 @@ export const CRStillBirthsearch = {
       asSectionHeader: true,
       values: [
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
-        { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || "NA" },
+        { title: "CR_VEHICLE_TYPE", value: response?.vehicleType || "NA" },
         { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "NA" },
         { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.vehicleHaltPlace || "NA" },
         { title: "CR_VEHICLE_FROM_EN", value: response?.vehicleFromEn || "NA" },

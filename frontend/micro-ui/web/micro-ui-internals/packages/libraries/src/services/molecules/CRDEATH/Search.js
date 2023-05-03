@@ -366,12 +366,12 @@ export const CRDeathsearch = {
       title: "CR_INITIATOR_DETAILS",
       // asSectionHeader: true,
       values: [
-        { title: "CR_RELATION", value: response?.InitiatorinfoDetails?.relation || "NA" },
-        { title: "PDF_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.InitiatorName || "NA" },
-        { title: "PDF_INITIATOR_AADHAR", value: response?.InitiatorinfoDetails?.InitiatorAadhaar || "NA" },
-        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.InitiatorinfoDetails?.InitiatorMobile || "NA" },
-        { title: "PDF_INITIATOR_DESIGNATION", value: response?.InitiatorinfoDetails?.initiatorDesi || "NA" },
-        { title: "PDF_INITIATOR_ADDRESS", value: response?.InitiatorinfoDetails?.InitiatorAddress || "NA" },
+        { title: "CR_RELATION", value: response?.Initiator?.InitiatorRelation || "NA" },
+        { title: "PDF_INITIATOR_NAME", value: response?.Initiator?.InitiatorName || "NA" },
+        { title: "PDF_INITIATOR_AADHAR", value: response?.Initiator?.InitiatorAadhaar || "NA" },
+        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.Initiator?.InitiatorMobile || "NA" },
+        { title: "PDF_INITIATOR_DESIGNATION", value: response?.Initiator?.initiatorDesi || "NA" },
+        { title: "PDF_INITIATOR_ADDRESS", value: response?.Initiator?.InitiatorAddress || "NA" },
 
       ],
     };
@@ -379,11 +379,11 @@ export const CRDeathsearch = {
       title: "CR_INFORMANT_DETAILS",
       // asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NA" },
-        { title: "PDF_INFORMER_AADHAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformantDetails?.infomantFirstNameEn || "NA" },
+        { title: "PDF_INFORMER_AADHAR", value: response?.InformantDetails?.infomantAadhar || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformantDetails?.infomantMobile || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformantDetails?.informerDesi || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformantDetails?.informerAddress || "NA" },
 
       ],
     };
