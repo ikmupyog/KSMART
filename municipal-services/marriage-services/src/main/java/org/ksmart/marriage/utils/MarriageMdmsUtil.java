@@ -974,8 +974,27 @@ public class MarriageMdmsUtil {
         List<String> po  = getPOCode(mdmsData);
         int index = po.indexOf(POId);
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");        
-    }  
-    
+    }
+    public String getMaritalStatusEn(Object mdmsData, String POId) {
+        List<String> po  = getPOCode(mdmsData);
+        int index = po.indexOf(POId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].name");
+    }
+    public String getMaritalStatusMl(Object mdmsData, String POId) {
+        List<String> po  = getPOCode(mdmsData);
+        int index = po.indexOf(POId);
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].namelocal");
+    }
+//    public String getGenderEn(Object mdmsData, String POId) {
+//        List<String> po  = getPOCode(mdmsData);
+//        int index = po.indexOf(POId);
+//        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_GENDER_JSONPATH+"["+index+"].name");
+//    }
+//    public String getGenderMl(Object mdmsData, String POId) {
+//        List<String> po  = getPOCode(mdmsData);
+//        int index = po.indexOf(POId);
+//        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_GENDER_JSONPATH+"["+index+"].namelocal");
+//    }
     private List<String> getCountryCode(Object mdmsData) {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODE_JSONPATH);
     }

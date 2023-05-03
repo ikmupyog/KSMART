@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriagecorrection.service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
@@ -106,7 +107,7 @@ public class MarriageCorrectionService {
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
         criteria.setId(request.getMarriageCorrectionDetails().get(0).getRegisterId());
         criteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
-        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
+        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria,request.getRequestInfo());
         marriageCorrectionApplnValidator.validateCorrectionRegistrySearch(marriageRegistryDetails);
 
         MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
@@ -156,8 +157,8 @@ public class MarriageCorrectionService {
     }
 
 //req For Testing
-    private List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
-        return registryRepository.searchMarriageRegistry(criteria);
+    private List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria , RequestInfo requestInfo) {
+        return registryRepository.searchMarriageRegistry(criteria,requestInfo);
     }
 
 
