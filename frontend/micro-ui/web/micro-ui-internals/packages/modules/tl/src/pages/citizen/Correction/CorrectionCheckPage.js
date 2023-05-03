@@ -199,10 +199,10 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
                               {`${t(unit.businessCategory)}`}
                             </td>
                             <td style={{border:"solid 1px"}}>
-                              {`${t(stringReplaceAll(unit.businessType, ".", "_"))}`}
+                              {`${t(stringReplaceAll(unit?.businessType, ".", "_"))}`}
                             </td>
                             <td style={{border:"solid 1px"}}>
-                              {`${t(stringReplaceAll(unit.businessSubtype, ".", "_"))}`}
+                              {`${t(stringReplaceAll(unit?.businessSubtype, ".", "_"))}`}
                             </td>
                           </tr>
                         )

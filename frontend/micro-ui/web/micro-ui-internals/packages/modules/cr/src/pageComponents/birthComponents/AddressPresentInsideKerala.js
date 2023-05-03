@@ -491,7 +491,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     //     }
     // }
     function setSelectinsideKeralaHouseNameEn(e) {
-        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z/-0-9 ]*$") != null)) {
+        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null)) {
             setinsideKeralaHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -777,7 +777,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 onChange={setSelectinsideKeralaHouseNameEn}
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                                {...(validation = { pattern: "^[a-zA-Z/-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                                {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                             />
                         </div>
                     </div>
