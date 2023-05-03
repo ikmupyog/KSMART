@@ -195,6 +195,10 @@ public class MarriageConstants {
     public static final String CR_MDMS_POSTOFFICE_CODE_JSONPATH = "$.MdmsRes.common-masters.PostOffice[*].code";
     public static final String CR_MDMS_POSTOFFICE_JSONPATH = "$.MdmsRes.common-masters.PostOffice";
 
+    public static final String CR_MDMS_MARITALSTATUS_JSONPATH = "$.MdmsRes.birth-death-service.MaritalStatus";
+
+    public static final String CR_MDMS_GENDER_JSONPATH = "$.MdmsRes.common-masters.GenderType";
+
     public static final String CR_MDMS_MARRIAGE_TENANT_CODE_JSONPATH = "$.MdmsRes.tenant.tenants.city[*].code";
     public static final String CR_MDMS_MARRIAGE_TENANT_JSONPATH = "$.MdmsRes.tenant.tenants.city";
 }

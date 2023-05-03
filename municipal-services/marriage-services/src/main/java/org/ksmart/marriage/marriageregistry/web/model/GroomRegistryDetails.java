@@ -138,6 +138,14 @@ public class GroomRegistryDetails {
     @JsonProperty("groomMaritalstatusID")
     private String maritalstatusid;
 
+    @Size(max = 64)
+    @JsonProperty("groomMaritalstatusidEn")
+    private String groomMaritalstatusidEn;
+
+    @Size(max = 64)
+    @JsonProperty("groomMaritalstatusidMl")
+    private String groomMaritalstatusidMl;
+
     @JsonProperty("groomIsSpouseLiving")
     private Boolean groomIsSpouseLiving;
 

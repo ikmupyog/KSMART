@@ -273,13 +273,22 @@ public class MarriageRegistryRepository {
                     String permntInKeralaAdrPostOfficeMl = util.getPONameMl(mdmsData, marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
                     marriage.getGroomAddressDetails().setPermntInKeralaAdrPostOfficeMl(permntInKeralaAdrPostOfficeMl);
                 }
-//
-//        System.out.println("Groom address -------");
-//                String address=marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req, result.get(0));
-//        String address2=marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req, result.get(0));
-//
-//        System.out.println(address);
-//        System.out.println(address2);
+                //groom Maritalstatusid
+                if(marriage.getGroomDetails().getMaritalstatusid() != null){
+                    String groomMaritalstatusidEn = util.getMaritalStatusEn(mdmsData,marriage.getGroomDetails().getMaritalstatusid());
+                    marriage.getGroomDetails().setGroomMaritalstatusidEn(groomMaritalstatusidEn);
+
+                    String groomMaritalstatusidMl = util.getMaritalStatusEn(mdmsData,marriage.getGroomDetails().getMaritalstatusid());
+                    marriage.getGroomDetails().setGroomMaritalstatusidMl(groomMaritalstatusidMl);
+                }
+                //bride Maritalstatusid
+                if(marriage.getBrideDetails().getMaritalstatusid() != null){
+                    String brideMaritalstatusidEn = util.getMaritalStatusEn(mdmsData,marriage.getGroomDetails().getMaritalstatusid());
+                    marriage.getBrideDetails().setBrideMaritalstatusidEn(brideMaritalstatusidEn);
+
+                    String brideMaritalstatusidMl = util.getMaritalStatusEn(mdmsData,marriage.getGroomDetails().getMaritalstatusid());
+                    marriage.getBrideDetails().setBrideMaritalstatusidMl(brideMaritalstatusidMl);
+                }
             });
         }
 
