@@ -209,7 +209,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
               onChange={setSelectVehicleRegistrationNo}
               disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
-              style={{textTransform:"uppercase"}}
+              // style={{textTransform:"uppercase"}}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
             />
           </div>

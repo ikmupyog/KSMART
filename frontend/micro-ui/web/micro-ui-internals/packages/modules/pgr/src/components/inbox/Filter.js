@@ -3,15 +3,16 @@ import { Dropdown, RadioButtons, ActionBar, RemoveableTag, RoundedLabel } from "
 import { ApplyFilterBar, CloseSvg } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Status from "./Status";
+import { arraySort } from "../../constants/utils";
 
 let pgrQuery = {};
 let wfQuery = {};
 
 const Filter = (props) => {
-  let { uuid } = Digit.UserService.getUser().info;
+  const { uuid = '' } = Digit.UserService.getUser().info;
   const { searchParams } = props;
   const { t } = useTranslation();
-  const isAssignedToMe = searchParams?.filters?.wfFilters?.assignee && searchParams?.filters?.wfFilters?.assignee[0]?.code ? true : false;
+  const isAssignedToMe = searchParams?.filters?.pgrQuery?.userIds ? true : false;
 
   const assignedToOptions = useMemo(
     () => [
@@ -37,19 +38,22 @@ const Filter = (props) => {
 
   const [wfFilters, setWfFilters] = useState(
     searchParams?.filters?.wfFilters || {
-      assignee: [{ code: uuid }],
+      userIds: [{ code: uuid }],
     }
   );
 
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  // let localities = Digit.Hooks.pgr.useLocalities({ city: tenantId });
-  const { data: localities } = Digit.Hooks.useBoundaryLocalities(tenantId, "admin", {}, t);
+  // let locality = Digit.Hooks.pgr.useLocalities({ city: tenantId });
+
+  const { data: localities } = Digit.Hooks.useBoundaryLocalities(tenantId, "revenue", {}, t);
+  // const { data: localities } = Digit.Hooks.useBoundaryLocalities(tenantId, "admin", {}, t);
+
   let serviceDefs = Digit.Hooks.pgr.useServiceDefs(tenantId, "PGR");
 
   const onRadioChange = (value) => {
     setSelectedAssigned(value);
-    uuid = value.code === "ASSIGNED_TO_ME" ? uuid : "";
-    setWfFilters({ ...wfFilters, assignee: [{ code: uuid }] });
+    const UUID = value.code === "ASSIGNED_TO_ME" ? uuid : "";
+    setWfFilters({ ...wfFilters, userIds: [{ code: UUID }] });
   };
 
   useEffect(() => {
@@ -61,7 +65,7 @@ const Filter = (props) => {
         if (params) {
           pgrQuery[property] = params;
         }
-        else{
+        else {
           delete pgrQuery?.[property]
         }
       }
@@ -141,7 +145,7 @@ const Filter = (props) => {
 
   function clearAll() {
     let pgrReset = { serviceCode: [], locality: [], applicationStatus: [] };
-    let wfRest = { assigned: [{ code: [] }] };
+    let wfRest = { userIds: "" };
     setPgrFilters(pgrReset);
     setWfFilters(wfRest);
     pgrQuery = {};
@@ -152,7 +156,10 @@ const Filter = (props) => {
   }
 
   const handleFilterSubmit = () => {
-    props.onFilterChange({ pgrQuery: pgrQuery, wfQuery: wfQuery, wfFilters, pgrfilters });
+    props.onFilterChange({
+      pgrQuery: { ...pgrQuery, userIds: selectAssigned.code === "ASSIGNED_TO_ME" ? uuid : "" },
+      wfQuery: wfQuery, wfFilters, pgrfilters
+    });
   };
 
   const GetSelectOptions = (lable, options, selected = null, select, optionKey, onRemove, key) => {
@@ -160,7 +167,7 @@ const Filter = (props) => {
     return (
       <div>
         <div className="filter-label">{lable}</div>
-        {<Dropdown option={options} selected={selected} select={(value) => select(value, key)} optionKey={optionKey} />}
+        {<Dropdown option={arraySort(options || [], optionKey, t)} selected={selected} select={(value) => select(value, key)} optionKey={optionKey} optionCardStyles={{ maxWidth: "fit-content" }} />}
 
         <div className="tag-container">
           {pgrfilters[key].length > 0 &&
