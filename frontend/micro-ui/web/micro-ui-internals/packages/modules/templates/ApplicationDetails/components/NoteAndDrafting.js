@@ -51,9 +51,13 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const [file, setFile] = useState();
   const [fileLimit, setFileLimit] = useState(0);
   const [uploadedFile, setUploadedFile] = useState()
+  const [selectedAutoNote, setSelectedAutoNote] =useState()
   const setNoteTextField = (e) => {
     setNoteText(e.target.value);
   };
+  const autoNoteListChange =(e)=>{
+    setSelectedAutoNote(e)
+  }
   console.log(applDetails);
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
@@ -69,8 +73,16 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config: {},
   });
-//   console.log("applicationDetails", workflowDetails);
+  const { data: AutoNotes = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "AutoNotes");
 
+  console.log('a',AutoNotes);
+//   console.log("applicationDetails", workflowDetails);
+  let cmbautoNoteList = [];
+  AutoNotes &&
+  AutoNotes["FileManagement"] &&
+  AutoNotes["FileManagement"].AutoNotes.map((ob) => {
+    cmbautoNoteList.push(ob);
+    });
   //workflow end
 
   const saveNote = () => {
@@ -443,9 +455,10 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                                 </div> */}
               </div>
               <div className="col-md-5 search-file">
-                <Dropdown t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("SEARCH_SELECT_AUTO_NOTES")} />
+                <Dropdown t={t} option={cmbautoNoteList} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  selected={selectedAutoNote}
+                                    select={autoNoteListChange} placeholder={t("SEARCH_SELECT_AUTO_NOTES")} />
 
-                <ul
+                {/* <ul
                   style={{
                     maxHeight: "120px",
                     overflowY: "scroll",
@@ -453,23 +466,12 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                     padding: "10px",
                   }}
                 >
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                  <li>For verification</li>
-                  <li>Submitting the draft notice.</li>
-                </ul>
+                  {selectedAutoNote?selectedAutoNote?.Notes.map((item,key)=>(
+                     <li key={key} >{item.name}</li>
+                  )):<li></li>}
+                 
+                 
+                </ul> */}
               </div>
             </div>
           </div>
@@ -510,7 +512,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
           </div>
 
           {/* /////////////////////////save textarea//////////// */}
-          <SubmitBar onClick={saveNote} label={t("SAVE")} > </SubmitBar>
+          {/* <SubmitBar onClick={saveNote} label={t("SAVE")} > </SubmitBar> */}
           {/* <div class="custom-draft-button">
            
             <CustomButton onClick={saveNote} text={t("SAVE")}></CustomButton>

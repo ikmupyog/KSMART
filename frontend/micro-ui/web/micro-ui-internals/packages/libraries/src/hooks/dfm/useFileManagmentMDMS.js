@@ -3,6 +3,12 @@ import { useQuery } from "react-query";
 
 const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
   
+  const useDFMAutoNotes = () => {
+    return useQuery("AutoNotes", () => MdmsService.getDFMAutoNote(tenantId, moduleCode), config);
+  };
+  const useDFMADraftType = () => {
+    return useQuery("DraftType", () => MdmsService.getDFMDraftType(tenantId, moduleCode), config);
+  };
   const useDFMajorFunction = () => {
     return useQuery("DFM_MAJOR_FUNCTION", () => MdmsService.getDFMajorFunction(tenantId, moduleCode), config);
   };
@@ -217,6 +223,10 @@ const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) =
   };
 
   switch (type) {
+    case "AutoNotes" :
+      return useDFMAutoNotes();
+    case "DraftType" :
+      return useDFMADraftType();
     case "MajorFunction":
       return useDFMajorFunction();
       case "SubFunction":

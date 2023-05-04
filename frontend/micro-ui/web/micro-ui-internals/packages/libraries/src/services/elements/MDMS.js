@@ -229,6 +229,36 @@ const getCRFoetalDeathList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getDFMAutoNotesList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "AutoNotes",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getDFMDraftTypeList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DraftType",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getDFMajorFunctionList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2488,6 +2518,12 @@ export const MdmsService = {
   },
   getCRFoetalDeath: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRFoetalDeathList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMAutoNote: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMAutoNotesList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMDraftType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMDraftTypeList(tenantId, moduleCode), moduleCode);
   },
   getDFMajorFunction: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDFMajorFunctionList(tenantId, moduleCode), moduleCode);
