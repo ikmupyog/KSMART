@@ -67,15 +67,13 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("NAME_OF_MOTHER")}
         </label>
         <TextInput
           name="nameOfMother"
           inputRef={register({})}
           placeholder={`${t("NAME_OF_MOTHER")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("INVALID_NAME_MOTHER") })}
+          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("INVALID_NAME_MOTHER") })}
         />
       </SearchField>
 
