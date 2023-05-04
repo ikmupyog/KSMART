@@ -1,5 +1,6 @@
 import { useMutation } from "react-query";
 import { CRDeathService } from "../../services/elements/CRDEATH";
+import Urls from "../../services/atoms/urls";
 
 export const useRegSearchDeath = (tenantId) => {
     return useMutation(({ filters }) => CRDeathService.CRRegistrySearchDeath({ tenantId, filters }))

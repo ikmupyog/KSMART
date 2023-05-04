@@ -1,7 +1,8 @@
 import { useMutation } from "react-query";
 import { service as CommonService } from "../../services/elements/Common";
 
-export const useCommonMutateHook = ({ params = {}, additionalProps = {} }) => {
+export const useCommonMutateHook = (props = {}) => {
+    const { params = {}, additionalProps = {} } = props;
     return useMutation(({ filters }) => CommonService({
         params: {
             ...params,
