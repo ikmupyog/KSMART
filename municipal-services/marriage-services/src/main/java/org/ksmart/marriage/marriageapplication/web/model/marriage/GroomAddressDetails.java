@@ -261,7 +261,8 @@ public class GroomAddressDetails {
     @JsonProperty("outSideIndiaPostCodePresent")
     private String outSideIndiaPostCodePresent;
 
-
+    @JsonProperty("presentAddrVillageId")
+    private String presentAddrVillageId ;
     ////Permanant
 
     @JsonProperty("isPermanentAddress")
@@ -429,11 +430,12 @@ public class GroomAddressDetails {
 
     @JsonProperty("isPermanentAddressInt")
     private Integer isPermanentAddressInt;
-    @JsonProperty("PermanentAddrTalukId")
+
+    @JsonProperty("permanentAddrTalukId")
     private String permanentAddrTalukId ;
 
 
-    @JsonProperty("PermanentAddrVillageId")
+    @JsonProperty("permanentAddrVillageId")
     private String permanentAddrVillageId ;
     @Size(max = 64)
     @JsonProperty("countryIdPermanent")

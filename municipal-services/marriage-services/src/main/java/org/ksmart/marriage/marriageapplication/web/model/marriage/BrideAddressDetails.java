@@ -429,11 +429,11 @@ public class BrideAddressDetails {
     @JsonProperty("isPermanentAddressInt")
     private Integer isPermanentAddressInt;
 
-    @JsonProperty("PermanentAddrTalukId")
+    @JsonProperty("permanentAddrTalukId")
     private String permanentAddrTalukId ;
 
 
-    @JsonProperty("PermanentAddrVillageId")
+    @JsonProperty("permanentAddrVillageId")
     private String permanentAddrVillageId ;
     @Size(max = 64)
 
