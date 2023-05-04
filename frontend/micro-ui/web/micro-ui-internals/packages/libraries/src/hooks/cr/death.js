@@ -8,3 +8,7 @@ export const useRegSearchDeath = (tenantId) => {
 export const getDeathFileSourceDetails = (tenantId) => {
     return useMutation(({ filters }) => CRDeathService.CRRegDownloadDeathFileDetails({ params: { tenantId, ...filters }, additionalProps: { setTimeParam: false } }))
 };
+
+export const getNacDeathFileSourceDetails = ({ params = {}, additionalProps = {} }) => {
+    return useCommonMutateHook({ params, additionalProps: { ...additionalProps, url: Urls.crnacdeath.registry_download } });
+};

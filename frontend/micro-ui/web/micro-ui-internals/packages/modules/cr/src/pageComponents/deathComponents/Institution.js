@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton } from
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
-
+import { sortDropdownNames } from "../../utils";
 const Institution = ({
   config,
   onSelect,
@@ -153,8 +153,8 @@ const Institution = ({
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
-                option={cmbinstitutionType}
+                isMandatory={true}              
+                option={sortDropdownNames(cmbinstitutionType ? cmbinstitutionType : [],"name",t)}
                 selected={institution}
                 select={setselectinstitution}
                 disable={isDisableEdit}
