@@ -27,7 +27,7 @@ const WrapPaymentComponent = (props) => {
   console.log({ props, workflw })
 
   if (business_service === "CR" && isBpaSuccess) {
-    const mutation = Digit.Hooks.cr.setPaymentStatus({});
+    const mutation = Digit.Hooks.cr.setPaymentStatus({ params: {} });
     mutation.mutate({
       filters: {
         PaymentDetails: [{
