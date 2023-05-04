@@ -265,8 +265,6 @@ import { getBirthFileSourceDetails, getNacBirthFileSourceDetails } from "./cr/bi
 import { setPaymentStatus } from "./cr/payment";
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
 
-import useESign from "./cr/useESign";
-
 const pgr = {
   useComplaintDetails,
   useComplaintsList,
