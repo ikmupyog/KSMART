@@ -30,7 +30,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("GD.emailid   as GD_emailid , GD.gender   as GD_gender, GD.dateofbirth as GD_dateofbirth, GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian ,")
             .append("GD.fathername_en   as GD_fathername_en, GD.mothername_en   as GD_mothername_en,GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml,")
             .append("GD.father_aadharno as GD_father_aadharno, GD.mother_aadharno as GD_mother_aadharno, GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,")
-            .append("GD.guardian_aadharno   as GD_guardian_aadhar,  GD.maritalstatusid   as GD_maritalstatus,GD.no_of_spouse_living   as GD_livingspouseNo,GD.is_spouse_living as GD_is_spouse_living , GD.bride_groom as  GD_bride_groom ,")
+            .append("GD.guardian_aadharno   as GD_guardian_aadharno,  GD.maritalstatusid   as GD_maritalstatusid,GD.no_of_spouse_living   as GD_livingspouseNo,GD.is_spouse_living as GD_is_spouse_living , GD.bride_groom as  GD_bride_groom ,")
 
             .append("BD.id as  BD_id  , BD.residentship   as BD_residentship ,  BD.aadharno   as BD_aadharno ,BD.passportno   as BD_passportno ,  BD.socialsecurityno   as BD_socialsecurityno ,")
             .append("BD.firstname_en   as BD_firstname_en , BD.middlename_en   as BD_middlename_en ,BD.lastname_en   as BD_lastname_en ,  BD.firstname_ml   as BD_firstname_ml,")
