@@ -976,8 +976,8 @@ public class MarriageMdmsUtil {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");        
     }
     public String getMaritalStatusEn(Object mdmsData, String POId) {
-        List<String> po  = getPOCode(mdmsData);
-        int index = po.indexOf(POId);
+        List<String> maritalStatus  = getMaritalStatusCode(mdmsData);
+        int index = maritalStatus.indexOf(POId);
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].name");
     }
     public String getMaritalStatusMl(Object mdmsData, String POId) {
@@ -1012,6 +1012,9 @@ public class MarriageMdmsUtil {
     }
     private List<String> getPOCode(Object mdmsData) {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_CODE_JSONPATH);
+    }
+    private List<String> getMaritalStatusCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH);
     }
     private List<String> getLBCode(Object mdmsData) {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TENANT_CODE_JSONPATH);
@@ -1087,6 +1090,19 @@ public class MarriageMdmsUtil {
     }
 
     public String getWardNameMl(Object mdmsData, String WardId) {
+        List<String> tenants  = getBoundaryCode(mdmsData);
+        int index = tenants.indexOf(WardId);
+        ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".localname");
+        return names.get(index);
+    }
+
+    public String getPlaceTypeNameEn(Object mdmsData, String WardId) {
+        List<String> tenants  = getBoundaryCode(mdmsData);
+        int index = tenants.indexOf(WardId);
+        ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".localname");
+        return names.get(index);
+    }
+    public String getPlaceTypeNameMl(Object mdmsData, String WardId) {
         List<String> tenants  = getBoundaryCode(mdmsData);
         int index = tenants.indexOf(WardId);
         ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".localname");

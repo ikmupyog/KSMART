@@ -483,7 +483,13 @@ public class MarriageApplicationRepository {
                     String marriageWardCodeMl = util.getWardNameMl(mdmsDataLocation,marriage.getWardCode());
                     marriage.getGroomAddressDetails().setPresentWardNoMl(marriageWardCodeMl);
                 }
-
+                // if(marriage.getPlacetype() != null){
+                //     String MarriagePlaceTypeNameEn = util.getPlaceTypeNameEn(mdmsData,marriage.getPlacetype());
+                //     marriage.setMarriagePlaceTypenameEn(MarriagePlaceTypeNameEn);
+                    
+                //     String MarriagePlaceTypeNameMl = util.getPlaceTypeNameMl(mdmsData, marriage.getPlacetype());
+                //     marriage.setMarriagePlaceTypenameMl(MarriagePlaceTypeNameMl);
+                // }
 
                 GroomDetails groomDetails =marriage.getGroomDetails();
                 GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);

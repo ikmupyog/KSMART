@@ -59,6 +59,7 @@ public class MarriageApplicationDetails {
     @Size(max = 1000)
     @JsonProperty("marriagePlacenameEn")
     private String placenameEn;
+
     @Size(max = 1000)
     @JsonProperty("marriagePlacenameMl")
     private String placenameMl;
@@ -249,6 +250,11 @@ private String marriageTalukNameEn;
 @JsonProperty("marriageTalukNameMl")
 private String marriageTalukNameMl;
 
+@JsonProperty("marriagePlaceTypenameEn")
+private String marriagePlaceTypenameEn;
+
+@JsonProperty("marriagePlaceTypenameMl")
+private String marriagePlaceTypenameMl;
 
 }
 
