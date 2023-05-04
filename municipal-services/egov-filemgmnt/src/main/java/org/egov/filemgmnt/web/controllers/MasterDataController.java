@@ -231,6 +231,7 @@ public class MasterDataController implements MasterDataBaseController {
     @Override
     @DeleteMapping("/masterdata/modules/_delete")
     public ResponseEntity<Void> deleteModule(@RequestBody ModuleDetailsRequest request) {
+        final ModuleDetails moduleDetails= masterDataService.deleteModule(request);
         return ResponseEntity.noContent()
                              .build();
     }
@@ -238,6 +239,7 @@ public class MasterDataController implements MasterDataBaseController {
     @Override
     @DeleteMapping("/masterdata/majorfunctions/_delete")
     public ResponseEntity<Void> deleteMajorFunction(@RequestBody MajorFunctionDetailsRequest request) {
+        final MajorFunctionDetails majorFunctionDetails= masterDataService.deleteMajorFunction(request);
         return ResponseEntity.noContent()
                              .build();
     }
@@ -245,6 +247,7 @@ public class MasterDataController implements MasterDataBaseController {
     @Override
     @DeleteMapping("/masterdata/subfunctions/_delete")
     public ResponseEntity<Void> deleteSubFunction(@RequestBody SubFunctionDetailsRequest request) {
+        final SubFunctionDetails subFunctionDetails = masterDataService.deleteSubFunction(request);
         return ResponseEntity.noContent()
                              .build();
     }
@@ -252,6 +255,7 @@ public class MasterDataController implements MasterDataBaseController {
     @Override
     @DeleteMapping("/masterdata/services/_delete")
     public ResponseEntity<Void> deleteService(@RequestBody ServiceDetailsRequest request) {
+        final ServiceDetails serviceDetails = masterDataService.deleteService(request);
         return ResponseEntity.noContent()
                              .build();
     }

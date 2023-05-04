@@ -26,23 +26,23 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
 
              // ModuleDetails
              .append("  md.id AS modulemaster_id, md.tenantid, md.modulecode, md.modulenameeng, md.modulenamemal")
-             .append("  , md.status, md.createdby, md.createdtime, md.lastmodifiedby, md.lastmodifiedtime")
+             .append("  , md.status AS modulemaster_status, md.createdby AS modulemaster_createdby, md.createdtime AS modulemaster_createdtime, md.lastmodifiedby AS modulemaster_lastmodifiedby, md.lastmodifiedtime AS modulemaster_lastmodifiedtime")
 
              // MajorFunction Details
              .append("  , mf.id AS majorfunction_id, mf.tenantid, mf.mfcode, mf.moduleid, mf.mfnameeng")
-             .append("  , mf.mfnamemal, mf.createdby, mf.createdtime, mf.lastmodifiedby, mf.lastmodifiedtime, mf.status")
+             .append("  , mf.mfnamemal, mf.createdby AS majorfunction_createdby, mf.createdtime AS majorfunction_createdtime, mf.lastmodifiedby AS majorfunction_lastmodifiedby, mf.lastmodifiedtime AS majorfunction_lastmodifiedtime, mf.status AS majorfunction_status")
 
              // Subfunction Details
              .append("  , sf.id AS subfunction_id, sf.tenantid, sf.sfcode, sf.mfid, sf.sfnameeng")
-             .append("  , sf.sfnamemal, sf.createdby, sf.createdtime, sf.lastmodifiedby, sf.lastmodifiedtime, sf.status")
+             .append("  , sf.sfnamemal, sf.createdby AS subfunction_createdby, sf.createdtime AS subfunction_createdtime, sf.lastmodifiedby AS subfunction_lastmodifiedby , sf.lastmodifiedtime AS subfunction_lastmodifiedtime, sf.status AS subfunction_status")
 
              // service master details
              .append("  , svm.id AS servicemaster_id, svm.tenantid, svm.servicecode, svm.sfid, svm.servicenameeng")
-             .append("  , svm.servicenamemal, svm.createdby, svm.createdtime, svm.lastmodifiedby, svm.lastmodifiedtime, svm.status")
+             .append("  , svm.servicenamemal, svm.createdby AS servicemaster_createdby, svm.createdtime AS servicemaster_createdtime, svm.lastmodifiedby AS servicemaster_lastmodifiedby, svm.lastmodifiedtime AS servicemaster_lastmodifiedtime, svm.status AS servicemaster_status")
              .append(" FROM eg_fm_modulemaster md")
-             .append(" INNER JOIN eg_fm_majorfunctionmaster mf ON mf.moduleid = md.id")
-             .append(" INNER JOIN eg_fm_subfunctionmaster sf ON sf.mfid = mf.id")
-             .append(" INNER JOIN eg_fm_servicemaster svm ON svm.sfid = sf.id");
+             .append(" LEFT JOIN eg_fm_majorfunctionmaster mf ON mf.moduleid = md.id")
+             .append(" LEFT JOIN eg_fm_subfunctionmaster sf ON sf.mfid = mf.id")
+             .append(" LEFT JOIN eg_fm_servicemaster svm ON svm.sfid = sf.id");
     }
 
     public String getModuleSearchQuery(@NotNull final ModuleSearchCriteria criteria,
@@ -62,6 +62,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("mf.mfcode", criteria.getMajorFunctionCode(), query, preparedStmtValues);
+        addFilter("mf.moduleid",criteria.getModuleId(), query, preparedStmtValues);
         return query.toString();
     }
 
@@ -71,9 +72,12 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
 
-        addFilter("svc.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
+        addFilter("svm.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
         return query.toString();
     }
+
+
+
 
     public String getSubFunctionSearchQuery(@NotNull final SubFunctionSearchCriteria criteria,
                                             @NotNull final List<Object> preparedStmtValues,

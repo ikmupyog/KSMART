@@ -17,8 +17,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class ServiceSearchCriteria {
+    @NotBlank(message = "Tenant identification number is required")
+    @Size(max = 15, message = "Tenant identification number length cannot exceed 15 characters")
+    @JsonProperty("tenantId")
+    private String tenantId;
 
-    @NotBlank(message = "Service code is required")
+
+  //  @NotBlank(message = "Service code is required")
     @Size(max = 64, message = "Service code length cannot exceed 64 characters")
     @JsonProperty("serviceCode")
     private String serviceCode;
