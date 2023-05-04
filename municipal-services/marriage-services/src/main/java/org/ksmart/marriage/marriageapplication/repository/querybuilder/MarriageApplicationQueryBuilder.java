@@ -32,6 +32,8 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("GD.father_aadharno as GD_father_aadharno, GD.mother_aadharno as GD_mother_aadharno, GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,")
             .append("GD.guardian_aadharno   as GD_guardian_aadharno,  GD.maritalstatusid   as GD_maritalstatusid,GD.no_of_spouse_living   as GD_livingspouseNo,GD.is_spouse_living as GD_is_spouse_living , GD.bride_groom as  GD_bride_groom ,")
 
+
+
             .append("BD.id as  BD_id  , BD.residentship   as BD_residentship ,  BD.aadharno   as BD_aadharno ,BD.passportno   as BD_passportno ,  BD.socialsecurityno   as BD_socialsecurityno ,")
             .append("BD.firstname_en   as BD_firstname_en , BD.middlename_en   as BD_middlename_en ,BD.lastname_en   as BD_lastname_en ,  BD.firstname_ml   as BD_firstname_ml,")
             .append("BD.middlename_ml   as BD_middlename_ml ,  BD.lastname_ml   as BD_lastname_ml  , BD.mobile   as BD_mobile  ,   BD.emailid   as BD_emailid  , ")
