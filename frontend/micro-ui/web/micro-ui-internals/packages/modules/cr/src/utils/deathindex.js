@@ -555,6 +555,14 @@ export const convertToDeathRegistration = (data = {}) => {
 
          
         },
+        DeathNACDocuments: [
+          {
+            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            filestoreId: data?.InformationDeath?.uploadedFile ? data?.InformationDeath?.uploadedFile :null,            
+            proceedNoRDO: data?.InformationDeath?.proceedNoRDO,
+            regNoNAC: data?.InformationDeath?.regNoNAC,
+          }
+        ],
         Demands: [
           {
             tenantId: data?.InformationDeath?.tenantId,
@@ -594,14 +602,7 @@ export const convertToDeathRegistration = (data = {}) => {
       },
       
     ],
-    DeathNACDocuments: [
-      {
-        DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
-        filestoreId: data?.ChildDetails?.uploadedFile,            
-        proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
-        regNoNAC: data?.ChildDetails?.regNoNAC,
-      }
-    ],
+  
   };
   return formdata;
 };
