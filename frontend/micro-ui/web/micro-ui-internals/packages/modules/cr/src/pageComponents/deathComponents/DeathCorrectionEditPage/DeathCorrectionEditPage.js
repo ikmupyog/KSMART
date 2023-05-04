@@ -245,7 +245,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
                     onBlur={(e) => onAdharChange(e)}
                     placeholder={`${t("CR_AADHAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text",  title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -271,7 +271,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameEn")}
                     placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -324,7 +324,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameMl")}
                     placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_ML") })}
                   />
                 </div>
                 <div className="col-md-4">

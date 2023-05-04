@@ -7,16 +7,20 @@ const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ")
 const getCorrectionDetails = (application, t) => {
     console.log("certificate......", application);
     // const correction = application?.CorrectionField?.[0]?.correctionFieldValue?.[0];
-    const  {correctionFieldValue = [] ,correctionFieldName} = application?.CorrectionField?.[0];
-    const correction = correctionFieldValue[0];
+    const  correctionDetails = application?.CorrectionField;
+    console.log("correctionfield", correctionFieldValue);
     const isDate = correctionFieldName === "DECEASED_DOB" ? true : false ;
-  return {
-    title: t(correction?.column),
-    values: [
+    const correctionData = correctionDetails?.map((correction)=>{
+        return({title: t(correction?.column),
+            values: [
       { title: t("old value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
       { title: t("new value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue,10), "dd/MM/yyyy") : correction?.newValue}
     ],
-  };
+})
+});
+console.log("correctionData==",correctionData);
+// returnedData = {...correctionData}
+return correctionData;
 };
 
 const getCRDeathCorrectionAcknowledgementData = async (application, tenantInfo, t) => {
@@ -41,7 +45,7 @@ console.log("get data===",application, tenantInfo, t);
       },
     //   getChildDetails(application, t),
     //   getAddressDetails(application, t),
-      getCorrectionDetails(application, t)
+      ...getCorrectionDetails(application, t)
     ],
   };
 };

@@ -285,6 +285,9 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.CHILD_AADHAAR?.curValue}
                   onBlur={onAdharChange}
                   placeholder={`${t("CR_AADHAR")}`}
+                  inputProps={{
+                    maxLength: 12,
+                  }}
                   // ValidationRequired = {true}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
