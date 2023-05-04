@@ -28,43 +28,21 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const [infomantMobile, setinfomantMobile] = useState(formData?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedBirthInformarDetails?.infomantMobile : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile : "");
   const [informerAddress, setinformerAddress] = useState(formData?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedBirthInformarDetails?.informerAddress : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  // const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFiles? formData?.AbandonedDocumentUpload?.uploadedFiles: []);
-  // const [docuploadedId, setDocuploadedId] = useState(formData?.AbandonedBirthInformarDetails?.docuploadedId? formData?.AbandonedDocumentUpload?.docuploadedId: "");
-  // const [docuploadedName, setDocuploadedName] = useState(formData?.AbandonedBirthInformarDetails?.setDocuploadedName? formData?.AbandonedDocumentUpload?.setDocuploadedName: "");
-  // const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile? formData?.AbandonedDocumentUpload?.uploadedFile: null);
-  // const [file, setFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.file);
-  // const [error, setError] = useState(null);
-  // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
   // const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedBirthInformarDetails?.document: []);
   // const [docuploadedId, setDocuploadedId] = useState();
   // const [docuploadedName, setDocuploadedName] = useState();
-  // const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.fileStoreId || null);
-  // const [file, setFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity);
-  // const [error, setError] = useState(null);
-  // const cityDetails = Digit.ULBService.getCurrentUlb();
-  // let acceptFormat = ".pdf"
-
-  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedBirthInformarDetails?.document: []);
-  const [docuploadedId, setDocuploadedId] = useState();
-  const [docuploadedName, setDocuploadedName] = useState();
-  const [uploadedFile, setUploadedFile] = useState();
-  const [file, setFile] = useState();
+  // const [uploadedFile, setUploadedFile] = useState();
+  // const [file, setFile] = useState();
   const [error, setError] = useState(null);
-  const cityDetails = Digit.ULBService.getCurrentUlb();
+  // const cityDetails = Digit.ULBService.getCurrentUlb();
   let acceptFormat = ".pdf"
 
+  const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile);
+  const [uploadedFile1, setUploadedFile1] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile1);
+  const [file, setFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile);
+  const [file1, setFile1] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile1);
 
-
-
-  // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
-
-  // const [dropdownValue, setDropdownValue] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.documentType || null);
-  // const tenantId = Digit.ULBService.getCurrentTenantId();
-  // const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
-  // const docs = Documentsob?.AbandonedBirthInformarDetails?.Documents;
-  // console.log(docs);
-  // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
 
 
   const [toast, setToast] = useState(false);
@@ -75,8 +53,54 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
         setIsInitialRender(false);
         setIsDeclarationInfo(formData?.AbandonedBirthInformarDetails?.isDeclarationInfo);
       }
-    }
+    }    
   }, [isInitialRender]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file) {
+        if (file.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file1) {
+        if (file1.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file1, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+
+              setUploadedFile1(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file1]);
+
+  function selectfile(e) {
+    setFile(e.target.files[0]);
+  }
+  function selectfile1(e) {
+    setFile1(e.target.files[0]);
+  }
 
   function setSelectinstitutionName(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -133,44 +157,35 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       setinformerAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   } 
-  function selectfile(e) {
-    console.log({e});
-    let result = documentList.filter(obj => obj.code == e?.target?.id);
-    setDocuploadedName(result[0].description);
-    setDocuploadedId(e?.target?.id);
-    setUploadedFile(null);
-    setFile(e.target.files[0]);
-    console.log(result + "MY Documents"); 
-    // console.log(uploadedFile);
-  }
-  function onDeleteown(e) {
-    const removeindex = uploadedFiles.findIndex(element => {
-      return element.documentType === e
-    });
-    if (removeindex === -1) {
-      return false;
-    };
-    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
-  }
+  // function selectfile(e) {
+  //   console.log({e});
+  //   let result = documentList.filter(obj => obj.code == e?.target?.id);
+  //   setDocuploadedName(result[0].description);
+  //   setDocuploadedId(e?.target?.id);
+  //   setUploadedFile(null);
+  //   setFile(e.target.files[0]);
+  //   console.log(result + "MY Documents");
+  // }
+  // function onDeleteown(e) {
+  //   const removeindex = uploadedFiles.findIndex(element => {
+  //     return element.documentType === e
+  //   });
+  //   if (removeindex === -1) {
+  //     return false;
+  //   };
+  //   setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+  // }
 
-  function handleDelete(e) {
-    const removeindex = uploadedFiles?.findIndex(element => {
-      return element?.documentType === e
-    });
-    if (removeindex === -1) {
-      return false;
-    };
-    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
-  }
-  // function setSelectdocumentName(e) {
-  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-  //     setdocumentName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-  //   }
-  // }  function setSelectdocumentType(e) {
-  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-  //     setdocumentType(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-  //   }
-  // }  
+  // function handleDelete(e) {
+  //   const removeindex = uploadedFiles?.findIndex(element => {
+  //     return element?.documentType === e
+  //   });
+  //   if (removeindex === -1) {
+  //     return false;
+  //   };
+  //   setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+  // }
+
   function setDeclarationInfo(e) {
     if (e.target.checked == true) {
       setIsDeclarationInfo(e.target.checked);     
@@ -182,11 +197,11 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   let validFlag = true;
   const goNext = () => {
 
-    let document = formData?.document;
-    if (uploadedFiles.length > 0) {
-        document = uploadedFiles      
-    }
-    let documents = { document: document }   
+    // let document = formData?.document;
+    // if (uploadedFiles.length > 0) {
+    //     document = uploadedFiles      
+    // }
+    // let documents = { document: document }   
    
     if (validFlag == true) {      
       // sessionStorage.setItem("institutionName", institutionName ? institutionName : null);
@@ -205,7 +220,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       // sessionStorage.setItem("isDeclarationInfo", isDeclarationInfo ? isDeclarationInfo : null);
 
       onSelect(config.key, { 
-        documents,
+        // documents,
         institutionName: institutionName.trim(),
         caretakerName: caretakerName.trim(),
         caretakerDesignation: caretakerDesignation.trim(),
@@ -217,55 +232,50 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
         infomantFirstNameEn: infomantFirstNameEn.trim(), 
         infomantMobile: infomantMobile.trim(),  
         informerAddress: informerAddress.trim(),
-        uploadedFiles,
+        // uploadedFiles,
         isDeclarationInfo,
         // docuploadedName,
         // file,
         // document,
         // fileStoreId,
         // ProofOfIdentity,
-        
+        uploadedFile,
+        uploadedFile1,
+        file,
+        file1,
       });
     }
   };
  
-  useEffect(() => {
-    (async () => {
-      setError(null);
-      if (file && file?.type) {
-        if (!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`))) {
-          setError(t("CR_UPLOAD_FORMAT_NOT_SUPPORTED"));
-        }
-        else if (file.size >= 2000000) {
-          setError(t("CR_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
-          try {
-            const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
-            if (response?.data?.files?.length > 0) {
-              const temp = {
-                "documentType": docuploadedId, "description": docuploadedName,
-                "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
-              };
-              // let tempfiles=uploadedFiles;
-              // const removeindex = tempfiles.findIndex(element => {
-              //   return element.documentType ===temp.documentType
-              // });
-              // if(removeindex !== -1){
-              //   tempfiles=tempfiles.splice(removeindex,1);
-              //   setUploadedFiles(tempfiles);
-              //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
-              // }
-              uploadedFiles.push(temp);
-              setUploadedFile(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("PT_FILE_UPLOAD_ERROR"));
-            }
-          } catch (err) {
-          }
-        }
-      }
-    })();
-  }, [file, uploadedFiles]);
+  // useEffect(() => {
+  //   (async () => {
+  //     setError(null);
+  //     if (file && file?.type) {
+  //       if (!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`))) {
+  //         setError(t("CR_UPLOAD_FORMAT_NOT_SUPPORTED"));
+  //       }
+  //       else if (file.size >= 2000000) {
+  //         setError(t("CR_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+  //       } else {
+  //         try {
+  //           const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
+  //           if (response?.data?.files?.length > 0) {
+  //             const temp = {
+  //               "documentType": docuploadedId, "description": docuploadedName,
+  //               "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
+  //             };
+
+  //             uploadedFiles.push(temp);
+  //             setUploadedFile(response?.data?.files[0]?.fileStoreId);
+  //           } else {
+  //             setError(t("PT_FILE_UPLOAD_ERROR"));
+  //           }
+  //         } catch (err) {
+  //         }
+  //       }
+  //     }
+  //   })();
+  // }, [file, uploadedFiles]);
 
   return (
     <React.Fragment>
@@ -274,7 +284,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}   isDisabled={!isDeclarationInfo}  >
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}   isDisabled={!isDeclarationInfo ||!uploadedFile||!uploadedFile1}  >
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -502,6 +512,49 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
         </div>
 
         <div className="row">
+            <div className="col-md-12">
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                  CR_REPORTING_FORM<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile}
+                    onDelete={() => {
+                      setUploadedFile(null);
+                    }}
+                    message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                  CR_CHILDBIRTH_PROOF<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile1}
+                    onDelete={() => {
+                      setUploadedFile1(null);
+                    }}
+                    message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>              
+            </div>   
+          </div>
+
+
+
+        {/* <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
               {
@@ -539,7 +592,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
             </div>
             </div>
         </div>
-        {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
+        {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""} */}
 
 
         {/* <div className="row">
