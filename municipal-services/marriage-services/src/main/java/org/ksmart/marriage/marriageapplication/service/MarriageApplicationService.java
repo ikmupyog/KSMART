@@ -133,7 +133,6 @@ public class MarriageApplicationService {
         return request.getMarriageDetails();
 
     }
-
     public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         return repository.searchMarriageDetails(criteria,requestInfo);
     }

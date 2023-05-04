@@ -476,13 +476,13 @@ public class MarriageApplicationRepository {
                     marriage.getGroomAddressDetails().setPrmttWardNoMl(prmttWardNoMl);
                 }
                 //Marriage WardCode
-                if(marriage.getWardCode() != null){
-                    String marriageWardCodeEn = util.getWardNameEn(mdmsDataLocation,marriage.getWardCode());
-                    marriage.getGroomAddressDetails().setPresentWardNoEn(marriageWardCodeEn);
+                // if(marriage.getWardCode() != null){
+                //     String marriageWardCodeEn = util.getWardNameEn(mdmsDataLocation,marriage.getWardCode());
+                //     marriage.getGroomAddressDetails().setPresentWardNoEn(marriageWardCodeEn);
                     
-                    String marriageWardCodeMl = util.getWardNameMl(mdmsDataLocation,marriage.getWardCode());
-                    marriage.getGroomAddressDetails().setPresentWardNoMl(marriageWardCodeMl);
-                }
+                //     String marriageWardCodeMl = util.getWardNameMl(mdmsDataLocation,marriage.getWardCode());
+                //     marriage.getGroomAddressDetails().setPresentWardNoMl(marriageWardCodeMl);
+                // }
                 // if(marriage.getPlacetype() != null){
                 //     String MarriagePlaceTypeNameEn = util.getPlaceTypeNameEn(mdmsData,marriage.getPlacetype());
                 //     marriage.setMarriagePlaceTypenameEn(MarriagePlaceTypeNameEn);
@@ -490,10 +490,11 @@ public class MarriageApplicationRepository {
                 //     String MarriagePlaceTypeNameMl = util.getPlaceTypeNameMl(mdmsData, marriage.getPlacetype());
                 //     marriage.setMarriagePlaceTypenameMl(MarriagePlaceTypeNameMl);
                 // }
-
+                System.out.println("ParentGuardianFlag-1"+marriage.getId());
                 GroomDetails groomDetails =marriage.getGroomDetails();
                 GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
                 groomDetails.setAadharno(groomDetailsDec.getAadharno());
+                System.out.println("ParentGuardianFlag"+marriage.getId());
                     if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
                         groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
                         groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
