@@ -376,7 +376,7 @@ export const convertToDeathRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
@@ -555,14 +555,6 @@ export const convertToDeathRegistration = (data = {}) => {
 
          
         },
-        DeathNACDocuments: [
-          {
-            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
-            filestoreId: data?.InformationDeath?.uploadedFile ? data?.InformationDeath?.uploadedFile :null,            
-            proceedNoRDO: data?.InformationDeath?.proceedNoRDO,
-            regNoNAC: data?.InformationDeath?.regNoNAC,
-          }
-        ],
         Demands: [
           {
             tenantId: data?.InformationDeath?.tenantId,
@@ -714,7 +706,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaPincode?.code
+            ? data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.InformationDeath?.AddressBirthDetails?.presentInsideKeralaPostOffice?.code
