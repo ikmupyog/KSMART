@@ -372,7 +372,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRAB",
         businessservice: "birth-services",
-        workflowcode: "BIRTHABANDONED",
+        workflowcode: "ABANDONEDBIRTH",
         ParentsDetails: {
           motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.AbandonedChildDetails?.motherFirstNameMl,
