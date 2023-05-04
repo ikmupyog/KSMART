@@ -360,7 +360,7 @@ export const convertToMarriageRegistration = (data = {}) => {
         placeid: data?.MarriageDetails?.placeidEn ? data?.MarriageDetails?.placeidEn?.code : null,
         marriagePlacenameEn: data?.MarriageDetails?.marriagePlacenameEn ? data?.MarriageDetails?.marriagePlacenameEn : null,
         marriagePlacenameMl: data?.MarriageDetails?.marriagePlacenameMl ? data?.MarriageDetails?.marriagePlacenameMl : null,
-        marriageLocalityEn: data?.MarriageDetails?.marriageStreetEn ? data?.MarriageDetails?.marriageStreetEn : null,
+        marriageLocalityEn: data?.MarriageDetails?.marriageLocalityEn ? data?.MarriageDetails?.marriageLocalityEn : null,
         marriageLocalityMl: data?.MarriageDetails?.marriageLocalityMl ? data?.MarriageDetails?.marriageLocalityMl : null,
         marriageStreetEn: data?.MarriageDetails?.marriageStreetEn ? data?.MarriageDetails?.marriageStreetEn : null,
         marriageStreetMl: data?.MarriageDetails?.marriageStreetMl ? data?.MarriageDetails?.marriageStreetMl : null,

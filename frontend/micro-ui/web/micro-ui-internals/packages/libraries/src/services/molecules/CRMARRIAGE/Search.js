@@ -247,8 +247,8 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomGuardianAadharNo,
         },
         {
-          title: `${t("CR_GUARDIAN_NAME")}`,
-          value: `${response?.GroomDetails?.groomGuardiannameEn}/${response?.GroomDetails?.groomGuardiannameMl}`,
+          title: `${t("CR_GROOM_GUARDIAN_NAME_EN")} / ${t("CR_GROOM_GUARDIAN_NAME_ML")}`,
+          value: `${response?.GroomDetails?.groomGuardiannameEn} / ${response?.GroomDetails?.groomGuardiannameMl}`,
         })
       );
     }
@@ -631,7 +631,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideGuardianAadharNo,
         },
         {
-          title: `${t("CR_BRIDE_GUARDIAN_NAME_EN")} / {t("CR_BRIDE_GUARDIAN_NAME_ML")}`,
+          title: `${t("CR_BRIDE_GUARDIAN_NAME_EN")} / ${t("CR_BRIDE_GUARDIAN_NAME_ML")}`,
           value: `${response?.BrideDetails?.brideGuardiannameEn} / ${response?.BrideDetails?.brideGuardiannameMl}`,
         }
       );
