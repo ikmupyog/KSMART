@@ -209,7 +209,7 @@ export const CRDeathsearch = {
         { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NA" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaPostOfficeMl || "NA" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NA" },
-        { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || NA },
+        { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NA" },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || "NA" },
         { title: "CR_STREET_NAME_EN", value: response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || "NA" },
         { title: "CR_STREET_NAME_ML", value: response?.AddressBirthDetails?.presentInsideKeralaStreetNameMl || "NA" },
@@ -218,14 +218,14 @@ export const CRDeathsearch = {
         //Permanent Address
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.permanentAddrCountryNameEn + " / " + (response?.AddressBirthDetails?.permanentAddrCountryNameMl != null ? response?.AddressBirthDetails?.permanentAddrCountryNameMl : "") || "NA" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.permtaddressStateNameEn + " / " + response?.AddressBirthDetails.permtaddressStateNameMl || "NA" },
-        { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.permntInKeralaAdrDistrict + " / " + response?.AddressBirthDetails.permntInKeralaAdrDistrictMl || "NA" },
-        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTaluk || "NA" },
-        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillage || "NA" },
+        { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.permntInKeralaAdrDistrictEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrDistrictMl || "NA" },
+        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTalukEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrTalukMl|| "NA" },
+        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillageEn + " / " +response?.AddressBirthDetails?.permntInKeralaAdrVillageMl || "NA" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.permntInKeralaAdrLBName + " / " + response?.AddressBirthDetails?.permntInKeralaAdrLBNameMl || "NA" },
         { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.prmttWardNoEn + " / " + response?.AddressBirthDetails?.prmttWardNoMl || "NA" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeMl || "NA" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "NA" },
-        { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn || NA },
+        { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn || "NA" },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl || "NA" },
         { title: "CR_STREET_NAME_EN", value: response?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn || "NA" },
         { title: "CR_STREET_NAME_ML", value: response?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl || "NA" },
@@ -335,7 +335,7 @@ export const CRDeathsearch = {
     };
 
     const statisticalInfo = {
-      title: "CR_DEATH_STATSTICAL_INFORMATION_HEADER",
+      title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [
         { title: "CR_MEDICAL_ATTENTION_DEATH", value: response?.StatisticalInfo?.medicalAttentionTypeEn +"/" + response?.StatisticalInfo?.medicalAttentionTypeMl  || "NA" },
         { title: "CR_AUTOPSY_PERFORM", value: response?.StatisticalInfo?.IsAutopsyPerformed || "NA" },
@@ -362,8 +362,31 @@ export const CRDeathsearch = {
         //{ title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.statisticalInfo?.occupation || "NA" },
       ],
     };
+    const InitiatorDetails = {
+      title: "CR_INITIATOR_DETAILS",
+      // asSectionHeader: true,
+      values: [
+        { title: "CR_RELATION", value: response?.Initiator?.InitiatorRelation || "NA" },
+        { title: "PDF_INITIATOR_NAME", value: response?.Initiator?.InitiatorName || "NA" },
+        { title: "PDF_INITIATOR_AADHAR", value: response?.Initiator?.InitiatorAadhaar || "NA" },
+        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.Initiator?.InitiatorMobile || "NA" },
+        { title: "PDF_INITIATOR_DESIGNATION", value: response?.Initiator?.initiatorDesi || "NA" },
+        { title: "PDF_INITIATOR_ADDRESS", value: response?.Initiator?.InitiatorAddress || "NA" },
 
-   
+      ],
+    };
+    const InformarHospitalInstitution = {
+      title: "CR_INFORMANT_DETAILS",
+      // asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformantDetails?.infomantFirstNameEn || "NA" },
+        { title: "PDF_INFORMER_AADHAR", value: response?.InformantDetails?.infomantAadhar || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformantDetails?.infomantMobile || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformantDetails?.informerDesi || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformantDetails?.informerAddress || "NA" },
+
+      ],
+    };
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
     if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
@@ -388,6 +411,8 @@ export const CRDeathsearch = {
     }
     response && employeeResponse.push(FamilyInformationDeath);    
     response && employeeResponse.push(statisticalInfo);
+    response && employeeResponse.push(InitiatorDetails);
+    response && employeeResponse.push(InformarHospitalInstitution);
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,

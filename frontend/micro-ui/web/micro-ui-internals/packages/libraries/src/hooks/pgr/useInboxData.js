@@ -17,7 +17,7 @@ const useInboxData = (searchParams) => {
     let complaintDetailsResponse = null;
     let combinedRes = [];
     complaintDetailsResponse = await Digit.PGRService.search(tenantId, appFilters);
-    
+
     complaintDetailsResponse.ServiceWrappers.forEach((service) => serviceIds.push(service.service.serviceRequestId));
     const serviceIdParams = serviceIds.join();
     const workflowInstances = await Digit.WorkflowService.getByBusinessId(tenantId, serviceIdParams, wfFilters, false);
@@ -30,12 +30,12 @@ const useInboxData = (searchParams) => {
     return combinedRes;
   };
 
-  const result = useQuery(["fetchInboxData", 
-  ...Object.keys(searchParams).map(i =>
+  const result = useQuery(["fetchInboxData",
+    ...Object.keys(searchParams).map(i =>
       typeof searchParams[i] === "object" ? Object.keys(searchParams[i]).map(e => searchParams[i][e]) : searchParams[i]
-     )],
-  fetchInboxData,
-  { staleTime: Infinity }
+    )],
+    fetchInboxData,
+    { staleTime: Infinity }
   );
   return { ...result, revalidate: () => client.refetchQueries(["fetchInboxData"]) };
 };
@@ -48,6 +48,7 @@ const mapWfBybusinessId = (wfs) => {
 
 const combineResponses = (complaintDetailsResponse, workflowInstances) => {
   let wfMap = mapWfBybusinessId(workflowInstances.ProcessInstances);
+
   return complaintDetailsResponse.ServiceWrappers.map((complaint) => ({
     serviceRequestId: complaint.service.serviceRequestId,
     complaintSubType: complaint.service.serviceCode,
@@ -56,6 +57,7 @@ const combineResponses = (complaintDetailsResponse, workflowInstances) => {
     taskOwner: wfMap[complaint.service.serviceRequestId]?.assignes?.[0]?.name || "-",
     sla: wfMap[complaint.service.serviceRequestId]?.businesssServiceSla,
     tenantId: complaint.service.tenantId,
+    state: wfMap[complaint.service.serviceRequestId]?.state || complaint.service
   }));
 };
 
