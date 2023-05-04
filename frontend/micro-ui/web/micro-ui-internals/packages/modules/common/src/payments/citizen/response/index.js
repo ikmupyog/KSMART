@@ -25,15 +25,25 @@ const WrapPaymentComponent = (props) => {
   );
 
   console.log({ props, workflw })
+  const mutation = Digit.Hooks.cr.setPaymentStatus({ params: {} });
+  console.log("Mutation Created", mutation)
 
   if (business_service === "CR" && isBpaSuccess) {
-    const mutation = Digit.Hooks.cr.setPaymentStatus({ params: {} });
+    console.log("In Payment Success Condition", {
+      filters: {
+        PaymentDetails: [{
+          applicationNumber: consumerCode || 0,
+          applicationStatus: "INITIATED",
+          isPaymentSuccess: isBpaSuccess || true
+        }]
+      }
+    });
     mutation.mutate({
       filters: {
         PaymentDetails: [{
-          applicationNumber: consumerCode,
+          applicationNumber: consumerCode || 0,
           applicationStatus: "INITIATED",
-          isPaymentSuccess: isBpaSuccess
+          isPaymentSuccess: isBpaSuccess || true
         }]
       }
     }, { onSuccess: () => console.log(`status updated as ${isBpaSuccess}`) });
