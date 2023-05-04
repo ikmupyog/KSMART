@@ -256,5 +256,13 @@ private String marriagePlaceTypenameEn;
 @JsonProperty("marriagePlaceTypenameMl")
 private String marriagePlaceTypenameMl;
 
+    @JsonProperty("marriageWardCodeEn")
+    private String marriageWardCodeEn;
+    @JsonProperty("marriageWardCodeMl")
+    private String marriageWardCodeMl;
+    @JsonProperty("marriagePlaceIdEn")
+    private String marriagePlaceIdEn;
+    @JsonProperty("marriagePlaceIdMl")
+    private String marriagePlaceIdMl;
 }
 

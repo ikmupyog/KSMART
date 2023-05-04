@@ -59,7 +59,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         }
 
         DateFormat formatter = new SimpleDateFormat("ddMMyyyy");
-        marriageApplicationDetails.setDateofreporting(Long.valueOf(formatter.format(new Date())));
+        marriageApplicationDetails.setDateofreporting(new Date().getTime());
 
         correctionRequest.getMarriageCorrectionDetails().forEach(correction -> {
 
@@ -74,6 +74,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             marriageApplicationDetails.setWorkflowcode(correction.getWorkflowcode());
             marriageApplicationDetails.setId(UUID.randomUUID().toString());
             correction.setMarriageId(marriageApplicationDetails.getId());
+            correction.setApplicationDate(new Date().getTime());
 
             setApplicationNumbers(correctionRequest, marriageApplicationDetails);
             correction.setApplicationNo(marriageApplicationDetails.getApplicationNumber());
