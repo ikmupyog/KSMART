@@ -62,6 +62,9 @@ public class DeathDtl {
     @JsonProperty("Demands")
     private List<Demand> demands;
 
+    @JsonProperty("DeathNACDocuments")
+    private List<DeathDocument> deathNACDocuments;
+
 
 //Jasmine 11.02.2023
     @Size(max = 64)

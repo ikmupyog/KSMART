@@ -499,4 +499,10 @@ public class DeathBasicInfo {
    @JsonProperty("publicPlaceMl")
    private String  publicPlaceMl ;
    
+   @JsonProperty("deathPlaceWardEn")
+   private String  deathPlaceWardEn ;
+
+   @JsonProperty("deathPlaceWardMl")
+   private String  deathPlaceWardMl ;
+   
 }

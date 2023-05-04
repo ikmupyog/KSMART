@@ -471,6 +471,34 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPAddress
 
+    - query: INSERT INTO public.eg_death_document_dtls(id, tenantid, death_dtls_id, document_type, filestore_id, death_ackno, active, created_by, createdtime, lastmodifiedby, lastmodifiedtime)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCertificateDtls.*.DeathNACDocuments.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.Id
+      
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.DeathDtlId
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.DocumentType
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.FileStoreId
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.DeathACKNo
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.Active
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.AuditDetails.createdBy      
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.AuditDetails.lastModifiedBy
+      
+      - jsonPath: $.deathCertificateDtls.*.DeathNACDocuments.*.AuditDetails.lastModifiedTime
+
 #Jasmine 12.02.2023
 #commented on 15/12/2023(based on new suggession 14/12/2023 )
     # - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)

@@ -121,6 +121,18 @@ public class DeathEnrichment implements BaseEnrichment{
                 if (statisticalInfo!=null){
                     statisticalInfo.setStatisticalId(UUID.randomUUID().toString()); 
                 } 
+                //Rakhi S ikm on 04.05.2023 Document Upload (NAC) for after 1 year 
+                List<DeathDocument> documentInfo = deathdtls.getDeathNACDocuments();
+                if (documentInfo!=null){
+                    documentInfo
+                        .forEach(document -> {
+                    document.setId(UUID.randomUUID().toString());
+                    document.setActive(true);
+                    document.setTenantId(deathdtls.getDeathBasicInfo().getTenantId());
+                    document.setDeathDtlId(deathdtls.getDeathBasicInfo().getId());
+                    document.setDeathDocAuditDetails(auditDetails);
+                });
+            }        
                 //System.out.println("REQUEST"+request.getDeathCertificateDtls());
                 //Jasmine informant and initiator 11.02.2023
                 // DeathInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
@@ -198,6 +210,14 @@ public class DeathEnrichment implements BaseEnrichment{
                         deathdtls.getDeathBasicInfo().setDeathACKNo(itr.next());
                         deathdtls.getDeathBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
                         deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+
+                        List<DeathDocument> documentInfo = deathdtls.getDeathNACDocuments();
+                        if (documentInfo!=null){
+                            documentInfo
+                                .forEach(document -> {                        
+                            document.setDeathACKNo(deathdtls.getDeathBasicInfo().getDeathACKNo());
+                        });
+                    }
 
                     });
         }
