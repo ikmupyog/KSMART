@@ -546,6 +546,7 @@ public class MarriageApplicationRepository {
                     GroomDetails groomDetailsDec = encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
                     groomDetails.setAadharno(groomDetailsDec.getAadharno());
                     if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)) {
+
                         groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
                         groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
                     } else if (groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)) {
