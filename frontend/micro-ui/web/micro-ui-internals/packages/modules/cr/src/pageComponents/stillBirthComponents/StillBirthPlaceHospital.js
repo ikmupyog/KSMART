@@ -5,7 +5,7 @@ import { useQueryClient } from "react-query";
 import { sortDropdownNames } from "../../utils";
 
 const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditStillBirth
+  selectHospitalNameMl, isEditStillBirth, hospitalCode, isDisableEditRole, setisDisableEditRole
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -17,8 +17,8 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
-
+ // const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
+ const [isDisableEdit, setisDisableEdit] = useState(false);
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
   if (tenantboundary) {
@@ -42,27 +42,59 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
       }
     }
   }
+ 
 
   useEffect(() => {
-
     if (isInitialRender) {
-      if (formData?.StillBirthChildDetails?.hospitalName) {
-        selectHospitalNameMl(hospitalNameMl);
-        setIsInitialRender(false);
-      } else {
-        if (hospitalName != null) {
-          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalName.code);
+
+      if (formData?.StillBirthChildDetails?.hospitalCode != null && formData?.StillBirthChildDetails?.hospitalCode != "" && formData?.StillBirthChildDetails?.hospitalCode != undefined) {
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode);
+          selectHospitalName(cmbhospitalMl[0]);
           selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
+      } else if (formData?.StillBirthChildDetails?.hospitalName != null && formData?.StillBirthChildDetails?.hospitalName != "" && formData?.StillBirthChildDetails?.hospitalName != undefined) {
+        if (cmbhospital.length > 0) {     
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalName.code);
+          selectHospitalName(cmbhospitalMl[0]);
+          selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
+      } else if (hospitalCode != null) {
+        if (cmbhospital.length > 0) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode);
+          selectHospitalName(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
+          selectHospitalNameMl(cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalCode)[0]);
           setIsInitialRender(false);
         }
       }
     }
-  }, [cmbhospitalMl, isInitialRender])
+
+  }, [cmbhospital, isInitialRender])
+
+
+  // useEffect(() => {
+
+  //   if (isInitialRender) {
+  //     if (formData?.StillBirthChildDetails?.hospitalName) {
+  //       selectHospitalNameMl(hospitalNameMl);
+  //       setIsInitialRender(false);
+  //     } else {
+  //       if (hospitalName != null) {
+  //         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalName.code);
+  //         selectHospitalNameMl(cmbhospitalMl[0]);
+  //         setIsInitialRender(false);
+  //       }
+  //     }
+  //   }
+  // }, [cmbhospitalMl, isInitialRender])
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
     selectHospitalName(value);
-    setIsInitialRender(true);
+    selectHospitalNameMl(value);
+   // setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
@@ -99,6 +131,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={hospitalName}
                 select={setselectHospitalName}
+               // disable={isDisableEditRole}
              //   disable={isDisableEdit}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
