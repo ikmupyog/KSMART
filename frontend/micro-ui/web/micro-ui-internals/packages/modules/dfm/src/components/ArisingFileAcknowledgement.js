@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 // import { convertToStillBirthRegistration, convertToEditStillBirthRegistration } from "../../../utils/stillbirthindex";
-// import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
+import getPDFData from "../utils/getArisingFileAcknowledgementData.js";
 import { useHistory, useLocation } from "react-router-dom";
 
 const GetActionMessage = (props) => {
@@ -18,6 +18,9 @@ const GetActionMessage = (props) => {
     return t("APPLICATION_FAILED");
   }
 };
+
+
+
 
 const rowContainerStyle = {
   padding: "4px 0px",
@@ -39,10 +42,22 @@ const BannerPicker = (props) => {
 };
 
 const ArisingFileAcknowledgement = ({ data = {}, onSuccess = () => null, userType }) => {
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+
+  const { tenants } = storeData || {};
   const { t } = useTranslation();
 
   let location = useLocation();
   let navigationData = location?.state?.navData;
+
+  const handleDownloadPdf = async () => {
+    const { Licenses = [] } = mutation.data;
+    const License = (Licenses && Licenses[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
+    let res = License;
+    const data = getPDFData({ ...res }, tenantInfo, t);
+    data.then((ress) => Digit.Utils.pdf.generate(ress));
+  };
 
   if (false) {
     return (
@@ -76,8 +91,7 @@ const ArisingFileAcknowledgement = ({ data = {}, onSuccess = () => null, userTyp
                 <span className="download-button">{t("Acknowledgment")}</span>
               </div>
             }
-          //style={{ width: "100px" }}
-          // onClick={handleDownloadPdf}
+            onClick={handleDownloadPdf}
           />
 
           <Link to={`/digit-ui/employee`}>
