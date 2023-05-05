@@ -274,7 +274,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/module-adding`} component={() => <SearchModule parentRoute={path} />} />
 
           <PrivateRoute path={`${path}/major-function-adding`} component={() => <MajorFunctionAdding parentRoute={path} />} />
-          <PrivateRoute path={`${path}/sub-function-adding`} component={() => <SubFunctionAdding parentRoute={path} />} />
+          <PrivateRoute path={`${path}/sub-function-adding`} component={() => <SearchModule parentRoute={path} />} />
           <PrivateRoute path={`${path}/service-adding`} component={() => <ServiceAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-acknowledgement`} component={() => <ArisingFileAcknowledgement parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-summery`} component={() => <ArisingFileSummery parentRoute={path} />} />

@@ -185,9 +185,10 @@ const Urls = {
     create_note: "/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
     fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
     arising_file: "/filemgmnt/v1/applicantservices/_createArisingFile",
-    createmodule:"/filemgmnt/v1/globalmaster/_createmodule",
-    modulesearch: "/filemgmnt/v1/globalmaster/_searchmodule"
-
+    createmodule:"/filemgmnt/v1/masterdata/modules/_search",
+    submodulesearch:"/filemgmnt/v1//masterdata/modules/_create",
+    modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
+    createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create"
   },
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",

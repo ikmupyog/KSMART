@@ -33,6 +33,17 @@ export const DFMService = {
       params: details,
       auth: true,
     }),
+    submodulesearch: (details) =>
+    Request({
+      url: Urls.dfm.submodulesearch,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: details,
+      auth: true,
+    }),
+   
   // search_bill: ({ tenantId, filters }) =>
   //   Request({
   //     url: filters.businesService !== "PT" ? Urls.mcollect.search_bill : Urls.mcollect.search_bill_pt,
@@ -113,9 +124,21 @@ export const DFMService = {
       setTimeParam: false,
       userService: true,
       method: "POST",
+      params: {tenantId},
+      auth: true,
+    }),
+    createsubmodule: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.createsubmodule,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
       params: {},
       auth: true,
     }),
+  
   // billingslab: ({ tenantId, filters, auth }) =>
   //   Request({
   //     url: Urls.tl.billingslab,

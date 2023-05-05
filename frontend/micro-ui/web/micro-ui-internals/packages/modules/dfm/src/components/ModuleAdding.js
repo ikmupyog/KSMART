@@ -43,7 +43,7 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const locale = Digit.SessionStorage.get("locale");
   let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
   let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
-  const mutation = Digit.Hooks.dfm.useCreateModule(tenantId);
+  const mutation = Digit.Hooks.dfm.useCreateModule();
   const [moduleCode, setModulecode] = useState("");
   const [moduleNameEn, setModuleNameEn] = useState("");
   const [moduleNameMl, setModuleNameMl] = useState("");
@@ -65,38 +65,42 @@ const setsetModuleNameMl = (e) => {
     setModuleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
   }
 }
-  const columns = useMemo(
-    () => [
-      {
-        Header: t("SL_NO"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(row.original.fileNumber || ""),
-      },
+useEffect(() => {
+  const searchModule = Digit.Hooks.dfm.useSearchmodule();
 
-      {
-        Header: t("MODULE_CODE"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      },
-      {
-        Header: t("MODULE_NAME_ENG"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-        disableSortBy: true,
-      },
+  const columns = [
+    {
+      Header: t("SL_NO"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(row.original.fileNumber || ""),
+    },
+    {
+      Header: t("MODULE_CODE"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.function) || ""),
+    },
+    {
+      Header: t("MODULE_NAME_ENG"),
+      Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      disableSortBy: true,
+    },
+    {
+      Header: t("MODULE_NAME_MAL"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.function) || ""),
+    },
+    {
+      Header: t("-"),
+      Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      disableSortBy: true,
+    },
+  ];
 
-      {
-        Header: t("MODULE_NAME_MAL"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      },
-      {
-        Header: t("-"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-        disableSortBy: true,
-      },
-    ],
-    []
-  );
+  // rest of your code using searchModule and columns
+
+}, []);
+
+
 
   const saveModule = () => {
     const formData = {

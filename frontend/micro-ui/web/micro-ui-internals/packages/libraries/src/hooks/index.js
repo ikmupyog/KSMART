@@ -29,6 +29,7 @@ import useCreateEvent from "./events/useCreateEvent";
 import useUpdateEvent from "./events/useUpdateEvent";
 import useNewInboxGeneral from "./useInboxGeneral/useNewInbox";
 import useCreateModule from "./dfm/useCreateModule";
+import useCreateSubModule from "./dfm/useCreateSubModule"
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -468,7 +469,8 @@ const dfm = {
   useApplicationNoteDrafting,
   useApplicationFetchDraft,
   useApplicationArisingFile,
-  useCreateModule
+  useCreateModule,
+  useCreateSubModule
 };
 const receipts = {
   useReceiptsMDMS,
