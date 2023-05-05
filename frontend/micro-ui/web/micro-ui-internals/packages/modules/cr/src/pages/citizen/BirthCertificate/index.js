@@ -14,7 +14,9 @@ const BirthCertificateSearch = ({ path }) => {
       ..._data
     };
     if (!_.isEmpty(_data.birthDate)) {
-      _.set(data, "birthDate", convertDateToEpoch(_data.birthDate, "start"))
+      _.set(data, "dobFrom", convertDateToEpoch(_data.birthDate, "start"));
+      _.set(data, "dobTo", convertDateToEpoch(_data.birthDate));
+      delete data.birthDate;
     }
     setPayload(
       Object.keys(data)
