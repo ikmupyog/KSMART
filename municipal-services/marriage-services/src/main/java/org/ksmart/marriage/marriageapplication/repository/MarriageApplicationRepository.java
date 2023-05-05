@@ -464,8 +464,46 @@ public class MarriageApplicationRepository {
                         String marriageTypeMl = util.getMarriageTypeMl(mdmsData, marriage.getMarriageType());
                         marriage.setMarriageTypeMl(marriageTypeMl);
                     }
+                    //Marriage TenantId name
+                    if (marriage.getTenantid() != null) {
+                        String tenantIdEn = util.getMarriageTenantEn(mdmsData, marriage.getTenantid());
+                        marriage.setMarriageTenantIdEn(tenantIdEn);
+                        
+                        String tenantIdMl = util.getMarriageTenantMl(mdmsData, marriage.getTenantid());
+                        marriage.setMarriageTenantIdMl(tenantIdMl);
+                    }
+                    //Groom Present Address TenantId name
+                    if (marriage.getGroomAddressDetails().getPresentInsideKeralaLBName() != null) {
+                        String tenantIdEn = util.getMarriageTenantEn(mdmsData, marriage.getGroomAddressDetails().getPresentInsideKeralaLBName());
+                        marriage.getGroomAddressDetails().setPresentInsideKeralaLBNameEn(tenantIdEn);
 
+                        String tenantIdMl = util.getMarriageTenantMl(mdmsData, marriage.getGroomAddressDetails().getPresentInsideKeralaLBName());
+                        marriage.getGroomAddressDetails().setPresentInsideKeralaLBNameMl(tenantIdMl);
+                    }
+                    //Groom Permanent Address TenantId name
+                    if (marriage.getGroomAddressDetails().getPermntInKeralaAdrLBName() != null) {
+                        String tenantIdEn = util.getMarriageTenantEn(mdmsData, marriage.getGroomAddressDetails().getPermntInKeralaAdrLBName());
+                        marriage.getGroomAddressDetails().setPermntInKeralaAdrLBNameEn(tenantIdEn);
 
+                        String tenantIdMl = util.getMarriageTenantMl(mdmsData, marriage.getGroomAddressDetails().getPermntInKeralaAdrLBName());
+                        marriage.getGroomAddressDetails().setPermntInKeralaAdrLBNameMl(tenantIdMl);
+                    }
+                    //Bride Present Address TenantId name
+                    if (marriage.getBrideAddressDetails().getPresentInsideKeralaLBName() != null) {
+                        String tenantIdEn = util.getMarriageTenantEn(mdmsData, marriage.getBrideAddressDetails().getPresentInsideKeralaLBName());
+                        marriage.getBrideAddressDetails().setPresentInsideKeralaLBNameEn(tenantIdEn);
+
+                        String tenantIdMl = util.getMarriageTenantMl(mdmsData, marriage.getBrideAddressDetails().getPresentInsideKeralaLBName());
+                        marriage.getBrideAddressDetails().setPresentInsideKeralaLBNameMl(tenantIdMl);
+                    }
+                    //Bride Permanent Address TenantId name
+                    if (marriage.getBrideAddressDetails().getPermntInKeralaAdrLBName() != null) {
+                        String tenantIdEn = util.getMarriageTenantEn(mdmsData, marriage.getBrideAddressDetails().getPermntInKeralaAdrLBName());
+                        marriage.getBrideAddressDetails().setPermntInKeralaAdrLBNameEn(tenantIdEn);
+
+                        String tenantIdMl = util.getMarriageTenantMl(mdmsData, marriage.getBrideAddressDetails().getPermntInKeralaAdrLBName());
+                        marriage.getBrideAddressDetails().setPermntInKeralaAdrLBNameMl(tenantIdMl);
+                    }
 
                     //WARD DETAILS-MDMS Location Call
                     Object mdmsDataLocation = util.mdmsCallForLocation(requestInfo, marriage.getTenantid());

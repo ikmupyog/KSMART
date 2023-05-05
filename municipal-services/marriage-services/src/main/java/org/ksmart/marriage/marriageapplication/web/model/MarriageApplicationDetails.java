@@ -44,6 +44,12 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriageTenantid")
     private String tenantid;
 
+    @JsonProperty("marriageTenantIdEn")
+    private String marriageTenantIdEn;
+
+    @JsonProperty("marriageTenantIdMl")
+    private String marriageTenantIdMl;
+
     @Size(max = 64)
     @JsonProperty("marriagePlacetype")
     private String placetype;

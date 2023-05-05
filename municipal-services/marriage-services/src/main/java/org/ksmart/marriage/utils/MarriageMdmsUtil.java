@@ -1150,7 +1150,16 @@ public class MarriageMdmsUtil {
         int index = tenants.indexOf(Lbtype);
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_LBTYPE_JSONPATH+"["+index+"].namelocal");
     }
-
+    public String getMarriageTenantEn(Object mdmsData, String tenantId) {
+        List<String> tenants  = getTenantIdCode(mdmsData);
+        int index = tenants.indexOf(tenantId);
+        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_JSONPATH+"["+index+"].city.name");
+    }
+    public String getMarriageTenantMl(Object mdmsData, String tenantId) {
+        List<String> tenants  = getTenantIdCode(mdmsData);
+        int index = tenants.indexOf(tenantId);
+        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_JSONPATH+"["+index+"].city.localName");
+    }
 
     private List<String> getLBTypeCode(Object mdmsData) {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_LBTYPE_CODE_JSONPATH);
@@ -1163,5 +1172,8 @@ public class MarriageMdmsUtil {
     }
     private List<String> getPlaceIdCode(Object mdmsData) {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACEID_CODE_JSONPATH);
+    }
+    private List<String> getTenantIdCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH);
     }
 }

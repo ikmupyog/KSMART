@@ -197,7 +197,8 @@ public class MarriageCorrectionService {
         return request.getMarriageCorrectionDetails();
     }
     public List<MarriageApplicationDetails> searchCorrectionApplinDetails(MarriageCorrectionRequest request,MarriageApplicationSearchCriteria criteria) {
-        return applicationRepository.getMarriageApplication(criteria,request.getRequestInfo());
+        //return applicationRepository.getMarriageApplication(criteria,request.getRequestInfo());
+        return applicationRepository.searchMarriageDetails(criteria,request.getRequestInfo());
     }
 
     public List<MarriageCorrectionDetails> searchCorrectionDetails(String marriageId) {
