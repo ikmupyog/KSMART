@@ -25,7 +25,6 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  console.log("pro[pss",props);
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -49,15 +48,11 @@ const MarriageCorrectionAcknowledgement = () => {
 
   const handleDownloadPdf = async () => {
   
-    const { marriageCorrectionDetails = [] } = mutationData.data
-    console.log("marriageCorrectionDetails", marriageCorrectionDetails);
+    const { marriageCorrectionDetails = [] } = mutationData.data;
     const CorrectionData = (marriageCorrectionDetails && marriageCorrectionDetails[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.tenantid);
-    console.log("tenantInfo",tenantInfo,CorrectionData);
     let res = CorrectionData;
-    console.log({res});
     const data = getPDFData({ ...res }, tenantInfo, t);
-    console.log("data==",data);
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
 
