@@ -842,6 +842,9 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntOutsideIndiaprovinceEn: data?.GroomAddressDetails?.permntOutsideIndiaprovinceEn
             ? data?.GroomAddressDetails?.permntOutsideIndiaprovinceEn
             : null,
+          permntOutsideIndiaprovinceEn: data?.GroomAddressDetails?.permntOutsideIndiaprovinceMl
+            ? data?.GroomAddressDetails?.permntOutsideIndiaprovinceMl
+            : null,
           permntOutsideIndiaVillage: data?.GroomAddressDetails?.permntOutsideIndiaVillage
             ? data?.GroomAddressDetails?.permntOutsideIndiaVillage?.code
             : null,
