@@ -48,7 +48,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedBirthInformarDetails?.document: []);
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
-  const [uploadedFile, setUploadedFile] = useState();
+  const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.document);
   const [file, setFile] = useState();
   const [error, setError] = useState(null);
   const cityDetails = Digit.ULBService.getCurrentUlb();
@@ -56,6 +56,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
 
 
 
+  
 
   // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
