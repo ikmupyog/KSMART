@@ -50,7 +50,15 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const mutation = Digit.Hooks.dfm.useApplicationDrafting(tenantId);
     const payload = "KL-KOCHI-C-000017- FMARISING-2023-AR";
     const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
+    const { data: DraftType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "DraftType");
+    let cmbDraftList = [];
+    DraftType &&
+    DraftType["FileManagement"] &&
+    DraftType["FileManagement"].DraftType.map((ob) => {
+        cmbDraftList.push(ob);
+    })
     const [popup, setPopup] = useState(false);
+    const [selectedDraftType, setSelectedDraftType] = useState();
 
     const draftTextValue = data?.Drafting[0]?.draftText;
 
@@ -129,6 +137,9 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
             </div>
         );
     };
+    const setSelectedFunction=(value)=>{
+        setSelectedDraftType(value)
+    }
     // var link = "mailto:target@gmail.com";
     // In addition to this you can add subject or body as parameter . 
     // For e.g. 
@@ -175,8 +186,11 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                     t={t}
                                     type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
+                                    optionKey="name"
+                                    name="TYPE_OF_CORRESPONDENCE"
+                                    option={cmbDraftList}
+                                    select={setSelectedFunction}
+                                    selected={selectedDraftType}
                                     placeholder={t("shows_subject_from_application_with_edit_bitton")}
                                 />
 

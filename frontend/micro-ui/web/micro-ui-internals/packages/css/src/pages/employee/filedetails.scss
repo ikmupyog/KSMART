@@ -18,6 +18,13 @@
         width: 90%;
     }
 }
+.takeActionButtonWrapper{
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
+}
 
 .timeline-wrapper {
     background: white;
