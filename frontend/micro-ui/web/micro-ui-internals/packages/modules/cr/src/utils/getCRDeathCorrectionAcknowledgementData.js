@@ -4,27 +4,25 @@ const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
 
+
 const getCorrectionDetails = (application, t) => {
-    console.log("certificate......", application);
-    // const correction = application?.CorrectionField?.[0]?.correctionFieldValue?.[0];
-    const  correctionDetails = application?.CorrectionField;
-    console.log("correctionfield", correctionFieldValue);
-    const isDate = correctionFieldName === "DECEASED_DOB" ? true : false ;
-    const correctionData = correctionDetails?.map((correction)=>{
-        return({title: t(correction?.column),
-            values: [
-      { title: t("old value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
-      { title: t("new value"), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue,10), "dd/MM/yyyy") : correction?.newValue}
-    ],
-})
-});
-console.log("correctionData==",correctionData);
-// returnedData = {...correctionData}
-return correctionData;
-};
+    const correctionField = application?.CorrectionField;
+    const returnDetails = correctionField?.map((correctionItem) => {
+      const isDate = correctionItem?.correctionFieldName === "DECEASED_DOB" ? true : false;
+      const correctionData = correctionItem.correctionFieldValue?.map((correction) => {
+        return (
+          {
+            title: t(correction?.column),
+            value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue, 10), "dd/MM/yyyy") : correction?.newValue,
+          }
+        );
+      });
+      return { title: t((`CR_${correctionItem?.correctionFieldName}`)), values: correctionData };
+    });
+    return returnDetails;
+  };
 
 const getCRDeathCorrectionAcknowledgementData = async (application, tenantInfo, t) => {
-console.log("get data===",application, tenantInfo, t);
   return {
     t: t,
     tenantId: tenantInfo?.code,
@@ -34,11 +32,11 @@ console.log("get data===",application, tenantInfo, t);
     phoneNumber: "",
     details: [
       {
-        title:t("Acknowledgment Details"),
+        title:t("CR_ACKNOWLEDGMENT_DETAILS"),
         values: [
-          { title: t("Application No"), value: application?.InformationDeathCorrection?.DeathACKNo },
+          { title: t("CR_COMMON_COL_APP_NO"), value: application?.InformationDeathCorrection?.DeathACKNo },
           {
-            title: t("Application Date"),
+            title: t("CR_COMMON_COL_APP_DATE"),
             value: Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeathCorrection?.ApplicationDate, "dd/MM/yyyy"),
           },
         ],

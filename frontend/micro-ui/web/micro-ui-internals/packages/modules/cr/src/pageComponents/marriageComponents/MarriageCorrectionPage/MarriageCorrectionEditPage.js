@@ -354,7 +354,7 @@ const MarriageCorrectionEditPage = ({
     setParams(marriageCorrectionFormsObj);
     onSubmitAcknowledgement({marriageCorrectionFormsObj:formattedResp, navigationData});
     } else {
-      alert("Please edit atleast a field before submit");
+      alert(t("CR_EDIT_ATLEAST"));
     }
     // mutation.mutate(formattedResp, { onSuccess: onDocUploadSuccess });
     

@@ -142,7 +142,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
       // mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
       navigateAcknowledgement({ birthInclusionFormsObj: formattedResp, navigationData });
     } else {
-      alert("Please edit atleast a field before submission");
+      alert(t("CR_EDIT_ATLEAST"));
     }
   };
 
