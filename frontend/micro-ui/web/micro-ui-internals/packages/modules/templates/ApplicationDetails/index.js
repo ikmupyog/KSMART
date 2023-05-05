@@ -22,6 +22,7 @@ const ApplicationDetails = (props) => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedTakeAction, setSelectedTakeAction] = useState()
   const [isEnableLoader, setIsEnableLoader] = useState(false);
   const [isWarningPop, setWarningPopUp] = useState(false);
 
@@ -53,23 +54,26 @@ const ApplicationDetails = (props) => {
     }
   }, [showToast]);
 
-  function onActionSelect(action) {
-    if (action) {
-      if (action?.isWarningPopUp) {
-        setWarningPopUp(true);
-      } else if (action?.redirectionUrll) {
-        window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
-      } else if (!action?.redirectionUrl) {
-        setShowModal(true);
-      } else {
-        history.push({
-          pathname: action.redirectionUrl?.pathname,
-          state: { ...action.redirectionUrl?.state },
-        });
-      }
-    }
-    setSelectedAction(action);
-    setDisplayMenu(false);
+  function onActionSelect(action,e) {
+    console.log(action,e);
+    // if (action) {
+    //   setSelectedTakeAction(e)
+    //   if (action?.isWarningPopUp) {
+    //     setWarningPopUp(true);
+    //   } else if (action?.redirectionUrll) {
+    //     window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
+    //   } else if (!action?.redirectionUrl) {
+    //     setShowModal(true);
+    //   } else {
+    //     history.push({
+    //       pathname: action.redirectionUrl?.pathname,
+    //       state: { ...action.redirectionUrl?.state },
+    //     });
+    //   }
+    // }
+    setSelectedTakeAction(e)
+    // setSelectedAction(e);
+    // setDisplayMenu(false);
   }
 
   const queryClient = useQueryClient();
@@ -200,6 +204,7 @@ const ApplicationDetails = (props) => {
             forcedActionPrefix={forcedActionPrefix}
             ActionBarStyle={ActionBarStyle}
             MenuStyle={MenuStyle}
+            selectedTakeAction={selectedTakeAction}
           />
         </React.Fragment>
       ) : (
