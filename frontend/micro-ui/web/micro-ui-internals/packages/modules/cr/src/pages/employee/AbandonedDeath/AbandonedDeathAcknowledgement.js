@@ -53,6 +53,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
   const mutation = Digit.Hooks.cr.useAbandonedDeathCreationAPI(
     tenantId, isEditAbandonedDeath ? false : true
   );
+  let formdata = [];
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
@@ -81,16 +82,13 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
         if (!resubmit) {
           // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata =  !isEditAbandonedDeath?convertToAbandonedDeathRegistration(data):
+          formdata =  !isEditAbandonedDeath?convertToAbandonedDeathRegistration(data):
           convertToEditAbandonedDeathRegistration(data) ;
           console.log(formdata,"!isEdit? convertToAbandonedDeathRegistration(data)",data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           
-            mutation.mutate(formdata,
-            //    {
-            //   onSuccess,
-            // }
-            );
+            mutation.mutate(formdata).then(()=>
+            console.log("mutation end"))
           
          
         } else {
@@ -104,18 +102,9 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation]);
 
-  // useEffect(() => {
-  //   if (mutation.isSuccess || (mutation1.isSuccess && isEdit && !isDirectRenewal)) {
-  //     try {
-  //       let Licenses = !isEdit ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
-  //       mutation2.mutate(Licenses, {
-  //         onSuccess,
-  //       });
-  //     }
-  //     catch (er) {
-  //     }
-  //   }
-  // }, [mutation.isSuccess, mutation1.isSuccess]);
+  useEffect(() => {
+  formdata=[]
+  }, [mutation.isSuccess]);
 
 
   const handleDownloadPdf = async () => {

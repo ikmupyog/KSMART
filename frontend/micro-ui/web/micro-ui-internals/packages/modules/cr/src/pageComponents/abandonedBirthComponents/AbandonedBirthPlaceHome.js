@@ -130,11 +130,11 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   });
 
   function setSelectAdrsHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null)) {
       setAdrsHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  function setSelectAdrsHouseNameMl(e) {
+  function setSelectAdrsHouseNameMl(e) {   
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
     if(!(e.target.value.match(pattern))){
       e.preventDefault();
@@ -317,7 +317,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 onChange={setSelectAdrsHouseNameEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>
           </div>

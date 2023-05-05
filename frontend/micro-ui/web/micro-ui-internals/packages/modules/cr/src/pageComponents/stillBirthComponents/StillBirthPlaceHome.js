@@ -135,7 +135,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectAdrsHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setAdrsHouseNameMl('');
@@ -167,7 +167,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectAdrsStreetNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setAdrsStreetNameMl('');
@@ -183,15 +183,28 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
     if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
       e.preventDefault();
     }
   }
-  function setCheckMalayalamInputSplChar(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
     if (!(e.key.match(pattern))) {
       e.preventDefault();
     }
   }
+  
+  function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]/;
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
   let validFlag = true;
 
   const goNext = () => {
@@ -322,8 +335,6 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               />
             </div>
           </div>
-
-
           <div className="row">
             <div className="col-md-4">
               <CardLabel>
@@ -356,7 +367,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
-                onKeyPress={setCheckMalayalamInputField}
+                onKeyPress={setCheckMalayalamInputFieldWithSplChar}
                 onChange={setSelectAdrsStreetNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
@@ -373,7 +384,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsHouseNameMl"
                 value={adrsHouseNameMl}
-                onKeyPress={setCheckMalayalamInputSplChar}
+                onKeyPress={setCheckMalayalamInputFieldWithSplChar}
                 onChange={setSelectAdrsHouseNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
