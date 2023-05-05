@@ -14,7 +14,8 @@ import { sortDropdownNames } from "../../utils";
 // import { STATE_CODE } from "../../config/constants";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = false }) => {
-  // console.log(isEditDeath);
+  console.log(isEditDeath);
+  console.log(formData);
   // console.log(JSON.stringify(formData));  
   sessionStorage.removeItem("applicationNumber");
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
@@ -1545,7 +1546,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
         <FormStep
           t={t}
@@ -1649,7 +1650,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
                     />
                   </div>
 
-
                   <div className="col-md-3">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)}
@@ -1660,7 +1660,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
               </div>
             )}
           </div>
-
 
           {UploadNACHIde === true && (
             <div>

@@ -1284,7 +1284,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 onChange={setSelectbrideEmailid}
                 placeholder={`${t("CR_BRIDE_EMAIL")}`}
                 //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
               />
             </div>
           </div>

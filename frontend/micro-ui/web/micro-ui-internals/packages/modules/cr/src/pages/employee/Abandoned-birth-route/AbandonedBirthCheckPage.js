@@ -74,8 +74,10 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
   } = value;
 
   const uploadedImages = [
-    AbandonedBirthInformarDetails?.uploadedFiles[0].fileStoreId,
-    AbandonedBirthInformarDetails?.uploadedFiles[1].fileStoreId
+    // AbandonedBirthInformarDetails?.uploadedFiles[0].fileStoreId,
+    // AbandonedBirthInformarDetails?.uploadedFiles[1].fileStoreId
+    AbandonedBirthInformarDetails.uploadedFile,
+    AbandonedBirthInformarDetails.uploadedFile1,
   ];
   // console.log(uploadedImages);
   useEffect(() => {

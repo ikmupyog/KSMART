@@ -19,22 +19,41 @@ const Complaint = ({ data, path }) => {
 
   const closedStatus = ["RESOLVED", "REJECTED", "CLOSEDAFTERREJECTION", "CLOSEDAFTERRESOLUTION"];
 
+  const headerStyle = {
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    width: "80%",
+    fontSize: "26px"
+  }
+
   return (
-    <React.Fragment>
-      <Card onClick={handleClick}>
-        <CardSubHeader>{t(`SERVICEDEFS.${serviceCode.toUpperCase()}`)}</CardSubHeader>
+    <div className="col-md-4">
+      <Card onClick={handleClick} >
+        <CardSubHeader style={headerStyle}>{t(`SERVICEDEFS.${serviceCode.toUpperCase()}`)}</CardSubHeader>
 
-        <DateWrap date={Digit.DateUtils.ConvertTimestampToDate(data.auditDetails.createdTime)} />
-
-        <KeyNote keyValue={t(`${LOCALIZATION_KEY.CS_COMMON}_COMPLAINT_NO`)} note={serviceRequestId} />
-
-        <div className={`status-highlight ${closedStatus.includes(applicationStatus) ? "success" : ""}`} style={{ cursor: "pointer" }}>
-          <p>{(closedStatus.includes(applicationStatus) ? t("CS_COMMON_CLOSED") : t("CS_COMMON_OPEN")).toUpperCase()}</p>
+        <div className="col-md-12" style={{ paddingLeft: "2px", paddingRight: "2px" }}>
+          <div className="col-md-6">
+            <KeyNote keyValue={t(`${LOCALIZATION_KEY.CS_COMMON}_COMPLAINT_NO`)} note={serviceRequestId} />
+          </div>
+          <div className="col-md-6">
+            <DateWrap date={Digit.DateUtils.ConvertTimestampToDate(data.auditDetails.createdTime)} />
+          </div>
         </div>
 
-        {t(`${LOCALIZATION_KEY.CS_COMMON}_${applicationStatus}`)}
+        <div className="col-md-12" style={{ paddingLeft: "2px", paddingRight: "2px" }}>
+          <div className="col-md-6">
+            <p>{t(`${LOCALIZATION_KEY.CS_COMMON}_${applicationStatus}`)}</p>
+          </div>
+          <div className="col-md-6">
+            <div className={`status-highlight ${closedStatus.includes(applicationStatus) ? "success" : ""}`}
+              style={{ cursor: "pointer", marginLeft: "auto" }}>
+              <p>{(closedStatus.includes(applicationStatus) ? t("CS_COMMON_CLOSED") : t("CS_COMMON_OPEN")).toUpperCase()}</p>
+            </div>
+          </div>
+        </div>
       </Card>
-    </React.Fragment>
+    </div>
   );
 };
 

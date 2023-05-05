@@ -696,7 +696,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   let ownersHistory = [];
   let structurePlaceCorr = [];
   let structurePlaceHistory = [];
-  let applicationDocuments = [];
   let addressCorr = [];
   let addressHistory = [];
   let tradeNameCorr = data?.tradeName;
@@ -926,7 +925,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;
   }
   
-  applicationDocuments =  dataCorr?.tradeLicenseDetail?.applicationDocuments;
+  let applnDocuments =  dataCorr?.tradeLicenseDetail?.applicationDocuments ? dataCorr?.tradeLicenseDetail?.applicationDocuments : [] ;
 
   if((data?.tradeName !== dataCorr?.licenseUnitName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
     tradeNameCorr = dataCorr?.licenseUnitName?.trim();
@@ -958,7 +957,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
           licenseUnitNameLocal : licenseUnitNameLocalHistory,
           address : addressHistory
         },
-        applicationDocuments : applicationDocuments,
+        applicationDocuments : applnDocuments,
         status: "APPLIED",
         workflowCode : "CorrectionTL",
         applicationType:"CORRECTION",

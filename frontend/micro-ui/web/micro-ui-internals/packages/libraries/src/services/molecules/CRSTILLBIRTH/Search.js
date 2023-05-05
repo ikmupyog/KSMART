@@ -1,4 +1,4 @@
-import cloneDeep from "lodash/cloneDeep";
+//import cloneDeep from "lodash/cloneDeep";
 import { CRStillBirthService } from "../../elements/CRSTILLBIRTH";
 import { NA, getFormattedValue } from "../../../utils/dataFormatter";
 // import { convertEpochToDateDMY } from  "../../utils";
@@ -51,7 +51,7 @@ export const CRStillBirthsearch = {
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
     const response = await CRStillBirthsearch.application(tenantId, filter);
-    // console.log(response);
+     console.log(response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
@@ -61,6 +61,8 @@ export const CRStillBirthsearch = {
       const filters = { birthNumbers, offset: 0 };
       numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
     }
+
+   
     let employeeResponse = [];
     const StillBirthdetails = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
@@ -70,13 +72,10 @@ export const CRStillBirthsearch = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
-        // { title: "PDF_BIRTH_CHILD_NAME", value: response?.stillbirthchilddetails?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
+        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },        
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
-        { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : NA },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},   
-            
+        { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : NA },      
+        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : NA },              
         
        ],
        
@@ -121,7 +120,7 @@ export const CRStillBirthsearch = {
       asSectionHeader: true,
       values: [
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
-        { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || "NA" },
+        { title: "CR_VEHICLE_TYPE", value: response?.vehicleType || "NA" },
         { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "NA" },
         { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.vehicleHaltPlace || "NA" },
         { title: "CR_VEHICLE_FROM_EN", value: response?.vehicleFromEn || "NA" },
@@ -293,7 +292,7 @@ export const CRStillBirthsearch = {
     }
     
     
-    // };
+   // };
     
     const statisticalInfo = {
       title: "CR_STATISTICAL_DETAILS",
@@ -318,32 +317,33 @@ export const CRStillBirthsearch = {
         
        ],
     };
-    const StillBirthInformarHosInstDetails = {
-      title: "CR_INFORMANT_DETAILS",
-     // asSectionHeader: true,
-      values: [
-        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.StillBirthInformarDetails?.infomantFirstNameEn || "NA" },
-        { title: "PDF_INFORMER_AADHAR", value: response?.StillBirthInformarDetails?.infomantAadhar   || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.StillBirthInformarDetails?.infomantMobile  || "NA"},
-        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.StillBirthInformarDetails?.informerDesi || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.StillBirthInformarDetails?.informerAddress || "NA" },
+    // const StillBirthInformarHosInstDetails = {
+    //   title: "CR_INFORMANT_DETAILS",
+    //  // asSectionHeader: true,
+    //   values: [
+    //     { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.StillBirthInformarDetails?.infomantFirstNameEn || "NA" },
+    //     { title: "PDF_INFORMER_AADHAR", value: response?.StillBirthInformarDetails?.infomantAadhar   || "NA" },
+    //     { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.StillBirthInformarDetails?.infomantMobile  || "NA"},
+    //     { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.StillBirthInformarDetails?.informerDesi || "NA" },
+    //     { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.StillBirthInformarDetails?.informerAddress || "NA" },
         
-       ],
-    };
+    //    ],
+    // };
    
     response && employeeResponse.push(StillBirthdetails);
-    response && employeeResponse.push(stillbirthchilddetails);
+     response && employeeResponse.push(stillbirthchilddetails);
     if (response?.birthPlace === "HOSPITAL") {
-      response && employeeResponse.push(birthPlaceHospDetails);
+      response && employeeResponse.push(stillbirthPlaceHospDetails);
     } else if (response?.birthPlace === "INSTITUTION") {
-      response && employeeResponse.push(birthPlaceINSTITUTIONDetails);
+      response && employeeResponse.push(stillbirthPlaceINSTITUTIONDetails);
     } else if (response?.birthPlace === "HOME") {
-      response && employeeResponse.push(birthPlaceHOMEDetails);
-    } else if (response?.birthPlace === "VEHICLE") {
-      response && employeeResponse.push(birthPlaceVEHICLEDetails);
-    } else if (response?.birthPlace === "PUBLIC_PLACES") {
-      response && employeeResponse.push(birthPlacePUBLICPLACESDetails);
-    }
+       response && employeeResponse.push(stillbirthPlaceHOMEDetails);
+   } 
+   if (response?.birthPlace === "VEHICLE") {
+      response && employeeResponse.push(stillbirthPlaceVEHICLEDetails);
+    } else if (response?.belseirthPlace === "PUBLIC_PLACES") {
+      response && employeeResponse.push(stillbirthPlacePUBLICPLACESDetails);
+     }
     response && employeeResponse.push(StillBirthParentsDetails);
     if (response?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.presentaddressStateName === "kl") {
       response && employeeResponse.push(AddressBirthDetailsPresentInfo);
@@ -355,7 +355,7 @@ export const CRStillBirthsearch = {
     
      response && employeeResponse.push(statisticalInfo);
      response && employeeResponse.push(StillBirthInitiatorDetails);
-     response && employeeResponse.push(StillBirthInformarHosInstDetails);
+    //  response && employeeResponse.push(StillBirthInformarHosInstDetails);
 
     return {
       tenantId: response.tenantId,

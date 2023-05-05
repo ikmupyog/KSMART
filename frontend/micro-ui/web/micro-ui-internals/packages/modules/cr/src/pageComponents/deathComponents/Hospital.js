@@ -77,6 +77,7 @@ const Hospital = ({
   const onSkip = () => onSelect();
   function setselecthospitalNameEn(value) {
     selecthospitalNameEn(value);
+    selectHospitalNameMl(value);
     setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {

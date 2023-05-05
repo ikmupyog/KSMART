@@ -2,7 +2,7 @@ import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioO
 import React, { useState, useEffect, useCallback, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
-import { sortDropdownNames } from "../utils/index";
+import { sortDropdownNames, stringReplaceAll } from "../utils/index";
 import { useQueryClient } from "react-query";
 import { convertEpochToDate } from '../utils/index';
 
@@ -298,7 +298,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
           ob.code.split(".")[0] === BusinessCategory.code &&
           !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}`)
         ) {
-          BusinessTypeMenu.push({ i18nKey: `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}`, code: `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}` });
+          BusinessTypeMenu.push({ i18nKey: `${ob.code.split(".")[0]+"_"+ob.code.split(".")[1]}`, code: `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}` });
         }
       });
     return BusinessTypeMenu;
@@ -311,7 +311,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
         if (ob.code.split(".")[0]+"."+ob.code.split(".")[1] === BusinessType.code && !BusinessSubTypeMenu.some((BusinessSubTypeMenu) => BusinessSubTypeMenu.code === `${ob.code}`)) {
-          BusinessSubTypeMenu.push({ i18nKey: `${ob.code}`, code: `${ob.code}` });
+          BusinessSubTypeMenu.push({ i18nKey: `${stringReplaceAll(ob.code,'.','_')}`, code: `${ob.code}` });
         }
       });
     return BusinessSubTypeMenu;
