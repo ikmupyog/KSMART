@@ -24,7 +24,13 @@ const DeathCertificateSearch = () => {
     if (!_.isEmpty(data.DateOfDeath)) {
       _.set(data, "DateOfDeath", convertDateToEpoch(data.DateOfDeath, "start"))
     }
-    
+    if (!_.isEmpty(data.fromDate)) {
+      _.set(data, "fromDate", convertDateToEpoch(data.fromDate, "start"))
+    }
+    if (!_.isEmpty(data.toDate)) {
+      _.set(data, "toDate", convertDateToEpoch(data.toDate, "start"))
+    }
+
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])

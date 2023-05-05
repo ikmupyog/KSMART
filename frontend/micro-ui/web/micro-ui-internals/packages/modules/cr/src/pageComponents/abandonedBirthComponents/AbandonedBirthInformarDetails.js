@@ -38,11 +38,18 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   // const cityDetails = Digit.ULBService.getCurrentUlb();
   let acceptFormat = ".pdf"
 
-  const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile);
-  const [uploadedFile1, setUploadedFile1] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile1);
-  const [file, setFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile);
-  const [file1, setFile1] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile1);
 
+
+  
+
+  // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
+
+  // const [dropdownValue, setDropdownValue] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.documentType || null);
+  // const tenantId = Digit.ULBService.getCurrentTenantId();
+  // const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
+  // const docs = Documentsob?.AbandonedBirthInformarDetails?.Documents;
+  // console.log(docs);
+  // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
 
 
   const [toast, setToast] = useState(false);

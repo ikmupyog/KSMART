@@ -748,6 +748,9 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentOutSideIndiaProvinceEn: data?.GroomAddressDetails?.presentOutSideIndiaProvinceEn
             ? data?.GroomAddressDetails?.presentOutSideIndiaProvinceEn
             : null,
+          presentOutSideIndiaProvinceMl: data?.GroomAddressDetails?.presentOutSideIndiaProvinceMl
+            ? data?.GroomAddressDetails?.presentOutSideIndiaProvinceMl
+            : null,
           presentOutSideCountry: data?.GroomAddressDetails?.presentOutSideCountry ? data?.GroomAddressDetails?.presentOutSideCountry?.code : null,
           presentOutSideIndiaadrsVillage: data?.GroomAddressDetails?.presentOutSideIndiaadrsVillage
             ? data?.GroomAddressDetails?.presentOutSideIndiaadrsVillage?.code
@@ -838,6 +841,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           permntOutsideIndiaprovinceEn: data?.GroomAddressDetails?.permntOutsideIndiaprovinceEn
             ? data?.GroomAddressDetails?.permntOutsideIndiaprovinceEn
+            : null,
+          permntOutsideIndiaprovinceMl: data?.GroomAddressDetails?.permntOutsideIndiaprovinceMl
+            ? data?.GroomAddressDetails?.permntOutsideIndiaprovinceMl
             : null,
           permntOutsideIndiaVillage: data?.GroomAddressDetails?.permntOutsideIndiaVillage
             ? data?.GroomAddressDetails?.permntOutsideIndiaVillage?.code
