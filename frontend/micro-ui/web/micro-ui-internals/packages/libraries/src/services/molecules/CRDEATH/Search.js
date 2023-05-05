@@ -120,7 +120,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
+       // { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CR_HOSPITAL_EN", value: response?.InformationDeath?.DeathPlaceHospitalNameEn || "NA" },
         { title: "CR_HOSPITAL_ML", value: response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA" },
       ],
@@ -129,7 +129,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
+       // { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CR_INSTITUTION_TYPE", value: response?.InformationDeath?.institution || "NA" },
         { title: "CR_INSTITUTION_NAME_EN", value: response?.InformationDeath?.DeathPlaceInstitutionNameEn || "NA" },
         { title: "CR_INSTITUTION_NAME_ML", value: response?.InformationDeath?.DeathPlaceInstitutionNameMl || "NA" },
@@ -139,7 +139,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
+      // { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CS_COMMON_WARD", value: response?.InformationDeath?.homeWardEn + " / " + response?.InformationDeath?.homeWardMl || "NA" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.InformationDeath?.deathPlaceHomePostofficeEn +"/"+response?.InformationDeath?.deathPlaceHomePostofficeMl  || "NA" },
         { title: "CS_COMMON_PIN_CODE", value: response?.InformationDeath?.DeathPlaceHomePincode || "NA" },
@@ -155,7 +155,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
+        //{ title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || "NA" },
         { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "NA" },
         { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.VehicleFirstHaltEn + "/" + response?.VehicleFirstHaltMl || "NA" },
@@ -171,7 +171,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
+       // { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceEn + " / " + response?.publicPlaceMl || "NA" },
         { title: "CS_COMMON_WARD", value: response?.DeathPlaceWardId + " / " + response?.DeathPlaceWardIdMl || "NA" },
         { title: "CR_LOCALITY_EN", value: response?.DeathPlaceLocalityEn || "NA" },
@@ -185,7 +185,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
+      //  { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "NA" },
         { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceTypeEn + " / " + response?.publicPlaceTypeMl || "NA" },
         { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
         { title: "CR_LOCALITY_EN", value: response?.localityNameEn || "NA" },
@@ -238,7 +238,8 @@ export const CRDeathsearch = {
       title: "CR_ADDRESS_DETAILS",
       values: [
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountry || "NA" },
-        { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails?.presentaddressStateName || "NA" },
+        { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails?.presentaddressStateNameEn +"/" +response?.AddressBirthDetails?.presentaddressStateNameMl|| "NA" },
+
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.presentOutsideKeralaDistrict || "NA" },
         { title: "CR_TALUK_TEHSIL", value: response?.AddressBirthDetails?.presentOutsideKeralaTaluk || "NA" },
         { title: "CR_TOWN_VILLAGE_EN", value: response?.AddressBirthDetails?.presentOutsideKeralaVillage || "NA" },

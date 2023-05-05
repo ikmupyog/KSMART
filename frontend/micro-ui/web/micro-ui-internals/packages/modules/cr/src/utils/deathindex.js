@@ -393,7 +393,7 @@ export const convertToDeathRegistration = (data = {}) => {
             : null,
           presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
           presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode
             : null,
           presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
           presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
@@ -555,6 +555,14 @@ export const convertToDeathRegistration = (data = {}) => {
 
          
         },
+        DeathNACDocuments: [
+          {
+            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            filestoreId: data?.InformationDeath?.uploadedFile ? data?.InformationDeath?.uploadedFile :null,            
+            proceedNoRDO: data?.InformationDeath?.proceedNoRDO,
+            regNoNAC: data?.InformationDeath?.regNoNAC,
+          }
+        ],
         Demands: [
           {
             tenantId: data?.InformationDeath?.tenantId,
