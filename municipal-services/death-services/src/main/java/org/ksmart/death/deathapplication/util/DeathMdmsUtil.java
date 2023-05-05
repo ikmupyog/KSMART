@@ -529,7 +529,22 @@ public class DeathMdmsUtil {
        
         return crDeathModuleDtls;
     }
+    private ModuleDetail getTenantIdCertificateMl(String tenantId) {
 
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data            
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].city.localName";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.TENANT_MODULE_NAME).build();
+
+       
+        return crDeathModuleDtls;
+    }
     //Rakhi S ikm on 29.04.2023
     public Object mDMSSearch(RequestInfo requestInfo, String tenantId) {
         MdmsCriteriaReq mdmsCriteriaReq = getMDMSSearchRequest(requestInfo, tenantId);
@@ -928,5 +943,37 @@ public class DeathMdmsUtil {
         int index = lbs.indexOf(tenantId);
         return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_TENANT_JSONPATH+"["+index+"].localName");        
     }  
+    public Object mDMSCallCertificate(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificate(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestCertificate(RequestInfo requestInfo, String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);     
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+        return mdmsCriteriaReq;
+    }
+    public Object mDMSCallCertificateMl(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateMl(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestCertificateMl(RequestInfo requestInfo, String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdCertificateMl(tenantId);        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);     
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+        return mdmsCriteriaReq;
+    }
 
 }
