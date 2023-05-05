@@ -23,6 +23,7 @@ const DesktopInbox = ({
 }) => {
   const { t } = useTranslation();
   const GetCell = (value) => <span className="cell-text">{value}</span>;
+
   const GetSlaCell = (value) => {
     return value < 0 ? <span className="sla-cell-error">{value || ""}</span> : <span className="sla-cell-success">{value || ""}</span>;
   };
@@ -37,9 +38,8 @@ const DesktopInbox = ({
               <span className="link">
                 <Link to={"/digit-ui/employee/pgr/complaint/details/" + row.original["serviceRequestId"]}>{row.original["serviceRequestId"]}</Link>
               </span>
-              {/* <a onClick={() => goTo(row.row.original["serviceRequestId"])}>{row.row.original["serviceRequestId"]}</a> */}
               <br />
-              <span className="complain-no-cell-text">{t(`SERVICEDEFS.${row.original["complaintSubType"].toUpperCase()}`)}</span>
+              {/* <span className="complain-no-cell-text">{t(`SERVICEDEFS.${row.original["complaintSubType"].toUpperCase()}`)}</span> */}
             </div>
           );
         },
@@ -53,7 +53,7 @@ const DesktopInbox = ({
       {
         Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
         Cell: ({ row }) => {
-          return GetCell(t(`CS_COMMON_${row.original["status"]}`));
+          return GetCell(t(`CS_COMMON_${row.original?.state["applicationStatus"]}`));
         },
       },
       {
@@ -105,7 +105,7 @@ const DesktopInbox = ({
         onNextPage={onNextPage}
         onPrevPage={onPrevPage}
         totalRecords={totalRecords}
-        onPageSizeChagne={onPageSizeChange}
+        onPageSizeChange={onPageSizeChange}
         currentPage={currentPage}
         pageSizeLimit={pageSizeLimit}
       />

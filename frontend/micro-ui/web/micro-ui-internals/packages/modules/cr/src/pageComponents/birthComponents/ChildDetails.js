@@ -220,6 +220,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(false);
+  const [DateTimeError, setDateTimeError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(false);
   const [HospitalError, setHospitalError] = useState(false);
@@ -459,33 +460,43 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
 
-  function setselectChildDOB(value) {
+  useEffect(() => {
+    if (birthPlace && DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime])
 
+  function setselectChildDOB(value) {
+    setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-
     if (birthDate.getTime() <= today.getTime()) {
-
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
-        }
-      }
+      // if (birthPlace && DifferenceInTime != null) {
+      //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      //   if (currentWorgFlow.length > 0) {
+      //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //     setIsPayment(currentWorgFlow[0].payment);
+      //     setAmount(currentWorgFlow[0].amount);
+      //   }
+      // }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
@@ -748,10 +759,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
   function setselectBirthPlace(value) {
-    // console.log(workFlowData);
-    // console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
-    // console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
-
     selectBirthPlace(value);
     setValue(value.code);
     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
@@ -810,8 +817,28 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
   let validFlag = true;
   const goNext = () => {
-    console.log(UploadNACHIde);
-    console.log(NACFile);
+    if (birthDateTime.trim() == null || birthDateTime.trim() == '' || birthDateTime.trim() == undefined) {
+      setbirthDateTime("");
+    } else if (birthDateTime.trim() != null) {
+      let todayDate = new Date();
+      let currenthours = todayDate.getHours();
+      let currentMints = todayDate.getHours();
+      currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+      currentMints = currentMints < 10 ? "0" + currentMints : currentMints;      
+      let currentDatetime = currenthours + ':' + currentMints;
+      if (birthDateTime > currentDatetime) {
+        validFlag = false;
+        setbirthDateTime("");
+        setDateTimeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDateTimeError(false);
+        // alert("Right Time");
+      }
+    }
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
     } else if (childAadharNo != null && childAadharNo != "") {
@@ -1790,7 +1817,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
-                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                <CheckBox style={{Colour: "#be3cb7 !important"}} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
             </div>
@@ -1958,7 +1985,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           {toast && (
             <Toast
               error={
-                AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
                 WardError ||
                 AdsHomePincodeError ||
                 AdsHomePostOfficeError ||
@@ -1977,7 +2004,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
               }
               label={
-                AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
                   WardError ||
                   AdsHomePincodeError ||
                   AdsHomePostOfficeError ||
@@ -1996,40 +2023,42 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
                   ?
                   AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                      : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                        : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                          : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                            : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                              : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                                : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                  : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                    : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                      : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                        : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                          : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                                            : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                                              : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-
-                                                : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                  : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                    : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                                                      : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                        : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                          : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                            : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                              : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
-                                                                  : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-                                                                    : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
-                                                                      : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
-                                                                        : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
-                                                                          : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
-                                                                            : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
-                                                                              : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
-                                                                                : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
-                                                                                  : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
-                                                                                    : setToast(false)
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    : DateTimeError
+                      ? t(`CS_COMMON_DATE_TIME_ERROR`)
+                      : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                        : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                          : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                            : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                              : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                                : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                  : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                    : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                      : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                        : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                          : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                            : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                              : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                                : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                                  : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                    : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                      : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                        : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                          : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                            : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                              : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                                : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                  : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
+                                                                    : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                                      : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                        : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                          : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                            : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                              : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                                : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                                  : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                    : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                      : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
