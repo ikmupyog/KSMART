@@ -399,11 +399,19 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         },
       documentDetails: [
         {
-          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
-          document : data?.AbandonedBirthInformarDetails?.documents?.document,
-                 
-        }
-      ],
+          // tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          // document : data?.AbandonedBirthInformarDetails?.documents?.document,
+          DocumentType: "CR_REPORTING_FORM",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile      
+        },
+        {
+          // tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          // document : data?.AbandonedBirthInformarDetails?.documents?.document,          DocumentType: "Letter form the Informer/Notifier Official",
+          DocumentType: "CR_CHILDBIRTH_PROOF",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile1      
+        },
+      ], 
+
       },
     ],
   };
