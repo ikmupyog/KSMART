@@ -460,19 +460,11 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
 
             <div className="moduleLinkHomePageModuleLinks">
 
-                <div className="FileFlowWrapper counter-filewrapper">
+                <div className="FileFlowWrapper counter-filewrapper" style={{ paddingTop: "10px" }}>
 
 
 
-                    <div className="row legacy-section" >
-                        <div className="col-md-12" >
 
-                            <h1 >{t("ARISING_FILE_OPERATOR")}</h1>
-                        </div>
-
-
-
-                    </div>
 
                     <div className="row subject-section" >
                         <div className="col-md-12 col-sm-12">
@@ -572,7 +564,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
                         <div className="col-md-12 col-sm-12">
                             <div className="col-md-12 col-sm-12"  >
                                 <CardLabel>
-                                    {t("SUBJECT_DESCRIPTION")}
+                                    {t("DESCRIPTION")}
                                     <span className="mandatorycss">*</span>
                                 </CardLabel>
 
@@ -595,8 +587,8 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
 
                     </div>
 
-                    <div className="row subject-section" >
-                        <div className="col-md-12 col-sm-12">
+                    <div className="row" >
+                        <div className="col-md-12 col-sm-12" style={{ marginTop: "20px" }}>
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("PEN_NO")}
