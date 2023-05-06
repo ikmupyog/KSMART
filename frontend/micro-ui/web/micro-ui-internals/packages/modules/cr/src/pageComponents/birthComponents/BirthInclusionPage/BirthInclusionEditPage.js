@@ -142,7 +142,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
       // mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
       navigateAcknowledgement({ birthInclusionFormsObj: formattedResp, navigationData });
     } else {
-      alert("Please edit atleast a field before submission");
+      alert(t("CR_EDIT_ATLEAST"));
     }
   };
 
@@ -285,6 +285,9 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.CHILD_AADHAAR?.curValue}
                   onBlur={onAdharChange}
                   placeholder={`${t("CR_AADHAR")}`}
+                  inputProps={{
+                    maxLength: 12,
+                  }}
                   // ValidationRequired = {true}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />

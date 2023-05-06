@@ -117,7 +117,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
-  useEffect(() => {
+useEffect(() => {
 
     if (isInitialRender) {
       if (cmbLB.length > 0) {
@@ -185,10 +185,12 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrLBTypeName(value) {
     setinsideKeralaLBTypeName(value);
+
   }
   function setSelectpermntInKeralaAdrLBName(value) {
     setTenantWard(value.code);
     setpermntInKeralaAdrLBName(value);
+
   }
   function setSelectpermntInKeralaAdrVillage(value) {
     setpermntInKeralaAdrVillage(value);

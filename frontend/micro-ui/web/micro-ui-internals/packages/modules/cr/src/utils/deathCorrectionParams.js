@@ -6,7 +6,7 @@ const formFielColumns = {
     DECEASED_AADHAR: "CR_DECEASED_AADHAR",
     DECEASED_FATHER: {
       fathersNameEn: "CR_DECEASED_FATHER_EN",
-      fathersNameMl: "CR_DECEASED_FATHER_EN_ML",
+      fathersNameMl: "CR_DECEASED_FATHER_ML",
     },
     DECEASED_MOTHER:{
       mothersNameEn: "CR_DECEASED_MOTHER_EN",
@@ -26,7 +26,7 @@ const formFielColumns = {
       localityNameEn: "CR_LOCALITY_EN",
       localityNameMl: "CR_LOCALITY_ML",
       streetNameEn: "CR_STREET_EN",
-      streetNameMl: "CR_STREET_ML",
+      streetNameMl: "CR_STREET_MAL",
     },
     DECEASED_SPOUSE: {
       spouseNameEn: "CR_SPOUSE_NAME_EN",
@@ -35,7 +35,6 @@ const formFielColumns = {
   }
   
   const getCorrectionDocuments = (docData) => {
-    console.log("docData", docData);
     let selectedDocs = [];
     if (docData?.length > 0) {
       selectedDocs = docData.map((item) => {
@@ -52,10 +51,8 @@ const formFielColumns = {
   
   const getNestedFieldNames = (fieldData) =>{
     let fieldNameData = [];
-    console.log("reached--nested==",fieldData,Object.keys(fieldData.curValue));
     if(Object.keys(fieldData.curValue)?.length > 0){
       fieldNameData = Object.keys(fieldData.curValue).map((key)=>{
-        console.log("looped==",key,fieldData.initialValue,fieldData.curValue,formFielColumns[fieldData?.selectedDocType]);
         const columnName = formFielColumns[fieldData?.selectedDocType]?.[key];
         const oldValue = fieldData.initialValue?.[key] ? fieldData.initialValue?.[key] : null;
         const newValue = fieldData.curValue?.[key] ? fieldData.curValue?.[key] : null;
@@ -64,7 +61,6 @@ const formFielColumns = {
             oldValue:oldValue,
             newValue:newValue,
           };
-          console.log("tempObj==",tempObj);
           return tempObj;
       }) 
     }
@@ -72,7 +68,6 @@ const formFielColumns = {
   }
   
   const getCorrectionFieldValues = (item) => {
-    console.log("correction item==",item.curValue,item);
     let fieldValues = [];
     switch(item?.selectedDocType){
       
@@ -86,13 +81,11 @@ const formFielColumns = {
     ];
     break;
     case "DECEASED_DOB":
-        // console.log("DECEASED_DOB",Date(item.curValue),Date(item.curValue).getTime());
         fieldValues =  [
           {
             column: formFielColumns[item?.CorrectionField],
             oldValue: item.initialValue,
             newValue:  item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
-            // newValue: item.curValue && new Date(item.curValue).getTime(),
           },
         ];
         break;
@@ -113,12 +106,10 @@ const formFielColumns = {
   };
   
   const getCorrectionFields = (correctionData) => {
-    console.log("correctionData", Object.values(correctionData));
     const correctionDocs =
       Object.values(correctionData)?.length > 0 &&
       Object.values(correctionData)
         .map((item) => {
-          console.log("items==", item, item?.CorrectionField === "CHILD_DOB");
           if (item?.isEditable) {
             const correctionFieldValues = getCorrectionFieldValues(item);
             const correctionDocs = getCorrectionDocuments(item.documentData);
@@ -140,15 +131,16 @@ const formFielColumns = {
   };
   
   export const formatApiParams = (formData,userData) => {
-    console.log("formdata==", formData, "userData---", userData);
     const correctionFieldData = getCorrectionFields(formData);
-    console.log("formData", formData);
     const apiParam = {
       CorrectionDetails: [
         {
           id: userData?.id,
         //   tenantid: "kl.cochin",
-          applicationtype: "CRDRCN",
+          // applicationtype: "CRDRCN",
+          InformationDeath: { 
+          funcionUID: "CRDRNR",
+          },
           businessservice: "birth-services",
           workflowcode: "BIRTHHOSP21",
           action: "",

@@ -116,11 +116,11 @@ export const TLSearch = {
       }
       tradeUnits.values.push({
         title: "TRADELICENSE_TRADETYPE_LABEL",
-        value: unit?.businessType ? `${unit?.businessType}` : "NA"
+        value: unit?.businessType ? `${stringReplaceAll(unit?.businessType, ".", "_")}` : "NA"
       });
       tradeUnits.values.push({
         title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
-        value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA"
+        value: unit?.businessSubtype ? `${stringReplaceAll(unit?.businessSubtype, ".", "_")}` : "NA"
       })
     });
 
@@ -294,8 +294,8 @@ export const TLSearch = {
 
     correctiontag?.tradeUnits?.map((unit) => {
       correctionbasedet.values.push({ title: "TRADELICENSE_TRADECATEGORY_LABEL", value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA" });
-      correctionbasedet.values.push({ title: "TRADELICENSE_TRADETYPE_LABEL", value: unit?.businessType ? `${unit?.businessType}` : "NA" });
-      correctionbasedet.values.push({ title: "TL_NEW_TRADE_SUB_TYPE_LABEL", value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA" });
+      correctionbasedet.values.push({ title: "TRADELICENSE_TRADETYPE_LABEL", value: unit?.businessType ? `${stringReplaceAll(unit?.businessType, ".", "_")}` : "NA" });
+      correctionbasedet.values.push({ title: "TL_NEW_TRADE_SUB_TYPE_LABEL", value: unit?.businessSubtype ? `${stringReplaceAll(unit?.businessSubtype, ".", "_")}` : "NA" });
     });
     if (correctiontag?.structurePlace.length > 0) {
       correctionbasedet.values.push({

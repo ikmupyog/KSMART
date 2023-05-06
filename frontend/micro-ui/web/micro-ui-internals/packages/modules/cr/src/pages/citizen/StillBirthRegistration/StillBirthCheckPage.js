@@ -591,12 +591,12 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.deliveryMethods.name}</CardText>
                 </div>
-                <div className="col-md-3">
+                {/* <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`} :</CardText>
-                </div>
-                <div className="col-md-3">
+                </div> */}
+                {/* <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.birthWeight}</CardText>
-                </div>
+                </div> */}
               </div>
             </div>
 

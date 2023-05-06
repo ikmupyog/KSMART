@@ -216,12 +216,12 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
         <h1 className="headingh1">
-          <span style={{ background: "#fff", padding: "0 10px" }}>{`${fieldName} CHANGE`}</span>{" "}
+          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)} ${t("CR_CHANGE")}`}</span>{" "}
         </h1>
         {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
         {selectedDocuments?.length == 1 && (
           <div>
-            <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+            <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
             {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
             {selectedDocuments?.[0]?.Documents?.map((item, index) => (
               <div>
@@ -263,10 +263,10 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
                 resetFields();
                 onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
               } else {
-                setFileDocError("You have to upload following documents to make changes in the field");
+                setFileDocError(t("CR_UPLOAD_TO_MAKE_CHANGE"));
               }
             } else {
-              setFileDocError("Please select an option");
+              setFileDocError(t("CR_SELECT_OPTION"));
             }
           }}
         />
