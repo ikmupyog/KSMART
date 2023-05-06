@@ -217,6 +217,7 @@ public class BrideAddressDetails {
     @Size(max = 1000)
     @JsonProperty("villageNamePresent")
     private String villageNamePresent;
+
     @Size(max = 1000)
     @JsonProperty("townOrVillagePresent")
     private String townOrVillagePresent;
@@ -228,9 +229,11 @@ public class BrideAddressDetails {
     @Size(max = 1000)
     @JsonProperty("presentOthrTalukName")
     private String presentOthrTalukName;
+
     @Size(max = 64)
     @JsonProperty("presentOthPostOfficeEn")
     private String presentOthPostOfficeEn;
+    
     @Size(max = 64)
     @JsonProperty("brideGroomPresent")
     private String brideGroomPresent;
