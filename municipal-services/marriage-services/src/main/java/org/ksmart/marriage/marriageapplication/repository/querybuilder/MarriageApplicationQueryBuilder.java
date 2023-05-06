@@ -132,11 +132,13 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
         addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
         if (criteria.getBrideFirstnameEn() != null){
-          addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+          //addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+          addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
         }
         addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
         if (criteria.getGroomFirstnameEn() != null){
-          addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+          //addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+          addLikeFilter("LOWER(GD.firstname_en)", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
         }
         addDateRangeFilter("MD.dateofmarriage",
                 criteria.getFromDate(),
@@ -224,11 +226,13 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
       addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
       addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
       if (criteria.getBrideFirstnameEn() != null){
-        addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+       // addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+       addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
       }
       addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
       if (criteria.getGroomFirstnameEn() != null){
-        addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+       // addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+       addLikeFilter("LOWER(GD.firstname_en)", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
       }
       addDateRangeFilter("MD.dateofmarriage",
               criteria.getFromDate(),

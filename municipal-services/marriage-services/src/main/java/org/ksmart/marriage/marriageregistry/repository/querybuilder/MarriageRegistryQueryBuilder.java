@@ -123,17 +123,19 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           addFilter("MD.applicationnumber", criteria.getApplicationNumber(), query, preparedStmtValues);  
           addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);  
           addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
-         // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValue
+          addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
           addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
           if (criteria.getBrideFirstnameEn() != null){
-            addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+           // addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+           addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
           }
          // addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues); 
           //addFilter("BD_middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues); 
          // addFilter("BD_lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues); 
           addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues); 
           if (criteria.getGroomFirstnameEn() != null){
-            addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           // addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           addLikeFilter("LOWER(GD.firstname_en)", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
           }
          // addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues); 
           //addFilter("GD_middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues); 
@@ -206,11 +208,13 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
           addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
           if (criteria.getBrideFirstnameEn() != null){
-            addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+            //addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+            addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
           }
           addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues); 
           if (criteria.getGroomFirstnameEn() != null){
-            addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           // addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           addLikeFilter("LOWER(GD.firstname_en)", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
           }
           addDateRangeFilter("MD.dateofmarriage",
           criteria.getFromDate(),
