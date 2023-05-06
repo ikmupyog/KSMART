@@ -46,6 +46,7 @@ public class CorrectionApplicationRowMapper implements ResultSetExtractor<List<M
                         .businessservice(rs.getString("md_businessservice"))
                         .businessservice(rs.getString("md_workflowcode"))
                         .applicationNo(rs.getString("md_applicationnumber"))
+                        .applicationDate(rs.getLong("md_dateofreporting"))
                         .registrationno(rs.getString("md_registrationno"))
                         .registrationDate(rs.getLong("md_registration_date"))
                         .action(rs.getString("md_action"))

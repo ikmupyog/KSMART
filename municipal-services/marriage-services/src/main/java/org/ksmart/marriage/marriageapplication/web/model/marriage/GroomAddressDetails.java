@@ -667,4 +667,10 @@ public class GroomAddressDetails {
 
     @JsonProperty("presentInsideKeralaLBNameMl")
     private String presentInsideKeralaLBNameMl;
+
+    @JsonProperty("permntInKeralaAdrLBNameEn")
+    private String permntInKeralaAdrLBNameEn;
+
+    @JsonProperty("permntInKeralaAdrLBNameMl")
+    private String permntInKeralaAdrLBNameMl;
 }
