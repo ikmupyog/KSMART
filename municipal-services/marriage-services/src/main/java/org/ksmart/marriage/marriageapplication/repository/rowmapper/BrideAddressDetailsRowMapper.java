@@ -44,7 +44,7 @@ public interface BrideAddressDetailsRowMapper {
                 .presentWardNo(rs.getString("BPSA_ward_code"))
                // .presentOutsideKeralaDistrict(rs.getString("BPSA_districtid"))
                 .presentOutsideKeralaTalukName(rs.getString("BPSA_taluk_name"))
-                .presentOutsideKeralaCityVilgeEn(rs.getString("BPSA_village_name"))
+                .presentOutsideKeralaCityVilgeNameEn(rs.getString("BPSA_village_name"))
                // .presentOutsideKeralaPincode(rs.getString("BPSA_pinno"))
                 .presentOutsideKeralaPostOfficeEn(rs.getString("BPSA_poname_en"))
                 .presentOutsideKeralaPostOfficeMl(rs.getString("BPSA_poname_ml"))

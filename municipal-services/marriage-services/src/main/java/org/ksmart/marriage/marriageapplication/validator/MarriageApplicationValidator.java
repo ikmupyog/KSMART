@@ -1767,20 +1767,20 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentOutsideKeralaVillageName())) {
+                                                                                        .getPresentOutsideKeralaVillageorTown())) {
                                                                                 throw new CustomException(
                                                                                                 "BRIDE PRESENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village  " +
-                                                                                                                brideaddressInfo.getPresentOutsideKeralaVillageName()
+                                                                                                                brideaddressInfo.getPresentOutsideKeralaVillageorTown()
                                                                                                                 + " is invalid");
                                                                         }
 
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentOutsideKeralaCityVilgeEn())) {
+                                                                                        .getPresentOutsideKeralaCityVilgeNameEn())) {
                                                                                 throw new CustomException(
                                                                                                 " BRIDE PRESENT ADDRESS OUTSIDE KERALA: CITY INVALID ",
                                                                                                 "The City/Town " +
-                                                                                                                brideaddressInfo.getPresentOutsideKeralaCityVilgeEn()
+                                                                                                                brideaddressInfo.getPresentOutsideKeralaCityVilgeNameEn()
                                                                                                                 + " is invalid");
                                                                         }
 
