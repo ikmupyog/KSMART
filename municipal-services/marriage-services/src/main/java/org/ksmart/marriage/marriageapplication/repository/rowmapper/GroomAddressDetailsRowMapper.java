@@ -44,7 +44,7 @@ public interface GroomAddressDetailsRowMapper {
                 .presentWardNo(rs.getString("GPSA_ward_code"))
               //  .presentOutsideKeralaDistrict(rs.getString("GPSA_districtid"))
                 .presentOutsideKeralaTalukName(rs.getString("GPSA_taluk_name"))
-                .presentOutsideKeralaCityVilgeEn(rs.getString("GPSA_village_name"))
+                .presentOutsideKeralaCityVilgeNameEn(rs.getString("GPSA_village_name"))
               //  .presentOutsideKeralaPincode(rs.getString("GPSA_pinno"))
                 .presentOutsideKeralaPostOfficeEn(rs.getString("GPSA_poname_en"))
                 .presentOutsideKeralaPostOfficeMl(rs.getString("GPSA_poname_ml"))

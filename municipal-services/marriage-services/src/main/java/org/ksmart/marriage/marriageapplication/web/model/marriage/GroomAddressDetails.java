@@ -81,12 +81,11 @@ public class GroomAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaVillage")
-    private String presentOutsideKeralaVillageName;
+    private String presentOutsideKeralaVillageorTown;
 
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaCityVilgeEn")
-    private String presentOutsideKeralaCityVilgeEn;
-
+    private String presentOutsideKeralaCityVilgeNameEn;
     @Size(max = 64)
     @JsonProperty("presentOutsideKeralaPincode")
     private String presentOutsideKeralaPincode;
