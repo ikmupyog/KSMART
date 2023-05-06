@@ -116,8 +116,6 @@ const DesktopInbox = ({
     []
   );
 
-  console.log("first", data)
-
   const columns = React.useMemo(() => ([
     {
       Header: t("CR_COMMON_COL_APP_NO"),

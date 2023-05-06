@@ -1,5 +1,5 @@
-import { Card, CardSubHeader, CheckPoint, ConnectingCheckPoints, GreyOutText, Loader, DisplayPhotos } from "@egovernments/digit-ui-react-components";
-import React, { Fragment, useEffect, useMemo } from "react";
+import { Card, CardSectionHeader, CheckPoint, ConnectingCheckPoints, GreyOutText, Loader, DisplayPhotos } from "@egovernments/digit-ui-react-components";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LOCALIZATION_KEY } from "../constants/Localization";
 import PendingAtLME from "./timelineInstances/pendingAtLme";
@@ -24,6 +24,7 @@ const TLCaption = ({ data, comments }) => {
 
 const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating, zoomImage, complaintDetails }) => {
   const { t } = useTranslation();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
 
   function zoomImageWrapper(imageSource, index, thumbnailsToShow) {
     let newIndex = thumbnailsToShow.thumbs?.findIndex(link => link === imageSource);
@@ -50,45 +51,83 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
     // });
   }, [timeline]);
 
-  const getCommentsInCustomChildComponent = ({ comment, thumbnailsToShow, auditDetails, assigner, status }) => {
+  const getCommentsInCustomChildComponent = ({ comment, thumbnailsToShow, auditDetails, assigner, status, wfDocuments }) => {
     const captionDetails = {
       date: auditDetails?.lastModified,
       name: assigner?.name,
       mobileNumber: assigner?.mobileNumber,
       source: status == "COMPLAINT_FILED" ? complaintDetails?.audit.source : ""
     }
+    const [imagesThumbs, setImagesThumbs] = useState(null);
+    const [initialRender, setInitialRender] = useState(true);
+
+
+    const fetchImage = async (imageUrls) => {
+      const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(imageUrls, tenantId);
+      const newThumbnails = fileStoreIds.map((key) => {
+        const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url)
+        return { large: key.url?.split(",")[1], small: key.url?.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      });
+      setImagesThumbs(newThumbnails);
+      setInitialRender(false)
+    }
+
+    useEffect(() => {
+      if (initialRender && status != 'PENDINGFORASSIGNMENT') {
+        if (wfDocuments && wfDocuments.length > 0) {
+          const imageUrls = wfDocuments.map(item => item.fileStoreId)
+          fetchImage(imageUrls)
+        }
+      }
+    }, [status])
+
     return <>
       {comment ? <div>{comment?.map(e =>
         <div className="TLComments">
-          <h3>{t("WF_COMMON_COMMENTS")}</h3>
+          <h4><strong>{t("WF_COMMON_COMMENTS")}</strong></h4>
           <p>{e}</p>
         </div>
       )}</div> : null}
-      {thumbnailsToShow?.thumbs?.length > 0 ? <div className="TLComments">
-        <h3>{t("CS_COMMON_ATTACHMENTS")}</h3>
-        <DisplayPhotos srcs={thumbnailsToShow.thumbs} onClick={(src, index) => { zoomImageWrapper(src, index, thumbnailsToShow) }} />
+      {imagesThumbs ? <div className="TLComments">
+        <h4><strong>{t("CS_COMMON_ATTACHMENTS")}</strong></h4>
+        <div className="col-md-12">
+          {imagesThumbs.map((thumbnail, index) => {
+            return (
+              <div key={index}>
+                {thumbnail.type == "pdf" ?
+                  <React.Fragment>
+                    <object style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} data={thumbnail.pdfUrl}
+                      alt={`upload-thumbnails-${index}`} />
+                  </React.Fragment> :
+                  <img style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} src={thumbnail.small}
+                    alt={`upload-thumbnails-${index}`} onClick={() => zoomImage(thumbnail.large)} />}
+              </div>
+            );
+          })}
+        </div>
+        {/* <DisplayPhotos srcs={thumbnailsToShow.thumbs} onClick={(src, index) => { zoomImageWrapper(src, index, thumbnailsToShow) }} /> */}
       </div> : null}
       {captionDetails?.date ? <TLCaption data={captionDetails} comments={comment} /> : null}
     </>
   }
 
-  const getCheckPoint = ({ status, caption, auditDetails, timeLineActions, index, array, performedAction, comment, thumbnailsToShow, assigner, totalTimelineLength }) => {
+  const getCheckPoint = ({ status, caption, auditDetails, timeLineActions, index, array, performedAction, comment, thumbnailsToShow, assigner, totalTimelineLength, wfDocuments }) => {
     const isCurrent = 0 === index;
     switch (status) {
       case "PENDINGFORREASSIGNMENT":
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, wfDocuments })} />;
 
       // case "PENDINGFORASSIGNMENT":
       //   const isFirstPendingForAssignment = totalTimelineLength - (index + 1) === 0 ? true : false
       //   return <PendingForAssignment key={index} isCompleted={isCurrent} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, ...isFirstPendingForAssignment ? {auditDetails} : {thumbnailsToShow, auditDetails} })} />;
 
       case "PENDINGFORASSIGNMENT_AFTERREOPEN":
-        return <PendingForAssignment isCompleted={isCurrent} key={index} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })} />;
+        return <PendingForAssignment isCompleted={isCurrent} key={index} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, wfDocuments })} />;
 
       case "PENDINGATLME":
         let { name, mobileNumber } = caption && caption.length > 0 ? caption[0] : { name: "", mobileNumber: "" };
         const assignedTo = `${t(`CS_COMMON_${status}`)}`;
-        return <PendingAtLME isCompleted={isCurrent} key={index} name={name} mobile={mobileNumber} text={assignedTo} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })} />;
+        return <PendingAtLME isCompleted={isCurrent} key={index} name={name} mobile={mobileNumber} text={assignedTo} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, wfDocuments })} />;
 
       case "RESOLVED":
         return (
@@ -100,7 +139,7 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
             //rating={index <= 1 && rating}
             serviceRequestId={serviceRequestId}
             reopenDate={Digit.DateUtils.ConvertTimestampToDate(auditDetails.lastModifiedTime)}
-            customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })}
+            customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, wfDocuments })}
           />
         );
       case "REJECTED":
@@ -113,11 +152,11 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
             //rating={index <= 1 && rating}
             serviceRequestId={serviceRequestId}
             reopenDate={Digit.DateUtils.ConvertTimestampToDate(auditDetails.lastModifiedTime)}
-            customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })}
+            customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, wfDocuments })}
           />
         );
       case "CLOSEDAFTERRESOLUTION":
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${`CS_COMMON_${status}`}`)} customChild={<div>{getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })}{rating ? <StarRated text={t("CS_ADDCOMPLAINT_YOU_RATED")} rating={rating} /> : null}</div>} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${`CS_COMMON_${status}`}`)} customChild={<div>{getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, wfDocuments })}{rating ? <StarRated text={t("CS_ADDCOMPLAINT_YOU_RATED")} rating={rating} /> : null}</div>} />;
 
       // case "RESOLVE":
       // return (
@@ -130,20 +169,21 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
       //   />
       // );
       case "COMPLAINT_FILED":
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t("CS_COMMON_COMPLAINT_FILED")} customChild={getCommentsInCustomChildComponent({ comment, auditDetails, assigner, status })} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t("CS_COMMON_COMPLAINT_FILED")} customChild={getCommentsInCustomChildComponent({ comment, auditDetails, assigner, status, wfDocuments })} />;
 
       default:
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, status })} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, status, wfDocuments })} />;
     }
   };
 
   return (
     <React.Fragment>
-      <CardSubHeader>{t(`${LOCALIZATION_KEY.CS_COMPLAINT_DETAILS}_COMPLAINT_TIMELINE`)}</CardSubHeader>
+      <CardSectionHeader>{t(`${LOCALIZATION_KEY.CS_COMPLAINT_DETAILS}_COMPLAINT_TIMELINE`)}</CardSectionHeader>
+      <br></br>
       {timeline && totalTimelineLength > 0 ? (
         <ConnectingCheckPoints>
-          {timeline.map(({ status, caption, auditDetails, timeLineActions, performedAction, wfComment: comment, thumbnailsToShow, assigner }, index, array) => {
-            return getCheckPoint({ status, caption, auditDetails, timeLineActions, index, array, performedAction, comment, thumbnailsToShow, assigner, totalTimelineLength });
+          {timeline.map(({ status, caption, auditDetails, timeLineActions, performedAction, wfComment: comment, thumbnailsToShow, assigner, wfDocuments }, index, array) => {
+            return getCheckPoint({ status, caption, auditDetails, timeLineActions, index, array, performedAction, comment, thumbnailsToShow, assigner, totalTimelineLength, wfDocuments });
           })}
         </ConnectingCheckPoints>
       ) : (
