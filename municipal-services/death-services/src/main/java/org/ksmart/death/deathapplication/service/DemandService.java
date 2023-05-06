@@ -48,6 +48,10 @@ public class DemandService {
         demands.forEach(demand -> setDemandParamsLateFee(demand, requestInfo, wfc));
         return  enrichmentService.saveDemand(requestInfo,demands);
     }
+    public List<Demand> saveNACDemandDetails(List<Demand> demands, RequestInfo requestInfo) {
+        demands.forEach(demand -> setNACDemandParamsLateFee(demand, requestInfo));
+        return  enrichmentService.saveDemand(requestInfo,demands);
+    }
     public void setDemandParamsLateFee(Demand demand, RequestInfo requestInfo, WorkFlowCheck wfc) {
         demand.setConsumerType("FEE");
         demand.setBusinessService("CR");
@@ -63,6 +67,22 @@ public class DemandService {
         demand.setTaxPeriodFrom(System.currentTimeMillis());
         demand.setTaxPeriodTo(System.currentTimeMillis()+86400000);
         demand.setMinimumAmountPayable(new BigDecimal(12));
+    }
+    public void setNACDemandParamsLateFee(Demand demand, RequestInfo requestInfo) {
+        demand.setConsumerType("FEE");
+        demand.setBusinessService("CR");
+        ArrayList<DemandDetail> demandDetails = new ArrayList<>();
+        DemandDetail demandDetail=new DemandDetail();
+        demandDetail.setTaxHeadMasterCode("140130200");
+        demandDetail.setTaxAmount(new BigDecimal(2));
+        demandDetail.setTenantId(demand.getTenantId());
+        setGLCode(demandDetail, requestInfo);
+        demandDetails.add(demandDetail);
+        demand.setDemandDetails(demandDetails);
+        demand.setPayer(requestInfo.getUserInfo());
+        demand.setTaxPeriodFrom(System.currentTimeMillis());
+        demand.setTaxPeriodTo(System.currentTimeMillis()+86400000);
+        demand.setMinimumAmountPayable(new BigDecimal(2));
     }
 
     private ModuleDetail getGLCodeRequest() {

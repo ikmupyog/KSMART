@@ -4,6 +4,7 @@ import java.util.List;
 import javax.swing.text.Document;
 import javax.validation.Valid;
 
+import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -69,5 +70,7 @@ public class DeathNACDtls {
  
     public void setStatus(String s) {
     }
-
+    
+    @JsonProperty("Demands")
+    private List<Demand> demands;
 }

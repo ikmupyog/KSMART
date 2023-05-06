@@ -28,6 +28,8 @@ public class DeathDocumentsRowMapper implements ResultSetExtractor <List<DeathDo
                          .documentType(rs.getString("document_type"))
                          .fileStoreId(rs.getString("filestore_id"))
                          .deathACKNo(rs.getString("death_ackno"))
+                         .proceedNoRDO(rs.getString("rdo_proceedings_no"))
+                         .regNoNAC(rs.getString("nac_registration_no"))
                          .deathDocAuditDetails(getAuditDetails(rs))
                          .build());
                     }  

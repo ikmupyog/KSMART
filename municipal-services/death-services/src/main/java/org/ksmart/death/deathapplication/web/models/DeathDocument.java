@@ -51,5 +51,11 @@ public class DeathDocument {
 
     @JsonProperty("AuditDetails")
     private AuditDetails deathDocAuditDetails = null;
+
+    @JsonProperty("proceedNoRDO")
+    private String proceedNoRDO = null;
+
+    @JsonProperty("regNoNAC")
+    private String regNoNAC = null;
     
 }

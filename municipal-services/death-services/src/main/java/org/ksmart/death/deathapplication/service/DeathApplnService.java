@@ -207,6 +207,19 @@ public class DeathApplnService {
           enrichmentService.setNACACKNumber(request);            
           producer.push(deathConfig.getSaveDeathNACTopic(), request);
           workflowIntegrator.callWorkFlowNAC(request);
+          //Rakhi S on 06.05.2023
+          request.getDeathNACDtls().forEach(death->{
+               // if(wfc.getPayment()!= null){
+                   if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){
+                       List<Demand> demands = new ArrayList<>();
+                       Demand demand = new Demand();
+                       demand.setTenantId(death.getDeathBasicInfo().getTenantId());
+                       demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
+                       demands.add(demand);
+                       death.setDemands(demandService.saveNACDemandDetails(demands,request.getRequestInfo()));
+                   }
+               // }
+          }); 
           return request.getDeathNACDtls();
      }
 

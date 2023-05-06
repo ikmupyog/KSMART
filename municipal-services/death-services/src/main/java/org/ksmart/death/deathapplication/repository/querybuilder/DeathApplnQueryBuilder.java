@@ -238,7 +238,7 @@ public String getNextIDQuery() {
 
 //Rakhi S on 18.04.2023
 private static final String QUERYDOCUMENT = new StringBuilder()
-                                              .append("SELECT id, tenantid, document_type, death_dtls_id, filestore_id, death_ackno,  active, created_by, createdtime, lastmodifiedby, lastmodifiedtime")
+                                              .append("SELECT id, tenantid, document_type, death_dtls_id, filestore_id, death_ackno,  active, created_by, createdtime, lastmodifiedby, lastmodifiedtime, rdo_proceedings_no, nac_registration_no")
                                               .append("	FROM eg_death_document_dtls")
                                               .toString();
 
