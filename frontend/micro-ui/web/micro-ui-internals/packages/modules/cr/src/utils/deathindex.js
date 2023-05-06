@@ -287,17 +287,16 @@ export const convertToDeathRegistration = (data = {}) => {
 
           DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath ? data?.InformationDeath?.DateOfDeath : data?.InformationDeath?.FromDate),
           TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
-
-          //TimeOfDeathUnit: "AM",
+          TimeOfDeathUnit: "AM",
           DateOfDeath1: Date.parse(data?.InformationDeath?.ToDate),
-          DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,
-          // DeathPlaceTypecode: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
-          //DeathPlace: data?.InformationDeath?.DeathPlace.code,
-          //DeathPlaceTypecode: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
+          DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,         
           hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.code : null,
           hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
           institution: data?.InformationDeath?.institution ? data?.InformationDeath?.institution.name : null,
           DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.code : null,
+          institution: data?.InformationDeath?.institution ? data?.InformationDeath?.institution.name : null,
+          DeathPlaceInstitutionNameEn: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.institutionName : null,
+          DeathPlaceInstitutionNameMl: data?.InformationDeath?.InstitutionIdMl ? data?.InformationDeath?.InstitutionIdMl.institutionNamelocal : null,                  
           vehicleType: data?.InformationDeath?.vehicleType ? data?.InformationDeath?.vehicleType.code : null,
           VehicleNumber: data?.InformationDeath?.VehicleNumber,
           VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
@@ -434,7 +433,7 @@ export const convertToDeathRegistration = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
             ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
@@ -629,15 +628,14 @@ export const convertToEditDeathRegistration = (data = {}) => {
           tenantid: data?.InformationDeath?.tenantId,     
           DeathPlace: data?.InformationDeath?.DeathPlace ? data?.InformationDeath?.DeathPlace.code : null,
           DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType?.code : null,
-          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.hospitalName : null,
-          //DeathPlaceHospitalNameEn: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalName : null,
-         // DeathPlaceHospitalNameMl :data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
-          hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,
-         
+          hospitalNameEn: data?.InformationDeath?.hospitalNameEn ? data?.InformationDeath?.hospitalNameEn.hospitalName : null,         
+          hospitalNameMl: data?.InformationDeath?.hospitalName ? data?.InformationDeath?.hospitalName.hospitalNamelocal : null,         
          DeathPlaceTypecode: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
          institution: data?.InformationDeath?.institution ? data?.InformationDeath?.institution.name : null,
          DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId?.code : null,
-         InstitutionIdMl: data?.InformationDeath?.InstitutionIdMl ? data?.InformationDeath?.InstitutionIdMl.institutionNamelocal : null,          
+         InstitutionIdMl: data?.InformationDeath?.InstitutionIdMl ? data?.InformationDeath?.InstitutionIdMl.institutionNamelocal : null,
+          DeathPlaceInstitutionNameEn: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.institutionName : null,
+          DeathPlaceInstitutionNameMl: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.InstitutionIdMl.institutionNamelocal : null,                            
           VehicleNumber: data?.InformationDeath?.VehicleNumber,
           VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
           VehicleFromplaceMl: data?.InformationDeath?.VehicleFromplaceMl,

@@ -211,11 +211,12 @@ function DeathCorrectionSummary({
   const renderCardDetail = (value, fieldName, documentData) => {
     console.log("value in card==", value, fieldName);
     const type = fieldName === "DECEASED_DOB" ? "date" : "text";
+    const columnName = (value.column === "CR_DECEASED_LAST_NAME_ML") ? t("DECEASED_LAST_NAME_ML") : t(value.column);
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-3">
-            <h3 style={{ overflowWrap: "break-word" }}>{t(value.column)} :</h3>
+            <h3 style={{ overflowWrap: "break-word" }}>{columnName} :</h3>
           </div>
           <div className="col-md-4">
             <h4>
@@ -255,11 +256,11 @@ function DeathCorrectionSummary({
                     </div>
                     <div className="col-md-4">
                       {" "}
-                      <h5>{t("OLD_VALUE")}</h5>{" "}
+                      <h5>{t("CR_OLD_VALUE")}</h5>{" "}
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("NEW_VALUE")}</h5>{" "}
+                      <h5>{t("CR_NEW_VALUE")}</h5>{" "}
                     </div>
                   </div>
                 </div>
