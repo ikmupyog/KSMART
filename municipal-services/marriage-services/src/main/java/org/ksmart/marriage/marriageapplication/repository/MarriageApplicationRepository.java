@@ -69,6 +69,8 @@ public class MarriageApplicationRepository {
             List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
             if (result != null) {
                 result.forEach(marriage -> {
+                    marriage.setIsWorkflow(true);
+
 //Jasmine 03.05.2023 - MDMS for Summery Page
                     Object mdmsData = util.mDMSSearch(requestInfo, marriage.getTenantid());
                     //WARD DETAILS-MDMS Location Call

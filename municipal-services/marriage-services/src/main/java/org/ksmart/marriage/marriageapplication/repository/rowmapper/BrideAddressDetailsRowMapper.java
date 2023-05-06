@@ -54,6 +54,8 @@ public interface BrideAddressDetailsRowMapper {
                 // .presentOutsideKeralaLocalityNameMl(rs.getString("BPSA_locality_ml"))
                 // .presentOutsideKeralaStreetNameMl(rs.getString("BPSA_street_name_en"))
                 // .presentOutsideKeralaHouseNameMl(rs.getString("BPSA_housename_ml"))
+                .presentOutSideIndiaadrsCityTown(rs.getString("BPSA_city_town_village"))
+                .presentOutSideIndiaadrsVillage(rs.getString("BPSA_village_name"))
                 .presentOutSideIndiaAdressEn(rs.getString("BPSA_ot_address1_en"))
                 .presentOutSideIndiaAdressMl(rs.getString("BPSA_ot_address1_ml"))
                 .presentOutSideIndiaAdressEnB(rs.getString("BPSA_ot_address2_en"))
