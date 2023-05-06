@@ -218,4 +218,13 @@ public class DeathConstants {
     public static final String CR_MDMS_DEATH_TENANT_CODE_JSONPATH = "$.MdmsRes.tenant.tenants.city[*].code";
     public static final String CR_MDMS_DEATH_TENANT_JSONPATH = "$.MdmsRes.tenant.tenants.city";
 
+    public static final String CR_MDMS_HOSPITALS_CODE_JSONPATH = "$.MdmsRes.egov-location.hospitalList[*].code";
+    public static final String CR_MDMS_HOSPITALS_CODES_JSONPATH = "$.MdmsRes.egov-location.hospitalList";
+
+    public static final String CR_MDMS_INSTITUTIONS_CODES_JSONPATH = "$.MdmsRes.egov-location.institutionList";
+    public static final String CR_MDMS_INSTITUTIONS_CODE_JSONPATH = "$.MdmsRes.egov-location.institutionList[*].code";
+
+    public static final String CR_MDMS_INST_TYPE_CODE_JSONPATH = "$.MdmsRes.birth-death-service.InstitutionTypePlaceOfEvent[*].code";
+    public static final String CR_MDMS_INST_TYPE_JSONPATH = "$.MdmsRes.birth-death-service.InstitutionTypePlaceOfEvent";
+
 }
