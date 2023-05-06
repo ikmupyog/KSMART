@@ -189,11 +189,12 @@ const Urls = {
     create_note: "/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
     fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
     arising_file: "/filemgmnt/v1/applicantservices/_createArisingFile",
-    createmodule:"/filemgmnt/v1/masterdata/modules/_search",
+    createmodule:"/filemgmnt/v1/masterdata/modules/_create",
     submodulesearch:"/filemgmnt/v1//masterdata/modules/_create",
     modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
     createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create"
   },
+
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",
     payments: "/collection-services/payments",
@@ -253,6 +254,6 @@ const Urls = {
   noc: {
     nocSearch: "/noc-services/v1/noc/_search",
   },
-};
 
+};
 export default Urls;

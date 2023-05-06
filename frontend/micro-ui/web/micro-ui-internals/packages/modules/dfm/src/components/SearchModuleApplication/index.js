@@ -68,7 +68,6 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const moduleId = 1;
-
   // const searchModule = Digit.Hooks.dfm.useSearchmodule(tenantId);
   useEffect(() => {
     const getColumns = async () => {

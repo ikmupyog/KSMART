@@ -28,6 +28,7 @@ import { useEvents, useClearNotifications, useNotificationCount } from "./events
 import useCreateEvent from "./events/useCreateEvent";
 import useUpdateEvent from "./events/useUpdateEvent";
 import useNewInboxGeneral from "./useInboxGeneral/useNewInbox";
+import useApplicationModule from "./dfm/useApplicationModule";
 import useCreateModule from "./dfm/useCreateModule";
 import useCreateSubModule from "./dfm/useCreateSubModule"
 import useComplaintDetails from "./pgr/useComplaintDetails";
@@ -475,6 +476,7 @@ const dfm = {
   useApplicationFetchDraft,
   useApplicationArisingFile,
   useCreateModule,
+  useApplicationModule,
   useCreateSubModule
 };
 const receipts = {

@@ -2,6 +2,7 @@ import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
 export const DFMService = {
+
   create: (details, tenantId) =>
     Request({
       url: Urls.dfm.create,
@@ -32,8 +33,9 @@ export const DFMService = {
       method: "POST",
       params: details,
       auth: true,
+
     }),
-    submodulesearch: (details) =>
+  submodulesearch: (details) =>
     Request({
       url: Urls.dfm.submodulesearch,
       useCache: false,
@@ -43,7 +45,7 @@ export const DFMService = {
       params: details,
       auth: true,
     }),
-   
+
   // search_bill: ({ tenantId, filters }) =>
   //   Request({
   //     url: filters.businesService !== "PT" ? Urls.mcollect.search_bill : Urls.mcollect.search_bill_pt,
@@ -124,10 +126,10 @@ export const DFMService = {
       setTimeParam: false,
       userService: true,
       method: "POST",
-      params: {tenantId},
+      params: { tenantId },
       auth: true,
     }),
-    createsubmodule: (details, tenantId) =>
+  createsubmodule: (details, tenantId) =>
     Request({
       url: Urls.dfm.createsubmodule,
       data: details,
@@ -138,7 +140,7 @@ export const DFMService = {
       params: {},
       auth: true,
     }),
-  
+
   // billingslab: ({ tenantId, filters, auth }) =>
   //   Request({
   //     url: Urls.tl.billingslab,
@@ -149,4 +151,5 @@ export const DFMService = {
   //     params: { tenantId },
   //     auth: true,
   //   }),
+
 };

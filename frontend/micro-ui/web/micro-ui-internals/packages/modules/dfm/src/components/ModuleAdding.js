@@ -43,64 +43,58 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const locale = Digit.SessionStorage.get("locale");
   let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
   let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
-  const mutation = Digit.Hooks.dfm.useCreateModule();
+  const mutation = Digit.Hooks.dfm.useCreateModule(tenantId);
+  const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
+  console.log(data);
   const [moduleCode, setModulecode] = useState("");
   const [moduleNameEn, setModuleNameEn] = useState("");
   const [moduleNameMl, setModuleNameMl] = useState("");
 
   const setsetModulecode = (e) => {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setModulecode(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setModulecode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // setDesignation(e.target.value);
-}
-const setsetModuleNameEn = (e) => {
-  if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-    setModuleNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-  }
-  // setDesignation(e.target.value);
-}
-const setsetModuleNameMl = (e) => {
-  if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-    setModuleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-  }
-}
-useEffect(() => {
-  const searchModule = Digit.Hooks.dfm.useSearchmodule();
+  };
+  const setsetModuleNameEn = (e) => {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setModuleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+    // setDesignation(e.target.value);
+  };
+  const setsetModuleNameMl = (e) => {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setModuleNameMl("");
+    } else {
+      setModuleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  };
+
+  const textValue = data?.ModuleDetails;
+  console.log(textValue);
+  const GetCell = (value) => <span className="cell-text">{value}</span>;
 
   const columns = [
     {
-      Header: t("SL_NO"),
-      disableSortBy: true,
-      Cell: ({ row }) => GetCell(row.original.fileNumber || ""),
-    },
-    {
       Header: t("MODULE_CODE"),
+      Cell: ({ row }) => GetCell(t(row.original.moduleCode) || "NA"),
       disableSortBy: true,
-      Cell: ({ row }) => GetCell(t(row.original.function) || ""),
     },
     {
       Header: t("MODULE_NAME_ENG"),
-      Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      Cell: ({ row }) => GetCell(t(row?.original.moduleNameEnglish || "NA")),
       disableSortBy: true,
     },
     {
       Header: t("MODULE_NAME_MAL"),
       disableSortBy: true,
-      Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-    },
-    {
-      Header: t("-"),
-      Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.moduleNameMalayalam) || ""),
     },
   ];
 
   // rest of your code using searchModule and columns
-
-}, []);
-
-
 
   const saveModule = () => {
     const formData = {
@@ -112,7 +106,7 @@ useEffect(() => {
         did: null,
         key: null,
         msgId: null,
-        authToken : "5d11c6dc-a87c-4b1e-8353-d1e2d8fb3bff",
+        authToken: "5d11c6dc-a87c-4b1e-8353-d1e2d8fb3bff",
         correlationId: null,
         userInfo: {
           id: null,
@@ -131,7 +125,7 @@ useEffect(() => {
       ModuleDetails: {
         id: null,
         tenantId: "kl.cochin",
-        moduleCode:moduleCode ,
+        moduleCode: moduleCode,
         moduleNameEnglish: moduleNameEn,
         moduleNameMalayalam: moduleNameMl,
         status: null,
@@ -205,21 +199,16 @@ useEffect(() => {
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-md-12 module-adding">
               <div className="col-md-3 col-sm-4">
-                <SubmitBar label={t("NEW")} style={{ marginBottom: "10px" }} />
+                <SubmitBar label={t("NEW")} style={{ marginBottom: "10px", width: "65%" }} />
               </div>
               <div className="col-md-3 col-sm-4 ">
-                <div class="custom-draft-button">
-                 <SubmitBar onSubmit={saveModule} label={t("save")} style={{ marginBottom: "10px" }}
-                 />
-                </div>
-                {/* <SubmitBar label={t("SAVE")} style={{ marginBottom: "10px" }} /> */}
+                <SubmitBar onSubmit={saveModule} label={t("save")} style={{ marginBottom: "10px", width: "65%" }} />
               </div>
               <div className="col-md-3  col-sm-4">
-                <SubmitBar label={t("CLOSE")} style={{ marginBottom: "10px" }} />
+                <SubmitBar label={t("CLOSE")} style={{ marginBottom: "10px", width: "65%" }} />
               </div>
             </div>
           </div>
@@ -227,7 +216,22 @@ useEffect(() => {
       </div>
       <div className="moduleLinkHomePageModuleLinks">
         <div className="FileFlowWrapper customSubFunctionTable">
-          {/* <Table t={t} data={[]} columns={columns} /> */}
+          {textValue?.length > 0 && (
+            <Table
+              t={t}
+              data={textValue}
+              columns={columns}
+              getCellProps={(cellInfo) => {
+                return {
+                  style: {
+                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                    padding: "20px 18px",
+                    fontSize: "16px",
+                  },
+                };
+              }}
+            />
+          )}
         </div>
       </div>
     </React.Fragment>
