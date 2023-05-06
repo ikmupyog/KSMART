@@ -914,11 +914,11 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTwon())) {
                                                                                 throw new CustomException(
                                                                                                 "GROOM PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village " +
-                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillageorTwon()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         
@@ -932,11 +932,11 @@ public class MarriageApplicationValidator {
                                                                         }
 
                                                                         if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTwon())) {
                                                                                 throw new CustomException(
                                                                                                 " GROOM PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The Village " +
-                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillageorTwon()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
@@ -1482,11 +1482,11 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTwon())) {
                                                                                 throw new CustomException(
                                                                                                 "BRIDE PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village " +
-                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillageorTwon()
                                                                                                                 + " is invalid");
                                                                         }
                                                                        
@@ -1500,11 +1500,11 @@ public class MarriageApplicationValidator {
                                                                         }
 
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTwon())) {
                                                                                 throw new CustomException(
                                                                                                 " BRIDE PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The Village " +
-                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillageorTwon()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo

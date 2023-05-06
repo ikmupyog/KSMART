@@ -437,7 +437,7 @@ System.out.println("InsideCountry and state!=null"+marriage.getBrideAddressDetai
                                 String prmtoutKeralaDistNameMl = util.getDistrictNameMl(mdmsData, marriage.getBrideAddressDetails().getPermntOutsideKeralaDistrict());
                                 marriage.getBrideAddressDetails().setPermntOutsideKeralaDistrictMl(prmtoutKeralaDistNameMl);
                             }
-                            marriage.getBrideAddressDetails().setPermntOutsideKeralaVillage(marriage.getBrideAddressDetails().getVillageNamePermanent());
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaVillageorTwon(marriage.getBrideAddressDetails().getVillageNamePermanent());
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaTaluk(marriage.getBrideAddressDetails().getPresentOutsideKeralaTalukName());
 
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaCityVilgeEn(marriage.getBrideAddressDetails().getTownOrVillagePermanent());
@@ -772,7 +772,7 @@ System.out.println("InsideCountry and state!=null"+marriage.getBrideAddressDetai
                                 String prmtoutKeralaDistNameMl = util.getDistrictNameMl(mdmsData, marriage.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
                                 marriage.getGroomAddressDetails().setPermntOutsideKeralaDistrictMl(prmtoutKeralaDistNameMl);
                             }
-                            marriage.getGroomAddressDetails().setPermntOutsideKeralaVillage(marriage.getGroomAddressDetails().getVillageNamePermanent());
+                            marriage.getGroomAddressDetails().setPermntOutsideKeralaVillageorTwon(marriage.getGroomAddressDetails().getVillageNamePermanent());
                             marriage.getGroomAddressDetails().setPermntOutsideKeralaTaluk(marriage.getGroomAddressDetails().getPresentOutsideKeralaTalukName());
 
                             marriage.getGroomAddressDetails().setPermntOutsideKeralaCityVilgeEn(marriage.getGroomAddressDetails().getTownOrVillagePermanent());

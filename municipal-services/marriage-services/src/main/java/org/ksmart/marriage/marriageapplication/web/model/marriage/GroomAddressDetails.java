@@ -349,7 +349,7 @@ public class GroomAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("permntOutsideKeralaVillage")
-    private String permntOutsideKeralaVillage;
+    private String permntOutsideKeralaVillageorTwon;
 
     @Size(max = 64)
     @JsonProperty("permntOutsideKeralaPincode")
