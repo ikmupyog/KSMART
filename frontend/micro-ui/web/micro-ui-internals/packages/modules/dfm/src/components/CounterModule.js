@@ -235,42 +235,68 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
 
-    const individualOptions = useMemo(
-        () => [
-            { code: "INDIAN", name: t("INDIAN") },
-            // { code: "OUTSIDE_LOCAL_BODY", name: t("OUTSIDE_LOCAL_BODY") },
-        ],
-        [t]
-    );
-    const nonIndianIndividualOptions = useMemo(
-        () => [
-            { code: "NON_INDIAN", name: t("NON_INDIAN") },
-            // { code: "OUTSIDE_LOCAL_BODY", name: t("OUTSIDE_LOCAL_BODY") },
-        ],
-        [t]
-    );
-    const indianIndividualOptions = useMemo(
-        () => [
-            { code: "INSIDE_LOCAL_BODY", name: t("INSIDE_LOCAL_BODY") },
-            { code: "OUTSIDE_LOCAL_BODY", name: t("OUTSIDE_LOCAL_BODY") },
-        ],
-        [t]
-    );
-    const institutionOptions = useMemo(
-        () => [
-            { code: "INSTITUTION", name: t("INSTITUTION") },
-        ],
-        [t]
-    );
+    // const individualOptions = useMemo(
+    //     () => [
+    //         { code: "INDIAN", name: t("INDIAN") },
+    //         // { code: "OUTSIDE_LOCAL_BODY", name: t("OUTSIDE_LOCAL_BODY") },
+    //     ],
+    //     [t]
+    // );
+    // const nonIndianIndividualOptions = useMemo(
+    //     () => [
+    //         { code: "NON_INDIAN", name: t("NON_INDIAN") },
+    //         // { code: "OUTSIDE_LOCAL_BODY", name: t("OUTSIDE_LOCAL_BODY") },
+    //     ],
+    //     [t]
+    // );
+    // const indianIndividualOptions = useMemo(
+    //     () => [
+    //         { code: "INSIDE_LOCAL_BODY", name: t("INSIDE_LOCAL_BODY") },
+    //         { code: "OUTSIDE_LOCAL_BODY", name: t("OUTSIDE_LOCAL_BODY") },
+    //     ],
+    //     [t]
+    // );
+    // const institutionOptions = useMemo(
+    //     () => [
+    //         { code: "INSTITUTION", name: t("INSTITUTION") },
+    //     ],
+    //     [t]
+    // );
     // const indianIndividualOptions = useMemo(
     //     () => [
     //         { code: "INDIAN", name: t("INDIAN") },
     //     ],
     //     [t]
     // );
+
+
+
+    const indianInsideTypeRadio = [
+        { i18nKey: "INSIDE_LOCAL_BODY", code: "INSIDE_LOCAL_BODY" },
+
+    ];
+    const indianInsideTypes = indianInsideTypeRadio.map((type) => type.code);
+
+    const indianOutsideTypeRadio = [
+        { i18nKey: "OUTSIDE_LOCAL_BODY", code: "OUTSIDE_LOCAL_BODY" },
+
+    ];
+    const indianOutsideTypes = indianOutsideTypeRadio.map((type) => type.code);
+
+    const nonIndianTypeRadio = [
+        { i18nKey: "NON_INDIAN", code: "NON_INDIAN" }
+
+    ];
+    const nonIndianTypes = nonIndianTypeRadio.map((type) => type.code);
+
+    const institutionTypeRadio = [
+        { i18nKey: "INSTITUTION", code: "INSTITUTION" }
+
+    ];
+    const institutionTypes = institutionTypeRadio.map((type) => type.code);
     useEffect(() => {
-        setIsIndianActiveCheck(indianIndividualOptions[0])
-        setIsactive(individualOptions[0])
+        // setIsIndianActiveCheck(indianIndividualOptions[0])
+        setIsactive(indianInsideTypeRadio[0])
         setIndividual(true);
         setIndividualOutside(false);
         setIndividualInside(true);
@@ -283,7 +309,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         setIsactiveCheck("")
         setIsactive(e)
         setIsNonIndianActive("")
-        setIsIndianActiveCheck(indianIndividualOptions[0])
+        // setIsIndianActiveCheck(indianIndividualOptions[0])
         // if (e.code == "INSIDE_LOCAL_BODY") {
         //     setIsIndianActiveCheck(individualOptions[0])
         //     setIsactive(e)
@@ -294,7 +320,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         setIndividual(true);
         setInstitution(false);
         setIndividualInside(true);
-        setIsactive(individualOptions[0])
+        // setIsactive(individualOptions[0])
         setIndividualOutside(false);
         // } else {
         //     setIsactive(e)
@@ -304,28 +330,36 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         //     setIndividualInside(false);
         // }
     }
-    const handleIndianIndividual = (e) => {
+    const handleInsideIndividual = (e) => {
+        setIsactive(true)
         setIndividualIndian(true)
         setIndividualNonIndian(false)
         console.log("eeee", e)
-        setIsactiveCheck("")
-        setIsIndianActiveCheck(e)
-        setIsNonIndianActive("")
-        if (e.code == "INSIDE_LOCAL_BODY") {
-            setIndividual(true);
-            setInstitution(false);
-            setIndividualInside(true);
-            setIsactive(individualOptions[0])
-            setIndividualOutside(false);
-        } else {
-            setIsactive(individualOptions[0])
-            setIndividual(true);
-            setInstitution(false);
-            setIndividualOutside(true);
-            setIndividualInside(false);
-        }
-    }
+        // setIsactiveCheck("")
+        // setIsIndianActiveCheck(e)
+        // setIsNonIndianActive("")
+        // if (e.code == "INSIDE_LOCAL_BODY") {
+        setIndividual(true);
+        setInstitution(false);
+        setIndividualInside(true);
 
+        setIndividualOutside(false);
+
+    }
+    const handleOutsideIndividual = (e) => {
+        setIndividualIndian(true)
+        setIndividualNonIndian(false)
+        console.log("eeee", e)
+        setIsactive("")
+        // setIsactiveCheck("")
+        // setIsIndianActiveCheck(e)
+        //  setIsNonIndianActive("")
+
+        setIndividual(true);
+        setInstitution(false);
+        setIndividualOutside(true);
+        setIndividualInside(false);
+    }
     const handleNonIndianIndividual = (e) => {
         setIndividualIndian(false)
         setIndividualNonIndian(true)
@@ -847,6 +881,12 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         }
         // setDesignation(e.target.value);
     }
+
+    const handleMobileChange = (e) => {
+        setWhatsapp(mobile);
+    }
+
+
     useEffect(() => {
         console.log("mutation", mutation)
         console.log("mutation12", mutation?.data?.ArisingFile?.fileCode)
@@ -861,19 +901,9 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
             <div className="moduleLinkHomePageModuleLinks">
 
-                <div className="FileFlowWrapper arising-filewrapper">
+                <div className="FileFlowWrapper arising-filewrapper" style={{ paddingTop: "10px" }}>
 
 
-
-                    <div className="row legacy-section" >
-                        <div className="col-md-12" >
-
-                            <h1 >{t("COUNTER_MODULE")}</h1>
-                        </div>
-
-
-
-                    </div>
                     <div className="row subject-section" >
                         <div className="col-md-12 col-sm-12">
                             <div className="col-md-12 col-sm-12"  >
@@ -972,7 +1002,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                         <div className="col-md-12 col-sm-12">
                             <div className="col-md-12 col-sm-12"  >
                                 <CardLabel>
-                                    {t("SUBJECT_DESCRIPTION")}
+                                    {t("DESCRIPTION")}
                                     <span className="mandatorycss">*</span>
                                 </CardLabel>
 
@@ -1107,26 +1137,56 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
                     <div className="row">
-                        <div className="col-md-12 col-sm-12">
-                            <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
-                                <span style={{ background: "#fff", padding: "0 10px", color: "black" }}>{`${t("APPLICANT_DETAILS")}`}</span>
+                        <div className="col-md-12">
+                            <h1 className="headingh1" style={{ marginTop: "30px" }}>
+                                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NATIONALITY_AND_RESIDENTSHIP")}`}</span>{" "}
                             </h1>
                         </div>
                     </div>
 
-
                     <div className="row">
 
                         <div className="col-md-12 col-sm-12  col-xs-12">
-                            <div className="col-md-3 ">
-                                <CardLabel style={{ float: "right", marginTop: "15px" }}>{`${t("INDIVIDUAL")}`}</CardLabel>
+                            <div className="col-md-2 ">
+                                <CardLabel style={{ float: "right" }}>{`${t("INDIAN")}`}</CardLabel>
 
                             </div>
 
-                            <div className="col-md-2  col-sm-3  col-xs-4">
+                            <div className="col-md-3  col-sm-3  col-xs-4">
 
-                                <RadioButtons optionsKey="name" onSelect={handleIndividual} selectedOption={isActive} selected={isActive} options={individualOptions} />
+                                {/* <RadioButtons optionsKey="name" onSelect={handleIndividual} selectedOption={isActive} selected={isActive} options={individualOptions} /> */}
 
+                                {indianInsideTypes.map((type, index) => (
+                                    <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+                                        <input
+                                            className="groom-residentship"
+                                            type="radio"
+                                            name="indian"
+                                            style={{ height: "20px", width: "20px" }}
+                                            onChange={handleInsideIndividual}
+
+                                            checked={isActive}
+                                        />
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            {type}
+                                        </label>
+                                    </div>
+                                ))}
+                                {indianOutsideTypes.map((type, index) => (
+                                    <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+                                        <input
+                                            className="groom-residentship"
+                                            type="radio"
+                                            name="indian"
+                                            style={{ height: "20px", width: "20px" }}
+                                            onChange={handleOutsideIndividual}
+
+                                        />
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            {type}
+                                        </label>
+                                    </div>
+                                ))}
                             </div>
 
                             {/* <div className="col-md-2  col-sm-3  col-xs-4">
@@ -1134,76 +1194,125 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 <RadioButtons optionsKey="name" onSelect={handleIndividual} selectedOption={isActive} selected={isActive} options={nonIndianIndividualOptions} />
 
                             </div> */}
-                            <div className="col-md-3  col-sm-3  col-xs-12 notes" >
+                            <div className="col-md-3  col-sm-3  col-xs-12" >
+                                {nonIndianTypes.map((type, index) => (
+                                    <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+                                        <input
+                                            className="groom-residentship"
+                                            type="radio"
+                                            name="indian"
+                                            style={{ height: "20px", width: "20px" }}
+                                            onChange={handleNonIndianIndividual}
+
+                                        //checked={isActive}
+                                        />
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            {type}
+                                        </label>
+                                    </div>
+                                ))}
 
 
                             </div>
-                            <div className="col-md-4 col-sm-3 col-xs-4">
+                            <div className="col-md-3col-sm-3 col-xs-4">
                                 {/* <CardLabel >{`${t("INSTITUTION")}`}</CardLabel> */}
                                 {/* <RadioButtons optionsKey="name" selectedOption={isActive} selected={isActive} options={institutionOptions} onSelect={} /> */}
-                                <RadioButtons optionsKey="name" onChange={handleInstitution} selectedOption={isActiveCheck} selected={isActiveCheck} options={institutionOptions} onSelect={handleInstitution} />
+                                {/* <RadioButtons optionsKey="name" onChange={handleInstitution} selectedOption={isActiveCheck} selected={isActiveCheck} options={institutionOptions} onSelect={handleInstitution} /> */}
 
+                                {institutionTypes.map((type, index) => (
+                                    <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+                                        <input
+                                            className="groom-residentship"
+                                            type="radio"
+                                            name="indian"
+                                            style={{ height: "20px", width: "20px" }}
+                                            onChange={handleInstitution}
+
+                                        //checked={isActive}
+                                        />
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            {type}
+                                        </label>
+                                    </div>
+                                ))}
                             </div>
 
 
                         </div>
 
+                    </div>
 
-
-                        <div className="col-md-12 col-sm-12  col-xs-12">
+                    {/* <div className="col-md-12 col-sm-12  col-xs-12">
                             <div className="col-md-3 ">
 
 
-                            </div>
+                            </div> */}
 
-                            <div className="col-md-2  col-sm-3  col-xs-4" style={{ marginLeft: "50px" }}>
-                                <RadioButtons optionsKey="name" onChange={handleIndianIndividual} selectedOption={isIndianActiveCheck} selected={isIndianActiveCheck} options={indianIndividualOptions} onSelect={handleIndianIndividual} />
+                    {/* <div className="col-md-2  col-sm-3  col-xs-4" style={{ marginLeft: "50px" }}> */}
+                    {/* <RadioButtons optionsKey="name" onChange={handleIndianIndividual} selectedOption={isIndianActiveCheck} selected={isIndianActiveCheck} options={indianIndividualOptions} onSelect={handleIndianIndividual} /> */}
+                    {/* 
+                                {institutionTypes.map((type, index) => (
+                                    <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+                                        <input
+                                            className="groom-residentship"
+                                            type="radio"
+                                            name="indian"
+                                            style={{ height: "20px", width: "20px" }}
+                                            onChange={handleIndianIndividual}
 
-                                {/* <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
+                                        //checked={isActive}
+                                        />
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            {type}
+                                        </label>
+                                    </div>
+                                ))} */}
+
+                    {/* <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
                                 <CheckBox t={t} optionKey="name" checked={checkNote}
                                     value={checkNote} disable={checkNote} /> */}
 
 
-                            </div>
+                    {/* </div> */}
 
-                            {/* <div className="col-md-2  col-sm-3  col-xs-4">
+                    {/* <div className="col-md-2  col-sm-3  col-xs-4">
                                
                                 <RadioButtons optionsKey="name" onSelect={handleIndividual} selectedOption={isActive} selected={isActive} options={nonIndianIndividualOptions} />
 
                             </div> */}
-                            <div className="col-md-3  col-sm-3  col-xs-12 notes" >
+                    {/* <div className="col-md-3  col-sm-3  col-xs-12 notes" >
 
 
                             </div>
                             <div className="col-md-4 col-sm-3 col-xs-4">
 
                             </div>
+ */}
+
+                    {/* </div> */}
 
 
-                        </div>
 
 
-
-
-                        <div className="col-md-12 col-sm-12  col-xs-12">
+                    {/* <div className="col-md-12 col-sm-12  col-xs-12">
                             <div className="col-md-3 ">
 
 
                             </div>
 
-                            <div className="col-md-2  col-sm-3  col-xs-4">
+                            <div className="col-md-2  col-sm-3  col-xs-4"> */}
 
-                                <RadioButtons optionsKey="name" onSelect={handleNonIndianIndividual} selectedOption={isNonIndianActive} selected={isNonIndianActive} options={nonIndianIndividualOptions} />
+                    {/* <RadioButtons optionsKey="name" onSelect={handleNonIndianIndividual} selectedOption={isNonIndianActive} selected={isNonIndianActive} options={nonIndianIndividualOptions} /> */}
 
 
-                            </div>
+                    {/* </div> */}
 
-                            {/* <div className="col-md-2  col-sm-3  col-xs-4">
+                    {/* <div className="col-md-2  col-sm-3  col-xs-4">
                                
                                 <RadioButtons optionsKey="name" onSelect={handleIndividual} selectedOption={isActive} selected={isActive} options={nonIndianIndividualOptions} />
 
                             </div> */}
-                            <div className="col-md-3  col-sm-3  col-xs-12 notes" >
+                    {/* <div className="col-md-3  col-sm-3  col-xs-12 notes" >
 
 
                             </div>
@@ -1217,6 +1326,15 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
 
+                    </div> */}
+
+
+                    <div className="row">
+                        <div className="col-md-12">
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("APPLICANT_DETAILS")}`}</span>{" "}
+                            </h1>
+                        </div>
                     </div>
 
                     <div className="row subject-section" >
@@ -1361,7 +1479,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
                                 </CardLabel>
                                 <Dropdown
-
+                                    option={arraySort(cmbWard || [], 'namecmb', t)}
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
@@ -1600,7 +1718,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
                                 </CardLabel>
                                 <Dropdown
-
+                                    option={arraySort(cmbWard || [], 'namecmb', t)}
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
@@ -1861,7 +1979,21 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
                         <div className="col-md-12 col-sm-12"> */}
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("EMAIL_ID")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setEmailField}
+                                    value={email}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="email"
+                                    placeholder={t("EMAIL_ID")}
+                                />
 
+                            </div>
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("MOBILE_NO")}
@@ -1891,22 +2023,24 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                     name="whatsapp"
                                     placeholder={t("WHATSAPP_NO")}
                                 />
-                            </div>
-                            <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("EMAIL_ID")}
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setEmailField}
-                                    value={email}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="email"
-                                    placeholder={t("EMAIL_ID")}
-                                />
+                                <div className="row">
+                                    <div className="col-md-12">
 
+                                        <div className="col-md-1">
+                                            <CheckBox t={t} optionKey="name"
+                                                onChange={(e) => handleMobileChange(e)} />
+                                        </div>
+                                        <div className="col-md-4">
+                                            <CardLabel >{`${t("SAME_AS_MOBILE_NUMBER")}`}</CardLabel>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* <CardLabel class="someclass" >{`${t("SAME_AS_MOBILE_NUMBER")}`}</CardLabel>
+                                    <CheckBox t={t} optionKey="name"
+                                        onChange={(e) => handleMobileChange(e)} /> */}
                             </div>
+
 
                         </div>
 
@@ -1963,7 +2097,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                     {""}
                 </div>
             </div>
-        </React.Fragment>
+        </React.Fragment >
 
     );
 

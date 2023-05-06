@@ -192,7 +192,10 @@ const Urls = {
     createmodule:"/filemgmnt/v1/masterdata/modules/_create",
     submodulesearch:"/filemgmnt/v1//masterdata/modules/_create",
     modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
-    createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create"
+    createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create",
+    arising_file: "/filemgmnt/v1/arisingfiles/_create",
+    createmodule: "/filemgmnt/v1/globalmaster/_createmodule",
+
   },
 
   receipts: {
