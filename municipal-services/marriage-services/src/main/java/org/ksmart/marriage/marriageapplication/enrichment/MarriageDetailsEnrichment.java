@@ -264,7 +264,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         if (marriage.getGroomAddressDetails().getIsPermanentAddress()) {
                             marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getCountryIdPermanent());
                             marriage.getGroomAddressDetails().setStateIdPresent(marriage.getGroomAddressDetails().getStateIdPermanent());
-                            if (marriage.getGroomAddressDetails().getCountryIdPermanent().equals(COUNTRY_CODE)) {
+                            if (marriage.getGroomAddressDetails().getPermtaddressCountry().equals(COUNTRY_CODE)) {
                                 marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
                                 if (marriage.getGroomAddressDetails().getStateIdPresent().equals(MarriageConstants.STATE_CODE_SMALL)) {
                                     marriage.getGroomAddressDetails().setPresentaddressStateName(marriage.getGroomAddressDetails().getStateIdPresent());
@@ -447,7 +447,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         if(marriage.getBrideAddressDetails().getIsPermanentAddress()) {
                             marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getCountryIdPermanent());
                             marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getStateIdPermanent());
-                            if (marriage.getBrideAddressDetails().getCountryIdPermanent().equals(COUNTRY_CODE)) {
+                            if (marriage.getBrideAddressDetails().getPermtaddressCountry().equals(COUNTRY_CODE)) {
                                 marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
                                 if (marriage.getBrideAddressDetails().getStateIdPresent().equals(MarriageConstants.STATE_CODE_SMALL)) {
                                         marriage.getBrideAddressDetails().setPresentaddressStateName(marriage.getBrideAddressDetails().getStateIdPresent());
