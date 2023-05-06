@@ -614,7 +614,7 @@ System.out.println("InsideCountry and state!=null"+marriage.getBrideAddressDetai
                                     marriage.getGroomAddressDetails().setPresentOutsideKeralaDistrictMl(presentOutKeralaDistNameMl);
                                 }
 
-                                marriage.getGroomAddressDetails().setPresentOutsideKeralaVillageName(marriage.getGroomAddressDetails().getVillageNamePresent());
+                                marriage.getGroomAddressDetails().setPresentOutsideKeralaCityVilgeNameEn(marriage.getGroomAddressDetails().getVillageNamePresent());
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaTalukName(marriage.getGroomAddressDetails().getPresentOutsideKeralaTalukName());
 
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaLocalityNameEn(marriage.getGroomAddressDetails().getLocalityEnPresent());
@@ -626,7 +626,7 @@ System.out.println("InsideCountry and state!=null"+marriage.getBrideAddressDetai
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaHouseNameEn(marriage.getGroomAddressDetails().getHouseNameNoEnPresent());
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaHouseNameMl(marriage.getGroomAddressDetails().getHouseNameNoMlPresent());
 
-                                marriage.getGroomAddressDetails().setPresentOutsideKeralaCityVilgeEn(marriage.getGroomAddressDetails().getTownOrVillagePresent());
+                                marriage.getGroomAddressDetails().setPresentOutsideKeralaVillageorTown(marriage.getGroomAddressDetails().getTownOrVillagePresent());
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaPincode(marriage.getGroomAddressDetails().getPinNoPresent());
 
                             }
