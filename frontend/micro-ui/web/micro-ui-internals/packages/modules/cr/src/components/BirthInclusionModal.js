@@ -152,7 +152,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       return t(name);
     });
 
-    const documentName = documents.join(` or `);
+    const documentName = documents.join(t("CR_OR"));
 
     return documentName;
   };
@@ -266,7 +266,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     ) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -315,7 +315,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -381,7 +381,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedMenu?.length > 0) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -410,7 +410,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (isLoading && details.DocumentId.toString() === docuploadedId) {
       return (
         <div style={{ margin: 0 }}>
-          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+          <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
         </div>
       );
     }
