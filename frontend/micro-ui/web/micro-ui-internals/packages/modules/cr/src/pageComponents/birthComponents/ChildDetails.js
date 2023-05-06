@@ -514,6 +514,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         // setUploadNACHIde(false);
         setpopUpState(false);
+        setUploadNACHIde(false);
+        setproceedNoRDO("");
+        setregNoNAC("");
+        setUploadedFile("");
 
       }
     }

@@ -436,7 +436,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrTaluk(value) {
     setpermntInKeralaAdrTaluk(value);
-    console.log("cmbFilterVillage", cmbVillage);
     if (cmbVillage.length > 0) {
       setLbsVillagePermvalue(cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code));
     }
