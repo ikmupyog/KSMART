@@ -195,7 +195,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-5 col-sm-12 col-xs-12" style={{marginTop:'20px', alignItems:'center'}} >
+                            {/* <div className="col-md-5 col-sm-12 col-xs-12" style={{marginTop:'20px', alignItems:'center'}} >
 
                                 <TextInput
 
@@ -207,7 +207,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 />
 
-                            </div>
+                            </div> */}
                             <div className="col-md-1 col-sm-12 col-xs-12" style={{ display: "flex" }} >
 
                                 <div style={{ width: "20px", height: "20px", cursor: "pointer" }} onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>
@@ -251,7 +251,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             </div>
                         </div>
-                        <div class="link-file" >
+                        {/* <div class="link-file" >
 
                             <LinkButton
                                 label={t("+ADD_REFERENCE_HERE")}
@@ -275,7 +275,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                             />
-                        </div>
+                        </div> */}
                         <div class="textarea-draft" >
                             <CKEditor
                                 editor={ClassicEditor}

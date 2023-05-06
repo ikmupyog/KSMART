@@ -26,6 +26,7 @@ import {
   TextArea,
   DatePicker,
   RemoveableTag,
+  Modal,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 // import SearchApplication from "./SearchApplication";
@@ -38,6 +39,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const history = useHistory();
+  const mobileView = Digit.Utils.browser.isMobile() ? true : false;
   // const state = useSelector((state) => state);
   const [noteText, setNoteText] = useState("");
   const [checkDraft, setCheckDraft] = useState(false);
@@ -52,11 +54,14 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const [fileLimit, setFileLimit] = useState(0);
   const [uploadedFile, setUploadedFile] = useState()
   const [selectedAutoNote, setSelectedAutoNote] =useState()
+  const [displayNotePopup, setDisplayNotePopup] =useState(false)
   const setNoteTextField = (e) => {
     setNoteText(e.target.value);
   };
   const autoNoteListChange =(e)=>{
     setSelectedAutoNote(e)
+    setNoteText(e.name)
+
   }
   console.log(applDetails);
   const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -76,15 +81,16 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const { data: AutoNotes = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "AutoNotes");
 
   console.log('a',AutoNotes);
-//   console.log("applicationDetails", workflowDetails);
+  console.log("applicationDetails", workflowDetails);
   let cmbautoNoteList = [];
   AutoNotes &&
   AutoNotes["FileManagement"] &&
   AutoNotes["FileManagement"].AutoNotes.map((ob) => {
-    cmbautoNoteList.push(ob);
+    // cmbautoNoteList.push(ob);
+    if(ob.code == "OPERATOR") cmbautoNoteList.push(ob.Notes);
     });
   //workflow end
-
+// console.log(cmbautoNoteList);
   const saveNote = () => {
     const formData = {
       RequestInfo: {
@@ -225,6 +231,25 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     {label:"draft3",value:'draft3'},
     {label:"draft4",value:'draft4'},
   ]
+  const Close = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
+      <path d="M0 0h24v24H0V0z" fill="none" />
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+    </svg>
+  );
+  const Heading = ({ t, heading }) => {
+    return <h1 className="heading-m">{`${t(heading)}`}</h1>;
+  };
+  const CloseBtn = (props) => {
+    return (
+      <div className="icon-bg-secondary" style={{ cursor: "pointer" }} onClick={props.onClick}>
+        <Close />
+      </div>
+    );
+  };
+  const closePopup =()=>{
+    setDisplayNotePopup(false)
+  }
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks" style={{ height: "max-content", backgroundColor: "rgb(233, 228, 225) " }}>
@@ -313,6 +338,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                       <li>Status: {item.status}</li>
                       <li>Assignes: {item?.assignes?.[0]?.name}</li>
                       <li>Created: {item?.auditDetails?.lastModified}</li>
+                      <li>Notes: {item?.comment}</li>
                       <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
                     </ol>
                   );
@@ -416,7 +442,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
               </div>
             </div>
           </div>
-
+            <div>
+            <SubmitBar label={t("View Notes")} onSubmit={() => setDisplayNotePopup(!displayNotePopup)} />
+            </div>
           <div className="row ">
             <div className="col-md-12 col-sm-12">
               <div className="col-md-7 search-file">
@@ -427,6 +455,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                   name="NoteText"
                   placeholder={t("shows_subject_from_application_with_edit_bitton")}
                   onChange={setNoteTextField}
+                  // value={selectedAutoNote}
                   value={noteText}
                 />
 
@@ -455,7 +484,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                                 </div> */}
               </div>
               <div className="col-md-5 search-file">
-                <Dropdown t={t} option={cmbautoNoteList} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  selected={selectedAutoNote}
+                <Dropdown t={t} option={cmbautoNoteList[0]} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  selected={selectedAutoNote}
                                     select={autoNoteListChange} placeholder={t("SEARCH_SELECT_AUTO_NOTES")} />
 
                 {/* <ul
@@ -510,7 +539,41 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
               </div>
             </div>
           </div>
-
+          {displayNotePopup &&(
+             <Modal
+             headerBarMain={<Heading t={t} heading={"CR_SEARCH_BR_APPLICATIONS"} />}
+             headerBarEnd={<CloseBtn onClick={closePopup} />}
+             popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto" }}
+             formId="modal-action"
+             hideSubmit={true}
+           >
+             <div className="col-md-12 col-sm-12 col-xs-12 ">
+              <div
+                className=""
+                style={{
+                  maxHeight: "200px",
+                  minHeight: "200px",
+                  overflowY: "scroll",
+                  border: "1px solid rgb(69 69 69 / 18%)",
+                  padding: "10px",
+                  paddingLeft: "20px",
+                }}
+              >
+                {workflowDetails?.data?.processInstances?.map((item) => {
+                  return (
+                    <ol>
+                      <li>Status: {item.action}</li>
+                      <li>Assignes: {item?.assignes?.[0]?.name}</li>
+                      <li>Created: {item?.auditDetails?.lastModifiedTime}</li>
+                      <li>Notes: {item?.comment}</li>
+                      <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
+                    </ol>
+                  );
+                })}
+              </div>
+              </div>
+           </Modal>
+          )}
           {/* /////////////////////////save textarea//////////// */}
           {/* <SubmitBar onClick={saveNote} label={t("SAVE")} > </SubmitBar> */}
           {/* <div class="custom-draft-button">
