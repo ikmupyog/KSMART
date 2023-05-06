@@ -9,12 +9,17 @@ const BirthCertificateSearch = ({ path }) => {
   const { t } = useTranslation();
   const [payload, setPayload] = useState({});
 
-  function onSubmit(_data) {
-    const data = {
-      ..._data
-    };
-    if (!_.isEmpty(_data.birthDate)) {
-      _.set(data, "birthDate", convertDateToEpoch(_data.birthDate, "start"))
+  function onSubmit(data) {
+    if (!_.isEmpty(data.birthDate)) {
+      _.set(data, "dobFrom", convertDateToEpoch(data.birthDate, "start"));
+      _.set(data, "dobTo", convertDateToEpoch(data.birthDate));
+      delete data.birthDate;
+    }
+    if (!_.isEmpty(data.fromDate)) {
+      _.set(data, "fromDate", convertDateToEpoch(data.fromDate, "start"))
+    }
+    if (!_.isEmpty(data.toDate)) {
+      _.set(data, "toDate", convertDateToEpoch(data.toDate, "start"))
     }
     setPayload(
       Object.keys(data)

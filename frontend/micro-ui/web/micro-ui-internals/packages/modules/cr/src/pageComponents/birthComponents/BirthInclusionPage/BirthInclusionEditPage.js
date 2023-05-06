@@ -58,7 +58,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   }, []);
 
   useEffect(async () => {
-    console.log("fetchData---flag==", params, Object.keys(params));
     if (Object.keys(params)?.length > 0) {
       let tempParams = {};
       Object.keys(params).forEach((key, index) => (tempParams[key] = { ...params[key], isDisabled: true, isFocused: false }));
@@ -130,36 +129,30 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   const onDobChange = (value) => {
-    console.log("value==", value);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_DOB } = tempObj;
     tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: value, isFocused: false } };
-    console.log("dob change==", tempObj);
-    // birthInclusionFormsObj = {...tempObj};
     setbirthInclusionFormsObj(tempObj);
   };
 
   const onSubmitBirthInclusion = () => {
     const formattedResp = formatApiParams(birthInclusionFormsObj, navigationData);
     if (formattedResp?.CorrectionDetails?.[0]?.CorrectionField?.length > 0) {
-      console.log("formattedResp", formattedResp);
       setParams(birthInclusionFormsObj);
       // mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
       navigateAcknowledgement({ birthInclusionFormsObj: formattedResp, navigationData });
     } else {
-      alert("Please edit atleast a field before submission");
+      alert(t("CR_EDIT_ATLEAST"));
     }
   };
 
   const formatDob = (date) => {
-    console.log("date==", date);
     // return moment(date).format("DD/MM/YYYY");
     return moment(date,"YYYY-MM-DD").format("DD/MM/YYYY");
     // return date;
   };
 
   const onGenderChange = (genderDetails) => {
-    console.log("genderDetails", genderDetails);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_SEX } = tempObj;
     tempObj = { ...tempObj, CHILD_SEX: { ...CHILD_SEX, curValue: genderDetails } };
@@ -224,7 +217,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
           </div>
           {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
-            <FieldComponentContainer>
+          <div className="col-md-9">
               <div className="col-md-5">
                 <CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}</CardLabel>
                 <DatePicker
@@ -240,7 +233,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
               </div>
-            </FieldComponentContainer>
+            </div>
             {birthInclusionFormsObj?.CHILD_DOB?.isDisabled && (
               <div style={{ marginTop: "2.5rem" }}>
                 <ButtonContainer>
@@ -292,6 +285,9 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.CHILD_AADHAAR?.curValue}
                   onBlur={onAdharChange}
                   placeholder={`${t("CR_AADHAR")}`}
+                  inputProps={{
+                    maxLength: 12,
+                  }}
                   // ValidationRequired = {true}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
@@ -570,7 +566,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               </div>
             </FieldComponentContainer>
             {birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled && (
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.5rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["PRESENT_ADDRESS"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />

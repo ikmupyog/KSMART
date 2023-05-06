@@ -2,7 +2,6 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar, toast } from "@e
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToStillBirthRegistration, convertToEditStillBirthRegistration } from "../../../utils/stillbirthindex";
 import getPDFData from "../../../utils/getCRBirthInclusionAcknowledgementData";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -18,13 +17,7 @@ const GetActionMessage = (props) => {
   }
 };
 
-const rowContainerStyle = {
-  padding: "4px 0px",
-  justifyContent: "space-between",
-};
-
 const BannerPicker = (props) => {
-  console.log("props in banner ==",props);
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -58,21 +51,13 @@ const BirthInclusionAcknowledgement = () => {
     };
   }, []);
 
-  useEffect(()=>{
-  console.log("mutationData==",mutationData,tenants);
-  },[mutationData])
-
   const handleDownloadPdf = async () => {
   
     const { CorrectionApplication = [] } = mutationData.data
-    console.log();
     const CorrectionData = (CorrectionApplication && CorrectionApplication[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.tenantid);
-    console.log("tenantInfo",tenantInfo,CorrectionData);
     let res = CorrectionData;
-    console.log({res});
     const data = getPDFData({ ...res }, tenantInfo, t);
-    console.log("data==",data);
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
   

@@ -35,7 +35,7 @@ const generateActions = (rowData) => {
       break;
     case "PENDINGPAYMENT":
       response = <span className="link">
-        <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
+        <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}?tenantId=${rowData?.TL_COMMON_CITY_NAME}`}>
           MAKE PAYMENT
         </Link>
       </span>

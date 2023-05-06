@@ -173,7 +173,7 @@ const DeathPlaceHome = ({
   }
 
   function setSelectDeathPlaceHomehoueNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/,-]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setDeathPlaceHomehoueNameMl('');
@@ -198,10 +198,10 @@ const DeathPlaceHome = ({
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!e.key.match(pattern)) {
-      e.preventDefault();
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
     }
-  }
+}
   function setCheckSpecialCharSpace(e) {
     let pattern = /^[a-zA-Z-.`' ]*$/;
     if (!(e.key.match(pattern)) && e.code === 'Space') {
@@ -215,8 +215,8 @@ const DeathPlaceHome = ({
     }
   }
   
-function setCheckMalayalamInputFieldWithSplChar(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+  function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]/;
     if (!(e.key.match(pattern))) {
         e.preventDefault();
     }
@@ -428,13 +428,16 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 disable={isDisableEdit}             
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \/,-]*$",
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$",
                   isRequired: true,
                   type: "text",
                   title: t("CR_INVALID_HOUSE_NAME_ML"),
               })} 
             
               />
+
+
+              
             </div>
           </div>
         </div>
