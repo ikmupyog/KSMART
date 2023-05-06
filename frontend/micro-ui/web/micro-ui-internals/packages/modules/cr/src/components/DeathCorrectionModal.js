@@ -80,6 +80,17 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     }
   }
 
+  const getDocumentName = (doc) => {
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.split(",");
+    const documents = documentNameArray.map((name) => {
+      return t(name);
+    });
+
+    const documentName = documents.join(` ${t("CR_OR")} `);
+
+    return documentName;
+  };
+
   useEffect(() => {
     (async () => {
      
@@ -162,7 +173,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
           <div>
             {!selectedDocs.includes(item.DocumentId?.toString()) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
+                <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
                   <UploadFile
                     key={item.DocumentId}

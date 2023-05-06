@@ -46,6 +46,7 @@ module.exports = function (app) {
     "/marriage-services/v1/marriagedetails/_createmarriage",
     "/marriage-services/v1/marriagedetails/_searchmarriage",
     "/marriage-services/v1/marriagedetails/_createmarriagecorrection",
+    "/marriage-services/v1/marriagedetails/_updatemarriage",
     "/birth-services/cr/createnac",
     "/birth-services/cr/searchnac",
     "/death-services/v1/deathdetails/_createdeathabandoned",
