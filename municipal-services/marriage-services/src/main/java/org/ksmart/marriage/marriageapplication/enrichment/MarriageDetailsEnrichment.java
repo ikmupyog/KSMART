@@ -428,12 +428,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         marriage.getBrideAddressDetails().setBrideGroomPresent("B");
                     }
                     if (marriage.getBrideAddressDetails()!=null) {
-
+                        System.out.println("BridePresentAddress");
                         if (marriage.getBrideAddressDetails().getPresentaddressCountry() != null && marriage.getBrideAddressDetails().getPresentaddressStateName() != null) {
                             if (marriage.getBrideAddressDetails().getPresentaddressCountry().equals(COUNTRY_CODE)) {
                                 if (marriage.getBrideAddressDetails().getPresentaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
-
+System.out.println("BridePresentAddress-1");
                                         marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                         marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getPresentaddressStateName());
 
@@ -454,6 +454,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
 
                                 } else {
+                                    System.out.println("BridePresentAddress-2");
                                         marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                         marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getPresentaddressStateName());
 
@@ -473,10 +474,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setPresentOthrTalukName(marriage.getBrideAddressDetails().getPresentOutsideKeralaTalukName());
                                     marriage.getBrideAddressDetails().setPresentOthPostOfficeEn(marriage.getBrideAddressDetails().getPresentOutsideKeralaPostOfficeEn());
 
-
+                                    
                                     marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutsideKeralaVillageorTown());
                                     marriage.getBrideAddressDetails().setVillageNamePresent(marriage.getBrideAddressDetails().getPresentOutsideKeralaCityVilgeNameEn());
-
+                                  //  System.out.println("city/town"+marriage.getBrideAddressDetails().getTownOrVillagePresent());
+                                   // System.out.println("villagename"+marriage.getBrideAddressDetails().getVillageNamePresent());
                                 }
                             }
                         } else {
@@ -558,7 +560,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                        marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
                                        marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-
 
                                        marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
 

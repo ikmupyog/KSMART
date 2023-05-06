@@ -529,7 +529,6 @@ public class GroomAddressDetails {
     private String outSideIndiaPostCodePermanent;
 
     //Jasmine 03.05.2023
-
     @JsonProperty("permanentAddrCountryNameEn")
     private String permanentAddrCountryNameEn ;
 
