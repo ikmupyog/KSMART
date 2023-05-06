@@ -443,6 +443,7 @@
 
 .module-wrapper {
     height: 270px;
+    padding: 25px;
 
     @media (max-width: 1020px) {
         height: 340px;
@@ -472,7 +473,7 @@
     }
 
     @media (max-width: 600px) {
-        max-width: 340px;
+        max-width: 100%;
         overflow-x: scroll;
     }
 }
