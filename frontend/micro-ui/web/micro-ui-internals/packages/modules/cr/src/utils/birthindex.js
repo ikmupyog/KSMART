@@ -293,7 +293,7 @@ export const convertToBirthRegistration = (data = {}) => {
         institutionNameCode: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId.code : null,
         institutionId: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId.institutionName : null,
         institutionIdMl: data?.ChildDetails?.institutionIdMl ? data?.ChildDetails?.institutionIdMl.institutionNamelocal : null,
-        wardNo: data?.ChildDetails?.wardNo ? data?.ChildDetails?.wardNo.code : null,
+        wardNo: data?.ChildDetails?.wardNo.code ? data?.ChildDetails?.wardNo.code : data?.ChildDetails?.wardNo ? data?.ChildDetails?.wardNo : null,
         wardNameEn: data?.ChildDetails?.wardNameEn ? data?.ChildDetails?.wardNameEn : null,
         wardNameMl: data?.ChildDetails?.wardNameMl ? data?.ChildDetails?.wardNameMl : null,
         wardNumber: data?.ChildDetails?.wardNumber ? data?.ChildDetails?.wardNumber : null,
@@ -446,7 +446,7 @@ export const convertToBirthRegistration = (data = {}) => {
             ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
             : null,
           permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk
             : null,
           permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
             ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
@@ -510,6 +510,14 @@ export const convertToBirthRegistration = (data = {}) => {
               HI: "New Birth Digital Payment",
             },
           },
+        ],
+        BirthNACDocuments: [
+          {
+            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            filestoreId: data?.ChildDetails?.uploadedFile,            
+            proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
+            regNoNAC: data?.ChildDetails?.regNoNAC,
+          }
         ],
       },
     ],

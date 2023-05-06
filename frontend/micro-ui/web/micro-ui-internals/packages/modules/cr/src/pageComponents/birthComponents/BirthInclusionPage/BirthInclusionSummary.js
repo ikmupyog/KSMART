@@ -35,6 +35,7 @@ function BirthInclusionSummary({
   const tenantId = Digit.ULBService.getCurrentTenantId();
 
   const mutation = Digit.Hooks.cr.useBirthCorrectionAction(tenantId);
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_BIRTH_INCLUSION", {});
 
   const [imagesThumbs, setImagesThumbs] = useState([]);
   const navData = location?.state?.navData;
@@ -43,11 +44,10 @@ function BirthInclusionSummary({
   const history = useHistory();
 
     useEffect(() => {
-    
-      if (birthInclusionData?.length > 0) {
-        console.log("navigated data==", birthInclusionData);
-      }
-    }, []);
+        if (birthInclusionData?.length > 0) {
+          setDocumentsView(birthInclusionData?.[0]?.CorrectionDocument);
+        }
+      }, []);
 
   const fetchImage = async (uploadedImages) => {
     setImagesThumbs(null);
@@ -56,7 +56,7 @@ function BirthInclusionSummary({
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
     });
-    console.log("newThumbnails==", newThumbnails);
+   
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
@@ -66,42 +66,13 @@ function BirthInclusionSummary({
         };
         return tempObj;
       });
-    console.log("formattedImageThumbs==", formattedImageThumbs);
+
     setImagesThumbs(formattedImageThumbs);
   };
 
   function OpenImage(imageSource, index, thumbnailsToShow) {
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
-
-  // const getTimelineCaptions = (checkpoint) => {
-  //     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
-  //         const caption = {
-  //             date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
-  //             source: applicationData?.channel || "",
-  //         };
-  //         return <TLCaption data={caption} />;
-  //     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
-  //         const caption = {
-  //             date: checkpoint?.auditDetails?.lastModified,
-  //             name: checkpoint?.assignes?.[0]?.name,
-  //             mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-  //             comment: t(checkpoint?.comment),
-  //             wfComment: checkpoint.wfComment,
-  //             thumbnailsToShow: checkpoint?.thumbnailsToShow,
-  //         };
-  //         return <TLCaption data={caption} OpenImage={OpenImage} />;
-  //     } else {
-  //         const caption = {
-  //             date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-  //             name: checkpoint?.assignes?.[0]?.name,
-  //             // mobileNumber: checkpoint?.assigner?.mobileNumber,
-  //             wfComment: checkpoint?.wfComment,
-  //             mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-  //         };
-  //         return <TLCaption data={caption} />;
-  //     }
-  // };
 
   const getTranslatedValues = (dataValue, isNotTranslated) => {
     if (dataValue) {
@@ -152,15 +123,26 @@ function BirthInclusionSummary({
     else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
   };
 
-  const navigateAcknowledgement = () =>{
+  useEffect(()=>{
+  if(mutation?.isError) {
+
+    clearParams(); 
+    history.push({
+        pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
+        state: { navData, birthInclusionData: {} ,mutationData:{ data : mutation.data, isSuccess: mutation.isSuccess, isLoading : mutation?.isLoading }}
+      });
+  }
+  },[mutation])
+
+  const navigateAcknowledgement = (data) =>{
+    clearParams();
     history.push({
       pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
-      state: { navData, birthInclusionData: birthInclusionFormsObj }
+      state: { navData, birthInclusionData: data, mutationData:{ data : data, isSuccess: true, isLoading : false } }
     });
   }
 
   const submitBirthInclusion = () =>{
-    console.log("birth inclusion===123");
     mutation.mutate(birthInclusionFormsObj,{ onSuccess: navigateAcknowledgement });
   }
 
@@ -183,7 +165,6 @@ function BirthInclusionSummary({
   };
 
   const renderCardDetail = (value, fieldName, documentData) => {
-    console.log("value in card==", value, documentData);
     const type = fieldName === "CHILD_DOB" ? "date" : "text";
     return (
       <div className="row">
@@ -193,12 +174,12 @@ function BirthInclusionSummary({
           </div>
           <div className="col-md-4">
             <h4>
-              <strong>{getFieldValue(value?.oldValue, type)}</strong>
+              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-4">
             <h4>
-              <strong>{getFieldValue(value?.newValue, type)}</strong>
+              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-1">
@@ -210,7 +191,6 @@ function BirthInclusionSummary({
   };
 
   const renderSummaryCard = (detail, index) => {
-    console.log("detail in summary card--", detail, birthInclusionData[detail]);
     //  switch()
     return (
       <React.Fragment key={index}>

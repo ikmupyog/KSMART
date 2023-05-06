@@ -388,8 +388,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
           informerAddress: data?.AbandonedBirthInformarDetails?.informerAddress,
           informerDesi: data?.AbandonedBirthInformarDetails?.informerDesi,
           infomantinstitution : data?.AbandonedBirthInformarDetails?.infomantinstitution,
-
-          // isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
+          isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
         },
         caretakerDetails: {
           institutionName: data?.AbandonedBirthInformarDetails?.institutionName,
@@ -400,11 +399,19 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         },
       documentDetails: [
         {
-          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
-          document : data?.AbandonedBirthInformarDetails?.documents?.document,
-                 
-        }
-      ],
+          // tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          // document : data?.AbandonedBirthInformarDetails?.documents?.document,
+          DocumentType: "CR_REPORTING_FORM",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile      
+        },
+        {
+          // tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          // document : data?.AbandonedBirthInformarDetails?.documents?.document,          DocumentType: "Letter form the Informer/Notifier Official",
+          DocumentType: "CR_CHILDBIRTH_PROOF",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile1      
+        },
+      ], 
+
       },
     ],
   };

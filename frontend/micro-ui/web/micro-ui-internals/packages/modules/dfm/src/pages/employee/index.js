@@ -31,6 +31,7 @@ const DFMBreadCrumb = ({ location }) => {
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
   const isApplicationDetailsPage = location?.pathname?.includes("dfm/searchDetails");
+  const isDrafting = location?.pathname?.includes("dfm/drafting");
   // const isNewApplication = location?.pathname?.includes("tl/new-application");
   // const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -162,6 +163,12 @@ const DFMBreadCrumb = ({ location }) => {
       show: isApplicationDetailsPage ||
         breadCrumbUrls.includes("home/search/Details")
     },
+    {
+      path: "/digit-ui/employee/dfm/drafting",
+      content: t("DFM_DRAFTING"),
+      show: isDrafting ||
+        breadCrumbUrls.includes("home/search/dfm/drafting")
+    },
     // {
     //   path: "/digit-ui/employee/tl/inbox",
     //   content: t("ES_TITLE_INBOX"),
@@ -252,6 +259,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const ServiceAdding = Digit?.ComponentRegistryService?.getComponent('ServiceAdding')
   const ArisingFileAcknowledgement = Digit?.ComponentRegistryService?.getComponent('ArisingFileAcknowledgement')
   const ArisingFileSummery = Digit?.ComponentRegistryService?.getComponent('ArisingFileSummery')
+  const CounterModule = Digit?.ComponentRegistryService?.getComponent('CounterModule')
 
   return (
     <Switch>
@@ -278,6 +286,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/service-adding`} component={() => <ServiceAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-acknowledgement`} component={() => <ArisingFileAcknowledgement parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-summery`} component={() => <ArisingFileSummery parentRoute={path} />} />
+          <PrivateRoute path={`${path}/counter-module`} component={() => <CounterModule parentRoute={path} />} />
 
         </div>
       </React.Fragment>

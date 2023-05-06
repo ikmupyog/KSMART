@@ -107,8 +107,8 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_DEATH_REG_SUMMARY_HEADING")}</CardSubHeader>
@@ -1972,47 +1972,45 @@ content={<StatusTable >
 
           </StatusTable>}
         />
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="summaryheadingh">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
+         {window.location.href.includes("/citizen") && (
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="summaryheadingh">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
 
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-              // disable={isDisableEdit}
-              />
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                  <CheckBox
+                    label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                    onChange={setDeclarationInfo}
+                    value={isInitiatorDeclaration}
+                    checked={isInitiatorDeclaration}
+                    // disable={isDisableEdit}
+                  />
+                </div>
+              </div>
             </div>
           </div>
+        )}
 
-
-          {toast && (
-            <Toast
-              error={InitiatorDeclareError}
-              label={
-                InitiatorDeclareError
-                  ? InitiatorDeclareError
-                    ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
-                  : setToast(false)
-              }
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onDeathSubmit} />
-        </div>
-
+        {/* {toast && (
+          <Toast
+            error={InitiatorDeclareError}
+            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
+            onClose={() => setToast(false)}
+          />
+        )} */}
+        {""}
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onDeathSubmit} />
       </Card>
     </React.Fragment>
   );
 };
+
 
 export default DeathCheckPage;

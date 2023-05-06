@@ -12,12 +12,18 @@
     background: white;
     padding: 20px 15px;
     border-radius: 20px;
-    width: 65%;
 
     @media (max-width: 1050px) {
         margin-bottom: 20px;
         width: 90%;
     }
+}
+.takeActionButtonWrapper{
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
 }
 
 .timeline-wrapper {
@@ -36,6 +42,8 @@
 
 .file-main {
     display: flex;
+    flex-direction: column;
+    gap: 15px;
 
     @media (max-width: 1050px) {
         flex-direction: column;
@@ -50,6 +58,8 @@
 }
 
 .link-file {
+    display: flex;
+    align-items: center;
     margin-left: 30px;
     float: left;
     margin-right: 20px;
@@ -61,6 +71,10 @@
 
     }
 }
+.drafting{
+    display: flex;
+    align-items: center;
+}
 
 .link-file-sec {
     margin-left: 30px;
@@ -69,7 +83,6 @@
 }
 
 .card-file {
-    border: 2px solid black;
     height: 233px;
     margin-top: 85px;
     margin-bottom: 30px;
@@ -85,6 +98,8 @@
 }
 
 .notes {
+    display: flex;
+    align-items: center;
     @media (max-width: 600px) {
         margin-top: 48px
     }
@@ -110,6 +125,10 @@
     height: 300px;
     margin-top: 50px;
     margin-bottom: 30px;
+}
+.button-div{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .custom-draft-button {
@@ -150,21 +169,13 @@
 }
 
 .card-document {
-    height: 111px;
     margin-top: 30px;
 
     h2 {
         text-align: center;
         margin-bottom: 30px;
     }
-
-    @media (max-width: 1020px) {
-        height: 811px;
-    }
-
-    @media (max-width: 600px) {
-        height: 247px;
-    }
+ 
 }
 
 .card-document-column {
@@ -186,10 +197,9 @@
 }
 
 .reference-row {
-    border: 2px solid black;
-    height: 375px;
-    margin-top: 800px;
     margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
 
     @media (max-width: 1020px) {
         border: none;
@@ -220,6 +230,14 @@
 
 .reference-div {
     margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    
+}
+.drafting-row{
+    display: flex;
+    height: 50px;
+    flex-direction: row;
 }
 
 .geo-tag {
@@ -511,6 +529,19 @@
     }
 }
 
+.counter-filewrapper {
+    height: 828px;
+
+    @media (max-width: 1050px) {
+        height: 950px;
+
+    }
+
+    @media (max-width: 600px) {
+        height: 1300px;
+
+    }
+}
 
 /* Slideshow container */
 .carousel-container {

@@ -17,6 +17,7 @@ import CrCitizenFlowApp from "./BirthRegistration";
 // import CreateDeathCertificate from "./DeathReg";
 import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import DeathCorrectionSummary from "../../pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
+import DeathNacCertificateSearch from "./DeathNacCertificate";
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
@@ -77,37 +78,38 @@ const App = () => {
     <span className={"cr-citizen"}>
       <Switch>
         <AppContainer>
-        <PrivateRoute path={`${path}/marriage-correction-acknowledgement`} component={MarriageCorrectionAcknowledgement} />
         <PrivateRoute path={`${path}/marriage-correction-summary`} component={MarriageCorrectionSummary} />
-        <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
-        <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
-        <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
-        <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-edit`} component={CRMarriageCorrectionLoadPage} />
-        <PrivateRoute path={`${path}/birth-inclusion-acknowledgement`} component={BirthInclusionAcknowledgement} />
         <PrivateRoute path={`${path}/birth-inclusion-summary`} component={BirthInclusionSummary} />
-        <PrivateRoute path={`${path}/death-correction-acknowledgement`} component={DeathCorrectionAcknowledgement} />
         <PrivateRoute path={`${path}/death-correction-summary`} component={DeathCorrectionSummary} />
-        <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
-        <PrivateRoute path={`${path}/cr-death-nac`} component={CRCreateDeathNACRegistration} />
-        <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
-        <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
-        <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
-        <PrivateRoute path={`${path}/cr-abandonedbirth-creation`} component={CreateAbandonedBirth} />
-        <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
-        <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />     
-        <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
-        <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
-        <PrivateRoute path={`${path}/cr/marriage/my-application`} component={SearchApplicationMarriage} />
-        <PrivateRoute path={`${path}/cr/marriage/download-certificate`} component={DownloadMarriageCertificate} />
-        <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
-        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
-        <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />
-        <PrivateRoute path={`${path}/cr-death-inclusion`} component={CRDeathInclusions} />
-        <PrivateRoute path={`${path}/cr-marriage-correction`} component={CRMarriageCorrection} />
-        <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
-        <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
-        <PrivateRoute parentRoute={path} path={`${path}/death-correction-edit`} component={CRDeathCorrectionEditPage} /> 
-        <PrivateRoute parentRoute={path} path={`${path}/nac-birth-certificate`} component={() => <BirthNacCertificateSearch parentUrl={path} />} />
+          <PrivateRoute path={`${path}/marriage-correction-acknowledgement`} component={MarriageCorrectionAcknowledgement} />
+          <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
+          <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
+          <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
+          <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-edit`} component={CRMarriageCorrectionLoadPage} />
+          <PrivateRoute path={`${path}/birth-inclusion-acknowledgement`} component={BirthInclusionAcknowledgement} />
+          <PrivateRoute path={`${path}/death-correction-acknowledgement`} component={DeathCorrectionAcknowledgement} />
+          <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
+          <PrivateRoute path={`${path}/cr-death-nac`} component={CRCreateDeathNACRegistration} />
+          <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
+          <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
+          <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
+          <PrivateRoute path={`${path}/cr-abandonedbirth-creation`} component={CreateAbandonedBirth} />
+          <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
+          <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
+          <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
+          <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
+          <PrivateRoute path={`${path}/cr/marriage/my-application`} component={SearchApplicationMarriage} />
+          <PrivateRoute path={`${path}/cr/marriage/download-certificate`} component={DownloadMarriageCertificate} />
+          <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
+          <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
+          <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />
+          <PrivateRoute path={`${path}/cr-death-inclusion`} component={CRDeathInclusions} />
+          <PrivateRoute path={`${path}/cr-marriage-correction`} component={CRMarriageCorrection} />
+          <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path} />} />
+          <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} />
+          <PrivateRoute parentRoute={path} path={`${path}/nac-birth-certificate`} component={() => <BirthNacCertificateSearch parentUrl={path} />} />
+          <PrivateRoute parentRoute={path} path={`${path}/death-correction-edit`} component={CRDeathCorrectionEditPage} />
+          <PrivateRoute parentRoute={path} path={`${path}/nac-death-certificate`} component={() => <DeathNacCertificateSearch parentUrl={path} />} />
         </AppContainer>
       </Switch>
     </span>

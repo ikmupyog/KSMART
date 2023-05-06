@@ -2,7 +2,7 @@ import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioO
 import React, { useState, useEffect, useCallback, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
-import { sortDropdownNames } from "../utils/index";
+import { sortDropdownNames,stringReplaceAll } from "../utils/index";
 import { useQueryClient } from "react-query";
 
 const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
@@ -307,7 +307,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
           ob.code.split(".")[0] === BusinessCategory.code &&
           !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}`)
         ) {
-          BusinessTypeMenu.push({ i18nKey: `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}`, code: `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}` });
+          BusinessTypeMenu.push({ i18nKey: `${ob.code.split(".")[0] + "_" + ob.code.split(".")[1]}`, code: `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}` });
         }
       });
     return BusinessTypeMenu;
@@ -320,7 +320,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
         if (ob.code.split(".")[0] + "." + ob.code.split(".")[1] === BusinessType.code && !BusinessSubTypeMenu.some((BusinessSubTypeMenu) => BusinessSubTypeMenu.code === `${ob.code}`)) {
-          BusinessSubTypeMenu.push({ i18nKey: `${ob.code}`, code: `${ob.code}` });
+          BusinessSubTypeMenu.push({ i18nKey: `${stringReplaceAll(ob.code,'.','_')}`, code: `${ob.code}` });
         }
       });
     return BusinessSubTypeMenu;
@@ -895,28 +895,28 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     if (result) {
       let combineddoorno = "";
       formStateDoor.map((data) => {
-        combineddoorno = combineddoorno + data.doorNo +
-          (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
-          (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
+        combineddoorno = combineddoorno + data.doorNo?.trim() +
+          (data.doorNoSub !== "" && data.doorNoSub?.trim() !== null ? "/" + data.doorNoSub?.trim() : "") +
+          (data.stallNo !== "" && data.stallNo?.trim() !== null ? "(" + data.stallNo?.trim() + ")" : "") + ",";
       });
       combineddoorno = combineddoorno.slice(0, -1);
 
       let units = fields;
       let address = {
-        "doorNo": combineddoorno,
-        "localityName": locality,
-        "street": street,
-        "landmark": landmark,
-        "buildingName": buildingName,
+        "doorNo": combineddoorno?.trim(),
+        "localityName": locality?.trim(),
+        "street": street?.trim(),
+        "landmark": landmark?.trim(),
+        "buildingName": buildingName?.trim(),
         "zonalId": WardNo.zonecode,
         "wardId": WardNo.code,
         "wardNo": WardNo.wardno,
         "postOffice": postOffice,
         "pincode": pincode,
         "contactNo": contactNo,
-        "email": email,
-        "waterbody": waterbody,
-        "serviceArea": serviceArea
+        "email": email?.trim(),
+        "waterbody": waterbody?.trim(),
+        "serviceArea": serviceArea?.trim()
       };
       let tradeUnits = units[0];
 

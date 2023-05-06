@@ -90,7 +90,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
     );
   };
 
-  // console.log(formData);
+  console.log(formData);
   // const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const minutes = [
@@ -511,32 +511,32 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   // });
 
   const goNext = () => {
-    sessionStorage.setItem("MedicalAttentionType", MedicalAttentionType ? MedicalAttentionType.code : null);
-    sessionStorage.setItem("IsAutopsyPerformed", IsAutopsyPerformed ? IsAutopsyPerformed : null);
-    sessionStorage.setItem("IsAutopsyCompleted", IsAutopsyCompleted ? IsAutopsyCompleted : null);
-    sessionStorage.setItem("MannerOfDeath", MannerOfDeath ? MannerOfDeath.code : null);
-    sessionStorage.setItem("DeathMedicallyCertified", DeathMedicallyCertified ? DeathMedicallyCertified.code : null);
+    // sessionStorage.setItem("MedicalAttentionType", MedicalAttentionType ? MedicalAttentionType.code : null);
+    // sessionStorage.setItem("IsAutopsyPerformed", IsAutopsyPerformed ? IsAutopsyPerformed : null);
+    // sessionStorage.setItem("IsAutopsyCompleted", IsAutopsyCompleted ? IsAutopsyCompleted : null);
+    // sessionStorage.setItem("MannerOfDeath", MannerOfDeath ? MannerOfDeath.code : null);
+    // sessionStorage.setItem("DeathMedicallyCertified", DeathMedicallyCertified ? DeathMedicallyCertified.code : null);
 
-    sessionStorage.setItem("DeathCauseOther", DeathCauseOther ? DeathCauseOther.code : null);
-    sessionStorage.setItem("IsdeceasedPregnant", IsdeceasedPregnant ? IsdeceasedPregnant.code : null);
-    sessionStorage.setItem("IsDelivery", IsDelivery ? IsDelivery.code : null);
-    sessionStorage.setItem("DeathDuringDelivery", DeathDuringDelivery ? DeathDuringDelivery : null);
-    sessionStorage.setItem("SmokingType", SmokingType ? SmokingType : null);
-    sessionStorage.setItem("TobaccoType", SmokingType ? SmokingType : null);
-    sessionStorage.setItem("AlcoholType", AlcoholType ? AlcoholType : null);
+    // sessionStorage.setItem("DeathCauseOther", DeathCauseOther ? DeathCauseOther.code : null);
+    // sessionStorage.setItem("IsdeceasedPregnant", IsdeceasedPregnant ? IsdeceasedPregnant.code : null);
+    // sessionStorage.setItem("IsDelivery", IsDelivery ? IsDelivery.code : null);
+    // sessionStorage.setItem("DeathDuringDelivery", DeathDuringDelivery ? DeathDuringDelivery : null);
+    // sessionStorage.setItem("SmokingType", SmokingType ? SmokingType : null);
+    // sessionStorage.setItem("TobaccoType", SmokingType ? SmokingType : null);
+    // sessionStorage.setItem("AlcoholType", AlcoholType ? AlcoholType : null);
 
-    sessionStorage.setItem("DeathCauseMain", DeathCauseMain ? DeathCauseMain.code : null);
-    sessionStorage.setItem("DeathCauseMainCustom", DeathCauseMainCustom ? DeathCauseMainCustom : null);
-    sessionStorage.setItem("DeathCauseMainInterval", DeathCauseMainInterval ? DeathCauseMainInterval : null);
-    sessionStorage.setItem("DeathCauseMainTimeUnit", DeathCauseMainTimeUnit ? DeathCauseMainTimeUnit.code : null);
-    sessionStorage.setItem("DeathCauseSub", DeathCauseSub ? DeathCauseSub.code : null);
-    sessionStorage.setItem("DeathCauseSubCustom", DeathCauseSubCustom ? DeathCauseSubCustom : null);
-    sessionStorage.setItem("DeathCauseSubInterval", DeathCauseSubInterval ? DeathCauseSubInterval : null);
-    sessionStorage.setItem("DeathCauseSubTimeUnit", DeathCauseSubTimeUnit ? DeathCauseSubTimeUnit.code : null);
-    sessionStorage.setItem("DeathCauseSub2", DeathCauseSub2 ? DeathCauseSub2.code : null);
-    sessionStorage.setItem("DeathCauseSubCustom2", DeathCauseSubCustom2 ? DeathCauseSubCustom2 : null);
-    sessionStorage.setItem("DeathCauseSubInterval2", DeathCauseSubInterval2 ? DeathCauseSubInterval2 : null);
-    sessionStorage.setItem("DeathCauseSubTimeUnit2", DeathCauseSubTimeUnit2 ? DeathCauseSubTimeUnit2.code : null);
+    // sessionStorage.setItem("DeathCauseMain", DeathCauseMain ? DeathCauseMain.code : null);
+    // sessionStorage.setItem("DeathCauseMainCustom", DeathCauseMainCustom ? DeathCauseMainCustom : null);
+    // sessionStorage.setItem("DeathCauseMainInterval", DeathCauseMainInterval ? DeathCauseMainInterval : null);
+    // sessionStorage.setItem("DeathCauseMainTimeUnit", DeathCauseMainTimeUnit ? DeathCauseMainTimeUnit.code : null);
+    // sessionStorage.setItem("DeathCauseSub", DeathCauseSub ? DeathCauseSub.code : null);
+    // sessionStorage.setItem("DeathCauseSubCustom", DeathCauseSubCustom ? DeathCauseSubCustom : null);
+    // sessionStorage.setItem("DeathCauseSubInterval", DeathCauseSubInterval ? DeathCauseSubInterval : null);
+    // sessionStorage.setItem("DeathCauseSubTimeUnit", DeathCauseSubTimeUnit ? DeathCauseSubTimeUnit.code : null);
+    // sessionStorage.setItem("DeathCauseSub2", DeathCauseSub2 ? DeathCauseSub2.code : null);
+    // sessionStorage.setItem("DeathCauseSubCustom2", DeathCauseSubCustom2 ? DeathCauseSubCustom2 : null);
+    // sessionStorage.setItem("DeathCauseSubInterval2", DeathCauseSubInterval2 ? DeathCauseSubInterval2 : null);
+    // sessionStorage.setItem("DeathCauseSubTimeUnit2", DeathCauseSubTimeUnit2 ? DeathCauseSubTimeUnit2.code : null);
 
     onSelect(config.key, {
       MedicalAttentionType,
@@ -572,7 +572,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
 
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
 
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
@@ -619,6 +619,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                     handleChange={handleIsAutopsyPerformed}
                   />
                 </div>
+               
+                {IsAutopsyPerformed === "yes" && (
                 <div className="col-md-6">
                   <CardLabel>{t("CR_WERE_AUTOPSY")}</CardLabel>
                   <RadioButtons
@@ -631,7 +633,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                     handleChange={handleIsAutopsyCompleted}
                   />
                 </div>
+                )}
               </div>
+              
             </div>
             <div className="row">
               <div className="col-md-12">

@@ -59,9 +59,13 @@ export const ComplaintsList = (props) => {
   }
 
   return (
-    <React.Fragment>
-      <Header>{t(LOCALE.MY_COMPLAINTS)}</Header>
-      {complaintsList}
-    </React.Fragment>
+    <div className="row">
+      <div className="col-md-12">
+        <Header>{t(LOCALE.MY_COMPLAINTS)}</Header>
+        <div className="col-md-12">
+          {complaintsList}
+        </div>
+      </div>
+    </div>
   );
 };

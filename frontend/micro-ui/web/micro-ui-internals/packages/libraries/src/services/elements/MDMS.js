@@ -94,6 +94,21 @@ const getTypeOfMarriageMasterList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getSubRegistrarMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SubRegistar",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getMaritalStatusMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -208,6 +223,36 @@ const getCRFoetalDeathList = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "FoetalDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getDFMAutoNotesList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "AutoNotes",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getDFMDraftTypeList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DraftType",
           },
         ],
       },
@@ -1019,6 +1064,7 @@ const getCRTalukList = (tenantId, moduleCode) => ({
     ],
   },
 });
+
 const getCRReligionlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2446,6 +2492,9 @@ export const MdmsService = {
   getTypeOfMarriageMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);
   },
+  getSubRegistrarMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getSubRegistrarMasterList(tenantId, moduleCode), moduleCode);
+  },
   getMaritalStatusMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getMaritalStatusMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2469,6 +2518,12 @@ export const MdmsService = {
   },
   getCRFoetalDeath: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRFoetalDeathList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMAutoNote: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMAutoNotesList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMDraftType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMDraftTypeList(tenantId, moduleCode), moduleCode);
   },
   getDFMajorFunction: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDFMajorFunctionList(tenantId, moduleCode), moduleCode);

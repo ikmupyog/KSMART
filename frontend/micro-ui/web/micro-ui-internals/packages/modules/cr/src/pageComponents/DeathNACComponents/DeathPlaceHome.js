@@ -29,7 +29,7 @@ const DeathPlaceHome = ({
   setDeathPlaceWardId,
   PostOfficevalues,
   setPostOfficevalues,
-  isEditAbandonedDeath,
+  // isEditAbandonedDeath,
 }) => {
   const [pofilter, setPofilter] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -47,7 +47,7 @@ const DeathPlaceHome = ({
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
+  // const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -106,20 +106,20 @@ const DeathPlaceHome = ({
   const onSkip = () => onSelect();
 
 
-  if (isEditAbandonedDeath) {
-    if (formData?.InformationDeathAband?.DeathPlaceHomePostofficeId != null) {
-      if (cmbPostOffice.length > 0 && (DeathPlaceHomePostofficeId === undefined || DeathPlaceHomePostofficeId === "")) {
-        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.InformationDeathAband?.DeathPlaceHomePostofficeId)[0];
-        setDeathPlaceHomepostofficeId(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.InformationDeathAband?.DeathPlaceHomePostofficeId)[0]);
-        setDeathPlaceHomepincode(pin.pincode);
-      }
-    }
-    if (formData?.InformationDeathAband?.DeathPlaceWardId != null) {
-      if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
-        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAband?.DeathPlaceWardId)[0]);
-      }
-    }
-  }
+  // if (isEditAbandonedDeath) {
+  //   if (formData?.InformationDeathAband?.DeathPlaceHomePostofficeId != null) {
+  //     if (cmbPostOffice.length > 0 && (DeathPlaceHomePostofficeId === undefined || DeathPlaceHomePostofficeId === "")) {
+  //       let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.InformationDeathAband?.DeathPlaceHomePostofficeId)[0];
+  //       setDeathPlaceHomepostofficeId(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.InformationDeathAband?.DeathPlaceHomePostofficeId)[0]);
+  //       setDeathPlaceHomepincode(pin.pincode);
+  //     }
+  //   }
+  //   if (formData?.InformationDeathAband?.DeathPlaceWardId != null) {
+  //     if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
+  //       setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAband?.DeathPlaceWardId)[0]);
+  //     }
+  //   }
+  // }
 
 
   function setSelectDeathPlaceHomepostofficeId(value) {
@@ -256,7 +256,8 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 option={cmbWardNoFinal}
                 selected={DeathPlaceWardId}
                 select={setSelectDeathPlaceWardId}
-                disable={isDisableEdit}
+                placeholder={"Ward"}
+                // disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
@@ -272,7 +273,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 option={PostOfficevalues}
                 selected={DeathPlaceHomePostofficeId}
                 select={setSelectDeathPlaceHomepostofficeId}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
@@ -289,7 +290,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 name="DeathPlaceHomepincode"
                 value={DeathPlaceHomepincode}
                 onChange={setSelectDeathPlaceHomepincode}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                 {...(validation = {
                   pattern: "^[0-9]{6}$",
@@ -319,7 +320,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 value={DeathPlaceHomeLocalityEn}
                 onKeyPress={setCheckSpecialCharSpace}
                 onChange={setSelectDeathPlaceHomelocalityEn}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
@@ -335,7 +336,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 name="DeathPlaceHomeStreetNameEn"
                 value={DeathPlaceHomeStreetNameEn}
                 onChange={setSelectDeathPlaceHomestreetNameEn}    
-                disable={isDisableEdit}            
+                // disable={isDisableEdit}            
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -355,7 +356,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 value={DeathPlaceHomeHoueNameEn}
                 onChange={setSelectDeathPlaceHomehoueNameEn}
                 onKeyPress={setCheckSpecialCharSpace}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
@@ -378,7 +379,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 value={DeathPlaceHomeLocalityMl}
                 onChange={setSelectDeathPlaceHomelocalityMl}
                 onKeyPress={setCheckMalayalamInputField}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
@@ -399,7 +400,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 value={DeathPlaceHomeStreetNameMl}
                 onChange={setSelectDeathPlaceHomestreetNameMl}              
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                   isRequired: false,
@@ -423,7 +424,7 @@ function setCheckMalayalamInputFieldWithSplChar(e) {
                 value={DeathPlaceHomehoueNameMl}
                 onKeyPress={setCheckMalayalamInputFieldWithSplChar}
                 onChange={setSelectDeathPlaceHomehoueNameMl}     
-                disable={isDisableEdit}             
+                // disable={isDisableEdit}             
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",

@@ -2,7 +2,7 @@ import React from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
 import { Switch, useLocation, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { convertToAbandonedDeathRegistration } from "../../../utils/abandoneddeathindex";
+import { convertToDeathRegistration } from "../../../utils/deathindex";
 
 
 const DeathCrFlow = ({ data, path }) => {
@@ -10,16 +10,16 @@ const DeathCrFlow = ({ data, path }) => {
   const isEdit = window.location.href.includes("renew-trade");
   const cardMenuData = [
     {
-      title: "New Registration",
-      subTitle: "New Death Registration",
+      title: "CR_NEW_REGISTRATION",
+      subTitle: "CR_DEATH_NEW_REGISTRATION",
       // img: <BankIcon />,
       link: `/digit-ui/employee/cr/create-death/information-death`,
     },
     {
-      title: "New Registration",
-      subTitle: "New Death Registration Abandoned",
+      title: "CR_NEW_REGISTRATION_ABANDONED",
+      subTitle: "CR_ABANDONED_DEATH_REG",
       // img: <BankIcon />,
-      link: `${path}/abandoned-death-information`,
+      link: `/digit-ui/employee/cr/death-flow/Abandoned-death/abandoned-death-information`,
     },
   
     // {
@@ -29,25 +29,15 @@ const DeathCrFlow = ({ data, path }) => {
     //   link: `${path}/structure-type`,
     // },
     {
-      title: "Correction",
-      subTitle: "Correction of Registered Death",
+      title: "CR_DEATH_CORRECTIONS",
+      subTitle: "CR_REG_CORRECTION_SUB",
       link: `${path}/specify-correction`,
       // link: `${path}/search-correction/application`,
       // img: <FileProtected />, 
     },
     // {
-    //   title: "Suspension",
-    //   subTitle: "Inbox",
-    //   // img: <FileProtected />,
-    // },
-    {
-      title: "Cancellation",
-      subTitle: "Cancellation of Registered Death",
-      // img: <FileProtected />,
-    },
-    // {
-    //   title: "Revoke",
-    //   subTitle: "Inbox",
+    //   title: "Cancellation",
+    //   subTitle: "Cancellation of Registered Death",
     //   // img: <FileProtected />,
     // },
     
@@ -55,12 +45,12 @@ const DeathCrFlow = ({ data, path }) => {
   ];
   const ClassList = 
   {
-   'New Registration':  'crfile',
-   'Correction':  'crfilecorrection', 
-   'Cancellation':  'crfileadoption', 
+   'CR_NEW_REGISTRATION':  'crfile',
+   'CR_DEATH_CORRECTIONS':  'crfilecorrection', 
+   'CR_NEW_REGISTRATION_ABANDONED':  'crfileadoption', 
   };
   
-  let formdata = !isEdit ? convertToAbandonedDeathRegistration(data):[] ;
+  let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
   console.log(formdata);
   // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
   if(!isEdit)

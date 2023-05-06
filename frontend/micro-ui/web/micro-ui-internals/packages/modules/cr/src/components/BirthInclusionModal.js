@@ -7,6 +7,7 @@ import {
   RadioButtons,
   DatePicker,
   Loader,
+  CheckBox
 } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +21,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
-  console.log("selectedConfig==in birth modal", selectedDocs, selectedConfig);
+
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [uploadDoc, setUploadDoc] = useState({});
   const [fileDocError, setFileDocError] = useState("");
@@ -36,6 +37,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [conditionalProperty, setConditionalProperty] = useState("");
   const [checkStudentCondition, setCheckStudentCondition] = useState("");
   const [checkCorrectionCondition, setCheckCorrectionCondition] = useState("");
+  const [checkNameCorrectionCondition, setCheckNameCorrectionCondition] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [certificateDob, setCertificateDob] = useState("");
   const [hasError, setHasError] = useState(false);
@@ -57,20 +59,12 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       });
 
       const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
-      console.log("initial value==", selectedDocuments?.[0]?.Documents, selectedDocData, selectedDocs, filteredData, existingDocIds);
       setUploadedFiles([...filteredData]);
     }
   }, [selectedDocuments]);
 
-  console.log("selectedConfig", selectedConfig);
-  // const handleUploadDoc = (file, docType) => {
-  //   let tempObj = { [docType]: [...file] };
-  //   console.log("uploadedd===files--", docType, [...file], tempObj);
-  //   setUploadDoc({ ...uploadDoc, ...tempObj });
-  // };
 
   function onDeleteown(e) {
-    console.log("onDelete", e);
     const removeindex = uploadedFiles.findIndex((element) => {
       return element.documentType === e;
     });
@@ -78,15 +72,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (removeindex === -1) {
       return false;
     }
-    console.log("on delete--", removeindex, uploadedFiles);
+  
     docIdDetails.push(e);
     setUploadedFiles(!!uploadedFiles.splice(removeindex, 1));
   }
 
   async function selectfile(e) {
-    console.log("select file===", selectedDocuments, e.target.files);
+
     let result = await selectedDocuments?.[0]?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
-    console.log("select file==22", result);
     setDocuploadedName(result[0].DocumentList);
     setDocuploadedType(result[0].DocumentType);
     setDocuploadedId(e?.target?.id);
@@ -94,26 +87,24 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     setFile(e.target.files[0]);
   }
 
-  const setFileUploadFieldError = (errorObj) =>{
+  const setFileUploadFieldError = (errorObj) => {
     const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
-    
+
     if (errorIndex === -1) {
       setError([...error, errorObj]);
-      const docIds = [...errorDocIds,errorObj.fieldId]?.filter((item)=> item !== "");
+      const docIds = [...errorDocIds, errorObj.fieldId]?.filter((item) => item !== "");
       setErrorDocIds(docIds);
     } else {
       let tempError = [...error];
-      let tempDocIds = tempError.splice(errorIndex, 1,errorObj.fieldId).filter((item)=> item !== "")
+      let tempDocIds = tempError.splice(errorIndex, 1, errorObj.fieldId).filter((item) => item !== "");
       setErrorDocIds(tempDocIds);
       setError(tempError.splice(errorIndex, 1, errorObj));
     }
-  }
+  };
 
   useEffect(() => {
-    console.log("selectedConfig?.documentData==", selectedDocs, selectedConfig?.documentData);
     (async () => {
-      // setError([]);
-      console.log("uploaded files==", file, file?.type);
+     
       if (file && file?.type) {
         setIsLoading(true);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
@@ -130,7 +121,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           // try {
           const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
           if (response?.data?.files?.length > 0) {
-            console.log("SELECTED--DOCUMENTS---", uploadedFiles, response?.data, selectedDocuments?.[0]?.conditionCode);
             const temp = {
               documentId: docuploadedId,
               title: docuploadedName,
@@ -141,9 +131,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
               size: file.size,
             };
 
-            console.log("to change stATUS==", docuploadedId);
-
-            console.log("tempfiles===to push", uploadedFiles, temp);
             if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
               uploadedFiles.push(temp);
             }
@@ -153,14 +140,13 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
             setIsLoading(false);
           }
-          // } catch (err) {}
+      
         }
       }
     })();
   }, [file, uploadedFiles]);
 
   const getDocumentName = (doc) => {
-    console.log("doc item==", doc);
     const documentNameArray = doc.DocumentList && doc.DocumentList?.split(",");
     const documents = documentNameArray.map((name) => {
       return t(name);
@@ -175,7 +161,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let filteredDocs = [];
 
     filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == selectedObj.condition);
-    console.log("selectedObj==", selectedConfig.documentData, selectedObj, filteredDocs);
     return filteredDocs;
   };
 
@@ -186,7 +171,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   }
 
   useEffect(() => {
-    console.log("checked conditions==", checkStudentCondition, checkCorrectionCondition);
     let filteredDocs = [];
     let docCondition =
       selectedConfig.docFlag === BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS
@@ -201,42 +185,38 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       docCondition = `${docCondition}_${checkStudentCondition.code}`;
     }
     if (Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0) {
-      console.log("docCondition", selectedConfig.documentData, docCondition);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
-      console.log("filteredDocs==", filteredDocs);
       setSelectedDocuments(filteredDocs);
     }
   }, [checkStudentCondition, checkCorrectionCondition]);
 
   useEffect(() => {
-    // item.conditionCode === "NAME_GREATER_THAN_SIX_NON_STUDENT"
-    //   || item.conditionCode === "NAME_GREATER_THAN_SIX_STUDENT"
-    //   || item.conditionCode === "NAME_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
-    //   || item.conditionCode === "NAME_INCLUSION_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
-    //   || item.conditionCode === "NAME_CHANGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
-    //   || item.conditionCode === "NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE"
-    //   || item.conditionCode === "NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
-    //   || item.conditionCode === "ADD_HUSBAND_NAME_FOR_FEMALE"
-    console.log("checked conditions==22", selectedBirthData, checkStudentCondition, checkCorrectionCondition);
     let filteredDocs = [];
     let docCondition = "NAME_GREATER_THAN_SIX";
-
-    if (Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "STUDENT") {
-      const childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-      if (childAge >= 6 && childAge < 15) {
+    let childAge = "";
+       console.log("checkStudentCondition==",checkStudentCondition,Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "STUDENT");
+    if ((Object.keys(checkStudentCondition)?.length > 0) && (checkStudentCondition.code === "STUDENT")) {
+      
+      childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
+      console.log("reached",childAge,selectedBirthData?.dateofbirth);
+      if(childAge < 6){
+        docCondition = `NAME_LESS_THAN_SIX`;
+      } else if (childAge >= 6 && childAge < 15) {
         docCondition = `${docCondition}_${checkStudentCondition.code}`;
-      } else if (childAge == 0) {
+      } else if (childAge >= 18) {
         setShowDatePicker(true);
         const certificateDobDifference =
           certificateDob && selectedBirthData?.dateofbirth && moment(selectedBirthData?.dateofbirth).diff(moment(certificateDob), "months");
         const absDobDifference = certificateDobDifference && Math.abs(certificateDobDifference);
-        if (absDobDifference >= 18) {
-          if (absDobDifference >= 10 && certificateDob) {
+          if (certificateDob && absDobDifference >= 10) {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
+          } else if(checkNameCorrectionCondition){
+            docCondition = `ADD_HUSBAND_NAME_FOR_FEMALE`;
           } else {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE`;
           }
-        } else if (absDobDifference >= 10) {
+      } else if (childAge >= 15) {
+        if (absDobDifference >= 10) {
           if (selectedBirthData?.fullName?.trim() === "") {
             docCondition = `NAME_INCLUSION_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
           } else {
@@ -245,21 +225,19 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         } else {
           docCondition = `NAME_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE`;
         }
-        console.log("certificateDobDifference==", certificateDobDifference, certificateDob, absDobDifference);
       }
     }
     if (Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "NON_STUDENT") {
       setShowDatePicker(false);
       docCondition = `${docCondition}_${checkStudentCondition.code}`;
     }
-
+       
     if (Object.keys(checkCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
-      console.log("docCondition", selectedConfig.documentData, docCondition);
+      console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
-      console.log("filteredDocs==", filteredDocs);
       setSelectedDocuments(filteredDocs);
     }
-  }, [checkStudentCondition, checkCorrectionCondition, certificateDob]);
+  }, [checkStudentCondition, checkCorrectionCondition, checkNameCorrectionCondition, certificateDob]);
 
   if (!showModal) {
     return null;
@@ -274,19 +252,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
 
     const childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-    console.log("reached modal==11", childAge, selectedBirthData, selectedConfig, selectedConfig.docFlag);
     if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
       selectedStudentMenu = [
         { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT" },
         { i18nKey: "CR_COMMON_NONSTUDENT", code: "NON_STUDENT" },
       ];
-      // selectedChangeMenu = [
-      //   { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION" },
-      //   {  i18nKey: "CR_COMMON_CHANGE", code: "CHANGE" },
-      // ]
+      selectedChangeMenu = [{ i18nKey: "CR_INCLUDE_HUSBAND_NAME", code: "INCLUDE_HUSBAND_NAME" }];
     }
 
-    console.log("popup data==", selectedStudentMenu, selectedChangeMenu);
     if (
       selectedStudentMenu?.length > 0
       // || selectedChangeMenu?.length > 0
@@ -302,14 +275,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             selectedOption={checkStudentCondition}
             onSelect={setCheckStudentCondition}
           />
-          {/* <RadioButtons
-          t={t}
-          optionsKey="i18nKey"
-          // isMandatory={config.isMandatory}
-          options={selectedChangeMenu}
-          selectedOption={checkCorrectionCondition}
-          onSelect={setCheckCorrectionCondition}
-        /> */}
+          
           {showDatePicker && (
             <div>
               <h2>Please select the dob in certificate</h2>
@@ -322,6 +288,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                 // {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
+              <h2>Do you want to add your husband name as surname?</h2>
+              <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setCheckNameCorrectionCondition(!checkNameCorrectionCondition)} value={checkNameCorrectionCondition} checked={checkNameCorrectionCondition} />
             </div>
           )}
         </div>
@@ -334,7 +302,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const renderConditionalPopupComponent = () => {
     let selectedStudentMenu = [];
     let selectedChangeMenu = [];
-    console.log("reached modal==11", selectedConfig, selectedConfig.docFlag);
     if ([BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS, BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS].includes(selectedConfig.docFlag)) {
       selectedStudentMenu = [
         { i18nKey: "CR_COMMON_STUDENT", code: "WITH_OUT_CERTIFICATE" },
@@ -345,8 +312,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE" },
       ];
     }
-
-    console.log("popup data==", selectedStudentMenu, selectedChangeMenu);
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
@@ -354,7 +319,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
-            // isMandatory={config.isMandatory}
             options={selectedStudentMenu}
             selectedOption={checkStudentCondition}
             onSelect={setCheckStudentCondition}
@@ -362,7 +326,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
-            // isMandatory={config.isMandatory}
             options={selectedChangeMenu}
             selectedOption={checkCorrectionCondition}
             onSelect={setCheckCorrectionCondition}
@@ -377,7 +340,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const renderConditionalComponent = () => {
     let selectedMenu = [];
     let menu = [];
-    console.log("reached modal==", selectedConfig);
     switch (selectedConfig.docFlag) {
       case BIRTH_INCLUSION_DOC_FLAGS.STUDENT:
         selectedMenu = [
@@ -455,56 +417,42 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   };
 
   const getFileUploadFieldError = (item) => {
-    console.log("looped---item",error, item);
     let errorMessage = "";
     const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
     if (fieldErrorIndex > -1) {
       errorMessage = error[fieldErrorIndex]?.message;
     }
-    console.log("errorMessage==",fieldErrorIndex,errorMessage);
     return errorMessage;
   };
 
-  const getUploadFileMessage = () =>{
+  const getUploadFileMessage = () => {
     let uploadFileMessage = "";
-    if(uploadedFile){
+    if (uploadedFile) {
       uploadFileMessage = `${t(`TL_ACTION_FILEUPLOADED`)}`;
     } else {
-      uploadFileMessage =  `${t(`TL_ACTION_NO_FILEUPLOADED`)}`;
-    } 
+      uploadFileMessage = `${t(`TL_ACTION_NO_FILEUPLOADED`)}`;
+    }
     return uploadFileMessage;
-  }
+  };
 
-  const getUploadedFileName = (fileItem) =>{
+  const getUploadedFileName = (fileItem) => {
     let fileName = "";
     const fileNameIndex = uploadedFiles?.findIndex((e) => fileItem.DocumentId?.toString() === e.documentId);
     if (fileNameIndex > -1) {
       fileName = uploadedFiles[fileNameIndex]?.documentName;
     }
-    console.log("fileName==",fileNameIndex,fileName);
-    return {name:fileName};
-  }
+    return { name: fileName };
+  };
 
-  const hasUploadError = (item) =>{
+  const hasUploadError = (item) => {
     const hasError = errorDocIds.includes(item.DocumentId?.toString());
-    if(hasError){
+    if (hasError) {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
-  // useEffect(()=>{
-  //   const errorIndex = error.findIndex((e)=> e.fieldId === item.DocumentId);
-  //   console.log("inside has error==",errorIndex,error);
-  //   if(errorIndex > -1){
-  //     return true;
-  //   } else{
-  //     return false;
-  //   }
-  // },[error])
-
-  console.log("selectedDocuments---", selectedDocuments, error, fileDocError,uploadedFiles);
   return (
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
@@ -553,7 +501,6 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           selected={true}
           label={"Save"}
           onClick={() => {
-            console.log("selectedDocuments in save--", selectedDocuments);
             if (selectedDocuments?.length === 1) {
               if (!isLoading && selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
                 resetFields();

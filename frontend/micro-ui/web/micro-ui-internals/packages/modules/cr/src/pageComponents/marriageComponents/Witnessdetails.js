@@ -13,7 +13,6 @@ import {
   SubmitBar,
   TextArea,
   PopUp,
-  UploadFile,
   ImageUploadHandler,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
@@ -161,10 +160,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [uploadedGroomImageId, setUploadedGroomImageId] = useState(
     formData?.WitnessDetails?.uploadedGroomImageId ? formData?.WitnessDetails?.uploadedGroomImageId : null
   );
-  const [groomImageURL, setGroomImageURL] = useState(formData?.WitnessDetails?.groomImageURL ? formData?.WitnessDetails?.groomImageURL : null);
-  const [brideImageURL, setBrideImageURL] = useState(formData?.WitnessDetails?.brideImageURL ? formData?.WitnessDetails?.brideImageURL : null);
+  const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
+  const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({groomImageURL})
+  console.log({ groomURL });
 
   const currentYear = new Date().getFullYear();
 
@@ -385,7 +384,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
 
   function setSelectwitness1Age(e) {
-    setwitness1Age(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2));
+    setwitness1Age(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     if (e.target.value < 18) {
       setAgeValidationMsg(true);
       setToast(true);
@@ -409,7 +408,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness2Age(e) {
-    setwitness2Age(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2));
+    setwitness2Age(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     if (e.target.value < 18) {
       setAgeValidationMsg(true);
       setToast(true);
@@ -507,21 +506,19 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   }
 
-  function sendWitness1OTP() {}
-
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setBrideImageURL(fileStoreIds[0].url);
+    setBrideURL(fileStoreIds && fileStoreIds[0]?.url);
   }
 
   async function handleUploadGroom(id) {
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setGroomImageURL(fileStoreIds[0].url);
+    setGroomURL(fileStoreIds && fileStoreIds[0]?.url);
   }
 
-  console.log({ groomImageURL, brideImageURL });
+  console.log({ groomURL, brideURL });
 
   let validFlag = true;
   const goNext = () => {
@@ -723,8 +720,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2Esigned,
         isExpiredHusband,
         isExpiredWife,
-        brideImageURL,
-        groomImageURL,
+        brideURL,
+        groomURL,
         uploadedBrideImageId,
         uploadedGroomImageId,
       });
@@ -868,8 +865,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                   </div>
                   <div className="col-md-4">
                     <CardLabel>
-                      CR_WITNESS1_ADDRESS
-                      {`${t("")}`}
+                      {`${t("CR_WITNESS1_ADDRESS")}`}
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <TextArea
@@ -904,7 +900,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -921,11 +917,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       }}
                       name="eSign"
                       value="E-sign"
-                      onChange={setSelectwitness1Esigned}
-                      disable={isDisableEdit}
+                      // onClick = {sendWitness1OTP}
+                      // disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
@@ -1026,7 +1022,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -1047,7 +1043,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       disable={isDisableEdit}
                       // {...(validation = { isRequired: true })}
                     />
-                  </div>
+                  </div> */}
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
@@ -1178,29 +1174,18 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     witness2MobileError
                       ? witness1AadharError
                         ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                        : AgeValidationMsg
-                        ? t(`CR_INVALID_AGE`)
-                        : AdhaarDuplicationError
-                        ? t(`DUPLICATE_AADHAR_NO`)
-                        : witness1NameEnError
-                        ? t(`CR_INVALID_WITNESS1_NAME`)
-                        : witness2AadharError
-                        ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                        : witness2NameEnError
-                        ? t(`CR_INVALID_WITNESS2_NAME`)
-                        : witness1AgeError
-                        ? t(`CR_INVALID_WITNESS1_AGE`)
-                        : witness2AgeError
-                        ? t(`CR_INVALID_WITNESS2_AGE`)
-                        : witness1AddressEnError
-                        ? t(`CR_INVALID_WITNESS1_ADDRESS`)
-                        : witness2AddressEnError
-                        ? t(`CR_INVALID_WITNESS2_ADDRESS`)
-                        : witness1MobileError
-                        ? t(`CR_INVALID_WITNESS1_MOBILENO`)
-                        : witness2MobileError
-                        ? t(`CR_INVALID_WITNESS2_MOBILENO`)
-                        : setToast(false)
+                          : AgeValidationMsg ? t(`CR_INVALID_AGE`)
+                            : AdhaarDuplicationError ? t(`DUPLICATE_AADHAR_NO`)
+                              : witness1NameEnError ? t(`CR_INVALID_WITNESS1_NAME`)
+                                : witness2AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                                  : witness2NameEnError ? t(`CR_INVALID_WITNESS2_NAME`)
+                                    : witness1AgeError ? t(`CR_INVALID_WITNESS1_AGE`)
+                                      : witness2AgeError ? t(`CR_INVALID_WITNESS2_AGE`)
+                                        : witness1AddressEnError ? t(`CR_INVALID_WITNESS1_ADDRESS`)
+                                          : witness2AddressEnError ? t(`CR_INVALID_WITNESS2_ADDRESS`)
+                                            : witness1MobileError ? t(`CR_INVALID_WITNESS1_MOBILENO`)
+                                              : witness2MobileError ? t(`CR_INVALID_WITNESS2_MOBILENO`)
+                                                : setToast(false)
                       : setToast(false)
                   }
                   onClose={() => setToast(false)}

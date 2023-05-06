@@ -1,5 +1,6 @@
 .checkbox-wrap {
   @apply flex mb-md relative items-baseline;
+  margin-bottom: 23px;
 
   input {
     width: 21px;
@@ -47,7 +48,7 @@
   }
 
   .label {
-    margin-left: 56px;
+    margin-left: 32px;
     @apply text-form-field text-text-primary;
   }
 }

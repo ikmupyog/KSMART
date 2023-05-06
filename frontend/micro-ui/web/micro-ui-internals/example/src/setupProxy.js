@@ -56,6 +56,7 @@ module.exports = function (app) {
     "/death-services/v1/crdeathdetails/_search",
     "/filemgmnt/v1/applicantpersonals/_create",
     "/filemgmnt/v1/applicantpersonals/_update",
+    "/egov-workflow-v2/egov-wf/process/_transition",
     "/egov-url-shortening/shortener",
     "/inbox/v1/_search",
     "/tl-services",

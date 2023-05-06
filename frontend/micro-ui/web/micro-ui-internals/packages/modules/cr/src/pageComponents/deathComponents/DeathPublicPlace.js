@@ -27,7 +27,7 @@ const DeathPublicPlace = ({
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
+  const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherDeathPlace");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
   // const [publicPlaceType, selectpublicPlaceType] = useState(formData?.DeathPublicPlace?.publicPlaceType? formData?.DeathPublicPlace?.publicPlaceType : "");
   // const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(formData?.DeathPublicPlace?.DeathPlaceLocalityEn? formData?.DeathPublicPlace?.DeathPlaceLocalityEn : "");
@@ -40,7 +40,7 @@ const DeathPublicPlace = ({
   let cmbOtherplace = [];
   otherplace &&
     otherplace["birth-death-service"] &&
-    otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
+    otherplace["birth-death-service"].OtherDeathPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
   let Zonal = [];

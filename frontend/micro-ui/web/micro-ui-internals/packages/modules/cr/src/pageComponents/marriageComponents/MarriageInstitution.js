@@ -172,7 +172,7 @@ const MarriageInstitution = ({
               value={marriagePlacenameEn}
               onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELIGIOUS_INST_OTHER_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_PLACE_NAME_EN_ERROR") })}
             />
           </div>
           <div className="col-md-3">
@@ -185,7 +185,7 @@ const MarriageInstitution = ({
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -202,7 +202,7 @@ const MarriageInstitution = ({
               value={marriageLocalityEn}
               onChange={setSelectMarriageLocalityEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_ERROR_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -216,7 +216,7 @@ const MarriageInstitution = ({
               value={marriageLandmark}
               onChange={setSelectMarriageLandmark}
               placeholder={`${t("CR_LANDMARK")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_LANDMARK_ERROR") })}
             />
           </div>
         </div>
@@ -241,7 +241,7 @@ const MarriageInstitution = ({
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                 isRequired: true,
                 type: "text",
-                title: t("CR_INVALID_RELIGIOUS_INST_OTHER_ML"),
+                title: t("CR_PLACE_NAME_ML_ERROR"),
               })}
             />
           </div>
@@ -259,7 +259,7 @@ const MarriageInstitution = ({
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                 isRequired: false,
                 type: "text",
-                title: t("CR_INVALID_STREET_NAME_ML"),
+                title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_ML"),
               })}
             />
           </div>
@@ -281,7 +281,7 @@ const MarriageInstitution = ({
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                 isRequired: true,
                 type: "text",
-                title: t("CR_INVALID_LOCALITY_ML"),
+                title: t("CR_ERROR_LOCALITY_ML"),
               })}
             />
           </div>

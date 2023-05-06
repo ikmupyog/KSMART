@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Menu = (props) => {
   const keyPrefix = props.localeKeyPrefix || "CS_ACTION";
-
+   console.log("menu props==",props);
   return (
     <div className="menu-wrap" style={props.style}>
       {props.options.map((option, index) => {

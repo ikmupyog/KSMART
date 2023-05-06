@@ -8,10 +8,10 @@ let pgrQuery = {};
 let wfQuery = {};
 
 const Filter = (props) => {
-  let { uuid } = Digit.UserService.getUser().info;
+  let { uuid = '' } = Digit.UserService.getUser().info;
   const { searchParams } = props;
   const { t } = useTranslation();
-  const isAssignedToMe = searchParams?.filters?.wfFilters?.assignee && searchParams?.filters?.wfFilters?.assignee[0]?.code ? true : false;
+  const isAssignedToMe = searchParams?.filters?.assignee ? true : false;
 
   const assignedToOptions = useMemo(
     () => [
@@ -36,8 +36,8 @@ const Filter = (props) => {
   );
 
   const [wfFilters, setWfFilters] = useState(
-    searchParams?.filters?.wfFilters || {
-      assignee: [{ code: uuid }],
+    searchParams?.filters || {
+      assignee: uuid,
     }
   );
 
@@ -49,7 +49,7 @@ const Filter = (props) => {
   const onRadioChange = (value) => {
     setSelectedAssigned(value);
     uuid = value.code === "ASSIGNED_TO_ME" ? uuid : "";
-    setWfFilters({ ...wfFilters, assignee: [{ code: uuid }] });
+    setWfFilters({ ...wfFilters, assignee: uuid });
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Filter = (props) => {
         if (params) {
           pgrQuery[property] = params;
         }
-        else{
+        else {
           delete pgrQuery?.[property]
         }
       }
@@ -141,7 +141,7 @@ const Filter = (props) => {
 
   function clearAll() {
     let pgrReset = { serviceCode: [], locality: [], applicationStatus: [] };
-    let wfRest = { assigned: [{ code: [] }] };
+    let wfRest = { assigned: "" };
     setPgrFilters(pgrReset);
     setWfFilters(wfRest);
     pgrQuery = {};
@@ -152,7 +152,8 @@ const Filter = (props) => {
   }
 
   const handleFilterSubmit = () => {
-    props.onFilterChange({ pgrQuery: pgrQuery, wfQuery: wfQuery, wfFilters, pgrfilters });
+    // props.onFilterChange({ pgrQuery: pgrQuery, wfQuery: wfQuery, wfFilters, pgrfilters });
+    props.onFilterChange({ ...wfFilters });
   };
 
   const GetSelectOptions = (lable, options, selected = null, select, optionKey, onRemove, key) => {

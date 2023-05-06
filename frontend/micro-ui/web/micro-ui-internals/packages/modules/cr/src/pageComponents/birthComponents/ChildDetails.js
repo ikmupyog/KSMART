@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, UploadFile, PopUp, CardText } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -13,13 +13,19 @@ import { sortDropdownNames } from "../../utils";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
-  console.log(formData);
+  // console.log(formData);
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
   const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
   const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);
+  const [NACFile, setNACFile] = useState(formData?.ChildDetails?.uploadedFile ? formData?.ChildDetails?.uploadedFile : null);
+  const [uploadedFile, setUploadedFile] = useState(formData?.ChildDetails?.uploadedFile ? formData?.ChildDetails?.uploadedFile : null);
+  const [error, setError] = useState(null);
+  const [popUpState, setpopUpState] = useState(false);
+  const [popUpStateNac, setpopUpStateNac] = useState(false);
+  const [UploadNACHIde, setUploadNACHIde] = useState(formData?.ChildDetails?.UploadNACHIde ? true : false);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -145,6 +151,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender : formData?.ChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
+  const [proceedNoRDO, setproceedNoRDO] = useState(formData?.ChildDetails?.proceedNoRDO ? formData?.ChildDetails?.proceedNoRDO : "");
+  const [regNoNAC, setregNoNAC] = useState(formData?.ChildDetails?.regNoNAC ? formData?.ChildDetails?.regNoNAC : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
   const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
@@ -152,6 +160,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderuploadDoc, setisInitialRenderuploadDoc] = useState(true);
   const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
@@ -211,6 +220,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(false);
+  const [DateTimeError, setDateTimeError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(false);
   const [HospitalError, setHospitalError] = useState(false);
@@ -266,6 +276,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   roleall?.map?.((e) => {
     rolecombine.push(e.code);
   });
+
   const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
@@ -288,19 +299,34 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const getHospitalCode = () => {
     if (userRoles[0].code === "HOSPITAL_OPERATOR") {
       const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const operatorHosward = [];
+      operatorHospDet?.map((ob) => {
+        operatorHosward.push(...ob.jurisdictionChilds);
+      });
+      if (operatorHosward.length > 0) {
+        console.log("operatorHosward", operatorHosward[0].wardCode);
+        setWardNo(operatorHosward[0].wardCode);
+      }
       const tempArray = operatorHospDet?.map((ob) => {
         return ob.hospitalCode;
       });
       return tempArray?.[0];
     } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
       const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const appHosward = [];
+      approverHospDet?.map((ob) => {
+        appHosward.push(...ob.jurisdictionChilds);
+      });
+      if (appHosward.length > 0) {
+        console.log("operatorHosward", appHosward[0].wardCode);
+        setWardNo(appHosward[0].wardCode);
+      }
       const tempArray = approverHospDet?.map((ob) => {
         return ob.hospitalCode
       });
       return tempArray?.[0];
     }
   }
-
   useEffect(() => {
     if (isInitialRenderRoles) {
       if (userRoles.length > 0) {
@@ -308,7 +334,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           if (cmbPlaceMaster.length > 0) {
             const operatorHospCode = getHospitalCode();
             if (operatorHospCode != null) {
-              sethospitalCode(operatorHospCode);              
+              sethospitalCode(operatorHospCode);
             }
             selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
             setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
@@ -319,10 +345,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           if (cmbPlaceMaster.length > 0) {
             const approverHospCode = getHospitalCode();
             if (approverHospCode != null) {
-              sethospitalCode(approverHospCode);     
+              sethospitalCode(approverHospCode);
             }
             selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
-            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);            
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
             setisDisableEditRole(true);
             setInitialRenderRoles(false);
           }
@@ -343,7 +369,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             hospitalName={hospitalName}
             hospitalNameMl={hospitalNameMl}
             hospitalCode={hospitalCode}
-            isDisableEditRole = {isDisableEditRole}
+            isDisableEditRole={isDisableEditRole}
             setisDisableEditRole={setisDisableEditRole}
             userRoles={userRoles}
           />;
@@ -404,6 +430,27 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }, [isInitialRenderPlace]);
 
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (NACFile) {
+        if (NACFile.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              // console.log("test");
+              setUploadedFile(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) { }
+        }
+      }
+    })();
+  }, [NACFile]);
+
   function setselectGender(value) {
     selectGender(value);
   }
@@ -413,57 +460,60 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
 
-  function setselectChildDOB(value) {
+  useEffect(() => {
+    if (birthPlace && DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime])
 
+  function setselectChildDOB(value) {
+    setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-
     if (birthDate.getTime() <= today.getTime()) {
-
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
-        }
-      }
+      // if (birthPlace && DifferenceInTime != null) {
+      //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      //   if (currentWorgFlow.length > 0) {
+      //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //     setIsPayment(currentWorgFlow[0].payment);
+      //     setAmount(currentWorgFlow[0].amount);
+      //   }
+      // }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
         setChildAadharHIde(false);
         setChildAadharNo("");
       }
-    }
-    // else {
-    //   setChildDOB(null);
-    //   // setDOBError(true);
-    //   // setToast(true);
-    //   // setTimeout(() => {
-    //   //   setToast(false);
-    //   // }, 3000);
-    // }
+      if (Difference_In_Days > 365) {
+        // setUploadNACHIde(true);
+        setpopUpState(true);
+      } else {
+        // setUploadNACHIde(false);
+        setpopUpState(false);
 
-    // const today = new Date();
-    // const birthDate = new Date(value);
-    // let diffdate = birthDate.setMonth(birthDate.getMonth() - 6)
-    // console.log(diffdate);
-    // let age_in_ms = today - birthDate;
-    // let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-    // setMotherAgeMarriage(Math.floor(age_in_years));
+      }
+    }
   }
+
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -709,10 +759,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
   function setselectBirthPlace(value) {
-    // console.log(workFlowData);
-    // console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
-    // console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
-
     selectBirthPlace(value);
     setValue(value.code);
     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
@@ -749,6 +795,20 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
     // }
   }
+  function setSelectproceedNoRDO(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setproceedNoRDO(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
+    }
+  }
+  function setSelectregNoNAC(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setregNoNAC(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
+    }
+  }
+  function selectfile(e) {
+    console.log(e.target.files);
+    setNACFile(e.target.files[0]);
+  }
   function setCheckSpecialChar(e) {
     let pattern = /^[0-9]*$/;
     if (!(e.key.match(pattern))) {
@@ -757,6 +817,28 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
   let validFlag = true;
   const goNext = () => {
+    if (birthDateTime.trim() == null || birthDateTime.trim() == '' || birthDateTime.trim() == undefined) {
+      setbirthDateTime("");
+    } else if (birthDateTime.trim() != null) {
+      let todayDate = new Date();
+      let currenthours = todayDate.getHours();
+      let currentMints = todayDate.getHours();
+      currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+      currentMints = currentMints < 10 ? "0" + currentMints : currentMints;      
+      let currentDatetime = currenthours + ':' + currentMints;
+      if (birthDateTime > currentDatetime) {
+        validFlag = false;
+        setbirthDateTime("");
+        setDateTimeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDateTimeError(false);
+        // alert("Right Time");
+      }
+    }
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
     } else if (childAadharNo != null && childAadharNo != "") {
@@ -1258,7 +1340,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         streetNameMl: streetNameMl.trim(),
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid, DifferenceInTime, isWorkflow, isPayment, Amount
+        uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
+        proceedNoRDO, regNoNAC
       });
     }
   };
@@ -1293,7 +1376,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }
-
   if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
   } else {
@@ -1310,7 +1392,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "") : false)
           || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
-          || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""}>
+          || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""
+          || (UploadNACHIde === true ? (NACFile == null || proceedNoRDO === "" || regNoNAC === "") : false)
+        }>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1353,7 +1437,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={sortDropdownNames(menu ? menu : [],"code",t)}
+                  option={sortDropdownNames(menu ? menu : [], "code", t)}
                   selected={gender}
                   select={setselectGender}
                   disable={isDisableEdit}
@@ -1383,6 +1467,69 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 </div>)}
             </div>
           </div>
+          {UploadNACHIde === true && (
+            <div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_RDO_PROCEED_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="proceedNoRDO"
+                      value={proceedNoRDO}
+                      onChange={setSelectproceedNoRDO}
+                      disable={isDisableEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_RDO_PROCEED_NO")}`}
+                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_NAC_REG_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="regNoNAC"
+                      value={regNoNAC}
+                      onChange={setSelectregNoNAC}
+                      disable={isDisableEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_NAC_REG_NO")}`}
+                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_NAC_REG_NO") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_PROCE_CERTIFICATE_UPLOAD")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <UploadFile
+                      extraStyleName={"propertyCreate"}
+                      accept=".jpg,.png,.pdf"
+                      onUpload={selectfile}
+                      onDelete={() => {
+                        setUploadedFile(null);
+                      }}
+                      message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1401,7 +1548,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [],"name",t)}
+                  option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [], "name", t)}
                   selected={birthPlace}
                   disable={isDisableEditRole}
                   select={setselectBirthPlace}
@@ -1420,7 +1567,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 formData={formData}
                 isEditBirth={isEditBirth}
                 hospitalCode={hospitalCode}
-                isDisableEditRole ={isDisableEditRole}
+                isDisableEditRole={isDisableEditRole}
                 setisDisableEditRole={setisDisableEditRole}
               />
             </div>
@@ -1670,7 +1817,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
-                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                <CheckBox style={{Colour: "#be3cb7 !important"}} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
             </div>
@@ -1703,7 +1850,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [],"name",t)}
+                  option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [], "name", t)}
                   selected={medicalAttensionSub}
                   select={setSelectMedicalAttensionSub}
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
@@ -1749,7 +1896,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [],"name",t)}
+                  option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [], "name", t)}
                   selected={deliveryMethods}
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}
@@ -1774,10 +1921,71 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               </div>
             </div>
           </div>
+          {(popUpState) && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RDO_PROCED_QUESTION")}`}</CardText>
+                    </div>
+                  </div>
+                  <div className="row" style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button type="button"
+                      style={{ backgroundColor: "orange", padding: "4px 16px", color: "white", borderRadius: "8px", }}
+                      onClick={() => {
+                        setUploadNACHIde(true);
+                        setpopUpState(false);
+                        setpopUpStateNac(false);
+                      }}
+                    >{`${t("COMMON_YES")}`}</button>
+                    <button type="button"
+                      style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                      onClick={() => {
+                        setpopUpState(false);
+                        setpopUpStateNac(true);
+                      }}
+                    >{`${t("COMMON_NO")}`}</button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
+          {(popUpStateNac) && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAC_REQUEST_MSG")}`}
+                      </CardText>
+                    </div>
+                  </div>
+                  <div className="row" style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button type="button"
+                      style={{
+                        backgroundColor: "orange",
+                        padding: "4px 16px",
+                        color: "white",
+                        borderRadius: "8px",
+                      }}
+                      onClick={() => {
+                        setUploadNACHIde(false);
+                        setpopUpStateNac(false);
+                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-birth-nac/nac-download-details`);
+                      }}
+                    >
+                      {`${t("COMMON_OK")}`}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
           {toast && (
             <Toast
               error={
-                AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
                 WardError ||
                 AdsHomePincodeError ||
                 AdsHomePostOfficeError ||
@@ -1796,7 +2004,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
               }
               label={
-                AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
                   WardError ||
                   AdsHomePincodeError ||
                   AdsHomePostOfficeError ||
@@ -1815,40 +2023,42 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
                   ?
                   AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                      : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                        : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                          : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                            : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                              : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                                : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                  : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                    : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                      : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                        : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                          : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                                            : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                                              : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-
-                                                : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                  : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                    : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                                                      : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                        : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                          : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                            : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                              : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
-                                                                  : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-                                                                    : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
-                                                                      : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
-                                                                        : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
-                                                                          : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
-                                                                            : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
-                                                                              : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
-                                                                                : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
-                                                                                  : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
-                                                                                    : setToast(false)
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    : DateTimeError
+                      ? t(`CS_COMMON_DATE_TIME_ERROR`)
+                      : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                        : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                          : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                            : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                              : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                                : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                  : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                    : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                      : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                        : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                          : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                            : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                              : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                                : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                                  : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                    : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                      : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                        : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                          : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                            : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                              : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                                : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                  : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
+                                                                    : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                                      : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                        : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                          : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                            : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                              : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                                : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                                  : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                    : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                      : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

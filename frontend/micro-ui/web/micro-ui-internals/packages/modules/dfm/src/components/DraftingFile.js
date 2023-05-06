@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import {
     BackButton,
+    FormBackButton,
     PrivateRoute,
     BreadCrumb,
     CommonDashboard,
@@ -27,13 +28,13 @@ import {
     Card
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
+// import SearchApplication from "./SearchApplication";
+// import Search from "../pages/employee/Search";
+// import BirthSearchInbox from "../../../cr/src/components/inbox/search";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
-import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
+// import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
 
 
 const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
@@ -42,14 +43,22 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const [draftText, setDraftText] = useState("");
     const { t } = useTranslation();
     const history = useHistory();
-    const state = useSelector((state) => state);
+    // const state = useSelector((state) => state);
     const locale = Digit.SessionStorage.get("locale");
     let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
     let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
     const mutation = Digit.Hooks.dfm.useApplicationDrafting(tenantId);
     const payload = "KL-KOCHI-C-000017- FMARISING-2023-AR";
     const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
+    const { data: DraftType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "DraftType");
+    let cmbDraftList = [];
+    DraftType &&
+    DraftType["FileManagement"] &&
+    DraftType["FileManagement"].DraftType.map((ob) => {
+        cmbDraftList.push(ob);
+    })
     const [popup, setPopup] = useState(false);
+    const [selectedDraftType, setSelectedDraftType] = useState();
 
     const draftTextValue = data?.Drafting[0]?.draftText;
 
@@ -128,6 +137,9 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
             </div>
         );
     };
+    const setSelectedFunction=(value)=>{
+        setSelectedDraftType(value)
+    }
     // var link = "mailto:target@gmail.com";
     // In addition to this you can add subject or body as parameter . 
     // For e.g. 
@@ -163,7 +175,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </Card>
                         </Modal>}
                     <div className="row wrapper-file" >
-                        <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-md-12 col-sm-12 col-xs-12" style={{display:'flex',alignItems:"center"}}>
                             <div className="col-md-2 col-sm-12 col-xs-12"  >
 
                                 <h3 class="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
@@ -174,13 +186,16 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                     t={t}
                                     type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
+                                    optionKey="name"
+                                    name="TYPE_OF_CORRESPONDENCE"
+                                    option={cmbDraftList}
+                                    select={setSelectedFunction}
+                                    selected={selectedDraftType}
                                     placeholder={t("shows_subject_from_application_with_edit_bitton")}
                                 />
 
                             </div>
-                            <div className="col-md-5 col-sm-12 col-xs-12"  >
+                            {/* <div className="col-md-5 col-sm-12 col-xs-12" style={{marginTop:'20px', alignItems:'center'}} >
 
                                 <TextInput
 
@@ -192,7 +207,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 />
 
-                            </div>
+                            </div> */}
                             <div className="col-md-1 col-sm-12 col-xs-12" style={{ display: "flex" }} >
 
                                 <div style={{ width: "20px", height: "20px", cursor: "pointer" }} onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>
@@ -236,7 +251,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             </div>
                         </div>
-                        <div class="link-file" >
+                        {/* <div class="link-file" >
 
                             <LinkButton
                                 label={t("+ADD_REFERENCE_HERE")}
@@ -245,7 +260,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             />
                         </div>
-                        <div class="link-file">
+                        <div class="link-file-sec">
                             <LinkButton
                                 label={t("ADD")}
                                 className="file-link-button"
@@ -260,7 +275,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                             />
-                        </div>
+                        </div> */}
                         <div class="textarea-draft" >
                             <CKEditor
                                 editor={ClassicEditor}
@@ -283,7 +298,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                         </div>
-                        <div class="custom-draft-button">
+                        {/* <div class="custom-draft-button">
 
                             {!draftTextValue ? <CustomButton
                                 onClick={saveDraft}
@@ -292,20 +307,26 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             ></CustomButton> :
                                 ""}
-                        </div>
+                        </div> */}
                     </div>
 
 
                     <div className="row">
                         <div className="col-md-12" >
-
-                            <div className="col-md-3 col-sm-4" >
-                                <SubmitBar label={t("SAVE")} style={{ marginBottom: "10px" }} />
+                            <div className="button-div" >
+                            <FormBackButton >{t("CS_COMMON_BACK")}</FormBackButton>
+                            <SubmitBar label={t("SAVE")} />
                             </div>
+                           
+                            {/* <div className="col-md-3 col-sm-4" >
+                              
+                            </div> */}
+                           
+                          
                             {/* <div className="col-md-3 col-sm-4 " >
                                 <SubmitBar label={t("FORWARD")} style={{ marginBottom: "10px" }} />
                             </div> */}
-                            <div className="col-md-3  col-sm-4"  >
+                            {/* <div className="col-md-3  col-sm-4"  >
                                 <Dropdown
                                     t={t}
                                     type={"text"}
@@ -314,7 +335,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                     placeholder={t("DEFAULT/SELECT")}
                                 />
 
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>

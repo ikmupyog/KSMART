@@ -26,6 +26,7 @@ import TLCaption from "./TLCaption";
 import TLTradeAccessories from "./TLTradeAccessories";
 import TLTradeUnits from "./TLTradeUnits";
 import DocumentsPreview from "./DocumentsPreview";
+import NoteAndDrafting from './NoteAndDrafting'
 
 function ApplicationDetailsContent({
   applicationDetails,
@@ -44,14 +45,18 @@ function ApplicationDetailsContent({
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
 
-  const getTimelineCaptions = (checkpoint) => {
-    if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
+  const getTimelineCaptions = (checkpoint,index=100) => {
+    if (checkpoint.state === "OPEN" 
+    // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
+    ) {
+      console.log("reached 11",checkpoint,index);
       const caption = {
         date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
         source: applicationData?.channel || "",
       };
       return <TLCaption data={caption} />;
     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
+      console.log("reached 22",checkpoint,index);
       const caption = {
         date: checkpoint?.auditDetails?.lastModified,
         name: checkpoint?.assignes?.[0]?.name,
@@ -62,11 +67,14 @@ function ApplicationDetailsContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
+      console.log("reached 33",checkpoint,index);
       const caption = {
-        date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
+        date: checkpoint?.auditDetails?.lastModified,
         // name: checkpoint?.assigner?.name,
         name: checkpoint?.assignes?.[0]?.name,
         // mobileNumber: checkpoint?.assigner?.mobileNumber,
+        // comment: t(checkpoint?.comment),
+        thumbnailsToShow: checkpoint?.thumbnailsToShow,
         wfComment: checkpoint?.wfComment,
         mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
       };
@@ -123,7 +131,7 @@ function ApplicationDetailsContent({
     else if (value?.isUnit) return value?.value ? `${getTranslatedValues(value?.value, value?.isNotTranslated)} ${t(value?.isUnit)}` : t("N/A");
     else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
   };
-
+  // const NoteDrafting = Digit?.ComponentRegistryService?.getComponent('NoteDrafting')
   return (
     <>
       <div className="file-main">
@@ -131,66 +139,72 @@ function ApplicationDetailsContent({
           {applicationDetails?.applicationDetails?.map((detail, index) => (
             <React.Fragment key={index}>
               <div style={getMainDivStyles()}>
-                {index === 0 ? <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
-                  :
-                  <Accordion expanded={index === 1 ? true : false} title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
-                    content={<StatusTable style={getTableStyles()}>
-                      {detail?.title &&
-                        !detail?.title.includes("NOC") &&
-                        detail?.values?.map((value, index) => {
-                          if (value.map === true && value.value !== "N/A") {
-                            return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
-                          }
-                          if (value?.isLink == true) {
-                            return (
-                              <Row
-                                key={t(value.title)}
-                                label={
-                                  window.location.href.includes("tl") ? (
-                                    <div style={{ width: "200%" }}>
+                {index === 0 ? (
+                  <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
+                ) : (
+                  <Accordion
+                    expanded={index === 1 ? true : false}
+                    title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
+                    content={
+                      <StatusTable style={getTableStyles()}>
+                        {detail?.title &&
+                          !detail?.title.includes("NOC") &&
+                          detail?.values?.map((value, index) => {
+                            if (value.map === true && value.value !== "N/A") {
+                              return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
+                            }
+                            if (value?.isLink == true) {
+                              return (
+                                <Row
+                                  key={t(value.title)}
+                                  label={
+                                    window.location.href.includes("tl") ? (
+                                      <div style={{ width: "200%" }}>
+                                        <Link to={value?.to}>
+                                          <span className="link" style={{ color: "#F47738" }}>
+                                            {t(value?.title)}
+                                          </span>
+                                        </Link>
+                                      </div>
+                                    ) : isNocLocation || isBPALocation ? (
+                                      `${t(value.title)}`
+                                    ) : (
+                                      t(value.title)
+                                    )
+                                  }
+                                  text={
+                                    <div>
                                       <Link to={value?.to}>
                                         <span className="link" style={{ color: "#F47738" }}>
-                                          {t(value?.title)}
+                                          {value?.value}
                                         </span>
                                       </Link>
                                     </div>
-                                  ) : isNocLocation || isBPALocation ? (
-                                    `${t(value.title)}`
-                                  ) : (
-                                    t(value.title)
-                                  )
-                                }
-                                text={
-                                  <div>
-                                    <Link to={value?.to}>
-                                      <span className="link" style={{ color: "#F47738" }}>
-                                        {value?.value}
-                                      </span>
-                                    </Link>
-                                  </div>
-                                }
+                                  }
+                                  last={index === detail?.values?.length - 1}
+                                  caption={value.caption}
+                                  className="border-none"
+                                  rowContainerStyle={getRowStyles()}
+                                />
+                              );
+                            }
+                            return (
+                              <Row
+                                key={t(value.title)}
+                                label={isNocLocation || isBPALocation ? `${t(value.title)}` : t(value.title)}
+                                text={getTextValue(value)}
                                 last={index === detail?.values?.length - 1}
                                 caption={value.caption}
-                                className="border-none"
+                                className=" "
+                                // TODO, Later will move to classes
                                 rowContainerStyle={getRowStyles()}
                               />
                             );
-                          }
-                          return (
-                            <Row
-                              key={t(value.title)}
-                              label={isNocLocation || isBPALocation ? `${t(value.title)}` : t(value.title)}
-                              text={getTextValue(value)}
-                              last={index === detail?.values?.length - 1}
-                              caption={value.caption}
-                              className=" "
-                              // TODO, Later will move to classes
-                              rowContainerStyle={getRowStyles()}
-                            />
-                          );
-                        })}
-                    </StatusTable>} />
-                }
+                          })}
+                      </StatusTable>
+                    }
+                  />
+                )}
               </div>
               {detail?.belowComponent && <detail.belowComponent />}
               {detail?.additionalDetails?.inspectionReport && (
@@ -249,14 +263,26 @@ function ApplicationDetailsContent({
             </React.Fragment>
           ))}
         </div>
-        <div className={"timeline-wrapper"}>
+        <div style={{ position: "relative" }} className={"wrapper-app"}>
+          <Accordion
+            expanded={true}
+            title={"WORKFLOW"}
+            content={
+              <StatusTable style={getTableStyles()}>
+                <NoteAndDrafting applDetails={applicationDetails?.applicationData} />
+              </StatusTable>
+            }
+          />
+        </div>
+
+        {/* <div className={"timeline-wrapper"}>
           {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
             <React.Fragment>
               {(workflowDetails?.isLoading || isDataLoading) && <Loader />}
               {!workflowDetails?.isLoading && !isDataLoading && (
                 <Fragment>
                   <CardSectionHeader>
-                    {/* {t("ES_APPLICATION_DETAILS_APPLICATION_TIMELINE")} */}
+                   
                     {t("Activities")}
                   </CardSectionHeader>
                   <BreakLine />
@@ -280,7 +306,7 @@ function ApplicationDetailsContent({
                                   `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
-                                customChild={getTimelineCaptions(checkpoint)}
+                                customChild={getTimelineCaptions(checkpoint,index)}
                               />
                             </React.Fragment>
                           );
@@ -291,7 +317,7 @@ function ApplicationDetailsContent({
               )}
             </React.Fragment>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );

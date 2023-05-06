@@ -32,7 +32,6 @@ const formFielColumns = {
 }
 
 const getCorrectionDocuments = (docData) => {
-  console.log("docData", docData);
   let selectedDocs = [];
   if (docData?.length > 0) {
     selectedDocs = docData.map((item) => {
@@ -49,17 +48,14 @@ const getCorrectionDocuments = (docData) => {
 
 const getNestedFieldNames = (fieldData) =>{
   let fieldNameData = [];
-  console.log("reached--nested==",fieldData,Object.keys(fieldData.curValue));
   if(Object.keys(fieldData.curValue)?.length > 0){
     fieldNameData = Object.keys(fieldData.curValue).map((item)=>{
-      console.log("looped==",formFielColumns[fieldData?.selectedDocType]?.[item],formFielColumns[fieldData?.selectedDocType]);
       const columnName = formFielColumns[fieldData?.selectedDocType]?.[item];
        const tempObj = {
           column: columnName,
           oldValue: fieldData.initialValue?.[item],
           newValue: fieldData.curValue?.[item],
         };
-        console.log("tempObj==",tempObj);
         return tempObj;
     }) 
   }
@@ -67,16 +63,14 @@ const getNestedFieldNames = (fieldData) =>{
 }
 
 const getCorrectionFieldValues = (item) => {
-  console.log("correction item==",item);
   let fieldValues = [];
   switch(item?.selectedDocType){
   case "CHILD_DOB":
-    console.log("child dob==",item.curValue);
   fieldValues =  [
     {
       column: formFielColumns[item?.selectedDocType],
       oldValue: item.initialValue,
-      newValue: item.curValue && moment(item.curValue, 'DD/MM/YYYY').valueOf(),
+      newValue: item.curValue && moment(item.curValue, 'YYYY-MM-DD').valueOf(),
     },
   ];
   break;
@@ -106,12 +100,12 @@ const getCorrectionFieldValues = (item) => {
 };
 
 const getCorrectionFields = (correctionData) => {
-  console.log("correctionData", Object.values(correctionData));
+
   const correctionDocs =
     Object.values(correctionData)?.length > 0 &&
     Object.values(correctionData)
       .map((item) => {
-        console.log("items==loooped", item, item?.documentData?.[0]?.CorrectionField );
+       
         if (item?.isEditable) {
           const correctionFieldValues = getCorrectionFieldValues(item);
           const correctionDocs = getCorrectionDocuments(item.Documents);
@@ -129,14 +123,14 @@ const getCorrectionFields = (correctionData) => {
         }
       })
       .filter((item) => item !== null);
-      console.log("correctionDocs--==",correctionDocs);
+     
   return correctionDocs;
 };
 
 export const formatApiParams = (formData,userData) => {
-  console.log("formdata==", formData,userData);
+ 
   const correctionFieldData = getCorrectionFields(formData);
-  console.log("formData", formData,userData);
+ 
   const apiParam = {
     CorrectionDetails: [
       {
@@ -154,6 +148,6 @@ export const formatApiParams = (formData,userData) => {
       },
     ],
   };
-  console.log("api params==", apiParam);
+
   return apiParam;
 };

@@ -37,6 +37,8 @@ import SubFunctionAdding from "./components/SubFunctionAdding";
 import ServiceAdding from "./components/ServiceAdding";
 import ArisingFileAcknowledgement from "./components/ArisingFileAcknowledgement";
 import ArisingFileSummery from "./components/ArisingFileSummery";
+import CounterModule from "./components/CounterModule"
+
 import SearchModuleApplication from "./components/SearchModuleApplication";
 import SubFunctionApplication from "./components/SubFunctionApplication";
 export const DFMModule = ({ stateCode, userType, tenants }) => {
@@ -113,6 +115,8 @@ const componentsToRegister = {
   SubFunctionAdding,
   ServiceAdding,
   ArisingFileAcknowledgement,
+  ArisingFileSummery,
+  CounterModule,
   SearchModuleApplication,
   SubFunctionApplication,
   ArisingFileSummery

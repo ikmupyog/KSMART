@@ -22,7 +22,9 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
   const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [IsDeclarationInitiator, setisInitiatorDeclaration] = useState(formData?.Initiator?.IsDeclarationInitiator ? formData?.Initiator?.IsDeclarationInitiator : formData?.InformationDeath?.Initiator?.IsDeclarationInitiator ? formData?.InformationDeath?.Initiator?.IsDeclarationInitiator : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.Initiator?.isCaretaker ? formData?.Initiator?.isCaretaker : formData?.InformationDeath?.Initiator?.isCaretaker ? formData?.InformationDeath?.Initiator?.isCaretaker : false);
-  const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation.code ? formData?.Initiator?.InitiatorRelation : formData?.InformationDeath?.Initiator?.InitiatorRelation ? cmbInitiatorRelation.filter(cmbInitiatorRelation => cmbInitiatorRelation.code === formData?.InformationDeath?.Initiator?.InitiatorRelation)[0] : "");
+  //const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation.code ? formData?.Initiator?.InitiatorRelation : formData?.InformationDeath?.Initiator?.InitiatorRelation ? cmbInitiatorRelation.filter(cmbInitiatorRelation => cmbInitiatorRelation.code === formData?.InformationDeath?.Initiator?.InitiatorRelation)[0] : "");
+  const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation.code ? formData?.Initiator?.InitiatorRelation : formData?.InformationDeath?.Initiator?.InitiatorRelation ? cmbInitiatorRelation.filter(cmbInitiatorRelation => cmbInitiatorRelation.code === formData?.InformationDeath?.Initiator?.relation)[0] : "");
+ 
   const [InitiatorName, setInitiatorName] = useState(formData?.Initiator?.InitiatorName ? formData?.Initiator?.InitiatorName : formData?.InformationDeath?.Initiator?.InitiatorName ? formData?.InformationDeath?.Initiator?.InitiatorName : name);
   const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiator?.InitiatorAadhaar ? formData?.Initiator?.InitiatorAadhaar : formData?.InformationDeath?.Initiator?.InitiatorAadhaar ? formData?.InformationDeath?.Initiator?.InitiatorAadhaar : "");
   const [InitiatorMobile, setInitiatorMobile] = useState(formData?.Initiator?.InitiatorMobile ? formData?.Initiator?.InitiatorMobile : formData?.InformationDeath?.Initiator?.InitiatorMobile ? formData?.InformationDeath?.Initiator?.InitiatorMobile : mobileNumber);
@@ -78,12 +80,26 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
   }
 
 
-  function setSelectInitiatorAadhaar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setInitiatorAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-    }
-   
+  // function setSelectInitiatorAadhaar(e) {
+  //   if (e.target.value.trim().length >= 0) {
+  //     setInitiatorAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+  //   }
+  // }
 
+  function setSelectInitiatorAadhaar(e) {
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if ( newValue === formData?.InformationDeath?.DeceasedAadharNumber) {
+      // If so, clear the Father's Aadhar number field
+      setInitiatorAadhaar("");
+      setInitiaterAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }else
+    {
+      setInitiatorAadhaar(newValue);
+    }      
   }
 
   function setSelectInitiatorMobile(e) {
@@ -206,8 +222,8 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
     <React.Fragment>
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
 
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} 
       isDisabled={!InitiatorName || !InitiatorAadhaar || !InitiatorMobile 
         || (isCaretaker === true ? (initiatorDesi === "" || InitiatorAddress === "") : false)
@@ -252,7 +268,7 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
                     disable={isDisableEdit}
                     placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
                     //            disable={isCaretaker}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
+                    {...(validation = { pattern: "[a-zA-Z0-9_-]+", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
                   />
                 </div>
               </div>
@@ -305,7 +321,7 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
                 onChange={setSelectInitiatorName}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+                {...(validation = { pattern: "[a-zA-Z0-9_-]+", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
             </div>
             <div className="col-md-3">

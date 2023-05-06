@@ -75,9 +75,75 @@ export const CRAbandonedsearch = {
         // { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"}, 
+        // { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"}, 
         
        ],
+    };
+    const birthPlaceHospDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_HOSPITAL_EN", value: response?.hospitalName || "NA" },
+        { title: "CR_HOSPITAL_ML", value: response?.hospitalNameMl || "NA" },
+      ],
+    };
+    const birthPlaceINSTITUTIONDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        // { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NA" },
+        { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeCode ? response?.institutionTypeCode : "NA" },
+        { title: "CR_INSTITUTION_NAME_EN", value:  response?.institutionId ? response?.institutionId : "NA" },
+        { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NA" },
+      ],
+    };
+    const birthPlaceHOMEDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.adrsPostOffice || "NA" },
+        { title: "CS_COMMON_PIN_CODE", value: response?.adrsPincode || "NA" },
+        { title: "CR_LOCALITY_EN", value: response?.adrsLocalityNameEn || "NA" },
+        { title: "CR_LOCALITY_ML", value: response?.adrsLocalityNameMl || "NA" },
+        { title: "CR_STREET_NAME_EN", value: response?.adrsStreetNameEn || "NA" },
+        { title: "CR_STREET_NAME_ML", value: response?.adrsStreetNameMl || "NA" },
+        { title: "CR_HOUSE_NAME_EN", value: response?.adrsHouseNameEn || "NA" },
+        { title: "CR_HOUSE_NAME_ML", value: response?.adrsHouseNameMl || "NA" },
+      ],
+    };
+    const birthPlaceVEHICLEDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_VEHICLE_TYPE", value: response?.vehicleType || "NA" },
+        { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "NA" },
+        { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.vehicleHaltPlace || "NA" },
+        { title: "CR_VEHICLE_FROM_EN", value: response?.vehicleFromEn || "NA" },
+        { title: "CR_VEHICLE_TO_EN", value: response?.vehicleToEn || "NA" },
+        { title: "CR_VEHICLE_FROM_ML", value: response?.vehicleFromMl || "NA" },
+        { title: "CR_VEHICLE_TO_ML", value: response?.vehicleToMl || "NA" },
+        { title: "CR_ADMITTED_HOSPITAL_EN", value: response?.setadmittedHospitalEn || "NA" },
+        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
+      ],
+    };
+    const birthPlacePUBLICPLACESDetails = {
+      title: "CR_BIRTH_PLACE_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
+        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceType || "NA" },
+        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NA" },
+        { title: "CR_LOCALITY_EN", value: response?.localityNameEn || "NA" },
+        { title: "CR_LOCALITY_ML", value: response?.localityNameMl || "NA" },
+        { title: "CR_STREET_NAME_EN", value: response?.streetNameEn || "NA" },
+        { title: "CR_STREET_NAME_ML", value: response?.streetNameMl || "NA" },
+        { title: "CR_DESCRIPTION", value: response?.publicPlaceDecpEn || "NA" },
+      ],
     };
     // const parentInfo = {
     //   title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
@@ -123,7 +189,7 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NA" },
         { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NA" },
         { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NA" },
-        { title: "CS_COMMON_AADHAAR", value: response?.caretakerDetails?.infomantAadhar || "NA" },  
+        { title: "CS_COMMON_AADHAAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NA" },  
         { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NA" },
         
       ],
@@ -143,9 +209,18 @@ export const CRAbandonedsearch = {
     // }
     response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
+    if (response?.birthPlace === "HOSPITAL") {
+      response && employeeResponse.push(birthPlaceHospDetails);
+    } else if (response?.birthPlace === "INSTITUTION") {
+      response && employeeResponse.push(birthPlaceINSTITUTIONDetails);
+    } else if (response?.birthPlace === "HOME") {
+      response && employeeResponse.push(birthPlaceHOMEDetails);
+    } else if (response?.birthPlace === "VEHICLE") {
+      response && employeeResponse.push(birthPlaceVEHICLEDetails);
+    } else if (response?.birthPlace === "PUBLIC_PLACES") {
+      response && employeeResponse.push(birthPlacePUBLICPLACESDetails);
+    }  
     response && employeeResponse.push(motherInfo);
-    // response && employeeResponse.push(motherInfo);
-    // response && employeeResponse.push(addressInfo);
     response && employeeResponse.push(statisticalInfo);
     response && employeeResponse.push(childCustodyInfo);
     response && employeeResponse.push(informantDetailsInfo);
