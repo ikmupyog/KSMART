@@ -820,24 +820,35 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (birthDateTime.trim() == null || birthDateTime.trim() == '' || birthDateTime.trim() == undefined) {
       setbirthDateTime("");
     } else if (birthDateTime.trim() != null) {
-      let todayDate = new Date();
-      let currenthours = todayDate.getHours();
-      let currentMints = todayDate.getHours();
-      currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
-      currentMints = currentMints < 10 ? "0" + currentMints : currentMints;      
-      let currentDatetime = currenthours + ':' + currentMints;
-      if (birthDateTime > currentDatetime) {
-        validFlag = false;
-        setbirthDateTime("");
-        setDateTimeError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setDateTimeError(false);
-        // alert("Right Time");
+      if (childDOB != null) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const childDateofBirth = new Date(childDOB);
+        childDateofBirth.setHours(0, 0, 0, 0); 
+        if(childDateofBirth.getTime() < today.getTime()){
+          setDateTimeError(false);
+        } else if (childDateofBirth.getTime() === today.getTime()){
+          let todayDate = new Date();
+          let currenthours = todayDate.getHours();
+          let currentMints = todayDate.getHours();
+          currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+          currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+          let currentDatetime = currenthours + ':' + currentMints;
+          if (birthDateTime > currentDatetime) {
+            validFlag = false;
+            setbirthDateTime("");
+            setDateTimeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setDateTimeError(false);
+            // alert("Right Time");
+          }
+        }
       }
+      
     }
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
@@ -1817,7 +1828,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
-                <CheckBox style={{Colour: "#be3cb7 !important"}} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                <CheckBox style={{ Colour: "#be3cb7 !important" }} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
             </div>
@@ -1843,7 +1854,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
@@ -1889,7 +1900,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
