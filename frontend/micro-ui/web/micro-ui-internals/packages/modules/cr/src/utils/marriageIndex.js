@@ -587,6 +587,9 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntInKeralaAdrLocalityNameEn: data?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
             ? data?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
             : null,
+          permntInKeralaAdrStreetNameEn: data?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
+            ? data?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
+            : null,
           permntInKeralaAdrHouseNameEn: data?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
             ? data?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
             : null,
@@ -788,6 +791,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           permntInKeralaAdrLocalityNameEn: data?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
             ? data?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
+            : null,
+          permntInKeralaAdrStreetNameEn: data?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
+            ? data?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
             : null,
           permntInKeralaAdrHouseNameEn: data?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
             ? data?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn

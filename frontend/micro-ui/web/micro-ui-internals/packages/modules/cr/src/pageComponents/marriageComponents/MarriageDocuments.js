@@ -18,7 +18,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
 
-  const [uniqueId, setUniqueId] = useState(null);
+  // const [uniqueId, setUniqueId] = useState(null);
   const [uploadedImages, setUploadedImagesIds] = useState(null);
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState([]);
@@ -42,6 +42,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   // const isExpiredHusband = true;
   const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
   // const isExpiredWife = true;
+  const uniqueId = formData?.WitnessDetails?.uniqueId;
 
   console.log(groomResidentShip);
 
@@ -673,9 +674,9 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     }
   };
 
-  useEffect(() => {
-    setUniqueId(uuidv4());
-  }, []);
+  // useEffect(() => {
+  //   setUniqueId(uuidv4());
+  // }, []);
 
   useEffect(() => {
     (async () => {
