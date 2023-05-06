@@ -130,6 +130,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
         cmbWardNoFinal.push(wardmst);
     });
+    const sortWardList = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
 
 
     useEffect(() => {
@@ -681,7 +682,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             <Dropdown
                                 t={t}
                                 optionKey="namecmb"
-                                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
+                                option={sortWardList}
                                 selected={presentWardNo}
                                 select={setSelectWard}
                                 placeholder={`${t("CS_COMMON_WARD")}`}
