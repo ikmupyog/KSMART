@@ -1064,7 +1064,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </div>
             ) : (
               <React.Fragment>
-                <div className="col-md-4">
+                {brideResidentShip === "NRI" &&(
+                  <div className="col-md-4">
                   {" "}
                   <CardLabel>
                     {`${t("CR_BRIDE_AADHAR_NO")}`}
@@ -1088,6 +1089,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     })}
                   />
                 </div>
+                )}
+                
                 <div className="col-md-4">
                   {" "}
                   <CardLabel>
