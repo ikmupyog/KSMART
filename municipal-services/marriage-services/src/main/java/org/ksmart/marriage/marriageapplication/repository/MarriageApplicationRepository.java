@@ -289,8 +289,8 @@ public class MarriageApplicationRepository {
                                 marriage.getBrideAddressDetails().setPresentOutsideKeralaHouseNameMl(marriage.getBrideAddressDetails().getHouseNameNoMlPresent());
 
                                 marriage.getBrideAddressDetails().setPresentOutsideKeralaVillageorTown(marriage.getBrideAddressDetails().getTownOrVillagePresent());
+                                marriage.getBrideAddressDetails().setPresentOutsideKeralaPincode(marriage.getBrideAddressDetails().getPinNoPresent());
 
-                            //    marriage.getBrideAddressDetails().setPresentOutsideKeralaPincode(marriage.getBrideAddressDetails().getPinNoPresent());
 
                             }
                         }
@@ -320,6 +320,11 @@ public class MarriageApplicationRepository {
 
                             marriage.getBrideAddressDetails().setPresentOutSideIndiaProvinceEn(marriage.getBrideAddressDetails().getPresentOthrIndiaProvinceEn());
                             marriage.getBrideAddressDetails().setPresentOutSideIndiaProvinceMl(marriage.getBrideAddressDetails().getPresentOthrIndiaProvinceMl());
+
+//                            marriage.getBrideAddressDetails().setPresentOutSideIndiaProvinceEn(marriage.getGroomAddressDetails().getPresentOthrIndiaProvinceEn());
+//                            marriage.getBrideAddressDetails().setPresentOutSideIndiaProvinceMl(marriage.getGroomAddressDetails().getPresentOthrIndiaProvinceMl());
+
+
                         }
                     }
                    // PERMANENT ADDRESS DETAILS -BRIDE
@@ -457,8 +462,9 @@ public class MarriageApplicationRepository {
 
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeMl(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeMl());
-                            
-                        }
+
+
+                            }
                     }
                     //PERMANENT-OUTSIDE INDIA
                     else{
@@ -665,6 +671,7 @@ public class MarriageApplicationRepository {
 
                                 marriage.getGroomAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
                                 marriage.getGroomAddressDetails().setPermntOutsideKeralaPostOfficeMl(marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeMl());
+                                marriage.getGroomAddressDetails().setPresentOutsideKeralaPincode(marriage.getGroomAddressDetails().getPinNoPresent());
 
                             }
                         }

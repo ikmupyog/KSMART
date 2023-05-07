@@ -30,15 +30,15 @@ public interface BrideAddressDetailsRowMapper {
                 .presentInsideKeralaLBName(rs.getString("BPSA_tenantid"))
                 .presentWardNo(rs.getString("BPSA_ward_code"))
 
-                .presentInsideKeralaPincode(rs.getString("BPSA_pinno"))
+//                .presentInsideKeralaPincode(rs.getString("BPSA_pinno"))
                 .presentInsideKeralaPostOffice(rs.getString("BPSA_poid"))
 
                 .presentUuid(rs.getString("BPSA_id"))
                 .presentOutsideKeralaTalukName(rs.getString("BPSA_taluk_name"))
                 .townOrVillagePresent(rs.getString("BPSA_city_town_village"))
                 .presentOutsideKeralaCityVilgeNameEn(rs.getString("BPSA_village_name"))
-                .presentOutsideKeralaVillageorTown(rs.getString("BPSA_city_town_village"))
-                .presentOutsideKeralaPincode(rs.getString("BPSA_pinno"))
+//                .presentOutsideKeralaVillageorTown(rs.getString("BPSA_city_town_village"))
+//                .presentOutsideKeralaPincode(rs.getString("BPSA_pinno"))
                 .presentOutsideKeralaPostOfficeEn(rs.getString("BPSA_poname_en"))
                 .presentOutsideKeralaPostOfficeMl(rs.getString("BPSA_poname_ml"))
 
