@@ -155,7 +155,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
     if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
       return (
         <Card>
-          <Link to={`/digit-ui/citizen`}>
+          <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>
         </Card>
@@ -169,59 +169,60 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-        <Link to={`/digit-ui/citizen`}>
+        <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
       </Card>)
   }
   else
     console.log(JSON.stringify(mutation));
-    if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
-      return (
-        <Card>
-          <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
-          {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+  if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
+    return (
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
      */}
-          <LinkButton
-            label={
-              <div className="response-download-button">
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                </span>
-                <span className="download-button">{t("Acknowledgment")}</span>
-              </div>
-            }
-            //style={{ width: "100px" }}
-            onClick={handleDownloadPdf}
-          />
-         
-          {mutation?.data?.ChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.ChildDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
-            state: { tenantId: mutation.data.ChildDetails[0].tenantid },
-          }}>
-            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-          </Link>}
-          <Link to={`/digit-ui/citizen`}>
-            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-          </Link>
-        </Card>
-      );
-    } else {
-      return (
+        <LinkButton
+          label={
+            <div className="response-download-button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+              </span>
+              <span className="download-button">{t("Acknowledgment")}</span>
+            </div>
+          }
+          //style={{ width: "100px" }}
+          onClick={handleDownloadPdf}
+        />
 
-        <Card>
-          <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
-          {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
-          <Link to={`/digit-ui/citizen`}>
-            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-          </Link>
-        </Card>
+        {mutation?.data?.ChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+          pathname: `/digit-ui/citizen/payment/collect/${mutation.data.ChildDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
+          state: { tenantId: mutation.data.ChildDetails[0].tenantid },
+        }}>
+          <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+        </Link>}
+        <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
+      </Card>
+    );
+  } else {
+    return (
+
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
+        {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+
+        <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
+      </Card>
 
 
-      );
-    }
+    );
+  }
 
 };
 
