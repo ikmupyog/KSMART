@@ -271,7 +271,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === witness2AadharNo) {
+    if (newValue != '' && (newValue === witness2AadharNo)) {
       setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -279,10 +279,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.GroomDetails?.groomAadharNo ||
       newValue === formData?.GroomDetails?.groomFatherAadharNo ||
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
       setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
@@ -291,10 +292,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.BrideDetails?.brideAdharNo ||
       newValue === formData?.BrideDetails?.brideFatherAadharNo ||
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
       setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
@@ -304,6 +306,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       }, 3000);
     } else {
       setwitness1AadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectwitness2AadharNo(e) {
@@ -314,7 +317,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === witness1AadharNo) {
+    if (newValue != '' && (newValue === witness1AadharNo)) {
       setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -322,10 +325,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.GroomDetails?.groomAadharNo ||
       newValue === formData?.GroomDetails?.groomFatherAadharNo ||
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
       setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
@@ -334,10 +338,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.BrideDetails?.brideAdharNo ||
       newValue === formData?.BrideDetails?.brideFatherAadharNo ||
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
       setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
@@ -347,6 +352,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       }, 3000);
     } else {
       setwitness2AadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectwitness1NameEn(e) {
@@ -386,7 +392,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   function setSelectwitness1Age(e) {
     setwitness1Age(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     if (e.target.value < 18) {
-      console.log("agge"+witness1Age);
+      console.log("agge", e.target.value);
       setAgeValidationMsg(true);
       setToast(true);
       setTimeout(() => {
@@ -394,7 +400,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       }, 2000);
       setwitness1Age(null);
     } else {
-      console.log("aggeee"+witness1Age);
+      console.log("aggeee", e.target.value);
       setAgeValidationMsg(false);
     }
     // if (e.target.value.length === 3) {
@@ -945,6 +951,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       value={witness2AadharNo}
                       onChange={setSelectwitness2AadharNo}
                       disable={isDisableEdit}
+                      onKeyPress={setCheckSpecialChar}
                       placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
                       inputProps={{
                         maxLength: 12,
