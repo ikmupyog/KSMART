@@ -278,7 +278,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           
           {showDatePicker && (
             <div>
-              <h2>Please select the dob in certificate</h2>
+              <h2>{t("CR_SELECT_DOB")}</h2>
               <DatePicker
                 date={certificateDob}
                 max={convertEpochToDate(new Date())}
@@ -288,7 +288,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                 // {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
-              <h2>Do you want to add your husband name as surname?</h2>
+            
               <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setCheckNameCorrectionCondition(!checkNameCorrectionCondition)} value={checkNameCorrectionCondition} checked={checkNameCorrectionCondition} />
             </div>
           )}

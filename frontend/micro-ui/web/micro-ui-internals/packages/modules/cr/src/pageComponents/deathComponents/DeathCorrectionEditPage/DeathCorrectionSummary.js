@@ -54,14 +54,13 @@ function DeathCorrectionSummary({
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
     });
-    console.log("newThumbnails==", newThumbnails);
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
         const tempObj = {
-          image: item.small,
+          image: item.large,
           caption: `Caption ${index}`,
         };
         return tempObj;
@@ -287,7 +286,7 @@ function DeathCorrectionSummary({
         </div>
         {imagesThumbs?.length > 0 && (
           <div className={"cr-timeline-wrapper"}>
-            <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+            <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "auto", overflow: "scroll" }} />
           </div>
         )}
       </div>
