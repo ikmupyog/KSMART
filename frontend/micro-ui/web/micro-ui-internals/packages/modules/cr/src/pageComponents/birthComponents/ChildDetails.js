@@ -164,7 +164,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
@@ -221,6 +223,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(false);
   const [DateTimeError, setDateTimeError] = useState(false);
+  const [DateTimeHourError, setDateTimeHourError] = useState(false);
+  const [DateTimeMinuteError, setDateTimeMinuteError] = useState(false);
+  const [DateTimeAMPMError, setDateTimeAMPMError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(false);
   const [HospitalError, setHospitalError] = useState(false);
@@ -509,6 +514,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         // setUploadNACHIde(false);
         setpopUpState(false);
+        setUploadNACHIde(false);
+        setproceedNoRDO("");
+        setregNoNAC("");
+        setUploadedFile("");
 
       }
     }
@@ -609,10 +618,22 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   // function setSelectArrivalDate(e) {
   //   setChildArrivalDate(e.target.value);
   // }
+
+  useEffect(() => {
+    //console.log("time while onchange", birthDateTime);
+  }, [birthDateTime])
+
   const handleTimeChange = (value, cb) => {
+    //console.log("valuee--", value, value?.target?.value, value?.target?.name);
+    if (value?.target?.name === "hour12") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, hh: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "minute") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, mm: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "amPm") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, amPm: value?.target?.value ? value?.target?.value : null })
+    }
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
       // let hour = value;
       // let period = hour > 12 ? "PM" : "AM";
       // console.log(period);
@@ -806,7 +827,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
   function selectfile(e) {
-    console.log(e.target.files);
     setNACFile(e.target.files[0]);
   }
   function setCheckSpecialChar(e) {
@@ -817,27 +837,100 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
   let validFlag = true;
   const goNext = () => {
-    if (birthDateTime.trim() == null || birthDateTime.trim() == '' || birthDateTime.trim() == undefined) {
+    if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
       setbirthDateTime("");
-    } else if (birthDateTime.trim() != null) {
-      let todayDate = new Date();
-      let currenthours = todayDate.getHours();
-      let currentMints = todayDate.getHours();
-      currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
-      currentMints = currentMints < 10 ? "0" + currentMints : currentMints;      
-      let currentDatetime = currenthours + ':' + currentMints;
-      if (birthDateTime > currentDatetime) {
-        validFlag = false;
-        setbirthDateTime("");
-        setDateTimeError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setDateTimeError(false);
-        // alert("Right Time");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      setDateTimeAMPMError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeHourError(false);
+      if (childDOB != null) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const childDateofBirth = new Date(childDOB);
+        childDateofBirth.setHours(0, 0, 0, 0);
+        if (childDateofBirth.getTime() < today.getTime()) {
+          setDateTimeError(false);
+        } else if (childDateofBirth.getTime() === today.getTime()) {
+          let todayDate = new Date();
+          let currenthours = todayDate.getHours();
+          let currentMints = todayDate.getHours();
+          currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+          currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+          let currentDatetime = currenthours + ':' + currentMints;
+          if (birthDateTime > currentDatetime) {
+            validFlag = false;
+            setbirthDateTime("");
+            setCheckbirthDateTime({ hh: "", mm: "", amPm: "" });
+            setDateTimeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setDateTimeError(false);
+            // alert("Right Time");
+          }
+        }
       }
+
     }
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
@@ -1001,6 +1094,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             setToast(false);
           }, 2000);
         } else {
+          setAdsHomeStreetNameEnError(false);
           setAdsHomeStreetNameMlError(false);
         }
       }
@@ -1017,6 +1111,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           }, 2000);
         } else {
           setAdsHomeStreetNameEnError(false);
+          setAdsHomeStreetNameMlError(false);
         }
       }
     } else if (birthPlace.code === "VEHICLE") {
@@ -1816,8 +1911,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             </div>)}
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
-                <CheckBox style={{Colour: "#be3cb7 !important"}} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+              <div className="col-md-12">
+                <CheckBox style={{ Colour: "#be3cb7 !important" }} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
             </div>
@@ -1843,7 +1938,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
@@ -1889,7 +1984,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
@@ -1985,7 +2080,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           {toast && (
             <Toast
               error={
-                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || DateTimeHourError || DateTimeMinuteError || DateTimeAMPMError
+                || HospitalError || InstitutionError || InstitutionNameError ||
                 WardError ||
                 AdsHomePincodeError ||
                 AdsHomePostOfficeError ||
@@ -2004,7 +2100,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
               }
               label={
-                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || DateTimeHourError || DateTimeMinuteError || DateTimeAMPMError
+                  || HospitalError || InstitutionError || InstitutionNameError ||
                   WardError ||
                   AdsHomePincodeError ||
                   AdsHomePostOfficeError ||
@@ -2026,39 +2123,45 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : DateTimeError
                       ? t(`CS_COMMON_DATE_TIME_ERROR`)
-                      : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                        : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                          : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                            : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                              : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                                : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                                  : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                    : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                      : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                        : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                          : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                            : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                                              : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                                                : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-                                                  : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                    : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                      : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                                                        : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                          : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                            : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                              : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                                : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                  : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
-                                                                    : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-                                                                      : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
-                                                                        : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
-                                                                          : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
-                                                                            : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
-                                                                              : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
-                                                                                : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
-                                                                                  : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
-                                                                                    : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
-                                                                                      : setToast(false)
+                      : DateTimeHourError
+                        ? t(`CS_COMMON_DATE_HOUR_ERROR`)
+                        : DateTimeMinuteError
+                          ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
+                          : DateTimeAMPMError
+                            ? t(`CS_COMMON_DATE_AMPM_ERROR`)
+                            : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                              : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                                : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                                  : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                                    : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                                      : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                        : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                          : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                            : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                              : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                                : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                                  : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                                    : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                                      : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                                        : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                          : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                            : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                              : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                                : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                                  : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                                    : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                                      : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                        : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
+                                                                          : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                                            : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                              : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                                : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                                  : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                                    : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                                      : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                                        : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                          : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                            : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

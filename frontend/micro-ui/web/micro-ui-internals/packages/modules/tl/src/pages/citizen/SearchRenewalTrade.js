@@ -47,7 +47,8 @@ const SearchRenewalTrade = ({searchdata,isCorrectionreq}) => {
         }
         queryClient.removeQueries("TL_SEARCH");
         const data = {
-            ..._data  ,"applicationType":"RENEWAL"
+            ..._data  
+            //,"applicationType":"RENEWAL"
         }
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
     }
@@ -57,8 +58,8 @@ const SearchRenewalTrade = ({searchdata,isCorrectionreq}) => {
     }
     const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } =
      Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
-     let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("APPROVED")) : [];
-    // let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : []) :[];
+    //  let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("APPROVED")) : [];
+    let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : []) :[];
      if (wardmandatory)
         //  return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReultFinal?.length > 0 ? searchReultFinal : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />

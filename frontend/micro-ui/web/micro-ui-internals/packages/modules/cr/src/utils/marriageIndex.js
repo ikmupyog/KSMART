@@ -511,7 +511,7 @@ export const convertToMarriageRegistration = (data = {}) => {
             ? data?.BrideAddressDetails?.presentOutsideKeralaDistrict?.code
             : null,
           presentOutsideKeralaTaluk: data?.BrideAddressDetails?.presentOutsideKeralaTaluk
-            ? data?.BrideAddressDetails?.presentOutsideKeralaTaluk?.code
+            ? data?.BrideAddressDetails?.presentOutsideKeralaTaluk
             : null,
           presentOutsideKeralaVillage: data?.BrideAddressDetails?.presentOutsideKeralaVillage
             ? data?.BrideAddressDetails?.presentOutsideKeralaVillage?.code
@@ -520,7 +520,7 @@ export const convertToMarriageRegistration = (data = {}) => {
             ? data?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn
             : null,
           presentOutsideKeralaPincode: data?.BrideAddressDetails?.presentOutsideKeralaPincode
-            ? data?.BrideAddressDetails?.presentOutsideKeralaPincode?.code
+            ? data?.BrideAddressDetails?.presentOutsideKeralaPincode
             : null,
           presentOutsideKeralaPostOfficeEn: data?.BrideAddressDetails?.presentOutsideKeralaPostOfficeEn
             ? data?.BrideAddressDetails?.presentOutsideKeralaPostOfficeEn
@@ -558,9 +558,18 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentOutSideIndiaProvinceEn: data?.BrideAddressDetails?.presentOutSideIndiaProvinceEn
             ? data?.BrideAddressDetails?.presentOutSideIndiaProvinceEn
             : null,
+          presentOutSideIndiaProvinceMl: data?.BrideAddressDetails?.presentOutSideIndiaProvinceMl
+            ? data?.BrideAddressDetails?.presentOutSideIndiaProvinceMl
+            : null,
           presentOutSideCountry: data?.BrideAddressDetails?.presentOutSideCountry ? data?.BrideAddressDetails?.presentOutSideCountry?.code : null,
           presentOutSideIndiaadrsVillage: data?.BrideAddressDetails?.presentOutSideIndiaadrsVillage
             ? data?.BrideAddressDetails?.presentOutSideIndiaadrsVillage?.code
+            : null,
+          presentOutSideIndiaadrsCityTown: data?.BrideAddressDetails?.presentOutSideIndiaadrsCityTown
+            ? data?.BrideAddressDetails?.presentOutSideIndiaadrsCityTown
+            : null,
+          presentOutSideIndiaPostCode: data?.BrideAddressDetails?.presentOutSideIndiaPostCode
+            ? data?.BrideAddressDetails?.presentOutSideIndiaPostCode
             : null,
           isPermanentAddress: data?.BrideAddressDetails?.isPrsentAddress ? data?.BrideAddressDetails?.isPrsentAddress : null,
           permtaddressCountry: data?.BrideAddressDetails?.permtaddressCountry ? data?.BrideAddressDetails?.permtaddressCountry?.code : null,
@@ -577,6 +586,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           permntInKeralaAdrLocalityNameEn: data?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
             ? data?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
+            : null,
+          permntInKeralaAdrStreetNameEn: data?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
+            ? data?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
             : null,
           permntInKeralaAdrHouseNameEn: data?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
             ? data?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
@@ -596,9 +608,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntOutsideKeralaDistrict: data?.BrideAddressDetails?.permntOutsideKeralaDistrict
             ? data?.BrideAddressDetails?.permntOutsideKeralaDistrict?.code
             : null,
-          permntOutsideKeralaTaluk: data?.BrideAddressDetails?.permntOutsideKeralaTaluk
-            ? data?.BrideAddressDetails?.permntOutsideKeralaTaluk?.code
-            : null,
+          permntOutsideKeralaTaluk: data?.BrideAddressDetails?.permntOutsideKeralaTaluk ? data?.BrideAddressDetails?.permntOutsideKeralaTaluk : null,
           permntOutsideKeralaVillage: data?.BrideAddressDetails?.permntOutsideKeralaVillage
             ? data?.BrideAddressDetails?.permntOutsideKeralaVillage?.code
             : null,
@@ -644,9 +654,14 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoMl: data?.BrideAddressDetails?.permntOutsideIndiaLinetwoMl
             ? data?.BrideAddressDetails?.permntOutsideIndiaLinetwoMl
             : null,
-          permntOutsideIndiaprovinceEn: data?.BrideAddressDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaprovinceEn: data?.BrideAddressDetails?.permntOutsideIndiaprovinceEn
+            ? data?.BrideAddressDetails?.permntOutsideIndiaprovinceEn
+            : null,
+          permntOutsideIndiaprovinceMl: data?.BrideAddressDetails?.permntOutsideIndiaprovinceMl
+            ? data?.BrideAddressDetails?.permntOutsideIndiaprovinceMl
+            : null,
           permntOutsideIndiaVillage: data?.BrideAddressDetails?.permntOutsideIndiaVillage
-            ? data?.BrideAddressDetails?.permntOutsideIndiaVillage
+            ? data?.BrideAddressDetails?.permntOutsideIndiaVillage?.code
             : null,
           permntOutsideIndiaCityTown: data?.BrideAddressDetails?.permntOutsideIndiaCityTown
             ? data?.BrideAddressDetails?.permntOutsideIndiaCityTown
@@ -701,7 +716,7 @@ export const convertToMarriageRegistration = (data = {}) => {
             ? data?.GroomAddressDetails?.presentOutsideKeralaDistrict?.code
             : null,
           presentOutsideKeralaTaluk: data?.GroomAddressDetails?.presentOutsideKeralaTaluk
-            ? data?.GroomAddressDetails?.presentOutsideKeralaTaluk?.code
+            ? data?.GroomAddressDetails?.presentOutsideKeralaTaluk
             : null,
           presentOutsideKeralaVillage: data?.GroomAddressDetails?.presentOutsideKeralaVillage
             ? data?.GroomAddressDetails?.presentOutsideKeralaVillage?.code
@@ -710,7 +725,7 @@ export const convertToMarriageRegistration = (data = {}) => {
             ? data?.GroomAddressDetails?.presentOutsideKeralaCityVilgeEn
             : null,
           presentOutsideKeralaPincode: data?.GroomAddressDetails?.presentOutsideKeralaPincode
-            ? data?.GroomAddressDetails?.presentOutsideKeralaPincode?.code
+            ? data?.GroomAddressDetails?.presentOutsideKeralaPincode
             : null,
           presentOutsideKeralaPostOfficeEn: data?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn
             ? data?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn
@@ -755,6 +770,12 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentOutSideIndiaadrsVillage: data?.GroomAddressDetails?.presentOutSideIndiaadrsVillage
             ? data?.GroomAddressDetails?.presentOutSideIndiaadrsVillage?.code
             : null,
+          presentOutSideIndiaadrsCityTown: data?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown
+            ? data?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown
+            : null,
+          presentOutSideIndiaPostCode: data?.GroomAddressDetails?.presentOutSideIndiaPostCode
+            ? data?.GroomAddressDetails?.presentOutSideIndiaPostCode
+            : null,
           isPermanentAddress: data?.GroomAddressDetails?.isPrsentAddress ? data?.GroomAddressDetails?.isPrsentAddress : null,
           permtaddressCountry: data?.GroomAddressDetails?.permtaddressCountry ? data?.GroomAddressDetails?.permtaddressCountry?.code : null,
           permtaddressStateName: data?.GroomAddressDetails?.permtaddressStateName ? data?.GroomAddressDetails?.permtaddressStateName?.code : null,
@@ -770,6 +791,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           permntInKeralaAdrLocalityNameEn: data?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
             ? data?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
+            : null,
+          permntInKeralaAdrStreetNameEn: data?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
+            ? data?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
             : null,
           permntInKeralaAdrHouseNameEn: data?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
             ? data?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
@@ -791,9 +815,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntOutsideKeralaDistrict: data?.GroomAddressDetails?.permntOutsideKeralaDistrict
             ? data?.GroomAddressDetails?.permntOutsideKeralaDistrict?.code
             : null,
-          permntOutsideKeralaTaluk: data?.GroomAddressDetails?.permntOutsideKeralaTaluk
-            ? data?.GroomAddressDetails?.permntOutsideKeralaTaluk?.code
-            : null,
+          permntOutsideKeralaTaluk: data?.GroomAddressDetails?.permntOutsideKeralaTaluk ? data?.GroomAddressDetails?.permntOutsideKeralaTaluk : null,
           permntOutsideKeralaVillage: data?.GroomAddressDetails?.permntOutsideKeralaVillage
             ? data?.GroomAddressDetails?.permntOutsideKeralaVillage?.code
             : null,

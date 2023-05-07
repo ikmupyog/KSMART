@@ -217,7 +217,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
             <div className="col-md-12">
               <div className="col-md-12 mystyle">
                 <h1 className="headingh1 hstyle">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CORRECTION_NAME_DECEASED")}`}</span>{" "}
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
             </div>
