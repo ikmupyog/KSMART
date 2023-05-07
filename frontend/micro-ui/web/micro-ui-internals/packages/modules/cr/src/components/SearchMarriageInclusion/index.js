@@ -114,14 +114,6 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
     ],
     []
   );
-  let tmpData = data;
-  console.log("data==",data);
-  // useEffect(() => {
-  //   if (filestoreId && isSuccess === true) {
-  //     tmpData[0] = { ...data[0], filestoreId, isSuccess };
-  //   }
-  //   setFileData(tmpData);
-  // }, [filestoreId]);
 
   return (
     <React.Fragment>
