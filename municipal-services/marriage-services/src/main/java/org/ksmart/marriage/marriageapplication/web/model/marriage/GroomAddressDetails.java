@@ -607,11 +607,11 @@ public class GroomAddressDetails {
     @JsonProperty("permntInKeralaAdrTalukMl")
     private String permntInKeralaAdrTalukMl;
 
-    @JsonProperty("permntOutsideKeralaTalukEn")
-    private String permntOutsideKeralaTalukEn;
-
-    @JsonProperty("permntOutsideKeralaTalukMl")
-    private String permntOutsideKeralaTalukMl;
+//    @JsonProperty("permntOutsideKeralaTalukEn")
+//    private String permntOutsideKeralaTalukEn;
+//
+//    @JsonProperty("permntOutsideKeralaTalukMl")
+//    private String permntOutsideKeralaTalukMl;
 
     @JsonProperty("presentInsideKeralaVillageEn")
     private String presentInsideKeralaVillageEn;

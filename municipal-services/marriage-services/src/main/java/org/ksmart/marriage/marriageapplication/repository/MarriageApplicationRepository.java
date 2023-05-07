@@ -474,6 +474,7 @@ public class MarriageApplicationRepository {
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeMl(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeMl());
 
+
                             }
                     }
                     //PERMANENT-OUTSIDE INDIA
