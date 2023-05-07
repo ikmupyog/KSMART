@@ -30,7 +30,7 @@ const formFielColumns = {
     },
     DECEASED_SPOUSE: {
       spouseNameEn: "CR_SPOUSE_NAME_EN",
-      spouseNameMl: "CR_SPOUSE_NAME_Ml",
+      spouseNameMl: "CR_SPOUSE_NAME_ML",
     }
   }
   
