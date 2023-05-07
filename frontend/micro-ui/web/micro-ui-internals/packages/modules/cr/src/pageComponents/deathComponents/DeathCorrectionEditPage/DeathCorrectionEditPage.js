@@ -208,10 +208,6 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {/* <FormStep
-       t={t}
-        > */}
         <FormStep onSelect={onSubmitDeathCorrection} config={config}>
           <div className="row">
             <div className="col-md-12">
