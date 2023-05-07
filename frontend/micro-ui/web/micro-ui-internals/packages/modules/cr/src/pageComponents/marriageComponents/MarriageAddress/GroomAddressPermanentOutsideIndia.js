@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,7 @@ import { sortDropdownNames } from "../../../utils";
 const GroomAddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
-  permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
+  permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode, setpermntInKeralaAdrDistrict, setpermntInKeralaAdrLBName, setpermtaddressStateName,
   isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false,
   isPrsentAddress, setIsPrsentAddress
   // isInitialRender, setIsInitialRender
@@ -189,6 +189,14 @@ const GroomAddressPermanentOutsideIndia = ({ config, onSelect, userType, formDat
       e.preventDefault();
     }
   }
+
+
+  useEffect(()=>{
+    setpermntInKeralaAdrDistrict(null)
+    setpermntInKeralaAdrLBName(null)
+    setpermtaddressStateName(null)
+  },[])
+
   const goNext = () => {
 
   };

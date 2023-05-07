@@ -18,7 +18,7 @@ const BrideAddressPresentOutsideKerala = ({ config, onSelect, userType, formData
   setpermntOutsideKeralaHouseNameMl, permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl,
   setpermntOutsideKeralaLocalityNameMl, permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn,
   permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl, permntOutsideKeralaPostOfficeEn,
-  setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
+  setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl, setinsideKeralaDistrict, setinsideKeralaLBName,
   isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption, isEditBirthNAC = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -344,6 +344,11 @@ const BrideAddressPresentOutsideKerala = ({ config, onSelect, userType, formData
   const goNext = () => {
 
   };
+
+  useEffect(() => {
+    setinsideKeralaDistrict(null)
+    setinsideKeralaLBName(null)
+  }, []);
 
   if (isDistrictLoading) {
     return <Loader></Loader>;
