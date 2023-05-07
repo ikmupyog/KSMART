@@ -555,17 +555,17 @@ public class GroomRegistryAddressDetails {
     @JsonProperty("presentaddressCountryNameMl")
     private String presentaddressCountryNameMl ;
 
-    @JsonProperty("presentOutSideCountryNameEn")
-    private String presentOutSideCountryNameEn ;
+    // @JsonProperty("presentOutSideCountryNameEn")
+    // private String presentOutSideCountryNameEn ;
 
-    @JsonProperty("presentOutSideCountryNameMl")
-    private String presentOutSideCountryNameMl ;
+    // @JsonProperty("presentOutSideCountryNameMl")
+    // private String presentOutSideCountryNameMl ;
 
-    @JsonProperty("permanentOutSideCountryNameEn")
-    private String permanentOutSideCountryNameEn ;
+    // @JsonProperty("permanentOutSideCountryNameEn")
+    // private String permanentOutSideCountryNameEn ;
 
-    @JsonProperty("permanentOutSideCountryNameMl")
-    private String permanentOutSideCountryNameMl ;
+    // @JsonProperty("permanentOutSideCountryNameMl")
+    // private String permanentOutSideCountryNameMl ;
 
     @JsonProperty("presentaddressStateNameEn")
     private String presentaddressStateNameEn;

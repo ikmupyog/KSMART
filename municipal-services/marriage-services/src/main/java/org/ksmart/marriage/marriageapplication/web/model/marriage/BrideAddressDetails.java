@@ -299,11 +299,11 @@ public class BrideAddressDetails {
     private String permntInKeralaAdrVillage;
 
     @Size(max = 2500)
-    @JsonProperty("permntOutSideIndiaProvinceMl")
+    @JsonProperty("permntOutSideIndiaprovinceMl")
     private String permntOutSideIndiaProvinceMl;
 
     @Size(max = 2500)
-    @JsonProperty("permntOutSideIndiaProvinceEn")
+    @JsonProperty("permntOutSideIndiaprovinceEn")
     private String permntOutSideIndiaProvinceEn;
 
     @Size(max = 1000)
@@ -418,9 +418,9 @@ public class BrideAddressDetails {
     @JsonProperty("permanentOutsideIndiaPostCode")
     private String permanentOutsideIndiaPostCode;
 
-    @Size(max = 64)
-    @JsonProperty("permntOutsideIndiaCountry")
-    private String permntOutsideIndiaCountry;
+    // @Size(max = 64)
+    // @JsonProperty("permntOutsideIndiaCountry")
+    // private String permntOutsideIndiaCountry;
 
 
     ////Db Fields//////
@@ -529,8 +529,8 @@ public class BrideAddressDetails {
     @JsonProperty("outSideIndiaPostCodePermanent")
     private String outSideIndiaPostCodePermanent;
 
-    @JsonProperty("PermanentAddrCityOrVillageEn")
-    private String permanentAddrCityOrVillageEn ;
+    // @JsonProperty("PermanentAddrCityOrVillageEn")
+    // private String permanentAddrCityOrVillageEn ;
 
     //Jasmine 03.05.2023
 
@@ -546,17 +546,17 @@ public class BrideAddressDetails {
     @JsonProperty("presentaddressCountryNameMl")
     private String presentaddressCountryNameMl ;
 
-    @JsonProperty("presentOutSideCountryNameEn")
-    private String presentOutSideCountryNameEn ;
+    // @JsonProperty("presentOutSideCountryNameEn")
+    // private String presentOutSideCountryNameEn ;
 
-    @JsonProperty("presentOutSideCountryNameMl")
-    private String presentOutSideCountryNameMl ;
+    // @JsonProperty("presentOutSideCountryNameMl")
+    // private String presentOutSideCountryNameMl ;
 
-    @JsonProperty("permanentOutSideCountryNameEn")
-    private String permanentOutSideCountryNameEn ;
+    // @JsonProperty("permanentOutSideCountryNameEn")
+    // private String permanentOutSideCountryNameEn ;
 
-    @JsonProperty("permanentOutSideCountryNameMl")
-    private String permanentOutSideCountryNameMl ;
+    // @JsonProperty("permanentOutSideCountryNameMl")
+    // private String permanentOutSideCountryNameMl ;
 
     @JsonProperty("presentaddressStateNameEn")
     private String presentaddressStateNameEn;

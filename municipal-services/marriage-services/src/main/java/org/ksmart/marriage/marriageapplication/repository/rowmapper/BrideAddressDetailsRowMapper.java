@@ -50,7 +50,6 @@ public interface BrideAddressDetailsRowMapper {
                 .presentOthrIndiaAdressMlB(rs.getString("BPSA_ot_address2_ml"))
                 .presentOthrIndiaProvinceEn(rs.getString("BPSA_ot_state_region_province_en"))
                 .presentOthrIndiaProvinceMl(rs.getString("BPSA_ot_state_region_province_ml"))
-               // .presentOutSideIndiaPostCode(rs.getString("BPSA_ot_zipcode"))
                 .outSideIndiaPostCodePresent(rs.getString("BPSA_ot_zipcode"))
                 .brideGroomPresent(rs.getString("BPSA_bride_groom"))
                 // .presentaddressCountry(rs.getString("GPMA_countryid"))
@@ -124,15 +123,26 @@ public interface BrideAddressDetailsRowMapper {
                 .permntOutsideKeralaCityVilgeEn(rs.getString("BPMA_village_name"))
                 .permntOutsideKeralaPostOfficeEn(rs.getString("BPMA_poname_en"))
                 .permntOutsideKeralaPostOfficeMl(rs.getString("BPMA_poname_ml"))
-                .permntOutsideIndiaLineoneEn(rs.getString("BPMA_ot_address1_en"))
-                .permntOutsideIndiaLineoneMl(rs.getString("BPMA_ot_address1_ml"))
-                .permntOutsideIndiaLinetwoEn(rs.getString("BPMA_ot_address2_en"))
-                .permntOutsideIndiaLinetwoMl(rs.getString("BPMA_ot_address2_ml"))
+                // .permntOutsideIndiaLineoneEn(rs.getString("BPMA_ot_address1_en"))
+                // .permntOutsideIndiaLineoneMl(rs.getString("BPMA_ot_address1_ml"))
+                // .permntOutsideIndiaLinetwoEn(rs.getString("BPMA_ot_address2_en"))
+                // .permntOutsideIndiaLinetwoMl(rs.getString("BPMA_ot_address2_ml"))
+
+
+                .permntOthrIndiaLineoneEn(rs.getString("BPMA_ot_address1_en"))
+                .permntOthrIndiaLineoneMl(rs.getString("BPMA_ot_address1_ml"))
+                .permntOthrIndiaLinetwoEn(rs.getString("BPMA_ot_address2_en"))
+                .permntOthrIndiaLinetwoMl(rs.getString("BPMA_ot_address2_ml"))
+                .permntOthrIndiaprovinceEn(rs.getString("BPMA_ot_state_region_province_en"))
+                .permntOthrIndiaprovinceMl(rs.getString("BPMA_ot_state_region_province_ml"))
+                .outSideIndiaPostCodePermanent(rs.getString("BPMA_ot_zipcode"))
+      
+
                 //  .permntOutsideIndiaVillage(rs.getString(""))
                 // .permntOutsideIndiaCityTown(rs.getString(""))
-                .permanentOutsideIndiaPostCode(rs.getString("BPMA_ot_zipcode"))
-                .permntOutSideIndiaProvinceMl(rs.getString("BPMA_ot_state_region_province_ml"))
-                .permntOutSideIndiaProvinceEn(rs.getString("BPMA_ot_state_region_province_en"))
+               // .permanentOutsideIndiaPostCode(rs.getString("BPMA_ot_zipcode"))
+                // .permntOutSideIndiaProvinceMl(rs.getString("BPMA_ot_state_region_province_ml"))
+                // .permntOutSideIndiaProvinceEn(rs.getString("BPMA_ot_state_region_province_en"))
                 .brideGroomPermanent(rs.getString("BPMA_bride_groom"))
 
 

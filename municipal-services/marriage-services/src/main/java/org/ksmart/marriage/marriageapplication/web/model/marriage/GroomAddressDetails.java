@@ -297,7 +297,7 @@ public class GroomAddressDetails {
     private String permntInKeralaAdrVillage;
 
     @Size(max = 2500)
-    @JsonProperty("permntOutSideIndiaProvinceMl")
+    @JsonProperty("permntOutSideIndiaprovinceMl")
     private String permntOutSideIndiaProvinceMl;
 
     @Size(max = 2500)
@@ -541,17 +541,17 @@ public class GroomAddressDetails {
     @JsonProperty("presentaddressCountryNameMl")
     private String presentaddressCountryNameMl ;
 
-    @JsonProperty("presentOutSideCountryNameEn")
-    private String presentOutSideCountryNameEn ;
+    // @JsonProperty("presentOutSideCountryNameEn")
+    // private String presentOutSideCountryNameEn ;
 
-    @JsonProperty("presentOutSideCountryNameMl")
-    private String presentOutSideCountryNameMl ;
+    // @JsonProperty("presentOutSideCountryNameMl")
+    // private String presentOutSideCountryNameMl ;
 
-    @JsonProperty("permanentOutSideCountryNameEn")
-    private String permanentOutSideCountryNameEn ;
+    // @JsonProperty("permanentOutSideCountryNameEn")
+    // private String permanentOutSideCountryNameEn ;
 
-    @JsonProperty("permanentOutSideCountryNameMl")
-    private String permanentOutSideCountryNameMl ;
+    // @JsonProperty("permanentOutSideCountryNameMl")
+    // private String permanentOutSideCountryNameMl ;
 
     @JsonProperty("presentaddressStateNameEn")
     private String presentaddressStateNameEn;
