@@ -1290,7 +1290,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setToast(false);
       }, 2000);
     } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 42) {
+      if (pregnancyDuration < 20 || pregnancyDuration > 53) {
         validFlag = false;
         setPregnancyDurationInvalidError(true);
         setToast(true);
