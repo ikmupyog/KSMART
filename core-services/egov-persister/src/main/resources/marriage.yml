@@ -381,7 +381,6 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPostOffice
 
-                # - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPincode
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.pinNoPresent
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPresent
@@ -540,9 +539,8 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPostOffice
 
-            # - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPincode
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.pinNoPresent
-            
+
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPresent
 
             - jsonPath: $.MarriageDetails.*.id
@@ -1104,8 +1102,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPostOffice
 
-            # - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPincode
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.pinNoPresent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.pinNoPresent
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPresent
 
@@ -1188,7 +1185,6 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPostOffice
 
-          #  - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPincode
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.pinNoPresent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPresent

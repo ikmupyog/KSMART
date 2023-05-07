@@ -634,6 +634,7 @@ public class MarriageApplicationRepository {
                                     String presentOutKeralaDistNameMl = util.getDistrictNameMl(mdmsData, marriage.getGroomAddressDetails().getPresentOutsideKeralaDistrict());
                                     marriage.getGroomAddressDetails().setPresentOutsideKeralaDistrictMl(presentOutKeralaDistNameMl);
                                 }
+                                marriage.getGroomAddressDetails().setPresentOutsideKeralaVillageorTown(marriage.getGroomAddressDetails().getTownOrVillagePresent());
 
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaCityVilgeNameEn(marriage.getGroomAddressDetails().getVillageNamePresent());
                                 marriage.getGroomAddressDetails().setPresentOutsideKeralaTalukName(marriage.getGroomAddressDetails().getPresentOutsideKeralaTalukName());
