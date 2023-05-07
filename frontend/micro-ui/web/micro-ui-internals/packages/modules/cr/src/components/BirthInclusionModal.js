@@ -37,6 +37,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [conditionalProperty, setConditionalProperty] = useState("");
   const [checkStudentCondition, setCheckStudentCondition] = useState("");
   const [checkCorrectionCondition, setCheckCorrectionCondition] = useState("");
+  const [inclusionStudentCondition, setInclusionStudentCondition] = useState("");
+  const [inclusionCorrectionCondition, setInclusionCorrectionCondition] = useState("");
   const [checkNameCorrectionCondition, setCheckNameCorrectionCondition] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [certificateDob, setCertificateDob] = useState("");
@@ -152,7 +154,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       return t(name);
     });
 
-    const documentName = documents.join(` or `);
+    const documentName = documents.join(t("CR_OR"));
 
     return documentName;
   };
@@ -184,8 +186,10 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (Object.keys(checkStudentCondition)?.length > 0) {
       docCondition = `${docCondition}_${checkStudentCondition.code}`;
     }
+    console.log("checkCorrectionCondition==",Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0);
     if (Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0) {
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
+      console.log("filtered docss=",filteredDocs);
       setSelectedDocuments(filteredDocs);
     }
   }, [checkStudentCondition, checkCorrectionCondition]);
@@ -194,15 +198,15 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let filteredDocs = [];
     let docCondition = "NAME_GREATER_THAN_SIX";
     let childAge = "";
-       console.log("checkStudentCondition==",checkStudentCondition,Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "STUDENT");
-    if ((Object.keys(checkStudentCondition)?.length > 0) && (checkStudentCondition.code === "STUDENT")) {
+       console.log("checkStudentCondition==",inclusionStudentCondition,Object.keys(inclusionStudentCondition)?.length > 0 && inclusionStudentCondition.code === "STUDENT");
+    if ((Object.keys(inclusionStudentCondition)?.length > 0) && (inclusionStudentCondition.code === "STUDENT")) {
       
       childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
       console.log("reached",childAge,selectedBirthData?.dateofbirth);
       if(childAge < 6){
         docCondition = `NAME_LESS_THAN_SIX`;
       } else if (childAge >= 6 && childAge < 15) {
-        docCondition = `${docCondition}_${checkStudentCondition.code}`;
+        docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
       } else if (childAge >= 18) {
         setShowDatePicker(true);
         const certificateDobDifference =
@@ -210,7 +214,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         const absDobDifference = certificateDobDifference && Math.abs(certificateDobDifference);
           if (certificateDob && absDobDifference >= 10) {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
-          } else if(checkNameCorrectionCondition){
+          } else if(inclusionCorrectionCondition){
             docCondition = `ADD_HUSBAND_NAME_FOR_FEMALE`;
           } else {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE`;
@@ -227,17 +231,17 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         }
       }
     }
-    if (Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "NON_STUDENT") {
+    if (Object.keys(inclusionStudentCondition)?.length > 0 && inclusionStudentCondition.code === "NON_STUDENT") {
       setShowDatePicker(false);
-      docCondition = `${docCondition}_${checkStudentCondition.code}`;
+      docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
        
-    if (Object.keys(checkCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
+    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
       console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
     }
-  }, [checkStudentCondition, checkCorrectionCondition, checkNameCorrectionCondition, certificateDob]);
+  }, [inclusionStudentCondition, inclusionCorrectionCondition, certificateDob]);
 
   if (!showModal) {
     return null;
@@ -266,14 +270,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     ) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
             // isMandatory={config.isMandatory}
             options={selectedStudentMenu}
-            selectedOption={checkStudentCondition}
-            onSelect={setCheckStudentCondition}
+            selectedOption={inclusionStudentCondition}
+            onSelect={setInclusionStudentCondition}
           />
           
           {showDatePicker && (
@@ -289,7 +293,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                 // {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
               <h2>Do you want to add your husband name as surname?</h2>
-              <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setCheckNameCorrectionCondition(!checkNameCorrectionCondition)} value={checkNameCorrectionCondition} checked={checkNameCorrectionCondition} />
+              <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setInclusionCorrectionCondition(!inclusionCorrectionCondition)} value={inclusionCorrectionCondition} checked={inclusionCorrectionCondition} />
             </div>
           )}
         </div>
@@ -315,7 +319,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -381,7 +385,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedMenu?.length > 0) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -410,7 +414,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (isLoading && details.DocumentId.toString() === docuploadedId) {
       return (
         <div style={{ margin: 0 }}>
-          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+          <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
         </div>
       );
     }
@@ -457,14 +461,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
         <h1 className="headingh1">
-          <span style={{ background: "#fff", padding: "0 10px" }}>{`${fieldName} CHANGE`}</span>{" "}
+          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)} ${t("CR_CHANGE")}`}</span>{" "}
         </h1>
         {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
         {selectedConfig?.documentData?.length > 1 && renderConditionalPopupComponent()}
         {selectedConfig?.documentData?.length > 1 && renderChildNamePopupComponent()}
         {selectedDocuments?.length == 1 && (
           <div>
-            <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+            <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
             {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
             {selectedDocuments?.[0]?.Documents?.map((item, index) => (
               <div>
@@ -506,10 +510,10 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                 resetFields();
                 onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
               } else {
-                setFileDocError("You have to upload following documents to make changes in the field");
+                setFileDocError(t("CR_UPLOAD_TO_MAKE_CHANGE"));
               }
             } else {
-              setFileDocError("Please select an option");
+              setFileDocError(t("CR_SELECT_OPTION"));
             }
           }}
         />

@@ -25,13 +25,7 @@ const convertEpochToDate = (dateEpoch) => {
     return null;
   }
 };
-// const getAddress = (address, t) => {
-//   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
-//     address?.landmark ? `${address?.landmark}, ` : ""
-//   }${t(Digit.Utils.pt.getMohallaLocale(address?.locality.code, address?.tenantId))}, ${t(Digit.Utils.pt.getCityLocale(address?.tenantId))}${
-//     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
-//   }`;
-// };
+
 export const CRNACsearch = {
   all: async (tenantId, filters = {}) => {
     const response = await CRNACBirthService.CRNACsearch({ tenantId, filters });
@@ -176,8 +170,15 @@ export const CRNACsearch = {
           title: "CS_COMMON_DISTRICT",
           value: response?.AddressBirthDetails?.districtIdPresentEn + " / " + response?.AddressBirthDetails.districtIdPresentMl || "NA",
         },
-        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTaluk || "NA" },
-        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillage || "NA" },
+        {
+          title: "CS_COMMON_TALUK",
+          value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NA",
+        },
+        {
+          title: "CS_COMMON_VILLAGE",
+          value:
+            response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NA",
+        },
         {
           title: "CS_COMMON_LB_NAME",
           value:
@@ -213,8 +214,14 @@ export const CRNACsearch = {
           title: "CS_COMMON_DISTRICT",
           value: response?.AddressBirthDetails?.districtIdPermanentEn + " / " + response?.AddressBirthDetails.districtIdPermanentMl || "NA",
         },
-        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTaluk || "NA" },
-        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillage || "NA" },
+        {
+          title: "CS_COMMON_TALUK",
+          value: response?.AddressBirthDetails?.permntInKeralaAdrTalukEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrTalukMl || "NA",
+        },
+        {
+          title: "CS_COMMON_VILLAGE",
+          value: response?.AddressBirthDetails?.permntInKeralaAdrVillageEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrVillageMl || "NA",
+        },
         {
           title: "CS_COMMON_LB_NAME",
           value: response?.AddressBirthDetails?.permntInKeralaAdrLBNameEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrLBNameMl || "NA",
@@ -358,7 +365,6 @@ export const CRNACsearch = {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
       documents: Docdetails,
-      // additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,
     };

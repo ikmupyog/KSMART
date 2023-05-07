@@ -13,7 +13,7 @@ const ApplicationAbandonedBirthDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHABANDONED"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("ABANDONEDBIRTH"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
