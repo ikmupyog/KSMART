@@ -24,7 +24,7 @@ const DesktopInbox = ({
   const { t } = useTranslation();
 
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-  let SearchInbox = (window.location.href.includes("/birthinbox") == true ? "birth" : "death")
+  let SearchInbox = window.location.href.includes("/birthinbox") == true ? "birth" : window.location.href.includes("/marriageinbox") == true ? "marriage" : "death";
 
   const GetSlaCell = (value) => {
     return value < 0 ? <span className="sla-cell-error">{value || ""}</span> : <span className="sla-cell-success">{value || ""}</span>;
@@ -43,7 +43,7 @@ const DesktopInbox = ({
         accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
-          // console.log('rw',row);
+          console.log('rw death',row);
           return (
             // <div>
             //   <span className="link">
@@ -52,7 +52,7 @@ const DesktopInbox = ({
             // </div>
             <div>
               <span className="link">
-                <Link onClick={handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}>
+                <Link onClick={handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-deathdetails/${row.original?.InformationDeath?.["DeathACKNo"]}`}>
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
               </span>
@@ -116,16 +116,30 @@ const DesktopInbox = ({
     []
   );
 
-  const columns = React.useMemo(() => ([
+  console.log("first", data)
+
+  const goto = (birthData) =>{
+    const correctionCode = birthData?.applicationNumber?.split('-')?.[4];
+    console.log("loop[ed--data",correctionCode,birthData);
+    let url = `/digit-ui/employee/cr/application-details/${birthData.applicationNumber}`;
+  
+    if(["CRBRCN","CRDRCN","CRMRCR"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/correction-details/${birthData.applicationNumber}`;
+    }
+    return url;
+  }
+
+  const BirthColumns = React.useMemo(() => ([
     {
       Header: t("CR_COMMON_COL_APP_NO"),
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
+        console.log("row data==",row.original);
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -173,7 +187,7 @@ const DesktopInbox = ({
       <CRTable
         t={t}
         data={data}
-        columns={SearchInbox == "birth" ? columns : Deathcolumns}
+        columns={SearchInbox == "birth" ? BirthColumns : Deathcolumns}
         getCellProps={(cellInfo) => {
           return {
             style: {

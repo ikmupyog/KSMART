@@ -43,7 +43,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("WFBORNOUTSIDE60")) {
     return <BornOutsideActionModal {...props} />;
   }
-  if (props?.businessService.includes("BIRTHABANDONED")) {
+  if (props?.businessService.includes("ABANDONEDBIRTH")) {
     return <AbandonedBirthActionModal {...props} />;
   }
   if (

@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+// import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+import ApplicationDetailsTemplate from "./ApplicationContent";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
-const ApplicationAbandonedBirthDetails = () => {
+const CorrectionApplicationDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("ABANDONEDBIRTH"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("WFBIRTH21DAYS"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationAbandondBirthDetail(t, tenantId, applicationNumber);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_FLAG", false) 
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -29,7 +30,7 @@ const ApplicationAbandonedBirthDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationAbandonedBirthActions(tenantId);
+  } = Digit.Hooks.cr.useApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -38,9 +39,13 @@ const ApplicationAbandonedBirthDetails = () => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
-    role: "BND_CEMP" || "OFFICIAL_NOTIFIER",
+    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config: {},
   });
+
+  useEffect(()=>{
+ console.log("workflowDetails==",workflowDetails);
+  },[workflowDetails])
 
   const closeToast = () => {
     setShowToast(null);
@@ -73,10 +78,11 @@ const ApplicationAbandonedBirthDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
+      // console.log(data.action);
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
+            pathname: `/digit-ui/employee/cr/create-birth/child-details`,
             state: applicationDetails,
           },
             data.tenantId = stateId
@@ -87,7 +93,7 @@ const ApplicationAbandonedBirthDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter((item) => {
-    if ((item.code == "OFFICIAL_NOTIFIER" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "EMPLOYEE") return true;
+    if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN") return true;
   });
 
   const rolecheck = rolearray.length > 0 ? true : false;
@@ -182,7 +188,7 @@ const ApplicationAbandonedBirthDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_ABANDONEDBIRTH_SUMMARY_DETAILS"}
+        header={"CR_BIRTH_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -200,6 +206,4 @@ const ApplicationAbandonedBirthDetails = () => {
   );
 };
 
-
-
-export default ApplicationAbandonedBirthDetails;
+export default CorrectionApplicationDetails;
