@@ -409,7 +409,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
-
+{/*  */}
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-2">
