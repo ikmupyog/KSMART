@@ -60,7 +60,7 @@ public interface GroomAddressDetailsRowMapper {
                 .presentOutSideIndiaAdressEnB(rs.getString("GPSA_ot_address2_en"))
                 .presentOutSideIndiaAdressMlB(rs.getString("GPSA_ot_address2_ml"))
 //                .presentOutSideIndiaadrsCityTown(rs.getString("GPSA_city_town_village"))
-               .presentOutSideIndiaadrsVillage(rs.getString("GPSA_village_name"))
+//               .presentOutSideIndiaadrsVillage(rs.getString("GPSA_village_name"))
                 .presentOutSideIndiaProvinceEn(rs.getString("GPSA_ot_state_region_province_en"))
                 .presentOutSideIndiaProvinceMl(rs.getString("GPSA_ot_state_region_province_ml"))
                 .presentOutSideIndiaPostCode(rs.getString("GPSA_ot_zipcode"))
