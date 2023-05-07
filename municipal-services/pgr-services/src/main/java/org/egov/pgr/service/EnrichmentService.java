@@ -123,15 +123,17 @@ public class EnrichmentService {
         AuditDetails auditDetails = utils.getAuditDetails(requestInfo.getUserInfo().getUuid(), service,false);
 
         service.setAuditDetails(auditDetails);     
-        System.out.println("action  "+ workflow.getAssignes().isEmpty());
-        if( !workflow.getAssignes().isEmpty()) {
-	      if(workflow.getAssignes() != null ) {
+//        System.out.println("action  "+ workflow.getAssignes().size());
+//        if( !workflow.getAssignes().isEmpty() || workflow.getAssignes() != null) {
+//	      if(workflow.getAssignes() != null ) {
+	    	  
+	     if  (workflow.getAssignes()!=null && !workflow.getAssignes().isEmpty()) {
 	    	  System.out.println("action 1 "+ workflow.getAssignes());
 	        if(workflow.getAssignes().get(0) != null) {
 	        	 service.setAccountId(workflow.getAssignes().get(0));
 	        }    
 	      }
-        }
+        
        if((workflow.getAction().equals(ACTION_REJECT)) || (workflow.getAction().equals(ACTION_RESOLVE))){
     	  System.out.println("getCreatedBy  "+service.getAuditDetails().getCreatedBy());
     	  service.setAccountId(service.getAuditDetails().getCreatedBy());
