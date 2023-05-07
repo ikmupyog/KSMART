@@ -117,13 +117,13 @@ function MarriageCorrectionSummary({
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
     });
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
         const tempObj = {
-          image: item.small,
+          image: item.large,
           caption: `Caption ${index}`,
         };
         return tempObj;
@@ -294,11 +294,11 @@ function MarriageCorrectionSummary({
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("OLD_VALUE")}</h5>{" "}
+                      <h5>{t("CR_OLD_VALUE")}</h5>{" "}
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("NEW_VALUE")}</h5>{" "}
+                      <h5>{t("CR_NEW_VALUE")}</h5>{" "}
                     </div>
                   </div>
                 </div>
@@ -353,7 +353,7 @@ function MarriageCorrectionSummary({
         </div>
         <div className={"cr-timeline-wrapper"}>
           {imagesThumbs?.length > 0 && (
-            <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+            <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
           )}
 
           {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (

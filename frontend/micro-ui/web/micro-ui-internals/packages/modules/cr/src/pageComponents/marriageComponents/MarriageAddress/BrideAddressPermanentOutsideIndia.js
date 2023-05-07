@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -189,6 +189,15 @@ const BrideAddressPermanentOutsideIndia = ({ config, onSelect, userType, formDat
       e.preventDefault();
     }
   }
+
+
+  useEffect(()=>{
+    setpermntInKeralaAdrDistrict(null)
+    setpermntInKeralaAdrLBName(null)
+    setpermtaddressStateName(null)
+  },[])
+
+
   const goNext = () => {
 
   };
