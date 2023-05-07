@@ -25,6 +25,16 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
+  if (props.isSuccess && sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG")) {
+    console.log(JSON.stringify(props));
+    sessionStorage.setItem("applicationNumber", props.data?.AbandonedChildDetails[0]?.applicationNumber);
+    console.log(sessionStorage.getItem("applicationNumber"));
+    if (sessionStorage.getItem("applicationNumber") != null && props.isSuccess) {
+      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+    } else {
+      sessionStorage.removeItem("applicationNumber");
+    }
+  } else {
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -34,6 +44,7 @@ const BannerPicker = (props) => {
     />
 
   );
+  }
 };
 // console.log(props.data?.AbandonedChildDetails?.ParentsDetails?.applicationNumber);
 

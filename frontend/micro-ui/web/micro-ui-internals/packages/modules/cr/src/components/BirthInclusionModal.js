@@ -37,6 +37,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [conditionalProperty, setConditionalProperty] = useState("");
   const [checkStudentCondition, setCheckStudentCondition] = useState("");
   const [checkCorrectionCondition, setCheckCorrectionCondition] = useState("");
+  const [inclusionStudentCondition, setInclusionStudentCondition] = useState("");
+  const [inclusionCorrectionCondition, setInclusionCorrectionCondition] = useState("");
   const [checkNameCorrectionCondition, setCheckNameCorrectionCondition] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [certificateDob, setCertificateDob] = useState("");
@@ -184,8 +186,10 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (Object.keys(checkStudentCondition)?.length > 0) {
       docCondition = `${docCondition}_${checkStudentCondition.code}`;
     }
+    console.log("checkCorrectionCondition==",Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0);
     if (Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0) {
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
+      console.log("filtered docss=",filteredDocs);
       setSelectedDocuments(filteredDocs);
     }
   }, [checkStudentCondition, checkCorrectionCondition]);
@@ -194,15 +198,15 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let filteredDocs = [];
     let docCondition = "NAME_GREATER_THAN_SIX";
     let childAge = "";
-       console.log("checkStudentCondition==",checkStudentCondition,Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "STUDENT");
-    if ((Object.keys(checkStudentCondition)?.length > 0) && (checkStudentCondition.code === "STUDENT")) {
+       console.log("checkStudentCondition==",inclusionStudentCondition,Object.keys(inclusionStudentCondition)?.length > 0 && inclusionStudentCondition.code === "STUDENT");
+    if ((Object.keys(inclusionStudentCondition)?.length > 0) && (inclusionStudentCondition.code === "STUDENT")) {
       
       childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
       console.log("reached",childAge,selectedBirthData?.dateofbirth);
       if(childAge < 6){
         docCondition = `NAME_LESS_THAN_SIX`;
       } else if (childAge >= 6 && childAge < 15) {
-        docCondition = `${docCondition}_${checkStudentCondition.code}`;
+        docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
       } else if (childAge >= 18) {
         setShowDatePicker(true);
         const certificateDobDifference =
@@ -210,7 +214,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         const absDobDifference = certificateDobDifference && Math.abs(certificateDobDifference);
           if (certificateDob && absDobDifference >= 10) {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
-          } else if(checkNameCorrectionCondition){
+          } else if(inclusionCorrectionCondition){
             docCondition = `ADD_HUSBAND_NAME_FOR_FEMALE`;
           } else {
             docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE`;
@@ -227,17 +231,17 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         }
       }
     }
-    if (Object.keys(checkStudentCondition)?.length > 0 && checkStudentCondition.code === "NON_STUDENT") {
+    if (Object.keys(inclusionStudentCondition)?.length > 0 && inclusionStudentCondition.code === "NON_STUDENT") {
       setShowDatePicker(false);
-      docCondition = `${docCondition}_${checkStudentCondition.code}`;
+      docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
        
-    if (Object.keys(checkCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
+    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
       console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
     }
-  }, [checkStudentCondition, checkCorrectionCondition, checkNameCorrectionCondition, certificateDob]);
+  }, [inclusionStudentCondition, inclusionCorrectionCondition, certificateDob]);
 
   if (!showModal) {
     return null;
@@ -272,8 +276,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             optionsKey="i18nKey"
             // isMandatory={config.isMandatory}
             options={selectedStudentMenu}
-            selectedOption={checkStudentCondition}
-            onSelect={setCheckStudentCondition}
+            selectedOption={inclusionStudentCondition}
+            onSelect={setInclusionStudentCondition}
           />
           
           {showDatePicker && (

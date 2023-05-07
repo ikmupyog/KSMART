@@ -294,11 +294,11 @@ function MarriageCorrectionSummary({
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("OLD_VALUE")}</h5>{" "}
+                      <h5>{t("CR_OLD_VALUE")}</h5>{" "}
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("NEW_VALUE")}</h5>{" "}
+                      <h5>{t("CR_NEW_VALUE")}</h5>{" "}
                     </div>
                   </div>
                 </div>
