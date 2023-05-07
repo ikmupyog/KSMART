@@ -369,11 +369,11 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrLbType
 
-      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permanentOutsideIndiaPostCode
 
-      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permntOutsideIndiaprovinceEn
 
-      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permntOutsideIndiaprovinceMl
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
 
@@ -940,11 +940,11 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrLbType
 
-      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permanentOutsideIndiaPostCode
 
-      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permntOutsideIndiaprovinceEn
 
-      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permntOutsideIndiaprovinceMl
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
 

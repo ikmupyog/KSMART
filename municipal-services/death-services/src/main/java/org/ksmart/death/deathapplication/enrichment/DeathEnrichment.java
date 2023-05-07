@@ -318,8 +318,9 @@ public class DeathEnrichment implements BaseEnrichment{
                             }
                         } else{
 
-                            if (death.getDeathAddressInfo().getPresentOutSideCountry() != null) {
-                                death.getDeathAddressInfo().setPresentAddrCountryId(death.getDeathAddressInfo().getPresentOutSideCountry());
+                            if (death.getDeathAddressInfo().getPresentaddressCountry() != null && death.getDeathAddressInfo().getPresentaddressCountry() != DeathConstants.COUNTRY_CODE) {
+                                // death.getDeathAddressInfo().setPresentAddrCountryId(death.getDeathAddressInfo().getPresentOutSideCountry());
+                                death.getDeathAddressInfo().setPresentAddrCountryId(death.getDeathAddressInfo().getPresentaddressCountry());
                                 death.getDeathAddressInfo().setPresentOutSideIndiaProvinceEn(death.getDeathAddressInfo().getPresentOutSideIndiaProvinceEn());
                                 death.getDeathAddressInfo().setPresentOutSideIndiaProvinceMl(death.getDeathAddressInfo().getPresentOutSideIndiaProvinceMl());
                                 death.getDeathAddressInfo().setPresentAddrTownOrVillage(death.getDeathAddressInfo().getPresentOutSideIndiaadrsVillage());
@@ -381,14 +382,16 @@ public class DeathEnrichment implements BaseEnrichment{
                                 }
         
                             } else{
-                                if (death.getDeathAddressInfo().getPermntOutsideIndiaCountry() != null) {
-                                    death.getDeathAddressInfo().setPermanentAddrCountryId(death.getDeathAddressInfo().getPermntOutsideIndiaCountry());
+                                if (death.getDeathAddressInfo().getPermtaddressCountry() != null && death.getDeathAddressInfo().getPermtaddressCountry() != DeathConstants.COUNTRY_CODE) {
+                                    // death.getDeathAddressInfo().setPermanentAddrCountryId(death.getDeathAddressInfo().getPermntOutsideIndiaCountry());
+                                    death.getDeathAddressInfo().setPermanentAddrCountryId(death.getDeathAddressInfo().getPermtaddressCountry());
                                     death.getDeathAddressInfo().setPermanentAddrTownOrVillage(death.getDeathAddressInfo().getPermntOutsideIndiaVillage());
                                     death.getDeathAddressInfo().setPermanentAddrCityOrVillageEn(death.getDeathAddressInfo().getPermntOutsideIndiaCityTown());
                                     death.getDeathAddressInfo().setPermanentAddrHoueNameEn(death.getDeathAddressInfo().getPermntOutsideIndiaLineoneEn());
                                     death.getDeathAddressInfo().setPermanentAddrHoueNameMl(death.getDeathAddressInfo().getPermntOutsideIndiaLineoneMl());
                                     death.getDeathAddressInfo().setPermanentAddrStreetNameEn(death.getDeathAddressInfo().getPermntOutsideIndiaLinetwoEn());
                                     death.getDeathAddressInfo().setPermanentAddrStreetNameMl(death.getDeathAddressInfo().getPermntOutsideIndiaLinetwoMl()); 
+
                                 }
                             }
                         }
