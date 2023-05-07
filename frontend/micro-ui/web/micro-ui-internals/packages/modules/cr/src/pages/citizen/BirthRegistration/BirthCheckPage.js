@@ -1753,7 +1753,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           />
         )}
         {""}
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} disabled={!isInitiatorDeclaration} />
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit}  />
       </Card>
     </React.Fragment>
   );
