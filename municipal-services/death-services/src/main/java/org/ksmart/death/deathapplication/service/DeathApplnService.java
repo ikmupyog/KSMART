@@ -97,7 +97,11 @@ public class DeathApplnService {
           criteria.setFuncionUID(DeathConstants.FUN_MODULE_NEWAPPLN);
           return repository.getDeathApplication(criteria, requestInfo);
      }
-
+     
+    public List<DeathDtl> searchPayment(DeathSearchCriteria criteria, RequestInfo requestInfo) {
+          // criteria.setFuncionUID(DeathConstants.FUN_MODULE_NEWAPPLN);
+          return repository.getDeathApplicationPayment(criteria, requestInfo);
+     }
      //Jasmine  Update 07.02.2023
      public List<DeathDtl> update(DeathDtlRequest request) {
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.ksmart.death.deathapplication.repository.querybuilder.DeathApplnQueryBuilder;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathAbandonedRowMapper;
+import org.ksmart.death.deathapplication.repository.rowmapper.DeathApplnPaymentRowMapper;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathApplnRowMapper;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathCorrectionRowMapper;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathDocumentsRowMapper;
@@ -55,12 +56,14 @@ public class DeathApplnRepository {
     private final DeathAbandonedRowMapper abandonedRowMapper;
     private final DeathNACRowMapper deathNACRowMapper;
     private final DeathDocumentsRowMapper deathDocumentsRowMapper;
+    private final DeathApplnPaymentRowMapper deathApplnPaymentRowMapper;
 
     @Autowired
     DeathApplnRepository(JdbcTemplate jdbcTemplate, DeathApplnQueryBuilder queryBuilder,
                         DeathApplnRowMapper rowMapper ,DeathCorrectionRowMapper correctionRowMapper,
                         DeathAbandonedRowMapper abandonedRowMapper,DeathNACRowMapper deathNACRowMapper,
-                        DeathDocumentsRowMapper deathDocumentsRowMapper) {
+                        DeathDocumentsRowMapper deathDocumentsRowMapper,
+                        DeathApplnPaymentRowMapper deathApplnPaymentRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
@@ -68,6 +71,7 @@ public class DeathApplnRepository {
         this.abandonedRowMapper = abandonedRowMapper;
         this.deathNACRowMapper = deathNACRowMapper;
         this.deathDocumentsRowMapper = deathDocumentsRowMapper;
+        this.deathApplnPaymentRowMapper = deathApplnPaymentRowMapper;
     }
     public List<DeathDtl> getDeathApplication(DeathSearchCriteria criteria,RequestInfo requestInfo) {
         
@@ -2174,5 +2178,12 @@ public class DeathApplnRepository {
         String query = queryBuilder.getDeathCountQuery(criteria, preparedStmtList, Boolean.FALSE);
         int DeathCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
         return DeathCount;
+    }
+    public List<DeathDtl> getDeathApplicationPayment(DeathSearchCriteria criteria,RequestInfo requestInfo) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<DeathDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathApplnPaymentRowMapper);
+        return result; 
     }
 }
