@@ -9,15 +9,15 @@ const SearchFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "Birth Inbox",
-      subTitle: "Birth Applications Inbox",
+      title: "CR_BIRTH_INBOX",
+      subTitle: "CR_BIRTH_INBOX_APPLS",
       img: <BankIcon />,
       link: `${path}/birthinbox`,
     },
 
     {
-      title: "Death Inbox",
-      subTitle: "Death Applications Inbox",
+      title: "CR_DEATH_INBOX",
+      subTitle: "CR_DEATH_INBOX_APPS",
       img: <FileProtected />,
       link: `${path}/deathinbox`,
     },

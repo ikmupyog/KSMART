@@ -31,7 +31,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     });
 
     const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
-    console.log("initial value==",selectedConfig?.Documents,selectedDocData,selectedDocs,filteredData,existingDocIds);
     setUploadedFiles([...filteredData]);
   }
   }, [selectedConfig?.Documents]);
@@ -59,9 +58,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 
   function selectfile(e) {
     setIsLoading(true);
-    console.log("documentssd==",e,e.target.files,selectedConfig,e.target.id);
     let result = selectedConfig?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
-    console.log("documentssd==",e,e.target.files,result,selectedConfig,e.target.id);
     setDocuploadedName(result[0].DocumentList);
     setDocuploadedType(result[0].DocumentType);
     setDocuploadedId(e?.target?.id);
@@ -71,7 +68,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 
   const setFileUploadFieldError = (errorObj) =>{
     const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
-    console.log("error in upload==",error);
     if (errorIndex === -1) {
       setError([...error, errorObj]);
       const docIds = [...errorDocIds,errorObj.fieldId]?.filter((item)=> item !== "");
@@ -83,6 +79,17 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
       setError(tempError.splice(errorIndex, 1, errorObj));
     }
   }
+
+  const getDocumentName = (doc) => {
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.split(",");
+    const documents = documentNameArray.map((name) => {
+      return t(name);
+    });
+
+    const documentName = documents.join(` ${t("CR_OR")} `);
+
+    return documentName;
+  };
 
   useEffect(() => {
     (async () => {
@@ -132,13 +139,11 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 }, [file, uploadedFiles]);
 
   const getFileUploadFieldError = (item) => {
-    console.log("looped---item", item);
     let errorMessage = "";
     const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
     if (fieldErrorIndex > -1) {
       errorMessage = error[fieldErrorIndex]?.message;
     }
-    console.log("errorMessage==",fieldErrorIndex,errorMessage);
     return errorMessage;
   };
 
@@ -153,8 +158,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     }
   };
 
-  console.log("uploaded filess",uploadedFiles,selectedConfig,selectedConfig?.Documents,docuploadedId);
-
   if (!showModal) {
     return null;
   }
@@ -162,15 +165,15 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
         <h1 className="headingh1">
-          <span style={{ background: "#fff", padding: "0 10px" }}>{`${fieldName} CHANGE`}</span>{" "}
+          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)} ${t("CR_CHANGE")}`}</span>{" "}
         </h1>
-        <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+        <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
         {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
         {selectedConfig?.Documents?.map((item, index) => (
           <div>
             {!selectedDocs.includes(item.DocumentId?.toString()) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
+                <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
                   <UploadFile
                     key={item.DocumentId}
@@ -199,12 +202,11 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
           selected={true}
           label={"Save"}
           onClick={() => {
-            console.log("on save==", selectedConfig?.Documents, uploadedFiles);
             if (!isLoading && (selectedConfig?.Documents?.length === uploadedFiles?.length)) {
               resetFields();
               onSubmit(uploadedFiles, error);
             } else {
-              setFileDocError("You have to upload following documents to make changes in the field");
+              setFileDocError(t("CR_UPLOAD_TO_MAKE_CHANGE"));
             }
           }}
         />

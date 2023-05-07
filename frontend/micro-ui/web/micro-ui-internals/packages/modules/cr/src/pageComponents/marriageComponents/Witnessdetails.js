@@ -506,22 +506,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   }
 
-  // async function sendWitness1OTP(stateCode) {
-  //   console.log("Hi")
-  //   const data = {
-  //     mobileNumber: witness1Mobile,
-  //     tenantId: stateCode,
-  //     userType: "citizen",
-  //     type: "login"
-  //   }
-  //     try {
-  //       const res = await Digit.hooks.cr.useESign(data, stateCode);
-  //       return [res, null];
-  //     } catch (err) {
-  //       return [null, err];
-  //     }
-  //   };
-
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
@@ -740,6 +724,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         groomURL,
         uploadedBrideImageId,
         uploadedGroomImageId,
+        uniqueId,
       });
     }
   };

@@ -602,7 +602,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
               <div className="col-md-3">
                 <CardLabel>
-                  {`${t("CR_IS_CAREOF")}`}(S/O or D/O)
+                  {`${t("CR_IS_CAREOF")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
@@ -661,7 +661,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>Details of the Children born including the applicant child</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{t("Details of the Children born including the applicant child")}</span>{" "}
               </h1>
             </div>
           </div>
