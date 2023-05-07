@@ -59,13 +59,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   }, []);
 
   useEffect(async () => {
-    console.log("fetchData---flag==", params, Object.keys(params));
     if (Object.keys(params)?.length > 0) {
       let tempParams = {};
       Object.keys(params).forEach((key, index) => (tempParams[key] = { ...params[key], isDisabled: true, isFocused: false }));
       setDeathCorrectionFormsObj({ ...tempParams });
-      console.log("params[key]", tempParams);
-      // setIsFetchData(false);
     } else {
       deathCorrectionFormData = await initializedDeathCorrectionObject(DeathCorrectionDocuments, navigationData, sex, cmbPlace);
       await setDeathCorrectionFormsObj(deathCorrectionFormData);
@@ -89,7 +86,6 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
 
   const onUploadDocSubmit = async (fileData, error) => {
     let tempObj = { ...deathCorrectionFormsObj };
-    console.log("tempObj==", fileData, selectedFieldType, tempObj);
     let tempFieldType = tempObj[selectedFieldType];
 
     if (fileData && fileData?.length > 0) {
@@ -135,7 +131,6 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   };
   const onAdharChange = (e) => {
     let tempObj = { ...deathCorrectionFormsObj };
-    console.log("DECEASED_AADHAR==", e.target.value);
     let { DECEASED_AADHAR } = tempObj;
     tempObj = { ...tempObj, DECEASED_AADHAR: { ...DECEASED_AADHAR, curValue: e.target.value, isFocused: false } };
     setDeathCorrectionFormsObj(tempObj);
@@ -193,18 +188,16 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   };
 
   const onDocUploadSuccess = (data) => {
-    console.log("success==", data);
     onSubmitAcknowledgement(data);
   };
 
   const onSubmitDeathCorrection = () => {
     const formattedResp = formatApiParams(deathCorrectionFormsObj, navigationData);
     if (formattedResp?.CorrectionDetails?.[0]?.CorrectionField?.length > 0) {
-      console.log("formattedResp", formattedResp);
       setParams(deathCorrectionFormsObj);
       navigateAcknowledgement({ deathCorrectionFormsObj: formattedResp, navigationData });
     } else {
-      alert("Please edit atleast a field before submit");
+      alert(t("CR_EDIT_ATLEAST"));
     }
   };
 
@@ -213,7 +206,6 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
 
   
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
-    console.log("deathCorrectionFormsObj==", deathCorrectionFormsObj);
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -225,7 +217,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
             <div className="col-md-12">
               <div className="col-md-12 mystyle">
                 <h1 className="headingh1 hstyle">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CORRECTION_NAME_DECEASED")}`}</span>{" "}
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -245,7 +237,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
                     onBlur={(e) => onAdharChange(e)}
                     placeholder={`${t("CR_AADHAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text",  title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -271,7 +263,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameEn")}
                     placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -284,7 +276,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "middleNameEn")}
                     placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -297,7 +289,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "lastNameEn")}
                     placeholder={`${t("CR_LAST_NAME_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -324,7 +316,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameMl")}
                     placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_ML") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -339,7 +331,6 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title:  t("CR_INVALID_MIDDLE_NAME_ML") })}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -353,13 +344,14 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     onBlur={(e) => onNameChange(e, "lastNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_LAST_NAME_ML")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_LAST_NAME_ML"), })}
                   />
                 </div>
               </FieldComponentContainer>
             </FormFieldContainer>
             <FormFieldContainer>
-              <FieldComponentContainer>
+              <div className="col-md-9">
+              {/* <FieldComponentContainer> */}
                 <div className="col-md-4">
                   <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
                   <DatePicker
@@ -371,10 +363,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     min={convertEpochToDate("1900-01-01")}
                     onChange={onDodChange}
                     formattingFn={formatDod}
-                    {...(validation = { isRequired: true, title: t("CR_DATE_OF_DEATH") })}
                   />
                 </div>
-              </FieldComponentContainer>
+                </div>
+              {/* </FieldComponentContainer> */}
               <div style={{ marginTop: "2.8rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_DOB?.isDisabled && (
                   <ButtonContainer>
@@ -424,7 +416,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                     onBlur={(e) => onBlurMotherName(e, "mothersNameEn")}
                     placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -437,7 +429,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                     onBlur={(e) => onBlurMotherName(e, "mothersNameMl")}
                     placeholder={`${t("CR_MOTHER_NAME_ML")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -463,7 +455,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
                     onBlur={(e) => onBlurFatherName(e, "fathersNameEn")}
                     placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -477,7 +469,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     onBlur={(e) => onBlurFatherName(e, "fathersNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_FATHER_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -495,7 +487,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
             <FormFieldContainer>
               <FieldComponentContainer>
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_SPOUSE_TYPE_EN")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_SPOUSE_NAME_EN")}`}</CardLabel>
                   <TextInput
                     t={t}
                     type={"text"}
@@ -503,12 +495,12 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
                     autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameEn")}
-                    placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    placeholder={`${t("CR_SPOUSE_NAME_EN")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_SPOUSE_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_SPOUSE_TYPE_MAL")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_SPOUSE_NAME_ML")}`}</CardLabel>
                   <TextInput
                     t={t}
                     type={"text"}
@@ -516,8 +508,8 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
                     autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameMl")}
-                    placeholder={`${t("CR_SPOUSE_TYPE_ML")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    placeholder={`${t("CR_SPOUSE_NAME_ML")}`}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_SPOUSE_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -543,7 +535,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "houseNameEn")}
                     placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -553,10 +545,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
                     autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
-                    value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameEn}
+                    defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "localityNameEn")}
                     placeholder={`${t("CR_LOCALITY_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -569,7 +561,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "streetNameEn")}
                     placeholder={`${t("CR_STREET_EN")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -595,7 +587,11 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
                     placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
+                      type: "text",
+                      title: t("CR_INVALID_HOUSE_NAME_ML"),
+                    })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -608,7 +604,11 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "localityNameMl")}
                     placeholder={`${t("CR_LOCALITY_MAL")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                      type: "text",
+                      title: t("CR_INVALID_LOCALITY_ML"),
+                    })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -621,17 +621,15 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "streetNameMl")}
                     placeholder={`${t("CR_STREET_MAL")}`}
-                    // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                      type: "text",
+                      title: t("CR_INVALID_STREET_NAME_ML"),
+                    })}
                   />
                 </div>
               </FieldComponentContainer>
             </FormFieldContainer>
-            {/* <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
-            <FormFieldContainer>
-              <FieldComponentContainer></FieldComponentContainer>
-              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitDeathCorrection} />
-            </FormFieldContainer> */}
-          {/* </form> */}
           <DeathCorrectionModal
             showModal={showModal}
             selectedConfig={selectedCorrectionItem}

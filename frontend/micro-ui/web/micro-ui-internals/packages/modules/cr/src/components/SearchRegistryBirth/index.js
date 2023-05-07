@@ -90,7 +90,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo}
                   </Link> */}
-                {row.original.registrationno}
+                {row.original.registration_no}
               </span>
             </div>
           );
@@ -175,7 +175,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t ,tenantId}} />
+          <SearchFields {...{ register, control, reset, previousPage, t, tenantId }} />
         </SearchForm>
       </div>
       {isLoading ? <Loader /> : data.length > 0 ? <Table

@@ -26,8 +26,8 @@ const SearchFlow = ({ path }) => {
   ];
   const ClassList = 
     {
-     'Birth Inbox':  'crfile',
-     'Death Inbox':  'crfileadoption',
+     'CR_BIRTH_INBOX':  'crfile',
+     'CR_DEATH_INBOX':  'crfileadoption',
     };
   return (
     <div>

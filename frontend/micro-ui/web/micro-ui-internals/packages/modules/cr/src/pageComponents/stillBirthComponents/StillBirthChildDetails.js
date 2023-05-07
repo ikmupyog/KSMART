@@ -17,7 +17,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
  console.log(isEditStillBirth);
   sessionStorage.removeItem("applicationNumber");
   const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
+ //const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
   
   const stateId = Digit.ULBService.getStateId();
@@ -50,7 +50,13 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const { uuid: uuid } = Digit.UserService.getUser().info;
+  const [isDisableEdit, setisDisableEdit] = useState(false);
+  const [isDisableEditRole, setisDisableEditRole] = useState(false);
+  const [hospitalCode, sethospitalCode] = useState(formData?.StillBirthChildDetails?.hospitalCode);
+
+  const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
+ // const { uuid: uuid } = Digit.UserService.getUser().info;
   // console.log(Digit.UserService.getUser().info);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -90,7 +96,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   let workFlowData = [];
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
-  let hospitalCode = "";
+//  let hospitalCode = "";
   let institutionTypeCode = "";
   let institutionNameCode = "";
   let wardNameEn = "";
@@ -169,7 +175,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       ? menu.filter((menu) => menu.code === formData?.StillBirthChildDetails?.gender)[0]
       : ""
   );
-
+  const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
@@ -373,6 +379,88 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
 
   const onSkip = () => onSelect();
 
+  const roleall = [];
+  roleall.push(...roletemp);
+  const rolecombine = [];
+  roleall?.map?.((e) => {
+    rolecombine.push(e.code);
+  });
+
+  const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: rolecombine?.map?.((e) => ({ code: e })),
+      isActive: true,
+      uuids: uuid,
+      rolecodes: rolecombine?.map?.((e) => (e)).join(",")
+    }
+    // { enabled: !action?.isTerminateState }
+  );
+
+  const getHospitalCode = () => {
+    if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+      const operatorHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+      const operatorHosward = [];
+      operatorHospDet?.map((ob) => {
+        operatorHosward.push(...ob.jurisdictionChilds);
+      });
+      if (operatorHosward.length > 0) {
+        console.log("operatorHosward", operatorHosward[0].wardCode);
+        setWardNo(operatorHosward[0].wardCode);
+      }
+      const tempArray = operatorHospDet?.map((ob) => {
+        return ob.hospitalCode;
+      });
+      return tempArray?.[0];
+    } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+      const approverHospDet = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_APPROVER"));
+      const appHosward = [];
+      approverHospDet?.map((ob) => {
+        appHosward.push(...ob.jurisdictionChilds);
+      });
+      if (appHosward.length > 0) {
+        console.log("operatorHosward", appHosward[0].wardCode);
+        setWardNo(appHosward[0].wardCode);
+      }
+      const tempArray = approverHospDet?.map((ob) => {
+        return ob.hospitalCode
+      });
+      return tempArray?.[0];
+    }
+  }
+  useEffect(() => {
+    if (isInitialRenderRoles) {
+      if (userRoles.length > 0) {
+        if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+          if (cmbPlaceMaster.length > 0) {
+            const operatorHospCode = getHospitalCode();
+            if (operatorHospCode != null) {
+              sethospitalCode(operatorHospCode);
+            }
+            selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        } else if (userRoles[0].code === "HOSPITAL_APPROVER") {
+          if (cmbPlaceMaster.length > 0) {
+            const approverHospCode = getHospitalCode();
+            if (approverHospCode != null) {
+              sethospitalCode(approverHospCode);
+            }
+            selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
+            setisDisableEditRole(true);
+            setInitialRenderRoles(false);
+          }
+        }
+      }
+    }
+  }, [cmbPlaceMaster, isInitialRenderRoles]);
+
+
+
+
   React.useEffect(() => {
     if (isInitialRenderPlace) {
       if (birthPlace) {
@@ -381,7 +469,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setValue(placeOfBirth);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
         if (placeOfBirth === "HOSPITAL") {
-          <StillBirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl} />;
+          <StillBirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl}
+            isDisableEditRole={isDisableEditRole}
+            setisDisableEditRole={setisDisableEditRole}
+            userRoles={userRoles} />;
         }
         if (placeOfBirth === "INSTITUTION") {
           setIsInitialRenderInstitutionList(true);
@@ -656,9 +747,6 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       e.preventDefault();
     }
   }
-
-
-
   let validFlag = true;
   const goNext = () => {
     if (birthPlace.code === "HOSPITAL") {
@@ -671,7 +759,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
           setToast(false);
         }, 2000);
       } else {
-        hospitalCode = hospitalName.code;
+        sethospitalCode(hospitalName.code);
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
@@ -1241,6 +1329,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
                 isEditStillBirth={isEditStillBirth}
+                hospitalCode={hospitalCode}
+                isDisableEditRole={isDisableEditRole}
+                setisDisableEditRole={setisDisableEditRole}
               />
             </div>
           )}

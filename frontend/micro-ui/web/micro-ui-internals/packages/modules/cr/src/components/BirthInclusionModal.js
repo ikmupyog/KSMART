@@ -152,7 +152,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       return t(name);
     });
 
-    const documentName = documents.join(` or `);
+    const documentName = documents.join(t("CR_OR"));
 
     return documentName;
   };
@@ -266,7 +266,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     ) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -315,7 +315,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -381,7 +381,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedMenu?.length > 0) {
       return (
         <div>
-          <h2>Select one of the field</h2>
+          <h2>{t("CR_SELECT_ONE")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -410,7 +410,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (isLoading && details.DocumentId.toString() === docuploadedId) {
       return (
         <div style={{ margin: 0 }}>
-          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+          <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
         </div>
       );
     }
@@ -457,14 +457,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
         <h1 className="headingh1">
-          <span style={{ background: "#fff", padding: "0 10px" }}>{`${fieldName} CHANGE`}</span>{" "}
+          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)} ${t("CR_CHANGE")}`}</span>{" "}
         </h1>
         {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
         {selectedConfig?.documentData?.length > 1 && renderConditionalPopupComponent()}
         {selectedConfig?.documentData?.length > 1 && renderChildNamePopupComponent()}
         {selectedDocuments?.length == 1 && (
           <div>
-            <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+            <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
             {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
             {selectedDocuments?.[0]?.Documents?.map((item, index) => (
               <div>
@@ -506,10 +506,10 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                 resetFields();
                 onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
               } else {
-                setFileDocError("You have to upload following documents to make changes in the field");
+                setFileDocError(t("CR_UPLOAD_TO_MAKE_CHANGE"));
               }
             } else {
-              setFileDocError("Please select an option");
+              setFileDocError(t("CR_SELECT_OPTION"));
             }
           }}
         />

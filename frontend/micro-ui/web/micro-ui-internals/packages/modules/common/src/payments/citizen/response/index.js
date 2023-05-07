@@ -24,20 +24,30 @@ const WrapPaymentComponent = (props) => {
     "", {}, tenantId, { applicationNo: consumerCode }, {}, { enabled: (window.location.href.includes("bpa") || window.location.href.includes("BPA")) }
   );
 
-  console.log({ props, workflw })
+  // console.log({ props, workflw })
+  // const mutation = Digit.Hooks.cr.setPaymentStatus({ params: {} });
+  // console.log("Mutation Created", mutation)
 
-  if (business_service === "CR" && isBpaSuccess) {
-    const mutation = Digit.Hooks.cr.setPaymentStatus({});
-    mutation.mutate({
-      filters: {
-        PaymentDetails: [{
-          applicationNumber: consumerCode,
-          applicationStatus: "INITIATED",
-          isPaymentSuccess: isBpaSuccess
-        }]
-      }
-    }, { onSuccess: () => console.log(`status updated as ${isBpaSuccess}`) });
-  }
+  // if (business_service === "CR" && isBpaSuccess) {
+  //   console.log("In Payment Success Condition", {
+  //     filters: {
+  //       PaymentDetails: [{
+  //         applicationNumber: consumerCode || 0,
+  //         applicationStatus: "INITIATED",
+  //         isPaymentSuccess: isBpaSuccess || true
+  //       }]
+  //     }
+  //   });
+  //   mutation.mutate({
+  //     filters: {
+  //       PaymentDetails: [{
+  //         applicationNumber: consumerCode || 0,
+  //         applicationStatus: "INITIATED",
+  //         isPaymentSuccess: isBpaSuccess || true
+  //       }]
+  //     }
+  //   }, { onSuccess: () => console.log(`status updated as ${isBpaSuccess}`) });
+  // }
 
   const { isLoading, data, isError } = Digit.Hooks.usePaymentUpdate({ egId }, business_service, {
     retry: false,

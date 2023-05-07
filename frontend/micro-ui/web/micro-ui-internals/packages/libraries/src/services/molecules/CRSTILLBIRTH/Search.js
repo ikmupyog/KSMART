@@ -72,13 +72,10 @@ export const CRStillBirthsearch = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.stillbirthchilddetails?.applicationNumber || "NA" },
-        // { title: "PDF_BIRTH_CHILD_NAME", value: response?.stillbirthchilddetails?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
+        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },        
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
-        { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.stillbirthchilddetails?.childDOB ? convertEpochToDate(response?.stillbirthchilddetails?.childDOB) : "NA" },
-        { title: "CR_TIME_OF_BIRTH", value: response?.stillbirthchilddetails?.birthDateTime ? response?.stillbirthchilddetails?.birthDateTime : NA },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.stillbirthchilddetails?.hospitalName + "/" + response?.stillbirthchilddetails?.hospitalNameMl || "NA"},   
-            
+        { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : NA },      
+        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : NA },              
         
        ],
        
@@ -196,7 +193,7 @@ export const CRStillBirthsearch = {
     const AddressBirthDetailsPresentInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
-        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPresentEn + " / " + (response?.ParentsDetails?.countryIdPresentMl != null ? response?.ParentsDetails?.countryIdPresentMl : "") || "NA" },
+        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPresentEn + " / " + (response?.AddressBirthDetails?.countryIdPresentMl != null ? response?.AddressBirthDetails?.countryIdPresentMl : "") || "NA" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPresentEn + " / " + response?.AddressBirthDetails.stateIdPresentMl || "NA" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPresentEn + " / " + response?.AddressBirthDetails.districtIdPresentMl || "NA" },
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTaluk || "NA" },
@@ -212,7 +209,7 @@ export const CRStillBirthsearch = {
         { title: "CR_HOUSE_NAME_EN", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || "NA" },
         { title: "CR_HOUSE_NAME_ML", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameMl || "NA" },
         //Permanent Address
-        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPermanentEn + " / " + (response?.ParentsDetails?.countryIdPermanentMl != null ? response?.ParentsDetails?.countryIdPermanentMl : "") || "NA" },
+        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPermanentEn + " / " + (response?.AddressBirthDetails?.countryIdPermanentMl != null ? response?.AddressBirthDetails?.countryIdPermanentMl : "") || "NA" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPermanentEn + " / " + response?.AddressBirthDetails.stateIdPermanentMl || "NA" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPermanentEn + " / " + response?.AddressBirthDetails.districtIdPermanentMl || "NA" },
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTaluk || "NA" },

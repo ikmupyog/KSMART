@@ -18,7 +18,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
 
-  const [uniqueId, setUniqueId] = useState(null);
+  // const [uniqueId, setUniqueId] = useState(null);
   const [uploadedImages, setUploadedImagesIds] = useState(null);
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState([]);
@@ -42,6 +42,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   // const isExpiredHusband = true;
   const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
   // const isExpiredWife = true;
+  const uniqueId = formData?.WitnessDetails?.uniqueId;
 
   console.log(groomResidentShip);
 
@@ -673,9 +674,9 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     }
   };
 
-  useEffect(() => {
-    setUniqueId(uuidv4());
-  }, []);
+  // useEffect(() => {
+  //   setUniqueId(uuidv4());
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -1184,6 +1185,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     })();
   }, [witness2AadharDocument]);
 
+  console.log({formData})
+
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
@@ -1461,9 +1464,29 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   };
   const onSkip = () => onSelect();
 
-  console.log({ witness2Aadhar });
-  console.log(witness2AadharDocument);
-  console.log({ groomDrivingLicense });
+  console.log({
+    groomAadharDocument,
+    groomPassportDocument,
+    groomSSNDocument,
+    brideAadharDocument,
+    bridePassportDocument,
+    brideSSNDocument,
+    groomDrivingLicenseDocument,
+    groomSchoolCertificateDocument,
+    groomBirthCertificateDocument,
+    brideDrivingLicenseDocument,
+    brideSchoolCertificateDocument,
+    brideBirthCertificateDocument,
+    marriageOfficerCertificateDocument,
+    instituitionCertificateDocument,
+    groomDivorceAnnulledDecreeCertificateDocument,
+    brideDivorceAnnulledDecreeCertificateDocument,
+    groomExpirationCertificateDocument,
+    brideExpirationCertificateDocument,
+    witness1AadharDocument,
+    witness2AadharDocument
+  });
+  
 
   return (
     <React.Fragment>
@@ -1475,16 +1498,16 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
         onSelect={goNext}
         onSkip={onSkip}
         isDisabled={
-          (groomResidentShip === "INDIAN" && !groomAadharDocument) ||
-          ((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && (!groomPassportDocument || !groomSSNDocument)) ||
-          (brideResidentShip === "INDIAN" && !brideAadharDocument) ||
-          ((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (!bridePassportDocument || !brideSSNDocument)) ||
-          (groomAgeDocument === "DRIVING_LICENSE" && !groomDrivingLicenseDocument) ||
-          (groomAgeDocument === "SCHOOL_CERTIFICATE" && !groomSchoolCertificateDocument) ||
-          (groomAgeDocument === "BIRTH_CERTIFICATE" && !groomBirthCertificateDocument) ||
-          (brideAgeDocument === "DRIVING_LICENSE" && !brideDrivingLicenseDocument) ||
-          (brideAgeDocument === "SCHOOL_CERTIFICATE" && !brideSchoolCertificateDocument) ||
-          (brideAgeDocument === "BIRTH_CERTIFICATE" && !brideBirthCertificateDocument) ||
+          (groomResidentShip === "INDIAN" && !groomAadhar) ||
+          ((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && (!groomPassport || !groomSSN)) ||
+          (brideResidentShip === "INDIAN" && !brideAadhar) ||
+          ((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (!bridePassport || !brideSSN)) ||
+          (groomAgeDocument === "DRIVING_LICENSE" && !groomDrivingLicense) ||
+          (groomAgeDocument === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
+          (groomAgeDocument === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
+          (brideAgeDocument === "DRIVING_LICENSE" && !brideDrivingLicense) ||
+          (brideAgeDocument === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
+          (brideAgeDocument === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
           ((marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
             marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
             marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
@@ -1492,16 +1515,16 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
             marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
             marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
             marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") &&
-            !instituitionCertificateDocument) ||
+            !instituitionCertificate) ||
           (marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && !marriageOfficerCertificateDocument) ||
           ((groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") &&
-            !groomDivorceAnnulledDecreeCertificateDocument) ||
+            !groomDivorceAnnulledDecreeCertificate) ||
           ((brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") &&
-            !brideDivorceAnnulledDecreeCertificateDocument) ||
-          (isExpiredHusband && !groomExpirationCertificateDocument) ||
-          (isExpiredWife && !brideExpirationCertificateDocument) ||
-          !witness1AadharDocument ||
-          !witness2AadharDocument
+            !brideDivorceAnnulledDecreeCertificate) ||
+          (isExpiredHusband && !groomExpirationCertificate) ||
+          (isExpiredWife && !brideExpirationCertificate) ||
+          !witness1Aadhar ||
+          !witness2Aadhar
         }
       >
         <div className="row">

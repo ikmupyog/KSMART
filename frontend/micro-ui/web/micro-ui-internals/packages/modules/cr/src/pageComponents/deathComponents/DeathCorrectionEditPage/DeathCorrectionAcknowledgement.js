@@ -34,7 +34,7 @@ const BannerPicker = (props) => {
   );
 };
 
-const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, userType }) => {
+const DeathCorrectionAcknowledgement = () => {
   const { t } = useTranslation();
 
   let location = useLocation();
@@ -48,14 +48,10 @@ const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, use
 
   const handleDownloadPdf = async () => {
     const { deathCorrection = [] } = mutationData.data
-    console.log("mutationData....", mutationData);
     const CorrectionData = (deathCorrection && deathCorrection[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.InformationDeathCorrection.TenantId);
-    console.log("tenantInfo",tenantInfo,CorrectionData);
     let res = CorrectionData;
-    console.log({res});
     const data = getPDFData({ ...res }, tenantInfo, t);
-    console.log("data==",data);
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
   

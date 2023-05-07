@@ -29,7 +29,6 @@ function MarriageCorrectionSummary({
   statusAttribute = "status",
   paymentsList,
 }) {
-  
   const { t } = useTranslation();
   let location = useLocation();
   let navData = location?.state?.navData;
@@ -40,7 +39,7 @@ function MarriageCorrectionSummary({
   const history = useHistory();
 
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_MARRIAGE_CORRECTION", {});
-  
+
   const marriageFieldLabels = {
     marriageDOM: "CR_DATE_OF_MARRIAGE",
     "GroomDetails.groomFirstnameEn": "CR_FIRST_NAME_EN",
@@ -233,14 +232,25 @@ function MarriageCorrectionSummary({
   };
 
   useEffect(() => {
-    
     if (marriageCorrectionData?.length > 0) {
       setDocumentsView(marriageCorrectionData?.[0]?.CorrectionDocument);
     }
   }, []);
 
+  const getFieldType = (fieldName, value) => {
+    let fieldType = "text";
+    if (
+      fieldName === "DOM" ||
+      (fieldName === "GROOM_AGE" && value.column === "GroomDetails.groomDOB") ||
+      (fieldName === "BRIDE_AGE" && value.column === "BrideDetails.brideDOB")
+    ){
+      fieldType = "date";
+    }
+      return fieldType;
+  };
+
   const renderCardDetail = (value, fieldName, documentData) => {
-    const type = (["DOM", "GROOM_AGE", "BRIDE_AGE"].includes(fieldName)) ? "date" : "text";
+    const type = getFieldType(fieldName, value);
     return (
       <div className="row">
         <div className="col-md-12">
@@ -249,12 +259,12 @@ function MarriageCorrectionSummary({
           </div>
           <div className="col-md-3">
             <h4>
-              <strong style={{ wordWrap: "break-word"}}>{getFieldValue(value?.oldValue, type)}</strong>
+              <strong style={{ wordWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-3">
             <h4>
-              <strong style={{ wordWrap: "break-word"}}>{getFieldValue(value?.newValue, type)}</strong>
+              <strong style={{ wordWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-2">
@@ -303,28 +313,31 @@ function MarriageCorrectionSummary({
 
   const mutation = Digit.Hooks.cr.useMarriageCorrectionAction(tenantId);
 
-  const navigateAcknowledgement = (data={}) =>{
+  const navigateAcknowledgement = (data = {}) => {
     setParams({});
     history.push({
       pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
-      state: { navData, marriageCorrectionData: data,mutationData:{ data : data, isSuccess: true, isLoading : false }}
+      state: { navData, marriageCorrectionData: data, mutationData: { data: data, isSuccess: true, isLoading: false } },
     });
-  }
+  };
 
-  useEffect(()=>{
-  if(mutation?.isError) {
-    console.log("mutatio",mutation);
-    setParams({});
-    history.push({
+  useEffect(() => {
+    if (mutation?.isError) {
+      setParams({});
+      history.push({
         pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
-        state: { navData, marriageCorrectionData: {} ,mutationData:{ data : mutation.data, isSuccess: mutation.isSuccess, isLoading : mutation?.isLoading }}
+        state: {
+          navData,
+          marriageCorrectionData: {},
+          mutationData: { data: mutation.data, isSuccess: mutation.isSuccess, isLoading: mutation?.isLoading },
+        },
       });
-  }
-  },[mutation])
+    }
+  }, [mutation]);
 
   const onSubmitMarriageCorrection = () => {
-     mutation.mutate(marriageCorrectionFormsObj,{ onSuccess: navigateAcknowledgement });
-  }
+    mutation.mutate(marriageCorrectionFormsObj, { onSuccess: navigateAcknowledgement });
+  };
 
   return (
     <>
@@ -333,8 +346,8 @@ function MarriageCorrectionSummary({
           {marriageCorrectionData?.length > 0 && marriageCorrectionData?.map((detail, index) => renderSummaryCard(detail, index))}
           {marriageCorrectionData?.length > 0 && (
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: "2rem" }}>
-              <SubmitBar label={t("CS_COMMON_BACK")} onSubmit = {()=> history.goBack()}/>
-              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit = {onSubmitMarriageCorrection} />
+              <SubmitBar label={t("CS_COMMON_BACK")} onSubmit={() => history.goBack()} />
+              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
             </div>
           )}
         </div>
