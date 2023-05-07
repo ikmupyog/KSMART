@@ -335,7 +335,7 @@ export const convertToEditBornOutsideBirthRegistration = (data = {}) => {
           presentOutSideIndiaadrsCityTown: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown,
           presentOutSideIndiaPostCode: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode,
           isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
-          permtaddressCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
+          presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
             ? data?.BornOutsideAddressBirthDetails?.permtaddressCountry.code
             : null,
           permtaddressStateName: data?.BornOutsideAddressBirthDetails?.permtaddressStateName

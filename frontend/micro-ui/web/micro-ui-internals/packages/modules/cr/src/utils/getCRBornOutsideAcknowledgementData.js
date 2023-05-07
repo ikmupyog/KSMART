@@ -3,128 +3,115 @@ import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocali
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
-
-//  const getTradeDetails = (application, t) => {
-//   return {
-//     title: t("TL_COMMON_TR_DETAILS"),
-//     values: [
-//       { title: t("TL_APPLICATION_TYPE"), value: t(`TRADELICENSE_APPLICATIONTYPE_${application?.applicationType}`) || t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL"), value: application?.licenseType ? t(`TRADELICENSE_LICENSETYPE_${application?.licenseType}`) : t("CS_NA") },
-//       { title: t("TL_COMMON_TABLE_COL_TRD_NAME"), value: application?.tradeName || t("CS_NA") },
-//       { title: t("reports.tl.fromDate"), value: application?.validFrom ? Digit.DateUtils.ConvertTimestampToDate(application?.validFrom, "dd/MM/yyyy") : t("CS_NA") },
-//       { title: t("reports.tl.toDate"), value: application?.validTo ? Digit.DateUtils.ConvertTimestampToDate(application?.validTo, "dd/MM/yyyy") : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL"), value: application?.tradeLicenseDetail?.structureType ? t(`COMMON_MASTERS_STRUCTURETYPE_${application?.tradeLicenseDetail?.structureType?.split('.')[0]}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL"), value: application?.tradeLicenseDetail?.structureType ? t(`COMMON_MASTERS_STRUCTURETYPE_${stringReplaceAll(application?.tradeLicenseDetail?.structureType, ".", "_")}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"), value: Digit.DateUtils.ConvertTimestampToDate(application?.commencementDate, "dd/MM/yyyy") || t("CS_NA"), },
-//       { title: t("TL_NEW_GST_NUMBER_LABEL"), value: application?.tradeLicenseDetail?.additionalDetail?.gstNo || t("CS_NA") },
-//       { title: t("TL_NEW_OPERATIONAL_SQ_FT_AREA_LABEL"), value: application?.tradeLicenseDetail?.operationalArea || t("CS_NA") },
-//       { title: t("TL_NEW_NUMBER_OF_EMPLOYEES_LABEL"), value: application?.tradeLicenseDetail?.noOfEmployees || t("CS_NA") },
-//     ],
-//   };
-// };
-// const getAccessoriesDetails = (application, t) => {
-//   let values = [];
-//   application.tradeLicenseDetail?.accessories?.map((accessory) => {
-//     let accessoryCategory = t("CS_NA");
-//     if (accessory?.accessoryCategory) {
-//       accessoryCategory = stringReplaceAll(accessory?.accessoryCategory, ".", "_");
-//       accessoryCategory = t(`TRADELICENSE_ACCESSORIESCATEGORY_${stringReplaceAll(accessoryCategory, "-", "_")}`);
-//     }
-//     let value = [
-//       { title: t("TL_NEW_TRADE_DETAILS_ACC_LABEL"), value: accessoryCategory },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"), value: accessory?.uom || t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"), value: accessory?.uomValue || t("CS_NA") },
-//       { title: t("TL_ACCESSORY_COUNT_LABEL"), value: accessory?.count || t("CS_NA") }
-//     ];
-//     values.push(...value);
-//   });
-
-//   return {
-//     title: "",
-//     values: values,
-//   };
-// };
-
-// const getTradeUnitsDetails = (application, t) => {
-//   let values = [];
-//   application.tradeLicenseDetail?.tradeUnits?.map((unit) => {
-//     let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
-//     tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
-//     let value = [
-//       { title: t("TRADELICENSE_TRADECATEGORY_LABEL"), value: unit?.tradeType ? t(`TRADELICENSE_TRADETYPE_${unit?.tradeType?.split('.')[0]}`) : t("CS_NA") },
-//       { title: t("TRADELICENSE_TRADETYPE_LABEL"), value: unit?.tradeType ? t(`TRADELICENSE_TRADETYPE_${unit?.tradeType?.split('.')[1]}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_SUB_TYPE_LABEL"), value: tradeSubType ? t(`TRADELICENSE_TRADETYPE_${tradeSubType}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"), value: unit?.uom || t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"), value: unit?.uomValue || t("CS_NA") },
-//       { title: "", value: ""},
-//       { title: "", value: ""},
-//       { title: "", value: ""}
-//     ];
-//     values.push(...value);
-//   });
-
-//   return {
-//     title: "",
-//     values: values,
-//   };
-// };
 const getChildDetails = (application, t) => {
   application.owners = application?.BornOutsideChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
  
   return {
-    title: "",
+    title: "CR_BIRTH_CHILD_DETAILS",
     values: [
-      { title: t("Date of Birth"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
-      { title: t("Birth Place"), value: application?.outsideBirthPlaceEn ? application?.outsideBirthPlaceEn : t("CS_NA") },
-    //   { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
-
-      // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
-      // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
-      // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
-      // // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
-      // { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
+      
+      { title: t("PDF_BIRTH_DATE_OF_BIRTH"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
+      { title: t("PDF_BIRTH_CHILD_SEX"), value: application?.gender ? application?.gender : t("CS_NA") },
+      { title: t("PDF_BIRTH_PLACE_OF_BIRTH"), value: application?.outsideBirthPlaceEn ? application?.outsideBirthPlaceEn + "/" + application?.outsideBirthPlaceMl : t("CS_NA") },
+      { title: t("CR_CHILD_PASSPORT_NO"), value: application?.childPassportNo ? application?.childPassportNo : t("CS_NA") },
+      { title: t("PDF_BIRTH_CHILD_NAME"), value: application?.childFirstNameEn + application?.childMiddleNameEn + application?.childLastNameEn},
+      { title: t("CR_DATE_OF_ARRIVAL"), value: application?.childArrivalDate ? Digit.DateUtils.ConvertTimestampToDate(application?.childArrivalDate, "dd/MM/yyyy") : t("CS_NA") },
+      { title: t("CS_COMMON_COUNTRY"), value: application?.country ? application?.country : t("CS_NA") },
+      { title: t("CR_STATE_REGION_PROVINCE"), value: application?.provinceEn + "/" + application?.provinceMl || t("CS_NA")},
+      { title: t("CR_CITY_TOWN"), value: application?.cityTownEn + "/" + application?.cityTownMl || t("CS_NA")},
+      { title: t("CR_ZIP_CODE"), value: application?.postCode ? application?.postCode : t("CS_NA") },
     ],
   };
-
-  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
-  //   let values = [];
-  //   application?.tradeLicenseDetail.owners.map((owner) => {
-  //     let indOwner = [
-  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
-  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
-  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
-  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
-  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
-  //     ];
-  //     values.push(...indOwner);
-  //   });
-  //   return {
-  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
-  //     values: values,
-  //   };
-  // }
 };
-const getAddressDetails = (application, t) => {
+const getParentsDetails = (application, t) => {
+  return{
+    title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+    values: [
+      { title: t("PDF_BIRTH_NAME_OF_MOTHER"), value:
+      application?.BornOutsideParentsDetails?.motherFirstNameEn +
+        " / " +
+        application?.BornOutsideParentsDetails?.motherFirstNameMl || t("CS_NA") },
+        { title: t("CR_MOTHER_PASSPORT_NO"), value: application?.BornOutsideParentsDetails?.motherPassport ? application?.BornOutsideParentsDetails?.motherPassport : t("CS_NA") },
+        { title: t("CR_MOTHER_NATIONALITY"), value: application?.BornOutsideParentsDetails?.motherNationality ? application?.BornOutsideParentsDetails?.motherNationality : t("CS_NA") },
+        { title: t("PDF_BIRTH_NAME_OF_FATHER"), value:
+        application?.BornOutsideParentsDetails?.fatherFirstNameEn +
+          " / " +
+          application?.BornOutsideParentsDetails?.fatherFirstNameMl || t("CS_NA") },
+          { title: t("CR_FATHER_PASSPORT_NO"), value: application?.BornOutsideParentsDetails?.fatherPassport ? application?.BornOutsideParentsDetails?.fatherPassport : t("CS_NA") },
+          { title: t("CR_FATHER_NATIONALITY"), value: application?.BornOutsideParentsDetails?.fatherNationality ? application?.BornOutsideParentsDetails?.fatherNationality : t("CS_NA") },
+          { title: t("CR_MOTHER_AGE_MARRIAGE"), value: application?.BornOutsideParentsDetails?.motherMarriageAge ? application?.BornOutsideParentsDetails?.motherMarriageAge : t("CS_NA") },
+          { title: t("CR_MOTHER_AGE_BIRTH"), value: application?.BornOutsideParentsDetails?.motherMarriageBirth ? application?.BornOutsideParentsDetails?.motherMarriageBirth : t("CS_NA") },
+          { title: t("CR_MOTHER_EDUCATION"), value: application?.BornOutsideParentsDetails?.motherEducation ? application?.BornOutsideParentsDetails?.motherEducation : t("CS_NA") },
+          { title: t("CR_MOTHER_PROFESSIONAL"), value: application?.BornOutsideParentsDetails?.motherProfession ? application?.BornOutsideParentsDetails?.motherProfession : t("CS_NA") },
+          { title: t("CR_FATHER_EDUCATION"), value: application?.BornOutsideParentsDetails?.fatherEducation ? application?.BornOutsideParentsDetails?.fatherEducation : t("CS_NA") },
+          { title: t("CR_FATHER_PROFESSIONAL"), value: application?.BornOutsideParentsDetails?.fatherProfession ? application?.BornOutsideParentsDetails?.fatherProfession : t("CS_NA") },
+          { title: t("CS_COMMON_RELIGION"), value: application?.BornOutsideParentsDetails?.Religion ? application?.BornOutsideParentsDetails?.Religion : t("CS_NA") },
+          { title: t("CR_PARENTS_CONTACT_NO"), value: application?.BornOutsideParentsDetails?.fatherMobile ? application?.BornOutsideParentsDetails?.fatherMobile : t("CS_NA") },
+          { title: t("CR_PARENTS_EMAIL"), value: application?.BornOutsideParentsDetails?.fatherEmail ? application?.BornOutsideParentsDetails?.fatherEmail : t("CS_NA") },
+    ]
+  }
+}
+const getPermanantAddressDetails = (application, t) => {
+  console.log(application, "application");
   return {
-    title: "",
+    title: "CR_PERMANENT_ADDRESS",
     values: [
-      // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
-      // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
-      // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-      { title: t("Locality"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn || t("CS_NA") }
+      { title: t("CR_BIRTH_PERM_HO_NAME_LABEL"), value:
+      application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn +
+        " / " +
+        application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl || t("CS_NA") },
+        { title: t("CR_BIRTH_PERM_LOCALITY_LABEL"), value:
+        application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn +
+          " / " +
+          application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl || t("CS_NA") },
+        { title: t("CR_BIRTH_PERM_STREET_LABEL"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn : t("CS_NA") },
+        { title: t("CS_COMMON_POST_OFFICE"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice : t("CS_NA") },
+        { title: t("CR_BIRTH_PERM_PINCODE_LABEL"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode : t("CS_NA") },
+        { title: t("CS_COMMON_VILLAGE"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage : t("CS_NA") },
+        { title: t("CS_COMMON_TALUK"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk : t("CS_NA") },
+        { title: t("CS_COMMON_DISTRICT"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict : t("CS_NA") },
+        { title: t("CR_BIRTH_PERM_STATE_LABEL"), value: application?.BornOutsideAddressBirthDetails?.permtaddressStateName ? application?.BornOutsideAddressBirthDetails?.permtaddressStateName : t("CS_NA") },
+        { title: t("CR_BIRTH_PERM_COUNTRY_LABEL"), value: application?.BornOutsideAddressBirthDetails?.permtaddressCountry ? application?.BornOutsideAddressBirthDetails?.permtaddressCountry : t("CS_NA") },
     ],
   };
 };
-
+    const getForeignAddressDetails = (application, t) => {
+      return{
+    title: "CR_PARENTS_FOREIGN_ADDRESS",
+    values: [
+      { title: t("CS_COMMON_COUNTRY"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideCountry ? application?.BornOutsideAddressBirthDetails?.presentOutSideCountry : t("CS_NA") },
+      { title: t("CR_STATE_REGION_PROVINCE_EN"), value:
+      application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn +
+        " / " +
+        application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl || t("CS_NA") },
+        { title: t("CR_TOWN_VILLAGE_EN"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage : t("CS_NA") },
+        { title: t("CR_CITY_TOWN_EN"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown : t("CS_NA") },
+        { title: t("CR_ZIP_CODE"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode : t("CS_NA") },
+        { title: t("CR_ADDRES_LINE_ONE_EN"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn : t("CS_NA") },
+        { title: t("CR_ADDRES_LINE_ONE_ML"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl : t("CS_NA") },
+        { title: t("CR_ADDRES_LINE_TWO_EN"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB : t("CS_NA") },
+        { title: t("CR_ADDRES_LINE_TWO_ML"), value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB : t("CS_NA") },
+    ]
+  };
+};
+const getstatisticalInfo = (application, t) => {
+  return{
+    title: "CR_STATSTICAL_INFORMATION_HEADER",
+    values: [
+      { title: t("CR_BIRTH_WEIGHT"), value: application?.BornOutsideStaticInfn?.birthWeight ? application?.BornOutsideStaticInfn?.birthWeight : t("CS_NA") },
+      { title: t("CR_PREGNANCY_DURATION"), value: application?.BornOutsideStaticInfn?.pregnancyDuration ? application?.BornOutsideStaticInfn?.pregnancyDuration : t("CS_NA") },
+      { title: t("CR_DELIVERY_METHOD"), value: application?.BornOutsideStaticInfn?.deliveryMethods ? application?.BornOutsideStaticInfn?.deliveryMethods : t("CS_NA") },
+      { title: t("CR_NATURE_OF_MEDICAL_ATTENTION"), value: application?.BornOutsideStaticInfn?.medicalAttensionSub ? application?.BornOutsideStaticInfn?.medicalAttensionSub : t("CS_NA") },
+      { title: t("CR_ORDER_CURRENT_DELIVERY"), value: application?.BornOutsideStaticInfn?.orderofChildren ? application?.BornOutsideStaticInfn?.orderofChildren : t("CS_NA") },
+      { title: t("CR_RELATION"), value: application?.BornOutsideStaticInfn?.relation ? application?.BornOutsideStaticInfn?.relation : t("CS_NA") },
+      { title: t("CS_COMMON_AADHAAR"), value: application?.BornOutsideStaticInfn?.informarAadhar ? application?.BornOutsideStaticInfn?.informarAadhar : t("CS_NA") },
+      { title: t("CR_INFORMANT_NAME"), value: application?.BornOutsideStaticInfn?.informarNameEn ? application?.BornOutsideStaticInfn?.informarNameEn : t("CS_NA") },
+      { title: t("CR_MOBILE_NO"), value: application?.BornOutsideStaticInfn?.informarMobile ? application?.BornOutsideStaticInfn?.informarMobile : t("CS_NA") },
+      { title: t("CR_INFORMER_ADDRESS"), value: application?.BornOutsideStaticInfn?.informarAddress ? application?.BornOutsideStaticInfn?.informarAddress : t("CS_NA") },
+    ]
+  }
+}
 const getCRBornOutsideAcknowledgementData = async (application, tenantInfo, t) => {
   //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
   //   let res;
@@ -150,25 +137,11 @@ const getCRBornOutsideAcknowledgementData = async (application, tenantInfo, t) =
         ],
       },
       getChildDetails(application, t),
-      getAddressDetails(application, t),
-      //       getTradeDetails(application, t),
-      //       getTradeUnitsDetails(application, t),
-      //       getAccessoriesDetails(application, t),
-      //       getAddressDetails(application, t),
-      //       getOwnerDetails(application, t),
-      //       {
-      //         title: t("TL_COMMON_DOCS"),
-      //         values:
-      //           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
-      //             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
-      //               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
-      //               return {
-      //                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
-      //                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
-      //               };
-      //             })
-      //             : [],
-      //       },
+      getParentsDetails(application, t),
+      getPermanantAddressDetails(application, t),
+      getForeignAddressDetails(application, t),
+      getstatisticalInfo(application, t),
+      
     ],
   };
 };
