@@ -91,5 +91,8 @@ public class PGRConstants {
     
     public static final String PATTERN_MOBILE = "^[1-9][0-9]{9,14}$";
 
+    public static final String ACTION_REJECT = "REJECT";
+    
+    public static final String ACTION_RESOLVE = "RESOLVE";
 
 }

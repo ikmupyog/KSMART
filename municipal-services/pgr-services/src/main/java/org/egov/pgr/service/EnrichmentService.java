@@ -17,6 +17,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.egov.pgr.util.PGRConstants.USERTYPE_CITIZEN;
+import static org.egov.pgr.util.PGRConstants.ACTION_REJECT;
+import static org.egov.pgr.util.PGRConstants.ACTION_RESOLVE;
 
 @org.springframework.stereotype.Service
 public class EnrichmentService {
@@ -126,6 +128,10 @@ public class EnrichmentService {
         if(workflow.getAssignes().get(0) != null) {
         	 service.setAccountId(workflow.getAssignes().get(0));
         }    
+      }
+      if((workflow.getAction() == ACTION_REJECT) || (workflow.getAction() == ACTION_RESOLVE)){
+    	  
+    	  service.setAccountId(service.getAuditDetails().getCreatedBy());
       }
         if(serviceRequest.getService().getEmployee().getRolecode() == USERTYPE_CITIZEN) {
         	userService.callUserService(serviceRequest);
