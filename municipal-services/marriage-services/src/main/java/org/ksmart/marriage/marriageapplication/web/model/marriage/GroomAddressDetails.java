@@ -86,6 +86,7 @@ public class GroomAddressDetails {
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaCityVilgeEn")
     private String presentOutsideKeralaCityVilgeNameEn;
+
     @Size(max = 64)
     @JsonProperty("presentOutsideKeralaPincode")
     private String presentOutsideKeralaPincode;
