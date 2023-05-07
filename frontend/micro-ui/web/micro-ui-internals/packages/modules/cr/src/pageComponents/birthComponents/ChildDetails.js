@@ -10,6 +10,8 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 import { sortDropdownNames } from "../../utils";
+import moment from "react";
+import _ from "lodash";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
@@ -48,7 +50,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
   const [hospitalCode, sethospitalCode] = useState(formData?.ChildDetails?.hospitalCode);
-
+  const [docPreview, setDocPreview] = useState(formData?.ChildDetails?.docPreview ? formData?.ChildDetails?.docPreview : null);
   // console.log(Digit.UserService.getUser().info);
   const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
@@ -164,7 +166,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
+  const [birthDateTime, setbirthDateTime] = useState(isEditBirth === false && formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
   const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
   //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
@@ -274,6 +276,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }, [isInitialRender]);
+  const fetchFile = async (fileId) => {
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    return newThumbnails;
+  };
   // console.log(userRoles);
   const roleall = [];
   roleall.push(...roletemp);
@@ -443,10 +453,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, tenantId);
             if (response?.data?.files?.length > 0) {
-              // console.log("test");
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              setDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -634,10 +645,19 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
     if (typeof value === "string") {
       cb(value);
-      // let hour = value;
-      // let period = hour > 12 ? "PM" : "AM";
-      // console.log(period);
       setbirthDateTime(value);
+      console.log(value);
+      let time = value;
+      let timeParts = time.split(":");
+      console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
+      // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
+      // // Usage
+      // const milliSecTime = milliseconds(24, 36,0);
+      // const time = value;
+      // // "34:26";
+      // const timeParts = time.split(":");
+      // const convrtmilliSecTime = milliseconds(timeParts[0], timeParts[1],0);
+      // console.log(convrtmilliSecTime);
     }
   };
   function setChildName(e) {
@@ -1436,7 +1456,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
         uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
-        proceedNoRDO, regNoNAC
+        proceedNoRDO, regNoNAC, docPreview
       });
     }
   };
@@ -1575,7 +1595,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>{`${t("CR_RDO_PROCEED_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
@@ -1592,7 +1612,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
                     />
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>{`${t("CR_NAC_REG_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
@@ -1621,7 +1641,44 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                     />
                   </div>
+                  {
+                    docPreview && (
+                      <div className="col-md-2">
+                        {_.head(docPreview)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(docPreview)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(docPreview)?.small}
+                            alt="Other Certificate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(docPreview)?.type === "pdf"
+                              ? _.head(docPreview)?.pdfUrl
+                              : _.head(docPreview)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )
+                  }
+
                 </div>
+
               </div>
             </div>
           )}
