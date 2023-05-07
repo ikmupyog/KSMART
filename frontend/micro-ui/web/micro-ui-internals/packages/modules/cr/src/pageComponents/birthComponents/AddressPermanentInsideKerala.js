@@ -122,6 +122,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
+  const sortWardList = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
   useEffect(() => {
 
     if (isInitialRender && isPrsentAddress && countryValuePermanent === "IND" && valuePermanent === "kl"
@@ -435,7 +436,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrTaluk(value) {
     setpermntInKeralaAdrTaluk(value);
-    console.log("cmbFilterVillage", cmbVillage);
     if (cmbVillage.length > 0) {
       setLbsVillagePermvalue(cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code));
     }
@@ -630,7 +630,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             <Dropdown
               t={t}
               optionKey="namecmb"
-              option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
+              option={sortWardList}
               selected={permntInKeralaWardNo}
               select={setSelectWard}
               placeholder={`${t("CS_COMMON_WARD")}`}

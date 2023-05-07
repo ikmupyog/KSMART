@@ -38,8 +38,10 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   // const cityDetails = Digit.ULBService.getCurrentUlb();
   let acceptFormat = ".pdf"
 
-
-
+  const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile);
+  const [uploadedFile1, setUploadedFile1] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile1);
+  const [file, setFile] = useState(formData?.InitiatorAbandoned?.uploadedFile);
+  const [file1, setFile1] = useState(formData?.InitiatorAbandoned?.uploadedFile1);
   
 
   // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
