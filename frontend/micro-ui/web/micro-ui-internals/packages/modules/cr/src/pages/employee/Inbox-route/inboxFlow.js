@@ -11,7 +11,7 @@ const SearchFlow = ({ path }) => {
     {
       title: "CR_BIRTH_INBOX",
       subTitle: "CR_BIRTH_INBOX_APPLS",
-      img: <BankIcon />,
+      img: <FileProtected />,
       link: `${path}/birthinbox`,
     },
 
@@ -22,8 +22,8 @@ const SearchFlow = ({ path }) => {
       link: `${path}/deathinbox`,
     },
     {
-      title: "Marriage Inbox",
-      subTitle: "Marriage Applications Inbox",
+      title: "CR_MARRIAGE_INBOX",
+      subTitle: "CR_MARRIAGE_INBOX_APPS",
       img: <FileProtected />,
       link: `${path}/marriageinbox`,
     },
@@ -31,15 +31,15 @@ const SearchFlow = ({ path }) => {
   ];
   const ClassList = 
     {
-     'Birth Inbox':  'crfile',
-     'Death Inbox':  'crfileadoption',
-     'Marriage Inbox': 'crmarriageCorrection'
+     'CR_BIRTH_INBOX':  'crfile',
+     'CR_DEATH_INBOX':  'crfileadoption',
+     'CR_MARRIAGE_INBOX': 'crmarriageCorrection'
     };
   return (
     <div>
       <div className="fileText">
         {" "}
-        <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("Select Inbox Type")}</CardLabel>
+        <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("SELECT_INBX_TYPE")}</CardLabel>
         {/* <h3>Select Functional Modules</h3> */}
       </div>
       <div className="FileFlowWrapper">
