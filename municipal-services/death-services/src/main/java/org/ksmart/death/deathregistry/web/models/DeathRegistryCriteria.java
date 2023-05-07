@@ -137,4 +137,6 @@ public class DeathRegistryCriteria {
 
     @JsonProperty("CertificateNo")
     private String certificateNo;
+
+    private String deathType;
 }
