@@ -461,7 +461,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                         marriage.getBrideAddressDetails().setPoNoPresent(marriage.getBrideAddressDetails().getPresentInsideKeralaPostOffice());
                                 } 
                                 else {
-                                    System.out.println("BridePresentAddress-2"+marriage.getBrideAddressDetails().getPresentOutsideKeralaPincode());
+
                                     marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                     marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getPresentaddressStateName());
 
