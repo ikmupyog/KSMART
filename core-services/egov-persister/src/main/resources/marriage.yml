@@ -1185,7 +1185,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPostOffice
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPincode
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PinNoPresent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPresent
 
