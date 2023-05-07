@@ -84,6 +84,7 @@ public interface GroomAddressDetailsRowMapper {
                 .houseNameNoMlPermanent(rs.getString("GPMA_housename_ml"))
                 .villageNamePermanent(rs.getString("GPMA_village_name"))
                 .permanentUuid(rs.getString("GPMA_id"))
+                .townOrVillagePresent(rs.getString("GPMA_city_town_village"))
                 //.permtaddressCountry(rs.getString("GPMA_countryid"))
                 //.permtaddressStateName(rs.getString("GPMA_stateid"))
                 .permntInKeralaAdrLBName(rs.getString("GPMA_tenantid"))

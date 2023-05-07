@@ -352,7 +352,7 @@ public class BrideAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("permntOutsideKeralaVillage")
-    private String permntOutsideKeralaVillageorTwon;
+    private String permntOutsideKeralaVillageorTown;
 
     @Size(max = 64)
     @JsonProperty("permntOutsideKeralaPincode")
@@ -677,5 +677,8 @@ public class BrideAddressDetails {
 
     @JsonProperty("permntInKeralaAdrLBNameMl")
     private String permntInKeralaAdrLBNameMl;
+
+    @JsonProperty("presentAddrVillageId")
+    private String presentAddrVillageId ;
 
 }

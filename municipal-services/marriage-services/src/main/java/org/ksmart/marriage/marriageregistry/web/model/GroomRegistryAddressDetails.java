@@ -86,11 +86,11 @@ public class GroomRegistryAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaVillage")
-    private String presentOutsideKeralaVillageName;
+    private String presentOutsideKeralaVillageorTown;
 
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaCityVilgeEn")
-    private String presentOutsideKeralaCityVilgeEn;
+    private String presentOutsideKeralaCityVilgeNameEn;
 
     @Size(max = 64)
     @JsonProperty("presentOutsideKeralaPincode")
@@ -290,7 +290,7 @@ public class GroomRegistryAddressDetails {
 
     @Size(max = 64)
     @JsonProperty("permntOutsideKeralaCityVilgeEn")
-    private String permntOutsideKeralaCityVilgeEn;
+    private String permntOutsideKeralaCityVilgeNameEn;
 
     @Size(max = 64)
     @JsonProperty("permntInKeralaAdrTaluk")
@@ -354,7 +354,7 @@ public class GroomRegistryAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("permntOutsideKeralaVillage")
-    private String permntOutsideKeralaVillage;
+    private String permntOutsideKeralaVillageorTown;
 
     @Size(max = 64)
     @JsonProperty("permntOutsideKeralaPincode")
@@ -680,5 +680,8 @@ public class GroomRegistryAddressDetails {
 
     @JsonProperty("presentInsideKeralaLBNameMl")
     private String presentInsideKeralaLBNameMl;
+
+    @JsonProperty("presentAddrVillageId")
+    private String presentAddrVillageId ;
 
 }
