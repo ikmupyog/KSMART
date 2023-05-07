@@ -46,6 +46,19 @@ const CrLinks = ({ isMobile, data,SearchInbox }) => {
   //   }
   // }, []);
 
+  const getSearchInbox = (SearchInbox) =>{
+    let selectedInbox = t("Death Inbox");
+    switch(SearchInbox){
+      case "birth":
+         selectedInbox = t("Birth Inbox");
+         break;
+      case "marriage":
+        selectedInbox = t("Marriage Inbox");
+        break;
+    }
+    return SearchInbox;
+  }
+
   const GetLogo = () => (
     <div className="header">
       <span className="logo">
@@ -54,7 +67,7 @@ const CrLinks = ({ isMobile, data,SearchInbox }) => {
           <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z" fill="white" />
         </svg>
       </span>{" "}
-      <span className="text">{SearchInbox=="birth"?t("Birth Inbox"):t("Death Inbox")}</span>
+      <span className="text">{getSearchInbox(SearchInbox)}</span>
     </div>
   );
 

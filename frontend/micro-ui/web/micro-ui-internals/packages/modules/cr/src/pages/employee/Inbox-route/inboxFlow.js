@@ -21,13 +21,19 @@ const SearchFlow = ({ path }) => {
       img: <FileProtected />,
       link: `${path}/deathinbox`,
     },
-   
+    {
+      title: "Marriage Inbox",
+      subTitle: "Marriage Applications Inbox",
+      img: <FileProtected />,
+      link: `${path}/marriageinbox`,
+    },
     
   ];
   const ClassList = 
     {
      'Birth Inbox':  'crfile',
      'Death Inbox':  'crfileadoption',
+     'Marriage Inbox': 'crmarriageCorrection'
     };
   return (
     <div>

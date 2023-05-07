@@ -12,6 +12,7 @@ const assetsProxy = createProxyMiddleware({
 });
 module.exports = function (app) {
   [
+    "/marriage-services/v1/marriagedetails/_searchmarriage",
     "/egov-mdms-service",
     "/egov-location",
     "/localization",

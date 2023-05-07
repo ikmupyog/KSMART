@@ -6,6 +6,7 @@ import Inbox from "./Inbox";
 // import NewApplication from "./NewApplication";
 import Search from "./Search";
 // import Response from "../Response";
+import CorrectionApplicationDetails from "./Corrections";
 import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from "./ApplicationAdoptionDetails";
 import ApplicationAbandonedDeathDetails from "./ApplicationAbandonedDeathDetails";
@@ -294,6 +295,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
 
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/correction-details/:id/:type`} component={() => <CorrectionApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
           <PrivateRoute
             path={`${path}/application-bornOutsideIndia/:id`}
