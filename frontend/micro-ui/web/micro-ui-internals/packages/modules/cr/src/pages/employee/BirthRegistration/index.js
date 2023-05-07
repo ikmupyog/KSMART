@@ -60,7 +60,9 @@ const CreateBirthEmp = ({ parentUrl }) => {
   };
 
   const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+    if(isEditBirth === false){
+      clearParams();
+    } 
     queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
   };
   const handleSkip = () => { };

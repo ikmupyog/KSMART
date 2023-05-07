@@ -73,11 +73,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   function onBirthSubmit() {
-    console.log("Jetheesh");
-    console.log("isInitiatorDeclaration", isInitiatorDeclaration);
-    console.log("citizen", window.location.href.includes("/citizen"));
-
-    if (isInitiatorDeclaration === false && window.location.href.includes("/citizen")) {
+    // && window.location.href.includes("/citizen")
+    if (isInitiatorDeclaration === false ) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -1719,7 +1716,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           }
         />
 
-        {window.location.href.includes("/citizen") && (
+        {/* {window.location.href.includes("/citizen") && ( */}
           <div>
             <div className="row">
               <div className="col-md-12">
@@ -1743,7 +1740,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </div>
             </div>
           </div>
-        )}
+        {/* )} */}
 
         {toast && (
           <Toast
@@ -1753,7 +1750,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           />
         )}
         {""}
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} disabled={!isInitiatorDeclaration} />
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit}  disabled={!isInitiatorDeclaration }  />
+        {/* disabled={!isInitiatorDeclaration } */}
       </Card>
     </React.Fragment>
   );
