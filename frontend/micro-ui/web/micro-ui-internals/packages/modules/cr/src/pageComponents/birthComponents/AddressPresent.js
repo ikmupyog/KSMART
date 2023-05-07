@@ -10,7 +10,6 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
-    console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();

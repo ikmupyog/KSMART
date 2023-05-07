@@ -724,6 +724,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         groomURL,
         uploadedBrideImageId,
         uploadedGroomImageId,
+        uniqueId,
       });
     }
   };

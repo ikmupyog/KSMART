@@ -462,8 +462,8 @@ export const convertToMarriageRegistration = (data = {}) => {
           witness2Esigned: data?.WitnessDetails?.witness2Esigned ? data?.WitnessDetails?.witness2Esigned : false,
           groomFileStoreId: data?.WitnessDetails?.uploadedGroomImageId ? data?.WitnessDetails?.uploadedGroomImageId[0] : null,
           brideFileStoreId: data?.WitnessDetails?.uploadedBrideImageId ? data?.WitnessDetails?.uploadedBrideImageId[0] : null,
-          groomUrl: data?.WitnessDetails?.groomImageURL ? data?.WitnessDetails?.groomImageURL?.split(",")[1] : null,
-          brideUrl: data?.WitnessDetails?.brideImageURL ? data?.WitnessDetails?.brideImageURL?.split(",")[1] : null,
+          groomUrl: data?.WitnessDetails?.groomURL ? data?.WitnessDetails?.groomURL?.split(",")[1] : null,
+          brideUrl: data?.WitnessDetails?.brideURL ? data?.WitnessDetails?.brideURL?.split(",")[1] : null,
         },
         BrideAddressDetails: {
           presentaddressCountry: data?.BrideAddressDetails?.presentaddressCountry ? data?.BrideAddressDetails?.presentaddressCountry?.code : null,
@@ -586,6 +586,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           permntInKeralaAdrLocalityNameEn: data?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
             ? data?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
+            : null,
+          permntInKeralaAdrStreetNameEn: data?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
+            ? data?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
             : null,
           permntInKeralaAdrHouseNameEn: data?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
             ? data?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
@@ -788,6 +791,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           permntInKeralaAdrLocalityNameEn: data?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
             ? data?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
+            : null,
+          permntInKeralaAdrStreetNameEn: data?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
+            ? data?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
             : null,
           permntInKeralaAdrHouseNameEn: data?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
             ? data?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
