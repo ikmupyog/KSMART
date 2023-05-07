@@ -120,10 +120,13 @@ public class EnrichmentService {
         Workflow workflow =serviceRequest.getWorkflow();
         AuditDetails auditDetails = utils.getAuditDetails(requestInfo.getUserInfo().getUuid(), service,false);
 
-        service.setAuditDetails(auditDetails);        
-        if(!StringUtils.isEmpty(workflow.getAssignes().get(0))) {
+        service.setAuditDetails(auditDetails);     
+      
+      if(workflow.getAssignes() != null) {
+        if(workflow.getAssignes().get(0) != null) {
         	 service.setAccountId(workflow.getAssignes().get(0));
-        }        
+        }    
+      }
         if(serviceRequest.getService().getEmployee().getRolecode() == USERTYPE_CITIZEN) {
         	userService.callUserService(serviceRequest);
         }
