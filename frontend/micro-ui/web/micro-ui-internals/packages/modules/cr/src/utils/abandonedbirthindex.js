@@ -372,7 +372,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRAB",
         businessservice: "birth-services",
-        workflowcode: "BIRTHABANDONED",
+        workflowcode: "ABANDONEDBIRTH",
         ParentsDetails: {
           motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.AbandonedChildDetails?.motherFirstNameMl,
@@ -399,11 +399,19 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         },
       documentDetails: [
         {
-          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
-          document : data?.AbandonedBirthInformarDetails?.documents?.document,
-                 
-        }
-      ],
+          // tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          // document : data?.AbandonedBirthInformarDetails?.documents?.document,
+          DocumentType: "CR_REPORTING_FORM",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile      
+        },
+        {
+          // tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          // document : data?.AbandonedBirthInformarDetails?.documents?.document,          DocumentType: "Letter form the Informer/Notifier Official",
+          DocumentType: "CR_CHILDBIRTH_PROOF",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile1      
+        },
+      ], 
+
       },
     ],
   };
@@ -423,12 +431,12 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
 //         birthPlace: data?.AbandonedChildDetails?.birthPlace ? data?.AbandonedChildDetails?.birthPlace.code : null,
 //         hospitalName: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalName : null,
 //         hospitalNameMl: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalNamelocal : null,
-//         institutionTypeCode: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.code : null,
+//         institutionTypeCode: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution : null,
 //         institution: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.name : null,
-//         institutionNameCode: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.code : null,
+//         institutionNameCode: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId : null,
 //         institutionId: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.institutionName : null,
 //         institutionIdMl: data?.AbandonedChildDetails?.institutionIdMl ? data?.AbandonedChildDetails?.institutionIdMl.institutionNamelocal : null,
-//         wardNo: data?.AbandonedChildDetails?.wardNo ? data?.AbandonedChildDetails?.wardNo.code : null,
+//         wardNo: data?.AbandonedChildDetails?.wardNo ? data?.AbandonedChildDetails?.wardNo : null,
 //         wardNameEn: data?.AbandonedChildDetails?.wardNameEn ? data?.AbandonedChildDetails?.wardNameEn : null,
 //         wardNameMl: data?.AbandonedChildDetails?.wardNameMl ? data?.AbandonedChildDetails?.wardNameMl : null,
 //         wardNumber: data?.AbandonedChildDetails?.wardNumber ? data?.AbandonedChildDetails?.wardNumber : null,
@@ -463,7 +471,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
 //         action: "APPLY",
 //         applicationtype: "CRBRAB",
 //         businessservice: "birth-services",
-//         workflowcode: "21BIRTHHOME",
+//         workflowcode: "ABANDONEDBIRTH",
 //         ParentsDetails: {
 //           motherFirstNameEn: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameEn,
 //           motherFirstNameMl: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameMl,
@@ -478,7 +486,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
 //           infomantMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantMobile,
 //           informerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerAddress,
 //           informerDesi: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerDesi,
-//           // isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
+//           isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
 //         },
 //         caretakerDetails: {
 //           institutionName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.institutionName,
@@ -487,14 +495,18 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
 //           caretakerMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerMobile,
 //           caretakerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerAddress,
 //         },
-//         documentDetails: {
+//         documentDetails: [
+//         {
 
-//           tenantId: data?.AbandonedBirthInformarDetails?.tenantId,         
-//           document : data?.childdoc,
-//         // appplicantDocument : document
-      
-
+//           DocumentType: "CR_REPORTING_FORM",
+//           filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile      
 //         },
+//         {
+//           DocumentType: "CR_CHILDBIRTH_PROOF",
+//           filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile1      
+//         },
+//       ], 
+
 //       },
 //     ],
 //   };

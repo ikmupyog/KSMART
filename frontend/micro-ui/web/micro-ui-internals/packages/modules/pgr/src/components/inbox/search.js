@@ -45,7 +45,10 @@ const SearchComplaint = ({ onSearch, type, onClose, searchParams }) => {
   }
 
   function setMobile(e) {
-    setMobileNo(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      const phone = e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10)
+      setMobileNo(phone);
+    }
   }
 
   return (

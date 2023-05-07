@@ -24,13 +24,13 @@ const ActionModal = (props) => {
   }
   if (
     props?.businessService.includes("WFBIRTH21DAYS") ||
-    props?.businessService.includes("WFBIRTH30DAYS") ||
+    props?.businessService.includes("BIRTH30DAYSWF") ||
     props?.businessService.includes("WFBIRTH1YR") ||
     props?.businessService.includes("WFBIRTHABOVE1YR") ||
     props?.businessService.includes("WFBIRTH21DAYSHOME") ||
     props?.businessService.includes("WFBIRTH30DAYSHOME") ||
-    props?.businessService.includes("WFBIRTH1YRHOME") ||
-    props?.businessService.includes("ABOVE1YRBIRTHHOME")
+    props?.businessService.includes("WFBIRTHHOME1YEAR") ||
+    props?.businessService.includes("WFBIRTHHOME1YEARABOVE")
   ) {
     return <BirthActionModal {...props} />;
   }
@@ -43,7 +43,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("WFBORNOUTSIDE60")) {
     return <BornOutsideActionModal {...props} />;
   }
-  if (props?.businessService.includes("BIRTHABANDONED")) {
+  if (props?.businessService.includes("ABANDONEDBIRTH")) {
     return <AbandonedBirthActionModal {...props} />;
   }
   if (

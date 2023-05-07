@@ -12,7 +12,7 @@ const BirthInbox = () => {
   const [pageOffset, setPageOffset] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [searchParams, setSearchParams] = useState({ filters: { wfFilters: { assignee: [{ code: uuid }] } }, search: "", sort: {} });
+  const [searchParams, setSearchParams] = useState({ filters: { assignee: uuid }, search: "", sort: {} });
 
   useEffect(() => {
     (async () => {
@@ -47,27 +47,28 @@ const BirthInbox = () => {
     setSearchParams({ ...searchParams, search: params });
   };
 
-  // let complaints = Digit.Hooks.pgr.useInboxData(searchParams) || [];
-  // let { data: complaints, isLoading } = Digit.Hooks.cr.useUserSearch({ ...searchParams, offset: pageOffset, limit: pageSize }) ;
-let complaints=[]
-// let isLoading
+  let complaints = []
   let isMobile = Digit.Utils.browser.isMobile();
-  // let { data: complaintsz, isLoading:load } = Digit.Hooks.cr.useInbox({   tenantId, ...searchParams, offset: pageOffset, limit: pageSize }) ;
-  const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: searchParams?.search })
-// console.log(complaintsz);
-let birthData = searchParams?.search? searchResult : searchParams?.filters?.wfFilters?.assignee?.length>0?searchParams?.filters?.wfFilters?.assignee[0].code==""?searchResult:[]:[]
-let Loading = searchParams?.search? isLoading : false
+  // console.log("233", searchParams)
+
+  const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
+  // let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
+  // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
+  // console.log("complaintsz", complaintsz)
+
+  let Loading = isLoading;
+
   if (complaints?.length !== null) {
     if (isMobile) {
       return (
-        <MobileInbox data={birthData} isLoading={Loading} onFilterChange={handleFilterChange} onSearch={onSearch} searchParams={searchParams} />
+        <MobileInbox data={searchResult} isLoading={Loading} onFilterChange={handleFilterChange} onSearch={onSearch} searchParams={searchParams} />
       );
     } else {
       return (
         <div>
           <Header>{t("ES_COMMON_INBOX")}</Header>
           <DesktopInbox
-            data={birthData}
+            data={searchResult}
             isLoading={Loading}
             onFilterChange={handleFilterChange}
             onSearch={onSearch}

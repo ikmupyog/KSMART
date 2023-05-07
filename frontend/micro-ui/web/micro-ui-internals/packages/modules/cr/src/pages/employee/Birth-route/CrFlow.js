@@ -130,7 +130,7 @@ const CrFlow = ({ path }) => {
     // BND_CEMP START-----------------------------------------------------------------------------------
 
     {
-      title: "CR_BIRTH_REG_EMP",
+      title: "CR_BIRTH_REGISTRATION",
       subTitle: "CR_BIRTH_NEW_REG",
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,

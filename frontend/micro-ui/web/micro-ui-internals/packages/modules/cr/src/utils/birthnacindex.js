@@ -378,7 +378,7 @@ export const convertToNACRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
@@ -434,9 +434,7 @@ export const convertToNACRegistration = (data = {}) => {
           permntInKeralaAdrLocalityNameMl: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
           permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
-          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
-            : null,
+          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode ? data?.AddressBirthDetails?.permntInKeralaAdrPincode : null,
           permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
             ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
             : null,

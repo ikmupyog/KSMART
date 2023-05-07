@@ -20,9 +20,7 @@ const CorrectionTradeLicence = ({ parentRoute, isRenewal }) => {
   const [toast, setToast] = useState(Digit.SessionStorage.get("TL_CORRECTION_VALIDATE"));
   const stateId = Digit.ULBService.getStateId();
   const [errorMessage, setErrorMessage] = useState( Digit.SessionStorage.get("TL_CORRECTION_VALIDATE_MSG"));
-  // const [validation, setValidation] = useState(true);
   let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
-  console.log("myvalidation" + toast);
 
   let validation = true;
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
@@ -33,20 +31,17 @@ const CorrectionTradeLicence = ({ parentRoute, isRenewal }) => {
 
     paramscorrected?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(tUnit => {
       if (tUnit?.businessType === "" || tUnit?.businessType === null || tUnit?.businessType === undefined) {
-        // setValidation(false);
         setErrorMessage("TL_INVALID_BUSINESS_TYPE");
-        Digit.SessionStorage.set("TL_CORRECTION_VALIDATE_MSG", "TL_INVALID_BUSINESS_TYPE")
+        Digit.SessionStorage.set("TL_CORRECTION_VALIDATE_MSG", t("TL_INVALID_BUSINESS_TYPE"))
         validation = false;
       }
       if (tUnit?.businessSubtype === "" || tUnit?.businessSubtype === null || tUnit?.businessSubtype === undefined) {
         setErrorMessage("TL_INVALID_BUSINESS_SUBTYPE");
-        // setValidation(false);
-        Digit.SessionStorage.set("TL_CORRECTION_VALIDATE_MSG", "TL_INVALID_BUSINESS_TYPE")
+        Digit.SessionStorage.set("TL_CORRECTION_VALIDATE_MSG", t("TL_INVALID_BUSINESS_TYPE"))
         validation = false;
       }
     });
     let redirectWithHistory = history.push;
-    console.log("myvaidation flag"+validation);
     if (!validation) {
       setToast(true)
       Digit.SessionStorage.set("TL_CORRECTION_VALIDATE", true)
@@ -57,12 +52,10 @@ const CorrectionTradeLicence = ({ parentRoute, isRenewal }) => {
       return redirectWithHistory(`${match.path}/license-correction-root`);
     }
     else {
-      console.log("hai inside");
       Digit.SessionStorage.set("TL_CORRECTION_VALIDATE", false);
       Digit.SessionStorage.set("TL_CORRECTION_VALIDATE_MSG", "");
       setToast(false);
       setErrorMessage("");
-      // setValidation(true);
     }
 
     if (skipStep) {
@@ -101,7 +94,6 @@ const CorrectionTradeLicence = ({ parentRoute, isRenewal }) => {
   }
 
   function handleeditSelect(key, data, skipStep, index, isAddMultiple = false) {
-    console.log("hai ffffffffffffffffffffffffffffffffffff");
    // Digit.SessionStorage.set("TL_CORRECTION_VALIDATE", false);
     setToast(Digit.SessionStorage.get("TL_CORRECTION_VALIDATE"));
     setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
@@ -148,7 +140,6 @@ const CorrectionTradeLicence = ({ parentRoute, isRenewal }) => {
   //   )
   // }
   // else
-  console.log("error msg"+errorMessage);
   useEffect(() => {
     if(toast){
       setTimeout(() => {
@@ -176,8 +167,6 @@ const CorrectionTradeLicence = ({ parentRoute, isRenewal }) => {
                 formDataEdit={paramscorrected}
                 onAdd={handleMultiple}
                 userType="citizen"
-                errorMessage={errorMessage}
-                validation={validation}
               />
         {toast && (
           <Toast

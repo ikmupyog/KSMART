@@ -181,6 +181,8 @@ import useDeathNACSearch from "./cr/useDeathNACSearch";
 import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 import useMarriageSearch from "./cr/useMarriageSearch";
+import {useMarriageCorrectionSearch} from "./cr/marriage";
+
 
 import useSearchDeath from "./cr/useSearchDeath";
 // useSearchAbandonedDeath
@@ -260,11 +262,9 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
-import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
-import { getBirthFileSourceDetails } from "./cr/birth";
-import { getNacBirthFileSourceDetails } from "./cr/birthNac";
-import { getNacDeathFileSourceDetails } from "./cr/deathNac";
-
+import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails } from "./cr/death";
+import { getBirthFileSourceDetails, getNacBirthFileSourceDetails } from "./cr/birth";
+import { setPaymentStatus } from "./cr/payment";
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
 
 const pgr = {
@@ -411,6 +411,7 @@ const cr = {
   useBirthNACSearch,
   useBornOutSideBirthSearch,
   useMarriageSearch,
+  useMarriageCorrectionSearch,
   useSearchMarriage,
   getMarriageRegistryFileSourceDetails,
   useAdoptionSearch,
@@ -454,6 +455,7 @@ const cr = {
   useCRDeathSearchApplication,
   useCRApplicationDetails,
   useCRApplicationDeathDetails,
+  setPaymentStatus
 };
 const dfm = {
   useTenants: useTenantsDFM,

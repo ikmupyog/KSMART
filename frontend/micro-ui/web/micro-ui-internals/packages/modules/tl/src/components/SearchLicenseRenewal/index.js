@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
+import { useLocation, useRouteMatch } from "react-router-dom";
 
 const mystyle = {
   bgOpacity: "1",
@@ -22,8 +23,12 @@ const hstyle = {
   lineHieght: "1.5rem"
 };
 
-const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq }) => {
+const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrectionreq }) => {
+  const { pathname } = useLocation();
 
+  let currentPath = pathname.split("/").pop();
+  isCorrectionreq = currentPath === "license-correction-search" ?  true : false ;
+  
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -75,13 +80,13 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
       "capitalInvestment": finaldata?.tradeLicenseDetail?.capitalInvestment && finaldata?.tradeLicenseDetail?.capitalInvestment !== null && finaldata?.tradeLicenseDetail?.capitalInvestment !== "" ? true : false,
     }
     delete finaldata?.tradeLicenseDetail?.applicationDocuments;
-    isCancelreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
+    isCorrectionreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
     let tempdata = { "TradeDetails": finaldata }
-    isCancelreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
+    isCorrectionreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
     Digit.SessionStorage.set("TL_RENEWAL_ENABLE_TRADE", formdisable);
   }
   //need to get from workflow
-  let routepath = isCancelreq ? `/digit-ui/citizen/tl/tradelicence/license-correction` : `/digit-ui/citizen/tl/tradelicence/license-renewal-pde`;
+  let routepath = isCorrectionreq ? `/digit-ui/citizen/tl/tradelicence/license-correction` : `/digit-ui/citizen/tl/tradelicence/license-renewal-pde`;
   const GetCell = (value) => <span className="cell-text" style={{ wordBreak: "break-word" }}>{value}</span>;
   const columns = useMemo(() => ([
     {
@@ -90,7 +95,7 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
       disableSortBy: true,
       Cell: ({ row }) => {
         return (
-          (isCancelreq && row.original["isCurrentRequest"]) ?
+          (isCorrectionreq && row.original["isCurrentRequest"]) ?
             <div>
               <span >
                 {row.original["applicationNumber"]}
@@ -132,8 +137,8 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
     {
       Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
       disableSortBy: true,
-      accessor: (row) => (isCancelreq && row.isCurrentRequest) ? "Active Request Pending" :
-      (isCancelreq) ? ""
+      accessor: (row) => (isCorrectionreq && row.isCurrentRequest) ? "Active Request Pending" :
+      (isCorrectionreq) ? ""
       : 
       GetCell(row.status),
     },

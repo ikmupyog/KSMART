@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToStillBirthRegistration, convertToEditStillBirthRegistration } from "../../../utils/stillbirthindex";
-import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
+import getPDFData from "../../../utils/getCRDeathCorrectionAcknowledgementData";
 import { useHistory, useLocation } from "react-router-dom";
 
 const GetActionMessage = (props) => {
@@ -34,12 +34,26 @@ const BannerPicker = (props) => {
   );
 };
 
-const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, userType }) => {
+const DeathCorrectionAcknowledgement = () => {
   const { t } = useTranslation();
 
   let location = useLocation();
   let deathCorrectionData = location?.state?.deathCorrectionData;
   let mutationData = location?.state?.mutationData;
+
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+
+
+
+  const handleDownloadPdf = async () => {
+    const { deathCorrection = [] } = mutationData.data
+    const CorrectionData = (deathCorrection && deathCorrection[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.InformationDeathCorrection.TenantId);
+    let res = CorrectionData;
+    const data = getPDFData({ ...res }, tenantInfo, t);
+    data.then((resp) => Digit.Utils.pdf.generate(resp));
+  };
   
   
     if (mutationData?.isSuccess) {
@@ -60,7 +74,7 @@ const DeathCorrectionAcknowledgement = ({ data = {}, onSuccess = () => null, use
               </div>
             }
             //style={{ width: "100px" }}
-            // onClick={handleDownloadPdf}
+            onClick={handleDownloadPdf}
           />
 
           <Link to={`/digit-ui/citizen`}>

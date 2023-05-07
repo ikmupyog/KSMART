@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToStillBirthRegistration, convertToEditStillBirthRegistration } from "../../../utils/stillbirthindex";
-import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
+import getPDFData from "../../../utils/getCRMarriageCorrectionAcknowledgementData";
 import { useHistory, useLocation } from "react-router-dom";
+
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -24,7 +25,6 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  console.log("pro[pss",props);
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -43,21 +43,19 @@ const MarriageCorrectionAcknowledgement = () => {
   let marriageCorrectionData = location?.state?.marriageCorrectionData;
   let mutationData = location?.state?.mutationData;
 
-  // if (false) {
-  //   return (
-  //     <Card>
-  //       <BannerPicker
-  //         t={t}
-  //         // data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)}
-  //       />
-  //       {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-  //       <Link to={`/digit-ui/citizen`}>
-  //         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-  //       </Link>
-  //     </Card>
-  //   );
-  // } else {
-    // console.log(JSON.stringify(mutation));
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+
+  const handleDownloadPdf = async () => {
+  
+    const { marriageCorrectionDetails = [] } = mutationData.data;
+    const CorrectionData = (marriageCorrectionDetails && marriageCorrectionDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.tenantid);
+    let res = CorrectionData;
+    const data = getPDFData({ ...res }, tenantInfo, t);
+    data.then((resp) => Digit.Utils.pdf.generate(resp));
+  };
+
     if (mutationData?.isSuccess) {
       return (
         <Card>
@@ -76,7 +74,7 @@ const MarriageCorrectionAcknowledgement = () => {
               </div>
             }
             //style={{ width: "100px" }}
-            // onClick={handleDownloadPdf}
+            onClick={handleDownloadPdf}
           />
 
           <Link to={`/digit-ui/citizen`}>

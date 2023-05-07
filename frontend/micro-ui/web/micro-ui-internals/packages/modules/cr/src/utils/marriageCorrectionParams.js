@@ -101,7 +101,6 @@ const formFielColumns = {
 }
   
   const getCorrectionDocuments = (docData) => {
-    console.log("docData", docData);
     let selectedDocs = [];
     if (docData?.length > 0) {
       selectedDocs = docData.map((item) => {
@@ -118,7 +117,6 @@ const formFielColumns = {
 
   const getNestedFieldNames = (fieldData,fieldName) =>{
     let fieldNameData = [];
-    console.log("reached--nested==",fieldData);
     if(Object.keys(fieldData.curValue)?.length > 0){
       fieldNameData = Object.keys(fieldData.curValue).map((item)=>{
         const columnName =(fieldName === "GROOM_PERADD" || fieldName === "BRIDE_PERADD") ? formFielColumns[fieldData?.selectedDocType]?.[fieldData.addressType]?.[item] : formFielColumns[fieldData?.selectedDocType]?.[item];;
@@ -208,7 +206,6 @@ const formFielColumns = {
   };
   
   export const formatApiParams = (formData,userData) => {
-    console.log("userdata ===", userData);
     const correctionFieldData = getCorrectionFields(formData);
     const apiParam = {
       CorrectionDetails: [
@@ -216,7 +213,7 @@ const formFielColumns = {
           // id: userData?.id,
           tenantid: userData?.marriageTenantid,
           applicationType: "corr",
-          moduleCode: "CRBRCN",
+          moduleCode: "CRMRCR",
           businessservice: "marriage-services",
           workflowcode: "MARRIAGECORRECTION",
           isWorkflow: true,
