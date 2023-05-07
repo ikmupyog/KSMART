@@ -143,7 +143,7 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails,
     },
     {
-      path: "/digit-ui/employee/cr/death-flow/abandoned-death-information",
+      path: "/digit-ui/employee/cr/death-flow/Abandoned-death/abandoned-death-information",
       content: t("Abandoned Death"),
       show:  breadCrumbUrls.includes("death-flow/Abandoned-death/abandoned-death-information")||isAbandonedDeathDetails,
     },

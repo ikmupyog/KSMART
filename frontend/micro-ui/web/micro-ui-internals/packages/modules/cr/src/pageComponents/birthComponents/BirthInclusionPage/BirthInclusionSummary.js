@@ -183,7 +183,7 @@ function BirthInclusionSummary({
             </h4>
           </div>
           <div className="col-md-1">
-            <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+            <LinkButton label={t("CR_VIEW")} style={{ fontWeight: "bold", color: "#86a4ad", cursor:"pointer" }} onClick={() => setDocumentsView(documentData)} />
           </div>
         </div>
       </div>
