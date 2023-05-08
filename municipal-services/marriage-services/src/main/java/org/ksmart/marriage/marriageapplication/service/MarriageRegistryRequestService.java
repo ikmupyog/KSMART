@@ -80,6 +80,7 @@ public class MarriageRegistryRequestService {
         GroomRegistryAddressDetails groomRegistryAddressDetails = new GroomRegistryAddressDetails();
        // permtaddressCountry
         groomRegistryAddressDetails.setPermtaddressCountry(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry());
+        groomRegistryAddressDetails.setPermtaddressStateName(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressStateName());
         groomRegistryAddressDetails.setCountryIdPresent(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPresent());
         groomRegistryAddressDetails.setCountryIdPermanent(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPermanent());
         groomRegistryAddressDetails.setStateIdPresent(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getStateIdPresent());
@@ -129,7 +130,8 @@ public class MarriageRegistryRequestService {
 
     private BrideRegistryAddressDetails brideAddressRegistryDetails(MarriageDetailsRequest marriageBrideAddressrequest) {
         BrideRegistryAddressDetails brideRegistryAddressDetails = new BrideRegistryAddressDetails();
-        brideRegistryAddressDetails.setPermtaddressCountry(marriageBrideAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry());
+        brideRegistryAddressDetails.setPermtaddressCountry(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry());
+        brideRegistryAddressDetails.setPermtaddressStateName(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressStateName());
         brideRegistryAddressDetails.setCountryIdPresent(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getCountryIdPresent());
         brideRegistryAddressDetails.setCountryIdPermanent(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getCountryIdPermanent());
         brideRegistryAddressDetails.setStateIdPresent(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getStateIdPresent());
