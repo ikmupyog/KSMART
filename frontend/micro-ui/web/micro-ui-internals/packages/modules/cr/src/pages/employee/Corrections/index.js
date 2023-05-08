@@ -44,7 +44,6 @@ const CorrectionApplicationDetails = () => {
   });
 
   useEffect(()=>{
- console.log("workflowDetails==",workflowDetails,inboxType);
   },[workflowDetails])
 
   const closeToast = () => {

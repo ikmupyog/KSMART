@@ -17,9 +17,9 @@ const CreateBirthEmp = ({ parentUrl }) => {
   // console.log("isEditBirth" + isEditBirth);
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
-  const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
-  const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
-  console.log(roletemp[0].code);
+  // const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  // const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
+  // console.log(roletemp[0].code);
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
@@ -39,7 +39,7 @@ const CreateBirthEmp = ({ parentUrl }) => {
   //   config = configTemp;
   // }
  
-  console.log(config);
+  // console.log(config);
   config.indexRoute = "child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
