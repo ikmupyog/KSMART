@@ -22,11 +22,10 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setGroomDetails(new GroomDetails());
         marriageApplicationDetails.setBrideAddressDetails(new BrideAddressDetails());
         marriageApplicationDetails.setGroomAddressDetails(new GroomAddressDetails());
-
         MarriageRegistryDetails marriageRegistryDetails=registry.get(0);
 
+        //MARRIAGE DETAILS
         marriageApplicationDetails.setDateofmarriage(marriageRegistryDetails.getDateofmarriage());
-        //marriageApplicationDetails.setDateofreporting(marriageRegistryDetails.getDateofreporting());
         marriageApplicationDetails.setDistrictid(marriageRegistryDetails.getDistrictid());
         marriageApplicationDetails.setLbtype(marriageRegistryDetails.getLbtype());
         marriageApplicationDetails.setTenantid(marriageRegistryDetails.getTenantid());
@@ -43,15 +42,16 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setTalukid(marriageRegistryDetails.getTalukid());
         marriageApplicationDetails.setVillageName(marriageRegistryDetails.getVillage_name());
         marriageApplicationDetails.setMarriageType(marriageRegistryDetails.getMarriage_type());
+        marriageApplicationDetails.setOthMarriageType(marriageRegistryDetails.getOth_marriage_type());
         marriageApplicationDetails.setLandmark(marriageRegistryDetails.getLandmark());
         marriageApplicationDetails.setLocalityEn(marriageRegistryDetails.getLocality_en());
         marriageApplicationDetails.setLocalityMl(marriageRegistryDetails.getLocality_ml());
         marriageApplicationDetails.setRegistrationDate(marriageRegistryDetails.getRegistrationDate());
         marriageApplicationDetails.setRegistrationNo(marriageRegistryDetails.getRegistrationno());
-        //marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukid());
-        //marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillage_name());
+        marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukid());
+        marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillage_name());
 
-        //marriageApplicationDetails.getBrideDetails().setBrideId(marriageRegistryDetails.getBrideDetails().getBrideId());
+        //BRIDE DETAILS
         marriageApplicationDetails.getBrideDetails().setBrideGroom(marriageRegistryDetails.getBrideDetails().getBrideGroom());
         marriageApplicationDetails.getBrideDetails().setResidentship(marriageRegistryDetails.getBrideDetails().getResidentship());
         marriageApplicationDetails.getBrideDetails().setPassportno(marriageRegistryDetails.getBrideDetails().getPassportno());
@@ -81,10 +81,9 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideDetails().setMothernameMl(marriageRegistryDetails.getBrideDetails().getMothername_ml());
         marriageApplicationDetails.getBrideDetails().setMotherAadharno(marriageRegistryDetails.getBrideDetails().getMother_aadharno());
         marriageApplicationDetails.getBrideDetails().setMaritalstatusid(marriageRegistryDetails.getBrideDetails().getMaritalstatusid());
-        //marriageApplicationDetails.getBrideDetails().setMarriageid(marriageRegistryDetails.getBrideDetails().getMarriageid());
         marriageApplicationDetails.getBrideDetails().setTenentId(marriageRegistryDetails.getBrideDetails().getTenentId());
 
-
+        //GROOM DETAILS
         marriageApplicationDetails.getGroomDetails().setBrideGroom(marriageRegistryDetails.getGroomDetails().getBrideGroom());
         marriageApplicationDetails.getGroomDetails().setDateofbirth(marriageRegistryDetails.getGroomDetails().getDateofbirth());
         marriageApplicationDetails.getGroomDetails().setFirstnameEn(marriageRegistryDetails.getGroomDetails().getFirstname_en());
@@ -111,14 +110,12 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getGroomDetails().setMotherAadharno(marriageRegistryDetails.getGroomDetails().getMother_aadharno());
         marriageApplicationDetails.getGroomDetails().setGender(marriageRegistryDetails.getGroomDetails().getGender());
         marriageApplicationDetails.getGroomDetails().setMaritalstatusid(marriageRegistryDetails.getGroomDetails().getMaritalstatusid());
-        //marriageApplicationDetails.getGroomDetails().setMarriageid(marriageRegistryDetails.getGroomDetails().getMarriageid());
         marriageApplicationDetails.getGroomDetails().setParentGuardian(marriageRegistryDetails.getGroomDetails().getParent_guardian());
         marriageApplicationDetails.getGroomDetails().setPassportno(marriageRegistryDetails.getGroomDetails().getPassportno());
         marriageApplicationDetails.getGroomDetails().setResidentship(marriageRegistryDetails.getGroomDetails().getResidentship());
-        marriageApplicationDetails.getGroomDetails().setGroomIsSpouseLiving(marriageRegistryDetails.getGroomDetails().getGroomIsSpouseLiving());
         marriageApplicationDetails.getGroomDetails().setTenentId(marriageRegistryDetails.getGroomDetails().getTenentId());
 
-
+        //BRIDE ADDRESS DETAILS
         marriageApplicationDetails.getBrideAddressDetails().setCountryIdPermanent(marriageRegistryDetails.getBrideAddressDetails().getCountryIdPermanent());
         marriageApplicationDetails.getBrideAddressDetails().setStateIdPermanent(marriageRegistryDetails.getBrideAddressDetails().getStateIdPermanent());
         marriageApplicationDetails.getBrideAddressDetails().setDistrictIdPermanent(marriageRegistryDetails.getBrideAddressDetails().getDistrictIdPermanent());
@@ -148,7 +145,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
         marriageApplicationDetails.getBrideAddressDetails().setPinNoPermanent(marriageRegistryDetails.getBrideAddressDetails().getPinNoPermanent());
 
-
+        //GROOM ADDRESS DETAILS
         marriageApplicationDetails.getGroomAddressDetails().setCountryIdPermanent(marriageRegistryDetails.getGroomAddressDetails().getCountryIdPermanent());
         marriageApplicationDetails.getGroomAddressDetails().setStateIdPermanent(marriageRegistryDetails.getGroomAddressDetails().getStateIdPermanent());
         marriageApplicationDetails.getGroomAddressDetails().setDistrictIdPermanent(marriageRegistryDetails.getGroomAddressDetails().getDistrictIdPermanent());

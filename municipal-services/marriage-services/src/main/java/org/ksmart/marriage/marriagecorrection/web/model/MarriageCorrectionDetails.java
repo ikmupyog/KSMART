@@ -3,6 +3,7 @@ package org.ksmart.marriage.marriagecorrection.web.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.springframework.validation.annotation.Validated;
 
 import javax.swing.text.Document;
@@ -35,6 +36,8 @@ public class MarriageCorrectionDetails {
     @Size(max = 64)
     @JsonProperty("applicationNumber")
     private String applicationNo;
+    @JsonProperty("applicationDate")
+    private Long applicationDate;
     @Size(max = 64)
     @JsonProperty("businessService")
     private String businessservice;
@@ -72,6 +75,10 @@ public class MarriageCorrectionDetails {
 
     @JsonProperty("isWorkflow")
     private Boolean isWorkflow;
+
+
+    @JsonProperty("Demands")
+    private List<Demand> demands;
 
 
 }

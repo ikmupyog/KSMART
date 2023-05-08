@@ -23,7 +23,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("MD.lbtype as MD_lbtype , MD.tenantid as MD_tenantid ,  MD.placetype as MD_placetype , MD.placeid as MD_placeid ,") 
     .append("MD.placename_en as MD_placename_en , MD.placename_ml as MD_placename_ml ,  MD.housenameno_en as MD_housenameno_en , MD.housenameno_ml as MD_housenameno_ml ,") 
     .append("MD.locality_en as MD_locality_en , MD.locality_ml as MD_locality_ml  , MD.street_name_en as MD_street_name_en ,  MD.street_name_ml as MD_street_name_ml , ")
-    .append("MD.ward_code as MD_ward_code ,  MD.talukid as MD_talukid ,  MD.village_name as MD_village_name ,  MD.marriage_type as MD_marriage_type ,") 
+    .append("MD.ward_code as MD_ward_code ,  MD.talukid as MD_talukid ,  MD.village_name as MD_village_name ,  MD.marriage_type as MD_marriage_type ,MD.oth_marriage_type as MD_oth_marriage_type,")
     .append("MD.landmark as MD_landmark ,  MD.registrationno as MD_registrationno ,  MD.registration_date  as MD_registration_date ,  MD.registration_status as MD_registration_status , ")
     .append("MD.createdtime  as MD_createdtime ,   MD.createdby as MD_createdby ,  MD.lastmodifiedtime  as MD_lastmodifiedtime ,   MD.lastmodifiedby as MD_lastmodifiedby ,") 
     .append("MD.applicationnumber as MD_applicationnumber ,MD.brideurl as MD_brideurl,MD.groomurl as MD_groomurl ,MD.imageuuid as MD_imageuuid ,MD.bride_filestoreid as MD_bride_filestoreid ,MD.groom_filestoreid as MD_groom_filestoreid ,")
@@ -35,7 +35,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("GD.emailid   as GD_emailid , GD.gender   as GD_gender, GD.dateofbirth as GD_dateofbirth, GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian ,")
     .append("GD.fathername_en   as GD_fathername_en, GD.mothername_en   as GD_mothername_en,GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml,")    
     .append("GD.father_aadharno as GD_father_aadharno, GD.mother_aadharno as GD_mother_aadharno, GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,")    
-    .append("GD.guardian_aadharno   as GD_guardian_aadhar,  GD.maritalstatusid   as GD_maritalstatus,GD.no_of_spouse_living   as GD_livingspouseNo, GD.is_spouse_living as GD_is_spouse_living ,GD.bride_groom   GD_bride_groom ,")
+    .append("GD.guardian_aadharno   as GD_guardian_aadharno,  GD.maritalstatusid   as GD_maritalstatusid,GD.no_of_spouse_living   as GD_livingspouseNo, GD.is_spouse_living as GD_is_spouse_living ,GD.bride_groom as  GD_bride_groom ,")
         
     .append("BD.id as  BD_id  , BD.residentship   as BD_residentship ,  BD.aadharno   as BD_aadharno ,BD.passportno   as BD_passportno ,  BD.socialsecurityno   as BD_socialsecurityno ,")
     .append("BD.firstname_en   as BD_firstname_en , BD.middlename_en   as BD_middlename_en ,BD.lastname_en   as BD_lastname_en ,  BD.firstname_ml   as BD_firstname_ml,")
@@ -45,13 +45,13 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("BD.mother_aadharno   as BD_mother_aadharno  , BD.guardianname_en   as BD_guardianname_en  , BD.guardianname_ml   as BD_guardianname_ml  ,")  
     .append("BD.guardian_aadharno   as BD_guardian_aadharno  , BD.maritalstatusid as BD_maritalstatusid,BD.no_of_spouse_living as BD_livingspouseNo,BD.is_spouse_living as BD_is_spouse_living ,BD.bride_groom as BD_bride_groom,")
  
-    .append("GD.id   GD_id , GD.residentship as GD_residentship,GD.aadharno as GD_aadharno,GD.passportno as GD_passportno,GD.socialsecurityno as GD_socialsecurityno ,")  
-    .append("GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en , GD.firstname_ml   as GD_firstname_ml  ,")  
-    .append("GD.middlename_ml   as 	GD_middlename_ml ,GD.lastname_ml   as GD_lastname_ml ,  GD.mobile   as GD_mobile,GD.emailid   as GD_emailid , GD.gender   as GD_gender,") 
-    .append("GD.dateofbirth as GD_dateofbirth , 	GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian , GD.fathername_en   as GD_fathername_en,") 
-    .append("GD.mothername_en   as GD_mothername_en, GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml, GD.father_aadharno   as GD_father_aadharno  ,") 
-    .append("GD.mother_aadharno   as GD_mother_aadharno,GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,GD.guardian_aadharno as GD_guardian_aadharno,") 
-    .append("GD.maritalstatusid   as GD_maritalstatusid,    GD.no_of_spouse_living  as GD_livingspouseNo,  GD.bride_groom   GD_bride_groom ,") 
+    // .append("GD.id   GD_id , GD.residentship as GD_residentship,GD.aadharno as GD_aadharno,GD.passportno as GD_passportno,GD.socialsecurityno as GD_socialsecurityno ,")  
+    // .append("GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en , GD.firstname_ml   as GD_firstname_ml  ,")  
+    // .append("GD.middlename_ml   as 	GD_middlename_ml ,GD.lastname_ml   as GD_lastname_ml ,  GD.mobile   as GD_mobile,GD.emailid   as GD_emailid , GD.gender   as GD_gender,") 
+    // .append("GD.dateofbirth as GD_dateofbirth , 	GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian , GD.fathername_en   as GD_fathername_en,") 
+    // .append("GD.mothername_en   as GD_mothername_en, GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml, GD.father_aadharno   as GD_father_aadharno  ,") 
+    // .append("GD.mother_aadharno   as GD_mother_aadharno,GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,GD.guardian_aadharno as GD_guardian_aadharno,") 
+    // .append("GD.maritalstatusid   as GD_maritalstatusid,    GD.no_of_spouse_living  as GD_livingspouseNo,  GD.bride_groom   GD_bride_groom ,")
     
     .append("GPMA.id as GPMA_id ,GPMA.housename_en as GPMA_housename_en,GPMA.housename_ml as GPMA_housename_ml,GPMA.villageid as GPMA_villageid,GPMA.village_name as GPMA_village_name,")  
     .append("GPMA.talukid as GPMA_talukid  , GPMA.taluk_name as GPMA_taluk_name  ,  GPMA.tenantid as GPMA_tenantid  , GPMA.ward_code as GPMA_ward_code,")  
@@ -123,17 +123,19 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           addFilter("MD.applicationnumber", criteria.getApplicationNumber(), query, preparedStmtValues);  
           addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);  
           addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
-         // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValue
+          addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
           addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
           if (criteria.getBrideFirstnameEn() != null){
-            addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+           // addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+           addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
           }
          // addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues); 
           //addFilter("BD_middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues); 
          // addFilter("BD_lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues); 
           addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues); 
           if (criteria.getGroomFirstnameEn() != null){
-            addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           // addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           addLikeFilter("LOWER(GD.firstname_en)", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
           }
          // addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues); 
           //addFilter("GD_middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues); 
@@ -206,11 +208,13 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
           addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
           if (criteria.getBrideFirstnameEn() != null){
-            addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+            //addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+            addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
           }
           addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues); 
           if (criteria.getGroomFirstnameEn() != null){
-            addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           // addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+           addLikeFilter("LOWER(GD.firstname_en)", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
           }
           addDateRangeFilter("MD.dateofmarriage",
           criteria.getFromDate(),

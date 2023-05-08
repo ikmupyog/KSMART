@@ -90,6 +90,14 @@ public class BaseMarriageQueryBuilder {
             paramValues.add(value);
         }
     }
+    void addLikeFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("LIKE ? ");
+                    paramValues.add(value.toLowerCase().concat("%"));
+        }
+    }
 
     // private String createQuery(List<String> ids) {
     //     StringBuilder builder = new StringBuilder();

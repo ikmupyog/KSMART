@@ -35,6 +35,9 @@ public class MarriageApplicationSearchCriteria {
     @JsonProperty("active")
     private Boolean active;
 
+    @JsonProperty("businessService")
+    private String businessService;
+
     //Groom
     @JsonProperty("groomFirstnameEn")
     private String groomFirstnameEn;

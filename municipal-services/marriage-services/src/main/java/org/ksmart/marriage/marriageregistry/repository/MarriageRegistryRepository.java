@@ -93,15 +93,11 @@ public class MarriageRegistryRepository {
         String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
-//
-//        System.out.println("Groom address -------");
-//                String address=marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req, result.get(0));
-//        String address2=marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req, result.get(0));
-//
-//        System.out.println(address);
-//        System.out.println(address2);
 
-        return result;
+
+
+
+                return result;
 
     }
     public int getMarriageRegistryCount(MarriageRegistrySearchCriteria criteria) {

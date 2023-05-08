@@ -80,6 +80,23 @@ import java.util.stream.Collectors;
             paramValues.add(value);
         }
     }
+    // void addLikeFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
+    //     if (StringUtils.isNotBlank(value)) {
+    //         addWhereClause(paramValues, query);
+    //         query.append(column)
+    //                 .append("LIKE ?% ");
+    //         paramValues.add(value.toLowerCase());
+    //     }
+    // }
+    void addLikeFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("LIKE ? ");
+             paramValues.add(value.toLowerCase().concat("%"));
+          
+        }
+    }
     // void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
     //                         List<Object> paramValues) {
 

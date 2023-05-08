@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Component
-public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper, BrideAddressDetailsRowMapper, GroomAddressDetailsRowMapper,WitnessDetailsRowMapper,DocumentRowMapper{
+public class MarriagePaymentRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper, BrideAddressDetailsRowMapper, GroomAddressDetailsRowMapper,WitnessDetailsRowMapper,DocumentRowMapper{
 
     @Override
     public List<MarriageApplicationDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
@@ -47,7 +47,7 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                      .zonalOffice(rs.getString("MD_zonal_office"))
                      .workflowcode(rs.getString("MD_workflowcode"))
                      .applicationtype(rs.getString("MD_applicationType"))
-                     .action(rs.getString("MD_action"))
+                     .action("PAY")
                      .status(rs.getString("MD_status"))
                    // .status(rs.getString("MD_registration_status"))
                     .brideDetails(getBrideDetails(rs))

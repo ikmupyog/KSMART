@@ -81,11 +81,11 @@ public class GroomAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaVillage")
-    private String presentOutsideKeralaVillageName;
+    private String presentOutsideKeralaVillageorTown;
 
     @Size(max = 1000)
     @JsonProperty("presentOutsideKeralaCityVilgeEn")
-    private String presentOutsideKeralaCityVilgeEn;
+    private String presentOutsideKeralaCityVilgeNameEn;
 
     @Size(max = 64)
     @JsonProperty("presentOutsideKeralaPincode")
@@ -261,7 +261,8 @@ public class GroomAddressDetails {
     @JsonProperty("outSideIndiaPostCodePresent")
     private String outSideIndiaPostCodePresent;
 
-
+    @JsonProperty("presentAddrVillageId")
+    private String presentAddrVillageId ;
     ////Permanant
 
     @JsonProperty("isPermanentAddress")
@@ -296,7 +297,7 @@ public class GroomAddressDetails {
     private String permntInKeralaAdrVillage;
 
     @Size(max = 2500)
-    @JsonProperty("permntOutSideIndiaProvinceMl")
+    @JsonProperty("permntOutSideIndiaprovinceMl")
     private String permntOutSideIndiaProvinceMl;
 
     @Size(max = 2500)
@@ -349,7 +350,7 @@ public class GroomAddressDetails {
 
     @Size(max = 1000)
     @JsonProperty("permntOutsideKeralaVillage")
-    private String permntOutsideKeralaVillage;
+    private String permntOutsideKeralaVillageorTown;
 
     @Size(max = 64)
     @JsonProperty("permntOutsideKeralaPincode")
@@ -429,11 +430,12 @@ public class GroomAddressDetails {
 
     @JsonProperty("isPermanentAddressInt")
     private Integer isPermanentAddressInt;
-    @JsonProperty("PermanentAddrTalukId")
+
+    @JsonProperty("permanentAddrTalukId")
     private String permanentAddrTalukId ;
 
 
-    @JsonProperty("PermanentAddrVillageId")
+    @JsonProperty("permanentAddrVillageId")
     private String permanentAddrVillageId ;
     @Size(max = 64)
     @JsonProperty("countryIdPermanent")
@@ -526,4 +528,148 @@ public class GroomAddressDetails {
     @JsonProperty("outSideIndiaPostCodePermanent")
     private String outSideIndiaPostCodePermanent;
 
+    //Jasmine 03.05.2023
+    @JsonProperty("permanentAddrCountryNameEn")
+    private String permanentAddrCountryNameEn ;
+
+    @JsonProperty("permanentAddrCountryNameMl")
+    private String permanentAddrCountryNameMl ;
+
+    @JsonProperty("presentaddressCountryNameEn")
+    private String presentaddressCountryNameEn ;
+
+    @JsonProperty("presentaddressCountryNameMl")
+    private String presentaddressCountryNameMl ;
+
+    // @JsonProperty("presentOutSideCountryNameEn")
+    // private String presentOutSideCountryNameEn ;
+
+    // @JsonProperty("presentOutSideCountryNameMl")
+    // private String presentOutSideCountryNameMl ;
+
+    // @JsonProperty("permanentOutSideCountryNameEn")
+    // private String permanentOutSideCountryNameEn ;
+
+    // @JsonProperty("permanentOutSideCountryNameMl")
+    // private String permanentOutSideCountryNameMl ;
+
+    @JsonProperty("presentaddressStateNameEn")
+    private String presentaddressStateNameEn;
+
+    @JsonProperty("presentaddressStateNameMl")
+    private String presentaddressStateNameMl;
+
+    @JsonProperty("permtaddressStateNameEn")
+    private String permtaddressStateNameEn;
+
+    @JsonProperty("permtaddressStateNameMl")
+    private String permtaddressStateNameMl;
+
+    @JsonProperty("presentInsideKeralaDistrictEn")
+    private String presentInsideKeralaDistrictEn;
+
+    @JsonProperty("presentInsideKeralaDistrictMl")
+    private String presentInsideKeralaDistrictMl;
+
+    @JsonProperty("presentOutsideKeralaDistrictEn")
+    private String presentOutsideKeralaDistrictEn;
+
+    @JsonProperty("presentOutsideKeralaDistrictMl")
+    private String presentOutsideKeralaDistrictMl;
+
+    @JsonProperty("permntInKeralaAdrDistrictEn")
+    private String permntInKeralaAdrDistrictEn;
+
+    @JsonProperty("permntInKeralaAdrDistrictMl")
+    private String permntInKeralaAdrDistrictMl;
+
+    @JsonProperty("permntOutsideKeralaDistrictEn")
+    private String permntOutsideKeralaDistrictEn;
+
+    @JsonProperty("permntOutsideKeralaDistrictMl")
+    private String permntOutsideKeralaDistrictMl;
+
+    @JsonProperty("presentInsideKeralaTalukEn")
+    private String presentInsideKeralaTalukEn;
+
+    @JsonProperty("presentInsideKeralaTalukMl")
+    private String presentInsideKeralaTalukMl;
+
+    @JsonProperty("presentOutsideKeralaTalukEn")
+    private String presentOutsideKeralaTalukEn;
+
+    @JsonProperty("presentOutsideKeralaTalukMl")
+    private String presentOutsideKeralaTalukMl;
+
+    @JsonProperty("permntInKeralaAdrTalukEn")
+    private String permntInKeralaAdrTalukEn;
+
+    @JsonProperty("permntInKeralaAdrTalukMl")
+    private String permntInKeralaAdrTalukMl;
+
+//    @JsonProperty("permntOutsideKeralaTalukEn")
+//    private String permntOutsideKeralaTalukEn;
+//
+//    @JsonProperty("permntOutsideKeralaTalukMl")
+//    private String permntOutsideKeralaTalukMl;
+
+    @JsonProperty("presentInsideKeralaVillageEn")
+    private String presentInsideKeralaVillageEn;
+
+    @JsonProperty("presentInsideKeralaVillageMl")
+    private String presentInsideKeralaVillageMl;
+
+    @JsonProperty("presentOutsideKeralaVillageEn")
+    private String presentOutsideKeralaVillageEn;
+
+    @JsonProperty("presentOutsideKeralaVillageMl")
+    private String presentOutsideKeralaVillageMl;
+
+    @JsonProperty("permntInKeralaAdrVillageEn")
+    private String permntInKeralaAdrVillageEn;
+
+    @JsonProperty("permntInKeralaAdrVillageMl")
+    private String permntInKeralaAdrVillageMl;
+
+    @JsonProperty("permntOutsideKeralaVillageEn")
+    private String permntOutsideKeralaVillageEn;
+
+    @JsonProperty("permntOutsideKeralaVillageMl")
+    private String permntOutsideKeralaVillageMl;
+
+    @JsonProperty("presentInsideKeralaPostOfficeEn")
+    private String presentInsideKeralaPostOfficeEn;
+
+    @JsonProperty("presentInsideKeralaPostOfficeMl")
+    private String presentInsideKeralaPostOfficeMl;
+
+    @JsonProperty("permntInKeralaAdrPostOfficeEn")
+    private String permntInKeralaAdrPostOfficeEn;
+
+    @JsonProperty("permntInKeralaAdrPostOfficeMl")
+    private String permntInKeralaAdrPostOfficeMl;    
+
+    @JsonProperty("presentWardNoEn")
+    private String presentWardNoEn;
+
+    @JsonProperty("presentWardNoMl")
+    private String presentWardNoMl;
+
+    @JsonProperty("prmttWardNoEn")
+    private String prmttWardNoEn;
+
+    @JsonProperty("prmttWardNoMl")
+    private String prmttWardNoMl;
+
+    @JsonProperty("presentInsideKeralaLBNameEn")
+    private String presentInsideKeralaLBNameEn;
+
+    @JsonProperty("presentInsideKeralaLBNameMl")
+    private String presentInsideKeralaLBNameMl;
+
+    @JsonProperty("permntInKeralaAdrLBNameEn")
+    private String permntInKeralaAdrLBNameEn;
+
+    @JsonProperty("permntInKeralaAdrLBNameMl")
+    private String permntInKeralaAdrLBNameMl;
 }

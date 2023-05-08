@@ -326,22 +326,22 @@ public class MarriageApplicationValidator {
                                                                                                         marriagedtls.getPlacenameMl()
                                                                                                         + " is invalid");
                                                                 }
-                                                                // if (StringUtils.isEmpty(
-                                                                //                 marriagedtls.getLocalityEn())) {
-                                                                //         throw new CustomException(
-                                                                //                         " LOCALITY NAME ENGLISH IS INVALID ",
-                                                                //                         "The  Locality Name English " +
-                                                                //                                         marriagedtls.getLocalityEn()
-                                                                //                                         + " is invalid");
-                                                                // }
-                                                                // if (StringUtils.isEmpty(
-                                                                //                 marriagedtls.getLocalityMl())) {
-                                                                //         throw new CustomException(
-                                                                //                         " LOCALITY NAME MALAYALAM IS INVALID ",
-                                                                //                         "The  Locality Name Malayalam" +
-                                                                //                                         marriagedtls.getLocalityMl()
-                                                                //                                         + " is invalid");
-                                                                // }
+                                                                 if (StringUtils.isEmpty(
+                                                                                 marriagedtls.getLocalityEn())) {
+                                                                         throw new CustomException(
+                                                                                         " LOCALITY NAME ENGLISH IS INVALID ",
+                                                                                         "The  Locality Name English " +
+                                                                                                         marriagedtls.getLocalityEn()
+                                                                                                         + " is invalid");
+                                                                 }
+                                                                 if (StringUtils.isEmpty(
+                                                                                 marriagedtls.getLocalityMl())) {
+                                                                         throw new CustomException(
+                                                                                         " LOCALITY NAME MALAYALAM IS INVALID ",
+                                                                                         "The  Locality Name Malayalam" +
+                                                                                                         marriagedtls.getLocalityMl()
+                                                                                                         + " is invalid");
+                                                                }
                                                         }
                                                 }
 
@@ -914,11 +914,11 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTown())) {
                                                                                 throw new CustomException(
                                                                                                 "GROOM PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village " +
-                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillageorTown()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         
@@ -932,11 +932,11 @@ public class MarriageApplicationValidator {
                                                                         }
 
                                                                         if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTown())) {
                                                                                 throw new CustomException(
                                                                                                 " GROOM PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The Village " +
-                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                groomaddressInfo.getPermntOutsideKeralaVillageorTown()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
@@ -1198,20 +1198,20 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPresentOutsideKeralaVillageName())) {
+                                                                                        .getPresentOutsideKeralaCityVilgeNameEn())) {
                                                                                 throw new CustomException(
                                                                                                 "GROOM PRESENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village " +
-                                                                                                                groomaddressInfo.getPresentOutsideKeralaVillageName()
+                                                                                                                groomaddressInfo.getPresentOutsideKeralaCityVilgeNameEn()
                                                                                                                 + " is invalid");
                                                                         }
 
                                                                         if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPresentOutsideKeralaCityVilgeEn())) {
+                                                                                        .getPresentOutsideKeralaVillageorTown ())) {
                                                                                 throw new CustomException(
                                                                                                 " GROOM PRESENT ADDRESS OUTSIDE KERALA: CITY INVALID ",
                                                                                                 "The City/Town " +
-                                                                                                                groomaddressInfo.getPresentOutsideKeralaCityVilgeEn()
+                                                                                                                groomaddressInfo.getPresentOutsideKeralaVillageorTown ()
                                                                                                                 + " is invalid");
                                                                         }
 
@@ -1482,11 +1482,11 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTown())) {
                                                                                 throw new CustomException(
                                                                                                 "BRIDE PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village " +
-                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillageorTown()
                                                                                                                 + " is invalid");
                                                                         }
                                                                        
@@ -1500,11 +1500,11 @@ public class MarriageApplicationValidator {
                                                                         }
 
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPermntOutsideKeralaVillage())) {
+                                                                                        .getPermntOutsideKeralaVillageorTown())) {
                                                                                 throw new CustomException(
                                                                                                 " BRIDE PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The Village " +
-                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillage()
+                                                                                                                brideaddressInfo.getPermntOutsideKeralaVillageorTown()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
@@ -1767,20 +1767,20 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentOutsideKeralaVillageName())) {
+                                                                                        .getPresentOutsideKeralaVillageorTown())) {
                                                                                 throw new CustomException(
                                                                                                 "BRIDE PRESENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
                                                                                                 "The   Village  " +
-                                                                                                                brideaddressInfo.getPresentOutsideKeralaVillageName()
+                                                                                                                brideaddressInfo.getPresentOutsideKeralaVillageorTown()
                                                                                                                 + " is invalid");
                                                                         }
 
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentOutsideKeralaCityVilgeEn())) {
+                                                                                        .getPresentOutsideKeralaCityVilgeNameEn())) {
                                                                                 throw new CustomException(
                                                                                                 " BRIDE PRESENT ADDRESS OUTSIDE KERALA: CITY INVALID ",
                                                                                                 "The City/Town " +
-                                                                                                                brideaddressInfo.getPresentOutsideKeralaCityVilgeEn()
+                                                                                                                brideaddressInfo.getPresentOutsideKeralaCityVilgeNameEn()
                                                                                                                 + " is invalid");
                                                                         }
 

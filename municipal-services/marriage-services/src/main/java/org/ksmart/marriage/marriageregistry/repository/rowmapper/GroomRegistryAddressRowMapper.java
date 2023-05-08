@@ -95,7 +95,7 @@ public interface GroomRegistryAddressRowMapper {
                 .permntInKeralaWardNo(rs.getString("GPMA_ward_code"))
                 .permntOutsideKeralaDistrict(rs.getString("GPMA_districtid"))
                 .permntOutsideKeralaTaluk(rs.getString("GPMA_taluk_name"))
-                .permntOutsideKeralaVillage(rs.getString("GPMA_village_name"))
+                .permntOutsideKeralaVillageorTown(rs.getString("GPMA_village_name"))
                 .permntOutsideKeralaPincode(rs.getString("GPMA_pinno"))
                 .permntOutsideKeralaLocalityNameEn(rs.getString("GPMA_locality_en"))
                 .permntOutsideKeralaStreetNameEn(rs.getString("GPMA_street_name_en"))

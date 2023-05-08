@@ -2,11 +2,18 @@ package org.ksmart.marriage.utils;
 
 public class MarriageConstants {
     public static final String TENANTS = "tenants";
-    public static final String TENANT_MODULE_NAME = "tenant";    
+    public static final String TENANT_MODULE_NAME = "tenant";
+    public static final String CR_MDMS_MARRIAGETYPE = "MarriagePlaceType";
 
     public static final String GENDERTYPE = "GenderType";
     public static final String COMMON_MASTER_MODULE_NAME = "common-masters";
-     //mdms path codes
+    public static final String CR_MDMS_MARRIAGETYPE_CODE_JSONPATH = "$.MdmsRes.birth-death-service.TypeOfMarriage[*].code";
+    public static final String CR_MDMS_MARRIAGE_TYPE_JSONPATH = "$.MdmsRes.birth-death-service.TypeOfMarriage";
+
+    public static final String CR_MDMS_PLACETYPE_CODE_JSONPATH = "$.MdmsRes.birth-death-service.MarriagePlaceType[*].code";
+    public static final String CR_MDMS_PLACE_TYPE_JSONPATH = "$.MdmsRes.birth-death-service.MarriagePlaceType";
+
+    //mdms path codes
      public static final String COMMON_MASTER_JSONPATH = "$.MdmsRes.common-masters";
      public static final String TENANT_JSONPATH = "$.MdmsRes.tenant";
      public static final String BND_LIST_JSONPATH = "$.MdmsRes.birth-death-service";
@@ -169,4 +176,42 @@ public class MarriageConstants {
     public static final String MARRIAGE_PLACE_TENENT_CODE = "tenentCode";
     public static final String BILLING_SERVICE = "BillingService";
     public static final String NOT_RECORDED = "Not Recorded";
+
+    //03.05.2023
+    public static final String CR_MDMS_COUNTRY_CODE_JSONPATH = "$.MdmsRes.common-masters.Country[*].code";
+    public static final String CR_MDMS_COUNTRY_CODES_JSONPATH = "$.MdmsRes.common-masters.Country";
+
+    public static final String CR_MDMS_STATE_CODE_JSONPATH = "$.MdmsRes.common-masters.State[*].code";
+    public static final String CR_MDMS_STATE_JSONPATH = "$.MdmsRes.common-masters.State";
+
+    public static final String CR_MDMS_DISTRICT_CODE_JSONPATH = "$.MdmsRes.common-masters.District[*].code";
+    public static final String CR_MDMS_DISTRICT_JSONPATH = "$.MdmsRes.common-masters.District";
+
+    public static final String CR_MDMS_TALUK_CODE_JSONPATH = "$.MdmsRes.common-masters.Taluk[*].code";
+    public static final String CR_MDMS_TALUK_JSONPATH = "$.MdmsRes.common-masters.Taluk";
+
+    public static final String CR_MDMS_VILLAGE_CODE_JSONPATH = "$.MdmsRes.common-masters.Village[*].code";
+    public static final String CR_MDMS_VILLAGE_JSONPATH = "$.MdmsRes.common-masters.Village";
+
+    public static final String CR_MDMS_POSTOFFICE_CODE_JSONPATH = "$.MdmsRes.common-masters.PostOffice[*].code";
+    public static final String CR_MDMS_POSTOFFICE_JSONPATH = "$.MdmsRes.common-masters.PostOffice";
+
+    public static final String CR_MDMS_MARITALSTATUS_JSONPATH = "$.MdmsRes.birth-death-service.MaritalStatus";
+
+    public static final String CR_MDMS_GENDER_JSONPATH = "$.MdmsRes.common-masters.GenderType";
+
+    public static final String CR_MDMS_MARRIAGE_TENANT_CODE_JSONPATH = "$.MdmsRes.tenant.tenants.city[*].code";
+    public static final String CR_MDMS_MARRIAGE_TENANT_JSONPATH = "$.MdmsRes.tenant.tenants.city";
+
+    public static final String LOCATION_MDMS_BOUNDARY = "TenantBoundary";
+
+    public static final String CR_MDMS_BOUNDARY_CODE_JSONPATH = "$.MdmsRes.egov-location.TenantBoundary[*].boundary.children[*].children[*].code";
+    public static final String CR_MDMS_BOUNDARY_CODES_JSONPATH = "$.MdmsRes.egov-location.TenantBoundary[*].boundary.children[*].children[*]";
+
+    public static final String CR_MDMS_LBTYPE_CODE_JSONPATH = "$.MdmsRes.common-masters.LBType[*].code";
+    public static final String CR_MDMS_LBTYPE_JSONPATH = "$.MdmsRes.common-masters.LBType";
+
+    public static final String CR_MDMS_PLACEID_CODE_JSONPATH = "$.MdmsRes.egov-location.MarriagePlace[*].code";
+    public static final String CR_MDMS_PLACEID_JSONPATH = "$.MdmsRes.egov-location.MarriagePlace[*]";
+
 }

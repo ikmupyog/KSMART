@@ -381,7 +381,7 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPostOffice
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPincode
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.pinNoPresent
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPresent
 
@@ -411,7 +411,7 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaAdressMlB
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOthrIndiaProvinceEn
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOthrIndiaProvinceEn
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOthrIndiaProvinceMl
 
@@ -539,7 +539,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPostOffice
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPincode
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.pinNoPresent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPresent
 
@@ -569,7 +569,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOthrIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOthrIndiaProvinceEn
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOthrIndiaProvinceMl
 
@@ -1102,7 +1102,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPostOffice
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaPincode
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.pinNoPresent
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPresent
 
@@ -1122,7 +1122,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOthrIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOthrIndiaProvinceEn
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOthrIndiaProvinceMl
 
@@ -1185,7 +1185,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPostOffice
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaPincode
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.pinNoPresent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPresent
 
@@ -1205,7 +1205,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOthrIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOthrIndiaProvinceEn
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOthrIndiaProvinceMl
 
@@ -1214,7 +1214,6 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutsideKeralaPostOfficeMl
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.townOrVillagePresent
-
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -1422,7 +1421,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileStoreId
 
-            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentlink
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileURL
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageId
 
