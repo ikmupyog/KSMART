@@ -73,7 +73,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
   }
   let routeLink = "";
   routeLink = `${getPath(match.path, match.params)}`;
-  routeLink = routeLink.replace("/nac-birth-summary", "");
+  routeLink = routeLink.replace("/check", "");
   useEffect(() => {
     if (uploadedImages?.length > 0) {
       fetchImage();
@@ -174,7 +174,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {BirthNACDetails?.birthDateTime ? BirthNACDetails?.birthDateTime : "NA"}
+                      {BirthNACDetails?.birthDateTime ? BirthNACDetails?.birthDateTime : t("CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                   <div className="col-md-2">

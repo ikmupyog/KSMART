@@ -23,8 +23,6 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  // console.log(JSON.stringify(props));
-  // console.log(props);
   const [editFlag, setEditFlag, clearParams1] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
   console.log(props, sessionStorage.getItem("CR_EDIT_ADOPTION_FLAG"), editFlag);
   if ((props.isError || props?.isSuccess) && editFlag !== false) {
@@ -167,8 +165,8 @@ const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   // }, [mutation.isSuccess, mutation1.isSuccess]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data;
-    const License = (Licenses && Licenses[0]) || {};
+    const { AdoptionDetails = [] } = mutation.data;
+    const License = (AdoptionDetails && AdoptionDetails[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
     const data = getPDFData({ ...res }, tenantInfo, t);
@@ -228,6 +226,19 @@ const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
           //style={{ width: "100px" }}
           onClick={handleDownloadPdf}
         />
+        {mutation?.data?.AdoptionDetails[0]?.applicationStatus === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.AdoptionDetails[0].businessservice}/${mutation.data.AdoptionDetails[0].applicationNumber}`,
+              state: { tenantId: mutation.data.AdoptionDetails[0].tenantid },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>
+        )}
+        <Link to={`/digit-ui/citizen`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
         {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
