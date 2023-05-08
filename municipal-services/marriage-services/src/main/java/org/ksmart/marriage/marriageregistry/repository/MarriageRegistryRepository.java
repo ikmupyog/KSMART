@@ -314,13 +314,15 @@ public class MarriageRegistryRepository {
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsGroomAddressMap));
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsGroomAddressMap));
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsGroomAddressMap));
-                if (StringUtils.isNotBlank(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
-                    req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                String groomAddr = marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
+                if (StringUtils.isNotBlank(groomAddr)){
+                    req.getMarriageCertificate().get(0).setGroomPermntFullAddr(groomAddr);
                 }else{
                     req.getMarriageCertificate().get(0).setGroomPermntFullAddr(MarriageConstants.NOT_RECORDED);
                 }
-                if (StringUtils.isNotBlank(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))) {
-                    req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                String brideAddr = marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
+                if (StringUtils.isNotBlank(brideAddr)) {
+                    req.getMarriageCertificate().get(0).setBridePermntFullAddr(brideAddr);
                 }else{
                     req.getMarriageCertificate().get(0).setBridePermntFullAddr(MarriageConstants.NOT_RECORDED);
                 }
