@@ -2,10 +2,7 @@ package org.ksmart.marriage.marriagecorrection.mapper;
 
 
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideAddressDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomAddressDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.*;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +19,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setGroomDetails(new GroomDetails());
         marriageApplicationDetails.setBrideAddressDetails(new BrideAddressDetails());
         marriageApplicationDetails.setGroomAddressDetails(new GroomAddressDetails());
+        marriageApplicationDetails.setWitnessDetails(new WitnessDetails());
         MarriageRegistryDetails marriageRegistryDetails=registry.get(0);
 
         //MARRIAGE DETAILS
@@ -50,6 +48,17 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setRegistrationNo(marriageRegistryDetails.getRegistrationno());
         marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukid());
         marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillage_name());
+
+        marriageApplicationDetails.setModuleCode(marriageRegistryDetails.getModuleCode());
+        marriageApplicationDetails.getWitnessDetails().setBrideUrl(marriageRegistryDetails.getWitnessDetails().getBrideUrl());
+        marriageApplicationDetails.getWitnessDetails().setGroomUrl(marriageRegistryDetails.getWitnessDetails().getGroomUrl());
+        marriageApplicationDetails.getWitnessDetails().setImageUuid(marriageRegistryDetails.getWitnessDetails().getImageUuid());
+        marriageApplicationDetails.getWitnessDetails().setBrideFilestoreId(marriageRegistryDetails.getWitnessDetails().getBrideFilestoreId());
+        marriageApplicationDetails.getWitnessDetails().setGroomFilestoreId(marriageRegistryDetails.getWitnessDetails().getGroomFilestoreId());
+        marriageApplicationDetails.getWitnessDetails().setBrideExpired(marriageRegistryDetails.getWitnessDetails().getBrideExpired());
+        marriageApplicationDetails.getWitnessDetails().setGroomExpired(marriageRegistryDetails.getWitnessDetails().getGroomExpired());
+        marriageApplicationDetails.getWitnessDetails().setIsBackward(marriageRegistryDetails.getWitnessDetails().getIsBackward());
+        marriageApplicationDetails.setZonalOffice(marriageRegistryDetails.getZonalOffice());
 
         //BRIDE DETAILS
         marriageApplicationDetails.getBrideDetails().setBrideGroom(marriageRegistryDetails.getBrideDetails().getBrideGroom());
