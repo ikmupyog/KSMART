@@ -123,10 +123,10 @@ public class MarriageCorrectionService {
         //mdmsValidator.validateMarriageMDMSData(marriageDetailsRequest,mdmsData);
         //validatorService.ruleEngineMarriage(marriageDetailsRequest, wfc, mdmsData);
 
+        producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
         if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
             workflowIntegrator.callCorrectionWorkFlow(request);
         }
-        producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
 
         request.getMarriageCorrectionDetails().forEach(marriage->{
             if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
