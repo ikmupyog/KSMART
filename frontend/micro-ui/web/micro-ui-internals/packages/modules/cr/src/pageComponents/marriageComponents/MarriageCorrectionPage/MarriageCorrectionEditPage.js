@@ -421,7 +421,7 @@ const MarriageCorrectionEditPage = ({
                 />
               </div>
             </div>
-            <div style={{ marginTop: "2.8rem" }}>
+            <div style={{ marginTop: "2.2rem" }}>
               {marriageCorrectionFormsObj?.DOM?.isDisable && (
                 <div>
                   <ButtonContainer>
@@ -634,7 +634,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_NAME?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_NAME)}>
@@ -744,7 +744,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </div>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_AGE?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_AGE)}>
@@ -797,7 +797,7 @@ const MarriageCorrectionEditPage = ({
                     </div>
                   </FieldComponentContainer>
 
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_MOTHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_MOTHER)}>
@@ -849,7 +849,7 @@ const MarriageCorrectionEditPage = ({
                     </div>
                   </FieldComponentContainer>
 
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_FATHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_FATHER)}>
@@ -898,7 +898,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_GUARDIAN?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_GUARDIAN)}>
@@ -965,7 +965,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["GROOM_PERADD"])}>
@@ -1067,7 +1067,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["GROOM_PERADD"])}>
@@ -1179,7 +1179,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_NAME?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_NAME)}>
@@ -1299,7 +1299,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </div>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_AGE?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_AGE)}>
@@ -1350,7 +1350,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_MOTHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_MOTHER)}>
@@ -1401,7 +1401,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_FATHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_FATHER)}>
@@ -1450,7 +1450,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_GUARDIAN)}>
@@ -1517,7 +1517,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.BRIDE_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>
@@ -1619,7 +1619,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.BRIDE_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>

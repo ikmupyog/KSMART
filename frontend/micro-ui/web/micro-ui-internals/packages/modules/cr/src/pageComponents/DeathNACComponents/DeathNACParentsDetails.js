@@ -231,35 +231,35 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
   let validFlag = true;
   const goNext = () => {
     // if (isMotherInfo === false) {
-    if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
-      if (MotherAadharError) {
-        validFlag = false;
-        setMotherAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setMotherAadharError(false);
-      }
-    }
-    //}
-    if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
-      let adharLength = fatherAadhar;
-      console.log(adharLength);
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setFatherAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setFatherAadharError(false);
-      }
-    }
+    // if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
+    //   if (MotherAadharError) {
+    //     validFlag = false;
+    //     setMotherAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //     // return false;
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else {
+    //     setMotherAadharError(false);
+    //   }
+    // }
+    // //}
+    // if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
+    //   let adharLength = fatherAadhar;
+    //   console.log(adharLength);
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setFatherAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setFatherAadharError(false);
+    //   }
+    // }
   
 
     if (validFlag == true) {
@@ -398,11 +398,12 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
                       />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+                      <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                       <TextInput
                         t={t}
                         isMandatory={false}
                         type="number"
+                        min="12"
                         max="12"
                         optionKey="i18nKey"
                         name="SpouseAadhaar"
@@ -477,14 +478,16 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"number"}
+                    type="number"
                     optionKey="i18nKey"
+                    min="12"
+                    max="12"
                     name="motherAadhar"
                     value={motherAadhar}
                     onChange={setSelectMotherAadhar}
                     disable={isDisableEdit}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>
@@ -555,12 +558,14 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
+                    min="12"
+                    max="12"
                     name="fatherAadhar"
                     value={fatherAadhar}
                     onChange={setSelectFatherAadhar}
                     disable={isDisableEdit}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>

@@ -1689,7 +1689,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                  <CardLabel>{t("CR_AADHAR")}</CardLabel>
+                  <CardLabel>{t("CR_AADHAR")} <span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     type="number"
@@ -1699,7 +1699,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
                     value={DeceasedAadharNumber}
                     onChange={setSelectDeceasedAadharNumber}
                     placeholder={`${t("CR_AADHAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text",  title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$",isRequired: true, type: "text",  title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>

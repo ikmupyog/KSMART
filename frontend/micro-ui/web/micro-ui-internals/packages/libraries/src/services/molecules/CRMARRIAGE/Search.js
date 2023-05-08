@@ -73,13 +73,13 @@ export const CRSearchMarriage = {
       values: [
         { title: `${t("CR_SEARCH_APP_NO_LABEL")}`, value: response?.applicationNumber || "NA" },
         { title: `${t("CR_DATE_OF_MARRIAGE")}`, value: convertEpochToDate(response?.marriageDOM) || "NA" },
-        { title: `${t("CS_COMMON_DISTRICT")}`, value: `${response?.marriageDistrictEn} / ${response?.marriageDistrictEn}` },
+        { title: `${t("CS_COMMON_DISTRICT")}`, value: `${response?.marriageDistrictEn} / ${response?.marriageDistrictMl}` },
         { title: `${t("CS_COMMON_TALUK")}`, value: `${response?.marriageTalukNameEn} / ${response?.marriageTalukNameMl}` },
         { title: `${t("CS_COMMON_VILLAGE")}`, value: `${response?.marriageVillageNameEn} / ${response?.marriageVillageNameMl}` },
         { title: `${t("CS_LBTYPE")}`, value: response?.marriageLBtype || "NA" },
         { title: `${t("CS_LB")}`, value: response?.marriageTenantid || "NA" },
         { title: `${t("CS_COMMON_WARD")}`, value: `${response?.marriageWardCodeEn} / ${response?.marriageWardCodeMl}` },
-        { title: `${t("CR_MARRIAGE_PLACE_TYPE")}`, value : `${response?.marriagePlaceTypenameEn} / ${response?.marriagePlaceTypenameMl}` },
+        { title: `${t("CR_MARRIAGE_PLACE_TYPE")}`, value: `${response?.marriagePlaceTypenameEn} / ${response?.marriagePlaceTypenameMl}` },
         {
           title: `${t("CR_MARRIAGE_TYPE")}`,
           value: `${response?.marriageTypeEn} / ${response?.marriageTypeMl}`,
@@ -328,11 +328,11 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CR_TALUK_TEHSIL")}`,
-          value: `${response?.GroomAddressDetails?.presentOutsideKeralaTalukEn} / ${response?.GroomAddressDetails?.presentOutsideKeralaTalukMl}`,
+          value: response?.GroomAddressDetails?.presentOutsideKeralaTaluk || "NA",
         },
         {
           title: `${t("CR_TOWN_VILLAGE_EN")}`,
-          value: `${response?.GroomAddressDetails?.presentOutsideKeralaVillageEn} / ${response?.GroomAddressDetails?.presentOutsideKeralaVillageMl}`,
+          value: response?.GroomAddressDetails?.presentOutsideKeralaVillage || "NA",
         },
         {
           title: `${t("CR_CITY_VILLAGE_NAME_EN")}`,
@@ -344,7 +344,7 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CS_COMMON_POST_OFFICE")}`,
-          value: `${response?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn} / ${response?.GroomAddressDetails?.presentOutsideKeralaPostOfficeMl}`,
+          value: response?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn || "NA",
         },
         {
           title: `${t("CR_LOCALITY_EN")} / ${t("CR_LOCALITY_ML")}`,
@@ -405,7 +405,7 @@ export const CRSearchMarriage = {
       GroomPermanentAddressDetails.values.push(
         {
           title: `${t("CS_COMMON_COUNTRY")}`,
-          value: `${response?.GroomAddressDetails?.permanentAddrCountryNameEn} / ${response?.GroomAddressDetails?.permanentAddrCountryNameMl}`,
+          value: `${response?.GroomAddressDetails?.permtaddressCountry} / ${response?.GroomAddressDetails?.permtaddressCountry}`,
         },
         {
           title: `${t("CS_COMMON_STATE")}`,
@@ -473,11 +473,11 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CR_TALUK_TEHSIL")}`,
-          value: `${response?.GroomAddressDetails?.permntOutsideKeralaTalukEn} / ${response?.GroomAddressDetails?.permntOutsideKeralaTalukMl}`,
+          value: response?.GroomAddressDetails?.permntOutsideKeralaTaluk || "NA",
         },
         {
           title: `${t("CR_TOWN_VILLAGE_EN")}`,
-          value: `${response?.GroomAddressDetails?.permntOutsideKeralaVillageEn} / ${response?.GroomAddressDetails?.presentOutsideKeralaVillageMl}`,
+          value: response?.GroomAddressDetails?.permntOutsideKeralaVillage || "NA",
         },
         {
           title: `${t("CR_CITY_VILLAGE_NAME_EN")}`,
@@ -489,7 +489,7 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CS_COMMON_POST_OFFICE")}`,
-          value: `${response?.GroomAddressDetails?.permntOutsideKeralaPostOfficeEn} / ${response?.GroomAddressDetails?.permntOutsideKeralaPostOfficeMl}`,
+          value: response?.GroomAddressDetails?.permntOutsideKeralaPostOfficeEn || "NA",
         },
         {
           title: `${t("CR_LOCALITY_EN")} / ${t("CR_LOCALITY_ML")}`,
@@ -712,11 +712,11 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CR_TALUK_TEHSIL")}`,
-          value: `${response?.BrideAddressDetails?.presentOutsideKeralaTalukEn} / ${response?.BrideAddressDetails?.presentOutsideKeralaTalukMl}`,
+          value: response?.BrideAddressDetails?.presentOutsideKeralaTaluk || "NA",
         },
         {
           title: `${t("CR_TOWN_VILLAGE_EN")}`,
-          value: `${response?.BrideAddressDetails?.presentOutsideKeralaVillageEn} / ${response?.BrideAddressDetails?.presentOutsideKeralaVillageMl}`,
+          value: response?.BrideAddressDetails?.presentOutsideKeralaVillageEn || "NA",
         },
         {
           title: `${t("CR_CITY_VILLAGE_NAME_EN")}`,
@@ -728,7 +728,7 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CS_COMMON_POST_OFFICE")}`,
-          value: `${response?.BrideAddressDetails?.presentOutsideKeralaPostOfficeEn} / ${response?.BrideAddressDetails?.presentOutsideKeralaPostOfficeMl}`,
+          value: response?.BrideAddressDetails?.presentOutsideKeralaPostOfficeEn || "NA",
         },
         {
           title: `${t("CR_LOCALITY_EN")} / ${t("CR_LOCALITY_ML")}`,
@@ -857,11 +857,11 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CR_TALUK_TEHSIL")}`,
-          value: `${response?.BrideAddressDetails?.permntOutsideKeralaTalukEn} / ${response?.BrideAddressDetails?.permntOutsideKeralaTalukMl}`,
+          value: response?.BrideAddressDetails?.permntOutsideKeralaTaluk || "NA",
         },
         {
           title: `${t("CR_TOWN_VILLAGE_EN")}`,
-          value: `${response?.BrideAddressDetails?.permntOutsideKeralaVillageEn} / ${response?.BrideAddressDetails?.presentOutsideKeralaVillageMl}`,
+          value: response?.BrideAddressDetails?.permntOutsideKeralaVillage || "NA",
         },
         {
           title: `${t("CR_CITY_VILLAGE_NAME_EN")}`,
@@ -873,7 +873,7 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CS_COMMON_POST_OFFICE")}`,
-          value: `${response?.BrideAddressDetails?.permntOutsideKeralaPostOfficeEn} / ${response?.BrideAddressDetails?.permntOutsideKeralaPostOfficeMl}`,
+          value: response?.BrideAddressDetails?.permntOutsideKeralaPostOfficeEn || "NA",
         },
         {
           title: `${t("CR_LOCALITY_EN")} / ${t("CR_LOCALITY_ML")}`,

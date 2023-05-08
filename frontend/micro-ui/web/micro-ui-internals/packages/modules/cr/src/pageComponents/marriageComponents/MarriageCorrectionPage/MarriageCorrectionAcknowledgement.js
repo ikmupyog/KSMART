@@ -56,21 +56,6 @@ const MarriageCorrectionAcknowledgement = () => {
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
 
-  // if (false) {
-  //   return (
-  //     <Card>
-  //       <BannerPicker
-  //         t={t}
-  //         // data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)}
-  //       />
-  //       {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-  //       <Link to={`/digit-ui/citizen`}>
-  //         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-  //       </Link>
-  //     </Card>
-  //   );
-  // } else {
-    // console.log(JSON.stringify(mutation));
     if (mutationData?.isSuccess) {
       return (
         <Card>

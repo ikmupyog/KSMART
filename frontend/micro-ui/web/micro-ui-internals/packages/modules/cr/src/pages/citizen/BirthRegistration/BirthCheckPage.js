@@ -53,19 +53,18 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { ChildDetails, ParentsDetails, AddressBirthDetails, InitiatorinfoDetails, InformarHosInstDetails } = value;
-  console.log(AddressBirthDetails);
+  // console.log(AddressBirthDetails);
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${
-      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-    }`;
+    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+      }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
-    routeLink = `${getPath(match.path, match.params)}`;
-    routeLink = routeLink.replace("/check", "");
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/check", "");
   // }
 
   if (window.location.href.includes("/citizen") == "citizen") {
@@ -74,7 +73,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   function onBirthSubmit() {
-    if (!isInitiatorDeclaration && window.location.href.includes("/citizen")) {
+    // && window.location.href.includes("/citizen")
+    if (isInitiatorDeclaration === false ) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -197,7 +197,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameEn}</CardText>
                   </div>
-                  
+
                 </div>
               </div>
               <div className="row">
@@ -220,7 +220,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
                     {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
-                  </div>                 
+                  </div>
                 </div>
               </div>
             </StatusTable>
@@ -310,9 +310,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {ChildDetails?.hospitalName.hospitalNamelocal}                        
+                        {ChildDetails?.hospitalName.hospitalNamelocal}
                       </CardText>
-                      {<ActionButton style={{Colour: "red !important"}} jumpTo={`${routeLink}/ChildDetails`} />}
+                      {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/ChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -581,8 +581,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                       </div>
                       <div className="col-md-2">
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
-                  </div>
+                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -659,7 +659,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {`${t("CR_MOTHER_INFORMATION_MISSING")}`} :
                       </CardText>
-                      {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                      {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                     </div>
                   </div>
                 </div>
@@ -747,7 +747,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherProfession.name}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                        {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                       </div>
                     </div>
                   </div>
@@ -767,7 +767,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {`${t("CR_FATHER_INFORMATION_MISSING")}`} :
                       </CardText>
-                      {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                      {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                     </div>
                   </div>
                 </div>
@@ -856,7 +856,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.fatherEmail}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                   </div>
                 </div>
               </div>
@@ -1002,7 +1002,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1134,7 +1134,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1242,7 +1242,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1383,7 +1383,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1515,7 +1515,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntOutsideKeralaHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1623,7 +1623,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1708,7 +1708,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   )}
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/InitiatorDetails`} />}
+                    {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
                   </div>
                 </div>
               </div>
@@ -1716,7 +1716,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           }
         />
 
-        {window.location.href.includes("/citizen") && (
+        {/* {window.location.href.includes("/citizen") && ( */}
           <div>
             <div className="row">
               <div className="col-md-12">
@@ -1734,23 +1734,24 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     onChange={setDeclarationInfo}
                     value={isInitiatorDeclaration}
                     checked={isInitiatorDeclaration}
-                    // disable={isDisableEdit}
+                  // disable={isDisableEdit}
                   />
                 </div>
               </div>
             </div>
           </div>
-        )}
+        {/* )} */}
 
-        {/* {toast && (
+        {toast && (
           <Toast
             error={InitiatorDeclareError}
             label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
-        )} */}
+        )}
         {""}
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit}  disabled={!isInitiatorDeclaration }  />
+        {/* disabled={!isInitiatorDeclaration } */}
       </Card>
     </React.Fragment>
   );

@@ -39,7 +39,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   };
 
   const FieldComponentContainer = ({ children }) => {
-    return <div className="col-md-9">{children}</div>;
+    return <div className="col-md-10">{children}</div>;
   };
 
   const mutation = Digit.Hooks.cr.useDeathCorrectionAction(tenantId);
@@ -208,10 +208,6 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {/* <FormStep
-       t={t}
-        > */}
         <FormStep onSelect={onSubmitDeathCorrection} config={config}>
           <div className="row">
             <div className="col-md-12">
@@ -241,7 +237,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
@@ -294,7 +290,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
 
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
@@ -350,7 +346,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
               </FieldComponentContainer>
             </FormFieldContainer>
             <FormFieldContainer>
-              <div className="col-md-9">
+              <div className="col-md-10">
               {/* <FieldComponentContainer> */}
                 <div className="col-md-4">
                   <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
@@ -367,7 +363,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
                 </div>
               {/* </FieldComponentContainer> */}
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_DOB?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_DOB"])}>
@@ -394,7 +390,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_SEX?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SEX"])}>
@@ -433,7 +429,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_MOTHER?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_MOTHER"])}>
@@ -474,7 +470,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
 
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_FATHER?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_FATHER"])}>
@@ -513,7 +509,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_SPOUSE?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SPOUSE"])}>
@@ -565,7 +561,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.PERMANENT_ADDRESS?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
