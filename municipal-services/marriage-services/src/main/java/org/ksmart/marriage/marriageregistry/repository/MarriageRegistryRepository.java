@@ -5,11 +5,14 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.marriage.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 
  import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageCertificateEnrichment;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageRegistryEnrichment;
+import org.ksmart.marriage.marriageregistry.web.model.BrideRegistryDetails;
+import org.ksmart.marriage.marriageregistry.web.model.GroomRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.repository.querybuilder.MarriageRegistryQueryBuilder;
@@ -54,6 +57,9 @@ public class MarriageRegistryRepository {
     private final MarriageMdmsUtil util;
 
     @Autowired
+    EncryptionDecryptionUtil encryptionDecryptionUtil;
+
+    @Autowired
     public MarriageRegistryRepository(MarriageRegistryEnrichment marriageRegistryEnrichment, MarriageProducer producer,
                                       MarriageApplicationConfiguration marriageApplicationConfiguration,
                                       JdbcTemplate jdbcTemplate,
@@ -86,7 +92,7 @@ public class MarriageRegistryRepository {
         // return result.getMarriageDetails();
 
     // }
-    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
+    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria,RequestInfo requestInfo ) {
 
         List<Object> preparedStmtValues = new ArrayList<>();
 
@@ -94,17 +100,43 @@ public class MarriageRegistryRepository {
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
 
+            if (result != null) {
+                result.forEach(marriage -> {
+            
+                    GroomRegistryDetails groomDetails = marriage.getGroomDetails();
+                    GroomRegistryDetails groomDetailsDec = encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomRegistryDetails.class, requestInfo);
+                    groomDetails.setAadharno(groomDetailsDec.getAadharno());
+                    if (groomDetails.getParent_guardian() != null) {
+                        if (groomDetails.getParent_guardian().equals(MarriageConstants.PARENT)) {
 
+                            groomDetails.setMother_aadharno(groomDetailsDec.getMother_aadharno());
+                            groomDetails.setFather_aadharno(groomDetailsDec.getFather_aadharno());
+                        } else if (groomDetails.getParent_guardian().equals(MarriageConstants.GUARDIAN)) {
+                            groomDetails.setGuardian_aadharno(groomDetailsDec.getGuardian_aadharno());
+                        }
+                    }
+                    BrideRegistryDetails brideDetails = marriage.getBrideDetails();
+                    BrideRegistryDetails brideDetailsDec = encryptionDecryptionUtil.decryptObject(brideDetails, "BndDetail", BrideRegistryDetails.class, requestInfo);
+                    brideDetails.setAadharno(brideDetailsDec.getAadharno());
+                    if (brideDetails.getParent_guardian() != null) {
+                        if (brideDetails.getParent_guardian().equals(MarriageConstants.PARENT)) {
+                            brideDetails.setMother_aadharno(brideDetailsDec.getMother_aadharno());
+                            brideDetails.setFather_aadharno(brideDetailsDec.getFather_aadharno());
+                        } else if (brideDetails.getParent_guardian().equals(MarriageConstants.GUARDIAN)) {
+                            brideDetails.setGuardian_aadharno(brideDetailsDec.getGuardian_aadharno());
 
-
-                return result;
-
+                        }
+                    }
+                });
+        }
+        return result;
     }
+
     public int getMarriageRegistryCount(MarriageRegistrySearchCriteria criteria) {
         List<Object> preparedStmtList = new ArrayList<>();
         String query = queryBuilder.getMarriageRegistryCountQuery(criteria, preparedStmtList, Boolean.FALSE);
         int MarriageCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
-        System.out.println("Marriagecountquery"+query);
+       // System.out.println("Marriagecountquery"+query);
         return MarriageCount;
     }
     public List<MarriageCertificate> searchCertificateByMarriageId(String id) {
@@ -113,7 +145,6 @@ public class MarriageRegistryRepository {
         List<MarriageCertificate> results = jdbcTemplate.query(qry, preparedStmtVals.toArray(), marriageCertificateRowMapper);
         return results;
     }
-
 
 
     public MarriageCertPdfResponse saveMarriageCertPdf(MarriageCertPDFRequest marriageCertPDFRequest) {

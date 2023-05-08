@@ -83,13 +83,13 @@ public class MarriageRegistryService {
 
     }
 
-    public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
+    public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria,RequestInfo requestInfo) {
         
-        return repository.searchMarriageRegistry(criteria);
+        return repository.searchMarriageRegistry(criteria,requestInfo);
     }
 
     public MarriageCertificate download(MarriageRegistrySearchCriteria criteria, RequestInfo requestInfo) {
-        List<MarriageRegistryDetails> marriageRegistryDetailsList = repository.searchMarriageRegistry(criteria);
+        List<MarriageRegistryDetails> marriageRegistryDetailsList = repository.searchMarriageRegistry(criteria, requestInfo);
         if (marriageRegistryDetailsList != null && !marriageRegistryDetailsList.isEmpty()) {
 //            List<MarriageCertificate> marriageCertificateList = repository.searchCertificateByMarriageId(marriageRegistryDetailsList.get(0).getId());
         try {
@@ -99,7 +99,7 @@ public class MarriageRegistryService {
             MarriageCertRequest marriageCertRequest = MarriageCertRequest.builder().marriageCertificate(marriageCertificate).requestInfo(requestInfo).build();
             marriageCertificate.setMarriageRegistryDetails(marriageRegistryDetailsList.get(0));
             marriageCertificate.setRegistrationno(marriageRegistryDetailsList.get(0).getRegistrationno());
-            List<MarriageCertificate> marriageDtls = searchCertificate(criteria);
+            List<MarriageCertificate> marriageDtls = searchCertificate(criteria,requestInfo);
             if (null!=marriageDtls && marriageDtls.size() > 1) {
                 throw new CustomException("Invalid_Input", "Error in processing data");
             }
@@ -143,7 +143,7 @@ public class MarriageRegistryService {
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
            // marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
-//            marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
+        //  marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
             marriageCertificate.setCertificateStatus(MarriageCertificate.StatusEnum.FREE_DOWNLOAD);
             marriageCertificate.setCount(1);//If 1 download from filestoreId, If 0, need to regenerate certificate
@@ -174,8 +174,8 @@ public class MarriageRegistryService {
 
     }
 
-    public List<MarriageCertificate> searchCertificate(MarriageRegistrySearchCriteria criteria) {
-        List<MarriageRegistryDetails> obj = repository.searchMarriageRegistry(criteria);
+    public List<MarriageCertificate> searchCertificate(MarriageRegistrySearchCriteria criteria,RequestInfo requestInfo) {
+        List<MarriageRegistryDetails> obj = repository.searchMarriageRegistry(criteria,requestInfo);
         if(null!=obj&&obj.size()>0) {
             return repository.searchCertificateByMarriageId(obj.get(0).getId());
         }else{
@@ -189,7 +189,7 @@ public class MarriageRegistryService {
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
         criteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
-        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
+        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria,request.getRequestInfo());
         marriageCorrectionApplnValidator.validateCorrectionRegistrySearch(marriageRegistryDetails);
 
         MarriageApplicationSearchCriteria aplnCriteria=new MarriageApplicationSearchCriteria();
