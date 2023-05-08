@@ -325,6 +325,18 @@ public class MarriageRegistryRepository {
                     req.getMarriageCertificate().get(0).setBridePermntFullAddr(MarriageConstants.NOT_RECORDED);
                 }
                 //Setting groom NRI address
+                if (StringUtils.isNotBlank(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
+                    req.getMarriageCertificate().get(0).setGroomPermntNRIFullAddr(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                }else{
+                    req.getMarriageCertificate().get(0).setGroomPermntNRIFullAddr(MarriageConstants.NOT_RECORDED);
+                }
+
+                //Setting bride NRI address
+                if (StringUtils.isNotBlank(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
+                    req.getMarriageCertificate().get(0).setBridePermntNRIFullAddr(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                }else{
+                    req.getMarriageCertificate().get(0).setBridePermntNRIFullAddr(MarriageConstants.NOT_RECORDED);
+                }
 
 
                 //Setting bride address data from MDMS
