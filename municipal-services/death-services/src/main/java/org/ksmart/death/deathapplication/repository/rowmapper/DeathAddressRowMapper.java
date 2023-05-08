@@ -7,11 +7,7 @@ import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-/**
-     * Created by
-     * JASMINE IKM
-     * 
-     */
+
 @Component
 public class DeathAddressRowMapper  implements ResultSetExtractor  , BaseRowMapper{
 

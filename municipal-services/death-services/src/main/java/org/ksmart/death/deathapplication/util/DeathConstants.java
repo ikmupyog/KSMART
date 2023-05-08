@@ -227,4 +227,8 @@ public class DeathConstants {
     public static final String CR_MDMS_INST_TYPE_CODE_JSONPATH = "$.MdmsRes.birth-death-service.InstitutionTypePlaceOfEvent[*].code";
     public static final String CR_MDMS_INST_TYPE_JSONPATH = "$.MdmsRes.birth-death-service.InstitutionTypePlaceOfEvent";
 
+    public static final String BND_MDMS_VEHICLES = "VehicleType";
+    public static final String CR_MDMS_DEATH_VEHICLES_CODE_JSONPATH = "$.MdmsRes.birth-death-service.VehicleType[*].code";
+    public static final String CR_MDMS_DEATH_VEHICLES_JSONPATH = "$.MdmsRes.birth-death-service.VehicleType";
+
 }

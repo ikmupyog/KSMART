@@ -505,4 +505,16 @@ public class DeathBasicInfo {
    @JsonProperty("deathPlaceWardMl")
    private String  deathPlaceWardMl ;
    
+   @JsonProperty("vehicleTypeEn")
+   private String  vehicleTypeEn ;
+
+   @JsonProperty("vehicleTypeMl")
+   private String  vehicleTypeMl ;
+
+   @JsonProperty("vehicleHospitalNameEn")
+   private String  vehicleHospitalNameEn ;
+
+   @JsonProperty("vehicleHospitalNameMl")
+   private String  vehicleHospitalNameMl ;
+   
 }

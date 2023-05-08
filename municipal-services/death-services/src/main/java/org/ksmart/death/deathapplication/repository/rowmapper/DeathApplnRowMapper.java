@@ -4,18 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-
-/**
-     * Creates CrDeathRowMapper
-     * Jasmine
-     * on  06/02/2023
-     */
     
 @Component
 public class DeathApplnRowMapper  implements ResultSetExtractor<List<DeathDtl>>, BaseRowMapper{

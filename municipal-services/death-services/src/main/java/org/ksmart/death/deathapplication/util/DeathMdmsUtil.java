@@ -649,6 +649,9 @@ public class DeathMdmsUtil {
         crDeathMasterDetails
                             .add(MasterDetail.builder().name(DeathConstants.BND_MDMS_PUBLIC_PLACES)
                             .build());
+        crDeathMasterDetails
+                            .add(MasterDetail.builder().name(DeathConstants.BND_MDMS_VEHICLES)
+                            .build());
        
         // Add Module workflow
         crDeathMasterDetails.add(MasterDetail.builder()
@@ -906,6 +909,9 @@ public class DeathMdmsUtil {
     private List<String> getPublicPlaceCode(Object mdmsData) {
         return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_OTHER_PLACE_CODE_JSONPATH);
     }
+    private List<String> getVehicleCode(Object mdmsData) {
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_VEHICLES_CODE_JSONPATH);
+    }
     public String getWardNameEn(Object mdmsData, String WardId) {
         List<String> tenants  = getBoundaryCode(mdmsData);
         int index = tenants.indexOf(WardId);
@@ -994,7 +1000,16 @@ public class DeathMdmsUtil {
         int index = publicpalces.indexOf(PublicPlaceId);
         return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_OTHER_PLACE_JSONPATH+"["+index+"].namelocal"); 
     }
-
+    public String getVehicleNameEn(Object mdmsData, String VehicleTypeId) {
+        List<String> vehicles  = getVehicleCode(mdmsData);
+        int index = vehicles.indexOf(VehicleTypeId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_VEHICLES_JSONPATH+"["+index+"].name"); 
+    }
+    public String getVehicleNameMl(Object mdmsData, String VehicleTypeId) {
+        List<String> vehicles  = getVehicleCode(mdmsData);
+        int index = vehicles.indexOf(VehicleTypeId);
+        return JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_VEHICLES_JSONPATH+"["+index+"].namelocal"); 
+    }
     // public String getLBNameEn(Object mdmsData, String tenantId) {
     //     List<String> lbs  = getLBCode(mdmsData);
     //     int index = lbs.indexOf(tenantId);

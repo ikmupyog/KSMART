@@ -203,7 +203,6 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPresentOutsideKeralaStreetNameMl(null);
                                 deathDtl.getDeathAddressInfo().setPresentOutsideKeralaHouseNameEn(null);
                                 deathDtl.getDeathAddressInfo().setPresentOutsideKeralaHouseNameMl(null);
-
                             }
                         }
                     }
@@ -282,7 +281,7 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLinetwoMl(null);
                             }
                         }else{
-                            if (deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCountry() != null) {
+                            if (deathDtl.getDeathAddressInfo().getPermtaddressCountry() != null && deathDtl.getDeathAddressInfo().getPermtaddressCountry() != DeathConstants.COUNTRY_CODE) {
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaCountry(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCountry());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaVillage(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaVillage());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaCityTown(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCityTown());
@@ -291,7 +290,7 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLinetwoEn(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaLinetwoEn());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLinetwoMl(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaLinetwoMl());
                                 
-                                deathDtl.getDeathAddressInfo().setPermtaddressCountry(null);
+                                // deathDtl.getDeathAddressInfo().setPermtaddressCountry(null);
                                 deathDtl.getDeathAddressInfo().setPermtaddressStateName(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrDistrict(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrVillage(null);
@@ -316,6 +315,16 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPermntOutsideKeralaHouseNameEn(null);
                                 deathDtl.getDeathAddressInfo().setPermntOutsideKeralaHouseNameMl(null);
                                 deathDtl.getDeathAddressInfo().setPermntOutsideKeralaPincode(null); 
+                                //Rakhi S on 08.5.2023
+                                // deathDtl.getDeathAddressInfo().setPermntInKeralaAdrStreetNameEn(null);
+                                // deathDtl.getDeathAddressInfo().setPermntInKeralaAdrHouseNameEn(null);
+                                // deathDtl.getDeathAddressInfo().setPermntInKeralaAdrStreetNameMl(null);
+                                // deathDtl.getDeathAddressInfo().setPermntInKeralaAdrHouseNameMl(null);
+                                // deathDtl.getDeathAddressInfo().setPermntOutsideKeralaStreetNameEn(null);
+                                // deathDtl.getDeathAddressInfo().setPermntOutsideKeralaHouseNameEn(null);
+                                // deathDtl.getDeathAddressInfo().setPermntOutsideKeralaStreetNameMl(null);
+                                // deathDtl.getDeathAddressInfo().setPermntOutsideKeralaHouseNameMl(null);
+
                             }
                         }
                     }
@@ -677,7 +686,7 @@ public class DeathApplnRepository {
                 //Rakhi S on 02.03.2023 Mdms call  
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){                    
                     //DeathPlace Hospital
-                    if(deathDtl.getDeathBasicInfo().getDeathPlace() != null){
+                    if(deathDtl.getDeathBasicInfo().getDeathPlaceType() != null){
                         String deathPlaceHospitalEn = util.getHospitalNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospitalEn);
 
@@ -710,7 +719,7 @@ public class DeathApplnRepository {
                //Rakhi S on 02.04.2023 Death place Institution
                else if(DeathConstants.DEATH_PLACE_INSTITUTION.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                 //DeathPlace Institution
-                if(deathDtl.getDeathBasicInfo().getDeathPlace() != null){
+                if(deathDtl.getDeathBasicInfo().getDeathPlaceType() != null){
                     String deathPlaceHospitalEn = util.getInstitutionNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                     deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceHospitalEn);
 
@@ -740,6 +749,22 @@ public class DeathApplnRepository {
             }
             else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
                 deathDtl.getDeathBasicInfo().setVehicleType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                	//vehicleType
+                    if(deathDtl.getDeathBasicInfo().getVehicleType() != null){
+                        String vehicleTypeEn = util.getVehicleNameEn(mdmsData,deathDtl.getDeathBasicInfo().getVehicleType());
+                        deathDtl.getDeathBasicInfo().setVehicleTypeEn(vehicleTypeEn);
+    
+                        String vehicleTypeMl = util.getVehicleNameMl(mdmsData,deathDtl.getDeathBasicInfo().getVehicleType());
+                        deathDtl.getDeathBasicInfo().setVehicleTypeMl(vehicleTypeMl);
+                      }
+                      //VehicleHospitalEn
+                      if(deathDtl.getDeathBasicInfo().getVehicleHospitalEn() != null){
+                        String deathPlaceHospitalEn = util.getHospitalNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getVehicleHospitalEn());
+                        deathDtl.getDeathBasicInfo().setVehicleHospitalNameEn(deathPlaceHospitalEn);
+    
+                        String deathPlaceHospitalMl = util.getHospitalNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getVehicleHospitalEn());
+                        deathDtl.getDeathBasicInfo().setVehicleHospitalNameMl(deathPlaceHospitalMl);
+                    }
             }
             else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
                 deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
@@ -1465,7 +1490,7 @@ public class DeathApplnRepository {
                 }
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                      //DeathPlace Hospital
-                     if(deathDtl.getDeathBasicInfo().getDeathPlace() != null){
+                     if(deathDtl.getDeathBasicInfo().getDeathPlaceType() != null){
                         String deathPlaceHospitalEn = util.getHospitalNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospitalEn);
 
@@ -1497,12 +1522,12 @@ public class DeathApplnRepository {
                 //Rakhi S on 02.04.2023 Death place Institution
                 else if(DeathConstants.DEATH_PLACE_INSTITUTION.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     //DeathPlace Institution
-                    if(deathDtl.getDeathBasicInfo().getDeathPlace() != null){
-                        String deathPlaceHospitalEn = util.getInstitutionNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
-                        deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceHospitalEn);
+                    if(deathDtl.getDeathBasicInfo().getDeathPlaceType() != null){
+                        String deathPlaceEn = util.getInstitutionNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                        deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceEn);
 
-                        String deathPlaceHospitalMl = util.getInstitutionNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
-                        deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceHospitalMl);
+                        String deathPlaceMl = util.getInstitutionNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                        deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceMl);
                     }
                     // Object mdmsDataInstitution = util.mDMSCallInstitution(requestInfo  
                     //                         , deathDtl.getDeathBasicInfo().getTenantId()                           
@@ -1527,6 +1552,24 @@ public class DeathApplnRepository {
                 }
                else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
                 deathDtl.getDeathBasicInfo().setVehicleType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                //vehicleType
+                if(deathDtl.getDeathBasicInfo().getVehicleType() != null){
+                    String vehicleTypeEn = util.getVehicleNameEn(mdmsData,deathDtl.getDeathBasicInfo().getVehicleType());
+                    deathDtl.getDeathBasicInfo().setVehicleTypeEn(vehicleTypeEn);
+
+                    String vehicleTypeMl = util.getVehicleNameMl(mdmsData,deathDtl.getDeathBasicInfo().getVehicleType());
+                    deathDtl.getDeathBasicInfo().setVehicleTypeMl(vehicleTypeMl);
+                  }
+                  //VehicleHospitalEn
+                  if(deathDtl.getDeathBasicInfo().getVehicleHospitalEn() != null){
+                    String deathPlaceHospitalEn = util.getHospitalNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getVehicleHospitalEn());
+                    deathDtl.getDeathBasicInfo().setVehicleHospitalNameEn(deathPlaceHospitalEn);
+
+                    String deathPlaceHospitalMl = util.getHospitalNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getVehicleHospitalEn());
+                    deathDtl.getDeathBasicInfo().setVehicleHospitalNameMl(deathPlaceHospitalMl);
+                }
+
+
                 }
                 else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
                     deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
@@ -2082,79 +2125,56 @@ public class DeathApplnRepository {
 
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                      //DeathPlace Hospital
-                     if(deathDtl.getDeathBasicInfo().getDeathPlace() != null){
+                     if(deathDtl.getDeathBasicInfo().getDeathPlaceType() != null){
                         String deathPlaceHospitalEn = util.getHospitalNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospitalEn);
 
                         String deathPlaceHospitalMl = util.getHospitalNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
                     }
-                //     Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
-                //                            , deathDtl.getDeathBasicInfo().getTenantId()                           
-                //                            , deathDtl.getDeathBasicInfo().getDeathPlaceType());
-                //    Map<String,List<String>> masterDataHospital = getAttributeValuesHospital(mdmsDataHospital);
-
-                //    Object mdmsDataHospitalMl = util.mDMSCallHospitalMl(requestInfo  
-                //                            , deathDtl.getDeathBasicInfo().getTenantId()                           
-                //                            , deathDtl.getDeathBasicInfo().getDeathPlaceType());
-                //    Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
-
-                //    String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_DATA).toString();
-                //    deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
-
-                //    String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_DATA).toString();
-                //    deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
-
-                // deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
-                // deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
-
                 deathDtl.getDeathBasicInfo().setHospitalNameEn(deathDtl.getDeathBasicInfo().getDeathPlaceType());
                }
                 //Rakhi S on 02.04.2023 Death place Institution
                 else if(DeathConstants.DEATH_PLACE_INSTITUTION.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     //DeathPlace Institution
-                    if(deathDtl.getDeathBasicInfo().getDeathPlace() != null){
+                    if(deathDtl.getDeathBasicInfo().getDeathPlaceType() != null){
                         String deathPlaceHospitalEn = util.getInstitutionNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceHospitalEn);
 
                         String deathPlaceHospitalMl = util.getInstitutionNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceHospitalMl);
-                    }
-                    
-                    // Object mdmsDataInstitution = util.mDMSCallInstitution(requestInfo  
-                    //                         , deathDtl.getDeathBasicInfo().getTenantId()                           
-                    //                         , deathDtl.getDeathBasicInfo().getDeathPlaceType());
-                    // Map<String,List<String>> masterDataInstitution = getAttributeValuesHospital(mdmsDataInstitution);
-    
-                    // Object mdmsDataInstitutionMl = util.mDMSCallInstitutionMl(requestInfo     
-                    //                         , deathDtl.getDeathBasicInfo().getTenantId()                           
-                    //                         , deathDtl.getDeathBasicInfo().getDeathPlaceType());
-                    // Map<String,List<String>> masterDataInstitutionMl = getAttributeValuesHospital(mdmsDataInstitutionMl);
-    
-                    // String deathPlaceInstitution = masterDataInstitution.get(DeathConstants.INSTITUTION_NAME).toString();
-                    // deathPlaceInstitution = deathPlaceInstitution.replaceAll("[\\[\\]\\(\\)]", "");
-    
-                    // String deathPlaceInstitutionMl = masterDataInstitutionMl.get(DeathConstants.INSTITUTION_NAME).toString();
-                    // deathPlaceInstitutionMl = deathPlaceInstitutionMl.replaceAll("[\\[\\]\\(\\)]", "");
-                    
-                    // deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceInstitution);
-                    // deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceInstitutionMl);
-    
+                    }                   
                     deathDtl.getDeathBasicInfo().setInstitution(deathDtl.getDeathBasicInfo().getDeathPlaceType());
                 }
                else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
                 deathDtl.getDeathBasicInfo().setVehicleType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                	//vehicleType
+                    if(deathDtl.getDeathBasicInfo().getVehicleType() != null){
+                        String vehicleTypeEn = util.getVehicleNameEn(mdmsData,deathDtl.getDeathBasicInfo().getVehicleType());
+                        deathDtl.getDeathBasicInfo().setVehicleTypeEn(vehicleTypeEn);
+    
+                        String vehicleTypeMl = util.getVehicleNameMl(mdmsData,deathDtl.getDeathBasicInfo().getVehicleType());
+                        deathDtl.getDeathBasicInfo().setVehicleTypeMl(vehicleTypeMl);
+                      }
+                      //VehicleHospitalEn
+                      if(deathDtl.getDeathBasicInfo().getVehicleHospitalEn() != null){
+                        String deathPlaceHospitalEn = util.getHospitalNameEn(mdmsDataLocation,deathDtl.getDeathBasicInfo().getVehicleHospitalEn());
+                        deathDtl.getDeathBasicInfo().setVehicleHospitalNameEn(deathPlaceHospitalEn);
+    
+                        String deathPlaceHospitalMl = util.getHospitalNameMl(mdmsDataLocation,deathDtl.getDeathBasicInfo().getVehicleHospitalEn());
+                        deathDtl.getDeathBasicInfo().setVehicleHospitalNameMl(deathPlaceHospitalMl);
+                    }
                 }
                 else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
                     deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
                         //publicPlaceType
-                //   if(deathDtl.getDeathBasicInfo().getPublicPlaceType() != null){
-                //     String publicPlaceEn = util.getPublicPlaceEn(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
-                //     deathDtl.getDeathBasicInfo().setPublicPlaceEn(publicPlaceEn);
-
-                //     String publicPlaceMl = util.getPublicPlaceMl(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
-                //     deathDtl.getDeathBasicInfo().setPublicPlaceMl(publicPlaceMl);
-                //   }
+                        if(deathDtl.getDeathBasicInfo().getPublicPlaceType() != null){
+                            String publicPlaceEn = util.getPublicPlaceEn(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
+                            deathDtl.getDeathBasicInfo().setPublicPlaceEn(publicPlaceEn);
+        
+                            String publicPlaceMl = util.getPublicPlaceMl(mdmsData,deathDtl.getDeathBasicInfo().getPublicPlaceType());
+                            deathDtl.getDeathBasicInfo().setPublicPlaceMl(publicPlaceMl);
+                        }
                 } 
 
                criteria.setDeathACKNo(deathDtl.getDeathBasicInfo().getDeathACKNo());

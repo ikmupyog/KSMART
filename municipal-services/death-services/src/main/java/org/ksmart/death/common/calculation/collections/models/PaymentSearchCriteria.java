@@ -1,4 +1,4 @@
-package org.ksmart.birth.common.calculation.collections.models;
+package org.ksmart.death.common.calculation.collections.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
