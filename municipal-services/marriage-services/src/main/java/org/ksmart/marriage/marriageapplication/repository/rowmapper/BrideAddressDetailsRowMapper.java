@@ -27,7 +27,7 @@ public interface BrideAddressDetailsRowMapper {
                 .presentInsideKeralaTaluk(rs.getString("BPSA_talukid"))
                 .presentInsideKeralaVillage(rs.getString("BPSA_villageid"))
                 .villageNamePresent(rs.getString("BPSA_village_name"))
-                .presentInsideKeralaLBName(rs.getString("BPSA_tenantid"))
+                .presentInsideKeralaLBName(rs.getString("BPSA_present_tenentid"))
                 .presentWardNo(rs.getString("BPSA_ward_code"))
                 .presentInsideKeralaPostOffice(rs.getString("BPSA_poid"))
                 .presentUuid(rs.getString("BPSA_id"))
@@ -45,6 +45,7 @@ public interface BrideAddressDetailsRowMapper {
                 .outSideIndiaPostCodePresent(rs.getString("BPSA_ot_zipcode"))
                 .brideGroomPresent(rs.getString("BPSA_bride_groom"))
 
+
 //                PERMANENT
 
                 .countryIdPermanent(rs.getString("BPMA_countryid"))
@@ -60,7 +61,7 @@ public interface BrideAddressDetailsRowMapper {
                 .houseNameNoMlPermanent(rs.getString("BPMA_housename_ml"))
                 .villageNamePermanent(rs.getString("BPMA_village_name"))
                 .permanentUuid(rs.getString("BPMA_id"))
-                .permntInKeralaAdrLBName(rs.getString("BPMA_tenantid"))
+                .permntInKeralaAdrLBName(rs.getString("BPMA_permanent_tenentid"))
                 .townOrVillagePermanent(rs.getString("BPMA_city_town_village"))
                 .permntInKeralaAdrTaluk(rs.getString("BPMA_talukid"))
                 .permntInKeralaAdrVillage(rs.getString("BPMA_villageid"))
