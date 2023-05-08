@@ -901,20 +901,20 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getLocalityEnPermanent(), groomAddressBuilder, true);
 
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getPoNoPermanent(), groomAddressBuilder, true);
-                            if(!registryDetails.getGroomAddressDetails().getPermntInKeralaAdrDistrict().isEmpty()){
+                            if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrDistrict())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
                             else {
                                 appendIfNotBlank(registryDetails.getGroomAddressDetails().getDistrictName(), groomAddressBuilder, true);
 
                             }
-                            if(!registryDetails.getGroomAddressDetails().getPermtaddressStateName().isEmpty()){
+                            if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressStateName())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
                             else{
                                 appendIfNotBlank(registryDetails.getGroomAddressDetails().getStateName(), groomAddressBuilder, true);
                             }
-                            if(!registryDetails.getGroomAddressDetails().getPermtaddressCountry().isEmpty() ){
+                            if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressCountry()) ){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
                             else{
@@ -956,6 +956,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getPermntOthPostOfficeEn(), groomAddressBuilder, true);
 
                             if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaDistrict())){
+
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
                             else {
@@ -963,12 +964,13 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
 
                             }
                             if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressStateName())){
+
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
                             else{
                                 appendIfNotBlank(registryDetails.getGroomAddressDetails().getStateName(), groomAddressBuilder, true);
                             }
-                            if(!registryDetails.getGroomAddressDetails().getPermtaddressCountry().isEmpty() ){
+                            if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressCountry())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
                             else{
@@ -1095,20 +1097,20 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
 
                             appendIfNotBlank(registryDetails.getBrideAddressDetails().getLocalityEnPermanent(), brideAddressBuilder, true);
 
-                            if(!registryDetails.getBrideAddressDetails().getPermntInKeralaAdrDistrict().isEmpty()){
+                            if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrDistrict())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap), brideAddressBuilder, true);
                             }
                             else {
                                 appendIfNotBlank(registryDetails.getBrideAddressDetails().getDistrictName(), brideAddressBuilder, true);
 
                             }
-                            if(!registryDetails.getBrideAddressDetails().getPermtaddressStateName().isEmpty()){
+                            if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressStateName())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap), brideAddressBuilder, true);
                             }
                             else{
                                 appendIfNotBlank(registryDetails.getBrideAddressDetails().getStateName(), brideAddressBuilder, true);
                             }
-                            if(!registryDetails.getBrideAddressDetails().getPermtaddressCountry().isEmpty() ){
+                            if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressCountry())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap), brideAddressBuilder, true);
                             }
                             else{
@@ -1149,19 +1151,20 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             appendIfNotBlank(registryDetails.getBrideAddressDetails().getPermntOthPostOfficeEn(), brideAddressBuilder, true);
 
                             if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaDistrict())){
+
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap), brideAddressBuilder, true);
                             }
                             else {
                                 appendIfNotBlank(registryDetails.getBrideAddressDetails().getDistrictName(), brideAddressBuilder, true);
 
                             }
-                            if(!registryDetails.getBrideAddressDetails().getPermtaddressStateName().isEmpty()){
+                            if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressStateName())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap), brideAddressBuilder, true);
                             }
                             else{
                                 appendIfNotBlank(registryDetails.getBrideAddressDetails().getStateName(), brideAddressBuilder, true);
                             }
-                            if(!registryDetails.getBrideAddressDetails().getPermtaddressCountry().isEmpty() ){
+                            if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressCountry())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap), brideAddressBuilder, true);
                             }
                             else{
