@@ -27,4 +27,8 @@ public class SubFunctionDetailsResponse {
 
     @JsonProperty("SubFunctionDetails")
     private SubFunctionDetails subFunctionDetails;
+
+    @JsonProperty("Count")
+    private int count;
+
 }

@@ -27,4 +27,8 @@ public class MajorFunctionDetailsResponse {
 
     @JsonProperty("MajorFunctionDetails")
     private MajorFunctionDetails majorFunctionDetails;
+
+    @JsonProperty("Count")
+    private int count;
+
 }

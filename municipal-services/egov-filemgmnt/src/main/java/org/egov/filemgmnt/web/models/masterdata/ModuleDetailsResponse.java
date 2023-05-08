@@ -28,4 +28,7 @@ public class ModuleDetailsResponse {
     @JsonProperty("ModuleDetails")
     private ModuleDetails moduleDetails;
 
+    @JsonProperty("Count")
+    private int count;
+
 }

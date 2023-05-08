@@ -31,6 +31,10 @@ public class MajorFunctionSearchResponse {
     @JsonProperty("MajorFunctionDetails")
     private List<MajorFunctionDetails> majorFunctionDetails;
 
+    @Schema(type = "integer", format = "int32", description = "Search result count")
+    @JsonProperty("Count")
+    private int count;
+
     public MajorFunctionSearchResponse addMFDetails(final MajorFunctionDetails majorFunctionDetail) {
         if (majorFunctionDetails == null) {
             majorFunctionDetails = new ArrayList<>();

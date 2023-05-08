@@ -28,4 +28,7 @@ public class ServiceDetailsResponse {
     @JsonProperty("ServiceDetails")
     private ServiceDetails serviceDetails;
 
+    @JsonProperty("Count")
+    private int count;
+
 }

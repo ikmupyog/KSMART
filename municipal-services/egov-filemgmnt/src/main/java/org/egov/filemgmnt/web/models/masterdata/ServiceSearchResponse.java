@@ -30,6 +30,11 @@ public class ServiceSearchResponse {
     @JsonProperty("ServiceDetails")
     private List<ServiceDetails> serviceDetails;
 
+    @Schema(type = "integer", format = "int32", description = "Search result count")
+    @JsonProperty("Count")
+    private int count;
+
+
     public ServiceSearchResponse addService(final ServiceDetails serviceDetail) {
         if (serviceDetails == null) {
             serviceDetails = new ArrayList<>();

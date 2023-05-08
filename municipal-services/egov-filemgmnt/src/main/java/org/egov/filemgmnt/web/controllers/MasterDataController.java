@@ -170,11 +170,12 @@ public class MasterDataController implements MasterDataBaseController {
             log.debug("masterdata-modules-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
         final List<ModuleDetails> result = masterDataService.searchModules(request.getRequestInfo(), searchCriteria);
-
+        int totalCount = result.size();
         return ResponseEntity.ok(ModuleSearchResponse.builder()
                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                          Boolean.TRUE))
                                                      .moduleDetails(result)
+                                                     .count(totalCount)
                                                      .build());
     }
 
@@ -187,11 +188,12 @@ public class MasterDataController implements MasterDataBaseController {
         }
         final List<MajorFunctionDetails> result = masterDataService.searchMajorFunctions(request.getRequestInfo(),
                                                                                          searchCriteria);
-
+        int totalCount = result.size();
         return ResponseEntity.ok(MajorFunctionSearchResponse.builder()
                                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                                 Boolean.TRUE))
                                                             .majorFunctionDetails(result)
+                                                            .count(totalCount)
                                                             .build());
     }
 
@@ -204,11 +206,12 @@ public class MasterDataController implements MasterDataBaseController {
         }
         final List<SubFunctionDetails> result = masterDataService.searchSubFunctions(request.getRequestInfo(),
                                                                                      searchCriteria);
-
+        int totalCount = result.size();
         return ResponseEntity.ok(SubFunctionSearchResponse.builder()
                                                           .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                               Boolean.TRUE))
                                                           .subFunctionDetails(result)
+                                                           .count(totalCount)
                                                           .build());
     }
 
@@ -220,11 +223,12 @@ public class MasterDataController implements MasterDataBaseController {
             log.debug("masterdata-services-search:  \n{}", FMUtils.toJson(searchCriteria));
         }
         final List<ServiceDetails> result = masterDataService.searchServices(request.getRequestInfo(), searchCriteria);
-
+        int totalCount = result.size();
         return ResponseEntity.ok(ServiceSearchResponse.builder()
                                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                           Boolean.TRUE))
                                                       .serviceDetails(result)
+                        .count(totalCount)
                                                       .build());
     }
 
