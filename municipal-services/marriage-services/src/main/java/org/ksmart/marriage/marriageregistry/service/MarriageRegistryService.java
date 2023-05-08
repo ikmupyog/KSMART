@@ -143,7 +143,7 @@ public class MarriageRegistryService {
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
            // marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
-//            marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
+        //  marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
             marriageCertificate.setCertificateStatus(MarriageCertificate.StatusEnum.FREE_DOWNLOAD);
             marriageCertificate.setCount(1);//If 1 download from filestoreId, If 0, need to regenerate certificate

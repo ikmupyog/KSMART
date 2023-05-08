@@ -94,17 +94,14 @@ public class MarriageRegistryRepository {
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
 
-
-
-
-                return result;
+        return result;
 
     }
     public int getMarriageRegistryCount(MarriageRegistrySearchCriteria criteria) {
         List<Object> preparedStmtList = new ArrayList<>();
         String query = queryBuilder.getMarriageRegistryCountQuery(criteria, preparedStmtList, Boolean.FALSE);
         int MarriageCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
-        System.out.println("Marriagecountquery"+query);
+       // System.out.println("Marriagecountquery"+query);
         return MarriageCount;
     }
     public List<MarriageCertificate> searchCertificateByMarriageId(String id) {
@@ -113,7 +110,6 @@ public class MarriageRegistryRepository {
         List<MarriageCertificate> results = jdbcTemplate.query(qry, preparedStmtVals.toArray(), marriageCertificateRowMapper);
         return results;
     }
-
 
 
     public MarriageCertPdfResponse saveMarriageCertPdf(MarriageCertPDFRequest marriageCertPDFRequest) {
