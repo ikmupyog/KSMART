@@ -1021,6 +1021,42 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
         return groomAddressBuilder.toString();
 
     }
+
+    public String setGroomNRIAddressForCertificate(RequestInfo req,MarriageRegistryDetails registryDetails) {
+        StringBuilder groomAddressBuilder = new StringBuilder();
+        if (registryDetails.getGroomAddressDetails() != null) {
+            if (StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermtaddressCountry())&&!registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
+                registryDetails.getGroomAddressDetails().setPermntOthrIndiaLineoneEn(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
+                registryDetails.getGroomAddressDetails().setOutSideIndiaPostCodePermanent(registryDetails.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+                registryDetails.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(registryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
+                registryDetails.getGroomAddressDetails().setOutSideIndiaPostCodePermanent(registryDetails.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+                Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req, registryDetails.getGroomAddressDetails().getCountryIdPermanent());
+                    appendIfNotBlank(registryDetails.getGroomAddressDetails().getPermntOthrIndiaLineoneEn(), groomAddressBuilder, true);
+                    appendIfNotBlank(registryDetails.getGroomAddressDetails().getPermntOthrIndiaprovinceEn(), groomAddressBuilder, true);
+                    appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), groomAddressBuilder, true);
+                    appendIfNotBlank(registryDetails.getGroomAddressDetails().getOutSideIndiaPostCodePermanent(), groomAddressBuilder, true);
+                }
+        }
+        return groomAddressBuilder.toString();
+    }
+
+    public String setBrideNRIAddressForCertificate(RequestInfo req,MarriageRegistryDetails registryDetails) {
+        StringBuilder brideAddressBuilder = new StringBuilder();
+        if (registryDetails.getBrideAddressDetails() != null) {
+            if (StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermtaddressCountry())&&!registryDetails.getBrideAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
+                registryDetails.getBrideAddressDetails().setPermntOthrIndiaLineoneEn(registryDetails.getBrideAddressDetails().getPermntOutsideIndiaLineoneEn());
+                registryDetails.getBrideAddressDetails().setOutSideIndiaPostCodePermanent(registryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
+                registryDetails.getBrideAddressDetails().setPermntOthrIndiaprovinceEn(registryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
+                registryDetails.getBrideAddressDetails().setOutSideIndiaPostCodePermanent(registryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
+                Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req, registryDetails.getBrideAddressDetails().getCountryIdPermanent());
+                appendIfNotBlank(registryDetails.getBrideAddressDetails().getPermntOthrIndiaLineoneEn(), brideAddressBuilder, true);
+                appendIfNotBlank(registryDetails.getBrideAddressDetails().getPermntOthrIndiaprovinceEn(), brideAddressBuilder, true);
+                appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), brideAddressBuilder, true);
+                appendIfNotBlank(registryDetails.getBrideAddressDetails().getOutSideIndiaPostCodePermanent(), brideAddressBuilder, true);
+            }
+        }
+        return brideAddressBuilder.toString();
+    }
     public String setBridePermanentAddressForCertificate(RequestInfo req,MarriageRegistryDetails registryDetails) {
 
         StringBuilder brideAddressBuilder = new StringBuilder();
