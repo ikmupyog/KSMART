@@ -150,10 +150,10 @@ function BirthInclusionSummary({
     let fieldValue = "";
     switch (type) {
       case "text":
-        fieldValue = data;
+        fieldValue = data ? data : t("CR_NOT_RECORDED");
         break;
       case "date":
-        fieldValue = moment(data).format("DD/MM/YYYY");
+        fieldValue = data ? moment(data).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
         break;
     }
     return fieldValue;
