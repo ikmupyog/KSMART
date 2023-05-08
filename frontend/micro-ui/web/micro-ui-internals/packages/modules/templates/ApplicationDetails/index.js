@@ -55,25 +55,28 @@ const ApplicationDetails = (props) => {
   }, [showToast]);
 
   function onActionSelect(action,e) {
-    console.log(action,e);
-    // if (action) {
-    //   setSelectedTakeAction(e)
-    //   if (action?.isWarningPopUp) {
-    //     setWarningPopUp(true);
-    //   } else if (action?.redirectionUrll) {
-    //     window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
-    //   } else if (!action?.redirectionUrl) {
-    //     setShowModal(true);
-    //   } else {
-    //     history.push({
-    //       pathname: action.redirectionUrl?.pathname,
-    //       state: { ...action.redirectionUrl?.state },
-    //     });
-    //   }
-    // }
+    console.log('ac',action,e);
+    if (action) {
+      if (action?.isWarningPopUp) {
+        setWarningPopUp(true);
+      } else if (action?.redirectionUrll) {
+        window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
+      } else if (!action?.redirectionUrl) {
+        // setShowModal(true);
+      } else {
+        history.push({
+          pathname: action.redirectionUrl?.pathname,
+          state: { ...action.redirectionUrl?.state },
+        });
+      }
+    }
+    setSelectedAction(action);
+    setDisplayMenu(false);
+
+
+    //
     setSelectedTakeAction(e)
-    // setSelectedAction(e);
-    // setDisplayMenu(false);
+
   }
 
   const queryClient = useQueryClient();
@@ -205,6 +208,7 @@ const ApplicationDetails = (props) => {
             ActionBarStyle={ActionBarStyle}
             MenuStyle={MenuStyle}
             selectedTakeAction={selectedTakeAction}
+            selectedAction={selectedAction}
           />
         </React.Fragment>
       ) : (
