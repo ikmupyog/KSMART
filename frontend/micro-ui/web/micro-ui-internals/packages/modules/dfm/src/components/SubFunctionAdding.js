@@ -84,7 +84,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     }
   };
 
-  const { register,handleSubmit, setValue, getValues } = useForm({
+  const { register, handleSubmit, setValue, getValues } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
@@ -191,7 +191,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       <div className="moduleLinkHomePageModuleLinks">
         <div className="FileFlowWrapper sub-wrapper">
           <div className="row wrapper-file">
-            <div className="col-md-4 col-sm-12 col-xs-12">
+            <div className="col-md-3 col-sm-12 col-xs-12">
               <CardLabel>
                 {t("MODULE_NAME_ENG")}
                 <span className="mandatorycss">*</span>
@@ -207,7 +207,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
               />
             </div>
 
-            <div className="col-md-4 col-sm-12 col-xs-12">
+            <div className="col-md-3 col-sm-12 col-xs-12">
               <CardLabel>
                 {t("MAJOR_FUNCTION_NAME_ENG")}
                 <span className="mandatorycss">*</span>
@@ -222,7 +222,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
                 placeholder={t("MAJOR_FUNCTION_NAME_ENG")}
               />
             </div>
-            <div className="col-md-4 col-sm-12 col-xs-12">
+            <div className="col-md-3 col-sm-12 col-xs-12">
               <CardLabel>
                 {t("SF_CODE")}
                 <span className="mandatorycss">*</span>
@@ -253,7 +253,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
                   placeholder={t("SUB_FUNCTION_NAME_ENG")}
                 />
               </div> */}
-            <div className="col-md-4 col-sm-12 col-xs-12">
+            <div className="col-md-3 col-sm-12 col-xs-12">
               <CardLabel>
                 {t("SUB_FUNCTION_NAME_MAL")}
                 <span className="mandatorycss">*</span>
@@ -269,21 +269,25 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
                 placeholder={t("SUB_FUNCTION_NAME_MAL")}
               />
             </div>
-            <div className="col-md-4 col-sm-12 col-xs-12">
-              <CardLabel>
-                {t("SUB_FUNCTION_NAME_MAL")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                inputRef={register({})}
-                onChange={setsetsubFuncNmMl}
-                value={subFuncNmMl}
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="RegistrationNo"
-                placeholder={t("SUB_FUNCTION_NAME_MAL")}
-              />
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3 col-sm-12 col-xs-12">
+                <CardLabel>
+                  {t("SUB_FUNCTION_NAME_MAL")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  inputRef={register({})}
+                  onChange={setsetsubFuncNmMl}
+                  value={subFuncNmMl}
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="RegistrationNo"
+                  placeholder={t("SUB_FUNCTION_NAME_MAL")}
+                />
+              </div>
             </div>
           </div>
 
