@@ -922,72 +922,72 @@ public class MarriageMdmsUtil {
     public String getCountryNameEn(Object mdmsData, String CountryId) {
         List<String> countries  = getCountryCode(mdmsData);
         int index = countries.indexOf(CountryId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].name");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].name");
     }
     public String getCountryNameMl(Object mdmsData, String CountryId) {
         List<String> countries  = getCountryCode(mdmsData);
         int index = countries.indexOf(CountryId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].namelocal");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_COUNTRY_CODES_JSONPATH+"["+index+"].namelocal");
     }
     public String getStateNameEn(Object mdmsData, String StateId) {
         List<String> states  = getStateCode(mdmsData);
         int index = states.indexOf(StateId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].name");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].name");
     }
     public String getStateNameMl(Object mdmsData, String StateId) {
         List<String> states  = getStateCode(mdmsData);
         int index = states.indexOf(StateId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].namelocal");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_STATE_JSONPATH+"["+index+"].namelocal");
     }
     public String getDistrictNameEn(Object mdmsData, String DistrictId) {
         List<String> districts  = getDistrictCode(mdmsData);
         int index = districts.indexOf(DistrictId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].name");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].name");
     }    
     public String getDistrictNameMl(Object mdmsData, String DistrictId) {
         List<String> districts  = getDistrictCode(mdmsData);
         int index = districts.indexOf(DistrictId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].namelocal");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_DISTRICT_JSONPATH+"["+index+"].namelocal");
     }
     public String getTalukNameEn(Object mdmsData, String TalukId) {
         List<String> taluks  = getTalukCode(mdmsData);
         int index = taluks.indexOf(TalukId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].name");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].name");
     }  
     public String getTalukNameMl(Object mdmsData, String TalukId) {
         List<String> taluks  = getTalukCode(mdmsData);
         int index = taluks.indexOf(TalukId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].namelocal");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TALUK_JSONPATH+"["+index+"].namelocal");
     }    
     public String getVillageNameEn(Object mdmsData, String VillageId) {
         List<String> villages  = getVillageCode(mdmsData);
         int index = villages.indexOf(VillageId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].name");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].name");
     }  
     public String getVillageNameMl(Object mdmsData, String VillageId) {
         List<String> villages  = getVillageCode(mdmsData);
         int index = villages.indexOf(VillageId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].namelocal");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_VILLAGE_JSONPATH+"["+index+"].namelocal");
     }  
     public String getPONameEn(Object mdmsData, String POId) {
         List<String> po  = getPOCode(mdmsData);
         int index = po.indexOf(POId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].name");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].name");
     }  
     public String getPONameMl(Object mdmsData, String POId) {
         List<String> po  = getPOCode(mdmsData);
         int index = po.indexOf(POId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");        
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_POSTOFFICE_JSONPATH+"["+index+"].namelocal");
     }
     public String getMaritalStatusEn(Object mdmsData, String POId) {
         List<String> maritalStatus  = getMaritalStatusCode(mdmsData);
         int index = maritalStatus.indexOf(POId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].name");
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].name");
     }
     public String getMaritalStatusMl(Object mdmsData, String POId) {
         List<String> po  = getPOCode(mdmsData);
         int index = po.indexOf(POId);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].namelocal");
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARITALSTATUS_JSONPATH+"["+index+"].namelocal");
     }
 //    public String getGenderEn(Object mdmsData, String POId) {
 //        List<String> po  = getPOCode(mdmsData);
@@ -1095,70 +1095,70 @@ public class MarriageMdmsUtil {
         List<String> tenants  = getBoundaryCode(mdmsData);
         int index = tenants.indexOf(WardId);
         ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".name");
-        return names.get(index);
+        return index<0?null:names.get(index);
     }
 
     public String getWardNameMl(Object mdmsData, String WardId) {
         List<String> tenants  = getBoundaryCode(mdmsData);
         int index = tenants.indexOf(WardId);
         ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_BOUNDARY_CODES_JSONPATH+".localname");
-        return names.get(index);
+        return index<0?null:names.get(index);
     }
 
     public String getPlaceTypeNameEn(Object mdmsData, String placetype) {
         List<String> tenants  = getPlaceTypeCode(mdmsData);
         int index = tenants.indexOf(placetype);
-        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACE_TYPE_JSONPATH+"["+index+"].name");
+        return  index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACE_TYPE_JSONPATH+"["+index+"].name");
     }
     public String getPlaceTypeNameMl(Object mdmsData, String placetype) {
         List<String> tenants  = getPlaceTypeCode(mdmsData);
         int index = tenants.indexOf(placetype);
-        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACE_TYPE_JSONPATH+"["+index+"].namelocal");
+        return  index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACE_TYPE_JSONPATH+"["+index+"].namelocal");
     }
 
     public String getMarriageTypeEn(Object mdmsData, String marriageType) {
         List<String> tenants  = getMarriageTypeCode(mdmsData);
         int index = tenants.indexOf(marriageType);
-        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TYPE_JSONPATH+"["+index+"].name");
+        return  index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TYPE_JSONPATH+"["+index+"].name");
     }
     public String getMarriageTypeMl(Object mdmsData, String marriageType) {
         List<String> tenants  = getMarriageTypeCode(mdmsData);
         int index = tenants.indexOf(marriageType);
-        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TYPE_JSONPATH+"["+index+"].namelocal");
+        return  index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_TYPE_JSONPATH+"["+index+"].namelocal");
     }
 
     public String getMarriagePlaceIdEn(Object mdmsData, String placeId) {
         List<String> tenants  = getPlaceIdCode(mdmsData);
         int index = tenants.indexOf(placeId);
         ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACEID_JSONPATH+".name");
-        return names.get(index);
+        return index<0?null:names.get(index);
     }
     public String getMarriagePlaceIdMl(Object mdmsData, String placeId) {
         List<String> tenants  = getPlaceIdCode(mdmsData);
         int index = tenants.indexOf(placeId);
         ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACEID_JSONPATH+".nameLocal");
-        return names.get(index);
+        return index<0?null:names.get(index);
     }
 
     public String getMarriageLbtypeEn(Object mdmsData, String Lbtype) {
         List<String> tenants  = getLBTypeCode(mdmsData);
         int index = tenants.indexOf(Lbtype);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_LBTYPE_JSONPATH+"["+index+"].name");
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_LBTYPE_JSONPATH+"["+index+"].name");
     }
     public String getMarriageLbtypeMl(Object mdmsData, String Lbtype) {
         List<String> tenants  = getLBTypeCode(mdmsData);
         int index = tenants.indexOf(Lbtype);
-        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_LBTYPE_JSONPATH+"["+index+"].namelocal");
+        return index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_LBTYPE_JSONPATH+"["+index+"].namelocal");
     }
     public String getMarriageTenantEn(Object mdmsData, String tenantId) {
         List<String> tenants  = getTenantIdCode(mdmsData);
         int index = tenants.indexOf(tenantId);
-        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_JSONPATH+"["+index+"].city.name");
+        return  index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_JSONPATH+"["+index+"].city.name");
     }
     public String getMarriageTenantMl(Object mdmsData, String tenantId) {
         List<String> tenants  = getTenantIdCode(mdmsData);
         int index = tenants.indexOf(tenantId);
-        return  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_JSONPATH+"["+index+"].city.localName");
+        return  index<0?null:JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_JSONPATH+"["+index+"].city.localName");
     }
 
     private List<String> getLBTypeCode(Object mdmsData) {
