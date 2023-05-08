@@ -49,6 +49,8 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                      .applicationtype(rs.getString("MD_applicationType"))
                      .action(rs.getString("MD_action"))
                      .status(rs.getString("MD_status"))
+                    .villageId(rs.getString("MD_villageid"))
+                    .talukName(rs.getString("MD_taluk_name"))
                    // .status(rs.getString("MD_registration_status"))
                     .brideDetails(getBrideDetails(rs))
                     .groomDetails(getGroomDetails(rs))

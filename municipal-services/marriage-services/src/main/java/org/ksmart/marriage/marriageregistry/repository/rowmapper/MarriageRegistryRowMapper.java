@@ -52,6 +52,8 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
             .moduleCode(rs.getString("MD_module_code"))
              .certificateNo(rs.getString("MD_certificateno"))
             .zonalOffice(rs.getString("MD_zonal_office"))
+            .talukName(rs.getString("MD_taluk_name"))
+            .villageId(rs.getString("MD_villageid"))
             .brideDetails(getBrideDetails(rs))
             .brideAddressDetails(getBrideAddressDetails(rs))
             .groomDetails(getGroomDetails(rs))

@@ -46,8 +46,8 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setLocalityMl(marriageRegistryDetails.getLocality_ml());
         marriageApplicationDetails.setRegistrationDate(marriageRegistryDetails.getRegistrationDate());
         marriageApplicationDetails.setRegistrationNo(marriageRegistryDetails.getRegistrationno());
-        marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukid());
-        marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillage_name());
+        marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukName());
+        marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillageId());
 
         marriageApplicationDetails.setModuleCode(marriageRegistryDetails.getModuleCode());
         marriageApplicationDetails.getWitnessDetails().setBrideUrl(marriageRegistryDetails.getWitnessDetails().getBrideUrl());
