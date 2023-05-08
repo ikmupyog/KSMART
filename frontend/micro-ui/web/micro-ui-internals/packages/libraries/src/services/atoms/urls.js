@@ -194,7 +194,6 @@ const Urls = {
     modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
     createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create",
     arising_file: "/filemgmnt/v1/arisingfiles/_create",
-    createmodule: "/filemgmnt/v1/globalmaster/_createmodule",
 
   },
 
