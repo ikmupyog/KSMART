@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 
-export const NA = "NA";
+export const NA = "Not Recorded";
 
 
 /**
