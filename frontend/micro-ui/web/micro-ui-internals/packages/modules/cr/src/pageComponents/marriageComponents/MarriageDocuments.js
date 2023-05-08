@@ -46,7 +46,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
 
   console.log(groomResidentShip);
 
-
   const crAgeDocuments = [
     {
       name: "Driving License",
@@ -617,13 +616,12 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
 
   function selectWitness2Aadhar(e) {
     const witness2AadharFile = e.target.files[0];
-    console.log({witness2AadharFile});
+    console.log({ witness2AadharFile });
     setWitness2AadharDocument(witness2AadharFile);
     setWitness2AadharDocumentName(witness2AadharFile.name);
     setWitness2AadharDocumentType("Aadhar");
     setWitness2AadharDocumentOwner("W");
   }
-  
 
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
@@ -1185,7 +1183,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     })();
   }, [witness2AadharDocument]);
 
-  console.log({formData})
+  console.log({ formData });
 
   const goNext = () => {
     onSelect(config.key, {
@@ -1484,9 +1482,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     groomExpirationCertificateDocument,
     brideExpirationCertificateDocument,
     witness1AadharDocument,
-    witness2AadharDocument
+    witness2AadharDocument,
   });
-  
 
   return (
     <React.Fragment>
@@ -1517,10 +1514,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
             marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") &&
             !instituitionCertificate) ||
           (marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && !marriageOfficerCertificateDocument) ||
-          ((groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") &&
-            !groomDivorceAnnulledDecreeCertificate) ||
-          ((brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") &&
-            !brideDivorceAnnulledDecreeCertificate) ||
+          ((groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") && !groomDivorceAnnulledDecreeCertificate) ||
+          ((brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") && !brideDivorceAnnulledDecreeCertificate) ||
           (isExpiredHusband && !groomExpirationCertificate) ||
           (isExpiredWife && !brideExpirationCertificate) ||
           !witness1Aadhar ||
@@ -2638,42 +2633,47 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                     </h1>
                   </div>
                 </div>
-                <div className="col-md-8">
-                  <CardLabel>
-                    {`${t("CR_WITNESS1_ADHAR")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <UploadFile
-                    id={"marriage-docs"}
-                    extraStyleName={"propertyCreate"}
-                    accept=".jpg,.png,.pdf"
-                    onUpload={selectWitness1Aadhar}
-                    onDelete={() => {
-                      setWitness1Aadhar(null);
-                    }}
-                    message={witness1Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                  />
-                </div>
-                {witness1Aadhar && (
-                  <div className="col-md-4">
-                    {_.head(witness1Aadhar)?.type === "pdf" ? (
-                      <React.Fragment>
-                        <object
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          data={_.head(witness1Aadhar)?.pdfUrl}
-                          alt="Other Certificate Pdf"
-                        />
-                      </React.Fragment>
-                    ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(witness1Aadhar)?.small} alt="Other Certificate Image" />
-                    )}
-                    <a target="_blank" href={_.head(witness1Aadhar)?.type === "pdf" ? _.head(witness1Aadhar)?.pdfUrl : _.head(witness1Aadhar)?.large}>
-                      Preview
-                    </a>
+                <div className="row">
+                  <div className="col-md-8">
+                    <CardLabel>
+                      {`${t("CR_WITNESS1_ADHAR")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <UploadFile
+                      id={"marriage-docs"}
+                      extraStyleName={"propertyCreate"}
+                      accept=".jpg,.png,.pdf"
+                      onUpload={selectWitness1Aadhar}
+                      onDelete={() => {
+                        setWitness1Aadhar(null);
+                      }}
+                      message={witness1Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    />
                   </div>
-                )}
+                  {witness1Aadhar && (
+                    <div className="col-md-4">
+                      {_.head(witness1Aadhar)?.type === "pdf" ? (
+                        <React.Fragment>
+                          <object
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            data={_.head(witness1Aadhar)?.pdfUrl}
+                            alt="Other Certificate Pdf"
+                          />
+                        </React.Fragment>
+                      ) : (
+                        <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(witness1Aadhar)?.small} alt="Other Certificate Image" />
+                      )}
+                      <a
+                        target="_blank"
+                        href={_.head(witness1Aadhar)?.type === "pdf" ? _.head(witness1Aadhar)?.pdfUrl : _.head(witness1Aadhar)?.large}
+                      >
+                        Preview
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="col-md-6">
@@ -2684,42 +2684,47 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                     </h1>
                   </div>
                 </div>
-                <div className="col-md-8">
-                  <CardLabel>
-                    {`${t("CR_WITNESS2_ADHAR")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <UploadFile
-                    id={"marriage-docs"}
-                    extraStyleName={"propertyCreate"}
-                    accept=".jpg,.png,.pdf"
-                    onUpload={selectWitness2Aadhar}
-                    onDelete={() => {
-                      setWitness2Aadhar(null);
-                    }}
-                    message={witness2Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                  />
-                </div>
-                {witness2Aadhar && (
-                  <div className="col-md-4">
-                    {_.head(witness2Aadhar)?.type === "pdf" ? (
-                      <React.Fragment>
-                        <object
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          data={_.head(witness2Aadhar)?.pdfUrl}
-                          alt="Other Certificate Pdf"
-                        />
-                      </React.Fragment>
-                    ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(witness2Aadhar)?.small} alt="Other Certificate Image" />
-                    )}
-                    <a target="_blank" href={_.head(witness2Aadhar)?.type === "pdf" ? _.head(witness2Aadhar)?.pdfUrl : _.head(witness2Aadhar)?.large}>
-                      Preview
-                    </a>
+                <div className="row">
+                  <div className="col-md-8">
+                    <CardLabel>
+                      {`${t("CR_WITNESS2_ADHAR")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <UploadFile
+                      id={"marriage-docs"}
+                      extraStyleName={"propertyCreate"}
+                      accept=".jpg,.png,.pdf"
+                      onUpload={selectWitness2Aadhar}
+                      onDelete={() => {
+                        setWitness2Aadhar(null);
+                      }}
+                      message={witness2Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    />
                   </div>
-                )}
+                  {witness2Aadhar && (
+                    <div className="col-md-4">
+                      {_.head(witness2Aadhar)?.type === "pdf" ? (
+                        <React.Fragment>
+                          <object
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            data={_.head(witness2Aadhar)?.pdfUrl}
+                            alt="Other Certificate Pdf"
+                          />
+                        </React.Fragment>
+                      ) : (
+                        <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(witness2Aadhar)?.small} alt="Other Certificate Image" />
+                      )}
+                      <a
+                        target="_blank"
+                        href={_.head(witness2Aadhar)?.type === "pdf" ? _.head(witness2Aadhar)?.pdfUrl : _.head(witness2Aadhar)?.large}
+                      >
+                        Preview
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

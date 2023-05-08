@@ -31,13 +31,21 @@ const convertEpochToDate = (dateEpoch) => {
 //     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
 //   }`;
 // };
-export const CRsearch = {
+export const CRCorrectionSearch = {
   all: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
     return response;
   },
-  application: async (tenantId, filters = {}) => {
-    const response = await CRService.CRsearch({ tenantId, filters });
+  birthApplication: async (tenantId, filters = {}) => {
+    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters });
+    return response.ChildDetails[0];
+  },
+  deathApplication: async (tenantId, filters = {}) => {
+    const response = await CRService.CRDeathCorrectionSearch({ tenantId, filters });
+    return response.ChildDetails[0];
+  },
+  marriageApplication: async (tenantId, filters = {}) => {
+    const response = await CRService.CRMarriageCorrectionSearch({ tenantId, filters });
     return response.ChildDetails[0];
   },
 
@@ -46,21 +54,28 @@ export const CRsearch = {
     return response.ChildDetails;
   },
 
-  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    // console.log("applicationNumber" + applicationNumber);
+  applicationDetails: async (t, tenantId, applicationNumber, correctionType) => {
+    console.log("applicationNumber",correctionType);
     const filter = { applicationNumber };
-    const response = await CRsearch.application(tenantId, filter);
-    console.log(response);
+    let response = [];
+    if(correctionType === "birth"){
+     response = await CRCorrectionSearch.birthApplication(tenantId, filter);
+    } else if(correctionType === "death"){
+      response = await CRCorrectionSearch.deathApplication(tenantId, filter);
+    } else if(correctionType === "marriage") {
+      response = await CRCorrectionSearch.marriageApplication(tenantId, filter);
+    }
+    console.log({response});
 
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
-    if (response?.licenseNumber) {
-      const birthNumbers = response?.applicationNumber;
-      const filters = { birthNumbers, offset: 0 };
-      numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
-    }
+    // if (response?.licenseNumber) {
+    //   const birthNumbers = response?.applicationNumber;
+    //   const filters = { birthNumbers, offset: 0 };
+    //   numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
+    // }
     let employeeResponse = [];
     const Birthdetails = {
       title: "CR_BIRTH_SUMMARY_DETAILS",

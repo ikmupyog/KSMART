@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -50,6 +50,9 @@ const BrideAddressPresentOutsideIndia = ({
   setPermantpostCode,
   permntOutsideIndiaCountry,
   setPermntOutsideIndiaCountry,
+  setaddressStateName,
+  setinsideKeralaLBName,
+  setinsideKeralaDistrict,
   isEditBirth = false,
   isEditDeath = false,
   isEditAdoption,
@@ -252,6 +255,15 @@ const BrideAddressPresentOutsideIndia = ({
       e.preventDefault();
     }
   }
+
+
+  useEffect(()=>{
+    setinsideKeralaDistrict(null)
+    setinsideKeralaLBName(null)
+    setaddressStateName(null)
+  },[])
+
+
   const goNext = () => {};
   if (isCountryLoading) {
     return <Loader></Loader>;

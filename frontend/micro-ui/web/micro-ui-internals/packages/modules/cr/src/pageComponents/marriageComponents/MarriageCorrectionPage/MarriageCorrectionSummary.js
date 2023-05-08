@@ -117,13 +117,13 @@ function MarriageCorrectionSummary({
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
     });
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
         const tempObj = {
-          image: item.small,
+          image: item.large,
           caption: `Caption ${index}`,
         };
         return tempObj;
@@ -217,10 +217,10 @@ function MarriageCorrectionSummary({
     let fieldValue = "";
     switch (type) {
       case "text":
-        fieldValue = data;
+        fieldValue = data ? data : t("CR_NOT_RECORDED");
         break;
       case "date":
-        fieldValue = moment(data).format("DD/MM/YYYY");
+        fieldValue = data ? moment(data).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
         break;
     }
     return fieldValue;
@@ -249,7 +249,7 @@ function MarriageCorrectionSummary({
       return fieldType;
   };
 
-  const renderCardDetail = (value, fieldName, documentData) => {
+  const renderCardDetail = (index, value, fieldName, documentData) => {
     const type = getFieldType(fieldName, value);
     return (
       <div className="row">
@@ -268,7 +268,9 @@ function MarriageCorrectionSummary({
             </h4>
           </div>
           <div className="col-md-2">
-            <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+          {index === 0 &&
+            <LinkButton label={t("CR_VIEW")} style={{ fontWeight: "bold", color: "#86a4ad", cursor:"pointer" }} onClick={() => setDocumentsView(documentData)} />
+          }
           </div>
         </div>
       </div>
@@ -282,7 +284,7 @@ function MarriageCorrectionSummary({
         <div style={getMainDivStyles()}>
           <Accordion
             expanded={index === 0 ? true : false}
-            title={t(detail?.correctionFieldName)}
+            title={t(`CR_${detail?.correctionFieldName}`)}
             style={{ margin: "10px" }}
             content={
               <StatusTable style={getTableStyles()}>
@@ -294,15 +296,15 @@ function MarriageCorrectionSummary({
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("OLD_VALUE")}</h5>{" "}
+                      <h5>{t("CR_OLD_VALUE")}</h5>{" "}
                     </div>
                     <div className="col-md-3">
                       {" "}
-                      <h5>{t("NEW_VALUE")}</h5>{" "}
+                      <h5>{t("CR_NEW_VALUE")}</h5>{" "}
                     </div>
                   </div>
                 </div>
-                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value, detail.correctionFieldName, detail.CorrectionDocument))}
+                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(index, value, detail.correctionFieldName, detail.CorrectionDocument))}
               </StatusTable>
             }
           />
@@ -353,7 +355,7 @@ function MarriageCorrectionSummary({
         </div>
         <div className={"cr-timeline-wrapper"}>
           {imagesThumbs?.length > 0 && (
-            <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+            <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
           )}
 
           {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (

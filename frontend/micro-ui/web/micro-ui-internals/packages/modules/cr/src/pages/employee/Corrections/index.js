@@ -11,7 +11,7 @@ import orderBy from "lodash/orderBy";
 const CorrectionApplicationDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationNumber } = useParams();
+  const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
   const [businessService, setBusinessService] = useState("WFBIRTH21DAYS"); //DIRECTRENEWAL BIRTHHOSP21
@@ -19,7 +19,7 @@ const CorrectionApplicationDetails = () => {
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
@@ -44,7 +44,6 @@ const CorrectionApplicationDetails = () => {
   });
 
   useEffect(()=>{
- console.log("workflowDetails==",workflowDetails);
   },[workflowDetails])
 
   const closeToast = () => {

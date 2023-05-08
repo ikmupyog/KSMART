@@ -202,7 +202,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if ((Object.keys(inclusionStudentCondition)?.length > 0) && (inclusionStudentCondition.code === "STUDENT")) {
       
       childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-      console.log("reached",childAge,selectedBirthData?.dateofbirth);
+      console.log("reached",childAge,inclusionStudentCondition);
       if(childAge < 6){
         docCondition = `NAME_LESS_THAN_SIX`;
       } else if (childAge >= 6 && childAge < 15) {
@@ -236,7 +236,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
        
-    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
+    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
       console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
@@ -282,7 +282,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           
           {showDatePicker && (
             <div>
-              <h2>Please select the dob in certificate</h2>
+              <h2>{t("CR_SELECT_DOB")}</h2>
               <DatePicker
                 date={certificateDob}
                 max={convertEpochToDate(new Date())}
@@ -292,8 +292,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                 // {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
-              <h2>Do you want to add your husband name as surname?</h2>
-              <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setInclusionCorrectionCondition(!inclusionCorrectionCondition)} value={inclusionCorrectionCondition} checked={inclusionCorrectionCondition} />
+            
+              <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setCheckNameCorrectionCondition(!checkNameCorrectionCondition)} value={checkNameCorrectionCondition} checked={checkNameCorrectionCondition} />
             </div>
           )}
         </div>
