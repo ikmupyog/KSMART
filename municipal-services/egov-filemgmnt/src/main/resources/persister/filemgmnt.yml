@@ -612,10 +612,11 @@ serviceMaps:
     isTransaction: true
     queryMaps:
     - query: >
-        INSERT INTO public.eg_fm_arisingfile(id, tenantid, filecode, filearisingmode, filearisingdate, financialyear, 
-        workflowcode, businessservice, assignee, action, filestatus, createdby, createdtime, lastmodifiedby, lastmodifiedtime,
-        serviceid, subject, applicationdetails)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;
+        INSERT INTO public.eg_fm_arisingfile(id, tenantid, filecode, filearisingmode, filearisingdate, 
+        financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, 
+        createdtime, lastmodifiedby, lastmodifiedtime, serviceid, subject, 
+        applicationdetails, pennumber, employeename, employeedesignation)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         
       basePath: ArisingFile
       jsonMaps:
@@ -654,6 +655,12 @@ serviceMaps:
       - jsonPath: $.ArisingFile.title
 
       - jsonPath: $.ArisingFile.description
+
+      - jsonPath: $.ArisingFile.penNumber
+
+      - jsonPath: $.ArisingFile.employeeName
+
+      - jsonPath: $.ArisingFile.employeeDesignation
 
     - query: >
         INSERT INTO public.eg_fm_arisingfileapplicantdetails(id, tenantid, arisingfileid, filecode, applicanttype, firstname, 

@@ -128,6 +128,21 @@ public class ArisingFile {
     @JsonProperty("description")
     private String description;
 
+    @Schema(type = "string", description = "PEN Number")
+    @Size(max = 64, message = "Pen Number  length cannot exceed 64 characters")
+    @JsonProperty("penNumber")
+    private String penNumber;
+
+    @Schema(type = "string", description = "Employee Name ")
+    @Size(max = 64, message = "Employee Name length cannot exceed 64 characters")
+    @JsonProperty("employeeName")
+    private String employeeName;
+
+    @Schema(type = "string", description = "Employee Designation ")
+    @Size(max = 64, message = "Employee Designation length cannot exceed 64 characters")
+    @JsonProperty("employeeDesignation")
+    private String employeeDesignation;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
