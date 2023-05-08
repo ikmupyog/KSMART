@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 // import PropertyOwners from "../../ApplicationDetails/components/PropertyOwners";
 // import ScruntinyDetails from "../../ApplicationDetails/components/ScruntinyDetails";
 // import SubOccupancyTable from "../../ApplicationDetails/components/SubOccupancyTable";
-// import TLCaption from "../../ApplicationDetails/components/TLCaption";
+import TLCaption from "../../../../../templates/ApplicationDetails/components/TLCaption";
 // import TLTradeAccessories from "../../ApplicationDetails/components/TLTradeAccessories";
 // import TLTradeUnits from "../../ApplicationDetails/components/TLTradeUnits";
 // import DocumentsPreview from "../../ApplicationDetails/components/DocumentsPreview";
