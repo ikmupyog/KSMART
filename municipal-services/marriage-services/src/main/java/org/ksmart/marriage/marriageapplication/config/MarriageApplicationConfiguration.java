@@ -129,6 +129,9 @@ public class MarriageApplicationConfiguration {
     @Value("${persister.update.marriage.demand.topic}")
     private String updateDemandTopic;
 
+    @Value("${egov.marriage.image.DefaultPhotoUrl}")
+    private String defaultPhotoUrl;
+
     
 
 }
