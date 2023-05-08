@@ -793,7 +793,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                 !witness2NameEn ||
                 !witness2Age ||
                 !witness2AddressEn ||
-                !witness2Mobile
+                !witness2Mobile ||
+                !uploadedGroomImageId ||
+                !uploadedBrideImageId
               }
             >
               <div className="row">
