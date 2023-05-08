@@ -326,16 +326,16 @@ public class MarriageRegistryRepository {
                 }
                 //Setting groom NRI address
                 if (StringUtils.isNotBlank(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
-                    req.getMarriageCertificate().get(0).setGroomPermntNRIFullAddr(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                    req.getMarriageCertificate().get(0).setGroomNRIAddress(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                 }else{
-                    req.getMarriageCertificate().get(0).setGroomPermntNRIFullAddr(MarriageConstants.NOT_RECORDED);
+                    req.getMarriageCertificate().get(0).setGroomNRIAddress(MarriageConstants.NOT_RECORDED);
                 }
 
                 //Setting bride NRI address
                 if (StringUtils.isNotBlank(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
-                    req.getMarriageCertificate().get(0).setBridePermntNRIFullAddr(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                    req.getMarriageCertificate().get(0).setBrideNRIAddress(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                 }else{
-                    req.getMarriageCertificate().get(0).setBridePermntNRIFullAddr(MarriageConstants.NOT_RECORDED);
+                    req.getMarriageCertificate().get(0).setBrideNRIAddress(MarriageConstants.NOT_RECORDED);
                 }
 
 
