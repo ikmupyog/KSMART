@@ -46,7 +46,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
 
   const mutation = Digit.Hooks.cr.useCivilRegistrationNACBIRTHAPI(tenantId, isEditBirthNAC ? false : true);
-
+  console.log(mutation, "mutation");
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
@@ -89,7 +89,17 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
       } catch (err) {}
     }
   }, [mutation]);
-
+  useEffect(() => {
+    console.log(mutation.data);
+    if (mutation.isSuccess) {
+      //console.log(mutation.data?.ChildDetails[0].applicationNumber);
+      applicationNumber = mutation.data?.nacDetails[0].applicationNumber;
+      sessionStorage.setItem("applicationNumber", applicationNumber);
+      //console.log(applicationNumber);
+    } else {
+      applicationNumber = null;
+    }
+  }, [mutation.isSuccess]);
   const handleDownloadPdf = async () => {
     const { nacDetails = [] } = mutation.data;
     const License = (nacDetails && nacDetails[0]) || {};
@@ -98,6 +108,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
+  console.log(mutation, "mutation");
   let enableLoader = mutation.isIdle || mutation.isLoading;
   if (enableLoader) {
     if (
