@@ -23,12 +23,12 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlace:_.get(DeathNACDetails, "DeathPlace.code",""),
         DeathPlaceType:_.get(DeathNACDetails, "DeathPlaceType.code",""),
         hospitalNameEn:_.get(DeathNACDetails, "hospitalNameEn.code",""),
-        institution: _.get(DeathNACDetails, "institution.name",""),
-        vehicleType: _.get(DeathNACDetails, "vehicleType.name",""),
-        publicPlaceType: _.get(DeathNACDetails, "publicPlaceType.name",""),
+        institution: _.get(DeathNACDetails, "institution.code",""),
+        vehicleType: _.get(DeathNACDetails, "vehicleType.code",""),
+        publicPlaceType: _.get(DeathNACDetails, "publicPlaceType.code",""),
 
         DeathPlaceInstId:null,
-        VehicleHospitalEn:_.get(DeathNACDetails, "VehicleHospitalEn.hospitalName",""),
+        VehicleHospitalEn:_.get(DeathNACDetails, "VehicleHospitalEn.code",""),
         VehicleNumber:_.get(DeathNACDetails, "VehicleNumber",""),
         VehicleFromplaceEn:_.get(DeathNACDetails, "VehicleFromplaceEn",""),
         VehicleFromplaceMl:_.get(DeathNACDetails, "VehicleFromplaceMl",""),
@@ -36,14 +36,14 @@ export const DeathNACRegistrationData = (data = {}) => {
         VehicleToPlaceMl:_.get(DeathNACDetails, "VehicleToPlaceMl",""),
         VehicleFirstHaltEn:_.get(DeathNACDetails, "VehicleFirstHaltEn",""),
         VehicleFirstHaltMl:null,
-        DeathPlaceWardId:_.get(DeathNACDetails, "DeathPlaceWardId.name",null),
+        DeathPlaceWardId:_.get(DeathNACDetails, "DeathPlaceWardId.code",null),
 
-        DeathPlaceCountry:_.get(DeathNACDetails, "DeathPlaceCountry.name",""),
+        DeathPlaceCountry:_.get(DeathNACDetails, "DeathPlaceCountry.code",""),
         DeathPlaceLocalityEn:_.get(DeathNACDetails, "DeathPlaceLocalityEn",null),
         DeathPlaceLocalityMl:_.get(DeathNACDetails, "DeathPlaceLocalityMl",null),
         DeathPlaceStreetEn:_.get(DeathNACDetails, "DeathPlaceStreetEn",null),
         DeathPlaceStreetMl:_.get(DeathNACDetails, "DeathPlaceStreetMl",null),
-        DeathPlaceHomeWardId:_.get(DeathNACDetails, "DeathPlaceHomeWardId.name",null),
+        DeathPlaceHomeWardId:_.get(DeathNACDetails, "DeathPlaceWardId.code",null),
         DeathPlaceHomePostofficeId: data.DeathNACDetails.DeathPlace.code === "HOME" ? _.get(DeathNACDetails, "DeathPlaceHomePostofficeId.code",null) : _.get(DeathNACDetails, "DeathPlaceHomePostofficeId.name",null),
         DeathPlaceHomepincode:_.get(DeathNACDetails, "DeathPlaceHomepincode",null),
         DeathPlaceHomeLocalityEn:_.get(DeathNACDetails, "DeathPlaceHomeLocalityEn",null),
@@ -56,7 +56,7 @@ export const DeathNACRegistrationData = (data = {}) => {
 
 
         SpouseUnavailable:null,
-        SpouseType:_.get(DeathNACParentsDetails, "SpouseType.name",null),
+        SpouseType:_.get(DeathNACParentsDetails, "SpouseType.code",null),
         SpouseNameEn:_.get(DeathNACParentsDetails, "SpouseNameEN",null),
         SpouseNameML:_.get(DeathNACParentsDetails, "SpouseNameMl",null),
         SpouseAadhaar:_.get(DeathNACParentsDetails, "SpouseAadhaar",null),
@@ -68,7 +68,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         MotherNameEn:_.get(DeathNACParentsDetails, "motherFirstNameEn",null),
         MotherNameMl:_.get(DeathNACParentsDetails, "motherFirstNameMl",null),
         MotherAadharNo:_.get(DeathNACParentsDetails, "motherAadhar",null),
-        DeathACKNo:false,
+        DeathACKNo:null,
         funcionUID:"CRDRNA",
 
     };
