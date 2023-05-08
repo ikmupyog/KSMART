@@ -196,7 +196,8 @@ import useDFMApplicationActions from "./dfm/useApplicationActions";
 import useDFMGenderMDMS from "./dfm/useDFMGenderMDMS";
 import useDFMMDMS from "./dfm/useMDMS";
 import useDFMSearch from "./dfm/useSearch";
-import useSearchmodule from "./dfm/useSearchmodule"
+import useSearchmodule from "./dfm/useSearchmodule";
+import useSearchsubModule from "./dfm/useSearchsubModule";
 import useApplicationDrafting from "./dfm/useApplicationDrafting";
 import useApplicationNoteDrafting from "./dfm/useApplicationNoteDrafting";
 import useApplicationFetchDraft from "./dfm/useApplicationFetchDraft";
@@ -477,6 +478,7 @@ const dfm = {
   useApplicationArisingFile,
   useCreateModule,
   useApplicationModule,
+  useSearchsubModule,
   useCreateSubModule
 };
 const receipts = {
