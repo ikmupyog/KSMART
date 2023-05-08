@@ -11,7 +11,7 @@ const BrideAddressPermanentOutsideKerala = ({ config, onSelect, userType, formDa
   permntOutsideKeralaHouseNameEn, setpermntOutsideKeralaHouseNameEn, permntOutsideKeralaHouseNameMl, setpermntOutsideKeralaHouseNameMl,
   permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
   permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn, permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
-  permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
+  permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl, setpermntInKeralaAdrDistrict, setpermntInKeralaAdrLBName,
   value, setValue,isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false,
   countryValuePermanent, setCountryValuePermanent,valuePermanent, setValuePermanent,isPrsentAddress, setIsPrsentAddress
   
@@ -71,6 +71,11 @@ const BrideAddressPermanentOutsideKerala = ({ config, onSelect, userType, formDa
   //   PostOffice["common-masters"].PostOffice.map((ob) => {
   //     cmbPostOffice.push(ob);
   //   });
+
+  useEffect(()=>{
+    setpermntInKeralaAdrDistrict(null)
+    setpermntInKeralaAdrLBName(null)
+  },[])
   
   useEffect(() => {
     setcmbFilterPerDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent));

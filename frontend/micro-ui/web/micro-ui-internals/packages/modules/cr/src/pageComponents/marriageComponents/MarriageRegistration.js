@@ -206,6 +206,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       cmbMarriagePlaceIds.push(ob);
     });
 
+
   const uniquecmbWards = _.uniqWith(cmbWardNoFinal, (value1, value2) => value1.name === value2.name);
   console.log({ uniquecmbWards });
 
@@ -840,7 +841,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       } else {
         setmarriageLocalityMlError(false);
       }
-      if(marriageStreetEn != '' && (marriageStreetEn.trim() == null || marriageStreetEn.trim() == '' || marriageStreetEn.trim() == undefined)){
+      if(marriageStreetEn.trim() == null || marriageStreetEn.trim() == '' || marriageStreetEn.trim() == undefined){
         setmarriageStreetEn("");
       }else{
         if (marriageStreetMl.trim() == null || marriageStreetMl.trim() == '' || marriageStreetMl.trim() == undefined) {
@@ -855,7 +856,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           setmarriageStreetMlError(false);
         }
       }
-      if(marriageStreetMl != '' && (marriageStreetMl.trim() == null || marriageStreetMl.trim() == '' || marriageStreetMl.trim() == undefined)){
+      if(marriageStreetMl.trim() == null || marriageStreetMl.trim() == '' || marriageStreetMl.trim() == undefined){
         setmarriageStreetMl("");
         setmarriageStreetEnError(false);
       }else{  

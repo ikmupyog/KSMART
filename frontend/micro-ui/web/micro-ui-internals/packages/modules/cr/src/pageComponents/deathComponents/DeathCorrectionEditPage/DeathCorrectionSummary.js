@@ -54,19 +54,17 @@ function DeathCorrectionSummary({
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
     });
-    console.log("newThumbnails==", newThumbnails);
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
         const tempObj = {
-          image: item.small,
+          image: item.large,
           caption: `Caption ${index}`,
         };
         return tempObj;
       });
-    console.log("formattedImageThumbs==", formattedImageThumbs);
     setImagesThumbs(formattedImageThumbs);
     scrollToTop();
   };
@@ -80,38 +78,8 @@ function DeathCorrectionSummary({
     fetchImage(documentIds);
   };
 
-  // const getTimelineCaptions = (checkpoint) => {
-  //     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
-  //         const caption = {
-  //             date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
-  //             source: applicationData?.channel || "",
-  //         };
-  //         return <TLCaption data={caption} />;
-  //     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
-  //         const caption = {
-  //             date: checkpoint?.auditDetails?.lastModified,
-  //             name: checkpoint?.assignes?.[0]?.name,
-  //             mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-  //             comment: t(checkpoint?.comment),
-  //             wfComment: checkpoint.wfComment,
-  //             thumbnailsToShow: checkpoint?.thumbnailsToShow,
-  //         };
-  //         return <TLCaption data={caption} OpenImage={OpenImage} />;
-  //     } else {
-  //         const caption = {
-  //             date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-  //             name: checkpoint?.assignes?.[0]?.name,
-  //             // mobileNumber: checkpoint?.assigner?.mobileNumber,
-  //             wfComment: checkpoint?.wfComment,
-  //             mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-  //         };
-  //         return <TLCaption data={caption} />;
-  //     }
-  // };
-
   useEffect(() => {
     if (deathCorrectionData?.length > 0) {
-      console.log("navigated data==", deathCorrectionData);
       setDocumentsView(deathCorrectionData?.[0]?.CorrectionDocument);
     }
   }, []);
@@ -127,7 +95,6 @@ function DeathCorrectionSummary({
   useEffect(()=>{
     if(mutation?.isError) {
         setParams({});
-      console.log("mutatio",mutation);
       history.push({
           pathname:  `/digit-ui/citizen/cr/death-correction-acknowledgement`,
           state: { navData, deathCorrectionData: {} ,mutationData:{ data : mutation.data, isSuccess: mutation.isSuccess, isLoading : mutation?.isLoading }}
@@ -136,9 +103,7 @@ function DeathCorrectionSummary({
     },[mutation])
     
   const submitDeathCorrection = () => {
-    console.log("birth inclusion===123");
     const resp = mutation.mutate(deathCorrectionFormsObj, { onSuccess: navigateAcknowledgement });
-    console.log("resap==", resp);
   };
 
     
@@ -209,7 +174,6 @@ function DeathCorrectionSummary({
   };
 
   const renderCardDetail = (value, fieldName, documentData) => {
-    console.log("value in card==", value, fieldName);
     const type = fieldName === "DECEASED_DOB" ? "date" : "text";
     const columnName = (value.column === "CR_DECEASED_LAST_NAME_ML") ? t("DECEASED_LAST_NAME_ML") : t(value.column);
     return (
@@ -229,7 +193,7 @@ function DeathCorrectionSummary({
             </h4>
           </div>
           <div className="col-md-1">
-            <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+            <LinkButton label={t("CR_VIEW")} style={{ fontWeight: "bold", color: "#86a4ad", cursor:"pointer" }} onClick={() => setDocumentsView(documentData)} />
           </div>
         </div>
       </div>
@@ -237,8 +201,6 @@ function DeathCorrectionSummary({
   };
 
   const renderSummaryCard = (detail, index) => {
-    console.log("detail in summary card--", detail, deathCorrectionData[detail]);
-    //  switch()
     return (
       <React.Fragment key={index}>
         <div style={getMainDivStyles()}>
@@ -287,7 +249,7 @@ function DeathCorrectionSummary({
         </div>
         {imagesThumbs?.length > 0 && (
           <div className={"cr-timeline-wrapper"}>
-            <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+            <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "auto", overflow: "scroll" }} />
           </div>
         )}
       </div>
