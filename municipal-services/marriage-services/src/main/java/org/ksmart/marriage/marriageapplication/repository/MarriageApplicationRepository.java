@@ -474,7 +474,14 @@ public class MarriageApplicationRepository {
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
                             marriage.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeMl(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeMl());
 
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaLocalityNameEn(marriage.getBrideAddressDetails().getLocalityEnPermanent());
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaLocalityNameMl(marriage.getBrideAddressDetails().getLocalityMlPermanent());
 
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaStreetNameEn(marriage.getBrideAddressDetails().getStreetNameEnPermanent());
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaStreetNameMl(marriage.getBrideAddressDetails().getStreetNameMlPermanent());
+
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaHouseNameEn(marriage.getBrideAddressDetails().getHouseNameNoEnPermanent());
+                            marriage.getBrideAddressDetails().setPermntOutsideKeralaHouseNameMl(marriage.getBrideAddressDetails().getHouseNameNoMlPermanent());
                             }
                     }
                     //PERMANENT-OUTSIDE INDIA

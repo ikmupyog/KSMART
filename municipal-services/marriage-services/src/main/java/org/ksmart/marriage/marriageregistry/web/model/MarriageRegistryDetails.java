@@ -186,6 +186,14 @@ public class MarriageRegistryDetails {
     @JsonProperty("moduleCode")
     private String moduleCode;
 
+    @Size(max = 64)
+    @JsonProperty("villageId")
+    private String villageId;
+
+    @Size(max = 1000)
+    @JsonProperty("talukName")
+    private String talukName;
+
     @JsonProperty("BrideDetails")
     private BrideRegistryDetails brideDetails;
 
