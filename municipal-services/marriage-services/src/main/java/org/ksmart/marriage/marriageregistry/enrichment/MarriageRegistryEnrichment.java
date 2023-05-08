@@ -1034,7 +1034,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                     appendIfNotBlank(registryDetails.getGroomAddressDetails().getPermntOthrIndiaLineoneEn(), groomAddressBuilder, true);
                     appendIfNotBlank(registryDetails.getGroomAddressDetails().getPermntOthrIndiaprovinceEn(), groomAddressBuilder, true);
                     appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), groomAddressBuilder, true);
-                    appendIfNotBlank(registryDetails.getGroomAddressDetails().getOutSideIndiaPostCodePermanent(), groomAddressBuilder, true);
+                    appendIfNotBlank(registryDetails.getGroomAddressDetails().getOutSideIndiaPostCodePermanent(), groomAddressBuilder, false);
                 }
         }
         return groomAddressBuilder.toString();
