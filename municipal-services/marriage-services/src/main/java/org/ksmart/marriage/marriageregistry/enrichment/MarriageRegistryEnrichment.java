@@ -921,7 +921,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                                 appendIfNotBlank(registryDetails.getGroomAddressDetails().getCountryName(), groomAddressBuilder, true);
                             }
 
-                            appendIfNotBlank(registryDetails.getGroomAddressDetails().getPinNoPermanent(), groomAddressBuilder, true);
+                            appendIfNotBlank(registryDetails.getGroomAddressDetails().getPinNoPermanent(), groomAddressBuilder, false);
                         }
 
                     } else {
@@ -977,7 +977,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                                 appendIfNotBlank(registryDetails.getGroomAddressDetails().getCountryName(), groomAddressBuilder, true);
                             }
 
-                            appendIfNotBlank(registryDetails.getGroomAddressDetails().getPinNoPermanent(), groomAddressBuilder, true);
+                            appendIfNotBlank(registryDetails.getGroomAddressDetails().getPinNoPermanent(), groomAddressBuilder, false);
 
                         }
 
@@ -1021,6 +1021,9 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
             }
 
         }
+        if(StringUtils.isNotBlank(groomAddressBuilder.toString()) && ((Character) groomAddressBuilder.toString().charAt(groomAddressBuilder.toString().length())).equals(',')){
+            return groomAddressBuilder.toString().substring(0, groomAddressBuilder.toString().length()-1);
+        }
 
         return groomAddressBuilder.toString();
 
@@ -1041,6 +1044,9 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                     appendIfNotBlank(registryDetails.getGroomAddressDetails().getOutSideIndiaPostCodePermanent(), groomAddressBuilder, false);
                 }
         }
+        if(StringUtils.isNotBlank(groomAddressBuilder.toString()) && ((Character) groomAddressBuilder.toString().charAt(groomAddressBuilder.toString().length())).equals(',')){
+            return groomAddressBuilder.toString().substring(0, groomAddressBuilder.toString().length()-1);
+        }
         return groomAddressBuilder.toString();
     }
 
@@ -1058,6 +1064,9 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                 appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), brideAddressBuilder, true);
                 appendIfNotBlank(registryDetails.getBrideAddressDetails().getOutSideIndiaPostCodePermanent(), brideAddressBuilder, true);
             }
+        }
+        if(StringUtils.isNotBlank(brideAddressBuilder.toString()) && ((Character) brideAddressBuilder.toString().charAt(brideAddressBuilder.toString().length())).equals(',')){
+            return brideAddressBuilder.toString().substring(0, brideAddressBuilder.toString().length()-1);
         }
         return brideAddressBuilder.toString();
     }
@@ -1207,7 +1216,9 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
             }
 
         }
-
+        if(StringUtils.isNotBlank(brideAddressBuilder.toString()) && ((Character) brideAddressBuilder.toString().charAt(brideAddressBuilder.toString().length())).equals(',')){
+            return brideAddressBuilder.toString().substring(0, brideAddressBuilder.toString().length()-1);
+        }
         return brideAddressBuilder.toString();
 
     }
