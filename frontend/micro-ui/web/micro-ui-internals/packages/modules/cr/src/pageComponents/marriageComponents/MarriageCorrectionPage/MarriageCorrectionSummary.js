@@ -249,7 +249,7 @@ function MarriageCorrectionSummary({
       return fieldType;
   };
 
-  const renderCardDetail = (value, fieldName, documentData) => {
+  const renderCardDetail = (index, value, fieldName, documentData) => {
     const type = getFieldType(fieldName, value);
     return (
       <div className="row">
@@ -268,7 +268,9 @@ function MarriageCorrectionSummary({
             </h4>
           </div>
           <div className="col-md-2">
+          {index === 0 &&
             <LinkButton label={t("CR_VIEW")} style={{ fontWeight: "bold", color: "#86a4ad", cursor:"pointer" }} onClick={() => setDocumentsView(documentData)} />
+          }
           </div>
         </div>
       </div>
@@ -302,7 +304,7 @@ function MarriageCorrectionSummary({
                     </div>
                   </div>
                 </div>
-                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value, detail.correctionFieldName, detail.CorrectionDocument))}
+                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(index, value, detail.correctionFieldName, detail.CorrectionDocument))}
               </StatusTable>
             }
           />

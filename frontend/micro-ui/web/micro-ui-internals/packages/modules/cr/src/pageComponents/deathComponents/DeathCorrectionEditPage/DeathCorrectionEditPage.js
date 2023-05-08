@@ -39,7 +39,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   };
 
   const FieldComponentContainer = ({ children }) => {
-    return <div className="col-md-9">{children}</div>;
+    return <div className="col-md-10">{children}</div>;
   };
 
   const mutation = Digit.Hooks.cr.useDeathCorrectionAction(tenantId);
@@ -229,7 +229,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     max="12"
                     optionKey="i18nKey"
                     disabled={deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_AADHAR?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_AADHAR?.isFocused}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
                     onBlur={(e) => onAdharChange(e)}
                     placeholder={`${t("CR_AADHAR")}`}
@@ -237,7 +237,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
@@ -256,7 +256,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameEn}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameEn")}
                     placeholder={`${t("CR_FIRST_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -269,7 +269,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameEn}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "middleNameEn")}
                     placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
@@ -282,7 +282,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameEn}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "lastNameEn")}
                     placeholder={`${t("CR_LAST_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
@@ -290,7 +290,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
 
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
@@ -309,7 +309,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameMl}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameMl")}
                     placeholder={`${t("CR_FIRST_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_ML") })}
@@ -322,7 +322,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameMl}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "middleNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -336,7 +336,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameMl}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "lastNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_LAST_NAME_ML")}`}
@@ -346,7 +346,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
               </FieldComponentContainer>
             </FormFieldContainer>
             <FormFieldContainer>
-              <div className="col-md-9">
+              <div className="col-md-10">
               {/* <FieldComponentContainer> */}
                 <div className="col-md-4">
                   <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
@@ -363,7 +363,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
                 </div>
               {/* </FieldComponentContainer> */}
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_DOB?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_DOB"])}>
@@ -390,7 +390,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_SEX?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SEX"])}>
@@ -409,7 +409,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameEn}
                     disabled={deathCorrectionFormsObj.DECEASED_MOTHER?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                     onBlur={(e) => onBlurMotherName(e, "mothersNameEn")}
                     placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
@@ -429,7 +429,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_MOTHER?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_MOTHER"])}>
@@ -448,7 +448,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameEn}
                     disabled={deathCorrectionFormsObj.DECEASED_FATHER?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
                     onBlur={(e) => onBlurFatherName(e, "fathersNameEn")}
                     placeholder={`${t("CR_FATHER_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
@@ -461,7 +461,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameMl}
                     disabled={deathCorrectionFormsObj.DECEASED_FATHER?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
                     onBlur={(e) => onBlurFatherName(e, "fathersNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -470,7 +470,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
 
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_FATHER?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_FATHER"])}>
@@ -482,14 +482,14 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
             </FormFieldContainer>
             <FormFieldContainer>
               <FieldComponentContainer>
-                <div className="col-md-4">
+                <div className="col-md-4"> 
                   <CardLabel>{`${t("CR_SPOUSE_NAME_EN")}`}</CardLabel>
                   <TextInput
                     t={t}
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameEn}
                     disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameEn")}
                     placeholder={`${t("CR_SPOUSE_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_SPOUSE_NAME_EN") })}
@@ -502,14 +502,14 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameMl}
                     disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameMl")}
                     placeholder={`${t("CR_SPOUSE_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_SPOUSE_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.DECEASED_SPOUSE?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SPOUSE"])}>
@@ -527,7 +527,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     t={t}
                     type={"text"}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "houseNameEn")}
                     placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
@@ -540,7 +540,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     t={t}
                     type={"text"}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "localityNameEn")}
                     placeholder={`${t("CR_LOCALITY_EN")}`}
@@ -553,7 +553,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     t={t}
                     type={"text"}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "streetNameEn")}
                     placeholder={`${t("CR_STREET_EN")}`}
@@ -561,7 +561,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                   />
                 </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 {deathCorrectionFormsObj?.PERMANENT_ADDRESS?.isDisabled && (
                   <ButtonContainer>
                     <span onClick={() => setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
@@ -580,7 +580,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameMl}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
                     placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                     {...(validation = {
@@ -597,7 +597,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameMl}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "localityNameMl")}
                     placeholder={`${t("CR_LOCALITY_MAL")}`}
                     {...(validation = {
@@ -614,7 +614,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameMl}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                    autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                    // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "streetNameMl")}
                     placeholder={`${t("CR_STREET_MAL")}`}
                     {...(validation = {

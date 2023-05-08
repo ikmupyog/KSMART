@@ -323,31 +323,53 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 {DeathNACDetails.DeathPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-6">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Ward</CardLabel>
+                  <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>House Name</CardLabel>
                     </div>
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) + 
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeLocalityEn) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeStreetNameEn) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.name) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.pincode) +
-                          "/" +
-                          (DeathNACDetails.DeathPlaceHomeHoueNameMl) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeLocalityMl) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeStreetNameMl) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.name) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.pincode)}
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn)}
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Locality Name</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeLocalityEn) + 
+                        "/" +
+                        (DeathNACDetails.DeathPlaceHomeLocalityMl) }
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Street</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeStreetNameEn) + 
+                        "/" +
+                        (DeathNACDetails.DeathPlaceHomeStreetNameMl) }
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Post Office</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.name) }
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>PIN</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.pincode) }
                       </CardText>
                     </div>
                   </div>

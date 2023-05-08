@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, useLocation, Link } from "react-router-dom";
-import { PrivateRoute, BreadCrumb,DocumentIcon,CardLabel } from "@egovernments/digit-ui-react-components";
+import { PrivateRoute, BreadCrumb, DocumentIcon, CardLabel } from "@egovernments/digit-ui-react-components";
 import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,6 @@ const SearchFlow = ({ path }) => {
       img: <FileProtected />,
       link: `${path}/marriageinbox`,
     },
-    
   ];
   const ClassList = 
     {
@@ -44,31 +43,32 @@ const SearchFlow = ({ path }) => {
       </div>
       <div className="FileFlowWrapper">
         <div className="cardWrapper">
-          {cardMenuData?.map((item, index) => (
-           item.link?(
-            <Link to={item.link}>
-            {/* <Link to='trade-lisense'> */}
-            <div className={ClassList[item.title]}>
-              <div className="contentMenu">
-                <div className="contentImg">{item.img}</div>
-                <div className="contentText">
-                  <h6>{item.title}</h6>
-                  <span>{item.subTitle}</span>
+          {cardMenuData?.map((item, index) =>
+            item.link ? (
+              <Link to={item.link}>
+                {/* <Link to='trade-lisense'> */}
+                <div className={ClassList[item.title]}>
+                  <div className="contentMenu">
+                    <div className="contentImg">{item.img}</div>
+                    <div className="contentText">
+                      <h6>{item.title}</h6>
+                      <span>{item.subTitle}</span>
+                    </div>
+                  </div>
+                </div>{" "}
+              </Link>
+            ) : (
+              <div className={ClassList[item.title]}>
+                <div className="contentMenu">
+                  <div className="contentImg">{item.img}</div>
+                  <div className="contentText">
+                    <h6>{item.title}</h6>
+                    <span>{item.subTitle}</span>
+                  </div>
                 </div>
               </div>
-            </div>{" "}
-          </Link>
-           ):
-          ( <div className={ClassList[item.title]}>
-             <div className="contentMenu">
-               <div className="contentImg">{item.img}</div>
-               <div className="contentText">
-                 <h6>{item.title}</h6>
-                 <span>{item.subTitle}</span>
-               </div>
-             </div>
-           </div>)
-          ))}
+            )
+          )}
         </div>
       </div>
     </div>
