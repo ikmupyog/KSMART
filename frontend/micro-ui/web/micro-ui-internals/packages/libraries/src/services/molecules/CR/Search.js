@@ -95,7 +95,7 @@ export const CRsearch = {
       values: [
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NA" },
         { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NA" },
-        { title: "CR_INSTITUTION_NAME_EN", value:  response?.institutionId ? response?.institutionId : "NA" },
+        { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NA" },
         { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NA" },
       ],
     };
@@ -185,7 +185,7 @@ export const CRsearch = {
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPresentEn + " / " + response?.AddressBirthDetails.stateIdPresentMl || "NA" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPresentEn + " / " + response?.AddressBirthDetails.districtIdPresentMl || "NA" },
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NA" },
-        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NA"  },
+        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NA" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NA" },
         { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NA" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NA" },
@@ -294,11 +294,11 @@ export const CRsearch = {
       title: "CR_INFORMANT_DETAILS",
       // asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NA" },
-        { title: "PDF_INFORMER_AADHAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NA" },
-        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NA" },
+        { title: "CR_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NA" },
+        { title: "CS_COMMON_AADHAAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NA" },
+        { title: "CR_MOBILE_NO", value: response?.InformarHosInstDetails?.infomantMobile || "NA" },
+        { title: "CR_INFORMER_DESIGNATION", value: response?.InformarHosInstDetails?.informerDesi || "NA" },
+        { title: "CR_INFORMER_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NA" },
 
       ],
     };
@@ -321,12 +321,15 @@ export const CRsearch = {
       response && employeeResponse.push(AddressBirthDetailsPresentInfo);
     } else if (response?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.presentaddressStateName != "kl") {
       response && employeeResponse.push(AddressBirthDetailsPresentOutsideKeralaInfo);
-    } else if (response?.AddressBirthDetails?.presentaddressCountry != "COUNTRY_INDIA" ) {
+    } else if (response?.AddressBirthDetails?.presentaddressCountry != "COUNTRY_INDIA") {
       response && employeeResponse.push(AddressBirthDetailsPresentOutsideIndiaInfo);
     }
     response && employeeResponse.push(statisticalInfo);
-    response && employeeResponse.push(InitiatorDetails);
-    response && employeeResponse.push(InformarHospitalInstitution);
+    if (response?.InitiatorinfoDetails?.initiatorAadhar != null) {
+      response && employeeResponse.push(InitiatorDetails);
+    } else if (response?.InformarHosInstDetails?.infomantAadhar != null) {
+      response && employeeResponse.push(InformarHospitalInstitution);
+    }
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
