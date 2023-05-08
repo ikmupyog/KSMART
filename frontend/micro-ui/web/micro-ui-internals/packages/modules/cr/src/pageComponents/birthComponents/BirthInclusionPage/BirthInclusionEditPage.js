@@ -278,7 +278,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                 <TextInput
                   t={t}
                   disabled={birthInclusionFormsObj?.CHILD_AADHAAR?.isDisabled}
-                  autoFocus={birthInclusionFormsObj?.CHILD_AADHAAR?.isFocused}
+                  // autoFocus={birthInclusionFormsObj?.CHILD_AADHAAR?.isFocused}
                   max="12"
                   optionKey="i18nKey"
                   name="AadharNumber"
@@ -417,7 +417,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameEn}
                   onBlur={(e) => onChangeMotherDetails(e, "motherNameEn")}
                   disabled={birthInclusionFormsObj?.MOTHER_DETAILS?.isDisabled}
-                  autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
+                  // autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
                   placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
                 />
@@ -473,7 +473,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="FatherNameEn"
                   defaultValue={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameEn}
                   disabled={birthInclusionFormsObj?.FATHER_DETAILS?.isDisabled}
-                  autoFocus={birthInclusionFormsObj?.FATHER_DETAILS?.isFocused}
+                  // autoFocus={birthInclusionFormsObj?.FATHER_DETAILS?.isFocused}
                   onBlur={(e) => onChangeFatherDetails(e, "fatherNameEn")}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
