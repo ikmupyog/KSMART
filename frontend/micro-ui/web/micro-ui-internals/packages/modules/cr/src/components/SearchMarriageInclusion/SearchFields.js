@@ -39,7 +39,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
           name="registrationNo"
           inputRef={register({})}
           placeholder={`${t("CR_REGISTRATION_NUMBER")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
+          // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
         />
       </SearchField>
     <SearchField>

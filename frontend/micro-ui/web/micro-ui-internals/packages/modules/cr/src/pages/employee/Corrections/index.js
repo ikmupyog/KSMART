@@ -46,6 +46,10 @@ const CorrectionApplicationDetails = () => {
   useEffect(()=>{
   },[workflowDetails])
 
+  useEffect(()=>{
+    console.log("applicationDetails==",applicationDetails);
+  },[applicationDetails])
+
   const closeToast = () => {
     setShowToast(null);
   };
