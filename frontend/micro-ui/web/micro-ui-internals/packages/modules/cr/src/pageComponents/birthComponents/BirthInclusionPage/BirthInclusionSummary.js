@@ -150,10 +150,10 @@ function BirthInclusionSummary({
     let fieldValue = "";
     switch (type) {
       case "text":
-        fieldValue = data;
+        fieldValue = data ? data : t("CR_NOT_RECORDED");
         break;
       case "date":
-        fieldValue = moment(data).format("DD/MM/YYYY");
+        fieldValue = data ? moment(data).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
         break;
     }
     return fieldValue;
@@ -164,7 +164,7 @@ function BirthInclusionSummary({
     fetchImage(documentIds);
   };
 
-  const renderCardDetail = (value, fieldName, documentData) => {
+  const renderCardDetail = (index, value, fieldName, documentData) => {
     const type = fieldName === "CHILD_DOB" ? "date" : "text";
     return (
       <div className="row">
@@ -177,13 +177,15 @@ function BirthInclusionSummary({
               <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <h4>
               <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-1">
+          {index === 0 &&
             <LinkButton label={t("CR_VIEW")} style={{ fontWeight: "bold", color: "#86a4ad", cursor:"pointer" }} onClick={() => setDocumentsView(documentData)} />
+          }
           </div>
         </div>
       </div>
@@ -217,7 +219,7 @@ function BirthInclusionSummary({
                     </div>
                   </div>
                 </div>
-                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value, detail.correctionFieldName, detail.CorrectionDocument))}
+                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(index, value, detail.correctionFieldName, detail.CorrectionDocument))}
               </StatusTable>
             }
           />

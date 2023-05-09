@@ -1067,7 +1067,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     <div className="col-md-6">
                       <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
-                        <span className="mandatorycss">*</span>
+                        {/* <span className="mandatorycss">*</span> */}
                       </CardLabel>
                       <CheckBox
                         label={t("CR_EXPIRATION_TYPE")}
@@ -1094,7 +1094,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     <div className="col-md-6">
                       <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
-                        <span className="mandatorycss">*</span>
+                        {/* <span className="mandatorycss">*</span> */}
                       </CardLabel>
                       <CheckBox
                         label={t("CR_EXPIRATION_TYPE")}
@@ -1173,7 +1173,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     AdhaarDuplicationError 
                       ? witness1AadharError
                         ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                        : AgeValidationMsg ? t(`CR_INVALID_AGE`)
+                        : AgeValidationMsg ? t(`CR_MOTHER_AGE_WARNING`)
                             : witness1NameEnError ? t(`CR_INVALID_WITNESS1_NAME`)
                               : witness2AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                                 : witness2NameEnError ? t(`CR_INVALID_WITNESS2_NAME`)

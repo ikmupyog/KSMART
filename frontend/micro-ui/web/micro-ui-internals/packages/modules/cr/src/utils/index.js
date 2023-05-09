@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import set from "lodash/set";
+import moment from "moment";
 
 /*   method to check not null  if not returns false*/
 export const checkForNotNull = (value = "") => {
@@ -725,6 +726,14 @@ export const commonTransform = (object, path) => {
   });
   set(object, path, transformedData);
   return object;
+};
+
+export const convertUTCDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
+  //example input format : "2018-10-02"
+  if (dayStartOrEnd === "dayend")
+    return moment.utc(dateString, 'YYYY-MM-DD').endOf("day").valueOf();
+  else
+    return moment.utc(dateString, 'YYYY-MM-DD').startOf("day").valueOf();
 };
 
 export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {

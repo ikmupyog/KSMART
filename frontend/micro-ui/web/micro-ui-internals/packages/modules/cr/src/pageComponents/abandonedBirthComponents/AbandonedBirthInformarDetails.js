@@ -7,7 +7,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 

@@ -3,7 +3,7 @@ import { BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import BirthCertificate from "../../../components/SearchRegistryBirth";
 import _ from "lodash";
-import { convertDateToEpoch } from "../../../utils";
+import { convertUTCDateToEpoch } from "../../../utils";
 
 const BirthCertificateSearch = ({ path }) => {
   const { t } = useTranslation();
@@ -11,9 +11,7 @@ const BirthCertificateSearch = ({ path }) => {
 
   function onSubmit(data) {
     if (!_.isEmpty(data.birthDate)) {
-      _.set(data, "dobFrom", convertDateToEpoch(data.birthDate, "start"));
-      _.set(data, "dobTo", convertDateToEpoch(data.birthDate));
-      delete data.birthDate;
+      _.set(data, "birthDate", convertUTCDateToEpoch(data.birthDate, "start"));
     }
     if (!_.isEmpty(data.fromDate)) {
       _.set(data, "fromDate", convertDateToEpoch(data.fromDate, "start"))

@@ -37,6 +37,64 @@ const DesktopInbox = ({
     Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
   }
 
+  const goto = (data,inboxType) =>{
+    const correctionCode = data?.applicationNumber?.split('-')?.[4];
+    const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber ;
+    let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
+    switch(inboxType){
+      case "death":
+         url = `/digit-ui/employee/cr/application-deathdetails/${applicationNumber}`;
+         break;
+      case "marriage":
+        url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
+    }
+    
+  
+    if(["CRBRCN","CRDRCN","CRMRCR"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+    }
+    return url;
+  }
+
+  const MarriageColumns = React.useMemo(() => ([
+    {
+      Header: t("CR_COMMON_COL_APP_NO"),
+      accessor: "applicationNumber",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        return (
+          <div>
+            <span className="link">
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+                {/* {row.original.applicationNumber} */}
+                {row.original.applicationNumber}
+              </Link>
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      Header: t("CR_COMMON_COL_APP_DATE"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row?.auditDetails?.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+    },
+    {
+      Header: t("WF_INBOX_HEADER_LOCALITY"),
+      Cell: ({ row }) => {
+        return GetCell(t((row.original["wardNo"])));
+      },
+    },
+    {
+      Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
+      Cell: ({ row }) => {
+        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+      },
+    }
+  ]), [])
+
+
+
   const Deathcolumns = React.useMemo(
     () => [
       {
@@ -44,7 +102,6 @@ const DesktopInbox = ({
         accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
-          console.log('rw death',row);
           return (
             // <div>
             //   <span className="link">
@@ -53,18 +110,11 @@ const DesktopInbox = ({
             // </div>
             <div>
               <span className="link">
-                <Link onClick={handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-deathdetails/${row.original?.InformationDeath?.["DeathACKNo"]}`}>
+                <Link onClick={handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
               </span>
             </div>
-            // <div>
-            //     <span className="link">
-            //       <Link onClick={event => handleLinkClick(row.original.InformationDeath)} to={{pathname:`/digit-ui/employee/cr/application-deathdetails/`}}>
-            //         {row.original.InformationDeath["DeathACKNo"]}
-            //       </Link>
-            //     </span>
-            //   </div>
           );
         },
       },
@@ -117,18 +167,7 @@ const DesktopInbox = ({
     []
   );
 
-  console.log("first", data)
 
-  const goto = (birthData) =>{
-    const correctionCode = birthData?.applicationNumber?.split('-')?.[4];
-    console.log("loop[ed--data",correctionCode,birthData);
-    let url = `/digit-ui/employee/cr/application-details/${birthData.applicationNumber}`;
-  
-    if(["CRBRCN","CRDRCN","CRMRCR"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/correction-details/${birthData.applicationNumber}`;
-    }
-    return url;
-  }
 
   const BirthColumns = React.useMemo(() => ([
     {
@@ -136,11 +175,10 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
-        console.log("row data==",row.original);
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original)}>
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -188,7 +226,7 @@ const DesktopInbox = ({
       <CRTable
         t={t}
         data={data}
-        columns={SearchInbox == "birth" ? BirthColumns : Deathcolumns}
+        columns={SearchInbox == "birth" ? BirthColumns : SearchInbox == "marriage" ? MarriageColumns : Deathcolumns}
         getCellProps={(cellInfo) => {
           return {
             style: {
