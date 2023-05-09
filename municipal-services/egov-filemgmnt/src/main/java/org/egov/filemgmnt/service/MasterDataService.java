@@ -56,7 +56,6 @@ public class MasterDataService {
         Assert.notNull(module, "Master data module detail must not be null");
 
         final ModuleDetails existing = findModuleByCode(module.getModuleCode());
-
         validator.validateCreate(request, existing);
         enrichment.enrichCreateModule(request);
         producer.push(fmConfig.getSaveModuleMasterTopic(), request);
@@ -144,6 +143,9 @@ public class MasterDataService {
             throw new CustomException(INVALID_UPDATE.getCode(), "Master data sub function not found.");
         }
 
+        // validate existing
+        validator.validateUpdate(request, result);
+
         // enrich
         enrichment.enrichUpdateSubFunction(request, result);
 
@@ -160,9 +162,9 @@ public class MasterDataService {
         if (result == null) {
             throw new CustomException(INVALID_UPDATE.getCode(), "Master data service not found.");
         }
+        // validate existing
+        validator.validateUpdate(request, result);
 
-        // validate
-//         validator.validateUpdate(request, Collections.singletonList(result));
 
         // enrich
         enrichment.enrichUpdateService(request, result);

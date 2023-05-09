@@ -26,4 +26,7 @@ public class ServiceSearchCriteria {
     @Size(max = 64, message = "Service code length cannot exceed 64 characters")
     @JsonProperty("serviceCode")
     private String serviceCode;
+
+    @JsonProperty("status")
+    private String status;
 }

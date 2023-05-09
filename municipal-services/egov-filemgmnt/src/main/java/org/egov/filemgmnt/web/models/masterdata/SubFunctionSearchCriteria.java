@@ -25,4 +25,7 @@ public class SubFunctionSearchCriteria {
     // @NotBlank(message = "Sub function code is required")
     @JsonProperty("subFunctionCode")
     private String subFunctionCode;
+
+    @JsonProperty("status")
+    private String status;
 }

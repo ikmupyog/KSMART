@@ -22,7 +22,12 @@ public class MasterDataValidator {
     public void validateCreate(final ModuleDetailsRequest request, final ModuleDetails existing) {
         final String errorCode = INVALID_CREATE.getCode();
 
-        if (existing != null) {
+
+        if (existing != null ) {
+            throw new CustomException(errorCode, "Duplicate module, module already exists.");
+        }
+
+        if((existing != null ) && (existing.getModuleCode().toLowerCase().equals(request.getModuleDetails().getModuleCode()))){
             throw new CustomException(errorCode, "Duplicate module, module already exists.");
         }
     }
@@ -31,6 +36,10 @@ public class MasterDataValidator {
         final String errorCode = INVALID_CREATE.getCode();
 
         if (existing != null) {
+            throw new CustomException(errorCode, "Duplicate major function, major function already exists.");
+        }
+
+        if((existing != null ) && (existing.getMajorFunctionCode().equalsIgnoreCase(request.getMajorFunctionDetails().getMajorFunctionCode()))){
             throw new CustomException(errorCode, "Duplicate major function, major function already exists.");
         }
     }
@@ -92,6 +101,58 @@ public class MasterDataValidator {
 
         if (!ObjectUtils.nullSafeEquals(majorFunction.getModuleId(), existing.getModuleId())) {
             throw new CustomException(errorCode, "Invalid module id for existing major function.");
+        }
+    }
+
+    public void validateUpdate(final SubFunctionDetailsRequest request, final SubFunctionDetails existing) { // NOPMD
+        final String errorCode = INVALID_UPDATE.getCode();
+
+        if (existing == null) {
+            throw new CustomException(errorCode, "Sub function not found for sub function code.");
+        }
+
+        final SubFunctionDetails subFunction = request.getSubFunctionDetails();
+        if (subFunction.getId() == null) {
+            throw new CustomException(errorCode, "Sub function id is required for update.");
+        }
+
+        if (!ObjectUtils.nullSafeEquals(subFunction.getId(), existing.getId())) {
+            throw new CustomException(errorCode, "Invalid sub function id for existing module.");
+        }
+
+        // Validate major function
+        if (subFunction.getMajorFunctionId() == null) {
+            throw new CustomException(errorCode, "Major Function id is required for major function update.");
+        }
+
+        if (!ObjectUtils.nullSafeEquals(subFunction.getMajorFunctionId(), existing.getMajorFunctionId())) {
+            throw new CustomException(errorCode, "Invalid major function id for existing sub function.");
+        }
+    }
+
+    public void validateUpdate(final ServiceDetailsRequest request, final ServiceDetails existing) { // NOPMD
+        final String errorCode = INVALID_UPDATE.getCode();
+
+        if (existing == null) {
+            throw new CustomException(errorCode, "Service Details not found for service code.");
+        }
+
+        final ServiceDetails serviceDetails = request.getServiceDetails();
+        if (serviceDetails.getId() == null) {
+            throw new CustomException(errorCode, "Service id is required for update.");
+        }
+
+        if (!ObjectUtils.nullSafeEquals(serviceDetails.getId(), existing.getId())) {
+            throw new CustomException(errorCode, "Invalid service id for existing module.");
+        }
+
+        // Validate sub function
+        if (serviceDetails.getSubFunctionId() == null) {
+            throw new CustomException(errorCode, "Sub Function id is required for Service details update.");
+        }
+
+        if (!ObjectUtils.nullSafeEquals(serviceDetails.getSubFunctionId(), existing.getSubFunctionId())) {
+            throw new CustomException(errorCode, "Invalid sub function id for existing service.");
         }
     }
 }
