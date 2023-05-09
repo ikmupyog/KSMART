@@ -223,7 +223,7 @@ public class MarriageRegistryRequestService {
         groomRegistryDetails.setMiddlename_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMiddlenameMl());
         groomRegistryDetails.setLastname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastnameEn());
         groomRegistryDetails.setLastname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastnameMl());
-        groomRegistryDetails.setMobile(Long.valueOf(String.valueOf(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMobile())));
+        groomRegistryDetails.setMobile(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMobile());
         groomRegistryDetails.setEmailid(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getEmailid());
         groomRegistryDetails.setGender(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGender());
         groomRegistryDetails.setDateofbirth(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getDateofbirth());
@@ -259,7 +259,7 @@ public class MarriageRegistryRequestService {
         brideRegistryDetails.setMiddlename_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMiddlenameMl());
         brideRegistryDetails.setLastname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastnameEn());
         brideRegistryDetails.setLastname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastnameMl());
-        brideRegistryDetails.setMobile(Long.valueOf(String.valueOf(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMobile())));
+        brideRegistryDetails.setMobile(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMobile());
         brideRegistryDetails.setEmailid(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getEmailid());
         brideRegistryDetails.setGender(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGender());
         brideRegistryDetails.setDateofbirth(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getDateofbirth());
