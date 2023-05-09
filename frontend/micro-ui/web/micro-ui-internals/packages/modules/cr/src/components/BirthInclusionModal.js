@@ -44,6 +44,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [certificateDob, setCertificateDob] = useState("");
   const [hasError, setHasError] = useState(false);
   const [errorDocIds, setErrorDocIds] = useState([]);
+  
 
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   let conditionalComponent = "";
@@ -64,6 +65,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       setUploadedFiles([...filteredData]);
     }
   }, [selectedDocuments]);
+
+
 
 
   function onDeleteown(e) {
@@ -503,7 +506,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
 
         <EditButton
           selected={true}
-          label={"Save"}
+          label={(t("CR_SAVE"))}
           onClick={() => {
             if (selectedDocuments?.length === 1) {
               if (!isLoading && selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
@@ -519,7 +522,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         />
         <EditButton
           selected={false}
-          label={"Cancel"}
+          label={(t("CR_CANCEL"))}
           onClick={() => {
             hideModal();
           }}
