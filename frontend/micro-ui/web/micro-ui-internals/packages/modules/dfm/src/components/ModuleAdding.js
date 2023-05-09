@@ -1,62 +1,15 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {
-  BackButton,
-  PrivateRoute,
-  BreadCrumb,
-  CommonDashboard,
-  FormInputGroup,
-  SubmitBar,
-  CardLabel,
-  CardLabelError,
-  Dropdown,
-  CheckBox,
-  LinkButton,
-  SearchAction,
-  TextInput,
-  UploadFile,
-  SearchIconSvg,
-  TextArea,
-  CustomButton,
-  CardTextButton,
-  ActionBar,
-  Table,
-} from "@egovernments/digit-ui-react-components";
+import React, { useState } from "react";
+import { SubmitBar, CardLabel, TextInput, Table } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
-import viewToPlainText from "@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext";
 
 const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
-  const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [draftText, setDraftText] = useState("");
   const { t } = useTranslation();
-  const history = useHistory();
-  const state = useSelector((state) => state);
-  const locale = Digit.SessionStorage.get("locale");
-  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
-  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
   const mutation = Digit.Hooks.dfm.useCreateModule(tenantId);
   const updatemutation = Digit.Hooks.dfm.useUpdateModule(tenantId);
   const deleteItem = Digit.Hooks.dfm.useDeleteModule(tenantId);
-
-  function handleDeleteClick() {
-    deleteItem();
-  }
-  // const deleteItem = Digit.Hooks.dfm.useDeleteModule(tenantId);
-  // const handleDelete = () => {
-  //   console.log("deleted");
-  //   deleteItem.mutate(moduleCode);
-  // };
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
-  console.log(data);
   const [moduleCode, setModulecode] = useState("");
   const [moduleNameEn, setModuleNameEn] = useState("");
   const [moduleNameMl, setModuleNameMl] = useState("");
@@ -65,24 +18,17 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setModulecode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
-    // setDesignation(e.target.value);
   };
   const setsetModuleNameEn = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setModuleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
-    // setDesignation(e.target.value);
   };
   const setsetModuleNameMl = (e) => {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match(pattern) != null) {
       setModuleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
-    // if (!e.target.value.match(pattern)) {
-    //   setModuleNameMl("");
-    // } else {
-    //   setModuleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    // }
   };
   const [edit, setIsEdit] = useState(false);
   function handleLinkClick(row) {
@@ -92,34 +38,9 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     setModuleNameMl(row.moduleNameMalayalam);
   }
   const textValue = data?.ModuleDetails;
-  console.log(textValue);
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const Delete = () => {
     const formData = {
-      RequestInfo: {
-        apiId: "apiId",
-        ver: "1.0",
-        ts: null,
-        action: null,
-        did: null,
-        key: null,
-        msgId: null,
-        authToken: "5d11c6dc-a87c-4b1e-8353-d1e2d8fb3bff",
-        correlationId: null,
-        userInfo: {
-          id: null,
-          tenantId: "kl.cochin",
-          uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-          roles: [
-            {
-              id: null,
-              name: null,
-              code: "EMPLOYEE",
-              tenantId: null,
-            },
-          ],
-        },
-      },
       ModuleDetails: {
         status: "",
         moduleCode: moduleCode,
@@ -141,7 +62,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
           </div>
         );
       },
-      // Cell: ({ row }) => GetCell(t(row.original.moduleCode) || "NA"),
       disableSortBy: true,
     },
     {
@@ -158,7 +78,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
       Header: t("Download Certificate"),
       disableSortBy: true,
       Cell: ({ row }) => {
-        // let id = _.get(row, "original.id", null);
         return (
           <div onClick={Delete}>
             <button class="btn btn-delete">
@@ -166,54 +85,14 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
               <span class="mdi mdi-delete-empty mdi-24px"></span>
               <span>Delete</span>
             </button>
-            {/* {id !== null && <span className="link" onClick={() => {
-              fileSource.mutate({ filters: { id, source: "sms" } }, {
-                onSuccess: (fileDownloadInfo) => {
-                  const { filestoreId } = fileDownloadInfo;
-                  if (filestoreId) {
-                    downloadDocument(filestoreId);
-                  } else {
-                    console.log("filestoreId is null");
-                  }
-                }
-              });
-            }}>
-              Download
-            </span>} */}
           </div>
         );
       },
     },
   ];
 
-  // rest of your code using searchModule and columns
-
   const saveModule = () => {
     const formData = {
-      RequestInfo: {
-        apiId: "apiId",
-        ver: "1.0",
-        ts: null,
-        action: null,
-        did: null,
-        key: null,
-        msgId: null,
-        authToken: "5d11c6dc-a87c-4b1e-8353-d1e2d8fb3bff",
-        correlationId: null,
-        userInfo: {
-          id: null,
-          tenantId: "kl.cochin",
-          uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-          roles: [
-            {
-              id: null,
-              name: null,
-              code: "EMPLOYEE",
-              tenantId: null,
-            },
-          ],
-        },
-      },
       ModuleDetails: {
         id: null,
         tenantId: "kl.cochin",
@@ -236,12 +115,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
       updatemutation.mutate(formData);
     }
   };
-
-  // useEffect(() => {
-  //   if (mutation.isSuccess == true) {
-  //     history.push("/digit-ui/employee/dfm/note-drafting");
-  //   }
-  // }, [mutation.isSuccess]);
 
   return (
     <React.Fragment>
