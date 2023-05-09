@@ -2,7 +2,6 @@ import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
 export const DFMService = {
-
   create: (details, tenantId) =>
     Request({
       url: Urls.dfm.create,
@@ -33,7 +32,6 @@ export const DFMService = {
       method: "POST",
       params: details,
       auth: true,
-
     }),
   submodulesearch: (details) =>
     Request({
@@ -129,6 +127,28 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
+  updatemodule: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.updatemodule,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
+    deleteModule: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.deleteModule,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
   createsubmodule: (details, tenantId) =>
     Request({
       url: Urls.dfm.createsubmodule,
@@ -151,5 +171,4 @@ export const DFMService = {
   //     params: { tenantId },
   //     auth: true,
   //   }),
-
 };

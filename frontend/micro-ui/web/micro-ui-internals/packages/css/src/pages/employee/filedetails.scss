@@ -432,28 +432,27 @@
         height: 3772px;
     }
 }
-
 .module-adding {
     margin-top: 40px;
-
     @media (max-width: 1020px) {
         margin-top: 10px;
     }
 }
-
 .module-wrapper {
-    height: 270px;
     padding: 25px;
-
-    @media (max-width: 1020px) {
-        height: 340px;
-    }
-
-    @media (max-width: 600px) {
-        height: 520px;
-    }
+   @media (max-width: 768px){
+    padding-bottom: 50%;
+   }
+   @media (max-width: 640px){
+    padding-bottom: 50%;
+   }
+   @media (max-width: 480px){
+    padding-bottom: 75%;
+   }
+   @media (max-width: 360px){
+    padding-bottom: 85%;
+   }
 }
-
 .major-wrapper {
     height: 360px;
 

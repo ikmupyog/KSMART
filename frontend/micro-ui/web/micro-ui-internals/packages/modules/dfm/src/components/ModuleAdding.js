@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -44,6 +44,17 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
   let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
   const mutation = Digit.Hooks.dfm.useCreateModule(tenantId);
+  const updatemutation = Digit.Hooks.dfm.useUpdateModule(tenantId);
+  const deleteItem = Digit.Hooks.dfm.useDeleteModule(tenantId);
+
+  function handleDeleteClick() {
+    deleteItem();
+  }
+  // const deleteItem = Digit.Hooks.dfm.useDeleteModule(tenantId);
+  // const handleDelete = () => {
+  //   console.log("deleted");
+  //   deleteItem.mutate(moduleCode);
+  // };
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   console.log(data);
   const [moduleCode, setModulecode] = useState("");
@@ -64,22 +75,73 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   };
   const setsetModuleNameMl = (e) => {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setModuleNameMl("");
-    } else {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match(pattern) != null) {
       setModuleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
+    // if (!e.target.value.match(pattern)) {
+    //   setModuleNameMl("");
+    // } else {
+    //   setModuleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    // }
   };
-
+  const [edit, setIsEdit] = useState(false);
+  function handleLinkClick(row) {
+    setIsEdit(true);
+    setModulecode(row.moduleCode);
+    setModuleNameEn(row.moduleNameEnglish);
+    setModuleNameMl(row.moduleNameMalayalam);
+  }
   const textValue = data?.ModuleDetails;
   console.log(textValue);
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-
+  const Delete = () => {
+    const formData = {
+      RequestInfo: {
+        apiId: "apiId",
+        ver: "1.0",
+        ts: null,
+        action: null,
+        did: null,
+        key: null,
+        msgId: null,
+        authToken: "5d11c6dc-a87c-4b1e-8353-d1e2d8fb3bff",
+        correlationId: null,
+        userInfo: {
+          id: null,
+          tenantId: "kl.cochin",
+          uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
+          roles: [
+            {
+              id: null,
+              name: null,
+              code: "EMPLOYEE",
+              tenantId: null,
+            },
+          ],
+        },
+      },
+      ModuleDetails: {
+        status: "",
+        moduleCode: moduleCode,
+      },
+    };
+    deleteItem.mutate(formData);
+  };
   const columns = [
     {
       Header: t("MODULE_CODE"),
-      Cell: ({ row }) => GetCell(t(row.original.moduleCode) || "NA"),
+      Cell: ({ row }) => {
+        return (
+          <div>
+            <span className="link">
+              <div>
+                <a onClick={() => handleLinkClick(row.original)}> {row.original.moduleCode}</a>
+              </div>
+            </span>
+          </div>
+        );
+      },
+      // Cell: ({ row }) => GetCell(t(row.original.moduleCode) || "NA"),
       disableSortBy: true,
     },
     {
@@ -91,6 +153,36 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
       Header: t("MODULE_NAME_MAL"),
       disableSortBy: true,
       Cell: ({ row }) => GetCell(t(row.original.moduleNameMalayalam) || ""),
+    },
+    {
+      Header: t("Download Certificate"),
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        // let id = _.get(row, "original.id", null);
+        return (
+          <div onClick={Delete}>
+            <button class="btn btn-delete">
+              <span class="mdi mdi-delete mdi-24px"></span>
+              <span class="mdi mdi-delete-empty mdi-24px"></span>
+              <span>Delete</span>
+            </button>
+            {/* {id !== null && <span className="link" onClick={() => {
+              fileSource.mutate({ filters: { id, source: "sms" } }, {
+                onSuccess: (fileDownloadInfo) => {
+                  const { filestoreId } = fileDownloadInfo;
+                  if (filestoreId) {
+                    downloadDocument(filestoreId);
+                  } else {
+                    console.log("filestoreId is null");
+                  }
+                }
+              });
+            }}>
+              Download
+            </span>} */}
+          </div>
+        );
+      },
     },
   ];
 
@@ -137,7 +229,12 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         },
       },
     };
-    mutation.mutate(formData);
+
+    if (edit === false) {
+      mutation.mutate(formData);
+    } else {
+      updatemutation.mutate(formData);
+    }
   };
 
   // useEffect(() => {
@@ -165,6 +262,7 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
                   optionKey="i18nKey"
                   name="ModuleCode"
                   placeholder={t("ENTER_MODULE_CODE")}
+                  disable={edit}
                 />
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
@@ -199,18 +297,10 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12 module-adding">
-              <div className="col-md-3 col-sm-4">
-                <SubmitBar label={t("NEW")} style={{ marginBottom: "10px", width: "65%" }} />
-              </div>
-              <div className="col-md-3 col-sm-4 ">
-                <SubmitBar onSubmit={saveModule} label={t("save")} style={{ marginBottom: "10px", width: "65%" }} />
-              </div>
-              <div className="col-md-3  col-sm-4">
-                <SubmitBar label={t("CLOSE")} style={{ marginBottom: "10px", width: "65%" }} />
-              </div>
-            </div>
+          <div className="btn-flex">
+            <SubmitBar label={t("NEW")} className="btn-row" />
+            <SubmitBar onSubmit={saveModule} label={t("save")} className="btn-row" />
+            <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
         </div>
       </div>

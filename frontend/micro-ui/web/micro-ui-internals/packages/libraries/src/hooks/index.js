@@ -30,7 +30,9 @@ import useUpdateEvent from "./events/useUpdateEvent";
 import useNewInboxGeneral from "./useInboxGeneral/useNewInbox";
 import useApplicationModule from "./dfm/useApplicationModule";
 import useCreateModule from "./dfm/useCreateModule";
-import useCreateSubModule from "./dfm/useCreateSubModule"
+import useCreateSubModule from "./dfm/useCreateSubModule";
+import useUpdateModule from "./dfm/useUpdateModule";
+import useDeleteModule from "./dfm/useDeleteModule";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -479,7 +481,9 @@ const dfm = {
   useCreateModule,
   useApplicationModule,
   useSearchsubModule,
-  useCreateSubModule
+  useCreateSubModule,
+  useUpdateModule,
+  useDeleteModule
 };
 const receipts = {
   useReceiptsMDMS,

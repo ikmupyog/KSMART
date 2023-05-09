@@ -190,6 +190,8 @@ const Urls = {
     fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
     arising_file: "/filemgmnt/v1/applicantservices/_createArisingFile",
     createmodule:"/filemgmnt/v1/masterdata/modules/_create",
+    updatemodule:"/filemgmnt/v1/masterdata/modules/_update",
+    deleteModule:"/filemgmnt/v1/masterdata/modules/_delete",
     submodulesearch:"/filemgmnt/v1/masterdata/subfunctions/_search",
     modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
     createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create",
