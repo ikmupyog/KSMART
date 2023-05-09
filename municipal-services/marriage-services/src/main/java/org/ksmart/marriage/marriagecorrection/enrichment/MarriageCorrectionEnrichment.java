@@ -238,38 +238,38 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         GroomDetails groomDetails =marriageApplicationDetails.getGroomDetails();
         GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
         groomDetails.setAadharno(groomDetailsEnc.getAadharno());
-        if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
-            groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
-            groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
-            groomDetails.setGuardianAadharno(null);
-        }
-        else if(groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
-            groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
-            groomDetails.setMotherAadharno(null);
-            groomDetails.setFatherAadharno(null);
-        }
-        else{
-            groomDetails.setMotherAadharno(null);
-            groomDetails.setFatherAadharno(null);
-            groomDetails.setGuardianAadharno(null);
+        if(groomDetails.getParentGuardian()!=null) {
+            if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)) {
+                groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
+                groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
+                groomDetails.setGuardianAadharno(null);
+            } else if (groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)) {
+                groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
+                groomDetails.setMotherAadharno(null);
+                groomDetails.setFatherAadharno(null);
+            } else {
+                groomDetails.setMotherAadharno(null);
+                groomDetails.setFatherAadharno(null);
+                groomDetails.setGuardianAadharno(null);
+            }
         }
         BrideDetails brideDetails =marriageApplicationDetails.getBrideDetails();
         BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
         brideDetails.setAadharno(brideDetailsEnc.getAadharno());
-        if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
-            brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
-            brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
-            brideDetails.setGuardianAadharno(null);
-        }
-        else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
-            brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
-            brideDetails.setMotherAadharno(null);
-            brideDetails.setFatherAadharno(null);
-        }
-        else{
-            brideDetails.setMotherAadharno(null);
-            brideDetails.setFatherAadharno(null);
-            brideDetails.setGuardianAadharno(null);
+        if(brideDetails.getParentGuardian()!=null) {
+            if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)) {
+                brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
+                brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
+                brideDetails.setGuardianAadharno(null);
+            } else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)) {
+                brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+                brideDetails.setMotherAadharno(null);
+                brideDetails.setFatherAadharno(null);
+            } else {
+                brideDetails.setMotherAadharno(null);
+                brideDetails.setFatherAadharno(null);
+                brideDetails.setGuardianAadharno(null);
+            }
         }
 
     }
