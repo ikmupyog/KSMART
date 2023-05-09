@@ -32,6 +32,9 @@ public class ArisingFileEnrichment extends BaseEnrichment {
 
         setFileCodes(request);
 
+        final Long currentTime = Long.valueOf(System.currentTimeMillis());
+        arisingFile.setFileArisingDate(currentTime);
+
         // Enrich applicant address
         final ArisingFileApplicant applicant = arisingFile.getArisingFileApplicant();
         applicant.setId(UUID.randomUUID()

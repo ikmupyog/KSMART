@@ -69,12 +69,12 @@ public class MasterDataValidator {
         }
 
         final ModuleDetails module = request.getModuleDetails();
-        if (module.getId() == null) {
+        if (module.getModuleCode() == null) {
             throw new CustomException(errorCode, "Module id is required for update.");
         }
 
-        if (!ObjectUtils.nullSafeEquals(module.getId(), existing.getId())) {
-            throw new CustomException(errorCode, "Invalid module id for existing module.");
+        if (!ObjectUtils.nullSafeEquals(module.getModuleCode(), existing.getModuleCode())) {
+            throw new CustomException(errorCode, "Invalid module code for existing module.");
         }
     }
 
@@ -86,12 +86,12 @@ public class MasterDataValidator {
         }
 
         final MajorFunctionDetails majorFunction = request.getMajorFunctionDetails();
-        if (majorFunction.getId() == null) {
-            throw new CustomException(errorCode, "Major function id is required for update.");
+        if (majorFunction.getMajorFunctionCode() == null) {
+            throw new CustomException(errorCode, "Major function code is required for update.");
         }
 
-        if (!ObjectUtils.nullSafeEquals(majorFunction.getId(), existing.getId())) {
-            throw new CustomException(errorCode, "Invalid major function id for existing module.");
+        if (!ObjectUtils.nullSafeEquals(majorFunction.getMajorFunctionCode(), existing.getMajorFunctionCode())) {
+            throw new CustomException(errorCode, "Invalid major function code for existing module.");
         }
 
         // Validate module

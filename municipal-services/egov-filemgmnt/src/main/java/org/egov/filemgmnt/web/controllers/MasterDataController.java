@@ -27,10 +27,8 @@ import org.egov.filemgmnt.web.models.masterdata.SubFunctionDetailsResponse;
 import org.egov.filemgmnt.web.models.masterdata.SubFunctionSearchCriteria;
 import org.egov.filemgmnt.web.models.masterdata.SubFunctionSearchResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -105,7 +103,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @PutMapping("/masterdata/modules/_update")
+    @PostMapping("/masterdata/modules/_update")
     public ResponseEntity<ModuleDetailsResponse> updateModule(@RequestBody ModuleDetailsRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-modules-update:  \n{}", FMUtils.toJson(request));
@@ -122,7 +120,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @PutMapping("/masterdata/majorfunctions/_update")
+    @PostMapping("/masterdata/majorfunctions/_update")
     public ResponseEntity<MajorFunctionDetailsResponse> updateMajorFunction(@RequestBody MajorFunctionDetailsRequest request) {
         final MajorFunctionDetails mfDetails = masterDataService.updateMajorFunction(request);
 
@@ -134,7 +132,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @PutMapping("/masterdata/subfunctions/_update")
+    @PostMapping("/masterdata/subfunctions/_update")
     public ResponseEntity<SubFunctionDetailsResponse> updateSubFunction(@RequestBody SubFunctionDetailsRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("masterdata-subfunctions-update:  \n{}", FMUtils.toJson(request));
@@ -150,7 +148,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @PutMapping("/masterdata/services/_update")
+    @PostMapping("/masterdata/services/_update")
     public ResponseEntity<ServiceDetailsResponse> updateService(@RequestBody ServiceDetailsRequest request) {
 
         final ServiceDetails serviceDetails = masterDataService.updateService(request);
@@ -233,7 +231,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @DeleteMapping("/masterdata/modules/_delete")
+    @PostMapping("/masterdata/modules/_delete")
     public ResponseEntity<Void> deleteModule(@RequestBody ModuleDetailsRequest request) {
         masterDataService.deleteModule(request);
 
@@ -242,7 +240,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @DeleteMapping("/masterdata/majorfunctions/_delete")
+    @PostMapping("/masterdata/majorfunctions/_delete")
     public ResponseEntity<Void> deleteMajorFunction(@RequestBody MajorFunctionDetailsRequest request) {
         masterDataService.deleteMajorFunction(request);
 
@@ -251,7 +249,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @DeleteMapping("/masterdata/subfunctions/_delete")
+    @PostMapping("/masterdata/subfunctions/_delete")
     public ResponseEntity<Void> deleteSubFunction(@RequestBody SubFunctionDetailsRequest request) {
         masterDataService.deleteSubFunction(request);
 
@@ -260,7 +258,7 @@ public class MasterDataController implements MasterDataBaseController {
     }
 
     @Override
-    @DeleteMapping("/masterdata/services/_delete")
+    @PostMapping("/masterdata/services/_delete")
     public ResponseEntity<Void> deleteService(@RequestBody ServiceDetailsRequest request) {
         masterDataService.deleteService(request);
 
