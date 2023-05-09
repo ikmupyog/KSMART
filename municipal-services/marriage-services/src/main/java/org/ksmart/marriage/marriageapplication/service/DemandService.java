@@ -61,7 +61,7 @@ public class DemandService {
         demand.setBusinessService("CR");
         ArrayList<DemandDetail> demandDetails = new ArrayList<>();
         DemandDetail demandDetail=new DemandDetail();
-        demandDetail.setTaxHeadMasterCode("140130400");
+        demandDetail.setTaxHeadMasterCode(config.getTaxHeadMasterCode());
         demandDetail.setTaxAmount(new BigDecimal(wfc.getAmount()));
         demandDetail.setTenantId(demand.getTenantId());
         setGLCode(demandDetail, requestInfo);

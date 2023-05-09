@@ -132,6 +132,7 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.marriage.image.DefaultPhotoUrl}")
     private String defaultPhotoUrl;
 
-    
+    @Value("${egov.demand.taxheadmastercode}")
+    private String taxHeadMasterCode;
 
 }

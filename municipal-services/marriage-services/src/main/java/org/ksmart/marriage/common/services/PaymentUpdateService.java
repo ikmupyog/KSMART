@@ -24,6 +24,7 @@ import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetail
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -96,7 +97,11 @@ public class PaymentUpdateService {
 			System.out.println(" payment detail tenantId:"+paymentDetail.getBill().getConsumerCode());
 			System.out.println(" payment detail tenantId:"+paymentDetail.getBusinessService());
 			List<MarriageApplicationDetails> marriage = marriageService.searchMarriageDetails(searchCriteria,requestInfo);
-			
+			if(null!=marriage && marriage.size()==1){
+				if(marriage.get(0).getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
+					marriage.get(0).setAction(MarriageConstants.ACTION_PAY);
+				}
+			}
 			MarriageDetailsRequest updateRequest = MarriageDetailsRequest.builder().requestInfo(requestInfo)
 												   .marriageDetails(marriage).build();
 			//System.out.println(" payment detail updateRequest:"+updateRequest);
