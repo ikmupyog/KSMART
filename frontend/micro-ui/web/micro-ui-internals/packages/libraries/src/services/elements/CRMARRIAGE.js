@@ -65,7 +65,7 @@ export const CRMarriageService = {
     CRMarriageCorrectionSearch: ({ tenantId, filters }) =>{
       console.log("reached==",filters);
     return Request({
-      url: `${Urls.crcorrection.marriage_correction_search}?applicationType=new`,
+      url: Urls.crcorrection.marriage_correction_search,
       useCache: false,
       method: "POST",
       auth: true,

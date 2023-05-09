@@ -4,60 +4,117 @@ const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
 const getNACChildDetails = (application, t) => {
+  console.log(application, "application");
   application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   return {
-    title: "",
+    title: t("CR_BIRTH_CHILD_DETAILS"),
     values: [
       {
         title: t("Date of Birth"),
-        value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA"),
+        value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CR_NOT_RECORDED"),
       },
-      { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
-      { title: t("CS_COMMON_CHILD_AADHAAR"), value: application?.childAadharNo ? application?.childAadharNo : t("CS_NA") },
-      { title: t("ORDER_OF_BIRTH"), value: application?.nacorderofChildren ? application?.nacorderofChildren : t("CS_NA") },
+      { title: t("Gender"), value: application?.gender ? application?.gender : t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_CHILD_AADHAAR"), value: application?.childAadharNo ? application?.childAadharNo : t("CR_NOT_RECORDED") },
+      { title: t("ORDER_OF_BIRTH"), value: application?.nacorderofChildren ? application?.nacorderofChildren : t("CR_NOT_RECORDED") },
       {
         title: t("CR_FIRST_NAME_EN"),
         value:
-          application?.childFirstNameEn + "" + childMiddleNameEn + "" + childLastNameEn
-            ? application?.childFirstNameEn + "" + childMiddleNameEn + "" + childLastNameEn
-            : t("CS_NA"),
+          application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
+            ? application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
+            : t("CR_NOT_RECORDED"),
       },
       {
         title: t("CR_FIRST_NAME_ML"),
         value:
-          application?.childFirstNameMl + "" + childMiddleNameMl + "" + childLastNameMl
-            ? application?.childFirstNameMl + "" + childMiddleNameMl + "" + childLastNameMl
-            : t("CS_NA"),
+          application?.childFirstNameMl + "" + application?.childMiddleNameMl + "" + application?.childLastNameMl
+            ? application?.childFirstNameMl + "" + application?.childMiddleNameMl + "" + application?.childLastNameMl
+            : t("CR_NOT_RECORDED"),
       },
-      { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
-      { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
+      { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CR_NOT_RECORDED") },
+      { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CR_NOT_RECORDED") },
     ],
   };
 };
 const getParentsDetails = (application, t) => {
   application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   return {
-    title: "",
+    title: "CR_PARENTS_DETAILS",
     values: [
-      { title: t("CS_COMMON_AADHAAR"), value: application?.motherAadhar ? application?.motherAadhar : t("CS_NA") },
-      { title: t("CR_MOTHER_NAME_EN"), value: application?.motherFirstNameEn ? application?.motherFirstNameEn : t("CS_NA") },
-      { title: t("CR_MOTHER_NAME_ML"), value: application?.motherFirstNameMl ? application?.motherFirstNameMl : t("CS_NA") },
-      { title: t("CS_COMMON_AADHAAR"), value: application?.fatherAadhar ? application?.fatherAadhar : t("CS_NA") },
-      { title: t("CR_FATHER_NAME_EN"), value: application?.fatherFirstNameEn ? application?.fatherFirstNameEn : t("CS_NA") },
-      { title: t("Birth CR_FATHER_NAME_ML"), value: application?.fatherFirstNameMl ? application?.fatherFirstNameMl : t("CS_NA") },
+      {
+        title: t("CS_COMMON_AADHAAR"),
+        value: application?.ParentsDetails?.motherAadhar ? application?.ParentsDetails?.motherAadhar : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_MOTHER_NAME_EN"),
+        value: application?.ParentsDetails?.motherFirstNameEn ? application?.ParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_MOTHER_NAME_ML"),
+        value: application?.ParentsDetails?.motherFirstNameMl ? application?.ParentsDetails?.motherFirstNameMl : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CS_COMMON_AADHAAR"),
+        value: application?.ParentsDetails?.fatherAadhar ? application?.ParentsDetails?.fatherAadhar : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_FATHER_NAME_EN"),
+        value: application?.ParentsDetails?.fatherFirstNameEn ? application?.ParentsDetails?.fatherFirstNameEn : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("Birth CR_FATHER_NAME_ML"),
+        value: application?.ParentsDetails?.fatherFirstNameMl ? application?.ParentsDetails?.fatherFirstNameMl : t("CR_NOT_RECORDED"),
+      },
     ],
   };
 };
 const getAddressDetails = (application, t) => {
   return {
-    title: "",
+    title: "BIRTH_TIME_LINE_ADDRESS",
     values: [
-      { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") },
+      { title: t("CS_COMMON_DISTRICT"), value: application?.AddressBirthDetails?.presentInsideKeralaDistrict.name || t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_TALUK"), value: application?.AddressBirthDetails?.presentInsideKeralaTaluk.name || t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_VILLAGE"), value: application?.AddressBirthDetails?.presentInsideKeralaVillage.name || t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_LB_NAME"), value: application?.AddressBirthDetails?.presentInsideKeralaLBName.name || t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_WARD"), value: application?.AddressBirthDetails?.presentWardNo.namecmb || t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_POST_OFFICE"), value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice.name || t("CR_NOT_RECORDED") },
+      { title: t("CS_COMMON_PIN_CODE"), value: application?.AddressBirthDetails?.presentInsideKeralaPincode || t("CR_NOT_RECORDED") },
+      { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CR_NOT_RECORDED") },
+      { title: t("CR_LOCALITY_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || t("CR_NOT_RECORDED") },
+      { title: t("CR_STREET_NAME_EN"), value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || t("CR_NOT_RECORDED") },
+      { title: t("CR_STREET_NAME_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameMl || t("CR_NOT_RECORDED") },
+      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CR_NOT_RECORDED") },
+      { title: t("CR_HOUSE_NAME_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameMl || t("CR_NOT_RECORDED") },
     ],
   };
 };
-
+const getApplicantDetails = (application, t) => {
+  application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
+  return {
+    title: "CR_INITIATOR_DETAILS",
+    values: [
+      {
+        title: t("CS_COMMON_AADHAAR"),
+        value: application?.ApplicantDetails?.initiatorAadhar ? application?.ApplicantDetails?.initiatorAadhar : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_INITIATOR_NAME"),
+        value: application?.ApplicantDetails?.initiatorNameEn ? application?.ApplicantDetails?.initiatorNameEn : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_IS_CAREOF"),
+        value: application?.ApplicantDetails?.careofapplicant ? application?.ApplicantDetails?.careofapplicant : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_MOBILE_NO"),
+        value: application?.ApplicantDetails?.initiatorMobile ? application?.ApplicantDetails?.initiatorMobile : t("CR_NOT_RECORDED"),
+      },
+      {
+        title: t("CR_INFORMER_ADDRESS"),
+        value: application?.ApplicantDetails?.initiatorAddress ? application?.ApplicantDetails?.initiatorAddress : t("CR_NOT_RECORDED"),
+      },
+    ],
+  };
+};
 const getCRBirthNACAcknowledgementData = async (application, tenantInfo, t) => {
   return {
     t: t,
@@ -80,6 +137,7 @@ const getCRBirthNACAcknowledgementData = async (application, tenantInfo, t) => {
       getNACChildDetails(application, t),
       getParentsDetails(application, t),
       getAddressDetails(application, t),
+      getApplicantDetails(application, t),
     ],
   };
 };

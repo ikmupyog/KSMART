@@ -217,10 +217,10 @@ function MarriageCorrectionSummary({
     let fieldValue = "";
     switch (type) {
       case "text":
-        fieldValue = data;
+        fieldValue = data ? data : t("CR_NOT_RECORDED");
         break;
       case "date":
-        fieldValue = moment(data).format("DD/MM/YYYY");
+        fieldValue = data ? moment(data).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
         break;
     }
     return fieldValue;
@@ -284,7 +284,7 @@ function MarriageCorrectionSummary({
         <div style={getMainDivStyles()}>
           <Accordion
             expanded={index === 0 ? true : false}
-            title={t(detail?.correctionFieldName)}
+            title={t(`CR_${detail?.correctionFieldName}`)}
             style={{ margin: "10px" }}
             content={
               <StatusTable style={getTableStyles()}>

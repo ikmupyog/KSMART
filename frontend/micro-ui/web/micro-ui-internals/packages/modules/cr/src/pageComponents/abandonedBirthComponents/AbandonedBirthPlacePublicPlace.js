@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea, } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
   localityNameEn, setlocalityNameEn, localityNameMl, setlocalityNameMl, streetNameEn, setstreetNameEn,
@@ -127,12 +128,13 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
           </div>
 
           <div className="row">
+          <div className="col-md-12" >
             <div className="col-md-6" >
               <CardLabel>{`${t("CR_PUBLIC_PLACE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={cmbOtherplace}
+                option={sortDropdownNames(cmbOtherplace ? cmbOtherplace : [],"name",t)}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}
                 disable={isDisableEdit}
@@ -147,7 +149,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={cmbWardNoFinal}
+                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
                 selected={wardNo}
                 select={setSelectWard}
                 disable={isDisableEdit}
@@ -155,8 +157,10 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
+            </div>
           </div>
           <div className="row">
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_LOCALITY_EN")}
@@ -175,6 +179,26 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               />
             </div>
             <div className="col-md-6">
+              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="streetNameEn"
+                value={streetNameEn}
+                disable={isDisableEdit}
+                onChange={setSelectstreetNameEn}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              />
+            </div>
+            
+            </div>
+          </div>
+
+          <div className="row">
+          <div className="col-md-12">  
+          <div className="col-md-6">
               <CardLabel>
                 {t("CR_LOCALITY_ML")}
                 <span className="mandatorycss">*</span>
@@ -197,23 +221,6 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 })}
               />
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="streetNameEn"
-                value={streetNameEn}
-                disable={isDisableEdit}
-                onChange={setSelectstreetNameEn}
-                placeholder={`${t("CR_STREET_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-              />
-            </div>
             <div className="col-md-6">
               <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
               <TextInput
@@ -233,6 +240,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                   title: t("CR_INVALID_STREET_NAME_ML"),
                 })}
               />
+            </div>
             </div>
           </div>
           <div className="row">

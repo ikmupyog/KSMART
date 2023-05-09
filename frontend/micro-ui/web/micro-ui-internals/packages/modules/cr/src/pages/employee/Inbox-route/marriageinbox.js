@@ -43,17 +43,21 @@ const MarriageInbox = () => {
     setSearchParams({ ...searchParams, filters: filterParam });
   };
 
+  const onSuccess = (successData) =>{
+    console.log("successs====data",successData);
+  }
+
   const onSearch = (params = "") => {
     console.log("params for seRCH",params);
-    setSearchParams({ ...searchParams, search: params });
-    mutation.mutate();
+    setSearchParams({ ...searchParams,search: {applicationNo: params.applicationNumber}});
+    mutation.mutate({},{onSuccess});
   };
 
   let complaints = []
   let isMobile = Digit.Utils.browser.isMobile();
   // console.log("233", searchParams)
 
-  const mutation = Digit.Hooks.cr.useMarriageCorrectionSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} })
+  const mutation = Digit.Hooks.cr.useMarriageApplicationSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} })
 //   sortBy: 'dateOfBirth', sortOrder: 'DESC' 
   // let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
   // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
@@ -61,8 +65,9 @@ const MarriageInbox = () => {
 
   let Loading = mutation?.isLoading;
   let searchResult = mutation.data;
+
   useEffect(()=>{
-    mutation.mutate();
+    mutation.mutate({},{onSuccess});
   },[])
 
   if (complaints?.length !== null) {
