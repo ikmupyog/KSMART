@@ -144,6 +144,10 @@ function ApplicationDetailsContent({
                           if (value.map === true && value.value !== "N/A") {
                             return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
                           }
+                          if (value.subTitle === true) {
+                            return <div style={{color:"#C14C12", fontSize:"16px" ,fontWeight:"800",}}>{t(value.value)}</div>;
+                          }
+
                           if (value?.isLink == true) {
                             return (
                               <Row
