@@ -101,11 +101,11 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
         disableSortBy: true,
         accessor: (row) => GetCell(row?.fullName ? row?.fullName : "-"),
       },
-      {
-        Header: t("CR_COMMON_COL_APP_DATE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      },
+      // {
+      //   Header: t("CR_COMMON_COL_APP_DATE"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+      // },
       {
         Header: t("CR_COMMON_COL_DOB"),
         disableSortBy: true,

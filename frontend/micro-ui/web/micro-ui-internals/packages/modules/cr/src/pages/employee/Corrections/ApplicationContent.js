@@ -24,7 +24,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
 
     const { t } = useTranslation();
-
+console.log("applicationDetails in content==",applicationDetails);
     function OpenImage(imageSource, index, thumbnailsToShow) {
         window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }
@@ -192,7 +192,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
         <>
             <div className="file-main">
                 <div className={"cr-wrapper-app"}>
-                    {applicationDetails?.map((detail, index) => (
+                    {applicationDetails?.applicationDetails?.map((detail, index) => (
                         <React.Fragment key={index}>
                             <div style={getMainDivStyles()}>
 

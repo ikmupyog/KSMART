@@ -251,7 +251,7 @@ function DeathCorrectionSummary({
         </div>
         {imagesThumbs?.length > 0 && (
           <div className={"cr-timeline-wrapper"}>
-            <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "auto", width: "auto", overflow: "scroll" }} />
+            <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
           </div>
         )}
       </div>

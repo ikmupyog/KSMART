@@ -66,6 +66,14 @@ const marriageFieldLabels = {
   "BrideAddressDetails.permntOutsideIndiaLinetwoMl": "CR_ADDRES_LINE_TWO_ML",
 };
 
+const getCorrectionFieldValue = (newValue, isDate,t) =>{
+  let correctionNewValue = newValue ? newValue : t("CR_NOT_RECORDED");
+  if(isDate){
+    correctionNewValue = newValue ? Digit.DateUtils.ConvertTimestampToDate(parseInt(newValue, 10), "dd/MM/yyyy") : t("CR_NOT_RECORDED");
+  }
+  return correctionNewValue;
+}
+
 const getCorrectionDetails = (application, t) => {
   const correctionField = application?.CorrectionField;
 
@@ -84,11 +92,12 @@ const getCorrectionDetails = (application, t) => {
     
     const correctionData = correctionItem.correctionFieldValue?.map((correction) => {
       const isDate = checkIsDate(correctionItem?.correctionFieldName, correction);
+      const correctionFieldValue = getCorrectionFieldValue(correction?.newValue, isDate,t)
       return (
         // { title: t(correction?.column), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
         {
           title: t(marriageFieldLabels[correction?.column]),
-          value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue, 10), "dd/MM/yyyy") : correction?.newValue,
+          value: correctionFieldValue,
         }
       );
     });

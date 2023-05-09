@@ -128,8 +128,8 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   const onSkip = () => onSelect();
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setMotherFirstNameEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.trim().match("^[a-zA-Z]*$") != null) {
+      setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -147,11 +147,11 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   }
   function setSelectMotherFirstNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
+    if (!e.target.value.match(pattern) && e.target.value.trim() !== " ") {
       e.preventDefault();
       setMotherFirstNameMl("");
     } else {
-      setMotherFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMotherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -168,7 +168,7 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.trim().match("^[a-zA-Z]*$") != null) {
       setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
@@ -178,7 +178,7 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
       e.preventDefault();
       setFatherFirstNameMl("");
     } else {
-      setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setFatherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 

@@ -1015,7 +1015,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     : initiatorAddressError
                     ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
                     : DobMissmatchError
-                    ? t(`BIRTH_NAC_DOB_MISSMATCH`)
+                    ? t(`BIRTH_NAC_DATE_OF_BIRTH_MISSMATCH`)
                     : OrderofBirthMissmatchError
                     ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
                     : setToast(false)

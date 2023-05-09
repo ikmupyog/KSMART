@@ -96,7 +96,7 @@ export const CRCorrectionSearch = {
           const correctionTitle = item.correctionFieldName;
           const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue)
           // correctionValues.map((corr)=>{
-          console.log("corr-----item",corr);
+          // console.log("corr-----item",corr);
          
           return (
             {

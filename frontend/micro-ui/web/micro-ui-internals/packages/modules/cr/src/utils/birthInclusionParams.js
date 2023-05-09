@@ -128,14 +128,13 @@ const getCorrectionFields = (correctionData) => {
 };
 
 export const formatApiParams = (formData,userData) => {
- 
   const correctionFieldData = getCorrectionFields(formData);
  
   const apiParam = {
     CorrectionDetails: [
       {
         id: userData?.id,
-        tenantid: "kl.cochin",
+        tenantid: userData?.tenantid,
         applicationtype: "CRBRCN",
         businessservice: "birth-services",
         workflowcode: "BIRTHHOSP21",
