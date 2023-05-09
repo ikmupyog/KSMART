@@ -7,6 +7,7 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionDe
 import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
+import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.List;
   List<CorrectionDetails> application = repository.updateCorrectionBirthDetails(request);
   return application;
  }
-
+ public List<CorrectionDetails> searcCorrectionDetails(CorrectionRequest request, DeathSearchCriteria criteria) {
+  return repository.searchCorrectionDetails(request,criteria);
+ }
 
 }

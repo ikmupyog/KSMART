@@ -7,16 +7,12 @@ import org.ksmart.death.deathapplication.kafka.producer.DeathProducer;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionDetails;
 import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionRequest;
+import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
-
-/**
-     * Creates DeathRepository
-     * Rakhi S IKM
-     * on 08.02.2023
-     */
 
  @Repository
 public class DeathCorrectionRepository {
@@ -46,6 +42,14 @@ public class DeathCorrectionRepository {
         producer.push(config.getUpdateDeathCorrectionTopic(), request);
         return request.getCorrectionDetails();
     }
+     public List<CorrectionDetails> searchCorrectionDetails(CorrectionRequest request, DeathSearchCriteria criteria) {
+//         List<Object> preparedStmtValues = new ArrayList<>();
+//         criteria.setApplicationType(BirthConstants.FUN_MODULE_COR);
+//         String query = queryBuilder.getNewBirthApplicationSearchQuery(criteria, request, preparedStmtValues, Boolean.FALSE);
+         List<CorrectionDetails> result = null;
+         return result;
+     }
+
 
 
 }

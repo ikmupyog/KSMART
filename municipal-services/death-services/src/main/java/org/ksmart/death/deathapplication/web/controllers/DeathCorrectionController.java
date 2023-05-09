@@ -6,17 +6,12 @@ import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
 import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionDetails;
 import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathCorrection.CorrectionResponse;
-import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
-import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
-import org.ksmart.death.deathapplication.web.models.DeathCorrectionResponse;
+import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathregistry.service.DeathRegistryService;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -49,7 +44,7 @@ public class DeathCorrectionController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = {"/uodatedeathcorrection"})
+    @PostMapping(value = {"/updatedeathcorrection"})
     public ResponseEntity<CorrectionResponse> update(@Valid @RequestBody CorrectionRequest request) {
         List<CorrectionDetails> deathCorrDetails = service.updateCorrection(request);
 
@@ -57,6 +52,16 @@ public class DeathCorrectionController {
                 .builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
                 .deathCorrection(deathCorrDetails)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = {"/searchbirthcorrection"})
+    public ResponseEntity<CorrectionResponse> searchKsmartBirth(@RequestBody CorrectionRequest request, @Valid @ModelAttribute DeathSearchCriteria criteria) {
+        List<CorrectionDetails> details=service.searcCorrectionDetails(request, criteria);
+        CorrectionResponse response=CorrectionResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .deathCorrection(details)
                 .build();
         return ResponseEntity.ok(response);
     }
