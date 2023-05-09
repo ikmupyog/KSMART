@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 // import PropertyOwners from "../../ApplicationDetails/components/PropertyOwners";
 // import ScruntinyDetails from "../../ApplicationDetails/components/ScruntinyDetails";
 // import SubOccupancyTable from "../../ApplicationDetails/components/SubOccupancyTable";
-// import TLCaption from "../../ApplicationDetails/components/TLCaption";
+import TLCaption from "../../../../../templates/ApplicationDetails/components/TLCaption";
 // import TLTradeAccessories from "../../ApplicationDetails/components/TLTradeAccessories";
 // import TLTradeUnits from "../../ApplicationDetails/components/TLTradeUnits";
 // import DocumentsPreview from "../../ApplicationDetails/components/DocumentsPreview";
@@ -24,7 +24,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
 
     const { t } = useTranslation();
-
+console.log("applicationDetails in content==",applicationDetails);
     function OpenImage(imageSource, index, thumbnailsToShow) {
         window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }

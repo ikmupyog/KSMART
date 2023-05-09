@@ -318,7 +318,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AdoptionAddressBasePage",
+        key: "AddressBirthDetails",
         nextStep: "adoption-document-details",
         type: "component",
         hideInEmployee: false,

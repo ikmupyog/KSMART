@@ -29,7 +29,6 @@ const getAddressType = (details) => {
   return addressType;
 };
 const computeInitialValue = (data) => {
-  console.log("data ===>", data);
   let initialValue = {};
   if (data.GroomAddressDetails.permtaddressCountry !== "COUNTRY_INDIA") {
     initialValue = {

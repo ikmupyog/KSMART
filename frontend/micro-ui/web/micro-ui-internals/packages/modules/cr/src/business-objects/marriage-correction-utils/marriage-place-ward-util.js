@@ -19,7 +19,6 @@ export const getFilteredMarriagePlaceWardData = (selectedData, inclusionData, wa
   // const computeInitialValue = (wardCode,wards) => {
   //   // marriageCorrectionFormsObj?.marriageWardCode ? cmbWardNoFinal.filter(cmbWardNo=> cmbWardNo.code === marriageCorrectionFormsObj?.marriageWardCode[0]):""
   //   const initialValue = wards && wards.find((item)=> item.code === wardCode);
-  //   console.log("wards==",wards,initialValue,wardCode);
   //   return wardCode;
   // };
 
@@ -40,6 +39,5 @@ export const getFilteredMarriagePlaceWardData = (selectedData, inclusionData, wa
     } else {
       filteredData = inclusionData?.filter((item) => item.conditionCode === "MANDAPAM_HALL_AND_OTHER");
     }
-    console.log("filter===",inclusionData, filteredData);
     return {documentData:filteredData};
   };

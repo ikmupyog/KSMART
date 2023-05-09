@@ -31,14 +31,23 @@ const convertEpochToDate = (dateEpoch) => {
 //     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
 //   }`;
 // };
-export const CRsearch = {
+export const CRCorrectionSearch = {
   all: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
     return response;
   },
-  application: async (tenantId, filters = {}) => {
-    const response = await CRService.CRsearch({ tenantId, filters });
-    return response.ChildDetails[0];
+  birthApplication: async (tenantId, filters = {}) => {
+    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters });
+    console.log("birth resp==",response);
+    return response?.CorrectionApplication?.[0];
+  },
+  deathApplication: async (tenantId, filters = {}) => {
+    const response = await CRService.CRDeathCorrectionSearch({ tenantId, filters });
+    return response;
+  },
+  marriageApplication: async (tenantId, filters = {}) => {
+    const response = await CRService.CRMarriageCorrectionSearch({ tenantId, filters });
+    return response;
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
@@ -46,22 +55,80 @@ export const CRsearch = {
     return response.ChildDetails;
   },
 
-  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    // console.log("applicationNumber" + applicationNumber);
+  applicationDetails: async (t, tenantId, applicationNumber, correctionType) => {
+    console.log("applicationNumber",correctionType,correctionType === "birth");
     const filter = { applicationNumber };
-    const response = await CRsearch.application(tenantId, filter);
-    console.log(response);
+    let response = [];
+    if(correctionType === "birth"){
+     response = await CRCorrectionSearch.birthApplication(tenantId, filter);
+    } else if(correctionType === "death"){
+      response = await CRCorrectionSearch.deathApplication(tenantId, filter);
+    } else if(correctionType === "marriage") {
+      response = await CRCorrectionSearch.marriageApplication(tenantId, filter);
+    }
+    console.log("resappp===",response);
 
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
-    if (response?.licenseNumber) {
-      const birthNumbers = response?.applicationNumber;
-      const filters = { birthNumbers, offset: 0 };
-      numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
-    }
+    // if (response?.licenseNumber) {
+    //   const birthNumbers = response?.applicationNumber;
+    //   const filters = { birthNumbers, offset: 0 };
+    //   numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
+    // }
     let employeeResponse = [];
+
+    const getCorrectionFieldValues = (correctionFieldValues) =>{
+      const formattedCorrectionvalues =  correctionFieldValues?.map((item)=>{
+       
+         return ({ title: t(item.column), oldValue: item.oldValue ,newValue: item.newValue  })
+      })
+      console.log("returnd correction values==",formattedCorrectionvalues);
+      return formattedCorrectionvalues;
+    }
+
+    const formatBirthCorrectionDetails = (correctionData) =>{
+      if(correctionData?.length > 0 ){
+         const formattedCorrectionData = correctionData?.map((item)=>{
+          console.log("looped item",item);  
+          const correctionValues = item.correctionFieldValue;
+          const correctionTitle = item.correctionFieldName;
+          const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue)
+          // correctionValues.map((corr)=>{
+          // console.log("corr-----item",corr);
+         
+          return (
+            {
+              title: t(correctionTitle),
+              asSectionHeader: true,
+              fieldValues: correctionFieldValues,
+            }
+          )
+        // })
+         })
+         return formattedCorrectionData;
+    }
+  }
+
+    const birthCorrectionDetails =  await formatBirthCorrectionDetails(response?.CorrectionField);
+
+    console.log("birthCorrectionDetails==",birthCorrectionDetails);
+    // {
+    //   title: "CR_BIRTH_CHILD_DETAILS",
+    //   asSectionHeader: true,
+    //   values: [
+    //     { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
+    //     { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : NA },
+    //     { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : NA },
+    //     { title: "CR_GENDER", value: response?.gender },
+    //     { title: "CS_COMMON_CHILD_AADHAAR", value: response?.childAadharNo ? response?.childAadharNo : "NA" },
+    //     { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn },
+    //     { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl },
+
+    //   ],
+    // };
+
     const Birthdetails = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
       asSectionHeader: true,
@@ -329,9 +396,10 @@ export const CRsearch = {
     response && employeeResponse.push(InformarHospitalInstitution);
     return {
       tenantId: response.tenantId,
-      applicationDetails: employeeResponse,
+      // applicationDetails: employeeResponse,
+      applicationDetails: birthCorrectionDetails,
       // additionalDetails: response?.additionalDetails,
-      applicationData: response,
+      applicationData: response, 
       numOfApplications: numOfApplications,
     };
   },

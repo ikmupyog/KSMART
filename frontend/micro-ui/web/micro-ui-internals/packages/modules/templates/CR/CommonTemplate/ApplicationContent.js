@@ -10,6 +10,8 @@ import {
   LinkButton,
   Carousel,
   Accordion,
+  LabelFieldPair,
+  RadioButtons,
 } from "@egovernments/digit-ui-react-components";
 import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -39,12 +41,19 @@ function ApplicationContent({
   showTimeLine = true,
   statusAttribute = "status",
   paymentsList,
+  selectDeathtype,
 }) {
   const { t } = useTranslation();
 
   function OpenImage(imageSource, index, thumbnailsToShow) {
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
+  const [selectedValueRadio, setSelectedValue] = useState(applicationDetails?.InformationDeath?.isDeathNAC ? { i18nKey: "CR_IS_NAC", code: "NAC" } : applicationDetails?.InformationDeath?.isDeathNIA ? { i18nKey: "CR_IS_NIA", code: "NIA" } : {});
+  const radiomenu = [
+    { i18nKey: "CR_IS_NAC", code: "NAC" },
+    { i18nKey: "CR_IS_NIA", code: "NIA" },
+  ];
+
 
   const getTimelineCaptions = (checkpoint) => {
     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
@@ -107,6 +116,8 @@ function ApplicationContent({
       return {};
     }
   };
+
+  const deathNACurl = window.location.href.includes("application-deathnacdetails") ? true : false;
 
   const getMainDivStyles = () => {
     if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
@@ -268,6 +279,38 @@ function ApplicationContent({
               )}
             </React.Fragment>
           ))}
+          {
+            deathNACurl && (
+              <div style={{marginTop : "50px"}}>
+                <div className="row">
+                <div className="col-md-6">
+                  <h1>
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NIA / NAC ?")}`}</span>{" "}
+                  </h1>
+                </div>
+                <div className="col-md-6">
+                <div className="radios">
+                <div className="radiobuttons">
+                  <LabelFieldPair style={{ display: "flex" }}>
+                    <RadioButtons 
+                    t={t} 
+                    optionsKey="i18nKey" 
+                    options={radiomenu} 
+                    selectedOption={selectedValueRadio} 
+                    onSelect={(data)=>{
+                      console.log({data});
+                      setSelectedValue(data);
+                      selectDeathtype(data);
+                    }} 
+                    style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                  </LabelFieldPair>
+                </div>
+              </div>
+                </div>
+              </div>
+              </div>
+            )
+          }
         </div>
         <div className={"cr-timeline-wrapper"}>
           {documents && documents.length > 0 && (
@@ -301,8 +344,7 @@ function ApplicationContent({
                                 isCompleted={index === 0}
                                 info={checkpoint.comment}
                                 label={t(
-                                  `${timelineStatusPrefix}${
-                                    checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
+                                  `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
                                 customChild={getTimelineCaptions(checkpoint)}

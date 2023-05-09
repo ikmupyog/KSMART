@@ -432,9 +432,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    const newValue =
+      e.target.value.trim().length <= 12
+        ? e.target.value.trim().replace(/[^0-9]/gi, "")
+        : e.target.value
+            .trim()
+            .replace(/[^0-9]/gi, "")
+            .substring(0, 12);
 
-    if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+    if (newValue != "" && (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo)) {
       setGroomAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -443,6 +449,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     } else {
       setGroomAadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectGroomFatherAdharNo(e) {
@@ -451,9 +458,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    const newValue =
+      e.target.value.trim().length <= 12
+        ? e.target.value.trim().replace(/[^0-9]/gi, "")
+        : e.target.value
+            .trim()
+            .replace(/[^0-9]/gi, "")
+            .substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+    if (newValue != "" && (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo)) {
       setGroomFatherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -462,6 +475,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     } else {
       setGroomFatherAadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectGroomGardianAdhar(e) {
@@ -470,9 +484,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    const newValue =
+      e.target.value.trim().length <= 12
+        ? e.target.value.trim().replace(/[^0-9]/gi, "")
+        : e.target.value
+            .trim()
+            .replace(/[^0-9]/gi, "")
+            .substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
+    if (newValue != "" && (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo)) {
       setGroomGuardianAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -481,7 +501,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     } else {
       setGroomGuardianAadharNo(newValue);
-      console.log(groomGuardianAadharNo);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectGroomMotherAdharNo(e) {
@@ -491,9 +511,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     //   );
     // }
 
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    const newValue =
+      e.target.value.trim().length <= 12
+        ? e.target.value.trim().replace(/[^0-9]/gi, "")
+        : e.target.value
+            .trim()
+            .replace(/[^0-9]/gi, "")
+            .substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
+    if (newValue != "" && (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo)) {
       setGroomMotherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -502,6 +528,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     } else {
       setGroomMotherAadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
 
@@ -881,26 +908,26 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         groomAadharNo,
         groomPassportNo,
         groomSocialSecurityNo,
-        groomFirstnameEn,
-        groomFirstnameMl,
-        groomMiddlenameEn,
-        groomMiddlenameMl,
-        groomLastnameEn,
-        groomLastnameMl,
+        groomFirstnameEn: groomFirstnameEn.trim(),
+        groomFirstnameMl: groomFirstnameMl.trim(),
+        groomMiddlenameEn: groomMiddlenameEn.trim(),
+        groomMiddlenameMl: groomMiddlenameMl.trim(),
+        groomLastnameEn: groomLastnameEn.trim(),
+        groomLastnameMl: groomLastnameMl.trim(),
         groomMobile,
-        groomEmailid,
+        groomEmailid: groomEmailid.trim(),
         groomGender,
         groomDOB,
         groomAge,
         groomParentGuardian,
-        groomFathernameEn,
-        groomFathernameMl,
-        groomMothernameEn,
-        groomMothernameMl,
+        groomFathernameEn: groomFathernameEn.trim(),
+        groomFathernameMl: groomFathernameMl.trim(),
+        groomMothernameEn: groomMothernameEn.trim(),
+        groomMothernameMl: groomMothernameMl.trim(),
         groomFatherAadharNo,
         groomMotherAadharNo,
-        groomGuardiannameEn,
-        groomGuardiannameMl,
+        groomGuardiannameEn: groomGuardiannameEn.trim(),
+        groomGuardiannameMl: groomGuardiannameMl.trim(),
         groomGuardianAadharNo,
         groomMaritalstatusID,
         groomNoOfSpouse,
@@ -1026,9 +1053,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       inputProps={{
                         maxLength: 12,
                       }}
-                      {...(groomResidentShip === "INDIAN" && {
-                        ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
-                      })}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: groomResidentShip === "INDIAN" ? true : false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                     />
                   </div>
                 )}
@@ -1069,7 +1094,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
                     {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
                       ...(validation = {
-                        pattern: "^[A-Z0-9-]{12}$",
+                        pattern: "^[A-Z0-9-]{8,12}$",
                         type: "text",
                         isRequired: true,
                         title: t("CR_SOCIAL_SECURITY_NO_ERROR"),
@@ -1387,6 +1412,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     name="groomFatherAadharNo"
                     value={groomFatherAadharNo}
                     onChange={setSelectGroomFatherAdharNo}
+                    onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
                     {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
@@ -1448,6 +1474,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     name="groomMotherAadharNo"
                     value={groomMotherAadharNo}
                     onChange={setSelectGroomMotherAdharNo}
+                    onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
                     {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
@@ -1513,6 +1540,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     name="groomGuardianAadharNo"
                     value={groomGuardianAadharNo}
                     onChange={setSelectGroomGardianAdhar}
+                    onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
                     {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
