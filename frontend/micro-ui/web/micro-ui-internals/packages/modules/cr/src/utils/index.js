@@ -16,6 +16,10 @@ export const sortDropdownNames = (options, optionkey, locilizationkey) => {
   return options.sort((a, b) => locilizationkey(a[optionkey]).localeCompare(locilizationkey(b[optionkey])));
 };
 
+export const trimURL = (url) => {
+  return url?.split("?")[0]
+}
+
 export const convertToLocale = (value = "", key = "") => {
   let convertedValue = convertDotValues(value);
   if (convertedValue == "NA") {

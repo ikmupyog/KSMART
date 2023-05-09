@@ -19,6 +19,7 @@ import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
+import { trimURL } from "../../utils";
 // import { TimePicker } from '@material-ui/pickers';
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
@@ -201,21 +202,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   };
 
-  const handleGroomImage = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      setGroomImage(undefined);
-      return;
-    }
-    setGroomImage(event.target.files[0]);
-  };
 
-  const handleBrideImage = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      setBrideImage(undefined);
-      return;
-    }
-    setBrideImage(event.target.files[0]);
-  };
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
   const [witness2NameEnError, setwitness2NameEnError] = useState(false);
@@ -517,13 +504,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setBrideURL(fileStoreIds && fileStoreIds[0]?.url);
+    setBrideURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
 
   async function handleUploadGroom(id) {
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setGroomURL(fileStoreIds && fileStoreIds[0]?.url);
+    setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
 
   console.log({ groomURL, brideURL });
