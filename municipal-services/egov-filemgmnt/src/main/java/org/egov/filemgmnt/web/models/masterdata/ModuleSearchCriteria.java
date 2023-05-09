@@ -23,7 +23,7 @@ public class ModuleSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
-  //  @NotBlank(message = "Module code is required")
+    // @NotBlank(message = "Module code is required")
     @JsonProperty("moduleCode")
     private String moduleCode;
 }

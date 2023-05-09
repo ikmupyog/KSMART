@@ -22,7 +22,7 @@ public class SubFunctionSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
-   // @NotBlank(message = "Sub function code is required")
+    // @NotBlank(message = "Sub function code is required")
     @JsonProperty("subFunctionCode")
     private String subFunctionCode;
 }

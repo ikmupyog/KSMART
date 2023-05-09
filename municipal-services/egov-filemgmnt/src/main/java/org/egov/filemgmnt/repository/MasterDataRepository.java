@@ -58,13 +58,17 @@ public class MasterDataRepository {
 
     public List<MajorFunctionDetails> searchMajorFunctions(final MajorFunctionSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
-        final String query = queryBuilder.getMajorFunctionSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
+        final String query = queryBuilder.getMajorFunctionSearchQuery(searchCriteria,
+                                                                      preparedStmtValues,
+                                                                      Boolean.FALSE);
+
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), mfRowMapper);
     }
 
     public List<ServiceDetails> searchServices(final ServiceSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
         final String query = queryBuilder.getServiceSearchQuery(searchCriteria, preparedStmtValues, Boolean.FALSE);
+
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), serviceRowMapper);
     }
 }

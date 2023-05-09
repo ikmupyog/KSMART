@@ -34,7 +34,6 @@ public class ServiceSearchResponse {
     @JsonProperty("Count")
     private int count;
 
-
     public ServiceSearchResponse addService(final ServiceDetails serviceDetail) {
         if (serviceDetails == null) {
             serviceDetails = new ArrayList<>();

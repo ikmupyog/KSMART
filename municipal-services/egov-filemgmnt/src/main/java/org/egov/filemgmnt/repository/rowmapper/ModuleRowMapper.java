@@ -17,15 +17,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ModuleRowMapper implements ResultSetExtractor<List<ModuleDetails>>, BaseRowMapper {
 
+    private static final String MODULE_PREFIX = "module_";
+
     @Override
     public List<ModuleDetails> extractData(final ResultSet rs) throws SQLException, DataAccessException {
         final List<ModuleDetails> result = new ArrayList<>();
 
         while (rs.next()) {
             result.add(ModuleDetails.builder()
+                                    .id(rs.getString(MODULE_PREFIX + "id"))
+                                    .tenantId(rs.getString(MODULE_PREFIX + "tenantid"))
                                     .moduleCode(rs.getString("modulecode"))
                                     .moduleNameEnglish(rs.getString("modulenameeng"))
                                     .moduleNameMalayalam(rs.getString("modulenamemal"))
+                                    .status(rs.getString(MODULE_PREFIX + "status"))
+                                    .auditDetails(getAuditDetails(rs, MODULE_PREFIX))
                                     .build());
         }
         return result;

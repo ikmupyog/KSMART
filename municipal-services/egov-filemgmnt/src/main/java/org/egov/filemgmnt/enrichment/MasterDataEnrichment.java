@@ -73,45 +73,61 @@ public class MasterDataEnrichment extends BaseEnrichment {
         service.setStatus("1");
     }
 
-    public void enrichUpdateModule(final ModuleDetailsRequest request) {
+    public void enrichUpdateModule(final ModuleDetailsRequest request, final ModuleDetails existing) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
 
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-        final ModuleDetails module = request.getModuleDetails();
 
-        module.setAuditDetails(auditDetails);
+        final ModuleDetails module = request.getModuleDetails();
+        module.setAuditDetails(existing.getAuditDetails());
+        module.getAuditDetails()
+              .setLastModifiedBy(auditDetails.getLastModifiedBy());
+        module.getAuditDetails()
+              .setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
 
-    public void enrichUpdateMajorFunction(final MajorFunctionDetailsRequest request) {
+    public void enrichUpdateMajorFunction(final MajorFunctionDetailsRequest request,
+                                          final MajorFunctionDetails existing) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
 
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
         final MajorFunctionDetails majorFunction = request.getMajorFunctionDetails();
-
-        majorFunction.setAuditDetails(auditDetails);
+        majorFunction.setAuditDetails(existing.getAuditDetails());
+        majorFunction.getAuditDetails()
+                     .setLastModifiedBy(auditDetails.getLastModifiedBy());
+        majorFunction.getAuditDetails()
+                     .setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
 
-    public void enrichUpdateSubFunction(final SubFunctionDetailsRequest request) {
+    public void enrichUpdateSubFunction(final SubFunctionDetailsRequest request, final SubFunctionDetails existing) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
 
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
         final SubFunctionDetails subFunction = request.getSubFunctionDetails();
-        subFunction.setAuditDetails(auditDetails);
+        subFunction.setAuditDetails(existing.getAuditDetails());
+        subFunction.getAuditDetails()
+                   .setLastModifiedBy(auditDetails.getLastModifiedBy());
+        subFunction.getAuditDetails()
+                   .setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
 
-    public void enrichUpdateService(final ServiceDetailsRequest request) {
+    public void enrichUpdateService(final ServiceDetailsRequest request, final ServiceDetails existing) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final User userInfo = requestInfo.getUserInfo();
 
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
         final ServiceDetails service = request.getServiceDetails();
-        service.setAuditDetails(auditDetails);
+        service.setAuditDetails(existing.getAuditDetails());
+        service.getAuditDetails()
+               .setLastModifiedBy(auditDetails.getLastModifiedBy());
+        service.getAuditDetails()
+               .setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
 
     public void enrichDeleteModule(final ModuleDetailsRequest request) {

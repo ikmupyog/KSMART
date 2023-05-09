@@ -18,9 +18,9 @@ public class DraftFileQueryBuilder extends BaseQueryBuilder {
 
     static {
         QUERY.append(" SELECT") // NOPMD
-             .append("  dr.id AS drafting_id, dr.tenantId, dr.businessservice, dr.modulename, dr.filecode, dr.drafttype, dr.drafttext")
-             .append("  , dr.assigner, dr.filestoreid, dr.status, dr.createdby AS drafting_createdby, dr.createdtime AS drafting_createdtime")
-             .append("  , dr.lastmodifiedby AS drafting_lastmodifiedby, dr.lastmodifiedtime AS lastmodifiedtime")
+             .append("  dr.id, dr.tenantId, dr.businessservice, dr.modulename, dr.filecode, dr.drafttype, dr.drafttext")
+             .append("  , dr.assigner, dr.filestoreid, dr.status")
+             .append("  , dr.createdby, dr.createdtime, dr.lastmodifiedby, dr.lastmodifiedtime")
              .append("  FROM eg_fm_drafting dr");
     }
 
@@ -30,7 +30,7 @@ public class DraftFileQueryBuilder extends BaseQueryBuilder {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
 
-        addFilter("drafting_id", criteria.getDraftId(), query, preparedStmtValues);
+        addFilter("dr.id", criteria.getDraftId(), query, preparedStmtValues);
         addFilter("dr.businessservice", criteria.getBusinessService(), query, preparedStmtValues);
         addFilter("dr.modulename", criteria.getModuleName(), query, preparedStmtValues);
         addFilter("dr.drafttype",

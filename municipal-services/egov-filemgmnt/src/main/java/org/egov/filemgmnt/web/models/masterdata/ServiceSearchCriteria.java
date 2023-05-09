@@ -22,8 +22,7 @@ public class ServiceSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
-
-  //  @NotBlank(message = "Service code is required")
+    // @NotBlank(message = "Service code is required")
     @Size(max = 64, message = "Service code length cannot exceed 64 characters")
     @JsonProperty("serviceCode")
     private String serviceCode;

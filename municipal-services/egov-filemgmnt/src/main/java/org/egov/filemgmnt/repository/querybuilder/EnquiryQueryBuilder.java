@@ -17,10 +17,10 @@ public class EnquiryQueryBuilder extends BaseQueryBuilder {
 
     static {
         QUERY.append(" SELECT") // NOPMD
-             .append("  er.id as Enquiry_id, er.tenantid, er.businessservice, er.modulename, er.filecode, er.latitude")
-             .append("  , er.longitude, er.assigner, er.status, er.imagefilestoreid, er.createdby, er.createdtime")
-             .append("  , er.lastmodifiedby, er.lastmodifiedtime")
-             .append(" FROM eg_fm_enquiry er");
+             .append("  eq.id, eq.tenantid, eq.businessservice, eq.modulename, eq.filecode, eq.latitude")
+             .append("  , eq.longitude, eq.assigner, eq.status, eq.imagefilestoreid")
+             .append("  , eq.createdby, eq.createdtime, eq.lastmodifiedby, eq.lastmodifiedtime")
+             .append(" FROM eg_fm_enquiry eq");
     }
 
     public String getEnquirySearchQuery(@NotNull final EnquirySearchCriteria criteria,
@@ -28,11 +28,11 @@ public class EnquiryQueryBuilder extends BaseQueryBuilder {
                                         @NotNull final Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
-        addFilter("er.modulename", criteria.getModuleName(), query, preparedStmtValues);
-        addFilter("er.fileCode", criteria.getFileCode(), query, preparedStmtValues);
-        addFilter("er.assigner", criteria.getAssigner(), query, preparedStmtValues);
-        addFilter("er.status", criteria.getStatus(), query, preparedStmtValues);
-        addDateRangeFilter("er.createdtime", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
+        addFilter("eq.modulename", criteria.getModuleName(), query, preparedStmtValues);
+        addFilter("eq.fileCode", criteria.getFileCode(), query, preparedStmtValues);
+        addFilter("eq.assigner", criteria.getAssigner(), query, preparedStmtValues);
+        addFilter("eq.status", criteria.getStatus(), query, preparedStmtValues);
+        addDateRangeFilter("eq.createdtime", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
         return query.toString();
     }
 }

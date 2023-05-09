@@ -153,7 +153,7 @@ public class FileManagementValidator { // NOPMD
 
     public void validateUpdate(final ApplicantServiceRequest request, // NOPMD
                                final ApplicantServiceDetail existingServiceDetail) {
-        // TODO: need to validate tenant id
+        // TODO: need to validate tenant id.
 
         // validate service detail
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();

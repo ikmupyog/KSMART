@@ -22,16 +22,14 @@ public class MajorFunctionSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
- //   @NotBlank(message = "Major function code is required")
+    // @NotBlank(message = "Major function code is required")
     @Size(max = 64, message = "Major function code length cannot exceed 64 characters")
     @JsonProperty("majorFunctionCode")
     private String majorFunctionCode;
 
-  //  @NotBlank(message = "Module id is required")
+    // @NotBlank(message = "Module id is required")
     @Size(max = 64, message = "Module id length cannot exceed 64 characters")
     @JsonProperty("moduleId")
     private String moduleId;
-
-
 
 }

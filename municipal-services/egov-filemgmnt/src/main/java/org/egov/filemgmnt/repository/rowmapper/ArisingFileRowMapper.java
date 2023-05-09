@@ -23,9 +23,11 @@ public class ArisingFileRowMapper implements ResultSetExtractor<List<ArisingFile
 
         while (rs.next()) {
             result.add(ArisingFile.builder()
+                                  .id(rs.getString("id"))
                                   .fileCode(rs.getString("filecode"))
                                   .fileStatus(rs.getString("filestatus"))
                                   .fileArisingDate(rs.getLong("filearisingdate"))
+                                  .auditDetails(getAuditDetails(rs))
                                   .build());
         }
         return result;
