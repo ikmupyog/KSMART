@@ -30,7 +30,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
   if (tenantId === STATE_CODE.KL) {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const fileSource = Digit.Hooks.cr.getBirthFileSourceDetails({ params: { tenantId } });
+  const fileSource = Digit.Hooks.cr.getBirthFileSourceDetails({ params: {} });
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {

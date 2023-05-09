@@ -162,7 +162,7 @@ const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count })
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
+        <h1 style={hstyle}>{t("CR_DEATH_NAC_CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, previousPage, t, tenantId }} />
         </SearchForm>

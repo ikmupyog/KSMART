@@ -26,7 +26,7 @@ const CRApplicationDetails = (props) => {
 
   const {
     applicationDetails, showToast, setShowToast, isLoading, isDataLoading, applicationData, mutate, nocMutation, workflowDetails, businessService, closeToast, moduleCode,
-    timelineStatusPrefix, forcedActionPrefix, statusAttribute, ActionBarStyle, MenuStyle, paymentsList, showTimeLine = true, wardcodes
+    timelineStatusPrefix, forcedActionPrefix, statusAttribute, ActionBarStyle, MenuStyle, paymentsList, showTimeLine = true, wardcodes, selectDeathtype
   } = props;
 
   useEffect(() => {
@@ -142,6 +142,7 @@ const CRApplicationDetails = (props) => {
             statusAttribute={statusAttribute}
             paymentsList={paymentsList}
             showTimeLine={showTimeLine}
+            selectDeathtype={selectDeathtype}
           />
           {showModal ? (
             <ActionModal

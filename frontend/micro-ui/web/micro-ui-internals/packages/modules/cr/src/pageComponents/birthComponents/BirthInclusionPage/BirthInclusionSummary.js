@@ -199,7 +199,7 @@ function BirthInclusionSummary({
         <div style={getMainDivStyles()}>
           <Accordion
             expanded={index === 0 ? true : false}
-            title={t(detail?.correctionFieldName)}
+            title={t(`CR_${detail?.correctionFieldName}`)}
             style={{ margin: "10px" }}
             content={
               <StatusTable style={getTableStyles()}>
