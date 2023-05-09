@@ -192,7 +192,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
         <>
             <div className="file-main">
                 <div className={"cr-wrapper-app"}>
-                    {applicationDetails?.applicationDetails?.map((detail, index) => (
+                    {applicationDetails?.map((detail, index) => (
                         <React.Fragment key={index}>
                             <div style={getMainDivStyles()}>
 

@@ -103,7 +103,7 @@ export const Request = async ({
   } else if (setTimeParam) {
     params._ = Date.now();
   }
-console.log("axios--url==",url);
+
   let _url = url
     .split("/")
     .map((path) => {
@@ -123,8 +123,6 @@ console.log("axios--url==",url);
     if ((!params["tenantId"])&&(window?.globalConfigs?.getConfig("ENABLE_SINGLEINSTANCE"))) {
       params["tenantId"]=tenantInfo;
     }
-
-    console.log("axios request==", method, _url, data, params, headers);
 
   const res = userDownload
     ? await Axios({ method, url: _url, data, params, headers, responseType: "arraybuffer" })
