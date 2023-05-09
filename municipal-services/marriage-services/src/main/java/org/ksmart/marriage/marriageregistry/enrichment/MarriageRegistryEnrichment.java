@@ -1021,7 +1021,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
             }
 
         }
-        if(StringUtils.isNotBlank(groomAddressBuilder.toString()) && ((Character) groomAddressBuilder.toString().charAt(groomAddressBuilder.toString().length())).equals(',')){
+        if(StringUtils.isNotBlank(groomAddressBuilder.toString()) && ((Character) groomAddressBuilder.toString().charAt(groomAddressBuilder.toString().length()-1)).equals(',')){
             return groomAddressBuilder.toString().substring(0, groomAddressBuilder.toString().length()-1);
         }
 
@@ -1044,7 +1044,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                     appendIfNotBlank(registryDetails.getGroomAddressDetails().getOutSideIndiaPostCodePermanent(), groomAddressBuilder, false);
                 }
         }
-        if(StringUtils.isNotBlank(groomAddressBuilder.toString()) && ((Character) groomAddressBuilder.toString().charAt(groomAddressBuilder.toString().length())).equals(',')){
+        if(StringUtils.isNotBlank(groomAddressBuilder.toString()) && ((Character) groomAddressBuilder.toString().charAt(groomAddressBuilder.toString().length()-1)).equals(',')){
             return groomAddressBuilder.toString().substring(0, groomAddressBuilder.toString().length()-1);
         }
         return groomAddressBuilder.toString();
@@ -1065,7 +1065,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                 appendIfNotBlank(registryDetails.getBrideAddressDetails().getOutSideIndiaPostCodePermanent(), brideAddressBuilder, true);
             }
         }
-        if(StringUtils.isNotBlank(brideAddressBuilder.toString()) && ((Character) brideAddressBuilder.toString().charAt(brideAddressBuilder.toString().length())).equals(',')){
+        if(StringUtils.isNotBlank(brideAddressBuilder.toString()) && ((Character) brideAddressBuilder.toString().charAt(brideAddressBuilder.toString().length()-1)).equals(',')){
             return brideAddressBuilder.toString().substring(0, brideAddressBuilder.toString().length()-1);
         }
         return brideAddressBuilder.toString();
@@ -1216,7 +1216,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
             }
 
         }
-        if(StringUtils.isNotBlank(brideAddressBuilder.toString()) && ((Character) brideAddressBuilder.toString().charAt(brideAddressBuilder.toString().length())).equals(',')){
+        if(StringUtils.isNotBlank(brideAddressBuilder.toString()) && ((Character) brideAddressBuilder.toString().charAt(brideAddressBuilder.toString().length()-1)).equals(',')){
             return brideAddressBuilder.toString().substring(0, brideAddressBuilder.toString().length()-1);
         }
         return brideAddressBuilder.toString();
