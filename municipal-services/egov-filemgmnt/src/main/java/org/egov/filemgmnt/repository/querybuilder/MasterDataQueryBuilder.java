@@ -23,22 +23,22 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
     static {
         QUERY.append("SELECT") // NOPMD
              // Module
-             .append("  md.id AS module_id, md.module_tenantid, md.modulecode, md.modulenameeng, md.modulenamemal, md.status AS module_status")
+             .append("  md.id AS module_id, md.tenantid AS module_tenantid, md.modulecode, md.modulenameeng, md.modulenamemal, md.status AS module_status")
              .append("  , md.createdby AS module_createdby, md.createdtime AS module_createdtime")
              .append("  , md.lastmodifiedby AS module_lastmodifiedby, md.lastmodifiedtime AS module_lastmodifiedtime")
 
              // MajorFunction
-             .append("  , mf.id AS majorfunction_id, mf.majorfunction_tenantid, mf.mfcode, mf.moduleid, mf.mfnameeng, mf.mfnamemal, mf.status AS majorfunction_status")
+             .append("  , mf.id AS majorfunction_id, mf.tenantid AS majorfunction_tenantid, mf.mfcode, mf.moduleid, mf.mfnameeng, mf.mfnamemal, mf.status AS majorfunction_status")
              .append("  , mf.createdby AS majorfunction_createdby, mf.createdtime AS majorfunction_createdtime")
              .append("  , mf.lastmodifiedby AS majorfunction_lastmodifiedby, mf.lastmodifiedtime AS majorfunction_lastmodifiedtime")
 
              // SubFunction
-             .append("  , sf.id AS subfunction_id, sf.subfunction_tenantid, sf.sfcode, sf.mfid, sf.sfnameeng, sf.sfnamemal, sf.status AS subfunction_status")
+             .append("  , sf.id AS subfunction_id, sf.tenantid AS subfunction_tenantid, sf.sfcode, sf.mfid, sf.sfnameeng, sf.sfnamemal, sf.status AS subfunction_status")
              .append("  , sf.createdby AS subfunction_createdby, sf.createdtime AS subfunction_createdtime")
              .append("  , sf.lastmodifiedby AS subfunction_lastmodifiedby , sf.lastmodifiedtime AS subfunction_lastmodifiedtime")
 
              // Service
-             .append("  , sv.id AS service_id, sv.service_tenantid, sv.servicecode, sv.sfid, sv.servicenameeng, sv.servicenamemal, sv.status AS service_status")
+             .append("  , sv.id AS service_id, sv.tenantid AS service_tenantid, sv.servicecode, sv.sfid, sv.servicenameeng, sv.servicenamemal, sv.status AS service_status")
              .append("  , sv.createdby AS service_createdby, sv.createdtime AS servicem_createdtime")
              .append("  , sv.lastmodifiedby AS service_lastmodifiedby, sv.lastmodifiedtime AS service_lastmodifiedtime")
 
