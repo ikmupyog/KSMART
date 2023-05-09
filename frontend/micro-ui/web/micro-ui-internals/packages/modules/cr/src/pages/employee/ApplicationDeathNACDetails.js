@@ -6,6 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
+import set from "lodash/set";
 import orderBy from "lodash/orderBy";
 
 const ApplicationDeathNACDetails = () => {
@@ -20,9 +21,23 @@ const ApplicationDeathNACDetails = () => {
   sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDEATHNACDetail(t, tenantId, DeathACKNo);
+  const [selectedRadioValue, setSelectedRadioValue] = useState(applicationDetails?.InformationDeath?.isDeathNAC ? { i18nKey: "CR_IS_NAC", code: "NAC" } : applicationDetails?.InformationDeath?.isDeathNIA ? { i18nKey: "CR_IS_NIA", code: "NIA" } : {});
+
+  function selectRadioButtons(value){
+    setSelectedRadioValue(value);
+  }
 
   const stateId = Digit.ULBService.getStateId();
-
+  const newData = applicationDetails;
+  useEffect(() => {
+    if(selectedRadioValue?.code == "NAC") {
+      set(newData, "applicationData.InformationDeath.isDeathNAC", true);
+      set(newData, "applicationData.InformationDeath.isDeathNIA", false);
+    }else if(selectedRadioValue?.code == "NIA") {
+      set(newData, "applicationData.InformationDeath.isDeathNAC", false);
+      set(newData, "applicationData.InformationDeath.isDeathNIA", true);
+    }
+  },[selectedRadioValue]);
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
@@ -62,7 +77,6 @@ const ApplicationDeathNACDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
-  console.log(workflowDetails);
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter(
@@ -190,6 +204,7 @@ const ApplicationDeathNACDetails = () => {
         setShowToast={setShowToast}
         closeToast={closeToast}
         timelineStatusPrefix={"WF_21DAYS_"}
+        selectDeathtype={selectRadioButtons}
       />
     </div>
   );
