@@ -182,7 +182,7 @@ import useDeathNACSearch from "./cr/useDeathNACSearch";
 import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 import useMarriageSearch from "./cr/useMarriageSearch";
-import {useMarriageCorrectionSearch} from "./cr/marriage";
+import {useMarriageApplicationSearch} from "./cr/marriage";
 
 
 import useSearchDeath from "./cr/useSearchDeath";
@@ -413,7 +413,7 @@ const cr = {
   useBirthNACSearch,
   useBornOutSideBirthSearch,
   useMarriageSearch,
-  useMarriageCorrectionSearch,
+  useMarriageApplicationSearch,
   useSearchMarriage,
   getMarriageRegistryFileSourceDetails,
   useAdoptionSearch,

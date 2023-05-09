@@ -10,21 +10,28 @@ const getCorrectionFieldValue = (newValue, isDate,t) =>{
 }
 
 const getCorrectionDetails = (application, t) => {
-  console.log("correction details==", application);
   const correctionField = application?.CorrectionField;
   const returnDetails = correctionField?.map((correctionItem) => {
     const isDate = correctionItem?.correctionFieldName === "CHILD_DOB" ? true : false;
     const correctionData = correctionItem.correctionFieldValue?.map((correction) => {
-      const correctionFieldName = getCorrectionFieldValue(correction?.newValue, isDate, t)
-      return (
-        // { title: t(correction?.column), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
-        {
-          title: t(correction?.column),
-          value: correctionFieldName,
-        }
-      );
+      const correctionFieldName = getCorrectionFieldValue(correction?.newValue, isDate, t);
+      const birthLabels = correction?.column?.split('_');
+      const isMalField = ["MAL","ML"].includes(birthLabels[birthLabels?.length - 1]);
+      if(!isMalField){
+        return (
+          // { title: t(correction?.column), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
+          {
+            title: t(correction?.column),
+            value: correctionFieldName,
+          }
+        );
+      } else {
+        return "NA";
+      }
+      
     });
-    return { title: t(correctionItem?.correctionFieldName), values: correctionData };
+    const formattedCorrectionData = correctionData.filter((item) => item !== 'NA')
+    return { title: t(`CR_${correctionItem?.correctionFieldName}`), values: formattedCorrectionData };
   });
   return returnDetails;
 };
