@@ -76,7 +76,6 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
             if(marriage.getGroomDetails()!=null){
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
                  marriage.getGroomDetails().setBrideGroom("G");
-
             }
             if(marriage.getWitnessDetails()!=null){
                 marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
@@ -85,12 +84,24 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setSerial_no2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
+            //Added on 09.05.2023 Jasmine
+            if(marriage.getBrideAddressDetails()!=null){
+                marriage.getBrideAddressDetails().setPresentUuid(UUID.randomUUID().toString());
+                marriage.getBrideAddressDetails().setPermanentUuid(UUID.randomUUID().toString());
+                marriage.getGroomAddressDetails().setBrideGroomPresent("B");
+            }
+            if(marriage.getGroomAddressDetails()!=null){
+                marriage.getGroomAddressDetails().setPresentUuid(UUID.randomUUID().toString());
+                marriage.getGroomAddressDetails().setPermanentUuid(UUID.randomUUID().toString());
+                marriage.getGroomAddressDetails().setBrideGroomPresent("G");
+            }
+
         });
         setRegistrationNumber(request);
-        setBridePermanentAddress(request);
-        setBridePresentAddress(request);
-        setGroomPermanentAddress(request);
-        setGroomPresentAddress(request);
+        // setBridePermanentAddress(request);
+        // setBridePresentAddress(request);
+        // setGroomPermanentAddress(request);
+        // setGroomPresentAddress(request);
         createCertificateNo(request);
     }
 
