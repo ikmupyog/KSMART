@@ -24,17 +24,7 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   const [editFlag, setEditFlag, clearParams1] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
-  console.log(props, sessionStorage.getItem("CR_EDIT_ADOPTION_FLAG"), editFlag);
   if ((props.isError || props?.isSuccess) && editFlag !== false) {
-    // console.log('logged',props);
-    // let applicationNumber = props?.editData?.AdoptionChildDetails?.applicationNumber
-    // props?.setIsLoader(true)
-    // sessionStorage.setItem("CR_EDIT_UPDATE_STATUS",GetActionMessage(props))
-    // window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`);
-
-    // return (
-    //   <Loader />
-    //  )
     return (
       <Banner
         message={GetActionMessage(props)}

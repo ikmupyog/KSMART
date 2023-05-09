@@ -30,7 +30,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
   if (tenantId === STATE_CODE.KL) {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const fileSource = Digit.Hooks.cr.getBirthFileSourceDetails({ params: { tenantId } });
+  const fileSource = Digit.Hooks.cr.getBirthFileSourceDetails({ params: {} });
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -101,11 +101,11 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
         disableSortBy: true,
         accessor: (row) => GetCell(row?.fullName ? row?.fullName : "-"),
       },
-      {
-        Header: t("CR_COMMON_COL_APP_DATE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      },
+      // {
+      //   Header: t("CR_COMMON_COL_APP_DATE"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+      // },
       {
         Header: t("CR_COMMON_COL_DOB"),
         disableSortBy: true,

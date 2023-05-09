@@ -39,7 +39,6 @@ const DesktopInbox = ({
 
   const goto = (data,inboxType) =>{
     const correctionCode = data?.applicationNumber?.split('-')?.[4];
-    console.log("loop[ed--data",correctionCode,data);
     const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber ;
     let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
     switch(inboxType){
@@ -63,7 +62,6 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
-        console.log("row data==",row.original);
         return (
           <div>
             <span className="link">
@@ -104,7 +102,6 @@ const DesktopInbox = ({
         accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
-          console.log('rw death',row);
           return (
             // <div>
             //   <span className="link">
@@ -178,7 +175,6 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
-        console.log("row data==",row.original);
         return (
           <div>
             <span className="link">
