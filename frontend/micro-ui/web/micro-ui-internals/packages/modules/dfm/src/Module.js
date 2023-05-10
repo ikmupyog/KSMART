@@ -30,14 +30,17 @@ import LegacyFile from "./components/LegacyFile";
 import DraftTemplate from "./components/DraftTemplate";
 import Templates from "./components/Templates";
 import TemplateSec from "./components/TemplateSec";
-import ArisingFile from "./components/ArisingFile";
+import ArisingFile from "./components/arisingFiles/ArisingFile";
 import ModuleAdding from "./components/ModuleAdding";
 import MajorFunctionAdding from "./components/MajorFunctionAdding";
 import SubFunctionAdding from "./components/SubFunctionAdding";
 import ServiceAdding from "./components/ServiceAdding";
-import ArisingFileAcknowledgement from "./components/ArisingFileAcknowledgement";
-import ArisingFileSummery from "./components/ArisingFileSummery";
-import CounterModule from "./components/CounterModule"
+import ArisingFileAcknowledgement from "./components/arisingFiles/ArisingFileAcknowledgement";
+import ArisingFileSummery from "./components/arisingFiles/ArisingFileSummery";
+import CounterModule from "./components/counterModule/CounterModule"
+import CounterModuleSummery from "./components/counterModule/CounterModuleSummery"
+import CounterModuleAcknowledgement from "./components/counterModule/CounterModuleAcknowledgement"
+// import ArisingFiled from "./components/arisingFiles/ArisingFiled";
 
 import SearchModuleApplication from "./components/SearchModuleApplication";
 export const DFMModule = ({ stateCode, userType, tenants }) => {
@@ -117,7 +120,10 @@ const componentsToRegister = {
   ArisingFileSummery,
   CounterModule,
   SearchModuleApplication,
-  ArisingFileSummery
+  ArisingFileSummery,
+  CounterModuleSummery,
+  CounterModuleAcknowledgement
+  // ArisingFiled
 };
 
 export const initDFMComponents = () => {
