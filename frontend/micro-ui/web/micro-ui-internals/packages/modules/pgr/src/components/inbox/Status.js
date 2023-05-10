@@ -6,7 +6,6 @@ const Status = ({ complaints, onAssignmentChange, pgrfilters, assignedTo }) => {
   const { t } = useTranslation();
   const { uuid = '' } = Digit.UserService.getUser().info;
   const UUID = assignedTo?.code === "ASSIGNED_TO_ME" ? uuid : ""
-  console.log("UUID", UUID)
   const complaintsWithCount = Digit.Hooks.pgr.useComplaintStatusCount(complaints, UUID);
   let hasFilters = pgrfilters?.applicationStatus?.length;
   return (
