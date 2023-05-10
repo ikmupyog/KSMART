@@ -32,4 +32,6 @@ public class MajorFunctionSearchCriteria {
     @JsonProperty("moduleId")
     private String moduleId;
 
+    @JsonProperty("status")
+    private String status;
 }

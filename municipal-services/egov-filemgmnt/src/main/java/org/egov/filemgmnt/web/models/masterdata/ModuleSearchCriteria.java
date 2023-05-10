@@ -26,4 +26,7 @@ public class ModuleSearchCriteria {
     // @NotBlank(message = "Module code is required")
     @JsonProperty("moduleCode")
     private String moduleCode;
+
+    @JsonProperty("status")
+    private String status;
 }
