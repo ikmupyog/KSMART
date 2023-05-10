@@ -31,6 +31,7 @@ const DesktopInbox = ({
   };
 
   const handleLinkClick = (finaldata) => {
+    console.log("final data==", finaldata);
     let temp = {};
     temp.ChildDetails = finaldata;
     sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
@@ -38,34 +39,21 @@ const DesktopInbox = ({
     
   }
 
-  const goto = (data,inboxType) =>{
+  const goto = (data, inboxType) => {
     const correctionCode = data?.applicationNumber?.split('-')?.[4];
-    const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber ;
+    const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber;
     let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
-    switch(inboxType){
+    switch (inboxType) {
       case "death":
-         url = `/digit-ui/employee/cr/application-deathdetails/${applicationNumber}`;
-         break;
+        url = `/digit-ui/employee/cr/application-deathdetails/${applicationNumber}`;
+        break;
       case "marriage":
         url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
-    }    
-  
-    if(["CRBRCN","CRDRCN","CRMRCR"].includes(correctionCode)){
+    }
+
+
+    if (["CRBRCN", "CRDRCN", "CRMRCR"].includes(correctionCode)) {
       url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
-    } else if(["CRBRSB"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-stillbirth/${applicationNumber}`;
-    } else if(["CRBRBO"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-bornOutsideIndia/${applicationNumber}`;
-    } else if(["CRBRAB"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-abandonedbirth/${applicationNumber}`;
-    } else if(["CRBRAD"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`;
-    } else if(["CRBRNC"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-nacbirth/${applicationNumber}`;
-    } else if(["CRDRAD"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-abandoneddeathdetails/${applicationNumber}`;
-    } else if(["CRDRNC"].includes(correctionCode)){
-      url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
     }
     return url;
   }
@@ -79,7 +67,7 @@ const DesktopInbox = ({
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+              <Link onClick={event => handleLinkClick(row.original)} to={() => goto(row.original, SearchInbox)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -124,7 +112,7 @@ const DesktopInbox = ({
             // </div>
             <div>
               <span className="link">
-                <Link onClick={handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+                <Link onClick={handleLinkClick(row.original)} to={() => goto(row.original, SearchInbox)}>
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
               </span>
@@ -192,7 +180,7 @@ const DesktopInbox = ({
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+              <Link onClick={event => handleLinkClick(row.original)} to={() => goto(row.original, SearchInbox)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -224,6 +212,7 @@ const DesktopInbox = ({
   if (isLoading) {
     result = <Loader />;
   } else if (data && data.length === 0) {
+    console.log("data in desktop==", data);
     result = (
       <Card style={{ marginTop: 20 }}>
         {t("CS_MYAPPLICATIONS_NO_APPLICATION")
