@@ -70,7 +70,7 @@ public class EncryptionDecryptionUtil {
     public <E, P> P decryptObject(Object objectToDecrypt, String key, Class<E> classType, RequestInfo requestInfo) {
 
         try {
-            System.out.println("JasmineDecryptObject"+objectToDecrypt);
+          //  System.out.println("JasmineDecryptObject"+objectToDecrypt);
             boolean objectToDecryptNotList = false;
             if (objectToDecrypt == null) {
                 return null;

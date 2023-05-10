@@ -72,11 +72,11 @@ public class MarriageApplicationService {
             workflowIntegrator.callWorkFlow(request);
         }
         request.getMarriageDetails().forEach(marriage->{
-            System.out.println("JSONStatus"+marriage.getStatus());
-            System.out.println("ConstStatus"+MarriageConstants.STATUS_FOR_PAYMENT);
+            // System.out.println("JSONStatus"+marriage.getStatus());
+            // System.out.println("ConstStatus"+MarriageConstants.STATUS_FOR_PAYMENT);
           //  if(wfc.getPayment()!= null){
                 if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
-                    System.out.println("hienterpayment");
+                 //   System.out.println("hienterpayment");
                     List<Demand> demands = new ArrayList<>();
                     Demand demand = new Demand();
                     demand.setTenantId(marriage.getTenantid());

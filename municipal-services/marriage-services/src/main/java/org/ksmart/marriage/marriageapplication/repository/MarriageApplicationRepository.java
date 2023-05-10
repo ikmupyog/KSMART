@@ -20,7 +20,7 @@ import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.MarriageMdmsUtil;
 import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
-import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriagePaymentRowMapper;
+//import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriagePaymentRowMapper;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageDocumentRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,7 +40,7 @@ public class MarriageApplicationRepository {
     private final MarriageApplicationRowMapper marriageApplicationRowMapper;
     private final JdbcTemplate jdbcTemplate;
     private final MarriageDocumentRowMapper marriagedocumentRowMapper;
-    private final MarriagePaymentRowMapper marriagePaymentRowMapper;
+   // private final MarriagePaymentRowMapper marriagePaymentRowMapper;
 
 
     @Autowired
@@ -54,28 +54,28 @@ public class MarriageApplicationRepository {
                                          JdbcTemplate jdbcTemplate, 
                                          MarriageApplicationQueryBuilder marriageQueryBuilder,
                                          MarriageApplicationRowMapper marriageApplicationRowMapper,
-                                         MarriageDocumentRowMapper marriagedocumentRowMapper,
-                                         MarriagePaymentRowMapper marriagePaymentRowMapper
+                                         MarriageDocumentRowMapper marriagedocumentRowMapper
+                                      //   MarriagePaymentRowMapper marriagePaymentRowMapper
                                          ) {
         this.producer = producer;
         this.jdbcTemplate = jdbcTemplate;
         this.marriageQueryBuilder = marriageQueryBuilder;
         this.marriageApplicationRowMapper = marriageApplicationRowMapper;
         this.marriagedocumentRowMapper = marriagedocumentRowMapper;
-        this.marriagePaymentRowMapper = marriagePaymentRowMapper;
+       // this.marriagePaymentRowMapper = marriagePaymentRowMapper;
     }
     //Jasmine 07.05.2023
-    public List<MarriageApplicationDetails> searchMarriagePaymentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
-        List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        if (preparedStmtValues.size() == 0) {
-            throw new CustomException(ErrorCodes.NOT_FOUND.getCode(), "No result found.");
-        } 
-        else {
-            List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagePaymentRowMapper);
-            return result;
-        }
-    }
+    // public List<MarriageApplicationDetails> searchMarriagePaymentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
+    //     List<Object> preparedStmtValues = new ArrayList<>();
+    //     String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+    //     if (preparedStmtValues.size() == 0) {
+    //         throw new CustomException(ErrorCodes.NOT_FOUND.getCode(), "No result found.");
+    //     } 
+    //     else {
+    //         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagePaymentRowMapper);
+    //         return result;
+    //     }
+    // }
     public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);

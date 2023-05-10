@@ -105,13 +105,13 @@ public class MarriageApplicationValidator {
             private void validateDoM(Long dateOfMarriage, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc) {
                 Calendar calendar = Calendar.getInstance();
                 Long currentDate = calendar.getTimeInMillis();
-            System.out.println("wfCode"+wfCode);
+           // System.out.println("wfCode"+wfCode);
                 if (dateOfMarriage > currentDate) {
                     throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                             "Date of death should be less than or same as  current date.");
                 } else {
                     wfc = checkValidation(mdmsData, dateOfMarriage, wfc);
-            System.out.println("wfc"+wfc.getWorkflowCode());
+           //System.out.println("wfc"+wfc.getWorkflowCode());
                     if(!wfc.getWorkflowCode().equals(wfCode)) {
                         throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                                 "Workflow code from the application request is wrong.");
@@ -129,7 +129,7 @@ public class MarriageApplicationValidator {
                         Long currentDate = calendar.getTimeInMillis();
   
                         List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_NEW_WF_JSONPATH + "[*]");
-                       System.out.println("mdmswfcode"+wfLists);
+                      // System.out.println("mdmswfcode"+wfLists);
                         for (int n = 0; n < wfLists.size(); n++) {
                         String startStr = wfLists.get(n).get("startdateperiod").toString();
                         String endStr = wfLists.get(n).get("enddateperiod").toString();
@@ -253,8 +253,7 @@ public class MarriageApplicationValidator {
                                                                 if (StringUtils.isEmpty(
 
                                                                                 marriagedtls.getPlaceid())) {
-                                                                        System.out.println("marriageward" + marriagedtls
-                                                                                        .getPlaceid());
+                                                                      //  System.out.println("marriageward" + marriagedtls.getPlaceid());
                                                                         throw new CustomException(
                                                                                         " PLACE ID  IS INVALID ",
                                                                                         "The  Place Id English " +
@@ -395,7 +394,7 @@ public class MarriageApplicationValidator {
                                                         }
 
                                                 }
-                                                System.out.println("groomname" + groomInfo.getFirstnameEn());
+                                             //   System.out.println("groomname" + groomInfo.getFirstnameEn());
                                                 if (StringUtils.isEmpty(groomInfo.getFirstnameEn())) {
                                                         throw new CustomException(" GROOM NAME ENGLISH INVALID ",
                                                                         "The groom name in english " +
@@ -433,8 +432,7 @@ public class MarriageApplicationValidator {
                                                                                                 + " is invalid");
                                                         }
                                                         if (StringUtils.isEmpty(groomInfo.getFathernameMl())) {
-                                                                System.out.println("groomfather"
-                                                                                + groomInfo.getFathernameMl());
+                                                               // System.out.println("groomfather" + groomInfo.getFathernameMl());
                                                                 throw new CustomException(
                                                                                 " GROOM FATHER NAME MALAYALAM ",
                                                                                 "The  groom Father  Name in malayalam "

@@ -130,7 +130,7 @@ public class MarriageCorrectionService {
 
         request.getMarriageCorrectionDetails().forEach(marriage->{
             if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
-                System.out.println("hienterpayment");
+              //  System.out.println("hienterpayment");
                 List<Demand> demands = new ArrayList<>();
                 Demand demand = new Demand();
                 demand.setTenantId(marriage.getTenantid());
