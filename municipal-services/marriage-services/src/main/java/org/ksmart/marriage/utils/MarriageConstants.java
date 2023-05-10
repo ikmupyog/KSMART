@@ -40,7 +40,8 @@ public class MarriageConstants {
        //mdms tenantId
        public static final String MDMS_TENANTID = "kl";
        //workflow
-       public static final String BUSINESS_SERVICE_BND = "NewMarriage";
+      //  public static final String BUSINESS_SERVICE_BND = "NewMarriage";
+      public static final String BUSINESS_SERVICE_BND = "CR";
    
        public static final String TENANTIDKEY = "tenantId";
    

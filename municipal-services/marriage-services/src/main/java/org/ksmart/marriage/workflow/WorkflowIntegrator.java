@@ -77,7 +77,7 @@ public class WorkflowIntegrator {
         JSONArray array = new JSONArray();
         for (MarriageApplicationDetails marriageDtl : request.getMarriageDetails()) {
             String  businessServiceFromMDMS=marriageDtl.getBusinessservice();
-           // System.out.println("Jasmine-BusinessService"+businessServiceFromMDMS);
+            System.out.println("Jasmine-BusinessService"+businessServiceFromMDMS);
             if (businessServiceFromMDMS == null) {
             businessServiceFromMDMS = MarriageConstants.BUSINESS_SERVICE_BND;
         }
@@ -161,9 +161,11 @@ public class WorkflowIntegrator {
             });
             
             // setting the status back to TL object from wf response
-
+            System.out.println("statusb4"+ request.getMarriageDetails().get(0).getStatus());
                   request.getMarriageDetails().forEach(
+                 
                     bndObj -> bndObj.setStatus(idStatusMap.get(bndObj.getApplicationNumber())));
+                    System.out.println("statusafter"+ request.getMarriageDetails().get(0).getStatus());
 
         }
 
@@ -191,7 +193,7 @@ public class WorkflowIntegrator {
          JSONArray array = new JSONArray();
          for (MarriageCorrectionDetails marriageDtl : request.getMarriageCorrectionDetails()) {
              String  businessServiceFromMDMS=marriageDtl.getBusinessservice();
-            // System.out.println("Jasmine-BusinessService"+businessServiceFromMDMS);
+             System.out.println("BusinessServiceMarriage"+businessServiceFromMDMS);
              if (businessServiceFromMDMS == null) {
              businessServiceFromMDMS = MarriageConstants.BUSINESS_SERVICE_BND;
          }

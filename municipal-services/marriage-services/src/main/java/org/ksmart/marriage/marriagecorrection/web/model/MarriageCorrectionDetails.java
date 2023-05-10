@@ -36,6 +36,7 @@ public class MarriageCorrectionDetails {
     @Size(max = 64)
     @JsonProperty("applicationNumber")
     private String applicationNo;
+
     @JsonProperty("applicationDate")
     private Long applicationDate;
     @Size(max = 64)
@@ -50,6 +51,7 @@ public class MarriageCorrectionDetails {
     @Size(max = 64)
     @JsonProperty("registrationno")
     private String registrationno;
+    
     @JsonProperty("registration_date")
     private Long registrationDate;
     @Size(max = 64)
