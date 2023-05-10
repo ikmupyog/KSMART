@@ -35,6 +35,7 @@ const DesktopInbox = ({
     temp.ChildDetails = finaldata;
     sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
     Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+    
   }
 
   const goto = (data,inboxType) =>{
