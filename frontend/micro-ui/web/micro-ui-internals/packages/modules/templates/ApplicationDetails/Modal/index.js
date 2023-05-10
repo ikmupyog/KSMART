@@ -28,7 +28,7 @@ const ActionModal = (props) => {
     props?.businessService.includes("NEWBIRTH1YR") ||
     props?.businessService.includes("NEWBIRTHABOVE1YR") ||
     props?.businessService.includes("WFBIRTH21DAYSHOME") ||
-    props?.businessService.includes("WFBIRTH30DAYSHOME") ||
+    props?.businessService.includes("NEWBIRTH30DYSHOME") ||
     props?.businessService.includes("WFBIRTHHOME1YEAR") ||
     props?.businessService.includes("WFBIRTHHOME1YEARABOVE")
   ) {
