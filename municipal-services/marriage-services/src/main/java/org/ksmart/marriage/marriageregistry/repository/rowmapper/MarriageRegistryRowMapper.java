@@ -13,8 +13,9 @@ import java.util.List;
 @Component
 public class MarriageRegistryRowMapper implements ResultSetExtractor<List<MarriageRegistryDetails>>, 
                         BaseRowMapper,BrideRegistryRowMapper,
-                        GroomRegistryRowMapper,GroomRegistryAddressRowMapper,BrideRegistryAddressRowMapper,
-                        WitnessRegistryRowMapper{
+                        GroomRegistryRowMapper,GroomRegistryAddressRowMapper,BrideRegistryAddressRowMapper
+//                        WitnessRegistryRowMapper
+                       {
 
     @Override
     public List<MarriageRegistryDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
@@ -58,7 +59,7 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
             .brideAddressDetails(getBrideAddressDetails(rs))
             .groomDetails(getGroomDetails(rs))
             .groomAddressDetails(getGroomAddressDetails(rs))
-            .witnessDetails(getWitnessDetails(rs))
+//            .witnessDetails(getWitnessDetails(rs))
             .auditDetails(getAuditDetails(rs))
             .build());
         }

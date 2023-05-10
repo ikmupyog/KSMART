@@ -89,11 +89,11 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("BPSA.ot_address1_ml as BPSA_ot_address1_ml,BPSA.ot_address2_en as BPSA_ot_address2_en,BPSA.ot_address2_ml as BPSA_ot_address2_ml,")
     .append("BPSA.ot_state_region_province_en BPSA_ot_state_region_province_en  ,  BPSA.ot_state_region_province_ml as BPSA_ot_state_region_province_ml,BPSA.ot_zipcode as BPSA_ot_zipcode , ")
 
-    .append("WD1.id AS WD1_id , WD1.aadharno  as WD1_aadharno , WD1.name_en  as WD1_name_en ,  WD1.name_ml  as WD1_name_ml , WD1.age  as WD1_age , WD1.address_en  as WD1_address_en ,") 
-    .append("WD1.address_ml  as WD1_address_ml ,  WD1.mobile  as WD1_mobile , WD1.is_esigned  as WD1_is_esigned ,  WD1.marriageid  as WD1_marriageid , WD1.serial_no  as WD1_serial_no, ")
-    .append("WD2.id as 	WD2_id ,WD2.aadharno  as WD2_aadharno , WD2.name_en  as WD2_name_en , WD2.name_ml  as WD2_name_ml , WD2.age  as WD2_age ,WD2.address_en  as WD2_address_en ,") 
-    .append("WD2.address_ml  as WD2_address_ml , WD2.mobile  as WD2_mobile , WD2.is_esigned  as WD2_is_esigned , WD2.marriageid  as WD2_marriageid , WD2.serial_no  as WD2_serial_no ")   
-   
+//    .append("WD1.id AS WD1_id , WD1.aadharno  as WD1_aadharno , WD1.name_en  as WD1_name_en ,  WD1.name_ml  as WD1_name_ml , WD1.age  as WD1_age , WD1.address_en  as WD1_address_en ,")
+//    .append("WD1.address_ml  as WD1_address_ml ,  WD1.mobile  as WD1_mobile , WD1.is_esigned  as WD1_is_esigned ,  WD1.marriageid  as WD1_marriageid , WD1.serial_no  as WD1_serial_no, ")
+//    .append("WD2.id as 	WD2_id ,WD2.aadharno  as WD2_aadharno , WD2.name_en  as WD2_name_en , WD2.name_ml  as WD2_name_ml , WD2.age  as WD2_age ,WD2.address_en  as WD2_address_en ,")
+//    .append("WD2.address_ml  as WD2_address_ml , WD2.mobile  as WD2_mobile , WD2.is_esigned  as WD2_is_esigned , WD2.marriageid  as WD2_marriageid , WD2.serial_no  as WD2_serial_no ")
+//
     .append("FROM public.eg_register_marriage_details as MD  ")
     .append("INNER JOIN eg_register_marriage_bride_groom_details as BD ON BD.marriageid = MD.id AND ")
     .append("BD.bride_groom ='B' ")
