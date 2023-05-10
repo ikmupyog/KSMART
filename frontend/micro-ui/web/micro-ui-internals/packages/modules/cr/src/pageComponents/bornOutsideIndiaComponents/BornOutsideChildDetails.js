@@ -24,7 +24,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.BornOutsideChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.BornOutsideChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.BornOutsideChildDetails?.Amount);
   const { t } = useTranslation();
   let validation = {};
   let Difference_In_DaysRounded = "";
@@ -33,8 +35,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
-    "WorkFlowBirth"
+    "WorkFlowBornOutside"
   );
+
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -66,10 +69,13 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
 
   WorkFlowDetails &&
     WorkFlowDetails["birth-death-service"] &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    WorkFlowDetails["birth-death-service"].WorkFlowBornOutside &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBornOutside.map((ob) => {
       workFlowData.push(ob);
     });
+
+  console.log({ workFlowData });
+
   const [isEditBornOutsidePageComponents, setIsEditBornOutsidePageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBornOutsideIndia ? isEditBornOutsideIndia : false);
   const [childDOB, setChildDOB] = useState(
@@ -264,9 +270,21 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
     }
   }
-  // function setselectChildDOB(value) {
-  //   setChildDOB(value);
-  // }
+
+  useEffect(() => {
+    if (DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(
+        (workFlowData) => workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
+      );
+      if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        {console.log(workflowCode, "code")}
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime]);
+
   function setselectchildArrivalDate(value) {
     setchildArrivalDate(value);
     const today = new Date();
@@ -282,17 +300,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       setDifferenceInTime(today.getTime() - childArrivalDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(
-          (workFlowData) =>
-            workFlowData.BirtPlace === birthPlace.code &&
-            workFlowData.startdateperiod <= DifferenceInTime &&
-            workFlowData.enddateperiod >= DifferenceInTime
-        );
-        if (currentWorgFlow.length > 0) {
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-        }
-      }
+      
     }
   }
   function setSelectChildFirstNameEn(e) {
@@ -1158,7 +1166,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                 cityTownMlError ||
                 outsideBirthPlaceEnError ||
                 outsideBirthPlaceMlError
-                ? DateTimeError
+                  ? DateTimeError
                     ? t(`CS_COMMON_DATE_TIME_ERROR`)
                     : DateTimeHourError
                     ? t(`CS_COMMON_DATE_HOUR_ERROR`)
