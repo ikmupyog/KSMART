@@ -43,10 +43,12 @@ export const CRCorrectionSearch = {
   },
   deathApplication: async (tenantId, filters = {}) => {
     const response = await CRService.CRDeathCorrectionSearch({ tenantId, filters });
+    console.log("death resp==",response);
     return response;
   },
   marriageApplication: async (tenantId, filters = {}) => {
     const response = await CRService.CRMarriageCorrectionSearch({ tenantId, filters });
+    console.log("marriage resp==",response);
     return response;
   },
 
@@ -103,6 +105,7 @@ export const CRCorrectionSearch = {
               title: t(correctionTitle),
               asSectionHeader: true,
               fieldValues: correctionFieldValues,
+              // documents:
             }
           )
         // })

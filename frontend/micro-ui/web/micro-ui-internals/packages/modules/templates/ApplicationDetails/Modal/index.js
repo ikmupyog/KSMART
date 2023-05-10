@@ -25,12 +25,12 @@ const ActionModal = (props) => {
   if (
     props?.businessService.includes("WFBIRTH21DAYS") ||
     props?.businessService.includes("BIRTH30DAYSWF") ||
-    props?.businessService.includes("WFBIRTH1YR") ||
-    props?.businessService.includes("WFBIRTHABOVE1YR") ||
+    props?.businessService.includes("BIRTH30TO1YR") ||
+    props?.businessService.includes("ABOVE1YRBIRTH") ||
     props?.businessService.includes("WFBIRTH21DAYSHOME") ||
-    props?.businessService.includes("WFBIRTH30DAYSHOME") ||
-    props?.businessService.includes("WFBIRTHHOME1YEAR") ||
-    props?.businessService.includes("WFBIRTHHOME1YEARABOVE")
+    props?.businessService.includes("BIRTH30DAYSHOME") ||
+    props?.businessService.includes("BIRTH30TO1YRHOME") ||
+    props?.businessService.includes("ABOVE1YRBIRTHHOME")
   ) {
     return <BirthActionModal {...props} />;
   }
@@ -49,12 +49,12 @@ const ActionModal = (props) => {
   if (
     props?.businessService.includes("WFDEATH21DAYS") ||
     props?.businessService.includes("WFDEATH30DAYS") ||
-    props?.businessService.includes("WFDEATH1YR") ||
-    props?.businessService.includes("WFDEATHABOVE1YR") ||
+    props?.businessService.includes("DEATH30TO1YR") ||
+    props?.businessService.includes("ABOVE1YRDEATH") ||
     props?.businessService.includes("WFDEATH21DAYSHOME") ||
-    props?.businessService.includes("WFDEATH30DAYSHOME") ||
-    props?.businessService.includes("WFDEATH1YEARHOME") ||
-    props?.businessService.includes("WFDEATHHOME1YEARABOVE")
+    props?.businessService.includes("DEATH30DAYSHOME") ||
+    props?.businessService.includes("DEATH30TO1YRHOME") ||
+    props?.businessService.includes("ABOVE1YRDEATHHOME")
   ) {
     return <DeathActionModal {...props} />;
   }

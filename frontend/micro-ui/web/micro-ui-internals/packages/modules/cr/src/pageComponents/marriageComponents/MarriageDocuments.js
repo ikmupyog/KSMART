@@ -628,7 +628,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
     });
     console.log({ newThumbnails });
     return newThumbnails;
@@ -1184,9 +1184,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     })();
   }, [witness2AadharDocument]);
 
-  console.log({ formData });
-  console.log({ witness1Aadhar });
-
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
@@ -1463,30 +1460,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     });
   };
   const onSkip = () => onSelect();
-
-  console.log({
-    groomAadharDocument,
-    groomPassportDocument,
-    groomSSNDocument,
-    brideAadharDocument,
-    bridePassportDocument,
-    brideSSNDocument,
-    groomDrivingLicenseDocument,
-    groomSchoolCertificateDocument,
-    groomBirthCertificateDocument,
-    brideDrivingLicenseDocument,
-    brideSchoolCertificateDocument,
-    brideBirthCertificateDocument,
-    marriageOfficerCertificateDocument,
-    instituitionCertificateDocument,
-    groomDivorceAnnulledDecreeCertificateDocument,
-    brideDivorceAnnulledDecreeCertificateDocument,
-    groomExpirationCertificateDocument,
-    brideExpirationCertificateDocument,
-    witness1AadharDocument,
-    witness2AadharDocument,
-  });
-
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
@@ -1501,12 +1474,14 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
           ((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && (!groomPassport || !groomSSN)) ||
           (brideResidentShip === "INDIAN" && !brideAadhar) ||
           ((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (!bridePassport || !brideSSN)) ||
-          (groomAgeDocument === "DRIVING_LICENSE" && !groomDrivingLicense) ||
-          (groomAgeDocument === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
-          (groomAgeDocument === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
-          (brideAgeDocument === "DRIVING_LICENSE" && !brideDrivingLicense) ||
-          (brideAgeDocument === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
-          (brideAgeDocument === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
+          !groomAgeDocument ||
+          (groomAgeDocument?.code === "DRIVING_LICENSE" && !groomDrivingLicense) ||
+          (groomAgeDocument?.code === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
+          (groomAgeDocument?.code === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
+          !brideAgeDocument ||
+          (brideAgeDocument?.code === "DRIVING_LICENSE" && !brideDrivingLicense) ||
+          (brideAgeDocument?.code === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
+          (brideAgeDocument?.code === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
           ((marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
             marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
             marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
@@ -1577,7 +1552,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          data={trimURL(_.head(groomAadhar)?.pdfUrl)}
+                          data={_.head(groomAadhar)?.pdfUrl}
                           alt="Groom Aadhaar Pdf"
                         />
                       ) : (
@@ -1585,14 +1560,14 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(groomAadhar)?.small)}
+                          src={_.head(groomAadhar)?.small}
                           alt="Groom Aadhaar Image"
                         />
                       )}
                       <a
                         style={{ color: "blue" }}
                         target="_blank"
-                        href={_.head(groomAadhar)?.type === "pdf" ? trimURL(_.head(groomAadhar)?.pdfUrl) : trimURL(_.head(groomAadhar)?.large)}
+                        href={_.head(groomAadhar)?.type === "pdf" ? _.head(groomAadhar)?.pdfUrl : _.head(groomAadhar)?.large}
                       >
                         Preview
                       </a>
@@ -1625,7 +1600,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(groomPassport)?.pdfUrl)}
+                                data={_.head(groomPassport)?.pdfUrl}
                                 alt="Groom Passport Pdf"
                               />
                             </React.Fragment>
@@ -1634,7 +1609,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(groomPassport)?.small)}
+                              src={_.head(groomPassport)?.small}
                               alt="Groom Passport Image"
                             />
                           )}
@@ -1642,7 +1617,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ color: "blue" }}
                             target="_blank"
                             href={
-                              _.head(groomPassport)?.type === "pdf" ? trimURL(_.head(groomPassport)?.pdfUrl) : trimURL(_.head(groomPassport)?.large)
+                              _.head(groomPassport)?.type === "pdf" ? _.head(groomPassport)?.pdfUrl : _.head(groomPassport)?.large
                             }
                           >
                             Preview
@@ -1674,17 +1649,17 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(groomSSN)?.pdfUrl)}
+                                data={_.head(groomSSN)?.pdfUrl}
                                 alt="Groom SSN Pdf"
                               />
                             </React.Fragment>
                           ) : (
-                            <img style={{ margin: "5px 0" }} height={120} src={trimURL(_.head(groomSSN)?.small)} alt="Groom SSN Image" />
+                            <img style={{ margin: "5px 0" }} height={120} src={_.head(groomSSN)?.small} alt="Groom SSN Image" />
                           )}
                           <a
                             style={{ color: "blue" }}
                             target="_blank"
-                            href={_.head(groomSSN)?.type === "pdf" ? trimURL(_.head(groomSSN)?.pdfUrl) : trimURL(_.head(groomSSN)?.large)}
+                            href={_.head(groomSSN)?.type === "pdf" ? _.head(groomSSN)?.pdfUrl : _.head(groomSSN)?.large}
                           >
                             Preview
                           </a>
@@ -1747,7 +1722,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(groomDrivingLicense)?.pdfUrl)}
+                            data={_.head(groomDrivingLicense)?.pdfUrl}
                             alt="Groom Driving License Pdf"
                           />
                         </React.Fragment>
@@ -1756,7 +1731,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(groomDrivingLicense)?.small)}
+                          src={_.head(groomDrivingLicense)?.small}
                           alt="Groom Driving License Image"
                         />
                       )}
@@ -1765,8 +1740,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(groomDrivingLicense)?.type === "pdf"
-                            ? trimURL(_.head(groomDrivingLicense)?.pdfUrl)
-                            : trimURL(_.head(groomDrivingLicense)?.large)
+                            ? _.head(groomDrivingLicense)?.pdfUrl
+                            : _.head(groomDrivingLicense)?.large
                         }
                       >
                         Preview
@@ -1799,7 +1774,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(groomSchoolCertificate)?.pdfUrl)}
+                            data={_.head(groomSchoolCertificate)?.pdfUrl}
                             alt="School Certificate Pdf"
                           />
                         </React.Fragment>
@@ -1808,7 +1783,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(groomSchoolCertificate)?.small)}
+                          src={_.head(groomSchoolCertificate)?.small}
                           alt="School Certificate Image"
                         />
                       )}
@@ -1817,8 +1792,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(groomSchoolCertificate)?.type === "pdf"
-                            ? trimURL(_.head(groomSchoolCertificate)?.pdfUrl)
-                            : trimURL(_.head(groomSchoolCertificate)?.large)
+                            ? _.head(groomSchoolCertificate)?.pdfUrl
+                            : _.head(groomSchoolCertificate)?.large
                         }
                       >
                         Preview
@@ -1851,7 +1826,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(groomBirthCertificate)?.pdfUrl)}
+                            data={_.head(groomBirthCertificate)?.pdfUrl}
                             alt="Groom Birth Certificate Pdf"
                           />
                         </React.Fragment>
@@ -1860,7 +1835,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(groomBirthCertificate)?.small)}
+                          src={_.head(groomBirthCertificate)?.small}
                           alt="Groom Birth Certificate Image"
                         />
                       )}
@@ -1869,8 +1844,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(groomBirthCertificate)?.type === "pdf"
-                            ? trimURL(_.head(groomBirthCertificate)?.pdfUrl)
-                            : trimURL(_.head(groomBirthCertificate)?.large)
+                            ? _.head(groomBirthCertificate)?.pdfUrl
+                            : _.head(groomBirthCertificate)?.large
                         }
                       >
                         Preview
@@ -1916,7 +1891,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl)}
+                                data={_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl}
                                 alt="Divorce/Annulled Certificate Pdf"
                               />
                             </React.Fragment>
@@ -1925,7 +1900,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               width={100}
                               height={120}
-                              src={trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.small)}
+                              src={_.head(groomDivorceAnnulledDecreeCertificate)?.small}
                               alt="Divorce/Annulled Certificate Image"
                             />
                           )}
@@ -1934,8 +1909,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             target="_blank"
                             href={
                               _.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
-                                ? trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl)
-                                : trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.large)
+                                ? _.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl
+                                : _.head(groomDivorceAnnulledDecreeCertificate)?.large
                             }
                           >
                             Preview
@@ -1980,7 +1955,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(groomExpirationCertificate)?.pdfUrl)}
+                                data={_.head(groomExpirationCertificate)?.pdfUrl}
                                 alt="Groom Expiration Certificate Pdf"
                               />
                             </React.Fragment>
@@ -1989,7 +1964,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(groomExpirationCertificate)?.small)}
+                              src={_.head(groomExpirationCertificate)?.small}
                               alt="Groom Expiration Certificate Image"
                             />
                           )}
@@ -1998,8 +1973,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             target="_blank"
                             href={
                               _.head(groomExpirationCertificate)?.type === "pdf"
-                                ? trimURL(_.head(groomExpirationCertificate)?.pdfUrl)
-                                : trimURL(_.head(groomExpirationCertificate)?.large)
+                                ? _.head(groomExpirationCertificate)?.pdfUrl
+                                : _.head(groomExpirationCertificate)?.large
                             }
                           >
                             Preview
@@ -2055,7 +2030,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          data={trimURL(_.head(brideAadhar)?.pdfUrl)}
+                          data={_.head(brideAadhar)?.pdfUrl}
                           alt="Bride Aadhaar Pdf"
                         />
                       ) : (
@@ -2063,14 +2038,14 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(brideAadhar)?.small)}
+                          src={_.head(brideAadhar)?.small}
                           alt="Bride Aadhaar Image"
                         />
                       )}
                       <a
                         style={{ color: "blue" }}
                         target="_blank"
-                        href={_.head(brideAadhar)?.type === "pdf" ? trimURL(_.head(brideAadhar)?.pdfUrl) : trimURL(_.head(brideAadhar)?.large)}
+                        href={_.head(brideAadhar)?.type === "pdf" ? _.head(brideAadhar)?.pdfUrl : _.head(brideAadhar)?.large}
                       >
                         Preview
                       </a>
@@ -2103,7 +2078,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(bridePassport)?.pdfUrl)}
+                                data={_.head(bridePassport)?.pdfUrl}
                                 alt="Bride Passport Pdf"
                               />
                             </React.Fragment>
@@ -2112,7 +2087,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(bridePassport)?.small)}
+                              src={_.head(bridePassport)?.small}
                               alt="Bride Passport Image"
                             />
                           )}
@@ -2120,7 +2095,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ color: "blue" }}
                             target="_blank"
                             href={
-                              _.head(bridePassport)?.type === "pdf" ? trimURL(_.head(bridePassport)?.pdfUrl) : trimURL(_.head(bridePassport)?.large)
+                              _.head(bridePassport)?.type === "pdf" ? _.head(bridePassport)?.pdfUrl : _.head(bridePassport)?.large
                             }
                           >
                             Preview
@@ -2152,17 +2127,17 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(brideSSN)?.pdfUrl)}
+                                data={_.head(brideSSN)?.pdfUrl}
                                 alt="Bride SSN Pdf"
                               />
                             </React.Fragment>
                           ) : (
-                            <img style={{ margin: "5px 0" }} height={120} src={trimURL(_.head(brideSSN)?.small)} alt="Bride SSN Image" />
+                            <img style={{ margin: "5px 0" }} height={120} src={_.head(brideSSN)?.small} alt="Bride SSN Image" />
                           )}
                           <a
                             style={{ color: "blue" }}
                             target="_blank"
-                            href={_.head(brideSSN)?.type === "pdf" ? trimURL(_.head(brideSSN)?.pdfUrl) : trimURL(_.head(brideSSN)?.large)}
+                            href={_.head(brideSSN)?.type === "pdf" ? _.head(brideSSN)?.pdfUrl : _.head(brideSSN)?.large}
                           >
                             Preview
                           </a>
@@ -2225,7 +2200,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(brideDrivingLicense)?.pdfUrl)}
+                            data={_.head(brideDrivingLicense)?.pdfUrl}
                             alt="Bride Driving License Pdf"
                           />
                         </React.Fragment>
@@ -2234,7 +2209,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(brideDrivingLicense)?.small)}
+                          src={_.head(brideDrivingLicense)?.small}
                           alt="Bride Driving License Image"
                         />
                       )}
@@ -2243,8 +2218,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(brideDrivingLicense)?.type === "pdf"
-                            ? trimURL(_.head(brideDrivingLicense)?.pdfUrl)
-                            : trimURL(_.head(brideDrivingLicense)?.large)
+                            ? _.head(brideDrivingLicense)?.pdfUrl
+                            : _.head(brideDrivingLicense)?.large
                         }
                       >
                         Preview
@@ -2277,7 +2252,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(brideSchoolCertificate)?.pdfUrl)}
+                            data={_.head(brideSchoolCertificate)?.pdfUrl}
                             alt="Bride School Certificate Pdf"
                           />
                         </React.Fragment>
@@ -2286,7 +2261,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(brideSchoolCertificate)?.small)}
+                          src={_.head(brideSchoolCertificate)?.small}
                           alt="Bride School Certificate Image"
                         />
                       )}
@@ -2295,8 +2270,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(brideSchoolCertificate)?.type === "pdf"
-                            ? trimURL(_.head(brideSchoolCertificate)?.pdfUrl)
-                            : trimURL(_.head(brideSchoolCertificate)?.large)
+                            ? _.head(brideSchoolCertificate)?.pdfUrl
+                            : _.head(brideSchoolCertificate)?.large
                         }
                       >
                         Preview
@@ -2329,7 +2304,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(brideBirthCertificate)?.pdfUrl)}
+                            data={_.head(brideBirthCertificate)?.pdfUrl}
                             alt="Bride Birth Certificate Pdf"
                           />
                         </React.Fragment>
@@ -2338,7 +2313,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(brideBirthCertificate)?.small)}
+                          src={_.head(brideBirthCertificate)?.small}
                           alt="Bride Birth Certificate Image"
                         />
                       )}
@@ -2347,8 +2322,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(brideBirthCertificate)?.type === "pdf"
-                            ? trimURL(_.head(brideBirthCertificate)?.pdfUrl)
-                            : trimURL(_.head(brideBirthCertificate)?.large)
+                            ? _.head(brideBirthCertificate)?.pdfUrl
+                            : _.head(brideBirthCertificate)?.large
                         }
                       >
                         Preview
@@ -2394,7 +2369,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl)}
+                                data={_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl}
                                 alt="Divorce/Annulled Cetificate Pdf"
                               />
                             </React.Fragment>
@@ -2403,7 +2378,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               width={100}
                               height={120}
-                              src={trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.small)}
+                              src={_.head(brideDivorceAnnulledDecreeCertificate)?.small}
                               alt="Divorce/Annulled Cetificate Image"
                             />
                           )}
@@ -2412,8 +2387,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             target="_blank"
                             href={
                               _.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
-                                ? trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl)
-                                : trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.large)
+                                ? _.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl
+                                : _.head(brideDivorceAnnulledDecreeCertificate)?.large
                             }
                           >
                             Preview
@@ -2458,7 +2433,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(brideExpirationCertificate)?.pdfUrl)}
+                                data={_.head(brideExpirationCertificate)?.pdfUrl}
                                 alt="Bride Expiration Certificate Pdf"
                               />
                             </React.Fragment>
@@ -2467,7 +2442,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(brideExpirationCertificate)?.small)}
+                              src={_.head(brideExpirationCertificate)?.small}
                               alt="Bride Expiration Certificate Image"
                             />
                           )}
@@ -2476,8 +2451,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             target="_blank"
                             href={
                               _.head(brideExpirationCertificate)?.type === "pdf"
-                                ? trimURL(_.head(brideExpirationCertificate)?.pdfUrl)
-                                : trimURL(_.head(brideExpirationCertificate)?.large)
+                                ? _.head(brideExpirationCertificate)?.pdfUrl
+                                : _.head(brideExpirationCertificate)?.large
                             }
                           >
                             Preview
@@ -2547,7 +2522,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(instituitionCertificate)?.pdfUrl)}
+                                data={_.head(instituitionCertificate)?.pdfUrl}
                                 alt="Instituition Certificate Pdf"
                               />
                             </React.Fragment>
@@ -2556,7 +2531,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(instituitionCertificate)?.small)}
+                              src={_.head(instituitionCertificate)?.small}
                               alt="Instituition Certificate Image"
                             />
                           )}
@@ -2565,8 +2540,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             target="_blank"
                             href={
                               _.head(instituitionCertificate)?.type === "pdf"
-                                ? trimURL(_.head(instituitionCertificate)?.pdfUrl)
-                                : trimURL(_.head(instituitionCertificate)?.large)
+                                ? _.head(instituitionCertificate)?.pdfUrl
+                                : _.head(instituitionCertificate)?.large
                             }
                           >
                             Preview
@@ -2599,7 +2574,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(marriageOfficerCertificate)?.pdfUrl)}
+                                data={_.head(marriageOfficerCertificate)?.pdfUrl}
                                 alt="Marriage Officer Certificate Pdf"
                               />
                             </React.Fragment>
@@ -2608,7 +2583,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(marriageOfficerCertificate)?.small)}
+                              src={_.head(marriageOfficerCertificate)?.small}
                               alt="Marriage Officer Certificate Image"
                             />
                           )}
@@ -2617,8 +2592,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             target="_blank"
                             href={
                               _.head(marriageOfficerCertificate)?.type === "pdf"
-                                ? trimURL(_.head(marriageOfficerCertificate)?.pdfUrl)
-                                : trimURL(_.head(marriageOfficerCertificate)?.large)
+                                ? _.head(marriageOfficerCertificate)?.pdfUrl
+                                : _.head(marriageOfficerCertificate)?.large
                             }
                           >
                             Preview
@@ -2659,7 +2634,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          data={trimURL(_.head(otherMarriageCertificate)?.pdfUrl)}
+                          data={_.head(otherMarriageCertificate)?.pdfUrl}
                           alt="Other Certificate Pdf"
                         />
                       ) : (
@@ -2667,7 +2642,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(otherMarriageCertificate)?.small)}
+                          src={_.head(otherMarriageCertificate)?.small}
                           alt="Other Certificate Image"
                         />
                       )}
@@ -2676,8 +2651,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         target="_blank"
                         href={
                           _.head(otherMarriageCertificate)?.type === "pdf"
-                            ? trimURL(_.head(otherMarriageCertificate)?.pdfUrl)
-                            : trimURL(_.head(otherMarriageCertificate)?.large)
+                            ? _.head(otherMarriageCertificate)?.pdfUrl
+                            : _.head(otherMarriageCertificate)?.large
                         }
                       >
                         Preview
@@ -2728,7 +2703,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(witness1Aadhar)?.pdfUrl)}
+                            data={_.head(witness1Aadhar)?.pdfUrl}
                             alt="Other Certificate Pdf"
                           />
                         </React.Fragment>
@@ -2737,7 +2712,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(witness1Aadhar)?.small)}
+                          src={_.head(witness1Aadhar)?.small}
                           alt="Other Certificate Image"
                         />
                       )}
@@ -2745,7 +2720,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         style={{ color: "blue" }}
                         target="_blank"
                         href={
-                          _.head(witness1Aadhar)?.type === "pdf" ? trimURL(_.head(witness1Aadhar)?.pdfUrl) : trimURL(_.head(witness1Aadhar)?.large)
+                          _.head(witness1Aadhar)?.type === "pdf" ? _.head(witness1Aadhar)?.pdfUrl : _.head(witness1Aadhar)?.large
                         }
                       >
                         Preview
@@ -2788,7 +2763,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(witness2Aadhar)?.pdfUrl)}
+                            data={_.head(witness2Aadhar)?.pdfUrl}
                             alt="Other Certificate Pdf"
                           />
                         </React.Fragment>
@@ -2797,7 +2772,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           style={{ margin: "5px 0" }}
                           height={120}
                           width={100}
-                          src={trimURL(_.head(witness2Aadhar)?.small)}
+                          src={_.head(witness2Aadhar)?.small}
                           alt="Other Certificate Image"
                         />
                       )}
@@ -2805,7 +2780,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                         style={{ color: "blue" }}
                         target="_blank"
                         href={
-                          _.head(witness2Aadhar)?.type === "pdf" ? trimURL(_.head(witness2Aadhar)?.pdfUrl) : trimURL(_.head(witness2Aadhar)?.large)
+                          _.head(witness2Aadhar)?.type === "pdf" ? _.head(witness2Aadhar)?.pdfUrl :_.head(witness2Aadhar)?.large
                         }
                       >
                         Preview

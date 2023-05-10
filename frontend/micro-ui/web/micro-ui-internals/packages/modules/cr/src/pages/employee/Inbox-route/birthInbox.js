@@ -12,7 +12,7 @@ const BirthInbox = () => {
   const [pageOffset, setPageOffset] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [searchParams, setSearchParams] = useState({ filters: { assignee: uuid }, search: "", sort: {} });
+  const [searchParams, setSearchParams] = useState({ filters: { }, search: "", sort: {} });
 
   useEffect(() => {
     (async () => {
