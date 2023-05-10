@@ -278,7 +278,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       );
       if (currentWorgFlow.length > 0) {
         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-        {console.log(workflowCode, "code")}
         setIsPayment(currentWorgFlow[0].payment);
         setAmount(currentWorgFlow[0].amount);
       }
