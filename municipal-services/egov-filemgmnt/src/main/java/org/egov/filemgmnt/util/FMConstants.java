@@ -12,6 +12,7 @@ public class FMConstants {
     public static final String PATTERN_TENANT = "^kl\\.[a-z]+$";
     public static final String PATTERN_PINCODE = "^[1-9][0-9]{5}$";
     public static final String PATTERN_YEAR = "^[1-9][0-9]{3}$";
+    public static final String PATTERN_MODULE_CODE = "^[A-Z]+$";
 
     // Encryption / Decryption
     public static final String FM_APPLICANT_ENC_KEY = "FMDetail";

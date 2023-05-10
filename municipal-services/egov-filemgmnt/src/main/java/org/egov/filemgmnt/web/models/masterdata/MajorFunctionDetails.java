@@ -1,8 +1,10 @@
 package org.egov.filemgmnt.web.models.masterdata;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
@@ -39,6 +41,7 @@ public class MajorFunctionDetails {
     @Schema(type = "string", description = "Major function code")
     @NotBlank(message = "Major function code is required")
     @Size(max = 20, message = "Major function code length cannot exceed 20 characters")
+    @Pattern(regexp = FMConstants.PATTERN_MODULE_CODE, message = "Invalid major function code")
     @JsonProperty("majorFunctionCode")
     private String majorFunctionCode;
 
