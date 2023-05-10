@@ -93,9 +93,9 @@ public class PaymentUpdateService {
 			 
 			searchCriteria.setApplicationNo(paymentDetail.getBill().getConsumerCode());
 			searchCriteria.setBusinessService(paymentDetail.getBusinessService());
-			System.out.println(" payment detail tenantId:"+tenantId);
-			System.out.println(" payment detail tenantId:"+paymentDetail.getBill().getConsumerCode());
-			System.out.println(" payment detail tenantId:"+paymentDetail.getBusinessService());
+//			System.out.println(" payment detail tenantId:"+tenantId);
+//			System.out.println(" payment detail tenantId:"+paymentDetail.getBill().getConsumerCode());
+//			System.out.println(" payment detail tenantId:"+paymentDetail.getBusinessService());
 			List<MarriageApplicationDetails> marriage = marriageService.searchMarriageDetails(searchCriteria,requestInfo);
 			if(null!=marriage && marriage.size()==1){
 				if(marriage.get(0).getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){

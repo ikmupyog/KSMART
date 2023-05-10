@@ -91,11 +91,8 @@ public class MarriageRegistryService {
     public MarriageCertificate download(MarriageRegistrySearchCriteria criteria, RequestInfo requestInfo) {
         List<MarriageRegistryDetails> marriageRegistryDetailsList = repository.searchMarriageRegistry(criteria, requestInfo);
         if (marriageRegistryDetailsList != null && !marriageRegistryDetailsList.isEmpty()) {
-//            List<MarriageCertificate> marriageCertificateList = repository.searchCertificateByMarriageId(marriageRegistryDetailsList.get(0).getId());
         try {
-
             MarriageCertificate marriageCertificate = new MarriageCertificate();
-
             MarriageCertRequest marriageCertRequest = MarriageCertRequest.builder().marriageCertificate(marriageCertificate).requestInfo(requestInfo).build();
             marriageCertificate.setMarriageRegistryDetails(marriageRegistryDetailsList.get(0));
             marriageCertificate.setRegistrationno(marriageRegistryDetailsList.get(0).getRegistrationno());
@@ -103,25 +100,11 @@ public class MarriageRegistryService {
             if (null!=marriageDtls && marriageDtls.size() > 1) {
                 throw new CustomException("Invalid_Input", "Error in processing data");
             }
-
-//            if(marriageDtls.size() > 0) { //TODO check if certificate already available , will the date of issue changes?
             marriageCertificate.setMarriageRegId(marriageRegistryDetailsList.get(0).getId());
-//                marriageCertificate.setApplicationId(marriageDtls.get(0).getApplicationId());
-//                marriageCertificate.setApplicationNumber(marriageDtls.get(0).getAckNo());
-//            marriageCertificate.setDateofreporting(marriageRegistryDetailsList.get(0).getDateofreporting());
-//            marriageCertificate.setTenantid(marriageRegistryDetailsList.get(0).getTenantid());
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 String date = df.format(marriageRegistryDetailsList.get(0).getRegistrationDate());
                 String datestr = date.split("-")[2];
                 marriageCertificate.setYear(datestr);
-//TODO re-check the fields setting
-//            marriageDtls.get(0).setCertId(marriageCertRequest.getMarriageCertificate().getMarriagecertificateno());
-//            if(null!=marriageDtls&&marriageDtls.size()==1){
-//                marriageDtls.get(0).setMarriageRegistryDetails(marriageRegistryDetailsList.get(0));
-//            }
-//            else if (marriageDtls==null||marriageDtls.size()==0) {
-//                marriageDtls.add(marriageCertificate);
-//            }
             MarriageCertPDFRequest marriageCertPDFRequest = MarriageCertPDFRequest.builder().requestInfo(requestInfo).marriageCertificate(Arrays.asList(marriageCertificate)).build();
             long currentDate=System.currentTimeMillis();
             marriageCertificate.setDateofissue(currentDate);
@@ -134,41 +117,35 @@ public class MarriageRegistryService {
                 String[] dobAry = strDate.split("/");
                 try {
                     dodInWords = NumToWordConverter.convertNumber(Long.parseLong(dobAry[0])) + "/" + new SimpleDateFormat("MMMM").format(res) + "/" + NumToWordConverter.convertNumber(Long.parseLong(dobAry[2]));
-
                     marriageCertificate.setDateOfIssueInWords(StringUtils.upperCase(StringUtils.isNotBlank(dodInWords)?dodInWords.trim():dodInWords));
                 } catch(Exception e) {
+                    log.error("DateToWords conversion error. threw an Exception: ",e);
                 }
             }
 
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
-           // marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
-        //  marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
             marriageCertificate.setCertificateStatus(MarriageCertificate.StatusEnum.FREE_DOWNLOAD);
             marriageCertificate.setCount(1);//If 1 download from filestoreId, If 0, need to regenerate certificate
-
-//            }
             marriageCertificate.setMarriagecertificateno(marriageRegistryDetailsList.get(0).getCertificateNo());
             List<MarriageCertificate> marriageCertSearch = repository.searchCertificateByMarriageId(marriageCertRequest.getMarriageCertificate().getMarriageRegId());
             if (null != marriageCertSearch && !marriageCertSearch.isEmpty()) {
                 marriageCertRequest.getMarriageCertificate().setId(marriageCertSearch.get(0).getId());
                 repository.updateMarriageCertificate(marriageCertRequest);
             } else {
-                //marriageCertificate.setId(UUID.randomUUID().toString());
                 repository.saveMarriageCertificate(marriageCertRequest);
             }
-
-
             return marriageCertificate;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            log.error("DOWNLOAD_ERROR. Marriage Certificate , threw an Exception: ",e);
             throw new CustomException("DOWNLOAD_ERROR", "Error in Downloading Certificate"+e.getMessage());
         }
         }else if (marriageRegistryDetailsList == null && marriageRegistryDetailsList.isEmpty()){
+            log.info("DOWNLOAD_ERROR. Marriage Certificate , Marriage registry not found");
             throw new CustomException("DOWNLOAD_ERROR", "Marriage registry not found");
         }else{
+            log.info("DOWNLOAD_ERROR. Marriage Certificate , More than one marriage registry found");
             throw new CustomException("DOWNLOAD_ERROR", "More than one marriage registry found");
         }
 
