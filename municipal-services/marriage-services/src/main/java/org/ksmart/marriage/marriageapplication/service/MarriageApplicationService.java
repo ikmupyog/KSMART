@@ -68,12 +68,13 @@ public class MarriageApplicationService {
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
+        System.out.println("Statusb4workflow"+ request.getMarriageDetails().get(0).getStatus());
         if (request.getMarriageDetails().get(0).getIsWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }
         request.getMarriageDetails().forEach(marriage->{
-            // System.out.println("JSONStatus"+marriage.getStatus());
-            // System.out.println("ConstStatus"+MarriageConstants.STATUS_FOR_PAYMENT);
+            System.out.println("JSONStatus"+marriage.getStatus());
+         //   System.out.println("ConstStatus"+MarriageConstants.STATUS_FOR_PAYMENT);
           //  if(wfc.getPayment()!= null){
                 if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
                  //   System.out.println("hienterpayment");
