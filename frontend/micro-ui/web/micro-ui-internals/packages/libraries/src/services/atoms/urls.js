@@ -194,8 +194,10 @@ const Urls = {
     deleteModule:"/filemgmnt/v1/masterdata/modules/_delete",
     submodulesearch:"/filemgmnt/v1/masterdata/subfunctions/_search",
     modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
+    majorFunctionSearch:"/filemgmnt/v1/masterdata/majorfunctions/_search",
     createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create",
     arising_file: "/filemgmnt/v1/arisingfiles/_create",
+    majorFunction:"/filemgmnt/v1/masterdata/majorfunctions/_create"
 
   },
 

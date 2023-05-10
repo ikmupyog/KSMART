@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useMemo } from "react";
 import { SubmitBar, CardLabel, TextInput, Table } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
@@ -48,54 +48,57 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     };
     deleteItem.mutate(formData);
   };
-  const columns = [
-    {
-      Header: t("MODULE_CODE"),
-      Cell: ({ row }) => {
-        return (
-          <div>
-            <span className="link">
-              <div>
-                <a onClick={() => handleLinkClick(row.original)}> {row.original.moduleCode}</a>
-              </div>
-            </span>
-          </div>
-        );
+  const columns = useMemo(
+    () => [
+      {
+        Header: t("MODULE_CODE"),
+        Cell: ({ row }) => {
+          return (
+            <div>
+              <span className="link">
+                <div>
+                  <a onClick={() => handleLinkClick(row.original)}> {row.original.moduleCode}</a>
+                </div>
+              </span>
+            </div>
+          );
+        },
+        disableSortBy: true,
       },
-      disableSortBy: true,
-    },
-    {
-      Header: t("MODULE_NAME_ENG"),
-      Cell: ({ row }) => GetCell(t(row?.original.moduleNameEnglish || "NA")),
-      disableSortBy: true,
-    },
-    {
-      Header: t("MODULE_NAME_MAL"),
-      disableSortBy: true,
-      Cell: ({ row }) => GetCell(t(row.original.moduleNameMalayalam) || ""),
-    },
-    {
-      Header: t("Download Certificate"),
-      disableSortBy: true,
-      Cell: ({ row }) => {
-        return (
-          <div onClick={Delete}>
-            <button class="btn btn-delete">
-              <span class="mdi mdi-delete mdi-24px"></span>
-              <span class="mdi mdi-delete-empty mdi-24px"></span>
-              <span>Delete</span>
-            </button>
-          </div>
-        );
+      {
+        Header: t("MODULE_NAME_ENG"),
+        Cell: ({ row }) => GetCell(t(row?.original.moduleNameEnglish || "NA")),
+        disableSortBy: true,
       },
-    },
-  ];
+      {
+        Header: t("MODULE_NAME_MAL"),
+        disableSortBy: true,
+        Cell: ({ row }) => GetCell(t(row.original.moduleNameMalayalam) || ""),
+      },
+      {
+        Header: t("Download Certificate"),
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          return (
+            <div onClick={Delete}>
+              <button class="btn btn-delete">
+                <span class="mdi mdi-delete mdi-24px"></span>
+                <span class="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
 
   const saveModule = () => {
     const formData = {
       ModuleDetails: {
         id: null,
-        tenantId: "kl.cochin",
+        tenantId: tenantId,
         moduleCode: moduleCode,
         moduleNameEnglish: moduleNameEn,
         moduleNameMalayalam: moduleNameMl,

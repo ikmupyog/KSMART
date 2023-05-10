@@ -33,6 +33,8 @@ import useCreateModule from "./dfm/useCreateModule";
 import useCreateSubModule from "./dfm/useCreateSubModule";
 import useUpdateModule from "./dfm/useUpdateModule";
 import useDeleteModule from "./dfm/useDeleteModule";
+import useSearchmajorFunction from "./dfm/useSearchmajorFunction";
+import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -481,9 +483,11 @@ const dfm = {
   useCreateModule,
   useApplicationModule,
   useSearchsubModule,
+  useSearchmajorFunction,
   useCreateSubModule,
   useUpdateModule,
-  useDeleteModule
+  useDeleteModule,
+  useMajorFunctionAdd
 };
 const receipts = {
   useReceiptsMDMS,

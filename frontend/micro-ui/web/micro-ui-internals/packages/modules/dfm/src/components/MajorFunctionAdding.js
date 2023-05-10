@@ -1,53 +1,48 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {
-  BackButton,
-  PrivateRoute,
-  BreadCrumb,
-  CommonDashboard,
-  FormInputGroup,
-  SubmitBar,
-  CardLabel,
-  CardLabelError,
-  Dropdown,
-  CheckBox,
-  LinkButton,
-  SearchAction,
-  TextInput,
-  UploadFile,
-  SearchIconSvg,
-  TextArea,
-  CustomButton,
-  CardTextButton,
-  ActionBar,
-  Table,
-} from "@egovernments/digit-ui-react-components";
+import { SubmitBar, CardLabel, Dropdown, TextInput, Table } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
-import viewToPlainText from "@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext";
 
 const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [draftText, setDraftText] = useState("");
   const { t } = useTranslation();
   const history = useHistory();
-  const state = useSelector((state) => state);
-  const locale = Digit.SessionStorage.get("locale");
-  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
-  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
-  const mutation = Digit.Hooks.dfm.useApplicationDrafting(tenantId);
-  const payload = "KL-KOCHI-C-000017- FMARISING-2023-AR";
-  const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
+  const mutation = Digit.Hooks.dfm.useMajorFunctionAdd(tenantId);
+  const [majorFunctionCode, setMajorFunctionCode] = useState("");
+  const [majorFunctionNameEnglish, setMajorFunctionNameEnglish] = useState("");
+  const [majorFunctionNameMalayalam, setMajorFunctionNameMalayalam] = useState("");
+  const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
+  console.log("datamodule", moduleNameEnglish.label);
+  const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
+  const { refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
+  // const Value = data?.ModuleDetails?.map((item) => item.moduleNameEnglish);
+  const Value = data?.ModuleDetails?.map((item) => ({
+    label: item.id,
+    value: item.moduleNameEnglish,
+  }));
+  console.log("valluuee", Value);
+  const setsetMajorFunctionCode = (e) => {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setMajorFunctionCode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  };
+  const setsetMajorFunctionNameEnglish = (e) => {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setMajorFunctionNameEnglish(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  };
+  const setsetMajorFunctionNameMalayalam = (e) => {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C @]*$/;
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match(pattern) != null) {
+      setMajorFunctionNameMalayalam(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  };
 
-  const draftTextValue = data?.Drafting[0]?.draftText;
+  //   const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId });
+
+  //   const draftTextValue = data?.Drafting[0]?.draftText;
   const columns = useMemo(
     () => [
       {
@@ -85,15 +80,16 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
     ],
     []
   );
+
   const saveDraft = () => {
     const formData = {
       MajorFunctionDetails: {
         id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         tenantId: "kl",
-        majorFunctionCode: "string",
+        majorFunctionCode: majorFunctionCode,
         moduleId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        majorFunctionNameEnglish: "string",
-        majorFunctionNameMalayalam: "string",
+        majorFunctionNameEnglish: majorFunctionNameEnglish,
+        majorFunctionNameMalayalam: majorFunctionNameMalayalam,
         status: "string",
         auditDetails: {
           createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -103,15 +99,18 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         },
       },
     };
+
     mutation.mutate(formData);
+    refetch();
   };
-
-  useEffect(() => {
-    if (mutation.isSuccess == true) {
-      history.push("/digit-ui/employee/dfm/note-drafting");
-    }
-  }, [mutation.isSuccess]);
-
+  //   useEffect(() => {
+  //     if (mutation.isSuccess == true) {
+  //       history.push("/digit-ui/employee/dfm/note-drafting");
+  //     }
+  //   }, [mutation.isSuccess]);
+  function setsetmoduleNameEnglish(value) {
+    setmoduleNameEnglish(value);
+  }
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -123,28 +122,53 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
                   {t("MODULE_NAME_ENG")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                <Dropdown t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("MODULE_NAME_ENG")} />
+                <Dropdown optionKey="value" option={Value} selected={moduleNameEnglish} select={setsetmoduleNameEnglish} />
+                {/* <Dropdown optionKey="moduleCode" option={Value} selected={moduleNameEnglish} select={setsetmoduleNameEnglish} /> */}
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
                 <CardLabel>
                   {t("MF_CODE")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                <TextInput t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("MF_CODE")} />
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  onChange={setsetMajorFunctionCode}
+                  value={majorFunctionCode}
+                  name="RegistrationNo"
+                  placeholder={t("MF_CODE")}
+                />
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
                 <CardLabel>
                   {t("MAJOR_FUNCTION_NAME_ENG")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                <TextInput t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("MAJOR_FUNCTION_NAME_ENG")} />
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  onChange={setsetMajorFunctionNameEnglish}
+                  value={majorFunctionNameEnglish}
+                  name="RegistrationNo"
+                  placeholder={t("MAJOR_FUNCTION_NAME_ENG")}
+                />
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
                 <CardLabel>
                   {t("MAJOR_FUNCTION_NAME_MAL")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                <TextInput t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("MAJOR_FUNCTION_NAME_MAL")} />
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  onChange={setsetMajorFunctionNameMalayalam}
+                  value={majorFunctionNameMalayalam}
+                  name="RegistrationNo"
+                  placeholder={t("MAJOR_FUNCTION_NAME_MAL")}
+                />
               </div>
             </div>
           </div>
@@ -157,9 +181,24 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         </div>
       </div>
       <div className="moduleLinkHomePageModuleLinks">
-        <div className="FileFlowWrapper customSubFunctionTable">
-          <Table t={t} data={[]} columns={columns} />
-        </div>
+        {/* <div className="FileFlowWrapper customSubFunctionTable">
+          {textValue?.length > 0 && (
+            <Table
+              t={t}
+              data={textValue}
+              columns={columns}
+              getCellProps={(cellInfo) => {
+                return {
+                  style: {
+                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                    padding: "20px 18px",
+                    fontSize: "16px",
+                  },
+                };
+              }}
+            />
+          )}
+        </div>   */}
       </div>
     </React.Fragment>
   );
