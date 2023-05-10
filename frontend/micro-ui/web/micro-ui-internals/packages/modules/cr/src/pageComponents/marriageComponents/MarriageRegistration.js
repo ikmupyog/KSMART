@@ -389,6 +389,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriageLBtype(value) {
     setMarriageLBtype(value);
+    if (cmbLB.length > 0) {
+      const currentLBType = filteredLBType.map(lb=>lb);
+      setMarriageLBtype(currentLBType[0]);
+    }
     setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
@@ -482,28 +486,23 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       districtid = currentDistrict[0].districtid;
       cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
       setLbsTalukvalue(cmbFilterTaluk);
-      console.log({ cmbFilterTaluk });
       cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
       setLbsVillagevalue(cmbFilterVillage);
-      console.log({ cmbFilterVillage });
       const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
       setMarriageLBtype(currentLBType[0]);
-      console.log({ currentLBType });
       const currentTaluk = cmbFilterTaluk?.filter((taluk) => taluk.code === currentLB[0].city.talukcode);
       setmarriageTalukID(currentTaluk[0]);
-      console.log({ currentTaluk });
     }
   }, [cmbLB.length]);
 
-  console.log({filteredLBType})
+  console.log({ filteredLBType });
 
   useEffect(() => {
     if (DifferenceInTime != null) {
-      console.log({DifferenceInTime})
-      let currentWorkFlow = workFlowData.filter(
-        (workFlowData) => {
-          return workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
-        });
+      console.log({ DifferenceInTime });
+      let currentWorkFlow = workFlowData.filter((workFlowData) => {
+        return workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime;
+      });
       if (currentWorkFlow.length > 0) {
         setWorkFlowCode(currentWorkFlow[0].WorkflowCode);
         setIsPayment(currentWorkFlow[0].payment);
@@ -937,7 +936,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
 
   console.log("Registration", formData);
-  console.log({workFlowCode})
+  console.log({ workFlowCode });
 
   if (
     isLoading ||
@@ -1036,6 +1035,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectMarriageDistrictid}
                     selected={marriageDistrictid}
                     placeholder={t("CS_COMMON_DISTRICT")}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1053,6 +1053,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectmarriageTalukID}
                     selected={marriageTalukID}
                     placeholder={t("CS_COMMON_TALUK")}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1089,6 +1090,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectmarriageLBtype}
                     selected={marriageLBtype}
                     placeholder={t("CS_LBTYPE")}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1106,6 +1108,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     selected={marriageTenantid}
                     select={setSelectmarriageTenantid}
                     placeholder={`${t("CS_LB")}`}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
