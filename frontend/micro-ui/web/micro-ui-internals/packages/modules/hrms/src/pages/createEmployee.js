@@ -189,7 +189,7 @@ const CreateEmployee = ({userType}) => {
         setcheck(true);
       }
     }
-    console.log(formData, "formData");
+    
     let setassigncheck = false;
     for (let i = 0; i < formData?.Assignments?.length; i++) {
       let key = formData?.Assignments[i];
@@ -210,7 +210,6 @@ const CreateEmployee = ({userType}) => {
       formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress &&
       formData?.SelectEmployeeGender?.gender.code &&
       formData?.SelectEmployeeName?.employeeName &&
-      // formData?.SelectEmployeeAadharNumber?.AadharNumber &&
       formData?.SelectEmployeeAadhaarNumber?.aadhaarNumber &&
       formData?.SelectEmployeeType?.code &&
       formData?.SelectEmployeePhoneNumber?.mobileNumber 
