@@ -61,8 +61,11 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             marriageApplicationDetails.getGroomDetails().setBrideGroom("G");
         }
 
-        DateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        //DateFormat formatter = new SimpleDateFormat("ddMMyyyy");
         marriageApplicationDetails.setDateofreporting(new Date().getTime());
+        HashMap<String,Boolean> prmntAdrsChangeFlag=new HashMap<>();
+        prmntAdrsChangeFlag.put("bride",false);
+        prmntAdrsChangeFlag.put("groom",false);
 
         correctionRequest.getMarriageCorrectionDetails().forEach(correction -> {
 
@@ -115,94 +118,91 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                         String[] fieldName = changeField.getField().split("\\.");
                         if (fieldName.length == 1) {
                             if (marriageApplnDetailsFieldMap.containsKey(fieldName[0])) {
-                                if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
+                                //if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
                                     CorrectionFieldValue correctionFieldValue = new CorrectionFieldValue();
                                     correctionFieldValue.setId(UUID.randomUUID().toString());
                                     correctionFieldValue.setCorrectionId(correctionId);
                                     correctionFieldValue.setMarriageId(marriageApplicationDetails.getId());
                                     correctionFieldValue.setCorrectionFieldName(correctionField.getCorrectionFieldName());
                                     correctionFieldValue.setColumnName(changeField.getField());
-                                    //correctionFieldValue.setOldValue(marriageApplnDetailsAccessor.getPropertyValue(marriageApplnDetailsFieldMap.get(fieldName[0])).toString());
-                                    correctionFieldValue.setOldValue(changeField.getOldValue());
-                                    correctionFieldValue.setNewValue(changeField.getNewValue());
+                                    correctionFieldValue.setOldValue(changeField.getOldValue()==null?"":changeField.getOldValue());
+                                    correctionFieldValue.setNewValue(changeField.getNewValue()==null?"":changeField.getNewValue());
                                     correctionFieldValue.setAuditDetails(auditDetails);
                                     correctionRequest.getCorrectionFieldValue().add(correctionFieldValue);
 
                                     marriageApplnDetailsAccessor.setPropertyValue(marriageApplnDetailsFieldMap.get(fieldName[0]), changeField.getNewValue());
-                                }
+                                //}
                             }
                         } else if (fieldName.length == 2) {
                             if (fieldName[0].equalsIgnoreCase("BrideDetails")) {
                                 if (brideDetailsFieldMap.containsKey(fieldName[1])) {
-                                    if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
+                                    //if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
                                         CorrectionFieldValue correctionFieldValue = new CorrectionFieldValue();
                                         correctionFieldValue.setId(UUID.randomUUID().toString());
                                         correctionFieldValue.setCorrectionId(correctionId);
                                         correctionFieldValue.setMarriageId(marriageApplicationDetails.getId());
                                         correctionFieldValue.setCorrectionFieldName(correctionField.getCorrectionFieldName());
                                         correctionFieldValue.setColumnName(changeField.getField());
-                                        //correctionFieldValue.setOldValue(brideDetailsAccessor.getPropertyValue(brideDetailsFieldMap.get(fieldName[1])).toString());
-                                        correctionFieldValue.setOldValue(changeField.getOldValue());
-                                        correctionFieldValue.setNewValue(changeField.getNewValue());
+                                        correctionFieldValue.setOldValue(changeField.getOldValue()==null?"":changeField.getOldValue());
+                                        correctionFieldValue.setNewValue(changeField.getNewValue()==null?"":changeField.getNewValue());
                                         correctionFieldValue.setAuditDetails(auditDetails);
                                         correctionRequest.getCorrectionFieldValue().add(correctionFieldValue);
 
                                         brideDetailsAccessor.setPropertyValue(brideDetailsFieldMap.get(fieldName[1]), changeField.getNewValue());
-                                    }
+                                   // }
                                 }
                             } else if (fieldName[0].equalsIgnoreCase("GroomDetails")) {
                                 if (groomDetailsFieldMap.containsKey(fieldName[1])) {
-                                    if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
+                                    //if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
                                         CorrectionFieldValue correctionFieldValue = new CorrectionFieldValue();
                                         correctionFieldValue.setId(UUID.randomUUID().toString());
                                         correctionFieldValue.setCorrectionId(correctionId);
                                         correctionFieldValue.setMarriageId(marriageApplicationDetails.getId());
                                         correctionFieldValue.setCorrectionFieldName(correctionField.getCorrectionFieldName());
                                         correctionFieldValue.setColumnName(changeField.getField());
-                                        //correctionFieldValue.setOldValue(groomDetailsAccessor.getPropertyValue(groomDetailsFieldMap.get(fieldName[1])).toString());
-                                        correctionFieldValue.setOldValue(changeField.getOldValue());
-                                        correctionFieldValue.setNewValue(changeField.getNewValue());
+                                        correctionFieldValue.setOldValue(changeField.getOldValue()==null?"":changeField.getOldValue());
+                                        correctionFieldValue.setNewValue(changeField.getNewValue()==null?"":changeField.getNewValue());
                                         correctionFieldValue.setAuditDetails(auditDetails);
                                         correctionRequest.getCorrectionFieldValue().add(correctionFieldValue);
 
                                         groomDetailsAccessor.setPropertyValue(groomDetailsFieldMap.get(fieldName[1]), changeField.getNewValue());
-                                    }
+                                    //}
                                 }
                             } else if (fieldName[0].equalsIgnoreCase("BrideAddressDetails")) {
                                 if (brideAddressDetailsFieldMap.containsKey(fieldName[1])) {
-                                    if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
+                                    prmntAdrsChangeFlag.put("bride",true);
+                                    //if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
                                         CorrectionFieldValue correctionFieldValue = new CorrectionFieldValue();
                                         correctionFieldValue.setId(UUID.randomUUID().toString());
                                         correctionFieldValue.setCorrectionId(correctionId);
                                         correctionFieldValue.setMarriageId(marriageApplicationDetails.getId());
                                         correctionFieldValue.setCorrectionFieldName(correctionField.getCorrectionFieldName());
                                         correctionFieldValue.setColumnName(changeField.getField());
-                                        //correctionFieldValue.setOldValue(brideAddressDetailsAccessor.getPropertyValue(brideAddressDetailsFieldMap.get(fieldName[1])).toString());
-                                        correctionFieldValue.setOldValue(changeField.getOldValue());
-                                        correctionFieldValue.setNewValue(changeField.getNewValue());
+                                        correctionFieldValue.setOldValue(changeField.getOldValue()==null?"":changeField.getOldValue());
+                                        correctionFieldValue.setNewValue(changeField.getNewValue()==null?"":changeField.getNewValue());
                                         correctionFieldValue.setAuditDetails(auditDetails);
                                         correctionRequest.getCorrectionFieldValue().add(correctionFieldValue);
 
                                         brideAddressDetailsAccessor.setPropertyValue(brideAddressDetailsFieldMap.get(fieldName[1]), changeField.getNewValue());
-                                    }
+                                    //}
                                 }
                             } else if (fieldName[0].equalsIgnoreCase("GroomAddressDetails")) {
                                 if (groomAddressDetailsFieldMap.containsKey(fieldName[1])) {
-                                    if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
+                                    prmntAdrsChangeFlag.put("groom",true);
+                                    //if(changeField.getOldValue()!=null && changeField.getOldValue()!=null) {
                                         CorrectionFieldValue correctionFieldValue = new CorrectionFieldValue();
                                         correctionFieldValue.setId(UUID.randomUUID().toString());
                                         correctionFieldValue.setCorrectionId(correctionId);
                                         correctionFieldValue.setMarriageId(marriageApplicationDetails.getId());
                                         correctionFieldValue.setCorrectionFieldName(correctionField.getCorrectionFieldName());
                                         correctionFieldValue.setColumnName(changeField.getField());
-                                        //correctionFieldValue.setOldValue(String.valueOf(groomAddressDetailsAccessor.getPropertyValue(groomAddressDetailsFieldMap.get(fieldName[1]))));
-                                        correctionFieldValue.setOldValue(changeField.getOldValue());
-                                        correctionFieldValue.setNewValue(changeField.getNewValue());
+                                        correctionFieldValue.setOldValue(changeField.getOldValue()==null?"":changeField.getOldValue());
+                                        correctionFieldValue.setNewValue(changeField.getNewValue()==null?"":changeField.getNewValue());
                                         correctionFieldValue.setAuditDetails(auditDetails);
                                         correctionRequest.getCorrectionFieldValue().add(correctionFieldValue);
 
                                         groomAddressDetailsAccessor.setPropertyValue(groomAddressDetailsFieldMap.get(fieldName[1]), changeField.getNewValue());
-                                    }
+                                    //}
                                 }
                             }
 
@@ -231,9 +231,10 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             });
         });
 
+        setBridePermanentAddress(marriageApplicationDetails,prmntAdrsChangeFlag.get("bride"));
 
-        setBridePermanentAddress(marriageApplicationDetails);
-        setGroomPermanentAddress(marriageApplicationDetails);
+        setGroomPermanentAddress(marriageApplicationDetails,prmntAdrsChangeFlag.get("groom"));
+
 
         GroomDetails groomDetails =marriageApplicationDetails.getGroomDetails();
         GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
@@ -320,7 +321,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
 
     }
 
-    private void setGroomPermanentAddress(MarriageApplicationDetails marriage) {
+    private void setGroomPermanentAddress(MarriageApplicationDetails marriage, Boolean prmntAdrsChangeFlag) {
         if (marriage != null) {
 
             if (marriage.getGroomAddressDetails() != null) {
@@ -329,57 +330,58 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                     marriage.getGroomAddressDetails().setPermanentUuid(UUID.randomUUID().toString());
                     marriage.getGroomAddressDetails().setBrideGroomPermanent("G");
                 }
+                if(prmntAdrsChangeFlag) {
+                    if (marriage.getGroomAddressDetails().getCountryIdPermanent() != null && marriage.getGroomAddressDetails().getStateIdPermanent() != null) {
+                        if (marriage.getGroomAddressDetails().getCountryIdPermanent().equalsIgnoreCase(MarriageConstants.COUNTRY_CODE)) {
+                            if (marriage.getGroomAddressDetails().getStateIdPermanent().equalsIgnoreCase(MarriageConstants.STATE_CODE_SMALL)) {
 
-                if (marriage.getGroomAddressDetails().getCountryIdPermanent() != null && marriage.getGroomAddressDetails().getStateIdPermanent() != null) {
-                    if (marriage.getGroomAddressDetails().getCountryIdPermanent().equalsIgnoreCase(MarriageConstants.COUNTRY_CODE)) {
-                        if (marriage.getGroomAddressDetails().getStateIdPermanent().equalsIgnoreCase(MarriageConstants.STATE_CODE_SMALL)) {
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent, marriage.getGroomAddressDetails().getPermtaddressCountry());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrTalukId,marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrVillageId,marriage.getGroomAddressDetails().getPermntInKeralaAdrVillage());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent,marriage.getGroomAddressDetails().getPermtaddressStateName());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrDistrict());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setLocalityEnPermanent, marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setLocalityMlPermanent, marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameMl());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameEnPermanent, marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameMlPermanent, marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameMl());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoEnPermanent, marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoMlPermanent, marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameMl());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPincode());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPoNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
+                            } else {
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent , marriage.getGroomAddressDetails().getPermtaddressCountry());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent , marriage.getGroomAddressDetails().getPermtaddressStateName());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaCityVilgeEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setLocalityEnPermanent, marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setLocalityMlPermanent, marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameMl());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameEnPermanent, marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameMlPermanent, marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameMl());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoEnPermanent, marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameEn());
+                                setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoMlPermanent, marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameMl());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaVillage());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrTalukName , marriage.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthPostOfficeEn , marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
+                                //setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
 
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent, marriage.getGroomAddressDetails().getPermtaddressCountry());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrTalukId,marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrVillageId,marriage.getGroomAddressDetails().getPermntInKeralaAdrVillage());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent,marriage.getGroomAddressDetails().getPermtaddressStateName());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrDistrict());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setLocalityEnPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setLocalityMlPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameEnPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameMlPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoEnPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoMlPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPincode());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPoNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
+                            }
                         } else {
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent , marriage.getGroomAddressDetails().getPermtaddressCountry());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent , marriage.getGroomAddressDetails().getPermtaddressStateName());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaCityVilgeEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setLocalityEnPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setLocalityMlPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameEnPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameMlPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoEnPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoMlPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameMl());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaVillage());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrTalukName , marriage.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthPostOfficeEn , marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-                            //setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
-
-                        }
-                    } else {
-                        //if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
+                            //if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
                             //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPresent , marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
                             //setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
                             //setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLineoneEn , marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLineoneMl , marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoEn , marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoMl , marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
+                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLineoneEn, marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
+                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLineoneMl, marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
+                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoEn, marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
+                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoMl, marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
                             //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceEn , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
                             //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceMl , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
                             //setIfNotNull(marriage.getGroomAddressDetails()::setOutSideIndiaPostCodePermanent , marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
 
-                        //}
-                    }
+                            //}
+                        }
 
+                    }
                 }
 
             }
@@ -389,7 +391,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
     }
 
 
-    private void setBridePermanentAddress(MarriageApplicationDetails marriage) {
+    private void setBridePermanentAddress(MarriageApplicationDetails marriage, Boolean prmntAdrsChangeFlag) {
         if (marriage != null) {
 
                 if (marriage.getBrideAddressDetails() != null) {
@@ -398,42 +400,42 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                         marriage.getBrideAddressDetails().setPermanentUuid(UUID.randomUUID().toString());
                         marriage.getBrideAddressDetails().setBrideGroomPermanent("B");
                     }
+                    if(prmntAdrsChangeFlag) {
+                        if (marriage.getBrideAddressDetails().getCountryIdPermanent() != null && marriage.getBrideAddressDetails().getStateIdPermanent() != null) {
+                            if (marriage.getBrideAddressDetails().getCountryIdPermanent().equalsIgnoreCase(MarriageConstants.COUNTRY_CODE)) {
+                                if (marriage.getBrideAddressDetails().getStateIdPermanent().equalsIgnoreCase(MarriageConstants.STATE_CODE_SMALL)) {
 
-                    if (marriage.getBrideAddressDetails().getCountryIdPermanent() != null && marriage.getBrideAddressDetails().getStateIdPermanent() != null) {
-                        if (marriage.getBrideAddressDetails().getCountryIdPermanent().equalsIgnoreCase(MarriageConstants.COUNTRY_CODE)) {
-                            if (marriage.getBrideAddressDetails().getStateIdPermanent().equalsIgnoreCase(MarriageConstants.STATE_CODE_SMALL)) {
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrTalukId, marriage.getBrideAddressDetails().getPermntInKeralaAdrTaluk());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrVillageId, marriage.getBrideAddressDetails().getPermntInKeralaAdrVillage());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrDistrict());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setLocalityEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameEn());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setLocalityMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameMl());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameEn());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameMl());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameEn());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameMl());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPoNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
+                                } else {
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaDistrict());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setLocalityEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameEn());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setLocalityMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameMl());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameEn());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameMl());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameEn());
+                                    setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameMl());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrTalukName, marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthPostOfficeEn, marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
+                                    //setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
 
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrTalukId, marriage.getBrideAddressDetails().getPermntInKeralaAdrTaluk());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrVillageId, marriage.getBrideAddressDetails().getPermntInKeralaAdrVillage());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrDistrict());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setLocalityEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setLocalityMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPoNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
+                                }
                             } else {
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaDistrict());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setLocalityEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setLocalityMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameMl());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrTalukName, marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthPostOfficeEn, marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-                                //setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
-
-                            }
-                        } else {
-                            //if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
+                                //if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPresent, marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setTownOrVillagePermanent, marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
@@ -445,9 +447,10 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceMl, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
                                 //setIfNotNull(marriage.getBrideAddressDetails()::setOutSideIndiaPostCodePermanent, marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
 
-                            //}
-                        }
+                                //}
+                            }
 
+                        }
                     }
 
                 }
@@ -458,9 +461,9 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
 
 
     public static <V> void setIfNotNull( Consumer<V> setter,V value) {
-        if (Objects.nonNull(value)) {
+        //if (Objects.nonNull(value)) {
             setter.accept(value);
-        }
+        //}
     }
 
 

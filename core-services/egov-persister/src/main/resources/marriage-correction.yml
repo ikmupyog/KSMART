@@ -284,11 +284,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.houseNameNoMlPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentAddrVillageId
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrVillage
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.villageNamePermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentAddrTalukId
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrTaluk
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaTaluk
 
@@ -308,7 +308,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.poNoPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.pinNoPermanent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPincode
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPermanent
 
@@ -326,23 +326,23 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthPostOfficeEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLineoneEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLineoneEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLineoneMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLineoneMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLinetwoEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaprovinceEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaprovinceEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaprovinceMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaprovinceMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePermanent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentOutsideIndiaPostCode
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthPostOfficeMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.townOrVillagePermanent
 
@@ -364,7 +364,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.houseNameNoMlPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermanentAddrVillageId
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrVillage
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.villageNamePermanent
 
@@ -418,7 +418,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceMl
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaprovinceMl
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentOutsideIndiaPostCode
 

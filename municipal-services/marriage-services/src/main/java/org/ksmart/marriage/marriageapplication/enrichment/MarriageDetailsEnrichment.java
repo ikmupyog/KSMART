@@ -86,6 +86,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
             setApplicationNumbers(request);
+            setBrideAddressNull(request);
+            setGroomAddressNull(request);
             setBridePermanentAddress(request);
             setBridePresentAddress(request);
             setGroomPermanentAddress(request);
@@ -606,10 +608,262 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 });
 
         }
+    private void setBrideAddressNull(MarriageDetailsRequest request){
+        request.getMarriageDetails()
+                .forEach(marriage->{
+//PRESENT
+                    marriage.getBrideAddressDetails().setCountryIdPresent(null);
+                    marriage.getBrideAddressDetails().setStateIdPresent(null);
 
 
+                    marriage.getBrideAddressDetails().setDistrictIdPresent(null);
 
-    //  private void setRegistrationNumber(MarriageDetailsRequest request) {
+                    marriage.getBrideAddressDetails().setLocalityEnPresent(null);
+                    marriage.getBrideAddressDetails().setLocalityMlPresent(null);
+
+                    marriage.getBrideAddressDetails().setStreetNameEnPresent(null);
+                    marriage.getBrideAddressDetails().setStreetNameMlPresent(null);
+
+                    marriage.getBrideAddressDetails().setHouseNameNoEnPresent(null);
+                    marriage.getBrideAddressDetails().setHouseNameNoMlPresent(null);
+
+                    marriage.getBrideAddressDetails().setPinNoPresent(null);
+                    marriage.getBrideAddressDetails().setPoNoPresent(null);
+
+
+                    marriage.getBrideAddressDetails().setCountryIdPresent(null);
+                    marriage.getBrideAddressDetails().setStateIdPresent(null);
+
+                    marriage.getBrideAddressDetails().setDistrictIdPresent(null);
+
+                    marriage.getBrideAddressDetails().setLocalityEnPresent(null);
+                    marriage.getBrideAddressDetails().setLocalityMlPresent(null);
+
+                    marriage.getBrideAddressDetails().setStreetNameEnPresent(null);
+                    marriage.getBrideAddressDetails().setStreetNameMlPresent(null);
+
+                    marriage.getBrideAddressDetails().setHouseNameNoEnPresent(null);
+                    marriage.getBrideAddressDetails().setHouseNameNoMlPresent(null);
+
+                    marriage.getBrideAddressDetails().setPinNoPresent(null);
+
+                    marriage.getBrideAddressDetails().setPresentOthrTalukName(null);
+                    marriage.getBrideAddressDetails().setPresentOthPostOfficeEn(null);
+
+                    marriage.getBrideAddressDetails().setTownOrVillagePresent(null);
+                    marriage.getBrideAddressDetails().setVillageNamePresent(null);
+
+
+                    marriage.getBrideAddressDetails().setCountryIdPresent(null);
+
+                    marriage.getBrideAddressDetails().setPresentOthrIndiaAdressEn(null);
+                    marriage.getBrideAddressDetails().setPresentOthrIndiaAdressMl(null);
+
+                    marriage.getBrideAddressDetails().setPresentOthrIndiaAdressEnB(null);
+                    marriage.getBrideAddressDetails().setPresentOthrIndiaAdressMlB(null);
+
+                    marriage.getBrideAddressDetails().setPresentOthrIndiaProvinceEn(null);
+                    marriage.getBrideAddressDetails().setPresentOthrIndiaProvinceMl(null);
+
+                    marriage.getBrideAddressDetails().setOutSideIndiaPostCodePresent(null);
+
+                    marriage.getBrideAddressDetails().setVillageNamePresent(null);
+                    marriage.getBrideAddressDetails().setTownOrVillagePresent(null);
+
+//PERMANENT
+
+                    marriage.getBrideAddressDetails().setCountryIdPermanent(null);
+
+                    marriage.getBrideAddressDetails().setStateIdPermanent(null);
+                    marriage.getBrideAddressDetails().setPermanentAddrTalukId(null);
+                    marriage.getBrideAddressDetails().setPermanentAddrVillageId(null);
+
+                    marriage.getBrideAddressDetails().setDistrictIdPermanent(null);
+
+                    marriage.getBrideAddressDetails().setLocalityEnPermanent(null);
+                    marriage.getBrideAddressDetails().setLocalityMlPermanent(null);
+
+                    marriage.getBrideAddressDetails().setStreetNameEnPermanent(null);
+                    marriage.getBrideAddressDetails().setStreetNameMlPermanent(null);
+
+                    marriage.getBrideAddressDetails().setHouseNameNoEnPermanent(null);
+                    marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(null);
+                    marriage.getBrideAddressDetails().setPinNoPermanent(null);
+                    marriage.getBrideAddressDetails().setPoNoPermanent(null);
+
+                    marriage.getBrideAddressDetails().setCountryIdPermanent(null);
+
+                    marriage.getBrideAddressDetails().setStateIdPermanent(null);
+
+                    marriage.getBrideAddressDetails().setDistrictIdPermanent(null);
+
+                    marriage.getBrideAddressDetails().setLocalityEnPermanent(null);
+                    marriage.getBrideAddressDetails().setLocalityMlPermanent(null);
+
+                    marriage.getBrideAddressDetails().setStreetNameEnPermanent(null);
+                    marriage.getBrideAddressDetails().setStreetNameMlPermanent(null);
+
+                    marriage.getBrideAddressDetails().setHouseNameNoEnPermanent(null);
+                    marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(null);
+
+
+                    marriage.getBrideAddressDetails().setPermntOthrTalukName(null);
+                    marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(null);
+
+                    marriage.getBrideAddressDetails().setPinNoPermanent(null);
+
+                    marriage.getBrideAddressDetails().setTownOrVillagePermanent(null);
+                    marriage.getBrideAddressDetails().setVillageNamePermanent(null);
+
+                    marriage.getBrideAddressDetails().setCountryIdPermanent(null);
+
+                    marriage.getBrideAddressDetails().setPermntOthrIndiaLineoneEn(null);
+                    marriage.getBrideAddressDetails().setPermntOthrIndiaLineoneMl(null);
+
+                    marriage.getBrideAddressDetails().setPermntOthrIndiaLinetwoEn(null);
+                    marriage.getBrideAddressDetails().setPermntOthrIndiaLinetwoMl(null);
+
+                    marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceEn(null);
+                    marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceMl(null);
+
+
+                    marriage.getBrideAddressDetails().setVillageNamePermanent(null);
+                    marriage.getBrideAddressDetails().setTownOrVillagePermanent(null);
+
+                    marriage.getBrideAddressDetails().setOutSideIndiaPostCodePermanent(null);
+
+                } );
+    }
+
+    private void setGroomAddressNull(MarriageDetailsRequest request){
+        request.getMarriageDetails()
+                .forEach(marriage-> {
+//PRESENT
+
+                    marriage.getGroomAddressDetails().setCountryIdPresent(null);
+                    marriage.getGroomAddressDetails().setStateIdPresent(null);
+
+                    marriage.getGroomAddressDetails().setDistrictIdPresent(null);
+
+                    marriage.getGroomAddressDetails().setLocalityEnPresent(null);
+                    marriage.getGroomAddressDetails().setLocalityMlPresent(null);
+
+                    marriage.getGroomAddressDetails().setStreetNameEnPresent(null);
+                    marriage.getGroomAddressDetails().setStreetNameMlPresent(null);
+
+                    marriage.getGroomAddressDetails().setHouseNameNoEnPresent(null);
+                    marriage.getGroomAddressDetails().setHouseNameNoMlPresent(null);
+
+                    marriage.getGroomAddressDetails().setPinNoPresent(null);
+                    marriage.getGroomAddressDetails().setPoNoPresent(null);
+
+                    marriage.getGroomAddressDetails().setPresentAddrVillageId(null);
+
+
+                    marriage.getGroomAddressDetails().setCountryIdPresent(null);
+                    marriage.getGroomAddressDetails().setStateIdPresent(null);
+                    marriage.getGroomAddressDetails().setDistrictIdPresent(null);
+
+                    marriage.getGroomAddressDetails().setLocalityEnPresent(null);
+                    marriage.getGroomAddressDetails().setLocalityMlPresent(null);
+
+                    marriage.getGroomAddressDetails().setStreetNameEnPresent(null);
+                    marriage.getGroomAddressDetails().setStreetNameMlPresent(null);
+
+                    marriage.getGroomAddressDetails().setHouseNameNoEnPresent(null);
+                    marriage.getGroomAddressDetails().setHouseNameNoMlPresent(null);
+
+                    marriage.getGroomAddressDetails().setPinNoPresent(null);
+
+                    marriage.getGroomAddressDetails().setPresentOthrTalukName(null);
+                    marriage.getGroomAddressDetails().setPresentOthPostOfficeEn(null);
+
+
+                    marriage.getGroomAddressDetails().setTownOrVillagePresent(null);
+                    marriage.getGroomAddressDetails().setVillageNamePresent(null);
+
+
+                    marriage.getGroomAddressDetails().setCountryIdPresent(null);
+
+                    marriage.getGroomAddressDetails().setOutSideIndiaPostCodePresent(null);
+
+                    marriage.getGroomAddressDetails().setPresentOthrIndiaAdressEn(null);
+                    marriage.getGroomAddressDetails().setPresentOthrIndiaAdressMl(null);
+
+                    marriage.getGroomAddressDetails().setPresentOthrIndiaAdressEnB(null);
+                    marriage.getGroomAddressDetails().setPresentOthrIndiaAdressMlB(null);
+
+                    marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceEn(null);
+                    marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceMl(null);
+
+                    marriage.getGroomAddressDetails().setVillageNamePresent(null);
+                    marriage.getGroomAddressDetails().setTownOrVillagePresent(null);
+//PERMANENT
+
+                    marriage.getGroomAddressDetails().setCountryIdPermanent(null);
+                    marriage.getGroomAddressDetails().setPermanentAddrTalukId(null);
+                    marriage.getGroomAddressDetails().setPermanentAddrVillageId(null);
+
+                    marriage.getGroomAddressDetails().setStateIdPermanent(null);
+
+                    marriage.getGroomAddressDetails().setDistrictIdPermanent(null);
+
+                    marriage.getGroomAddressDetails().setLocalityEnPermanent(null);
+                    marriage.getGroomAddressDetails().setLocalityMlPermanent(null);
+
+                    marriage.getGroomAddressDetails().setStreetNameEnPermanent(null);
+                    marriage.getGroomAddressDetails().setStreetNameMlPermanent(null);
+
+                    marriage.getGroomAddressDetails().setHouseNameNoEnPermanent(null);
+                    marriage.getGroomAddressDetails().setHouseNameNoMlPermanent(null);
+                    marriage.getGroomAddressDetails().setPinNoPermanent(null);
+                    marriage.getGroomAddressDetails().setPoNoPermanent(null);
+
+                    marriage.getGroomAddressDetails().setCountryIdPermanent(null);
+
+                    marriage.getGroomAddressDetails().setStateIdPermanent(null);
+
+                    marriage.getGroomAddressDetails().setDistrictIdPermanent(null);
+
+                    marriage.getGroomAddressDetails().setLocalityEnPermanent(null);
+                    marriage.getGroomAddressDetails().setLocalityMlPermanent(null);
+
+                    marriage.getGroomAddressDetails().setStreetNameEnPermanent(null);
+                    marriage.getGroomAddressDetails().setStreetNameMlPermanent(null);
+
+                    marriage.getGroomAddressDetails().setHouseNameNoEnPermanent(null);
+                    marriage.getGroomAddressDetails().setHouseNameNoMlPermanent(null);
+
+
+                    marriage.getGroomAddressDetails().setPermntOthrTalukName(null);
+                    marriage.getGroomAddressDetails().setPermntOthPostOfficeEn(null);
+
+
+                    marriage.getGroomAddressDetails().setPinNoPermanent(null);
+
+                    marriage.getGroomAddressDetails().setTownOrVillagePermanent(null);
+                    marriage.getGroomAddressDetails().setVillageNamePermanent(null);
+
+                    marriage.getGroomAddressDetails().setCountryIdPermanent(null);
+
+
+                    marriage.getGroomAddressDetails().setVillageNamePermanent(null);
+                    marriage.getGroomAddressDetails().setTownOrVillagePermanent(null);
+
+                    marriage.getGroomAddressDetails().setPermntOthrIndiaLineoneEn(null);
+                    marriage.getGroomAddressDetails().setPermntOthrIndiaLineoneMl(null);
+
+                    marriage.getGroomAddressDetails().setPermntOthrIndiaLinetwoEn(null);
+                    marriage.getGroomAddressDetails().setPermntOthrIndiaLinetwoMl(null);
+
+                    marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(null);
+                    marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(null);
+
+                    marriage.getGroomAddressDetails().setOutSideIndiaPostCodePermanent(null);
+                } ) ;
+    }
+
+        //  private void setRegistrationNumber(MarriageDetailsRequest request) {
 
     //      RequestInfo requestInfo = request.getRequestInfo();
     //      List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
