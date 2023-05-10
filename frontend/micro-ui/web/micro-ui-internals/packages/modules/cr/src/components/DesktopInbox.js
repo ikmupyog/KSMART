@@ -31,6 +31,7 @@ const DesktopInbox = ({
   };
 
   const handleLinkClick = (finaldata) => {
+    console.log("final data==",finaldata);
     let temp = {};
     temp.ChildDetails = finaldata;
     sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
@@ -210,6 +211,7 @@ const DesktopInbox = ({
   if (isLoading) {
     result = <Loader />;
   } else if (data && data.length === 0) {
+    console.log("data in desktop==",data);
     result = (
       <Card style={{ marginTop: 20 }}>
         {t("CS_MYAPPLICATIONS_NO_APPLICATION")
