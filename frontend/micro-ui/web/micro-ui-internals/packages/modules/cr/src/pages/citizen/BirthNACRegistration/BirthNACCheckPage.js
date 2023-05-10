@@ -173,9 +173,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {BirthNACDetails?.birthDateTime ? BirthNACDetails?.birthDateTime : t("CR_NOT_RECORDED")}
-                    </CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BirthNACDetails?.birthDateTime}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
