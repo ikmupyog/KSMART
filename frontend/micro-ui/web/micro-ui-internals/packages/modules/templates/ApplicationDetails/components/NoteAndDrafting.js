@@ -35,13 +35,12 @@ import { useTranslation } from "react-i18next";
 import { LocationSearchCard } from "@egovernments/digit-ui-react-components";
 // import { cardStyle } from "../utils";
 
-const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDetails }) => {
+const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDetails,noteText,setNoteText,  uploadFiles, setUploadFiles, uploadedFileStoreId, setUploadedFileStoreId ,noteTextErr,isValidate}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const history = useHistory();
   const mobileView = Digit.Utils.browser.isMobile() ? true : false;
   // const state = useSelector((state) => state);
-  const [noteText, setNoteText] = useState("");
   const [checkDraft, setCheckDraft] = useState(false);
   const [checkNote, setCheckNote] = useState(true);
   const [checkEnquiry, setCheckEnquiry] = useState(false);
@@ -49,10 +48,11 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [draftingData, setDraftingData] = useState([]);
-  const [uploadFiles, setUploadFiles] = useState([]);
+  // const [uploadFiles, setUploadFiles] = useState([]);
   const [file, setFile] = useState();
+  const [uploadeError, setError] = useState(null);
   const [fileLimit, setFileLimit] = useState(0);
-  const [uploadedFile, setUploadedFile] = useState()
+  // const [uploadedFileStoreId, setUploadedFileStoreId] = useState()
   const [selectedAutoNote, setSelectedAutoNote] =useState()
   const [displayNotePopup, setDisplayNotePopup] =useState(false)
   const setNoteTextField = (e) => {
@@ -63,7 +63,34 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     setNoteText(e.name)
 
   }
-  console.log(applDetails);
+
+  useEffect(() => {
+    // console.log('file',uploadedFileStoreId,uploadFiles);
+    (async () => {
+      setError(null);
+      if (uploadFiles&& uploadFiles?.length>0) {
+        if (uploadFiles&&uploadFiles[0].size >= 5242880) {
+          setError(t("CS_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+         
+          try {
+            const response = await Digit.UploadServices.Filestorage("PT", uploadFiles, Digit.ULBService.getStateId());
+          
+            if (response?.data?.files?.length > 0) {
+              setUploadedFileStoreId(response?.data?.files[0]?.fileStoreId);
+            
+            } else {
+              setError(t("CS_FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {
+            setError(t("CS_FILE_UPLOAD_ERROR"));
+          }
+        }
+      }
+    })();
+  }, [uploadFiles]);
+
+
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
   const applicationNumber = applDetails?.applicationNumber ;
@@ -80,8 +107,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   });
   const { data: AutoNotes = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "AutoNotes");
 
-  console.log('a',AutoNotes);
-  console.log("applicationDetails", workflowDetails);
+  // console.log('a',AutoNotes);
+  // console.log("workflow-notes", workflowDetails);
   let cmbautoNoteList = [];
   AutoNotes &&
   AutoNotes["FileManagement"] &&
@@ -250,6 +277,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const closePopup =()=>{
     setDisplayNotePopup(false)
   }
+  // console.log(isValidate,noteTextErr);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks" style={{ height: "max-content", backgroundColor: "rgb(233, 228, 225) " }}>
@@ -333,12 +361,13 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                 }}
               >
                 {workflowDetails?.data?.timeline?.map((item) => {
+                  // console.log('i',item);
                   return (
                     <ol>
                       <li>Status: {item.status}</li>
                       <li>Assignes: {item?.assignes?.[0]?.name}</li>
                       <li>Created: {item?.auditDetails?.lastModified}</li>
-                      <li>Notes: {item?.comment}</li>
+                      <li>Notes: {item?.wfComment[0]}</li>
                       <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
                     </ol>
                   );
@@ -449,6 +478,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
             <div className="col-md-12 col-sm-12">
               <div className="col-md-7 search-file">
                 <TextArea
+                  className={(isValidate == true && noteTextErr)?'employee-card-textarea employee-textarea-error':'employee-card-textarea'}
                   t={t}
                   type={"text"}
                   optionKey="i18nKey"
@@ -524,9 +554,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                 onUpload={handleFileEvent}
                 // onUpload={selectfile}
                 onDelete={() => {
-                  setUploadedFile(null);
+                  setUploadedFileStoreId(null);
                 }}
-                message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                message={uploadedFileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                 error={error}
               />
               <div className="tag-container" style={containerStyle}>
@@ -562,9 +592,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                 {workflowDetails?.data?.processInstances?.map((item) => {
                   return (
                     <ol>
-                      <li>Status: {item.action}</li>
+                      {/* <li>Status: {item.action}</li>
                       <li>Assignes: {item?.assignes?.[0]?.name}</li>
-                      <li>Created: {item?.auditDetails?.lastModifiedTime}</li>
+                      <li>Created: {item?.auditDetails?.lastModifiedTime}</li> */}
                       <li>Notes: {item?.comment}</li>
                       <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
                     </ol>

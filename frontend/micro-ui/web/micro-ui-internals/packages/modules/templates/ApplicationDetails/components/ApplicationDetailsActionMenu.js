@@ -14,6 +14,19 @@ function ApplicationDetailsActionBar({
   MenuStyle = {},
   selectedTakeAction,
   selectedAction,
+  applicationData,
+  setSelectedAssignee,
+  selectedApprover,
+  selectedAssigne,
+  noteText,
+  uploadFiles,
+  uploadedFileStoreId,
+  setIsValidate,
+  setToast,
+  setNoteTextErr,
+  setSelectedAssigneeErr,
+  submitAction,
+  moduleCode,
 }) {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -34,13 +47,15 @@ function ApplicationDetailsActionBar({
     { enabled: !selectedAction?.isTerminateState }
   );
   React.useEffect(() => {
-    console.log("logged");
     if (selectedAction?.assigneeRoles) {
       setApprovers(approverData?.Employees?.map((employee) => ({ uuid: employee?.uuid, name: employee?.user?.name })));
     }
   }, [approverData && selectedAction]);
 
-  console.log("aprove", approverData?.Employees, approvers, selectedAction);
+  const setSelectedApprover =(value)=>{
+    setSelectedAssignee(value)
+  }
+ 
   const userRoles = user?.info?.roles?.map((e) => e.code);
   let isSingleButton = false;
   let isMenuBotton = false;
@@ -61,22 +76,72 @@ function ApplicationDetailsActionBar({
   }
   const localeKeyPrefix = forcedActionPrefix || `WF_EMPLOYEE_${businessService?.toUpperCase()}`;
   const keyPrefix = localeKeyPrefix || "CS_ACTION";
-  console.log("o", actions, selectedTakeAction);
+
+  function submit(data) {
+    setIsValidate(true)
+    setToast(true)
+  
+    if((noteText ==="" || noteText == null) || (selectedAssigne == ''||  selectedAssigne == undefined)){
+      if(noteText ==="" || noteText == null){
+        setNoteTextErr(true)
+      }else{
+        setNoteTextErr(false)
+      }
+       if( selectedAssigne == ''||  selectedAssigne == undefined){      
+        setSelectedAssigneeErr(true)
+      }else{
+        setSelectedAssigneeErr(false)
+      }
+      
+    } else{
+      setNoteTextErr(false)
+      setSelectedAssigneeErr(false)
+      let workflow = { action: selectedAction?.action, comments: noteText, businessService, moduleName: moduleCode };
+      applicationData = {
+        ...applicationData,
+        action: selectedAction?.action,
+        comments: noteText,
+        comment: noteText,
+        businessservice:businessService,
+        moduleName: moduleCode,
+        assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+        // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
+        wfDocuments: uploadedFileStoreId
+          ? [
+              {
+                documentType: selectedAction?.action + " DOC",
+                fileName: uploadFiles[0]?.name,
+                fileStoreId: uploadedFileStoreId,
+              },
+            ]
+          : null,
+      };
+      // console.log('dash',applicationData,selectedAction,selectedAssigne,workflow);
+      submitAction({
+        Property: applicationData,
+      });
+      
+    }
+    // let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
+  
+  }
   return (
     <React.Fragment>
       {/* <Dropdown t={t} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  placeholder={t("SEARCH_SELECT_AUTO_NOTES")}
                 //  selected={selectedAutoNote}           option={cmbautoNoteList[0]}          select={autoNoteListChange}
                                   /> */}
-      {actions && (
+      {(actions &&actions?.length>0 && selectedTakeAction!=="" )&& (
         <div className="col-md-7">
           <CardLabel>{`${t("WF_ASSIGNEE_NAME_LABEL")}`}</CardLabel>
           <Dropdown
+          // className={selectedAssigneErr?'':''}
             option={approvers}
             autoComplete="off"
             optionKey="name"
             id="fieldInspector"
             placeholder={t("WF_ASSIGNEE_NAME_PLACEHOLDER")}
-            // select={setSelectedApprover}
+            select={setSelectedApprover}
+            selected={selectedAssigne}
             // selected={selectedApprover}
           />
         </div>
@@ -97,7 +162,7 @@ function ApplicationDetailsActionBar({
           </React.Fragment>
         ))}
       </div>
-      {actions && <SubmitBar label={t("SAVE")}> </SubmitBar>}
+      {(actions && actions?.length>0 && selectedTakeAction!=="" )&& <SubmitBar onSubmit={submit} label={t("SAVE")}> </SubmitBar>}
     </React.Fragment>
   );
 }
