@@ -87,7 +87,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("BPSA.poid as BPSA_poid,BPSA.poname_en as BPSA_poname_en,BPSA.poname_ml as BPSA_poname_ml,BPSA.pinno   BPSA_pinno  , BPSA.countryid  BPSA_countryid ,") 
     .append("BPSA.marriageid as BPSA_marriageid  ,  BPSA.bride_groom as BPSA_bride_groom  ,  BPSA.ot_address1_en as BPSA_ot_address1_en  ,")  
     .append("BPSA.ot_address1_ml as BPSA_ot_address1_ml,BPSA.ot_address2_en as BPSA_ot_address2_en,BPSA.ot_address2_ml as BPSA_ot_address2_ml,")
-    .append("BPSA.ot_state_region_province_en BPSA_ot_state_region_province_en  ,  BPSA.ot_state_region_province_ml as BPSA_ot_state_region_province_ml,BPSA.ot_zipcode as BPSA_ot_zipcode , ")
+    .append("BPSA.ot_state_region_province_en BPSA_ot_state_region_province_en  ,  BPSA.ot_state_region_province_ml as BPSA_ot_state_region_province_ml,BPSA.ot_zipcode as BPSA_ot_zipcode  ")
 
 //    .append("WD1.id AS WD1_id , WD1.aadharno  as WD1_aadharno , WD1.name_en  as WD1_name_en ,  WD1.name_ml  as WD1_name_ml , WD1.age  as WD1_age , WD1.address_en  as WD1_address_en ,")
 //    .append("WD1.address_ml  as WD1_address_ml ,  WD1.mobile  as WD1_mobile , WD1.is_esigned  as WD1_is_esigned ,  WD1.marriageid  as WD1_marriageid , WD1.serial_no  as WD1_serial_no, ")
