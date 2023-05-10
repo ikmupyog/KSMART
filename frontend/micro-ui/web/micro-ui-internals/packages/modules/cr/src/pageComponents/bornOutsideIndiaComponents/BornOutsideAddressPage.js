@@ -454,7 +454,8 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBo
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
                                 isEditBornOutsideIndia={isEditBornOutsideIndia}
-                              
+                                value
+                                countryvalue
                                 formData={formData}
                             />
                         </div>

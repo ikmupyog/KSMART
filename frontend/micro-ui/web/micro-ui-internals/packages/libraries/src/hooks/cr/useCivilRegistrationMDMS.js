@@ -39,6 +39,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useWorkFlowBirth = () => {
     return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
   };
+  const useWorkFlowBornOutside = () => {
+    return useQuery("CR_BORNOUTSIDE_WORKFLOW", () => MdmsService.getWorkFlowBornOutsideMaster(tenantId, moduleCode), config);
+  };
   const useWorkFlowDeath = () => {
     return useQuery("CR_DEATH_WORKFLOW", () => MdmsService.getWorkFlowDeathMaster(tenantId, moduleCode), config);
   };
@@ -340,6 +343,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useMaritalStatus();
     case "WorkFlowBirth":
       return useWorkFlowBirth();
+    case "WorkFlowBornOutside":
+      return useWorkFlowBornOutside();
     case "WorkFlowDeath":
       return useWorkFlowDeath();
     case "WorkFlowAdoption":

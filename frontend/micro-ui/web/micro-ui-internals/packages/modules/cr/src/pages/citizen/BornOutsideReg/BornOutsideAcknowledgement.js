@@ -38,6 +38,8 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [isEditBornOutsideIndia, setIsEditBornOutsideIndia] = useState(sessionStorage.getItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG")? true : false);
+  
+  let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
 
   const mutation = Digit.Hooks.cr.useCivilRegistrationBornOutsideIndiaBirthAPI(
     tenantId, isEditBornOutsideIndia ? false : true
@@ -116,18 +118,16 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation]);
 
-  // useEffect(() => {
-  //   if (mutation.isSuccess) {
-  //     try {
-  //       let Licenses = !isEditBornOutsideBirth ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
-  //       mutation2.mutate(Licenses, {
-  //         onSuccess,
-  //       });
-  //     }
-  //     catch (er) {
-  //     }
-  //   }
-  // }, [mutation.isSuccess, mutation1.isSuccess]);
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      //console.log(mutation.data?.ChildDetails[0].applicationNumber);
+      applicationNumber = mutation.data?.BornOutsideChildDetails[0].applicationNumber;
+      sessionStorage.setItem("applicationNumber", applicationNumber);
+      //console.log(applicationNumber);
+    } else {
+      applicationNumber = null;
+    }
+  }, [mutation.isSuccess]);
 
   const handleDownloadPdf = async () => {
     const { BornOutsideChildDetails = [] } = mutation.data
@@ -143,8 +143,7 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
-        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
-       
+        {<CardText>{t("COMMON_REASON")} : {mutation?.error?.response?.data?.Errors[0]?.message}</CardText>}
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
@@ -155,6 +154,8 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
       return (
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+
+
           {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
      */}
           <LinkButton
@@ -171,34 +172,15 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
             //style={{ width: "100px" }}
             onClick={handleDownloadPdf}
           />
-          {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
-      {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
-      {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
-      {!isEditBornOutsideBirth && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
-      {(mutation2.isSuccess) && isEditBornOutsideBirth && (
-        <LinkButton
-          label={
-            <div className="response-download-button">
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                </svg>
-              </span>
-              <span className="download-button">{t("TL_DOWNLOAD_ACK_FORM")}</span>
-            </div>
-          }
-          //style={{ width: "100px" }}
-          onClick={handleDownloadPdf}
-        />)}
-      {mutation2?.data?.Licenses[0]?.status === "PENDINGPAYMENT" && <Link to={{
-        pathname: `/digit-ui/citizen/payment/collect/${mutation2.data.Licenses[0].businessService}/${mutation2.data.Licenses[0].applicationNumber}`,
-        state: { tenantId: mutation2.data.Licenses[0].tenantId },
-      }}>
-        <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-      </Link>}
-      <Link to={`/digit-ui/citizen`}>
-        <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-      </Link> */}
+          {mutation?.data?.BornOutsideChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.BornOutsideChildDetails[0].businessservice}/${mutation.data.BornOutsideChildDetails[0].applicationNumber}`,
+            state: { tenantId: mutation.data.BornOutsideChildDetails[0].tenantid },
+          }}>
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>}
+          <Link to={`/digit-ui/citizen`}>
+            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          </Link>
         </Card>
       );
     } else {
@@ -206,6 +188,7 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
 
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
+
           {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
           <LinkButton
             label={

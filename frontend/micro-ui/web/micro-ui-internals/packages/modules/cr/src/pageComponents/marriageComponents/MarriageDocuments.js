@@ -1485,6 +1485,8 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     brideExpirationCertificateDocument,
     witness1AadharDocument,
     witness2AadharDocument,
+    groomAgeDocument,
+    brideAgeDocument
   });
 
   return (
@@ -1501,14 +1503,15 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
           ((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && (!groomPassport || !groomSSN)) ||
           (brideResidentShip === "INDIAN" && !brideAadhar) ||
           ((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (!bridePassport || !brideSSN)) ||
-          
-          (!groomAgeDocument && groomAgeDocument === "DRIVING_LICENSE" && !groomDrivingLicense) ||
-          (!groomAgeDocument && groomAgeDocument === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
-          (!groomAgeDocument && groomAgeDocument === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
-
-          (!brideAgeDocument && brideAgeDocument === "DRIVING_LICENSE" && !brideDrivingLicense) ||
-          (!brideAgeDocument && brideAgeDocument === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
-          (!brideAgeDocument && brideAgeDocument === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
+          !groomAgeDocument ||
+          (groomAgeDocument === "DRIVING_LICENSE" && !groomDrivingLicense) ||
+          (groomAgeDocument === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
+          (groomAgeDocument === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
+          // !groomDrivingLicense ||!groomSchoolCertificate ||!groomBirthCertificate ||
+          !brideAgeDocument ||
+          (brideAgeDocument === "DRIVING_LICENSE" && !brideDrivingLicense) ||
+          (brideAgeDocument === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
+          (brideAgeDocument === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
           ((marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
             marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
             marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||

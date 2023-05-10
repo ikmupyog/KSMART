@@ -13,6 +13,7 @@ const MarriageInbox = () => {
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [searchParams, setSearchParams] = useState({ filters: { assignee: uuid }, search: "", sort: {} });
+  const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -45,6 +46,7 @@ const MarriageInbox = () => {
 
   const onSuccess = (successData) =>{
     console.log("successs====data",successData);
+    setSearchResult(successData?.MarriageDetails);
   }
 
   const onSearch = (params = "") => {
@@ -64,7 +66,7 @@ const MarriageInbox = () => {
   // console.log("complaintsz", complaintsz)
 
   let Loading = mutation?.isLoading;
-  let searchResult = mutation.data;
+
 
   useEffect(()=>{
     mutation.mutate({},{onSuccess});
