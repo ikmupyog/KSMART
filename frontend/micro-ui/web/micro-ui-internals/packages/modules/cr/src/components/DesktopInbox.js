@@ -48,7 +48,7 @@ const DesktopInbox = ({
   }
 
   const goto = (data,inboxType) =>{
-    const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber ;
+    const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber?  data.applicationNumber :  data.applicationId ? data.applicationId : "" ;
     const correctionCode = applicationNumber?.split('-')?.[4];
   console.log("applicationNumber in correction",applicationNumber);
     let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
@@ -201,6 +201,7 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
+        console.log("row data birth==",row.original);
         return (
           <div>
             <span className="link">
@@ -232,6 +233,59 @@ const DesktopInbox = ({
     }
   ]), [])
 
+  const BirthInboxColumns = React.useMemo(() => ([
+    {
+      Header: t("CR_COMMON_COL_APP_NO"),
+      accessor: "applicationNumber",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        console.log("row data birth==",row.original);
+        return (
+          <div>
+            <span className="link">
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+                {/* {row.original.applicationNumber} */}
+                {row.original.applicationId}
+              </Link>
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      Header: t("CR_COMMON_COL_APP_DATE"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row?.date ? convertEpochToDateDMY(row.date) : ""),
+    },
+    {
+      Header: t("WF_INBOX_HEADER_LOCALITY"),
+      Cell: ({ row }) => {
+        return GetCell(t((row.original["wardNo"])));
+      },
+    },
+    {
+      Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
+      Cell: ({ row }) => {
+        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+      },
+    }
+  ]), []);
+
+  const getColumns = () =>{
+    let columns = []
+    if(SearchInbox === "birth"){ 
+      // columns = BirthColumns;
+      columns = BirthInboxColumns;  
+  } else if(SearchInbox === "marriage"){
+      columns =  MarriageColumns;
+  } else if(SearchInbox === "death"){
+      columns = Deathcolumns;
+  }
+  return columns;
+}
+
+ 
+
   let result;
   if (isLoading) {
     result = <Loader />;
@@ -252,7 +306,7 @@ const DesktopInbox = ({
       <CRTable
         t={t}
         data={data}
-        columns={SearchInbox == "birth" ? BirthColumns : SearchInbox == "marriage" ? MarriageColumns : Deathcolumns}
+        columns={getColumns()}
         getCellProps={(cellInfo) => {
           return {
             style: {
