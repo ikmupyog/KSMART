@@ -555,10 +555,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           ownerState[0].isAlive === "" ||
           !aadressFile ||
           !proofFile ||
-          !certificateFile ||
           !motherIdFile ||
-          !fatherIdFile ||
-          !medicalFile
+          !fatherIdFile
         }
       >
         <div>
@@ -920,10 +918,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  <CardLabel>
-                    {`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}</CardLabel>
                 </div>
                 <div className="col-md-6">
                   <UploadFile
@@ -976,10 +971,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  <CardLabel>
-                    {`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}</CardLabel>
                 </div>
                 <div className="col-md-6">
                   <UploadFile
