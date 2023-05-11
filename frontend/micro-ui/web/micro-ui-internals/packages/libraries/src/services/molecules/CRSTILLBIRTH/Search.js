@@ -94,9 +94,9 @@ export const CRStillBirthsearch = {
       asSectionHeader: true,
       values: [
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_NAME_EN", value: response?.hospitalNameMl || "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_NAME_ML", value: response?.hospitalNameMl || "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionIdMl || "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NOT_RECORDED" },
       ],
     };
     const stillbirthPlaceHOMEDetails = {
