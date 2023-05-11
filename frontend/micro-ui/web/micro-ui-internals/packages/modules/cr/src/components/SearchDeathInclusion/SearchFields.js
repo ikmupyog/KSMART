@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import { Controller, useWatch } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
 
@@ -8,12 +8,12 @@ const mystyle = {
 };
 let validation = {}
 
-const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) => {
+const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPage }) => {
     const stateId = Digit.ULBService.getStateId();
     const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
     const { data: Menu, isLoading: genderLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
     const { data: hospitalData = {}, isLoading:hospitalLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-
+    const [checkIsRequired, setCheckIsRequired] = useState(false);
   
     const applicationType = useWatch({ control, name: "applicationType" });
 
@@ -48,6 +48,14 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         hospitalData["egov-location"].hospitalList.map((ob) => {
           cmbhospital.push(ob);
         });
+
+        useEffect(() => {
+            if (watch().deathACKNo?.length > 0) {
+              setCheckIsRequired(false);
+            } else {
+              setCheckIsRequired(true);
+            }
+          }, [watch()]);
     return <>
         {/* <SearchField>
             <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
@@ -60,8 +68,10 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                  {/* <span className="mandatorycss">*</span>  */}
             {t("CR_SEARCH_ACK_NO")}</label>
             <TextInput name="deathACKNo" inputRef={register({})}
-                placeholder={`${t("CR_SEARCH_ACK_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
+// {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
+              placeholder={`${t("CR_SEARCH_ACK_NO")}`}
+              />
+                
         </SearchField>
         <SearchField>
             <label> 
@@ -73,17 +83,18 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         </SearchField>
         <SearchField>
             <label> 
-                {/* <span className="mandatorycss">*</span> */}
+                <span className="mandatorycss">*</span>
                 {t("CR_DATE_OF_DEATH")}</label>
             <Controller
-                render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_DATE_OF_DEATH") })} />}
+                render={(props) => <DatePicker date={props.value} onChange={props.onChange}
+                {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: checkIsRequired, title: t("CR_DATE_OF_DEATH") })} />}
                 name="DeathDate"
                 control={control}
             />
         </SearchField>
         <SearchField>
             <label>
-                {/* <span className="mandatorycss">*</span> */}
+                <span className="mandatorycss">*</span>
                 {t("CR_GENDER")}</label>
             <Controller
                 control={control}
@@ -97,7 +108,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                         optionKey="code"
                         t={t}
                         placeholder={`${t("CR_GENDER")}`}
-                        {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
+                        {...(validation = { isRequired: checkIsRequired, title: t("CR_INVALID_GENDER") })}
                     />
                 )}
             />
