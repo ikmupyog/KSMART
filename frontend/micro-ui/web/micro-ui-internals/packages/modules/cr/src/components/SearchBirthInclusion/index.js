@@ -37,7 +37,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
   const {path} = useRouteMatch();
   const { t } = useTranslation();
 
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
@@ -139,7 +139,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
       <div style={mystyle}>
         <h1 style={hstyle}>{t("INCLUSIONS_CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
+          <SearchFields {...{ register, control,watch, reset, previousPage, t }} />
         </SearchForm>
       </div>
       {isLoading && <Loader/>}

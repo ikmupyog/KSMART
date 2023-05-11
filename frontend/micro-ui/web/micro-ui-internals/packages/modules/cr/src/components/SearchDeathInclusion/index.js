@@ -33,7 +33,7 @@ const registyBtnStyle = {
 const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionClick }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
@@ -173,7 +173,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
       <div style={mystyle}>
         <h1 style={hstyle}>{t("DEATH INCLUSION")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
+          <SearchFields {...{ register, watch, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
       </div>
       {data?.length > 0 && (
