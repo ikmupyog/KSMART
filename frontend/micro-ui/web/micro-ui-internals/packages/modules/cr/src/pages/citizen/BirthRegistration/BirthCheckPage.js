@@ -151,7 +151,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NA"}
+                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -219,7 +219,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                   </div>
                 </div>
               </div>

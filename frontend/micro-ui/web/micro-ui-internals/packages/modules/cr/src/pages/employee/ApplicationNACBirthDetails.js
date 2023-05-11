@@ -6,6 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
+import set from "lodash/set";
 import orderBy from "lodash/orderBy";
 
 const ApplicationNACBirthDetails = () => {
@@ -23,7 +24,27 @@ const ApplicationNACBirthDetails = () => {
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_NACBIRTH_REG", {});
   const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_NACBIRTH_FLAG", false);
   const stateId = Digit.ULBService.getStateId();
+  const [selectedRadioValue, setSelectedRadioValue] = useState(
+    applicationDetails?.InformationDeath?.isDeathNAC
+      ? { i18nKey: "CR_IS_NAC", code: "NAC" }
+      : applicationDetails?.InformationDeath?.isDeathNIA
+      ? { i18nKey: "CR_IS_NIA", code: "NIA" }
+      : {}
+  );
 
+  function selectRadioButtons(value) {
+    setSelectedRadioValue(value);
+  }
+  const newData = applicationDetails;
+  useEffect(() => {
+    if (selectedRadioValue?.code == "NAC") {
+      set(newData, "applicationData.isBirthNAC", true);
+      set(newData, "applicationData.isBirthNIA", false);
+    } else if (selectedRadioValue?.code == "NIA") {
+      set(newData, "applicationData.isBirthNAC", false);
+      set(newData, "applicationData.isBirthNIA", true);
+    }
+  }, [selectedRadioValue]);
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
@@ -173,6 +194,7 @@ const ApplicationNACBirthDetails = () => {
         setShowToast={setShowToast}
         closeToast={closeToast}
         timelineStatusPrefix={"WF_21DAYS_"}
+        selectBirthtype={selectRadioButtons}
       />
     </div>
   );

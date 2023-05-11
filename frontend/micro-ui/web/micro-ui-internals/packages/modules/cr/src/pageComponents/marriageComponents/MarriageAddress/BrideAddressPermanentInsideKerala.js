@@ -177,7 +177,7 @@ const BrideAddressPermanentInsideKerala = ({
   });
 
   const sortedWards = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
-  console.log({sortedWards});
+  console.log({ sortedWards });
 
   useEffect(() => {
     if (
@@ -549,7 +549,6 @@ const BrideAddressPermanentInsideKerala = ({
   }
   function setSelectpermntInKeralaAdrTaluk(value) {
     setpermntInKeralaAdrTaluk(value);
-    console.log("cmbFilterVillage", cmbVillage);
     if (cmbVillage.length > 0) {
       setLbsVillagePermvalue(cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code));
     }
@@ -573,12 +572,12 @@ const BrideAddressPermanentInsideKerala = ({
     setpermntInKeralaAdrPostOffice(PostOfficePermvalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9/, ]*$") != null) {
       setpermntInKeralaAdrHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setpermntInKeralaAdrHouseNameMl("");
@@ -629,7 +628,7 @@ const BrideAddressPermanentInsideKerala = ({
     }
   }
   function setCheckMalayalamInputFieldWithSplChar(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/,-]/;
     if (!e.key.match(pattern)) {
       e.preventDefault();
     }
@@ -654,256 +653,263 @@ const BrideAddressPermanentInsideKerala = ({
       {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
       <div className="row">
-        <div className="col-md-3">
-          <CardLabel>
-            {t("CS_COMMON_DISTRICT")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <Dropdown
-            t={t}
-            optionKey="name"
-            option={sortDropdownNames(DistrictPermvalues ? DistrictPermvalues : [], "name", t)}
-            selected={permntInKeralaAdrDistrict}
-            select={setSelectpermntInKeralaAdrDistrict}
-            placeholder={`${t("CS_COMMON_DISTRICT")}`}
-            disable={isDisableEdit}
-          />
-        </div>
+        <div className="col-md-12">
+          <div className="col-md-3">
+            <CardLabel>
+              {t("CS_COMMON_DISTRICT")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={sortDropdownNames(DistrictPermvalues ? DistrictPermvalues : [], "name", t)}
+              selected={permntInKeralaAdrDistrict}
+              select={setSelectpermntInKeralaAdrDistrict}
+              placeholder={`${t("CS_COMMON_DISTRICT")}`}
+              disable={isDisableEdit}
+            />
+          </div>
 
-        {/* <div className="col-md-6" >
-                    <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
-                    <Dropdown
-                    t={t}
-                    optionKey="name"
-                    option={cmbLBType}
-                    selected={permntInKeralaAdrLBTypeName}
-                    select={setSelectpermntInKeralaAdrLBTypeName}
-                    
-                    />
-                    </div> */}
-        <div className="col-md-3">
-          <CardLabel>
-            {t("CS_COMMON_TALUK")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <Dropdown
-            t={t}
-            optionKey="name"
-            option={sortDropdownNames(TalukPermvalues ? TalukPermvalues : [], "name", t)}
-            selected={permntInKeralaAdrTaluk}
-            select={setSelectpermntInKeralaAdrTaluk}
-            placeholder={`${t("CS_COMMON_TALUK")}`}
-            disable={isDisableEdit}
-          />
-        </div>
-        <div className="col-md-3">
-          <CardLabel>
-            {t("CS_COMMON_VILLAGE")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <Dropdown
-            t={t}
-            optionKey="name"
-            option={sortDropdownNames(VillagePermvalues ? VillagePermvalues : [], "name", t)}
-            selected={permntInKeralaAdrVillage}
-            select={setSelectpermntInKeralaAdrVillage}
-            placeholder={`${t("CS_COMMON_VILLAGE")}`}
-            disable={isDisableEdit}
-          />
-        </div>
-        <div className="col-md-3">
-          <CardLabel>
-            {t("CS_COMMON_LB_NAME")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <Dropdown
-            t={t}
-            optionKey="name"
-            option={sortDropdownNames(permlbs ? permlbs : [], "name", t)}
-            selected={permntInKeralaAdrLBName}
-            select={setSelectpermntInKeralaAdrLBName}
-            placeholder={`${t("CS_COMMON_LB_NAME")}`}
-            disable={isDisableEdit}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-4">
-          <CardLabel>
-            {`${t("CS_COMMON_WARD")}`}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <Dropdown
-            t={t}
-            optionKey="namecmb"
-            option={sortedWards}
-            selected={permntInKeralaWardNo}
-            select={setSelectWard}
-            placeholder={`${t("CS_COMMON_WARD")}`}
-            disable={isDisableEdit}
-            {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-          />
-        </div>
-        <div className="col-md-4">
-          <CardLabel>
-            {t("CS_COMMON_POST_OFFICE")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <Dropdown
-            t={t}
-            optionKey="name"
-            option={sortDropdownNames(PostOfficePermvalues ? PostOfficePermvalues : [], "name", t)}
-            selected={permntInKeralaAdrPostOffice}
-            select={setSelectpermntInKeralaAdrPostOffice}
-            placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-            disable={isDisableEdit}
-          />
-        </div>
-        <div className="col-md-4">
-          <CardLabel>
-            {t("CS_COMMON_PIN_CODE")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrPincode"
-            value={permntInKeralaAdrPincode}
-            onChange={setSelectpermntInKeralaAdrPincode}
-            disable={isDisableEdit}
-            placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-            {...(validation = {
-              pattern: "^[0-9]*$",
-              isRequired: true,
-              type: "text",
-              maxLength: 6,
-              minLength: 6,
-              title: t("CS_COMMON_INVALID_PIN_CODE"),
-            })}
-          />
+          {/* <div className="col-md-6" >
+                  <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
+                  <Dropdown
+                  t={t}
+                  optionKey="name"
+                  option={cmbLBType}
+                  selected={permntInKeralaAdrLBTypeName}
+                  select={setSelectpermntInKeralaAdrLBTypeName}
+                  
+                  />
+                  </div> */}
+          <div className="col-md-3">
+            <CardLabel>
+              {t("CS_COMMON_TALUK")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={sortDropdownNames(TalukPermvalues ? TalukPermvalues : [], "name", t)}
+              selected={permntInKeralaAdrTaluk}
+              select={setSelectpermntInKeralaAdrTaluk}
+              placeholder={`${t("CS_COMMON_TALUK")}`}
+              disable={isDisableEdit}
+            />
+          </div>
+          <div className="col-md-3">
+            <CardLabel>
+              {t("CS_COMMON_VILLAGE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={sortDropdownNames(VillagePermvalues ? VillagePermvalues : [], "name", t)}
+              selected={permntInKeralaAdrVillage}
+              select={setSelectpermntInKeralaAdrVillage}
+              placeholder={`${t("CS_COMMON_VILLAGE")}`}
+              disable={isDisableEdit}
+            />
+          </div>
+          <div className="col-md-3">
+            <CardLabel>
+              {t("CS_COMMON_LB_NAME")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={sortDropdownNames(permlbs ? permlbs : [], "name", t)}
+              selected={permntInKeralaAdrLBName}
+              select={setSelectpermntInKeralaAdrLBName}
+              placeholder={`${t("CS_COMMON_LB_NAME")}`}
+              disable={isDisableEdit}
+            />
+          </div>
         </div>
       </div>
       <div className="row">
-        <div className="col-md-4">
-          <CardLabel>
-            {t("CR_LOCALITY_EN")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrLocalityNameEn"
-            value={permntInKeralaAdrLocalityNameEn}
-            onChange={setSelectpermntInKeralaAdrLocalityNameEn}
-            placeholder={`${t("CR_LOCALITY_EN")}`}
-            disable={isDisableEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
-          />
-        </div>
-        <div className="col-md-4">
-          <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrStreetNameEn"
-            value={permntInKeralaAdrStreetNameEn}
-            onChange={setSelectpermntInKeralaAdrStreetNameEn}
-            placeholder={`${t("CR_STREET_NAME_EN")}`}
-            disable={isDisableEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-          />
-        </div>
-        <div className="col-md-4">
-          <CardLabel>
-            {t("CR_HOUSE_NAME_EN")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrHouseNameEn"
-            value={permntInKeralaAdrHouseNameEn}
-            onChange={setSelectpermntInKeralaAdrHouseNameEn}
-            placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-            disable={isDisableEdit}
-            {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-          />
+        <div className="col-md-12">
+          <div className="col-md-4">
+            <CardLabel>
+              {`${t("CS_COMMON_WARD")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="namecmb"
+              option={sortedWards}
+              selected={permntInKeralaWardNo}
+              select={setSelectWard}
+              placeholder={`${t("CS_COMMON_WARD")}`}
+              disable={isDisableEdit}
+              {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CS_COMMON_POST_OFFICE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={sortDropdownNames(PostOfficePermvalues ? PostOfficePermvalues : [], "name", t)}
+              selected={permntInKeralaAdrPostOffice}
+              select={setSelectpermntInKeralaAdrPostOffice}
+              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              disable={isDisableEdit}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CS_COMMON_PIN_CODE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrPincode"
+              value={permntInKeralaAdrPincode}
+              onChange={setSelectpermntInKeralaAdrPincode}
+              disable={isDisableEdit}
+              placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+              {...(validation = {
+                pattern: "^[0-9]*$",
+                isRequired: true,
+                type: "text",
+                maxLength: 6,
+                minLength: 6,
+                title: t("CS_COMMON_INVALID_PIN_CODE"),
+              })}
+            />
+          </div>
         </div>
       </div>
       <div className="row">
-        <div className="col-md-4">
-          <CardLabel>
-            {t("CR_LOCALITY_ML")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrLocalityNameMl"
-            value={permntInKeralaAdrLocalityNameMl}
-            onKeyPress={setCheckMalayalamInputField}
-            onChange={setSelectpermntInKeralaAdrLocalityNameMl}
-            disable={isDisableEdit}
-            placeholder={`${t("CR_LOCALITY_ML")}`}
-            {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-              isRequired: true,
-              type: "text",
-              title: t("CR_INVALID_LOCALITY_ML"),
-            })}
-          />
+        <div className="col-md-12">
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_LOCALITY_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrLocalityNameEn"
+              value={permntInKeralaAdrLocalityNameEn}
+              onChange={setSelectpermntInKeralaAdrLocalityNameEn}
+              placeholder={`${t("CR_LOCALITY_EN")}`}
+              disable={isDisableEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrStreetNameEn"
+              value={permntInKeralaAdrStreetNameEn}
+              onChange={setSelectpermntInKeralaAdrStreetNameEn}
+              placeholder={`${t("CR_STREET_NAME_EN")}`}
+              disable={isDisableEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_HOUSE_NAME_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrHouseNameEn"
+              value={permntInKeralaAdrHouseNameEn}
+              onChange={setSelectpermntInKeralaAdrHouseNameEn}
+              placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+              disable={isDisableEdit}
+              {...(validation = { pattern: "^[a-zA-Z-0-9/, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+            />
+          </div>
         </div>
-        <div className="col-md-4">
-          <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrStreetNameMl"
-            value={permntInKeralaAdrStreetNameMl}
-            onKeyPress={setCheckMalayalamInputField}
-            onChange={setSelectpermntInKeralaAdrStreetNameMl}
-            placeholder={`${t("CR_STREET_NAME_ML")}`}
-            disable={isDisableEdit}
-            {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-              isRequired: false,
-              type: "text",
-              title: t("CR_INVALID_STREET_NAME_ML"),
-            })}
-          />
-        </div>
-        <div className="col-md-4">
-          <CardLabel>
-            {t("CR_HOUSE_NAME_ML")}
-            <span className="mandatorycss">*</span>
-          </CardLabel>
-          <TextInput
-            t={t}
-            type={"text"}
-            optionKey="i18nKey"
-            name="permntInKeralaAdrHouseNameMl"
-            value={permntInKeralaAdrHouseNameMl}
-            onKeyPress={setCheckMalayalamInputFieldWithSplChar}
-            onChange={setSelectpermntInKeralaAdrHouseNameMl}
-            placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-            disable={isDisableEdit}
-            {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
-              isRequired: true,
-              type: "text",
-              title: t("CR_INVALID_HOUSE_NAME_ML"),
-            })}
-          />
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_LOCALITY_ML")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrLocalityNameMl"
+              value={permntInKeralaAdrLocalityNameMl}
+              onKeyPress={setCheckMalayalamInputField}
+              onChange={setSelectpermntInKeralaAdrLocalityNameMl}
+              disable={isDisableEdit}
+              placeholder={`${t("CR_LOCALITY_ML")}`}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_LOCALITY_ML"),
+              })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrStreetNameMl"
+              value={permntInKeralaAdrStreetNameMl}
+              onKeyPress={setCheckMalayalamInputField}
+              onChange={setSelectpermntInKeralaAdrStreetNameMl}
+              placeholder={`${t("CR_STREET_NAME_ML")}`}
+              disable={isDisableEdit}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                isRequired: false,
+                type: "text",
+                title: t("CR_INVALID_STREET_NAME_ML"),
+              })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_HOUSE_NAME_ML")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntInKeralaAdrHouseNameMl"
+              value={permntInKeralaAdrHouseNameMl}
+              onKeyPress={setCheckMalayalamInputFieldWithSplChar}
+              onChange={setSelectpermntInKeralaAdrHouseNameMl}
+              placeholder={`${t("CR_HOUSE_NAME_ML")}`}
+              disable={isDisableEdit}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 /,-]*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_HOUSE_NAME_ML"),
+              })}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="row"></div>
       {/* </FormStep> */}
     </React.Fragment>
   );

@@ -376,7 +376,7 @@ export const convertToMarriageRegistration = (data = {}) => {
         marriageType: data?.MarriageDetails?.marriageType ? data?.MarriageDetails?.marriageType?.code : null,
         applicationType: "new",
         businessService: "CR",
-        workflowCode: "MARRIAGE45DAYS",
+        workflowCode: data?.MarriageDetails?.workflowCode ? data?.MarriageDetails?.workflow: "MARRIAGE45DAYS",
         isWorkflow: true,
         action: "INITIATE",
         registration_date: null,

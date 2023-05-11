@@ -39,6 +39,12 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useWorkFlowBirth = () => {
     return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
   };
+  const useWorkFlowMarriage = () => {
+    return useQuery("CR_MARRIAGE_WORKFLOW", () => MdmsService.getWorkFlowMarriageMaster(tenantId, moduleCode), config);
+  };
+  const useWorkFlowBornOutside = () => {
+    return useQuery("CR_BORNOUTSIDE_WORKFLOW", () => MdmsService.getWorkFlowBornOutsideMaster(tenantId, moduleCode), config);
+  };
   const useWorkFlowDeath = () => {
     return useQuery("CR_DEATH_WORKFLOW", () => MdmsService.getWorkFlowDeathMaster(tenantId, moduleCode), config);
   };
@@ -247,8 +253,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
               ?.filter((e) => e.code.split(".").length <= 2)
               ?.map((ownerShipDetails) => ({
                 ...ownerShipDetails,
-                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
-                  }`,
+                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${
+                  ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                }`,
               }));
             const finalArr = arr.filter((data) => data.code.includes("INDIVIDUAL") || data.code.includes("OTHER"));
 
@@ -257,22 +264,23 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
           const res = ownerShipdropDown?.length
             ? ownerShipdropDown
-              ?.map((ownerShipDetails) => ({
-                ...ownerShipDetails,
-                i18nKey: `PT_OWNERSHIP_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                ?.map((ownerShipDetails) => ({
+                  ...ownerShipDetails,
+                  i18nKey: `PT_OWNERSHIP_${
+                    ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
                   }`,
-              }))
-              .reduce((acc, ownerShipDetails) => {
-                if (ownerShipDetails.code.includes("INDIVIDUAL")) {
-                  return [...acc, ownerShipDetails];
-                } else if (ownerShipDetails.code.includes("OTHER")) {
-                  const { code, value, ...everythingElse } = ownerShipDetails;
-                  const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
-                  return [...acc, mutatedOwnershipDetails];
-                } else {
-                  return acc;
-                }
-              }, [])
+                }))
+                .reduce((acc, ownerShipDetails) => {
+                  if (ownerShipDetails.code.includes("INDIVIDUAL")) {
+                    return [...acc, ownerShipDetails];
+                  } else if (ownerShipDetails.code.includes("OTHER")) {
+                    const { code, value, ...everythingElse } = ownerShipDetails;
+                    const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
+                    return [...acc, mutatedOwnershipDetails];
+                  } else {
+                    return acc;
+                  }
+                }, [])
             : null;
 
           return res;
@@ -289,8 +297,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
         categoryData.length > 0
           ? categoryData?.map((category) => {
-            OwnerShipCategory[category.code] = category;
-          })
+              OwnerShipCategory[category.code] = category;
+            })
           : null;
 
         if (OwnerShipCategory) {
@@ -340,6 +348,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useMaritalStatus();
     case "WorkFlowBirth":
       return useWorkFlowBirth();
+    case "WorkFlowMarriage":
+      return useWorkFlowMarriage();
+    case "WorkFlowBornOutside":
+      return useWorkFlowBornOutside();
     case "WorkFlowDeath":
       return useWorkFlowDeath();
     case "WorkFlowAdoption":
