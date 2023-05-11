@@ -31,7 +31,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoading, toast, setToast }) => {
+const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoading, toast, setToast, isSuccess }) => {
   const history = useHistory();
   const { path } = useRouteMatch();
   const { t } = useTranslation();
@@ -174,7 +174,7 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
           <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
         </Card>
       ) : null}
-      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
+      {/* {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />} */}
     </React.Fragment>
   );
 };
