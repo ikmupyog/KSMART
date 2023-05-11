@@ -15,11 +15,13 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
 
     let businessServices=[];
     if(applicationType && applicationType?.code==="RENEWAL")
-    businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
+        businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
     else if(applicationType && applicationType?.code==="NEW")
-    businessServices=["NewTL"]
+        businessServices=["NewTL"]
+    else if(applicationType && applicationType?.code==="CORRECTION")
+        businessServices=["CORRECTIONTL"]
     else
-    businessServices=["EDITRENEWAL","DIRECTRENEWAL","NewTL"]
+        businessServices=["EDITRENEWAL","DIRECTRENEWAL","NewTL"]
 
     const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
     let applicationStatuses = []
@@ -114,7 +116,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     sortBy: "commencementDate",
                     sortOrder: "DESC"
                 });
-                previousPage();
+               // previousPage();
             }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
         </SearchField>
     </>
