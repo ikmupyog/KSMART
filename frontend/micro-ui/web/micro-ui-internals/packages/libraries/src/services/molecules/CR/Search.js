@@ -48,7 +48,10 @@ export const CRsearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    
+    console.log("userinfo",Digit.UserService.getUser().info);
+    const { name : Informername,roles: userRoles, uuid: uuid,mobileNumber : InformermobileNumber , } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+    const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_APPROVER"));
+  // console.log(roletemp[0].code);
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
@@ -77,8 +80,8 @@ export const CRsearch = {
         { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : "NOT_RECORDED" },
         { title: "CR_GENDER", value: response?.gender },
         { title: "CS_COMMON_CHILD_AADHAAR", value: response?.childAadharNo ? response?.childAadharNo : "NOT_RECORDED" },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn|| + " " + response?.childLastNameEn },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl },
+        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn || + " " + response?.childLastNameEn },
+        { title: "PDF_BIRTH_CHILD_NAME_ML", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl },
 
       ],
     };
@@ -183,7 +186,7 @@ export const CRsearch = {
     const AddressBirthDetailsPresentInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
-        { subTitle:true,title: "CR_PRESENT_ADDRESS", value:"CR_PRESENT_ADDRESS" },
+        { subTitle: true, title: "CR_PRESENT_ADDRESS", value: "CR_PRESENT_ADDRESS" },
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPresentEn + " / " + (response?.AddressBirthDetails?.countryIdPresentMl != null ? response?.AddressBirthDetails?.countryIdPresentMl : "") || "NOT_RECORDED" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPresentEn + " / " + response?.AddressBirthDetails.stateIdPresentMl || "NOT_RECORDED" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPresentEn + " / " + response?.AddressBirthDetails.districtIdPresentMl || "NOT_RECORDED" },
@@ -200,7 +203,7 @@ export const CRsearch = {
         { title: "CR_HOUSE_NAME_EN", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || "NOT_RECORDED" },
         { title: "CR_HOUSE_NAME_ML", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameMl || "NOT_RECORDED" },
         //Permanent Address
-        { subTitle:true,title: "CR_PERMANENT_ADDRESS", value:"CR_PERMANENT_ADDRESS" },
+        { subTitle: true, title: "CR_PERMANENT_ADDRESS", value: "CR_PERMANENT_ADDRESS" },
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPermanentEn + " / " + (response?.AddressBirthDetails?.countryIdPermanentMl != null ? response?.AddressBirthDetails?.countryIdPermanentMl : "") || "NOT_RECORDED" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPermanentEn + " / " + response?.AddressBirthDetails.stateIdPermanentMl || "NOT_RECORDED" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPermanentEn + " / " + response?.AddressBirthDetails.districtIdPermanentMl || "NOT_RECORDED" },

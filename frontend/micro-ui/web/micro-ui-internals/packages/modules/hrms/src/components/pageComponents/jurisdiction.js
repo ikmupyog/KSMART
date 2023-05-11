@@ -11,9 +11,9 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId(); 
   const [inactiveJurisdictions, setInactiveJurisdictions] = useState([]);
   const { data: data = {}, isLoading } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "egov-hrms", "HRMSRolesandDesignation") || {};
-  const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
+  const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
   //Maya
   // console.log(institutionList,institutionData); 
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "/egov-location", "boundary-data");

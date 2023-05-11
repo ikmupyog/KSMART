@@ -21,19 +21,25 @@ const getCorrectionDetails = (application, t) => {
     const returnDetails = correctionField?.map((correctionItem) => {
       const isDate = correctionItem?.correctionFieldName === "DECEASED_DOB" ? true : false;
       const correctionData = correctionItem.correctionFieldValue?.map((correction) => {
-        const correctionFieldName = getCorrectionFieldValue(correction?.newValue, isDate, t)
+        const correctionFieldName = getCorrectionFieldValue(correction?.newValue, isDate, t);
+        const marriageLabels = correction?.column?.split('_');
+        const isMalField = ["MAL","ML"].includes(marriageLabels[marriageLabels?.length - 1]);
+        if(!isMalField){
         return (
           {
             title: t(correction?.column),
             value: correctionFieldName,
           }
         );
+    } else {
+        return "NA";
+      }
       });
-      return { title: t((`CR_${correctionItem?.correctionFieldName}`)), values: correctionData };
+      const formattedCorrectionData = correctionData.filter((item) => item !== 'NA')
+      return { title: t((`CR_${correctionItem?.correctionFieldName}`)), values: formattedCorrectionData };
     });
     return returnDetails;
   };
-
 
 const getCRDeathCorrectionAcknowledgementData = async (application, tenantInfo, t) => {
   return {

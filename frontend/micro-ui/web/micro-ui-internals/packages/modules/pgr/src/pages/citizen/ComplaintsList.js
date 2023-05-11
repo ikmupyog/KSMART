@@ -12,11 +12,15 @@ export const ComplaintsList = (props) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   const { path, url } = useRouteMatch();
-  let { isLoading, error, data, revalidate } = Digit.Hooks.pgr.useComplaintsListByMobile(tenantId, mobileNumber);
+  const filters = {
+    mobileNumber: mobileNumber
+  }
+  let { isLoading, error, data, revalidate } = Digit.Hooks.pgr.useComplaintsListByMobile(tenantId, filters);
 
   useEffect(() => {
     revalidate();
   }, []);
+
 
   if (isLoading) {
     return (

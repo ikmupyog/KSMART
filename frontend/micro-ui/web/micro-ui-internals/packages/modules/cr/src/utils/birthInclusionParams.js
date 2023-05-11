@@ -129,7 +129,7 @@ const getCorrectionFields = (correctionData) => {
 
 export const formatApiParams = (formData,userData) => {
   const correctionFieldData = getCorrectionFields(formData);
- 
+ console.log("userData==",userData);
   const apiParam = {
     CorrectionDetails: [
       {

@@ -12,7 +12,7 @@ const BirthInbox = () => {
   const [pageOffset, setPageOffset] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [searchParams, setSearchParams] = useState({ filters: { assignee: uuid }, search: "", sort: {} });
+  const [searchParams, setSearchParams] = useState({ filters: { }, search: "", sort: {} });
 
   useEffect(() => {
     (async () => {
@@ -52,9 +52,12 @@ const BirthInbox = () => {
   // console.log("233", searchParams)
 
   const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
-  // let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
+  let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
   // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
-  // console.log("complaintsz", complaintsz)
+  useEffect(()=>{
+    console.log("complaintsz", complaintsz)
+  },[complaintsz]); 
+ 
 
   let Loading = isLoading;
 

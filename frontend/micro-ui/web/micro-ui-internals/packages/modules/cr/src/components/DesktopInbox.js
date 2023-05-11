@@ -32,14 +32,25 @@ const DesktopInbox = ({
 
   const handleLinkClick = (finaldata) => {
     let temp = {};
-    temp.ChildDetails = finaldata;
+    const applicationNumber = SearchInbox === "death" ? finaldata?.InformationDeath?.["DeathACKNo"] : finaldata.applicationNumber ;
+    const correctionCode = applicationNumber?.split('-')?.[4];
+    if(correctionCode === "CRBRCN"){
+      temp.ChildDetails = finaldata;
+    } 
+    //  please change the condition according to the respective page.
+    else{
+      temp.ChildDetails = finaldata;
+    }
+
     sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
     Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+    
   }
 
   const goto = (data,inboxType) =>{
-    const correctionCode = data?.applicationNumber?.split('-')?.[4];
     const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber ;
+    const correctionCode = applicationNumber?.split('-')?.[4];
+  console.log("applicationNumber in correction",applicationNumber);
     let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
     switch(inboxType){
       case "death":
@@ -47,10 +58,25 @@ const DesktopInbox = ({
          break;
       case "marriage":
         url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
-    }
-    
+    }    
   
     if(["CRBRCN","CRDRCN","CRMRCR"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+    } else if(["CRBRSB"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-stillbirth/${applicationNumber}`;
+    } else if(["CRBRBO"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-bornOutsideIndia/${applicationNumber}`;
+    } else if(["CRBRAB"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-abandonedbirth/${applicationNumber}`;
+    } else if(["CRBRAD"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`;
+    } else if(["CRBRNC"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-nacbirth/${applicationNumber}`;
+    } else if(["CRDRAD"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-abandoneddeathdetails/${applicationNumber}`;
+    } else if(["CRDRNC"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
+    } else{
       url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
     }
     return url;
