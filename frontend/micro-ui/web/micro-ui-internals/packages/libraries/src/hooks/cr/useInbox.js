@@ -3,14 +3,14 @@ import useInbox from "../useInbox"
 
 const useCRInbox = ({ tenantId, filters, config }) => {
 
-    const {applicationStatus, mobileNumber, applicationNumber, sortBy, sortOrder, locality, uuid, limit, offset } = filters
+    const {applicationStatus, mobileNumber, applicationNumber, sortBy, sortOrder, locality, uuid, limit, offset,businessServiceCode = "BIRTHHOSP21" } = filters
     const USER_UUID = Digit.UserService.getUser()?.info?.uuid;
     
     const _filters = {
         tenantId,
 		processSearchCriteria: {
             moduleName: "birth-services",
-			businessService: ["BIRTHHOSP21"],
+			businessService: [businessServiceCode],
             ...(applicationStatus?.length > 0 ? {status: applicationStatus} : {}),
             ...(uuid && Object.keys(uuid).length > 0 ? {assignee: uuid.code === "ASSIGNED_TO_ME" ? USER_UUID : ""} : {}),
         },
