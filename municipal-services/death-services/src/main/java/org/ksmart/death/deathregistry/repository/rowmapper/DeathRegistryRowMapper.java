@@ -10,12 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-
-/**
-     * Creates CrDeathRowMapper
-     * Jasmine
-     * on  08/02/2023
-     */
     
 @Component
 public class DeathRegistryRowMapper  implements ResultSetExtractor<List<DeathRegistryDtl>>, BaseRowMapper{

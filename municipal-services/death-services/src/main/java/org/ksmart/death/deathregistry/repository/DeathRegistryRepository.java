@@ -427,6 +427,9 @@ public class DeathRegistryRepository {
                    }
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameEn(permanentAddPO);
                }
+               else if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null){
+                 cert.getDeathAddressInfo().setPermanentAddrPostofficeNameEn(cert.getDeathAddressInfo().getPermanentAddrPincode());
+               }
                String permanentAddPOMl = masterDataPermanentMl.get(DeathRegistryConstants.POSTOFFICE).toString();
                permanentAddPOMl = permanentAddPOMl.replaceAll("[\\[\\]\\(\\)]", "");
 
@@ -436,6 +439,9 @@ public class DeathRegistryRepository {
                     permanentAddPOMl = permanentAddPOMl+" "+cert.getDeathAddressInfo().getPermanentAddrPincode();
                 }
                  cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl(permanentAddPOMl);
+              }
+              else if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null){
+                cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl(cert.getDeathAddressInfo().getPermanentAddrPincode());
               }
 
               //Rakhi S ikm on 12.02.2023 Village
@@ -869,6 +875,30 @@ public class DeathRegistryRepository {
                  else{
                     cert.getDeathAddressInfo().setPresentAddrcountryMl("");
                  }
+                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn() != null){
+                    cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceEn(", "+cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn());
+                 }
+                 else{
+                    cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceEn("");
+                 }
+                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl() != null){
+                    cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceMl(", "+cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl());
+                 }
+                 else{
+                    cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceMl("");
+                 }
+                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown() != null){
+                    cert.getDeathAddressInfo().setPermntOutsideIndiaCityTown(", "+cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown());
+                 }
+                 else{
+                    cert.getDeathAddressInfo().setPermntOutsideIndiaCityTown("");
+                 }
+                 if(cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode() != null){
+                    cert.getDeathAddressInfo().setPermanentOutsideIndiaPostCode(", "+cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode());
+                 }
+                 else{
+                    cert.getDeathAddressInfo().setPermanentOutsideIndiaPostCode("");
+                 }
                 //end
                 cert.getDeathBasicInfo().setPresentAddressFullEn(cert.getDeathAddressInfo().getPresentAddrResidenceAsscNo() +
                                             cert.getDeathAddressInfo().getPresentAddrHouseNo()+ 
@@ -883,7 +913,7 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPresentAddrStateId()+ 
                                             cert.getDeathAddressInfo().getPresentAddrCountryId());  
 
-                cert.getDeathBasicInfo().setPresentAddressFullMl(cert.getDeathAddressInfo().getPresentAddrHouseNo() +
+                cert.getDeathBasicInfo().setPresentAddressFullMl(cert.getDeathAddressInfo().getPresentAddrResidenceAsscNo() +
                                             cert.getDeathAddressInfo().getPresentAddrHouseNo()+ 
                                             cert.getDeathAddressInfo().getPresentAddrHoueNameMl()+
                                             cert.getDeathAddressInfo().getPresentAddrStreetNameMl()+ 
@@ -902,6 +932,9 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPermanentAddrStreetNameEn()+ 
                                             cert.getDeathAddressInfo().getPermanentAddrLocalityEn()+ 
                                             // cert.getDeathAddressInfo().getPermanentAddrCityEn()+ 
+                                            cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn()+
+                                            cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown()+
+                                            cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode()+
                                             cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn()+ 
                                             cert.getDeathAddressInfo().getPermanentAddrVillageNameEn()+
                                             cert.getDeathAddressInfo().getPermanentAddrTalukNameEn()+
@@ -915,6 +948,8 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPermanentAddrStreetNameMl()+
                                             cert.getDeathAddressInfo().getPermanentAddrLocalityMl()+
                                             // cert.getDeathAddressInfo().getPermanentAddrCityMl() +
+                                            cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl()+
+                                            cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode()+
                                             cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl()+
                                             cert.getDeathAddressInfo().getPermanentAddrVillageNameMl()+
                                             cert.getDeathAddressInfo().getPermanentAddrTalukNameMl()+ 

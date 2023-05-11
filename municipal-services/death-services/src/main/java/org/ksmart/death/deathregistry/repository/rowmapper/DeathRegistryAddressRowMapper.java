@@ -145,19 +145,23 @@ public class DeathRegistryAddressRowMapper  implements ResultSetExtractor  , Bas
                           .permntOutsideKeralaHouseNameMl(rs.getString("R_housename_ml"))
 
                           .presentOutSideCountry(rs.getString("R_country_id"))
-                          .PermntOutsideIndiaprovinceEn(rs.getString("R_province_name_en"))
-                          .PermntOutsideIndiaprovinceMl(rs.getString("R_province_name_ml"))
-                          .PermntOutsideIndiaVillage(rs.getString("R_city_town_village"))
-                          .PermntOutsideIndiaCityTown(rs.getString("R_city_en"))
+                          .permntOutsideIndiaprovinceEn(rs.getString("R_province_name_en"))
+                          .permntOutsideIndiaprovinceMl(rs.getString("R_province_name_ml"))
+                          .permntOutsideIndiaVillage(rs.getString("R_city_town_village"))
+                          .permntOutsideIndiaCityTown(rs.getString("R_city_en"))
                           .PermntOutsideIndiaLineoneEn(rs.getString("R_housename_en"))
                           .PermntOutsideIndiaLineoneMl(rs.getString("R_housename_ml"))
                           .PermntOutsideIndiaLinetwoEn(rs.getString("R_streetname_en"))
                           .PermntOutsideIndiaLinetwoMl(rs.getString("R_streetname_ml"))
-                          .PermanentOutsideIndiaPostCode(rs.getString("R_postal_code"))
+                          .permanentOutsideIndiaPostCode(rs.getString("R_postal_code"))
 
                           .permntInKeralaAdrLBName(rs.getString("R_addr_lb_name"))
                           .presentInsideKeralaLBName(rs.getString("P_addr_lb_name"))
                           .isPrsentAddress(rs.getBoolean("P_addr_sameas_present"))
+                          .presentAddrHouseNo(rs.getString("P_house_no"))
+                          .presentAddrResidenceAsscNo(rs.getString("P_residence_assc_no"))
+                          .permanentAddrHouseNo(rs.getString("R_house_no"))
+                          .permanentAddrResidenceAsscNo(rs.getString("R_residence_assc_no"))
                           .build();
     }
         

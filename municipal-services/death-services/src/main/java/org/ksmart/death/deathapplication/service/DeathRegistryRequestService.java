@@ -263,7 +263,11 @@ public class DeathRegistryRequestService {
         registryAddress.setPermanentAddrStreetNameMl(deathAddress.getPermanentAddrStreetNameMl());
         registryAddress.setPermanentAddrHoueNameEn(deathAddress.getPermanentAddrHoueNameEn());
         registryAddress.setPermanentAddrHoueNameMl(deathAddress.getPermanentAddrHoueNameMl());
-        registryAddress.setPermanentAddrPostalCode(deathAddress.getPermanentAddrPostalCode());
+        registryAddress.setPermanentOutsideIndiaPostCode(deathAddress.getPermanentOutsideIndiaPostCode());
+        registryAddress.setPermntOutsideIndiaprovinceEn(deathAddress.getPermntOutsideIndiaprovinceEn());
+        registryAddress.setPermntOutsideIndiaprovinceMl(deathAddress.getPermntOutsideIndiaprovinceMl());
+        registryAddress.setPermntOutsideIndiaVillage(deathAddress.getPermntOutsideIndiaVillage());
+        registryAddress.setPermntOutsideIndiaCityTown(deathAddress.getPermntOutsideIndiaCityTown());
         return registryAddress;
     }
 

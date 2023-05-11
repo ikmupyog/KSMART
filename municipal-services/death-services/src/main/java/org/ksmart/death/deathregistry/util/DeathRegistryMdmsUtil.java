@@ -774,7 +774,7 @@ public class DeathRegistryMdmsUtil {
 
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
-        final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].address";
+        final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].hospitalName";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.HOSPITAL_LIST).filter(perAddrfilterCode).build());  
 
@@ -819,7 +819,7 @@ public class DeathRegistryMdmsUtil {
 
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
-        final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].addressLocal";
+        final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].hospitalNamelocal";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.HOSPITAL_LIST).filter(perAddrfilterCode).build());  
 
@@ -862,7 +862,7 @@ public class DeathRegistryMdmsUtil {
                  // master details for crDeath module
                 List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
                 // master details for death certificate              
-                final String institutionfilterCode = "$.[?(@.code=='"+deathPlaceInstId+"')].address"; 
+                final String institutionfilterCode = "$.[?(@.code=='"+deathPlaceInstId+"')].institutionName"; 
                 crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.INSTITUTION_NAME).filter(institutionfilterCode).build());       
                 
@@ -903,7 +903,7 @@ public class DeathRegistryMdmsUtil {
         private ModuleDetail  getcommonMasterRequestInstitutionMl(String deathPlaceInstId) {
 
                List<MasterDetail> crDeathMasterDetails = new ArrayList<>();           
-               final String institutionfilterCode = "$.[?(@.code=='"+deathPlaceInstId+"')].addressLocal"; 
+               final String institutionfilterCode = "$.[?(@.code=='"+deathPlaceInstId+"')].institutionNamelocal"; 
                crDeathMasterDetails
                .add(MasterDetail.builder().name(DeathRegistryConstants.INSTITUTION_NAME).filter(institutionfilterCode).build());       
                

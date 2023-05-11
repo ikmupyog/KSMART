@@ -517,32 +517,48 @@ public class DeathRegistryAddressInfo {
     @JsonProperty("PermntOutsideIndiaLinetwoMl")
     private String PermntOutsideIndiaLinetwoMl;
 
-    @Size(max = 2500)
-    @JsonProperty("PermntOutsideIndiaprovinceEn")
-    private String PermntOutsideIndiaprovinceEn;
+    // @Size(max = 2500)
+    // @JsonProperty("PermntOutsideIndiaprovinceEn")
+    // private String PermntOutsideIndiaprovinceEn;
 
-    @Size(max = 1000)
-    @JsonProperty("PermntOutsideIndiaVillage")
-    private String PermntOutsideIndiaVillage;
+    // @Size(max = 1000)
+    // @JsonProperty("PermntOutsideIndiaVillage")
+    // private String PermntOutsideIndiaVillage;
 
-    @Size(max = 64)
-    @JsonProperty("PermntOutsideIndiaCityTown")
-    private String PermntOutsideIndiaCityTown;
+    // @Size(max = 64)
+    // @JsonProperty("PermntOutsideIndiaCityTown")
+    // private String PermntOutsideIndiaCityTown;
 
-    @Size(max = 10)
-    @JsonProperty("PermanentOutsideIndiaPostCode")
-    private String PermanentOutsideIndiaPostCode;
+    // @Size(max = 10)
+    // @JsonProperty("PermanentOutsideIndiaPostCode")
+    // private String PermanentOutsideIndiaPostCode;
 
     @Size(max = 64)
     @JsonProperty("PermntOutsideIndiaCountry")
     private String PermntOutsideIndiaCountry;
 
-    @Size(max = 2500)
-    @JsonProperty("PermntOutsideIndiaprovinceMl")
-    private String PermntOutsideIndiaprovinceMl;
+    // @Size(max = 2500)
+    // @JsonProperty("PermntOutsideIndiaprovinceMl")
+    // private String PermntOutsideIndiaprovinceMl;
 
     @Size(max = 2500)
     @JsonProperty("permntOutsideKeralaCityVilgeEn")
     private String permntOutsideKeralaCityVilgeEn;
+    
+    @JsonProperty("permanentOutsideIndiaPostCode")
+    private String permanentOutsideIndiaPostCode  ;
+
+    @JsonProperty("permntOutsideIndiaprovinceEn")
+    private String permntOutsideIndiaprovinceEn  ;
+    
+    @JsonProperty("permntOutsideIndiaprovinceMl")
+    private String permntOutsideIndiaprovinceMl ;
+
+    @JsonProperty("permntOutsideIndiaVillage")
+    private String permntOutsideIndiaVillage ;
+
+    @JsonProperty("permntOutsideIndiaCityTown")
+    private String permntOutsideIndiaCityTown ;
+
 
 }
