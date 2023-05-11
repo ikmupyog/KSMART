@@ -27,7 +27,15 @@ const BirthInclusion = () => {
   const [apiConfig, setApiConfig] = useState({ enabled: false });
   const [payload, setPayload] = useState({});
 
+  const [toast, setToast] = useState({ show: false, message: "" });
+
   function onSubmit(_data) {
+    console.log("error data", _data);
+    if (!_data.Gender) {    
+      setToast({ show: true, message: "Please select gender" });
+      return false;
+    }
+    setToast({ show: false, message: "" });
     var fromDate = new Date(_data?.fromDate);
     fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
     var toDate = new Date(_data?.toDate);
@@ -49,13 +57,15 @@ const BirthInclusion = () => {
   // const tenantId = Digit.ULBService.getCurrentTenantId();
 
   const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
+    enabled: !!(payload && Object.keys(payload).length > 0) && !toast.show,
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchBirth({
-    filters: {...payload, dateofbirth: payload.dateofbirth && moment(payload.dateofbirth, 'YYYY/MM/DD').valueOf()},
+    filters: { ...payload, dateofbirth: payload.dateofbirth && moment(payload.dateofbirth, "YYYY-MM-DD").valueOf() },
     config,
   });
+
+
 
   const gotoEditInclusion = async (data) => {
     history.push({
@@ -79,6 +89,8 @@ const BirthInclusion = () => {
         isLoading={isLoading}
         count={count}
         onInclusionClick={gotoEditInclusion}
+        toast={toast}
+        setToast={setToast}
       />
       {/* </Route> */}
       {/* <Route path={`${path}/acknowledgement`}>

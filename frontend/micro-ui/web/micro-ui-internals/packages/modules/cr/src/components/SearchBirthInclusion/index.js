@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect,useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SubmitBar, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -31,18 +31,19 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoading }) => {
+const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoading, toast, setToast }) => {
 
   const history = useHistory();
   const {path} = useRouteMatch();
   const { t } = useTranslation();
 
+
   const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "applicationNumber",
-      sortOrder: "DESC",
+      // sortBy: "applicationNumber",
+      // sortOrder: "DESC",
       tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
@@ -51,8 +52,8 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "applicationNumber");
-    register("sortOrder", "DESC");
+    // register("sortBy", "applicationNumber");
+    // register("sortOrder", "DESC");
     register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
@@ -174,6 +175,13 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
           </React.Fragment>
         )
       }
+       {toast.show && (
+            <Toast
+              error={toast.show}
+              label={toast.message}
+              onClose={() => setToast(false)}
+            />
+       )}
     </React.Fragment>
   );
 };
