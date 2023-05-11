@@ -24,7 +24,7 @@ const DesktopInbox = ({
   const { t } = useTranslation();
 
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-  let SearchInbox = (window.location.href.includes("/birthinbox") == true ? "birth" : "death")
+  let SearchInbox = window.location.href.includes("/birthinbox") == true ? "birth" : window.location.href.includes("/marriageinbox") == true ? "marriage" : "death";
 
   const GetSlaCell = (value) => {
     return value < 0 ? <span className="sla-cell-error">{value || ""}</span> : <span className="sla-cell-success">{value || ""}</span>;
@@ -33,8 +33,81 @@ const DesktopInbox = ({
   const handleLinkClick = (finaldata) => {
     let temp = {};
     temp.ChildDetails = finaldata;
+    sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
     Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+    
   }
+
+  const goto = (data,inboxType) =>{
+    const correctionCode = data?.applicationNumber?.split('-')?.[4];
+    const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber ;
+    let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
+    switch(inboxType){
+      case "death":
+         url = `/digit-ui/employee/cr/application-deathdetails/${applicationNumber}`;
+         break;
+      case "marriage":
+        url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
+    }    
+  
+    if(["CRBRCN","CRDRCN","CRMRCR"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+    } else if(["CRBRSB"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-stillbirth/${applicationNumber}`;
+    } else if(["CRBRBO"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-bornOutsideIndia/${applicationNumber}`;
+    } else if(["CRBRAB"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-abandonedbirth/${applicationNumber}`;
+    } else if(["CRBRAD"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`;
+    } else if(["CRBRNC"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-nacbirth/${applicationNumber}`;
+    } else if(["CRDRAD"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-abandoneddeathdetails/${applicationNumber}`;
+    } else if(["CRDRNC"].includes(correctionCode)){
+      url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
+    }
+    return url;
+  }
+
+  const MarriageColumns = React.useMemo(() => ([
+    {
+      Header: t("CR_COMMON_COL_APP_NO"),
+      accessor: "applicationNumber",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        return (
+          <div>
+            <span className="link">
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+                {/* {row.original.applicationNumber} */}
+                {row.original.applicationNumber}
+              </Link>
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      Header: t("CR_COMMON_COL_APP_DATE"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row?.auditDetails?.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+    },
+    {
+      Header: t("WF_INBOX_HEADER_LOCALITY"),
+      Cell: ({ row }) => {
+        return GetCell(t((row.original["wardNo"])));
+      },
+    },
+    {
+      Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
+      Cell: ({ row }) => {
+        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+      },
+    }
+  ]), [])
+
+
 
   const Deathcolumns = React.useMemo(
     () => [
@@ -43,7 +116,6 @@ const DesktopInbox = ({
         accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
-          // console.log('rw',row);
           return (
             // <div>
             //   <span className="link">
@@ -52,18 +124,11 @@ const DesktopInbox = ({
             // </div>
             <div>
               <span className="link">
-                <Link onClick={handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}>
+                <Link onClick={handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
               </span>
             </div>
-            // <div>
-            //     <span className="link">
-            //       <Link onClick={event => handleLinkClick(row.original.InformationDeath)} to={{pathname:`/digit-ui/employee/cr/application-deathdetails/`}}>
-            //         {row.original.InformationDeath["DeathACKNo"]}
-            //       </Link>
-            //     </span>
-            //   </div>
           );
         },
       },
@@ -116,9 +181,9 @@ const DesktopInbox = ({
     []
   );
 
-  console.log("first", data)
 
-  const columns = React.useMemo(() => ([
+
+  const BirthColumns = React.useMemo(() => ([
     {
       Header: t("CR_COMMON_COL_APP_NO"),
       accessor: "applicationNumber",
@@ -127,7 +192,7 @@ const DesktopInbox = ({
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -175,7 +240,7 @@ const DesktopInbox = ({
       <CRTable
         t={t}
         data={data}
-        columns={SearchInbox == "birth" ? columns : Deathcolumns}
+        columns={SearchInbox == "birth" ? BirthColumns : SearchInbox == "marriage" ? MarriageColumns : Deathcolumns}
         getCellProps={(cellInfo) => {
           return {
             style: {

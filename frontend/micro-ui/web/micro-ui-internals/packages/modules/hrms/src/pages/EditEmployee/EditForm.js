@@ -59,6 +59,7 @@ const EditForm = ({ tenantId, data }) => {
     SelectEmployeePhoneNumber: { mobileNumber: data?.user?.mobileNumber },
     SelectEmployeeId: { code: data?.code },
     SelectEmployeeName: { employeeName: data?.user?.name },
+    SelectEmployeeAadhaarNumber: { aadhaarNumber: data?.user?.aadhaarNumber },
     SelectEmployeeEmailId: { emailId: data?.user?.emailId },
     SelectEmployeeCorrespondenceAddress: { correspondenceAddress: data?.user?.correspondenceAddress },
     SelectDateofEmployment: { dateOfAppointment: convertEpochToDate(data?.dateOfAppointment) },
@@ -106,6 +107,7 @@ const EditForm = ({ tenantId, data }) => {
 
     const email = formData?.SelectEmployeeEmailId?.emailId || '';
     const name = formData?.SelectEmployeeName?.employeeName || '';
+    const aadhar = formData?.SelectEmployeeAadharNumber?.AadharNumber || '';
     const address = formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress || '';
     const validEmail = email.length == 0 ? true : email.match(Digit.Utils.getPattern('Email'));
     return validEmail && name?.match(Digit.Utils.getPattern('Name')) && address.match(Digit.Utils.getPattern('Address'));
@@ -149,6 +151,7 @@ const EditForm = ({ tenantId, data }) => {
       formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress &&
       formData?.SelectEmployeeGender?.gender.code &&
       formData?.SelectEmployeeName?.employeeName &&
+      formData?.SelectEmployeeAadhaarNumber?.aadhaarNumber &&
       formData?.SelectEmployeePhoneNumber?.mobileNumber &&
       checkfield &&
       setassigncheck &&
@@ -191,6 +194,7 @@ const EditForm = ({ tenantId, data }) => {
     requestdata.user.gender = input?.SelectEmployeeGender?.gender.code;
     requestdata.user.dob = Date.parse(input?.SelectDateofBirthEmployment?.dob);
     requestdata.user.mobileNumber = input?.SelectEmployeePhoneNumber?.mobileNumber;
+    requestdata.user.aadhaarNumber = input?.SelectEmployeeAadhaarNumber?.aadhaarNumber;
     requestdata["user"]["name"] = input?.SelectEmployeeName?.employeeName;
     requestdata.user.correspondenceAddress = input?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress;
     requestdata.user.roles = roles.filter(role=>role&&role?.name);

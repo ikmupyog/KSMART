@@ -372,7 +372,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRAB",
         businessservice: "birth-services",
-        workflowcode: "BIRTHABANDONED",
+        workflowcode: "ABANDONEDBIRTH",
         ParentsDetails: {
           motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.AbandonedChildDetails?.motherFirstNameMl,
@@ -419,96 +419,100 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
   return formdata;
 };
 
-// export const convertToEditAbandonedBirthRegistration = (data = {}) => {
-//   const formdata = {
-//     AbandonedDetails: [
-//       {
-//         childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
-//         birthDateTime: parseInt(data?.AbandonedChildDetails?.birthDateTime),
-//         gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
-//         tenantid: data?.AbandonedChildDetails?.tenantId,
-//         hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,
-//         birthPlace: data?.AbandonedChildDetails?.birthPlace ? data?.AbandonedChildDetails?.birthPlace.code : null,
-//         hospitalName: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalName : null,
-//         hospitalNameMl: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalNamelocal : null,
-//         institutionTypeCode: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.code : null,
-//         institution: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.name : null,
-//         institutionNameCode: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.code : null,
-//         institutionId: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.institutionName : null,
-//         institutionIdMl: data?.AbandonedChildDetails?.institutionIdMl ? data?.AbandonedChildDetails?.institutionIdMl.institutionNamelocal : null,
-//         wardNo: data?.AbandonedChildDetails?.wardNo ? data?.AbandonedChildDetails?.wardNo.code : null,
-//         wardNameEn: data?.AbandonedChildDetails?.wardNameEn ? data?.AbandonedChildDetails?.wardNameEn : null,
-//         wardNameMl: data?.AbandonedChildDetails?.wardNameMl ? data?.AbandonedChildDetails?.wardNameMl : null,
-//         wardNumber: data?.AbandonedChildDetails?.wardNumber ? data?.AbandonedChildDetails?.wardNumber : null,
-//         adrsHouseNameEn: data?.AbandonedChildDetails?.adrsHouseNameEn,
-//         adrsHouseNameMl: data?.AbandonedChildDetails?.adrsHouseNameMl,
-//         adrsLocalityNameEn: data?.AbandonedChildDetails?.adrsLocalityNameEn,
-//         adrsLocalityNameMl: data?.AbandonedChildDetails?.adrsLocalityNameMl,
-//         adrsStreetNameEn: data?.AbandonedChildDetails?.adrsStreetNameEn,
-//         adrsStreetNameMl: data?.AbandonedChildDetails?.adrsStreetNameMl,
-//         adrsPostOffice: data?.AbandonedChildDetails?.adrsPostOffice ? data?.AbandonedChildDetails?.adrsPostOffice : null,
-//         adrsPincode: data?.AbandonedChildDetails?.adrsPincode ? data?.AbandonedChildDetails?.adrsPincode : null,
-//         vehicleType: data?.AbandonedChildDetails?.vehicleType ? data?.AbandonedChildDetails?.vehicleType : null,
-//         vehicleHaltPlace: data?.AbandonedChildDetails?.vehicleHaltPlace,
-//         vehicleHaltPlaceMl: data?.AbandonedChildDetails?.vehicleHaltPlaceMl,
-//         vehicleRegistrationNo: data?.AbandonedChildDetails?.vehicleRegistrationNo,
-//         vehicleFromEn: data?.AbandonedChildDetails?.vehicleFromEn,
-//         vehicleToEn: data?.AbandonedChildDetails?.vehicleToEn,
-//         vehicleFromMl: data?.AbandonedChildDetails?.vehicleFromMl,
-//         vehicleToMl: data?.AbandonedChildDetails?.vehicleToMl,
-//         setadmittedHospitalEn: data?.AbandonedChildDetails?.setadmittedHospitalEn ? data?.AbandonedChildDetails?.setadmittedHospitalEn: null,
-//         vehicleDesDetailsEn: data?.AbandonedChildDetails?.vehicleDesDetailsEn ? data?.AbandonedChildDetails?.vehicleDesDetailsEn : null,
-//         publicPlaceType: data?.AbandonedChildDetails?.publicPlaceType ? data?.AbandonedChildDetails?.publicPlaceType: null,
-//         localityNameEn: data?.AbandonedChildDetails?.localityNameEn,
-//         localityNameMl: data?.AbandonedChildDetails?.localityNameMl,
-//         streetNameEn: data?.AbandonedChildDetails?.streetNameEn,
-//         streetNameMl: data?.AbandonedChildDetails?.streetNameMl,
-//         publicPlaceDecpEn: data?.AbandonedChildDetails?.publicPlaceDecpEn,
-//         birthWeight: data?.AbandonedChildDetails?.birthWeight,
-//         pregnancyDuration: data?.AbandonedChildDetails?.pregnancyDuration ? data?.AbandonedChildDetails?.pregnancyDuration : null,
-//         medicalAttensionSub: data?.AbandonedChildDetails?.medicalAttensionSub ? data?.AbandonedChildDetails?.medicalAttensionSub.code : null,
-//         deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
-//         action: "APPLY",
-//         applicationtype: "CRBRAB",
-//         businessservice: "birth-services",
-//         workflowcode: "21BIRTHHOME",
-//         ParentsDetails: {
-//           motherFirstNameEn: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameEn,
-//           motherFirstNameMl: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameMl,
-//           motherAadhar: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherAadhar,
-//           ismotherInfo: data?.AbandonedChildDetails?.AbandonedChildDetails?.isMotherInfo,
-//           isfatherInfo: data?.AbandonedChildDetails?.AbandonedChildDetails?.isMotherInfo,
-//           addressOfMother: data?.AbandonedChildDetails?.AbandonedChildDetails?.addressOfMother,
-//         },
-//         InformarHosInstDetails: {
-//           infomantFirstNameEn: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantFirstNameEn,
-//           infomantAadhar: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantAadhar,
-//           infomantMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantMobile,
-//           informerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerAddress,
-//           informerDesi: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerDesi,
-//           // isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
-//         },
-//         caretakerDetails: {
-//           institutionName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.institutionName,
-//           caretakerName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerName,
-//           caretakerDesignation: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerDesignation,
-//           caretakerMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerMobile,
-//           caretakerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerAddress,
-//         },
-//         documentDetails: {
+export const convertToEditAbandonedBirthRegistration = (data = {}) => {
+  const formdata = {
+    AbandonedDetails: [
+      {
+        childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
+        birthDateTime: parseInt(data?.AbandonedChildDetails?.birthDateTime),
+        gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
+        tenantid: data?.AbandonedChildDetails?.tenantId,
+        hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,
+        birthPlace: data?.AbandonedChildDetails?.birthPlace ? data?.AbandonedChildDetails?.birthPlace.code : null,
+        hospitalName: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalName : null,
+        hospitalNameMl: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalNamelocal : null,
+        institutionTypeCode: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution : null,
+        institution: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.name : null,
+        institutionNameCode: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId : null,
+        institutionId: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.institutionName : null,
+        institutionIdMl: data?.AbandonedChildDetails?.institutionIdMl ? data?.AbandonedChildDetails?.institutionIdMl.institutionNamelocal : null,
+        wardNo: data?.AbandonedChildDetails?.wardNo ? data?.AbandonedChildDetails?.wardNo : null,
+        wardNameEn: data?.AbandonedChildDetails?.wardNameEn ? data?.AbandonedChildDetails?.wardNameEn : null,
+        wardNameMl: data?.AbandonedChildDetails?.wardNameMl ? data?.AbandonedChildDetails?.wardNameMl : null,
+        wardNumber: data?.AbandonedChildDetails?.wardNumber ? data?.AbandonedChildDetails?.wardNumber : null,
+        adrsHouseNameEn: data?.AbandonedChildDetails?.adrsHouseNameEn,
+        adrsHouseNameMl: data?.AbandonedChildDetails?.adrsHouseNameMl,
+        adrsLocalityNameEn: data?.AbandonedChildDetails?.adrsLocalityNameEn,
+        adrsLocalityNameMl: data?.AbandonedChildDetails?.adrsLocalityNameMl,
+        adrsStreetNameEn: data?.AbandonedChildDetails?.adrsStreetNameEn,
+        adrsStreetNameMl: data?.AbandonedChildDetails?.adrsStreetNameMl,
+        adrsPostOffice: data?.AbandonedChildDetails?.adrsPostOffice ? data?.AbandonedChildDetails?.adrsPostOffice : null,
+        adrsPincode: data?.AbandonedChildDetails?.adrsPincode ? data?.AbandonedChildDetails?.adrsPincode : null,
+        vehicleType: data?.AbandonedChildDetails?.vehicleType ? data?.AbandonedChildDetails?.vehicleType : null,
+        vehicleHaltPlace: data?.AbandonedChildDetails?.vehicleHaltPlace,
+        vehicleHaltPlaceMl: data?.AbandonedChildDetails?.vehicleHaltPlaceMl,
+        vehicleRegistrationNo: data?.AbandonedChildDetails?.vehicleRegistrationNo,
+        vehicleFromEn: data?.AbandonedChildDetails?.vehicleFromEn,
+        vehicleToEn: data?.AbandonedChildDetails?.vehicleToEn,
+        vehicleFromMl: data?.AbandonedChildDetails?.vehicleFromMl,
+        vehicleToMl: data?.AbandonedChildDetails?.vehicleToMl,
+        setadmittedHospitalEn: data?.AbandonedChildDetails?.setadmittedHospitalEn ? data?.AbandonedChildDetails?.setadmittedHospitalEn: null,
+        vehicleDesDetailsEn: data?.AbandonedChildDetails?.vehicleDesDetailsEn ? data?.AbandonedChildDetails?.vehicleDesDetailsEn : null,
+        publicPlaceType: data?.AbandonedChildDetails?.publicPlaceType ? data?.AbandonedChildDetails?.publicPlaceType: null,
+        localityNameEn: data?.AbandonedChildDetails?.localityNameEn,
+        localityNameMl: data?.AbandonedChildDetails?.localityNameMl,
+        streetNameEn: data?.AbandonedChildDetails?.streetNameEn,
+        streetNameMl: data?.AbandonedChildDetails?.streetNameMl,
+        publicPlaceDecpEn: data?.AbandonedChildDetails?.publicPlaceDecpEn,
+        birthWeight: data?.AbandonedChildDetails?.birthWeight,
+        pregnancyDuration: data?.AbandonedChildDetails?.pregnancyDuration ? data?.AbandonedChildDetails?.pregnancyDuration : null,
+        medicalAttensionSub: data?.AbandonedChildDetails?.medicalAttensionSub ? data?.AbandonedChildDetails?.medicalAttensionSub.code : null,
+        deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
+        action: "APPLY",
+        applicationtype: "CRBRAB",
+        businessservice: "birth-services",
+        workflowcode: "ABANDONEDBIRTH",
+        ParentsDetails: {
+          motherFirstNameEn: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameMl,
+          motherAadhar: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherAadhar,
+          ismotherInfo: data?.AbandonedChildDetails?.AbandonedChildDetails?.isMotherInfo,
+          isfatherInfo: data?.AbandonedChildDetails?.AbandonedChildDetails?.isMotherInfo,
+          addressOfMother: data?.AbandonedChildDetails?.AbandonedChildDetails?.addressOfMother,
+        },
+        InformarHosInstDetails: {
+          infomantFirstNameEn: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantFirstNameEn,
+          infomantAadhar: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantAadhar,
+          infomantMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantMobile,
+          informerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerAddress,
+          informerDesi: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerDesi,
+          isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
+        },
+        caretakerDetails: {
+          institutionName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.institutionName,
+          caretakerName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerName,
+          caretakerDesignation: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerDesignation,
+          caretakerMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerMobile,
+          caretakerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerAddress,
+        },
+        documentDetails: [
+        {
 
-//           tenantId: data?.AbandonedBirthInformarDetails?.tenantId,         
-//           document : data?.childdoc,
-//         // appplicantDocument : document
-      
+          DocumentType: "CR_REPORTING_FORM",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile      
+        },
+        {
+          DocumentType: "CR_CHILDBIRTH_PROOF",
+          filestoreId: data?.AbandonedBirthInformarDetails?.uploadedFile1      
+        },
+      ], 
 
-//         },
-//       },
-//     ],
-//   };
+      },
+    ],
+  };
 
-//   return formdata;
-// };
+  return formdata;
+};
 
 export const getwfdocuments = (data) => {
   let wfdoc = [];
@@ -688,123 +692,123 @@ export const stringToBoolean = (value) => {
 };
 
 //FinancialYear
-export const convertToEditTrade = (data, fy = []) => {
-  const currrentFYending = fy?.filter((item) => item?.code === data?.financialYear)?.[0]?.endingDate;
-  const nextFinancialYearForRenewal = fy?.filter((item) => item?.startingDate === currrentFYending)?.[0]?.code;
-  let isDirectrenewal = stringToBoolean(sessionStorage.getItem("isDirectRenewal"));
-  let formdata = {
-    Licenses: [
-      {
-        id: data?.id,
-        tenantId: data?.address?.city?.code,
-        businessService: data?.businessService,
-        licenseType: data?.licenseType,
-        applicationType: "RENEWAL",
-        workflowCode: isDirectrenewal ? "DIRECTRENEWAL" : "EDITRENEWAL",
-        licenseNumber: data?.licenseNumber,
-        applicationNumber: data?.applicationNumber,
-        tradeName: data?.tradeName,
-        applicationDate: data?.applicationDate,
-        commencementDate: data?.commencementDate,
-        issuedDate: data?.issuedDate,
-        financialYear: nextFinancialYearForRenewal || "2020-21",
-        validFrom: data?.validFrom,
-        validTo: data?.validTo,
-        action: "INITIATE",
-        wfDocuments: data?.wfDocuments,
-        status: data?.status,
-        tradeLicenseDetail: {
-          address: data.tradeLicenseDetail.address,
-          applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
-          accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
-          owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
-          structureType: isDirectrenewal
-            ? data.tradeLicenseDetail.structureType
-            : data?.TradeDetails?.VehicleType
-            ? data?.TradeDetails?.VehicleType.code
-            : data?.TradeDetails?.BuildingType.code,
-          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
-            ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
-            : data?.ownershipCategory?.code,
-          tradeUnits: gettradeupdateunits(data),
-          additionalDetail: data.tradeLicenseDetail.additionalDetail,
-          auditDetails: data.tradeLicenseDetail.auditDetails,
-          channel: data.tradeLicenseDetail.channel,
-          id: data.tradeLicenseDetail.id,
-          ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && {
-            institution: {
-              designation: data?.owners?.owners?.[0]?.designation,
-              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-              instituionName: data?.owners?.owners?.[0]?.institutionName,
-              name: data?.owners?.owners?.[0]?.name,
-            },
-          }),
-        },
-        calculation: null,
-        auditDetails: data?.auditDetails,
-        accountId: data?.accountId,
-      },
-    ],
-  };
-  return formdata;
-};
+// export const convertToEditTrade = (data, fy = []) => {
+//   const currrentFYending = fy?.filter((item) => item?.code === data?.financialYear)?.[0]?.endingDate;
+//   const nextFinancialYearForRenewal = fy?.filter((item) => item?.startingDate === currrentFYending)?.[0]?.code;
+//   let isDirectrenewal = stringToBoolean(sessionStorage.getItem("isDirectRenewal"));
+//   let formdata = {
+//     Licenses: [
+//       {
+//         id: data?.id,
+//         tenantId: data?.address?.city?.code,
+//         businessService: data?.businessService,
+//         licenseType: data?.licenseType,
+//         applicationType: "RENEWAL",
+//         workflowCode: isDirectrenewal ? "DIRECTRENEWAL" : "EDITRENEWAL",
+//         licenseNumber: data?.licenseNumber,
+//         applicationNumber: data?.applicationNumber,
+//         tradeName: data?.tradeName,
+//         applicationDate: data?.applicationDate,
+//         commencementDate: data?.commencementDate,
+//         issuedDate: data?.issuedDate,
+//         financialYear: nextFinancialYearForRenewal || "2020-21",
+//         validFrom: data?.validFrom,
+//         validTo: data?.validTo,
+//         action: "INITIATE",
+//         wfDocuments: data?.wfDocuments,
+//         status: data?.status,
+//         tradeLicenseDetail: {
+//           address: data.tradeLicenseDetail.address,
+//           applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
+//           accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
+//           owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
+//           structureType: isDirectrenewal
+//             ? data.tradeLicenseDetail.structureType
+//             : data?.TradeDetails?.VehicleType
+//             ? data?.TradeDetails?.VehicleType.code
+//             : data?.TradeDetails?.BuildingType.code,
+//           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
+//             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
+//             : data?.ownershipCategory?.code,
+//           tradeUnits: gettradeupdateunits(data),
+//           additionalDetail: data.tradeLicenseDetail.additionalDetail,
+//           auditDetails: data.tradeLicenseDetail.auditDetails,
+//           channel: data.tradeLicenseDetail.channel,
+//           id: data.tradeLicenseDetail.id,
+//           ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && {
+//             institution: {
+//               designation: data?.owners?.owners?.[0]?.designation,
+//               ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+//               mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+//               instituionName: data?.owners?.owners?.[0]?.institutionName,
+//               name: data?.owners?.owners?.[0]?.name,
+//             },
+//           }),
+//         },
+//         calculation: null,
+//         auditDetails: data?.auditDetails,
+//         accountId: data?.accountId,
+//       },
+//     ],
+//   };
+//   return formdata;
+// };
 
 //FinancialYear
-export const convertToResubmitTrade = (data) => {
-  let formdata = {
-    Licenses: [
-      {
-        id: data?.id,
-        tenantId: data?.address?.city?.code,
-        businessService: data?.businessService,
-        licenseType: data?.licenseType,
-        applicationType: data.applicationType,
-        workflowCode: data.workflowCode,
-        licenseNumber: data?.licenseNumber,
-        applicationNumber: data?.applicationNumber,
-        tradeName: data?.tradeName,
-        applicationDate: data?.applicationDate,
-        commencementDate: data?.commencementDate,
-        issuedDate: data?.issuedDate,
-        financialYear: data?.financialYear,
-        validFrom: data?.validFrom,
-        validTo: data?.validTo,
-        action: "FORWARD",
-        wfDocuments: data?.wfDocuments,
-        status: data?.status,
-        tradeLicenseDetail: {
-          address: data.tradeLicenseDetail.address,
-          applicationDocuments: getEditTradeDocumentUpdate(data),
-          accessories: gettradeupdateaccessories(data),
-          owners: gettradeownerarray(data),
-          structureType: data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code,
-          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
-            ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
-            : data?.ownershipCategory?.code,
-          tradeUnits: gettradeupdateunits(data),
-          additionalDetail: data.tradeLicenseDetail.additionalDetail,
-          auditDetails: data.tradeLicenseDetail.auditDetails,
-          channel: data.tradeLicenseDetail.channel,
-          id: data.tradeLicenseDetail.id,
-          institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
-            ? {
-                designation: data?.owners?.owners?.[0]?.designation,
-                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-                instituionName: data?.owners?.owners?.[0]?.institutionName,
-                name: data?.owners?.owners?.[0]?.name,
-              }
-            : null,
-        },
-        calculation: null,
-        auditDetails: data?.auditDetails,
-        accountId: data?.accountId,
-      },
-    ],
-  };
-  return formdata;
-};
+// export const convertToResubmitTrade = (data) => {
+//   let formdata = {
+//     Licenses: [
+//       {
+//         id: data?.id,
+//         tenantId: data?.address?.city?.code,
+//         businessService: data?.businessService,
+//         licenseType: data?.licenseType,
+//         applicationType: data.applicationType,
+//         workflowCode: data.workflowCode,
+//         licenseNumber: data?.licenseNumber,
+//         applicationNumber: data?.applicationNumber,
+//         tradeName: data?.tradeName,
+//         applicationDate: data?.applicationDate,
+//         commencementDate: data?.commencementDate,
+//         issuedDate: data?.issuedDate,
+//         financialYear: data?.financialYear,
+//         validFrom: data?.validFrom,
+//         validTo: data?.validTo,
+//         action: "FORWARD",
+//         wfDocuments: data?.wfDocuments,
+//         status: data?.status,
+//         tradeLicenseDetail: {
+//           address: data.tradeLicenseDetail.address,
+//           applicationDocuments: getEditTradeDocumentUpdate(data),
+//           accessories: gettradeupdateaccessories(data),
+//           owners: gettradeownerarray(data),
+//           structureType: data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code,
+//           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
+//             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
+//             : data?.ownershipCategory?.code,
+//           tradeUnits: gettradeupdateunits(data),
+//           additionalDetail: data.tradeLicenseDetail.additionalDetail,
+//           auditDetails: data.tradeLicenseDetail.auditDetails,
+//           channel: data.tradeLicenseDetail.channel,
+//           id: data.tradeLicenseDetail.id,
+//           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
+//             ? {
+//                 designation: data?.owners?.owners?.[0]?.designation,
+//                 ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+//                 mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+//                 instituionName: data?.owners?.owners?.[0]?.institutionName,
+//                 name: data?.owners?.owners?.[0]?.name,
+//               }
+//             : null,
+//         },
+//         calculation: null,
+//         auditDetails: data?.auditDetails,
+//         accountId: data?.accountId,
+//       },
+//     ],
+//   };
+//   return formdata;
+// };
 
 /*   method to check value  if not returns NA*/
 

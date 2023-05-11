@@ -24,7 +24,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.BornOutsideChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.BornOutsideChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.BornOutsideChildDetails?.Amount);
   const { t } = useTranslation();
   let validation = {};
   let Difference_In_DaysRounded = "";
@@ -33,8 +35,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
-    "WorkFlowBirth"
+    "WorkFlowBornOutside"
   );
+
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -66,10 +69,13 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
 
   WorkFlowDetails &&
     WorkFlowDetails["birth-death-service"] &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    WorkFlowDetails["birth-death-service"].WorkFlowBornOutside &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBornOutside.map((ob) => {
       workFlowData.push(ob);
     });
+
+  console.log({ workFlowData });
+
   const [isEditBornOutsidePageComponents, setIsEditBornOutsidePageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBornOutsideIndia ? isEditBornOutsideIndia : false);
   const [childDOB, setChildDOB] = useState(
@@ -142,6 +148,11 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [ProvinceMlError, setProvinceMlError] = useState(formData?.BornOutsideChildDetails?.ProvinceMlError ? false : false);
   const [cityTownEnError, setcityTownEnError] = useState(formData?.BornOutsideChildDetails?.cityTownEnError ? false : false);
   const [cityTownMlError, setcityTownMlError] = useState(formData?.BornOutsideChildDetails?.cityTownMlError ? false : false);
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  const [DateTimeError, setDateTimeError] = useState(false);
+  const [DateTimeHourError, setDateTimeHourError] = useState(false);
+  const [DateTimeMinuteError, setDateTimeMinuteError] = useState(false);
+  const [DateTimeAMPMError, setDateTimeAMPMError] = useState(false);
   const [outsideBirthPlaceEnError, setoutsideBirthPlaceEnError] = useState(
     formData?.BornOutsideChildDetails?.outsideBirthPlaceEnError ? false : false
   );
@@ -211,16 +222,26 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   //     }
   //   }
   // }
+  useEffect(() => {
+    //console.log("time while onchange", birthDateTime);
+  }, [birthDateTime]);
+
   const handleTimeChange = (value, cb) => {
+    if (value?.target?.name === "hour12") {
+      setCheckbirthDateTime({ ...setCheckbirthDateTime, hh: value?.target?.value ? value?.target?.value : null });
+    } else if (value?.target?.name === "minute") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, mm: value?.target?.value ? value?.target?.value : null });
+    } else if (value?.target?.name === "amPm") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, amPm: value?.target?.value ? value?.target?.value : null });
+    }
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
       // let hour = value;
       // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };
-
   function setSelectPostCode(e) {
     // if (e.target.value.length != 0) {
     //   if (e.target.value.length > 6) {
@@ -249,9 +270,20 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
     }
   }
-  // function setselectChildDOB(value) {
-  //   setChildDOB(value);
-  // }
+
+  useEffect(() => {
+    if (DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(
+        (workFlowData) => workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
+      );
+      if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime]);
+
   function setselectchildArrivalDate(value) {
     setchildArrivalDate(value);
     const today = new Date();
@@ -267,17 +299,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       setDifferenceInTime(today.getTime() - childArrivalDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(
-          (workFlowData) =>
-            workFlowData.BirtPlace === birthPlace.code &&
-            workFlowData.startdateperiod <= DifferenceInTime &&
-            workFlowData.enddateperiod >= DifferenceInTime
-        );
-        if (currentWorgFlow.length > 0) {
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-        }
-      }
+      
     }
   }
   function setSelectChildFirstNameEn(e) {
@@ -410,6 +432,100 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   }
   let validFlag = true;
   const goNext = () => {
+    if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      setDateTimeAMPMError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeHourError(false);
+      if (childDOB != null) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const childDateofBirth = new Date(childDOB);
+        childDateofBirth.setHours(0, 0, 0, 0);
+        if (childDateofBirth.getTime() < today.getTime()) {
+          setDateTimeError(false);
+        } else if (childDateofBirth.getTime() === today.getTime()) {
+          let todayDate = new Date();
+          let currenthours = todayDate.getHours();
+          let currentMints = todayDate.getHours();
+          currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+          currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+          let currentDatetime = currenthours + ":" + currentMints;
+          if (birthDateTime > currentDatetime) {
+            validFlag = false;
+            setbirthDateTime("");
+            setCheckbirthDateTime({ hh: "", mm: "", amPm: "" });
+            setDateTimeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setDateTimeError(false);
+            // alert("Right Time");
+          }
+        }
+      }
+    }
     // if (AadharError) {
     //   validFlag = false;
     //   setAadharError(true);
@@ -1019,6 +1135,10 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               error={
                 DateError ||
                 DOBError ||
+                DateTimeError ||
+                DateTimeHourError ||
+                DateTimeMinuteError ||
+                DateTimeAMPMError ||
                 ChildPassportError ||
                 AadharError ||
                 childArrivalDateError ||
@@ -1032,6 +1152,10 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               label={
                 DateError ||
                 DOBError ||
+                DateTimeError ||
+                DateTimeHourError ||
+                DateTimeMinuteError ||
+                DateTimeAMPMError ||
                 ChildPassportError ||
                 AadharError ||
                 childArrivalDateError ||
@@ -1041,7 +1165,15 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                 cityTownMlError ||
                 outsideBirthPlaceEnError ||
                 outsideBirthPlaceMlError
-                  ? DOBError
+                  ? DateTimeError
+                    ? t(`CS_COMMON_DATE_TIME_ERROR`)
+                    : DateTimeHourError
+                    ? t(`CS_COMMON_DATE_HOUR_ERROR`)
+                    : DateTimeMinuteError
+                    ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
+                    : DateTimeAMPMError
+                    ? t(`CS_COMMON_DATE_AMPM_ERROR`)
+                    : DOBError
                     ? t(`BIRTH_ERROR_DOB_CHOOSE`)
                     : AadharError
                     ? t(`BIRTH_ERROR_AADHAAR_NO_CHOOSE`)

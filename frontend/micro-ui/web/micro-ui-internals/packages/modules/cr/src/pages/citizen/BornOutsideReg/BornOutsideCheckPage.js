@@ -177,7 +177,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : "NA"}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`} :</CardText>
@@ -720,7 +720,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.relation}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.relation?.code}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME")}`} :</CardText>

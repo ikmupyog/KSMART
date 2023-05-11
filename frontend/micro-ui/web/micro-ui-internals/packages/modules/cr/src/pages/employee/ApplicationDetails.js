@@ -44,7 +44,6 @@ const ApplicationDetails = () => {
   });
 
   useEffect(()=>{
- console.log("workflowDetails==",workflowDetails);
   },[workflowDetails])
 
   const closeToast = () => {

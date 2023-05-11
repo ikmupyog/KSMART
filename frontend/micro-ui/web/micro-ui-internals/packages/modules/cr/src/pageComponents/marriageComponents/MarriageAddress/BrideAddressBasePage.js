@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader, CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/MARRIAGETimeline";
 import DRTimeline from "../../../components/DRTimeline";
@@ -1834,6 +1834,8 @@ const BrideAddressBasePage = ({
               setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
               permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
               setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
+              setinsideKeralaDistrict={setinsideKeralaDistrict}
+              setinsideKeralaLBName={setinsideKeralaLBName}
               isEditBirth={isEditBirth}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
@@ -1890,6 +1892,9 @@ const BrideAddressBasePage = ({
               setPermantpostCode={setPermantpostCode}
               // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
               // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+              setinsideKeralaDistrict={setinsideKeralaDistrict}
+              setinsideKeralaLBName={setinsideKeralaLBName}
+              setaddressStateName={setaddressStateName}
               isEditBirth={isEditBirth}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
@@ -2207,6 +2212,8 @@ const BrideAddressBasePage = ({
               setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
               permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
               setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
+              setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
+              setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
               value={value}
               setValue={setValue}
               isEditBirth={isEditBirth}
@@ -2247,6 +2254,9 @@ const BrideAddressBasePage = ({
               setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
               // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
               // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+              setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
+              setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
+              setpermtaddressStateName={setpermtaddressStateName}
               countryvalue={countryvalue}
               setCountryValue={setCountryValue}
               isEditBirth={isEditBirth}

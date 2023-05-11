@@ -19,6 +19,7 @@ import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
+import { trimURL } from "../../utils";
 // import { TimePicker } from '@material-ui/pickers';
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
@@ -122,8 +123,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [witness2AddressEn, setwitness2AddressEn] = useState(
     formData?.WitnessDetails?.witness2AddressEn ? formData?.WitnessDetails?.witness2AddressEn : ""
   );
-  const [witness1AadharError, setwitness1AadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
-  const [witness2AadharError, setwitness2AadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
+  const [witness1AadharError, setwitness1AadharError] = useState(formData?.WitnessDetails?.witness1AadharNo ? false : false);
+  const [witness2AadharError, setwitness2AadharError] = useState(formData?.WitnessDetails?.witness2AadharNo ? false : false);
   const [witness1Mobile, setwitness1Mobile] = useState(formData?.WitnessDetails?.witness1Mobile ? formData?.WitnessDetails?.witness1Mobile : "");
   const [witness2Mobile, setwitness2Mobile] = useState(formData?.WitnessDetails?.witness2Mobile ? formData?.WitnessDetails?.witness2Mobile : "");
   const [witness1Esigned, setwitness1Esigned] = useState(
@@ -201,31 +202,17 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   };
 
-  const handleGroomImage = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      setGroomImage(undefined);
-      return;
-    }
-    setGroomImage(event.target.files[0]);
-  };
 
-  const handleBrideImage = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
-      setBrideImage(undefined);
-      return;
-    }
-    setBrideImage(event.target.files[0]);
-  };
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
-  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
   const [witness2NameEnError, setwitness2NameEnError] = useState(false);
-  const [witness1AgeError, setwitness1AgeError] = useState(false);
-  const [witness2AgeError, setwitness2AgeError] = useState(false);
+  const [witness1AgeError, setwitness1AgeError] = useState(formData?.WitnessDetails?.witness1Age ? false : false);
+  const [witness2AgeError, setwitness2AgeError] = useState(formData?.WitnessDetails?.witness2Age ? false : false);
   const [witness1AddressEnError, setwitness1AddressEnError] = useState(false);
   const [witness2AddressEnError, setwitness2AddressEnError] = useState(false);
   const [witness1MobileError, setwitness1MobileError] = useState(false);
   const [witness2MobileError, setwitness2MobileError] = useState(false);
+  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(e) {
@@ -271,7 +258,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === witness2AadharNo) {
+    if (newValue != '' && (newValue === witness2AadharNo)) {
       setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -279,22 +266,24 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.GroomDetails?.groomAadharNo ||
       newValue === formData?.GroomDetails?.groomFatherAadharNo ||
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
       setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
-      setToast(true);
+      setToast(true);motherMarriageAge
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.BrideDetails?.brideAdharNo ||
       newValue === formData?.BrideDetails?.brideFatherAadharNo ||
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
       setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
@@ -304,6 +293,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       }, 3000);
     } else {
       setwitness1AadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectwitness2AadharNo(e) {
@@ -314,7 +304,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === witness1AadharNo) {
+    if (newValue != '' && (newValue === witness1AadharNo)) {
       setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -322,10 +312,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.GroomDetails?.groomAadharNo ||
       newValue === formData?.GroomDetails?.groomFatherAadharNo ||
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
       setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
@@ -334,10 +325,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
+      newValue != '' && (
       newValue === formData?.BrideDetails?.brideAdharNo ||
       newValue === formData?.BrideDetails?.brideFatherAadharNo ||
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
       setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
@@ -347,6 +339,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       }, 3000);
     } else {
       setwitness2AadharNo(newValue);
+      setAdhaarDuplicationError(false);
     }
   }
   function setSelectwitness1NameEn(e) {
@@ -386,6 +379,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   function setSelectwitness1Age(e) {
     setwitness1Age(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     if (e.target.value < 18) {
+      console.log("agge", e.target.value);
       setAgeValidationMsg(true);
       setToast(true);
       setTimeout(() => {
@@ -393,6 +387,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       }, 2000);
       setwitness1Age(null);
     } else {
+      console.log("aggeee", e.target.value);
       setAgeValidationMsg(false);
     }
     // if (e.target.value.length === 3) {
@@ -509,13 +504,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   async function handleUploadBride(id) {
     setUploadedBrideImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setBrideURL(fileStoreIds && fileStoreIds[0]?.url);
+    setBrideURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
 
   async function handleUploadGroom(id) {
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setGroomURL(fileStoreIds && fileStoreIds[0]?.url);
+    setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
 
   console.log({ groomURL, brideURL });
@@ -708,12 +703,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       onSelect(config.key, {
         witness1AadharNo,
         witness2AadharNo,
-        witness1NameEn,
-        witness2NameEn,
+        witness1NameEn: witness1NameEn.trim(),
+        witness2NameEn: witness2NameEn.trim(),
         witness1Age,
         witness2Age,
-        witness1AddressEn,
-        witness2AddressEn,
+        witness1AddressEn: witness1AddressEn.trim(),
+        witness2AddressEn: witness2AddressEn.trim(),  
         witness1Mobile,
         witness2Mobile,
         witness1Esigned,
@@ -724,6 +719,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         groomURL,
         uploadedBrideImageId,
         uploadedGroomImageId,
+        uniqueId,
       });
     }
   };
@@ -784,7 +780,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                 !witness2NameEn ||
                 !witness2Age ||
                 !witness2AddressEn ||
-                !witness2Mobile
+                !witness2Mobile ||
+                !uploadedGroomImageId ||
+                !uploadedBrideImageId
               }
             >
               <div className="row">
@@ -942,6 +940,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       value={witness2AadharNo}
                       onChange={setSelectwitness2AadharNo}
                       disable={isDisableEdit}
+                      onKeyPress={setCheckSpecialChar}
                       placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
                       inputProps={{
                         maxLength: 12,
@@ -1068,7 +1067,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     <div className="col-md-6">
                       <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
-                        <span className="mandatorycss">*</span>
+                        {/* <span className="mandatorycss">*</span> */}
                       </CardLabel>
                       <CheckBox
                         label={t("CR_EXPIRATION_TYPE")}
@@ -1095,7 +1094,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     <div className="col-md-6">
                       <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
-                        <span className="mandatorycss">*</span>
+                        {/* <span className="mandatorycss">*</span> */}
                       </CardLabel>
                       <CheckBox
                         label={t("CR_EXPIRATION_TYPE")}
@@ -1148,7 +1147,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                   error={
                     witness1AadharError ||
                     AgeValidationMsg ||
-                    AdhaarDuplicationError ||
                     witness1NameEnError ||
                     witness2AadharError ||
                     witness2NameEnError ||
@@ -1157,12 +1155,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     witness1AddressEnError ||
                     witness2AddressEnError ||
                     witness1MobileError ||
-                    witness2MobileError
+                    witness2MobileError ||
+                    AdhaarDuplicationError 
                   }
                   label={
                     witness1AadharError ||
                     AgeValidationMsg ||
-                    AdhaarDuplicationError ||
                     witness1NameEnError ||
                     witness2AadharError ||
                     witness2NameEnError ||
@@ -1171,20 +1169,21 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     witness1AddressEnError ||
                     witness2AddressEnError ||
                     witness1MobileError ||
-                    witness2MobileError
+                    witness2MobileError ||
+                    AdhaarDuplicationError 
                       ? witness1AadharError
                         ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                          : AgeValidationMsg ? t(`CR_INVALID_AGE`)
-                            : AdhaarDuplicationError ? t(`DUPLICATE_AADHAR_NO`)
-                              : witness1NameEnError ? t(`CR_INVALID_WITNESS1_NAME`)
-                                : witness2AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                                  : witness2NameEnError ? t(`CR_INVALID_WITNESS2_NAME`)
-                                    : witness1AgeError ? t(`CR_INVALID_WITNESS1_AGE`)
-                                      : witness2AgeError ? t(`CR_INVALID_WITNESS2_AGE`)
-                                        : witness1AddressEnError ? t(`CR_INVALID_WITNESS1_ADDRESS`)
-                                          : witness2AddressEnError ? t(`CR_INVALID_WITNESS2_ADDRESS`)
-                                            : witness1MobileError ? t(`CR_INVALID_WITNESS1_MOBILENO`)
-                                              : witness2MobileError ? t(`CR_INVALID_WITNESS2_MOBILENO`)
+                        : AgeValidationMsg ? t(`CR_MOTHER_AGE_WARNING`)
+                            : witness1NameEnError ? t(`CR_INVALID_WITNESS1_NAME`)
+                              : witness2AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                                : witness2NameEnError ? t(`CR_INVALID_WITNESS2_NAME`)
+                                  : witness1AgeError ? t(`CR_INVALID_WITNESS1_AGE`)
+                                    : witness2AgeError ? t(`CR_INVALID_WITNESS2_AGE`)
+                                      : witness1AddressEnError ? t(`CR_INVALID_WITNESS1_ADDRESS`)
+                                        : witness2AddressEnError ? t(`CR_INVALID_WITNESS2_ADDRESS`)
+                                          : witness1MobileError ? t(`CR_INVALID_WITNESS1_MOBILENO`)
+                                            : witness2MobileError ? t(`CR_INVALID_WITNESS2_MOBILENO`)
+                                              : AdhaarDuplicationError ? t(`DUPLICATE_AADHAR_NO`)
                                                 : setToast(false)
                       : setToast(false)
                   }

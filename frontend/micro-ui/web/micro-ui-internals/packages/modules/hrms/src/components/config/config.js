@@ -10,6 +10,12 @@ export const newConfig = [
       },
       {
         type: "component",
+        component: "SelectEmployeeAadhaarNumber", 
+        key: "SelectEmployeeAadhaarNumber",
+        withoutLabel: true,
+      },
+      {
+        type: "component",
         component: "SelectEmployeePhoneNumber",
         key: "SelectEmployeePhoneNumber",
         withoutLabel: true,

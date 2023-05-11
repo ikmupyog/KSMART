@@ -139,6 +139,21 @@ const getWorkFlowBirthMasterList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getWorkFlowBornOutsideMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowBornOutside",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getWorkFlowDeathMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2500,6 +2515,9 @@ export const MdmsService = {
   },
   getWorkFlowBirthMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowBirthMasterList(tenantId, moduleCode), moduleCode);
+  },
+  getWorkFlowBornOutsideMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowBornOutsideMasterList(tenantId, moduleCode), moduleCode);
   },
   getWorkFlowDeathMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowDeathMasterList(tenantId, moduleCode), moduleCode);
