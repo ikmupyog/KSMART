@@ -130,7 +130,7 @@ console.log("getValues ===> ", watch());
             reset({
               id: "",
               DeceasedName: "",
-              DeathDate: "",
+              marriageDOM: "",
               Gender: "",
               WifeorMotherName: "",
               HusbandorfatherName: "",

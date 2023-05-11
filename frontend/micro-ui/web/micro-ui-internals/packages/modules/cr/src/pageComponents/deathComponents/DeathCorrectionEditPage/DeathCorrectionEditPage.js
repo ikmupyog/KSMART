@@ -233,7 +233,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
                     onBlur={(e) => onAdharChange(e)}
                     placeholder={`${t("CR_AADHAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text",  title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: deathCorrectionFormsObj?.DECEASED_AADHAR?.isEditable, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -259,7 +259,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameEn")}
                     placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: deathCorrectionFormsObj?.DECEASED_NAME?.isRequired, title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -312,7 +312,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "firstNameMl")}
                     placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: deathCorrectionFormsObj?.DECEASED_NAME?.isEditable, title: t("CR_INVALID_FIRST_NAME_ML") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -412,7 +412,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                     onBlur={(e) => onBlurMotherName(e, "mothersNameEn")}
                     placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: deathCorrectionFormsObj.DECEASED_MOTHER?.isEditable, title: t("CR_INVALID_MOTHER_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -425,7 +425,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                     onBlur={(e) => onBlurMotherName(e, "mothersNameMl")}
                     placeholder={`${t("CR_MOTHER_NAME_ML")}`}
-                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: deathCorrectionFormsObj.DECEASED_MOTHER?.isEditable, title: t("CR_INVALID_MOTHER_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -451,7 +451,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
                     onBlur={(e) => onBlurFatherName(e, "fathersNameEn")}
                     placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: deathCorrectionFormsObj.DECEASED_FATHER?.isEditable, title: t("CR_INVALID_FATHER_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -465,7 +465,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     onBlur={(e) => onBlurFatherName(e, "fathersNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}
-                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_FATHER_NAME_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: deathCorrectionFormsObj.DECEASED_FATHER?.isEditable, title: t("CR_INVALID_FATHER_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -492,7 +492,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameEn")}
                     placeholder={`${t("CR_SPOUSE_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_SPOUSE_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: deathCorrectionFormsObj.DECEASED_SPOUSE?.isEditable, title: t("CR_INVALID_SPOUSE_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -505,7 +505,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     // autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameMl")}
                     placeholder={`${t("CR_SPOUSE_NAME_ML")}`}
-                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_SPOUSE_NAME_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: deathCorrectionFormsObj.DECEASED_SPOUSE?.isEditable, title: t("CR_INVALID_SPOUSE_NAME_ML") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -531,7 +531,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "houseNameEn")}
                     placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: deathCorrectionFormsObj.PERMANENT_ADDRESS?.isEditable, title: t("CR_INVALID_HOUSE_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -544,7 +544,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "localityNameEn")}
                     placeholder={`${t("CR_LOCALITY_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: deathCorrectionFormsObj.PERMANENT_ADDRESS?.isEditable, title: t("CR_INVALID_LOCALITY_EN") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -557,7 +557,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameEn}
                     onBlur={(e) => onPresentAddressChange(e, "streetNameEn")}
                     placeholder={`${t("CR_STREET_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: deathCorrectionFormsObj.PERMANENT_ADDRESS?.isEditable, title: t("CR_INVALID_STREET_NAME_EN") })}
                   />
                 </div>
               </FieldComponentContainer>
@@ -586,6 +586,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                       type: "text",
+                      isRequired: deathCorrectionFormsObj.PERMANENT_ADDRESS?.isEditable,
                       title: t("CR_INVALID_HOUSE_NAME_ML"),
                     })}
                   />
@@ -603,6 +604,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                       type: "text",
+                      isRequired: deathCorrectionFormsObj.PERMANENT_ADDRESS?.isEditable,
                       title: t("CR_INVALID_LOCALITY_ML"),
                     })}
                   />
@@ -620,6 +622,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                       type: "text",
+                      isRequired: deathCorrectionFormsObj.PERMANENT_ADDRESS?.isEditable,
                       title: t("CR_INVALID_STREET_NAME_ML"),
                     })}
                   />
