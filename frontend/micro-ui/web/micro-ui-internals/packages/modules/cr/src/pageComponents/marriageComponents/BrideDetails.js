@@ -424,8 +424,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
     console.log();
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-    if (newValue != "" && (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo)) {
-      setbrideFatherAadharNo("");
+    if (newValue != '' && (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo)) {
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -438,7 +437,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         newValue === formData?.GroomDetails?.groomMotherAadharNo ||
         newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setbrideFatherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -458,8 +456,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue != "" && (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo)) {
-      setBrideAadharNo("");
+    if (newValue != '' && (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo)) {
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -472,7 +469,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         newValue === formData?.GroomDetails?.groomMotherAadharNo ||
         newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setBrideAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -491,8 +487,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue != "" && (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo)) {
-      setbrideMotherAadharNo("");
+    if (newValue != '' && (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo)) {
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -505,7 +500,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         newValue === formData?.GroomDetails?.groomMotherAadharNo ||
         newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setbrideMotherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -524,8 +518,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue != "" && (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo)) {
-      setbrideGuardianAadharNo("");
+    if (newValue != '' && (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo)) {
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -538,7 +531,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         newValue === formData?.GroomDetails?.groomMotherAadharNo ||
         newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setbrideGuardianAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
