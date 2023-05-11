@@ -170,8 +170,10 @@ public class MarriageCorrectionService {
         marriageCorrectionMDMSValidator.validateMarriageCorrectionMDMSData(request,mdmsData);
 
         String applicationNumber = request.getMarriageCorrectionDetails().get(0).getApplicationNo();
+        String registrationNumber = request.getMarriageCorrectionDetails().get(0).getRegistrationno();
         MarriageApplicationSearchCriteria criteria = (MarriageApplicationSearchCriteria.builder()
                                                     .applicationNo(applicationNumber)
+                                                    .registrationNo(registrationNumber)
                                                     .build());
         List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria, request.getRequestInfo());
         correctionValidatorService.validateCorrectionUpdate(request, searchResult);
