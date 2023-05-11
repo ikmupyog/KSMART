@@ -41,6 +41,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
       limit: 10,
       sortBy: "dateofmarriage",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
 
@@ -49,6 +50,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
     register("limit", 10);
     // register("sortBy", "dateofmarriage");
     // register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {

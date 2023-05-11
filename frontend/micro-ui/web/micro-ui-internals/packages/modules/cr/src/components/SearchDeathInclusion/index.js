@@ -39,6 +39,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
       limit: 10,
       sortBy: "DateOfDeath",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
   const { t } = useTranslation();
@@ -48,6 +49,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
     register("limit", 10);
     register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {

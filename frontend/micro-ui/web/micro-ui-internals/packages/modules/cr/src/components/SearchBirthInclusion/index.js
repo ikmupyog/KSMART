@@ -43,6 +43,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
       limit: 10,
       sortBy: "applicationNumber",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
   
@@ -52,6 +53,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
     register("limit", 10);
     register("sortBy", "applicationNumber");
     register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
