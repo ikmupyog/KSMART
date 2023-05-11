@@ -30,6 +30,7 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
   function selectedValue(value) {
     setComplaintType(value);
     onSelect({ complaintType: value });
+    console.log("value", value)
     // SessionStorage.set("complaintType", value);
   }
   return (

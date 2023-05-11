@@ -36,12 +36,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     { i18nKey: "Yes", code: true },
     { i18nKey: "No", code: false },
   ];
-  let menu = [];
+  let gender = [];
   let cmbMaritalStatus = [];
   // let cmbProfession = [];
   Menu &&
     Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+      gender.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
   maritalStatus &&
     maritalStatus["birth-death-service"] &&
@@ -615,6 +615,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       e.preventDefault();
     }
   }
+
+  useEffect(() => {
+    if (gender.length > 0) {
+      const selectedGender = gender.filter((option) => option.code === "FEMALE");
+      console.log({ selectedGender });
+      setbrideGender(selectedGender[0]);
+    }
+  }, [gender.length]);
 
   let validFlag = true;
   const goNext = () => {
@@ -1296,7 +1304,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 t={t}
                 optionKey="code"
                 isMandatory={true}
-                option={menu}
+                option={gender}
                 selected={brideGender}
                 select={setSelectbrideGender}
                 placeholder={`${t("CR_BRIDE_GENDER")}`}
