@@ -95,6 +95,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   let cmbWardNoFinal = [];
   let cmbFilterTaluk = [];
   let cmbFilterVillage = [];
+  let cmbCurrentLBType = [];
   let cmbSubRegistarOffice = [];
   let MarriagePlaceTypeName = "";
   let workFlowData = [];
@@ -357,12 +358,16 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     districtid = value.districtid;
     setTenantboundary(true);
     if (cmbLB.length > 0) {
+      console.log("Hiiii");
       const currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
       setLbs(currentLB);
       cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
       setLbsTalukvalue(cmbFilterTaluk);
       cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
       setLbsVillagevalue(cmbFilterVillage);
+      cmbCurrentLBType = filteredLBType.flter((lb) => lb.code === currentLB[0].city.lbtypecode);
+      setMarriageLBtype(cmbCurrentLBType[0]);
+      console.log({ cmbCurrentLBType });
       setIsInitialRender(false);
     }
     setmarriageTalukID("");
@@ -389,10 +394,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriageLBtype(value) {
     setMarriageLBtype(value);
-    if (cmbLB.length > 0) {
-      const currentLBType = filteredLBType.map(lb=>lb);
-      setMarriageLBtype(currentLBType[0]);
-    }
     setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
@@ -459,10 +460,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   function setCSLB(selectedLBType) {
     const localbodies = lbs?.filter((LB) => LB?.city?.districtid === marriageDistrictid?.districtid);
-    if (selectedLBType?.name === "Municipality") {
+    if (selectedLBType?.code === "LB_TYPE_MUNICIPALITY") {
       const filteredMunicipality = localbodies?.filter((LB) => LB?.city?.lbtypecode?.split("_")[2] === "MUNICIPALITY");
       return filteredMunicipality;
-    } else if (selectedLBType?.name === "Corporation") {
+    } else if (selectedLBType?.code === "LB_TYPE_CORPORATION") {
       const filteredCorporation = localbodies?.filter((LB) => LB?.city?.lbtypecode.split("_")[2] === "CORPORATION");
       return filteredCorporation;
     }
@@ -490,8 +491,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       setLbsVillagevalue(cmbFilterVillage);
       const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
       setMarriageLBtype(currentLBType[0]);
-      const currentTaluk = cmbFilterTaluk?.filter((taluk) => taluk.code === currentLB[0].city.talukcode);
-      setmarriageTalukID(currentTaluk[0]);
     }
   }, [cmbLB.length]);
 
@@ -1035,7 +1034,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectMarriageDistrictid}
                     selected={marriageDistrictid}
                     placeholder={t("CS_COMMON_DISTRICT")}
-                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1053,7 +1051,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectmarriageTalukID}
                     selected={marriageTalukID}
                     placeholder={t("CS_COMMON_TALUK")}
-                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1090,7 +1087,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectmarriageLBtype}
                     selected={marriageLBtype}
                     placeholder={t("CS_LBTYPE")}
-                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1108,7 +1104,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     selected={marriageTenantid}
                     select={setSelectmarriageTenantid}
                     placeholder={`${t("CS_LB")}`}
-                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
