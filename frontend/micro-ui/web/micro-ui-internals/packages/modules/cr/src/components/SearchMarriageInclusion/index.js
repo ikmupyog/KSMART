@@ -35,20 +35,22 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   // const [FileData, setFileData] = useState([]);
   
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "dateofmarriage",
+      sortBy: "marriageDOM",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
 
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    // register("sortBy", "dateofmarriage");
+    // register("sortBy", "marriageDOM");
     // register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -120,7 +122,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
       <div style={mystyle}>
         <h1 style={hstyle}>{t("CR_MARRIAGE_CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
+          <SearchFields {...{ register, watch, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
       </div>
       {isLoading && <Loader/>}
