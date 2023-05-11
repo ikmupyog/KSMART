@@ -273,7 +273,7 @@ export const convertToBirthRegistration = (data = {}) => {
     ChildDetails: [
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.ChildDetails?.birthDateTime),
+        birthDateTime: data?.ChildDetails?.birthDateTime,
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
@@ -531,7 +531,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
     ChildDetails: [
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.ChildDetails?.birthDateTime),
+        birthDateTime: data?.ChildDetails?.birthDateTime,
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
