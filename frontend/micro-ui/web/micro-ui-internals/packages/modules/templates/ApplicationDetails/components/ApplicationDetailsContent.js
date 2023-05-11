@@ -38,6 +38,15 @@ function ApplicationDetailsContent({
   showTimeLine = true,
   statusAttribute = "status",
   paymentsList,
+  setNoteText,
+  noteText,
+  uploadFiles,
+  setUploadFiles,
+  uploadedFileStoreId,
+  setUploadedFileStoreId,
+  selectedAssigneErr,
+  noteTextErr,
+  isValidate,
 }) {
   const { t } = useTranslation();
 
@@ -49,12 +58,14 @@ function ApplicationDetailsContent({
     if (checkpoint.state === "OPEN"
       // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
     ) {
+
       const caption = {
         date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
         source: applicationData?.channel || "",
       };
       return <TLCaption data={caption} />;
     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
+
       const caption = {
         date: checkpoint?.auditDetails?.lastModified,
         name: checkpoint?.assignes?.[0]?.name,
@@ -65,6 +76,7 @@ function ApplicationDetailsContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
+
       const caption = {
         date: checkpoint?.auditDetails?.lastModified,
         // name: checkpoint?.assigner?.name,
@@ -265,7 +277,15 @@ function ApplicationDetailsContent({
             title={"WORKFLOW"}
             content={
               <StatusTable style={getTableStyles()}>
-                <NoteAndDrafting applDetails={applicationDetails?.applicationData} />
+                <NoteAndDrafting applDetails={applicationDetails?.applicationData} noteText={noteText} setNoteText={setNoteText}
+                  uploadFiles={uploadFiles}
+                  setUploadFiles={setUploadFiles}
+                  uploadedFileStoreId={uploadedFileStoreId}
+                  setUploadedFileStoreId={setUploadedFileStoreId}
+                  selectedAssigneErr={selectedAssigneErr}
+                  isValidate={isValidate}
+                  noteTextErr={noteTextErr} />
+
               </StatusTable>
             }
           />

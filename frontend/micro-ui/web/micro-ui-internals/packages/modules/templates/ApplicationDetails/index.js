@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-import { Loader } from "@egovernments/digit-ui-react-components";
+import { Loader,Toast} from "@egovernments/digit-ui-react-components";
 
 import ActionModal from "./Modal";
 
@@ -22,10 +22,18 @@ const ApplicationDetails = (props) => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedTakeAction, setSelectedTakeAction] = useState()
+  const [selectedTakeAction, setSelectedTakeAction] = useState('')
+  // const [selectedTakeActionErr, setSelectedTakeActionErr] = useState(false)
+  const [selectedAssigne, setSelectedAssignee] = useState('')
+  const [selectedAssigneErr, setSelectedAssigneeErr] = useState(false)
   const [isEnableLoader, setIsEnableLoader] = useState(false);
   const [isWarningPop, setWarningPopUp] = useState(false);
-
+  const [noteText, setNoteText] = useState("");
+  const [noteTextErr, setNoteTextErr] = useState(false);
+  const [uploadFiles, setUploadFiles] = useState([]);
+  const [uploadedFileStoreId, setUploadedFileStoreId] = useState()
+  const [isValidate,setIsValidate] =useState(false)
+  const [toast, setToast] = useState(false);
   const {
     applicationDetails,
     showToast,
@@ -55,25 +63,28 @@ const ApplicationDetails = (props) => {
   }, [showToast]);
 
   function onActionSelect(action,e) {
-    console.log(action,e);
-    // if (action) {
-    //   setSelectedTakeAction(e)
-    //   if (action?.isWarningPopUp) {
-    //     setWarningPopUp(true);
-    //   } else if (action?.redirectionUrll) {
-    //     window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
-    //   } else if (!action?.redirectionUrl) {
-    //     setShowModal(true);
-    //   } else {
-    //     history.push({
-    //       pathname: action.redirectionUrl?.pathname,
-    //       state: { ...action.redirectionUrl?.state },
-    //     });
-    //   }
-    // }
+    // console.log('ac',action,e,selectedTakeAction);
+    if (action) {
+      if (action?.isWarningPopUp) {
+        setWarningPopUp(true);
+      } else if (action?.redirectionUrll) {
+        window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
+      } else if (!action?.redirectionUrl) {
+        // setShowModal(true);
+      } else {
+        history.push({
+          pathname: action.redirectionUrl?.pathname,
+          state: { ...action.redirectionUrl?.state },
+        });
+      }
+    }
+    setSelectedAction(action);
+    setDisplayMenu(false);
+
+
+    //
     setSelectedTakeAction(e)
-    // setSelectedAction(e);
-    // setDisplayMenu(false);
+
   }
 
   const queryClient = useQueryClient();
@@ -88,6 +99,7 @@ const ApplicationDetails = (props) => {
   };
 
   const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    // console.log('l',data);
     setIsEnableLoader(true);
     if (typeof data?.customFunctionToExecute === "function") {
       data?.customFunctionToExecute({ ...data });
@@ -142,7 +154,9 @@ const ApplicationDetails = (props) => {
         },
       });
     }
-
+    setSelectedTakeAction('')
+    setNoteText('')
+    setSelectedAssignee('')
     closeModal();
   };
 
@@ -166,6 +180,15 @@ const ApplicationDetails = (props) => {
             statusAttribute={statusAttribute}
             paymentsList={paymentsList}
             showTimeLine={showTimeLine}
+            noteText={noteText}
+            setNoteText={setNoteText}
+            uploadFiles={uploadFiles}
+            setUploadFiles={setUploadFiles}
+            uploadedFileStoreId={uploadedFileStoreId}
+            setUploadedFileStoreId={setUploadedFileStoreId}
+            selectedAssigneErr={selectedAssigneErr}
+            noteTextErr={noteTextErr}
+            isValidate={isValidate}
           />
           {showModal ? (
             <ActionModal
@@ -205,10 +228,27 @@ const ApplicationDetails = (props) => {
             ActionBarStyle={ActionBarStyle}
             MenuStyle={MenuStyle}
             selectedTakeAction={selectedTakeAction}
+            selectedAction={selectedAction}
+            applicationData={applicationDetails?.applicationData}
+            setSelectedAssignee= {setSelectedAssignee}
+            selectedAssigne={selectedAssigne}
+            noteText={noteText}
+            uploadFiles={uploadFiles}
+            setUploadFiles={setUploadFiles}
+            uploadedFileStoreId={uploadedFileStoreId}
+            setNoteTextErr={setNoteTextErr}
+            setIsValidate ={setIsValidate}
+            setToast={setToast}
+            setSelectedAssigneeErr={setSelectedAssigneeErr}
+            submitAction={submitAction}
+            moduleCode={moduleCode}
           />
         </React.Fragment>
       ) : (
         <Loader />
+      )}
+      {toast &&(
+        <Toast error={ noteTextErr || selectedAssigneErr} label={noteTextErr? t('DFM_INVALID_NOTES'):selectedAssigneErr? t('DFM_INVALID_ASSIGNEE'): setToast(false)}  isDleteBtn={true} onClose={() => setToast(false)}/>
       )}
     </React.Fragment>
   );
