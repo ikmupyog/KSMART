@@ -281,9 +281,25 @@ export const getaccessories = (data) => {
 export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   // data?.TradeDetails?.tradeLicenseDetail?.address?.tenantId = Digit.ULBService.getCitizenCurrentTenant();
-  let address = data?.TradeDetails?.tradeLicenseDetail?.address;
-  address.postOffice = data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name;
-  address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  // let address = data?.TradeDetails?.tradeLicenseDetail?.address;
+  let address = {"doorNo": data?.TradeDetails?.tradeLicenseDetail?.address?.doorNo,
+    "localityName": data?.TradeDetails?.tradeLicenseDetail?.address?.localityName,
+    "street": data?.TradeDetails?.tradeLicenseDetail?.address?.street,
+    "landmark": data?.TradeDetails?.tradeLicenseDetail?.address?.landmark,
+    "buildingName": data?.TradeDetails?.tradeLicenseDetail?.address?.buildingName,
+    "zonalId": data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.zonecode,
+    "wardId": data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.code,
+    "wardNo": data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.wardno,
+    "postOffice": data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name,
+    "pincode": data?.TradeDetails?.tradeLicenseDetail?.address?.pincode,
+    "contactNo": data?.TradeDetails?.tradeLicenseDetail?.address?.contactNo,
+    "email": data?.TradeDetails?.tradeLicenseDetail?.address?.email,
+    "waterbody": data?.TradeDetails?.tradeLicenseDetail?.address?.waterbody,
+    "serviceArea": data?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea,
+    "tenantId": Digit.ULBService.getCitizenCurrentTenant()
+  };
+  // address.postOffice = data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name;
+  // address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
   let structurePlace = data?.TradeDetails?.tradeLicenseDetail?.structurePlace;
   structurePlace?.map((structplace) => {
     structplace.isResurveyed = structplace?.isResurveyed?.code === "YES" ? true : false;
@@ -314,7 +330,7 @@ export const convertToTrade = (data = {}) => {
           licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType?.code,
           noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
           ownershipCategory: data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code,
-          address: data?.TradeDetails?.tradeLicenseDetail?.address,
+          address: address,//data?.TradeDetails?.tradeLicenseDetail?.address
           applicationDocuments: null,
           owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
           institution: data?.TradeDetails?.tradeLicenseDetail?.institution,

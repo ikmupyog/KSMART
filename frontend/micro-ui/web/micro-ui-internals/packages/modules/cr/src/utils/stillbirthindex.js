@@ -273,7 +273,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
     StillBirthChildDetails: [
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.StillBirthChildDetails?.birthDateTime),
+        birthDateTime: data?.StillBirthChildDetails?.birthDateTime,
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
@@ -489,17 +489,9 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
     StillBirthChildDetails: [
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.StillBirthChildDetails?.birthDateTime),
-        gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
-        // childAadharNo: data?.StillBirthChildDetails?.childAadharNo,
-        // isChildName: data?.StillBirthChildDetails?.isChildName ? data?.StillBirthChildDetails?.isChildName : false,
+        birthDateTime: data?.StillBirthChildDetails?.birthDateTime,        
+        gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,        
         tenantid: data?.StillBirthChildDetails?.tenantId,
-        // childFirstNameEn: data?.StillBirthChildDetails?.childFirstNameEn,
-        // childFirstNameMl: data?.StillBirthChildDetails?.childFirstNameMl,
-        // childMiddleNameEn: data?.StillBirthChildDetails?.childMiddleNameEn,
-        // childMiddleNameMl: data?.StillBirthChildDetails?.childMiddleNameMl,
-        // childLastNameEn: data?.StillBirthChildDetails?.childLastNameEn,
-        // childLastNameMl: data?.StillBirthChildDetails?.childLastNameMl,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
         birthPlace: data?.StillBirthChildDetails?.birthPlace ? data?.StillBirthChildDetails?.birthPlace.code : null,
         hospitalName: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.hospitalName : null,
@@ -550,44 +542,25 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         applicationNumber: data?.StillBirthChildDetails?.applicationNumber,
         assignee: [data?.StillBirthChildDetails?.uuid],
         StillBirthParentsDetails: {
-          motherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn,
-          motherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl,
-          motherAadhar: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar,
-          // motherMarriageAge: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageAge,
-          motherMarriageBirth: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth,
-          // motherMaritalStatus: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
-          //   ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
-          //   : null,
-          motherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation
-            : null,
-          motherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession
-            : null,
-          motherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
-            : null,
-          orderofChildren: data?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren,
-          fatherAadhar: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar,
-          ismotherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo,
-          isfatherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo,    
-          fatherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn,
-          fatherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameMl,
-          fatherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
-            : null,
-          fatherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
-            : null,
-          fatherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession
-            : null,
-       
-          Religion: data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
-            : null,
-          fatherMobile: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherMobile,
-          fatherEmail: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEmail,
+          motherFirstNameEn: data?.StillBirthParentsDetails?.motherFirstNameEn ? data?.StillBirthParentsDetails?.motherFirstNameEn : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.StillBirthParentsDetails?.motherFirstNameMl ? data?.StillBirthParentsDetails?.motherFirstNameMl : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl,
+          motherAadhar: data?.StillBirthParentsDetails?.motherAadhar ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar,
+          motherMarriageBirth: data?.StillBirthParentsDetails?.motherMarriageBirth ? data?.StillBirthParentsDetails?.motherMarriageBirth : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth,
+          motherEducation: data?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthParentsDetails?.motherEducation.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation : null,
+          motherProfession: data?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthParentsDetails?.motherProfession.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession : null,
+          motherNationality: data?.StillBirthParentsDetails?.motherNationality ? data?.StillBirthParentsDetails?.motherNationality.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality : null,
+          orderofChildren: data?.StillBirthParentsDetails?.orderofChildren ? data?.StillBirthParentsDetails?.orderofChildren : data?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren,
+          fatherAadhar: data?.StillBirthParentsDetails?.fatherAadhar ? data?.StillBirthParentsDetails?.fatherAadhar : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar,
+          ismotherInfo: data?.StillBirthParentsDetails.ismotherInfo ? data?.StillBirthParentsDetails.ismotherInfo : data?.StillBirthChildDetails?.StillBirthParentsDetails.ismotherInfo,
+          isfatherInfo: data?.StillBirthParentsDetails.isfatherInfo ? data?.StillBirthParentsDetails.isfatherInfo : data?.StillBirthChildDetails?.StillBirthParentsDetails.isfatherInfo,
+          fatherFirstNameEn: data?.StillBirthParentsDetails?.fatherFirstNameEn ? data?.StillBirthParentsDetails?.fatherFirstNameEn : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn,
+          fatherFirstNameMl: data?.StillBirthParentsDetails?.fatherFirstNameMl ? data?.StillBirthParentsDetails?.fatherFirstNameMl : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameMl,
+          fatherNationality: data?.StillBirthParentsDetails?.fatherNationality ? data?.StillBirthParentsDetails?.fatherNationality.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality : null,
+          fatherEducation: data?.StillBirthParentsDetails?.fatherEducation ? data?.StillBirthParentsDetails?.fatherEducation.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation : null,
+          fatherProfession: data?.StillBirthParentsDetails?.fatherProfession ? data?.StillBirthParentsDetails?.fatherProfession.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession : null,
+          Religion: data?.StillBirthParentsDetails?.Religion ? data?.StillBirthParentsDetails?.Religion.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion : null,
+          fatherMobile: data?.StillBirthParentsDetails?.fatherMobile ? data?.StillBirthParentsDetails?.fatherMobile : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherMobile,
+          fatherEmail: data?.StillBirthParentsDetails?.fatherEmail ? data?.StillBirthParentsDetails?.fatherEmail : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEmail,
         },
         AddressBirthDetails: {
           presentaddressCountry: data?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry
@@ -721,26 +694,24 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           permntOutsideIndiaCityTown: data?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaCityTown,
           permanentOutsideIndiaPostCode: data?.StillBirthChildDetails?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
+       
         StillBirthInformarHosInstDetails: {
-          infomantFirstNameEn: data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.infomantFirstNameEn,
-          infomantAadhar: data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.infomantAadhar,
-          infomantMobile: data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.infomantMobile,
-          informerAddress: data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.informerAddress,
-          informerDesi: data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.informerDesi,
-          isDeclarationInfo: data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.isDeclarationInfo,
+          infomantFirstNameEn: data?.StillBirthInformarHosInstDetails?.infomantFirstNameEn ? data?.StillBirthInformarHosInstDetails?.infomantFirstNameEn : data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.infomantFirstNameEn,
+          infomantAadhar: data?.StillBirthInformarHosInstDetails?.infomantAadhar ? data?.StillBirthInformarHosInstDetails?.infomantAadhar : data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.infomantAadhar,
+          infomantMobile: data?.StillBirthInformarHosInstDetails?.infomantMobile ? data?.StillBirthInformarHosInstDetails?.infomantMobile : data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.infomantMobile,
+          informerAddress: data?.StillBirthInformarHosInstDetails?.informerAddress ? data?.StillBirthInformarHosInstDetails?.informerAddress : data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.informerAddress,
+          informerDesi: data?.StillBirthInformarHosInstDetails?.informerDesi ? data?.StillBirthInformarHosInstDetails?.informerDesi : data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.informerDesi,
+          isDeclarationInfo: data?.StillBirthInformarHosInstDetails?.isDeclarationInfo ? data?.StillBirthInformarHosInstDetails?.isDeclarationInfo : data?.StillBirthChildDetails?.StillBirthInformarHosInstDetails?.isDeclarationInfo,
         },
         StillBirthInitiatorDetails: {
-          relation: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation,
-          initiatorNameEn: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn,
-          initiatorAadhar: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar,
-          initiatorMobile: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile,
-          initiatorDesi: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi,
-          initiatorAddress: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress,
-          isInitiatorDeclaration: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration,
-          isCaretaker: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker,
-
-
-          
+          relation: data?.StillBirthInitiatorDetails?.relation ? data?.StillBirthInitiatorDetails?.relation.code : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation,
+          initiatorNameEn: data?.StillBirthInitiatorDetails?.initiatorNameEn ? data?.StillBirthInitiatorDetails?.initiatorNameEn : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn,
+          initiatorAadhar: data?.StillBirthInitiatorDetails?.initiatorAadhar ? data?.StillBirthInitiatorDetails?.initiatorAadhar : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar,
+          initiatorMobile: data?.StillBirthInitiatorDetails?.initiatorMobile ? data?.StillBirthInitiatorDetails?.initiatorMobile : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile,
+          initiatorDesi: data?.StillBirthInitiatorDetails?.initiatorDesi ? data?.StillBirthInitiatorDetails?.initiatorDesi : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi,
+          initiatorAddress: data?.StillBirthInitiatorDetails?.initiatorAddress ? data?.StillBirthInitiatorDetails?.initiatorAddress : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress,
+          isInitiatorDeclaration: data?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? data?.StillBirthInitiatorDetails?.isInitiatorDeclaration : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration,
+          isCaretaker: data?.StillBirthInitiatorDetails?.isCaretaker ? data?.StillBirthInitiatorDetails?.isCaretaker : data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker,
         },
       },
     ],
