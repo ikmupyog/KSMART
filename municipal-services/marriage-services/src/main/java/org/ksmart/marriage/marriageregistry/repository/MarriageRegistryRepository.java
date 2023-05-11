@@ -30,6 +30,8 @@ import org.springframework.stereotype.Repository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -311,10 +313,20 @@ public class MarriageRegistryRepository {
                 }
 
             if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
+                if(isImageExists(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
+                    req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath() + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
+                }else{
+                    log.error("PDF_ERROR. Marriage Certificate , Invalid Groom Photo Path!!!");
+                    throw new CustomException("PDF_ERROR", "Invalid Groom Photo Path!!!" );
+                }
             }
             if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
+                if(isImageExists(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
                 req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
+            }else{
+                log.error("PDF_ERROR. Marriage Certificate , Invalid Bride Photo Path!!!");
+                throw new CustomException("PDF_ERROR", "Invalid Bride Photo Path!!!" );
+            }
             }
                 setDefaultValuesIfNull(req.getMarriageCertificate().get(0));
 
@@ -357,6 +369,22 @@ public class MarriageRegistryRepository {
             return pdfResponse;
 
 
+    }
+
+    public static boolean isImageExists(String URLName){
+        try {
+            HttpURLConnection.setFollowRedirects(false);
+            // note : you may also need
+            //        HttpURLConnection.setInstanceFollowRedirects(false)
+            HttpURLConnection con =
+                    (HttpURLConnection) new URL(URLName).openConnection();
+            con.setRequestMethod("HEAD");
+            return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void setDefaultValuesIfNull(MarriageCertificate cert){
