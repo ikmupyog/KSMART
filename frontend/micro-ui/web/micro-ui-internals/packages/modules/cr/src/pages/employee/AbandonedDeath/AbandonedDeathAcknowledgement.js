@@ -13,6 +13,7 @@ const GetActionMessage = (props) => {
     return t("CR_CREATE_APPLICATION_PENDING");
     // !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
+    console.log("props",props)
     return t("CR_CREATE_APPLICATION_FAILED");
   }
 };
@@ -87,8 +88,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
           console.log(formdata,"!isEdit? convertToAbandonedDeathRegistration(data)",data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           
-            mutation.mutate(formdata).then(()=>
-            console.log("mutation end"))
+            mutation.mutate(formdata)
           
          
         } else {
@@ -139,7 +139,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
       return (
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
-        
+          {console.log("mutation",mutation)}
           <LinkButton
             label={
               <div className="response-download-button">
@@ -163,7 +163,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
-        {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+        {<CardText>{mutation?.error?.message}</CardText>}
         
         <LinkButton
             label={

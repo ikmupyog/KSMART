@@ -1654,7 +1654,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
                   <div className="col-md-3">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)}
-                      value={TimeOfDeath} />
+                      value={isEditDeath?new Date(TimeOfDeath):TimeOfDeath} />
                     {/* disable={isDisableEdit} */}
                   </div>
                 </div>

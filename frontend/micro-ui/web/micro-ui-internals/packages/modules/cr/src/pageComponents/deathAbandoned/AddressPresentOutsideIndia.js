@@ -240,9 +240,10 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 name="presentOutSideIndiaProvinceMl"
                 value={presentOutSideIndiaProvinceMl}
                 onKeyPress={setCheckMalayalamInputField}
+                
                 onChange={setSelectProvinceMl}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false,type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false,type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
             </div>
           </div>

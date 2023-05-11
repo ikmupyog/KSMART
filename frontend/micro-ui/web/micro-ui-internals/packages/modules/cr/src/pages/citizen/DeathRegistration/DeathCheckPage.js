@@ -152,7 +152,8 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_DEATH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(InformationDeath?.DateOfDeath)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    {convertEpochToDate(InformationDeath?.DateOfDeath)}</CardText>
                 </div>
                 {/* <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_DEATH")}`} :</CardText>
@@ -219,7 +220,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_DEATH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.TimeOfDeath ? InformationDeath?.TimeOfDeath : "NA"}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.TimeOfDeath ? InformationDeath?.TimeOfDeath : "CR_NOT_RECORDED"}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
