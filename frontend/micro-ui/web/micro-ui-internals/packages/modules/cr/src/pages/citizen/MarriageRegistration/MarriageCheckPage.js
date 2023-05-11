@@ -49,7 +49,7 @@ const getPath = (path, params) => {
 };
 
 const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
-  console.log({formData});
+  console.log({ formData });
   let isEdit = window.location.href.includes("renew-trade");
 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
@@ -103,7 +103,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
   } else {
     userType = "employee";
   }
-  console.log({val1: WitnessDetails?.isExpiredWife, val2: WitnessDetails?.isExpiredHusband});
+  console.log({ val1: WitnessDetails?.isExpiredWife, val2: WitnessDetails?.isExpiredHusband });
   console.log(value);
   console.log("abc", MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE");
   return (
@@ -237,7 +237,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   )}
                 </div>
               </div>
-              {MarriageDetails?.marriagePlaceType?.code === "OTHER" && (
+              {MarriageDetails?.marriagePlacetype?.code === "OTHER" && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
@@ -317,7 +317,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </React.Fragment>
               )}
-              {MarriageDetails?.marriagePlaceType?.code === "HOUSE" && (
+              {MarriageDetails?.marriagePlacetype?.code === "HOUSE" && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
@@ -393,18 +393,18 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </React.Fragment>
               )}
-              {(MarriageDetails?.marriagePlaceType?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
+              {(MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`} :
-                        </CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePublicOrPrivateNamePlaceEn ? MarriageDetails?.marriagePublicOrPrivateNamePlaceEn : "CR_NOT_RECORDED"}
+                          {MarriageDetails?.marriagePublicOrPrivateNamePlaceEn
+                            ? MarriageDetails?.marriagePublicOrPrivateNamePlaceEn
+                            : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -440,13 +440,13 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :
-                        </CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePublicOrPrivateNamePlaceMl ? MarriageDetails?.marriagePublicOrPrivateNamePlaceMl : "CR_NOT_RECORDED"}
+                          {MarriageDetails?.marriagePublicOrPrivateNamePlaceMl
+                            ? MarriageDetails?.marriagePublicOrPrivateNamePlaceMl
+                            : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-12">
@@ -2898,11 +2898,17 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-6">
-                    {WitnessDetails?.uploadedGroomImageId ? <img src={WitnessDetails?.uploadedGroomImageId} alt="Groom Image" /> : "NR"}
+                  <div className="col-md-3">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GROOM_PHOTO")}`} :</CardText>
                   </div>
-                  <div className="col-md-6">
-                    {WitnessDetails?.uploadedGroomImageId ? <img src={WitnessDetails?.uploadedBrideImageId} alt="Groom Image" /> : "NR"}
+                  <div className="col-md-3">
+                    {WitnessDetails?.groomURL ? <img height={120} width={100} src={WitnessDetails?.groomURL} alt="Groom Image" /> : "NR"}
+                  </div>
+                  <div className="col-md-3">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BRIDE_PHOTO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-3">
+                    {WitnessDetails?.brideURL ? <img height={120} width={100} src={WitnessDetails?.brideURL} alt="Groom Image" /> : "NR"}
                   </div>
                 </div>
               </div>
@@ -3922,7 +3928,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
+            <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
           </div>
         </div>
       </Card>
