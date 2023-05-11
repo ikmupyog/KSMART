@@ -441,7 +441,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo)) {
-      setGroomAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -467,7 +466,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo)) {
-      setGroomFatherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -493,7 +491,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo)) {
-      setGroomGuardianAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -520,7 +517,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo)) {
-      setGroomMotherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
