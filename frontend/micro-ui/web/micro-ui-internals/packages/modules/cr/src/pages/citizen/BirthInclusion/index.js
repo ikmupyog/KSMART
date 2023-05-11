@@ -75,10 +75,11 @@ const BirthInclusion = () => {
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
         // filestoreId={storeId}
-        // isSuccess={isSuccess}
+        isSuccess={isSuccess}
         isLoading={isLoading}
         count={count}
         onInclusionClick={gotoEditInclusion}
+        status={status}
       />
       {/* </Route> */}
       {/* <Route path={`${path}/acknowledgement`}>

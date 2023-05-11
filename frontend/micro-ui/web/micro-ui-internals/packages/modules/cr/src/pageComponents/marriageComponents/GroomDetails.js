@@ -33,11 +33,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_GROOM_GUARDIAN", code: "GUARDIAN" },
   ];
   const groomParent = parentDetails.map((parent) => parent.code);
-  let menu = [];
+  let gender = [];
   let cmbMaritalStatus = [];
   Menu &&
     Menu.map((groomGenderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
+      gender.push({
+        i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`,
+        code: `${groomGenderDetails.code}`,
+        value: `${groomGenderDetails.code}`,
+      });
     });
   maritalStatus &&
     maritalStatus["birth-death-service"] &&
@@ -185,6 +189,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
+    console.log({ value });
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
@@ -534,6 +539,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
     }
   }
+
+  useEffect(() => {
+    if (gender.length > 0) {
+      const selectedGender = gender.filter((option) => option.code === "MALE");
+      console.log({ selectedGender });
+      selectGroomGender(selectedGender[0]);
+    }
+  }, [gender.length]);
 
   let validFlag = true;
   const goNext = () => {
@@ -933,7 +946,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   };
 
   console.log("Groom", formData);
-  console.log({ groomDOB });
 
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
@@ -1266,7 +1278,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={true}
-                option={menu}
+                option={gender}
                 selected={groomGender}
                 select={setselectGroomGender}
                 placeholder={`${t("CR_GROOM_GENDER")}`}

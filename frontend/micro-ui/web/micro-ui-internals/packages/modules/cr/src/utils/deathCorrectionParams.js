@@ -138,9 +138,10 @@ const formFielColumns = {
           id: userData?.id,
         //   tenantid: "kl.cochin",
           // applicationtype: "CRDRCN",
-          InformationDeath: { 
           funcionUID: "CRDRNR",
-          },
+          // InformationDeath: { 
+          // funcionUID: "CRDRNR",
+          // },
           businessservice: "birth-services",
           workflowcode: "BIRTHHOSP21",
           action: "",
