@@ -171,7 +171,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("DEATH INCLUSION")}</h1>
+        <h1 style={hstyle}>{t("CR_DEATH_CORRECTION")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
