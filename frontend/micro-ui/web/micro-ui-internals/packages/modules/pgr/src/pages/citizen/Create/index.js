@@ -26,16 +26,12 @@ export const CreateComplaint = () => {
   const [paramState, setParamState] = useState(params);
   const [nextStep, setNextStep] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
-
   const [rerender, setRerender] = useState(0);
   const client = useQueryClient();
+
   useEffect(() => {
     setCanSubmit(false);
   }, []);
-
-  // useEffect(() => {
-
-  // }, [params, nextStep]);
 
   const goNext = () => {
     const currentPath = pathname.split("/").pop();
@@ -64,6 +60,7 @@ export const CreateComplaint = () => {
       submitComplaint();
     }
   };
+
   const submitComplaint = async () => {
     if (paramState?.complaintType) {
       // let deptCode = paramState?.complaintType["deptCode"];
@@ -95,7 +92,7 @@ export const CreateComplaint = () => {
       };
       await dispatch(createComplaint(data));
       await client.refetchQueries(["complaintsList"]);
-      history.push(`${match.path}/response`);
+      history.push({ pathname: `${match.path}/response`, state: data });
     }
   };
 
