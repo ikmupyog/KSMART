@@ -469,14 +469,14 @@ public class MarriageApplicationValidator {
                                                                                                 groomInfo.getMothernameMl()
                                                                                                 + " is invalid");
                                                         }
-//                                                } else {
-//                                                        if (StringUtils.isEmpty(groomInfo.getGuardianAadharno())) {
-//                                                                throw new CustomException(
-//                                                                                " GROOM GUARDIAN AADHAR INVALID ",
-//                                                                                "The  groom Guardian Aadhar number " +
-//                                                                                                groomInfo.getGuardianAadharno()
-//                                                                                                + " is invalid");
-//                                                        }
+                                               } else {
+                                                //        if (StringUtils.isEmpty(groomInfo.getGuardianAadharno())) {
+                                                //                throw new CustomException(
+                                                //                                " GROOM GUARDIAN AADHAR INVALID ",
+                                                //                                "The  groom Guardian Aadhar number " +
+                                                //                                                groomInfo.getGuardianAadharno()
+                                                //                                                + " is invalid");
+                                                //        }
                                                         if (StringUtils.isEmpty(groomInfo.getGuardiannameEn())) {
                                                                 throw new CustomException(
                                                                                 " GROOM GUARDIAN NAME ENGLISH ",
