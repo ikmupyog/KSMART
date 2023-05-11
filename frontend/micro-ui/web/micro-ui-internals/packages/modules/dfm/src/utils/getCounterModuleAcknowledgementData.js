@@ -94,7 +94,8 @@ const getCounterModuleAcknowledgementData = async (application, tenantInfo, t) =
             getAddressDetails(application, t),
             getApplicantDetails(application, t),
             getInstitutionDetails(application, t),
-            getDataDetails(application, t)
+            getDataDetails(application, t),
+            getDataPlaceDetails(application, t)
         ],
     };
 };
