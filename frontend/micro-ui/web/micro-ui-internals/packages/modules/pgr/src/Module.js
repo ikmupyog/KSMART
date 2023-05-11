@@ -12,13 +12,13 @@ import { LOCALE } from "./constants/Localization";
 import { ComplaintDetails } from "./pages/employee/ComplaintDetails";
 import { CreateComplaint as CreateComplaintEmp } from "./pages/employee/CreateComplaint";
 import Inbox from "./pages/employee/Inbox";
-import ResponseEmp from "./pages/employee/Response";
+import ResponseEmp from "./pages/employee/CreateComplaint/Response";
 
 import { CreateComplaint as CreateComplaintCitizen } from "./pages/citizen/Create";
 import { ComplaintsList } from "./pages/citizen/ComplaintsList";
 import ComplaintDetailsPage from "./pages/citizen/ComplaintDetails";
 import SelectRating from "./pages/citizen/Rating/SelectRating";
-import ResponseCitizen from "./pages/citizen/Response";
+import ResponseCitizen from "./pages/citizen/Create/Response";
 import SelectPincode from "./pageComponents/Steps/SelectPincode";
 import SelectAddress from "./pageComponents/Steps/SelectAddress";
 import SelectComplaintType from "./pageComponents/Steps/SelectComplaintType";

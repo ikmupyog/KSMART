@@ -217,7 +217,7 @@ const ComplaintDetailsPage = (props) => {
           {/* <div style={borderStyle}></div> */}
 
         </div>
-        <div className={"timeline-wrapper"}>
+        <div className={"timeline-wrapper"} style={{ marginRight: "15px" }}>
           <div style={timelineWidth}>
             {complaintDetails?.service && (
               <WorkflowComponent getWorkFlow={onWorkFlowChange} complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
