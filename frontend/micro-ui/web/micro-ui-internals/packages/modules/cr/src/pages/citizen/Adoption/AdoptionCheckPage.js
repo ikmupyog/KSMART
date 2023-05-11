@@ -235,6 +235,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
+
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-2">
@@ -257,6 +258,50 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
+              {AdoptionChildDetails?.adoptionAgency ? (
+                <>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_AGENT_NAME")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionAgencyName}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_AGENT_ADDRESS")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionAgencyAddress}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_CONTACT_PERSON")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionContractPersonName}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_CONTACT_NO")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionContactNo}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </StatusTable>
           }
         />

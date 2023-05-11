@@ -204,7 +204,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           onClick={handleDownloadPdf}
         />
 
-        {mutation?.data?.MarriageDetails[0]?.applicationStatus === "PENDINGPAYMENT" && (
+        {mutation?.data?.MarriageDetails[0]?.status === "PENDINGPAYMENT" && (
           <Link
             to={{
               pathname: `/digit-ui/citizen/payment/collect/${mutation.data.MarriageDetails[0].businessservice}/${mutation.data.MarriageDetails[0].applicationNumber}`,
