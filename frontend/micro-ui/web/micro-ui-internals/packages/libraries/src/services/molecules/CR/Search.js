@@ -48,10 +48,10 @@ export const CRsearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    console.log("userinfo",Digit.UserService.getUser().info);
-    const { name : Informername,roles: userRoles, uuid: uuid,mobileNumber : InformermobileNumber , } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+    console.log("userinfo", Digit.UserService.getUser().info);
+    const { name: Informername, roles: userRoles, uuid: uuid, mobileNumber: InformermobileNumber, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
     const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_APPROVER"));
-  // console.log(roletemp[0].code);
+    // console.log(roletemp[0].code);
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
@@ -78,10 +78,10 @@ export const CRsearch = {
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NOT_RECORDED" },
         { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NOT_RECORDED" },
         { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : "NOT_RECORDED" },
-        { title: "CR_GENDER", value: response?.gender },
+        { title: "CR_GENDER", value: response?.gender ? response?.gender : "NOT_RECORDED" },
         { title: "CS_COMMON_CHILD_AADHAAR", value: response?.childAadharNo ? response?.childAadharNo : "NOT_RECORDED" },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn || + " " + response?.childLastNameEn },
-        { title: "PDF_BIRTH_CHILD_NAME_ML", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl },
+        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn || "NOT_RECORDED" },
+        { title: "PDF_BIRTH_CHILD_NAME_ML", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl || "NOT_RECORDED" },
 
       ],
     };
@@ -193,7 +193,7 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NOT_RECORDED" },
@@ -210,7 +210,7 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTalukEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillageEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.permntInKeralaAdrLBNameEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNoEn + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNoText + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoEn + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoMl || "NOT_RECORDED" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn || "NOT_RECORDED" },
