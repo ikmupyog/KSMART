@@ -97,13 +97,13 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.zonalId?.name}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_WARD_NO")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>({TradeDetails?.tradeLicenseDetail?.address?.wardNo?.wardno})-{TradeDetails?.tradeLicenseDetail?.address?.wardNo?.name}</CardText>
                 </div>
                 <div className="col-md-2">
                   {<ActionButton jumpTo={`${routeLink}/license-unit-det`} />}

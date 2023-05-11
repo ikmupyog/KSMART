@@ -57,10 +57,6 @@ const DeathInclusion = () => {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
 
-  useEffect(()=>{
-console.log("payload......", payload);
-  },[payload])
-
   const {
     data: { deathCertificateDtls: searchResult, Count: count } = {},
     isLoading,

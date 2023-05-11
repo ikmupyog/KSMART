@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const SearchRenewalTrade = ({searchdata,isCorrectionreq}) => {
+const SearchRenewalTrade = ({searchdata,isProcessreq}) => {
     const [searchdatacat, setSearchdatacat] = useState(searchdata);
     const [errorMessage, setErrorMessage] = useState("");
     const [wardmandatory, setWardmandatory] = useState(true);
@@ -46,10 +46,11 @@ const SearchRenewalTrade = ({searchdata,isCorrectionreq}) => {
                 _data.sortOrder = "DESC"
         }
         queryClient.removeQueries("TL_SEARCH");
-        const data = {
-            ..._data  
-            //,"applicationType":"RENEWAL"
-        }
+        const data = isProcessreq === "correction" || isProcessreq === "cancellation"  ?  {..._data }//,"applicationType":"CORRECTION"
+        :
+        {
+            ..._data  ,"applicationType":"RENEWAL"
+        };
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
     }
 
@@ -62,7 +63,7 @@ const SearchRenewalTrade = ({searchdata,isCorrectionreq}) => {
     let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : []) :[];
      if (wardmandatory)
         //  return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReultFinal?.length > 0 ? searchReultFinal : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
-       return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
+       return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     else
         return (
             <div>

@@ -93,6 +93,7 @@ const MarriageCorrection = () => {
       data={fetchData?.length > 0 ? fetchData : ""}
       count={mutation.data?.Count}
       isLoading={mutation.isLoading}
+      isSuccess={mutation.isSuccess}
       onCorrectionClick={gotoEditCorrection}
     />
     </React.Fragment>
