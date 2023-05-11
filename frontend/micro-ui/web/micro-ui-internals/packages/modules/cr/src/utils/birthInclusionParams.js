@@ -137,7 +137,7 @@ export const formatApiParams = (formData,userData) => {
         tenantid: userData?.tenantid,
         applicationtype: "CRBRCN",
         businessservice: "birth-services",
-        workflowcode: "BIRTHHOSP21",
+        workflowcode: "BIRTHCORRECTION",
         action: "",
         registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
         registrationNo: userData?.registration_no,
