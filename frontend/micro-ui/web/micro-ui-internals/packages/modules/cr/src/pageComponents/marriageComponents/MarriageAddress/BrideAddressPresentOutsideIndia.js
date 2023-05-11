@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -46,13 +46,13 @@ const BrideAddressPresentOutsideIndia = ({
   setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown,
   setadrsPermntOutsideIndiaCityTown,
+  setinsideKeralaDistrict,
+  setinsideKeralaLBName,
+  setaddressStateName,
   permanentOutsideIndiaPostCode,
   setPermantpostCode,
   permntOutsideIndiaCountry,
   setPermntOutsideIndiaCountry,
-  setaddressStateName,
-  setinsideKeralaLBName,
-  setinsideKeralaDistrict,
   isEditBirth = false,
   isEditDeath = false,
   isEditAdoption,
@@ -133,7 +133,7 @@ const BrideAddressPresentOutsideIndia = ({
   }
 
   function setSelectadrsCityTown(e) {
-    if (e.target.value.trim().length >= 0 && e.target.valksue.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setadrsCityTown(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -255,14 +255,12 @@ const BrideAddressPresentOutsideIndia = ({
       e.preventDefault();
     }
   }
-
+  const goNext = () => {};
   useEffect(() => {
     setinsideKeralaDistrict(null);
     setinsideKeralaLBName(null);
     setaddressStateName(null);
   }, []);
-
-  const goNext = () => {};
   if (isCountryLoading) {
     return <Loader></Loader>;
   } else
