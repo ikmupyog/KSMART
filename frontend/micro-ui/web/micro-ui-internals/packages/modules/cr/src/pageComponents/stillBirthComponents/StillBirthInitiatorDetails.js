@@ -120,7 +120,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
     }
   }
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9, ]*$")  != null) {
       setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : e.target.value.substring(0, 250));
     }
   }

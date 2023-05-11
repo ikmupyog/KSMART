@@ -326,6 +326,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //     }
   //   }
   // });
+
+  console.log({Villagevalues})
+
   function setSelectmarriageDOM(value) {
     setDifferenceInTime(null);
     setmarriageDOM(value);
@@ -361,8 +364,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setTenantboundary(true);
     cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
     setLbsTalukvalue(cmbFilterTaluk);
-      // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
-      // setLbsVillagevalue(cmbFilterVillage);
     setmarriageVillageName("");
     setMarriageLBtype("");
     setMarriageTenantid("");
@@ -374,6 +375,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   function setSelectmarriageTalukID(value) {
     setmarriageTalukID(value);
     setmarriageVillageName("");
+    cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code);
+    setLbsVillagevalue(cmbFilterVillage);
+    console.log({cmbFilterVillage});
+
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
