@@ -375,7 +375,7 @@ const MarriageCorrectionEditPage = ({
         margin: "1.5rem",
         padding: "1rem 1rem 1rem 1rem",
         cursor: "pointer",
-        color: "rgb(244, 119, 56)",
+        color: "#86a4ad",
         fontWeight: "bold",
         borderBottom: "2px solid black",
       };
@@ -401,7 +401,7 @@ const MarriageCorrectionEditPage = ({
           {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
             <div className="col-md-10">
-              <div className="col-md-5">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_DATE_OF_MARRIAGE")}
                 </CardLabel>
@@ -421,7 +421,7 @@ const MarriageCorrectionEditPage = ({
                 />
               </div>
             </div>
-            <div style={{ marginTop: "2.8rem" }}>
+            <div style={{ marginTop: "2.2rem" }}>
               {marriageCorrectionFormsObj?.DOM?.isDisable && (
                 <div>
                   <ButtonContainer>
@@ -594,7 +594,7 @@ const MarriageCorrectionEditPage = ({
                         optionKey="i18nKey"
                         name="groomFirstnameEn"
                         disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onGroomNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
@@ -610,7 +610,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomMiddlenameEn"
                         disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onGroomNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
@@ -626,7 +626,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomLastnameEn"
                         disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onGroomNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
@@ -634,7 +634,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_NAME?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_NAME)}>
@@ -657,7 +657,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomFirstNameMl"
                         disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameMl}
                         onBlur={(e) => onGroomNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
@@ -678,7 +678,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="GroomMiddleNameMl"
                         disabled={marriageCorrectionFormsObj.GROOM_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameMl}
                         onBlur={(e) => onGroomNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -694,7 +694,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomLastNameMl"
                         disabled={marriageCorrectionFormsObj.GROOM_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameMl}
                         onBlur={(e) => onGroomNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
@@ -735,7 +735,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="GroomAge"
                         disabled={marriageCorrectionFormsObj.GROOM_AGE?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_AGE?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_AGE?.isFocused}
                         value={marriageCorrectionFormsObj?.GROOM_AGE?.curValue?.age}
                         // value={DeceasedFirstNameEn}
                         onChange={onGroomDOBChange}
@@ -744,7 +744,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </div>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_AGE?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_AGE)}>
@@ -767,7 +767,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomMothernameEn"
                         disabled={marriageCorrectionFormsObj.GROOM_MOTHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameEn}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
@@ -783,7 +783,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomMothernameMl"
                         disabled={marriageCorrectionFormsObj.GROOM_MOTHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameMl}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -797,7 +797,7 @@ const MarriageCorrectionEditPage = ({
                     </div>
                   </FieldComponentContainer>
 
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_MOTHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_MOTHER)}>
@@ -820,7 +820,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomFathernameEn"
                         disabled={marriageCorrectionFormsObj.GROOM_FATHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameEn}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
@@ -836,7 +836,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomFathernameMl"
                         disabled={marriageCorrectionFormsObj.GROOM_FATHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameMl}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -849,7 +849,7 @@ const MarriageCorrectionEditPage = ({
                     </div>
                   </FieldComponentContainer>
 
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_FATHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_FATHER)}>
@@ -870,7 +870,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomGuardiannameEn"
                         disabled={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameEn}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
@@ -886,7 +886,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="groomGuardiannameMl"
                         disabled={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameMl}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
@@ -898,7 +898,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.GROOM_GUARDIAN?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.GROOM_GUARDIAN)}>
@@ -929,7 +929,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="groomHouseNameEn"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
@@ -943,7 +943,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="groomLocalityEn"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
                             placeholder={`${t("CR_LOCALITY_EN")}`}
@@ -957,7 +957,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="groomStreetEn"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.streetNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "streetNameEn")}
                             placeholder={`${t("CR_STREET_EN")}`}
@@ -965,7 +965,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["GROOM_PERADD"])}>
@@ -985,7 +985,7 @@ const MarriageCorrectionEditPage = ({
                             name="groomHouseNameMl"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                             {...(validation = {
@@ -1003,7 +1003,7 @@ const MarriageCorrectionEditPage = ({
                             name="groomLocalityMl"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
                             placeholder={`${t("CR_LOCALITY_MAL")}`}
                             {...(validation = {
@@ -1021,7 +1021,7 @@ const MarriageCorrectionEditPage = ({
                             name="groomStreetMl"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.streetNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "streetNameMl")}
                             placeholder={`${t("CR_STREET_MAL")}`}
                             {...(validation = {
@@ -1045,7 +1045,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="groomAddressLine1En"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
@@ -1059,7 +1059,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="groomAddressLine2En"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
@@ -1067,7 +1067,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["GROOM_PERADD"])}>
@@ -1087,7 +1087,7 @@ const MarriageCorrectionEditPage = ({
                             name="groomAddressLine1Ml"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                             {...(validation = {
@@ -1105,7 +1105,7 @@ const MarriageCorrectionEditPage = ({
                             name="groomAddressLine2Ml"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                             {...(validation = {
@@ -1139,7 +1139,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideFirstNameEn"
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onBrideNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
@@ -1155,7 +1155,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideMiddleNameEn"
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onBrideNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
@@ -1171,7 +1171,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideLastNameEn"
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onBrideNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
@@ -1179,7 +1179,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_NAME?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_NAME)}>
@@ -1202,7 +1202,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideFirstNameMl"
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameMl}
                         onBlur={(e) => onBrideNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
@@ -1223,7 +1223,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideMiddleNameMl"
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameMl}
                         onBlur={(e) => onBrideNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -1244,7 +1244,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideLastNameMl"
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameMl}
                         onBlur={(e) => onBrideNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
@@ -1290,7 +1290,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideAge"
                         disabled={marriageCorrectionFormsObj.BRIDE_AGE?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_AGE?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_AGE?.isFocused}
                         value={marriageCorrectionFormsObj?.BRIDE_AGE?.curValue?.age}
                         // value={DeceasedFirstNameEn}
                         onChange={onBrideDOBChange}
@@ -1299,7 +1299,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </div>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_AGE?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_AGE)}>
@@ -1322,7 +1322,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideMothernameEn"
                         disabled={marriageCorrectionFormsObj.BRIDE_MOTHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER?.curValue?.brideMotherNameEn}
                         onBlur={(e) => onBrideMotherNameChange(e, "brideMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
@@ -1338,7 +1338,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideMotherNameMl"
                         disabled={marriageCorrectionFormsObj.BRIDE_MOTHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER?.curValue?.brideMotherNameMl}
                         onBlur={(e) => onBrideMotherNameChange(e, "brideMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -1350,7 +1350,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_MOTHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_MOTHER)}>
@@ -1373,7 +1373,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideFatherNameEn"
                         disabled={marriageCorrectionFormsObj.BRIDE_FATHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER?.curValue?.brideFatherNameEn}
                         onBlur={(e) => onBrideFatherNameChange(e, "brideFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
@@ -1389,7 +1389,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideFatherNameMl"
                         disabled={marriageCorrectionFormsObj.BRIDE_FATHER?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER?.curValue?.brideFatherNameMl}
                         onBlur={(e) => onBrideFatherNameChange(e, "brideFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -1401,7 +1401,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_FATHER?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_FATHER)}>
@@ -1422,7 +1422,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideGuardianNameEn"
                         disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.curValue?.brideGuardianNameEn}
                         onBlur={(e) => onBrideGuardianNameChange(e, "brideGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
@@ -1438,7 +1438,7 @@ const MarriageCorrectionEditPage = ({
                         // optionKey="i18nKey"
                         name="brideGuardianNameMl"
                         disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isDisable}
-                        autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
+                        // autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.curValue?.brideGuardianNameMl}
                         onBlur={(e) => onBrideGuardianNameChange(e, "brideGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
@@ -1450,7 +1450,7 @@ const MarriageCorrectionEditPage = ({
                       />
                     </div>
                   </FieldComponentContainer>
-                  <div style={{ marginTop: "2.8rem" }}>
+                  <div style={{ marginTop: "2.2rem" }}>
                     {marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.isDisable && (
                       <ButtonContainer>
                         <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.BRIDE_GUARDIAN)}>
@@ -1481,7 +1481,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="brideHouseNameEn"
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.houseNameEn}
                             onBlur={(e) => onBrideAddressChange(e, "houseNameEn")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
@@ -1495,7 +1495,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="brideLocalityEn"
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.localityNameEn}
                             onBlur={(e) => onBrideAddressChange(e, "localityNameEn")}
                             placeholder={`${t("CR_LOCALITY_EN")}`}
@@ -1509,7 +1509,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="brideStreetEn"
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.streetNameEn}
                             onBlur={(e) => onBrideAddressChange(e, "streetNameEn")}
                             placeholder={`${t("CR_STREET_EN")}`}
@@ -1517,7 +1517,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.BRIDE_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>
@@ -1537,7 +1537,7 @@ const MarriageCorrectionEditPage = ({
                             name="brideHouseNameMl"
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.houseNameMl}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             onBlur={(e) => onBrideAddressChange(e, "houseNameMl")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                             {...(validation = {
@@ -1555,7 +1555,7 @@ const MarriageCorrectionEditPage = ({
                             name="brideLocalityMl"
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.localityNameMl}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             onBlur={(e) => onBrideAddressChange(e, "localityNameMl")}
                             placeholder={`${t("CR_LOCALITY_MAL")}`}
                             {...(validation = {
@@ -1573,7 +1573,7 @@ const MarriageCorrectionEditPage = ({
                             name="brideStreetMl"
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.streetNameMl}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             onBlur={(e) => onBrideAddressChange(e, "streetNameMl")}
                             placeholder={`${t("CR_STREET_MAL")}`}
                             {...(validation = {
@@ -1597,7 +1597,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="brideAddressLine1En"
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine1En}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine1En")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
@@ -1611,7 +1611,7 @@ const MarriageCorrectionEditPage = ({
                             type={"text"}
                             name="brideAddressLine2En"
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine2En}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine2En")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
@@ -1619,7 +1619,7 @@ const MarriageCorrectionEditPage = ({
                           />
                         </div>
                       </FieldComponentContainer>
-                      <div style={{ marginTop: "2.5rem" }}>
+                      <div style={{ marginTop: "2.2rem" }}>
                         {marriageCorrectionFormsObj?.BRIDE_PERADD?.isDisable && (
                           <ButtonContainer>
                             <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>
@@ -1639,7 +1639,7 @@ const MarriageCorrectionEditPage = ({
                             name="brideAddressLine1Ml"
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine1Ml}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine1Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                             {...(validation = {
@@ -1657,7 +1657,7 @@ const MarriageCorrectionEditPage = ({
                             name="brideAddressLine2Ml"
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine2Ml}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
-                            autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine2Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                             {...(validation = {

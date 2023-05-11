@@ -330,7 +330,9 @@ export const convertToNACRegistration = (data = {}) => {
         applicationtype: "CRBRNC",
         businessservice: "birth-services",
         workflowcode: "NACAPP",
-
+        isPayment: data?.BirthNACDetails?.isPayment,
+        Amount: data?.BirthNACDetails?.Amount,
+        applicationStatus: data?.BirthNACDetails?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
         ParentsDetails: {
           motherFirstNameEn: data?.BirthNACParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BirthNACParentsDetails?.motherFirstNameMl,
@@ -345,12 +347,11 @@ export const convertToNACRegistration = (data = {}) => {
           motherProfession: null,
           motherNationality: null,
           orderofChildren: null,
-          ismotherInfo: null,
-          isfatherInfo: null,
+          ismotherInfo: true,
+          isfatherInfo: true,
           fatherNationality: null,
           fatherEducation: null,
           fatherProfession: null,
-          Religion: null,
           fatherMobile: null,
           fatherEmail: null,
         },
@@ -378,7 +379,7 @@ export const convertToNACRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
@@ -415,7 +416,7 @@ export const convertToNACRegistration = (data = {}) => {
             ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
             : null,
           presentOutSideIndiaadrsCityTown: data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
-          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress ? data?.AddressBirthDetails?.isPrsentAddress : null,
+          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress ? data?.AddressBirthDetails?.isPrsentAddress : false,
           permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry.code : null,
           permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName.code : null,
           permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName
@@ -434,9 +435,7 @@ export const convertToNACRegistration = (data = {}) => {
           permntInKeralaAdrLocalityNameMl: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
           permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
-          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
-            : null,
+          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode ? data?.AddressBirthDetails?.permntInKeralaAdrPincode : null,
           permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
             ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
             : null,

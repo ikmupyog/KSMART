@@ -64,6 +64,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [motherIdFile, setMotherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile3);
   const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
   const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
+  const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
 
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
@@ -248,10 +249,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     setcareofapplicant(e.target.value);
   }
   function setSelectinitiatorAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === formData?.BirthNACParentsDetails?.motherAadhar || newValue === formData?.BirthNACParentsDetails?.fatherAadhar) {
+      setinitiatorAadhar("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setinitiatorAadhar(newValue);
     }
   }
   function setSelectinitiatorMobile(e) {
@@ -548,10 +555,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           ownerState[0].isAlive === "" ||
           !aadressFile ||
           !proofFile ||
-          !certificateFile ||
           !motherIdFile ||
-          !fatherIdFile ||
-          !medicalFile
+          !fatherIdFile
         }
       >
         <div>
@@ -913,10 +918,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  <CardLabel>
-                    {`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}</CardLabel>
                 </div>
                 <div className="col-md-6">
                   <UploadFile
@@ -969,10 +971,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  <CardLabel>
-                    {`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}</CardLabel>
                 </div>
                 <div className="col-md-6">
                   <UploadFile
@@ -997,7 +996,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 initiatorMobileError ||
                 initiatorAddressError ||
                 DobMissmatchError ||
-                OrderofBirthMissmatchError
+                OrderofBirthMissmatchError ||
+                AadharError
               }
               label={
                 infomantFirstNmeEnError ||
@@ -1005,7 +1005,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 initiatorMobileError ||
                 initiatorAddressError ||
                 DobMissmatchError ||
-                OrderofBirthMissmatchError
+                OrderofBirthMissmatchError ||
+                AadharError
                   ? infomantFirstNmeEnError
                     ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                     : initiatorAadharError
@@ -1015,9 +1016,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     : initiatorAddressError
                     ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
                     : DobMissmatchError
-                    ? t(`BIRTH_NAC_DOB_MISSMATCH`)
+                    ? t(`BIRTH_NAC_DATE_OF_BIRTH_MISSMATCH`)
                     : OrderofBirthMissmatchError
                     ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
+                    : AadharError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : setToast(false)
                   : setToast(false)
               }

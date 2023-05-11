@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, vehicleRegistrationNo, vehicleFromEn,
   vehicleToEn, vehicleFromMl, vehicleHaltPlace,  vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
@@ -190,7 +191,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
               t={t}
               optionKey="name"
               isMandatory={true}
-              option={cmbVehicle}
+              option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
               selected={vehicleType}
               select={setSelectVehicleType}
               disable={isDisableEdit}
@@ -312,7 +313,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
               t={t}
               optionKey="hospitalName"
               isMandatory={true}
-              option={cmbhospital}
+              option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
               selected={setadmittedHospitalEn}
               select={selectadmittedHospitalEn}
               disable={isDisableEdit}
@@ -327,7 +328,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
             <Dropdown
               t={t}
               optionKey="namecmb"
-              option={cmbWardNoFinal}
+              option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
               selected={wardNo}
               select={setSelectWard}
               placeholder={`${t("CS_COMMON_WARD")}`}

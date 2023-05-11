@@ -26,11 +26,11 @@ const formFielColumns = {
       localityNameEn: "CR_LOCALITY_EN",
       localityNameMl: "CR_LOCALITY_ML",
       streetNameEn: "CR_STREET_EN",
-      streetNameMl: "CR_STREET_MAL",
+      streetNameMl: "CR_STREET_ML",
     },
     DECEASED_SPOUSE: {
       spouseNameEn: "CR_SPOUSE_NAME_EN",
-      spouseNameMl: "CR_SPOUSE_NAME_Ml",
+      spouseNameMl: "CR_SPOUSE_NAME_ML",
     }
   }
   

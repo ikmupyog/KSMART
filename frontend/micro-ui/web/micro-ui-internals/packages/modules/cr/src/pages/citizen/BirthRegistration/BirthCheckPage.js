@@ -53,19 +53,18 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { ChildDetails, ParentsDetails, AddressBirthDetails, InitiatorinfoDetails, InformarHosInstDetails } = value;
-  console.log(AddressBirthDetails);
+  // console.log(AddressBirthDetails);
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${
-      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-    }`;
+    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+      }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
-    routeLink = `${getPath(match.path, match.params)}`;
-    routeLink = routeLink.replace("/check", "");
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/check", "");
   // }
 
   if (window.location.href.includes("/citizen") == "citizen") {
@@ -74,7 +73,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   function onBirthSubmit() {
-    if (!isInitiatorDeclaration && window.location.href.includes("/citizen")) {
+    // && window.location.href.includes("/citizen")
+    if (isInitiatorDeclaration === false) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -151,7 +151,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NA"}
+                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -197,7 +197,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameEn}</CardText>
                   </div>
-                  
+
                 </div>
               </div>
               <div className="row">
@@ -219,8 +219,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
-                  </div>                 
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
                 </div>
               </div>
             </StatusTable>
@@ -310,9 +310,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {ChildDetails?.hospitalName.hospitalNamelocal}                        
+                        {ChildDetails?.hospitalName.hospitalNamelocal}
                       </CardText>
-                      {<ActionButton style={{Colour: "red !important"}} jumpTo={`${routeLink}/ChildDetails`} />}
+                      {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/ChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -581,8 +581,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
                       </div>
                       <div className="col-md-2">
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
-                  </div>
+                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -659,7 +659,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {`${t("CR_MOTHER_INFORMATION_MISSING")}`} :
                       </CardText>
-                      {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                      {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                     </div>
                   </div>
                 </div>
@@ -747,7 +747,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherProfession.name}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                        {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                       </div>
                     </div>
                   </div>
@@ -767,7 +767,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {`${t("CR_FATHER_INFORMATION_MISSING")}`} :
                       </CardText>
-                      {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                      {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                     </div>
                   </div>
                 </div>
@@ -856,7 +856,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.fatherEmail}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/ParentsDetails`} />}
+                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                   </div>
                 </div>
               </div>
@@ -1002,7 +1002,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1134,7 +1134,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1242,7 +1242,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1383,7 +1383,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1515,7 +1515,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntOutsideKeralaHouseNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1623,7 +1623,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1632,125 +1632,193 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
-        <Accordion
-          expanded={false}
-          title={t("CR_INITIATOR_DETAILS")}
-          content={
-            <StatusTable>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  {InitiatorinfoDetails?.isCaretaker === true && (
-                    <div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi}</CardText>
-                      </div>
-                    </div>
-                  )}
-                  {InitiatorinfoDetails?.isCaretaker === false && (
-                    <div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.i18nKey}</CardText>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
-                  </div>
-                  <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
-                  </div>
-                  {InitiatorinfoDetails?.isCaretaker === true && (
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_ADDRESS")}`} :</CardText>
-                    </div>
-                  )}
-                  {InitiatorinfoDetails?.isCaretaker === false && (
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
-                    </div>
-                  )}
-                  <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/InitiatorDetails`} />}
-                  </div>
-                </div>
-              </div>
-            </StatusTable>
-          }
-        />
-
-        {window.location.href.includes("/citizen") && (
+        {InitiatorinfoDetails?.initiatorAadhar != null && (
           <div>
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="summaryheadingh">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-                </h1>
-              </div>
+            <Accordion
+              expanded={false}
+              title={t("CR_INITIATOR_DETAILS")}
+              content={
+                <StatusTable>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-12">
+                        <h1 className="summaryheadingh">
+                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      {InitiatorinfoDetails?.isCaretaker === true && (
+                        <div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :
+                            </CardText>
+                          </div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi}</CardText>
+                          </div>
+                        </div>
+                      )}
+                      {InitiatorinfoDetails?.isCaretaker === false && (
+                        <div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
+                          </div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.i18nKey}</CardText>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
+                      </div>
+                      {InitiatorinfoDetails?.isCaretaker === true && (
+                        <div className="col-md-3">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_ADDRESS")}`} :</CardText>
+                        </div>
+                      )}
+                      {InitiatorinfoDetails?.isCaretaker === false && (
+                        <div className="col-md-3">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                        </div>
+                      )}
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                      </div>
+                    </div>
+                  </div>
+                </StatusTable>
+              }
+            />
+          </div>
+        )}
+        {InformarHosInstDetails?.initiatorAadhar != null && (
+          <div>
+            <Accordion
+              expanded={false}
+              title={t("CR_INFORMER_VERIFICATION")}
+              content={
+                <StatusTable>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-12">
+                        <h1 className="summaryheadingh">
+                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantAadhar}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantFirstNameEn}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_DESIGNATION")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.informerDesi}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantMobile}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.informerAddress}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                      </div>
+                    </div>
+                  </div>
+                </StatusTable>
+              }
+            />
+          </div>
+        )}
+        {/* {window.location.href.includes("/citizen") && ( */}
+        <div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="summaryheadingh">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+              </h1>
             </div>
+          </div>
 
-            <div className="row">
+          <div className="row">
+            <div className="col-md-12">
               <div className="col-md-12">
-                <div className="col-md-12">
-                  <CheckBox
-                    label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                    onChange={setDeclarationInfo}
-                    value={isInitiatorDeclaration}
-                    checked={isInitiatorDeclaration}
-                    // disable={isDisableEdit}
-                  />
-                </div>
+                <CheckBox
+                  label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                  onChange={setDeclarationInfo}
+                  value={isInitiatorDeclaration}
+                  checked={isInitiatorDeclaration}
+                // disable={isDisableEdit}
+                />
               </div>
             </div>
           </div>
-        )}
+        </div>
+        {/* )} */}
 
-        {/* {toast && (
+        {toast && (
           <Toast
             error={InitiatorDeclareError}
             label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
-        )} */}
+        )}
         {""}
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} disabled={!isInitiatorDeclaration} />
+        {/* disabled={!isInitiatorDeclaration } */}
       </Card>
     </React.Fragment>
   );

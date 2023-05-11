@@ -1,4 +1,4 @@
-import { DropIcon, EmployeeModuleCard, PopUp, EditButton, UploadFile,Loader } from "@egovernments/digit-ui-react-components";
+import { DropIcon, EmployeeModuleCard, PopUp, EditButton, UploadFile, Loader } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../config/constants";
@@ -17,23 +17,38 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [errorDocIds, setErrorDocIds] = useState([])
+  const [errorDocIds, setErrorDocIds] = useState([]);
   const [error, setError] = useState([]);
+  const [isAlreadyUploaded,setIsAlreadyUploaded] = useState(false)
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
+
+  useEffect(() => {
+    if (selectedConfig?.Documents?.length > 0) {
+      const existingDocIds = selectedConfig?.Documents?.map((item) => {
+        if (selectedDocs.includes(item.DocumentId?.toString())) {
+          return item.DocumentId?.toString();
+        }
+      });
+
+      const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
+      setUploadedFiles([...filteredData]);
+    }
+
+    
+  }, [selectedConfig?.Documents]);
+
 
 
   useEffect(() => {
-    if(selectedConfig?.Documents?.length > 0){
-    const existingDocIds = selectedConfig?.Documents?.map((item) => {
-      if (selectedDocs.includes(item.DocumentId?.toString())) {
-        return item.DocumentId?.toString();
-      }
-    });
+    const remainUploadDocs = selectedConfig?.Documents?.filter((item)=> !selectedDocs.includes(item.DocumentId?.toString()))
+    if (remainUploadDocs?.length === 0) {
+      setIsAlreadyUploaded(true)
+    } else {
+      setIsAlreadyUploaded(false)
+    }
+    }, [selectedConfig?.Documents])
 
-    const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
-    setUploadedFiles([...filteredData]);
-  }
-  }, [selectedConfig?.Documents]);
+  
 
   const resetFields = () => {
     setFileDocError("");
@@ -66,36 +81,43 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     setFile(e.target.files[0]);
   }
 
-  const setFileUploadFieldError = (errorObj) =>{
+  const setFileUploadFieldError = (errorObj) => {
     const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
     if (errorIndex === -1) {
       setError([...error, errorObj]);
-      const docIds = [...errorDocIds,errorObj.fieldId]?.filter((item)=> item !== "");
+      const docIds = [...errorDocIds, errorObj.fieldId]?.filter((item) => item !== "");
       setErrorDocIds(docIds);
     } else {
       let tempError = [...error];
-      let tempDocIds = tempError.splice(errorIndex, 1,errorObj.fieldId).filter((item)=> item !== "")
+      let tempDocIds = tempError.splice(errorIndex, 1, errorObj.fieldId).filter((item) => item !== "");
       setErrorDocIds(tempDocIds);
       setError(tempError.splice(errorIndex, 1, errorObj));
     }
-  }
+  };
+
+  const getDocumentName = (doc) => {
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.split(",");
+    const documents = documentNameArray.map((name) => {
+      return t(name);
+    });
+
+    const documentName = documents.join(` ${t("CR_OR")} `);
+
+    return documentName;
+  };
 
   useEffect(() => {
     (async () => {
-     
       if (file && file?.type) {
-       
         setError(null);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
           setIsLoading(false);
           let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
           setFileUploadFieldError(tempObj);
-          
         } else if (file.size >= 2000000) {
           setIsLoading(false);
           let tempObj = { message: t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"), fieldId: docuploadedId };
           setFileUploadFieldError(tempObj);
-          
         } else {
           let tempObj = { message: "", fieldId: "" };
           setFileUploadFieldError(tempObj);
@@ -112,20 +134,20 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
               size: file.size,
             };
 
-  if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
-    uploadedFiles.push(temp);
-  }
-  setUploadedFile(response?.data?.files[0]?.fileStoreId);
-  setIsLoading(false);
-} else {
-  setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
-  setIsLoading(false);
-}
-// } catch (err) {}
-}
-}
-})();
-}, [file, uploadedFiles]);
+            if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
+              uploadedFiles.push(temp);
+            }
+            setUploadedFile(response?.data?.files[0]?.fileStoreId);
+            setIsLoading(false);
+          } else {
+            setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
+            setIsLoading(false);
+          }
+          // } catch (err) {}
+        }
+      }
+    })();
+  }, [file, uploadedFiles]);
 
   const getFileUploadFieldError = (item) => {
     let errorMessage = "";
@@ -136,11 +158,10 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     return errorMessage;
   };
 
- 
   const renderLoader = (details) => {
-    if (isLoading && (details.DocumentId?.toString() === docuploadedId)) {
+    if (isLoading && details.DocumentId?.toString() === docuploadedId) {
       return (
-        <div style={{margin:0}}>
+        <div style={{ margin: 0 }}>
           <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
         </div>
       );
@@ -156,17 +177,21 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
         <h1 className="headingh1">
           <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)} ${t("CR_CHANGE")}`}</span>{" "}
         </h1>
-        <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
+        {isAlreadyUploaded ? (
+          <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_ALREADY_UPLOAD_DOCUMENTS")}`}</h2>
+        ) : (
+          <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
+        )}
         {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
         {selectedConfig?.Documents?.map((item, index) => (
           <div>
             {!selectedDocs.includes(item.DocumentId?.toString()) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
+                <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
                   <UploadFile
                     key={item.DocumentId}
-                    id={parseInt(item.DocumentId,10)}
+                    id={parseInt(item.DocumentId, 10)}
                     name={item.DocumentType}
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -176,12 +201,11 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
                       setUploadedFile(null);
                     }}
                     message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    iserror={getFileUploadFieldError(item)} 
+                    iserror={getFileUploadFieldError(item)}
                   />
-                   
-                   {renderLoader(item)}
+
+                  {renderLoader(item)}
                 </div>
-           
               </div>
             )}
           </div>
@@ -189,9 +213,9 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 
         <EditButton
           selected={true}
-          label={"Save"}
+          label={isAlreadyUploaded ? (t("CR_CONTINUE")) : (t("CR_SAVE"))}
           onClick={() => {
-            if (!isLoading && (selectedConfig?.Documents?.length === uploadedFiles?.length)) {
+            if (!isLoading && selectedConfig?.Documents?.length === uploadedFiles?.length) {
               resetFields();
               onSubmit(uploadedFiles, error);
             } else {
@@ -201,7 +225,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
         />
         <EditButton
           selected={false}
-          label={"Cancel"}
+          label={(t("CR_CANCEL"))}
           onClick={() => {
             hideModal();
           }}

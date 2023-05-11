@@ -1,5 +1,5 @@
 import React from "react";
-import { CardLabel,Card, TextInput, Modal, SearchField, SubmitBar, DatePicker, Table ,Loader} from "@egovernments/digit-ui-react-components";
+import { CardLabel, Card, TextInput, Modal, SearchField, SubmitBar, DatePicker, Table, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 // import Search from '../../components/SearchApplicationBirth'
@@ -13,7 +13,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
   // };
   const convertEpochToDateDMY = (dateEpoch) => {
     if (dateEpoch == null || dateEpoch == undefined || dateEpoch == "") {
-      return "NA";
+      return t("CR_NOT_RECORDED");
     }
     const dateFromApi = new Date(dateEpoch);
     let month = dateFromApi.getMonth() + 1;
@@ -201,7 +201,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
       {
         Header: t("CR_GENDER"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.gender|| "-"),
+        accessor: (row) => GetCell(row.gender || "-"),
       },
       {
         Header: t("CR_PLACE_OF_BIRTH"),
@@ -213,7 +213,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
   );
   // const Search = Digit.ComponentRegistryService.getComponent("SearchCrApplication"); useSearch ChildDetails
   if (window.location.href.includes("/adoption-child-details") == true) {
-    const { data: { ChildDetails : searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchAdoption({
+    const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchAdoption({
       tenantId,
       filters: payload,
       config,
@@ -315,7 +315,9 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
           </div>
         </div>
         <div className="row">
-          {isLoading ? <Loader /> : searchResult !== "" && searchResult?.length > 0 ? (
+          {isLoading ? (
+            <Loader />
+          ) : searchResult !== "" && searchResult?.length > 0 ? (
             <Table
               styles={{ marginLeft: "7px", width: "98.9%" }}
               paginationStyle={{ marginLeft: "7px", width: "98.9%" }}
@@ -342,11 +344,11 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
               disableSort={false}
               sortParams={[{ id: getValues.sortBy, desc: getValues.sortOrder === "DESC" ? true : false }]}
             />
-          ): <Card style={{ marginTop: 20 , marginLeft:'10px', width:'99.2%'}}>
-          <p style={{ textAlign: "center" }}>
-            {t("ES_COMMON_NO_DATA")}
-          </p>
-        </Card>}
+          ) : (
+            <Card style={{ marginTop: 20, marginLeft: "10px", width: "99.2%" }}>
+              <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
+            </Card>
+          )}
         </div>
       </Modal>
     );

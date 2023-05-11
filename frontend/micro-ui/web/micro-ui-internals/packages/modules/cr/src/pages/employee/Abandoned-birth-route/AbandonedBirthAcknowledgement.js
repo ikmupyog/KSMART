@@ -25,6 +25,16 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
+  if (props.isSuccess && sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG")) {
+    console.log(JSON.stringify(props));
+    sessionStorage.setItem("applicationNumber", props.data?.AbandonedChildDetails[0]?.applicationNumber);
+    // console.log(sessionStorage.getItem("applicationNumber"));
+    if (sessionStorage.getItem("applicationNumber") != null && props.isSuccess) {
+      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+    } else {
+      sessionStorage.removeItem("applicationNumber");
+    }
+  } else {
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -34,6 +44,7 @@ const BannerPicker = (props) => {
     />
 
   );
+  }
 };
 // console.log(props.data?.AbandonedChildDetails?.ParentsDetails?.applicationNumber);
 
@@ -62,7 +73,7 @@ console.log(mutation);
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {  
-          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data) : [];    
+          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data) : convertToEditAbandonedBirthRegistration(data);    
           // let formdata = convertToAbandonedBirthRegistration(data);
             mutation.mutate(formdata, {
             onSuccess,
@@ -143,7 +154,7 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
           />
      
      {mutation?.data?.AbandonedDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-            pathname: `/digit-ui/employee/payment/collect/${mutation.data.AbandonedDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
+            pathname: `/digit-ui/employee/payment/collect/${mutation.data.AbandonedDetails[0].businessservice}/${mutation.data.AbandonedDetails[0].applicationNumber}`,
             state: { tenantId: mutation.data.AbandonedDetails[0].tenantid },
           }}>
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />

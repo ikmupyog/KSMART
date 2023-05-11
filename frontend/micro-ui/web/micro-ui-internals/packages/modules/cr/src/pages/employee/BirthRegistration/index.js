@@ -12,26 +12,41 @@ const CreateBirthEmp = ({ parentUrl }) => {
   const history = useHistory();
   const queryClient = useQueryClient();
   //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
-  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")? true : false);  
+  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
   // console.log("isEditBirth" + isEditBirth);
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
+  // const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  // const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
+  // console.log(roletemp[0].code);
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  const birthConfig = newConfig.find((item)=> item.head === "Birth Routing");
+  const birthConfig = newConfig.find((item) => item.head === "Birth Routing");
 
-  config = config.concat(birthConfig.body.filter((a) => !a.hideInCitizen));
-
+  config = config.concat(birthConfig.body.filter((a) => {
+    return !a.hideInCitizen
+    // if ((roletemp[0].code === "HOSPITAL_OPERATOR" || roletemp[0].code === "HOSPITAL_APPROVER") && isEditBirth === false) {
+    //   return !a.hideInEmployee
+    // }
+  }));
+  // let configTemp = config;
+  // if(configTemp.length>0 && isEditBirth === false 
+  //   && (roletemp[0].code === "HOSPITAL_OPERATOR" || roletemp[0].code === "HOSPITAL_APPROVER") ){
+  //   configTemp[2].nextStep = "informer-details";
+  //   config = configTemp;
+  // }
+ 
+  // console.log(config);
   config.indexRoute = "child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    
+
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;
@@ -60,7 +75,9 @@ const CreateBirthEmp = ({ parentUrl }) => {
   };
 
   const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+    if (isEditBirth === false) {
+      clearParams();
+    }
     queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
   };
   const handleSkip = () => { };
