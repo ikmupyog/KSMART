@@ -237,7 +237,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   )}
                 </div>
               </div>
-              {MarriageDetails?.marriagePlaceType?.code === "OTHER" && (
+              {MarriageDetails?.marriagePlacetype?.code === "OTHER" && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
@@ -317,7 +317,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </React.Fragment>
               )}
-              {MarriageDetails?.marriagePlaceType?.code === "HOUSE" && (
+              {MarriageDetails?.marriagePlacetype?.code === "HOUSE" && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
@@ -393,7 +393,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </React.Fragment>
               )}
-              {(MarriageDetails?.marriagePlaceType?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
+              {(MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
