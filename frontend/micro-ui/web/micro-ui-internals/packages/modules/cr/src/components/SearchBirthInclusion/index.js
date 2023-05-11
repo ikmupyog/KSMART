@@ -78,7 +78,7 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
   const isMobile = window.Digit.Utils.browser.isMobile();
 
   if (isMobile) {
-    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, data, onSubmit }} />;
+    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, data, onSubmit, isSuccess }} />;
   }
 
   const handleLinkClick = () => {
