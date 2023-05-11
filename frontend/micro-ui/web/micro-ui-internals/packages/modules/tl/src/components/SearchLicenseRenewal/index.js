@@ -23,11 +23,14 @@ const hstyle = {
   lineHieght: "1.5rem"
 };
 
-const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrectionreq }) => {
+const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isProcessreq }) => {
   const { pathname } = useLocation();
 
   let currentPath = pathname.split("/").pop();
-  isCorrectionreq = currentPath === "license-correction-search" ?  true : false ;
+  isProcessreq = currentPath === "license-correction-search" ? 
+   "correction" 
+   : currentPath === "license-cancellation-search" ? "cancellation" : "renewal" ;
+
   
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -52,16 +55,16 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrection
 
   function onPageSizeChange(e) {
     setValue("limit", Number(e.target.value))
-    handleSubmit(onSubmit)(false)
+    handleSubmit(onSubmit)()
   }
 
   function nextPage() {
     setValue("offset", getValues("offset") + getValues("limit"))
-    handleSubmit(onSubmit)(false)
+    handleSubmit(onSubmit)()
   }
   function previousPage() {
     setValue("offset", getValues("offset") - getValues("limit"))
-    handleSubmit(onSubmit)(false)
+    handleSubmit(onSubmit)()
   }
 
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -80,13 +83,18 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrection
       "capitalInvestment": finaldata?.tradeLicenseDetail?.capitalInvestment && finaldata?.tradeLicenseDetail?.capitalInvestment !== null && finaldata?.tradeLicenseDetail?.capitalInvestment !== "" ? true : false,
     }
     delete finaldata?.tradeLicenseDetail?.applicationDocuments;
-    isCorrectionreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
+    isProcessreq === "correction"  ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) 
+    : isProcessreq === "cancellation" ? Digit.SessionStorage.set("TL_CANCELLATION_TRADE", finaldata)
+    : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
+
     let tempdata = { "TradeDetails": finaldata }
-    isCorrectionreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
+    isProcessreq === "correction" ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
     Digit.SessionStorage.set("TL_RENEWAL_ENABLE_TRADE", formdisable);
   }
   //need to get from workflow
-  let routepath = isCorrectionreq ? `/digit-ui/citizen/tl/tradelicence/license-correction` : `/digit-ui/citizen/tl/tradelicence/license-renewal-pde`;
+  let routepath = isProcessreq === "correction" ? `/digit-ui/citizen/tl/tradelicence/license-correction`
+  : isProcessreq === "cancellation" ? `/digit-ui/citizen/tl/tradelicence/license-cancellation`
+  : `/digit-ui/citizen/tl/tradelicence/license-renewal-pde`;
   const GetCell = (value) => <span className="cell-text" style={{ wordBreak: "break-word" }}>{value}</span>;
   const columns = useMemo(() => ([
     {
@@ -95,7 +103,7 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrection
       disableSortBy: true,
       Cell: ({ row }) => {
         return (
-          (isCorrectionreq && row.original["isCurrentRequest"]) ?
+          (isProcessreq && row.original["isCurrentRequest"]) ?
             <div>
               <span >
                 {row.original["applicationNumber"]}
@@ -137,8 +145,8 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrection
     {
       Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
       disableSortBy: true,
-      accessor: (row) => (isCorrectionreq && row.isCurrentRequest) ? "Active Request Pending" :
-      (isCorrectionreq) ? ""
+      accessor: (row) => (isProcessreq && row.isCurrentRequest) ? "Active Request Pending" :
+      (isProcessreq) ? ""
       : 
       GetCell(row.status),
     },
@@ -155,7 +163,7 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCorrection
       </SearchForm>
 
     </div>
-
+    
     {data?.display ? <Card style={{ marginTop: 20 }}>
       {
         t(data.display)

@@ -24,7 +24,6 @@ export const fetchLocalities = (city) => async (dispatch, getState) => {
 };
 
 export const updateComplaints = (data) => async (dispatch) => {
-  console.log("uploaded docs",data);
   let ServiceWrappers = await Digit.PGRService.update(data);
 
   dispatch({
@@ -43,9 +42,7 @@ export const fetchBusinessServiceByTenant = (tenantId, businessServices) => asyn
 };
 
 export const applyInboxFilters = (filters) => async (dispatch) => {
-  console.log(filters);
   let response = await Digit.PGRService.inboxFilter(filters);
-  console.log(response);
   dispatch({
     type: APPLY_INBOX_FILTER,
     payload: { response },

@@ -31,20 +31,22 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoading }) => {
+const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoading, isSuccess }) => {
 
   const history = useHistory();
   const {path} = useRouteMatch();
   const { t } = useTranslation();
 
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
       sortBy: "applicationNumber",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
+  console.log("isSuccess....", isSuccess);
   
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
     register("limit", 10);
     register("sortBy", "applicationNumber");
     register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -139,12 +142,10 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
       <div style={mystyle}>
         <h1 style={hstyle}>{t("INCLUSIONS_CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
+          <SearchFields {...{ register, control,watch, reset, previousPage, t }} />
         </SearchForm>
       </div>
-      {isLoading && <Loader/>}
-      {
-        data !== "" && (
+      {(data?.length > 0  && isSuccess) ? (
           <React.Fragment>
             <Table
               t={t}
@@ -170,8 +171,12 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
               sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
             />
           </React.Fragment>
-        )
-      }
+         ) : isSuccess ? (
+          <Card style={{ marginTop: 20 }}>
+            <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
+          </Card>
+        ): null}
+      
     </React.Fragment>
   );
 };

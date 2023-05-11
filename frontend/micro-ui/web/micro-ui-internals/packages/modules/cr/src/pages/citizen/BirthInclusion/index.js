@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import {
   BackButton,
   TextInput,
@@ -52,7 +53,7 @@ const BirthInclusion = () => {
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchBirth({
-    filters: payload,
+    filters: {...payload, dateofbirth: payload.dateofbirth && moment(payload.dateofbirth, 'YYYY/MM/DD').valueOf()},
     config,
   });
 
@@ -74,10 +75,11 @@ const BirthInclusion = () => {
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
         // filestoreId={storeId}
-        // isSuccess={isSuccess}
+        isSuccess={isSuccess}
         isLoading={isLoading}
         count={count}
         onInclusionClick={gotoEditInclusion}
+        status={status}
       />
       {/* </Route> */}
       {/* <Route path={`${path}/acknowledgement`}>
