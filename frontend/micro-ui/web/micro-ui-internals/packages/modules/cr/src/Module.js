@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
 import AdoptionChildDetails from "../src/pageComponents/adoptionComponents/AdoptionChildDetails";
-import AdoptionAddressBasePage from "../src/pageComponents/adoptionComponents/AdoptionAddressBasePage";
 import AdoptionParentsDetails from "./pageComponents/adoptionComponents/AdoptionParentsDetails";
 import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
 import AdoptionDocuments from "../src/pageComponents/adoptionComponents/AdoptionDocuments";
@@ -322,7 +321,6 @@ const componentsToRegister = {
   CRLinks,
   CRCard,
   AdoptionChildDetails,
-  AdoptionAddressBasePage,
   AdoptionParentsDetails,
   AdoptionInitiatorDetails,
   AdoptionDocuments,

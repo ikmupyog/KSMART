@@ -33,12 +33,13 @@ const registyBtnStyle = {
 const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionClick }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
   const { t } = useTranslation();
@@ -48,6 +49,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
     register("limit", 10);
     register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -173,7 +175,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
       <div style={mystyle}>
         <h1 style={hstyle}>{t("CR_DEATH_CORRECTION")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
+          <SearchFields {...{ register, watch, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
       </div>
       {data?.length > 0 && (
