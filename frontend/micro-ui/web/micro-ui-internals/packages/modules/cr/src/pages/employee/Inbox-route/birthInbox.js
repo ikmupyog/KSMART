@@ -52,11 +52,11 @@ const BirthInbox = () => {
   // console.log("233", searchParams)
 
   const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
-  let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
+  // let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
   // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
-  useEffect(()=>{
-    console.log("complaintsz", complaintsz)
-  },[complaintsz]); 
+  // useEffect(()=>{
+  //   console.log("complaintsz", complaintsz)
+  // },[complaintsz]); 
  
 
   let Loading = isLoading;
