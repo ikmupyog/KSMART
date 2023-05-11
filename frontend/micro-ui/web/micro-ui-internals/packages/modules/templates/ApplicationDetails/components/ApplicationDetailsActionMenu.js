@@ -116,10 +116,17 @@ function ApplicationDetailsActionBar({
             ]
           : null,
       };
+      if(businessService == "ADOPTIONHOME"){
+        submitAction({
+          Property: applicationData,
+        });
+      }else if(businessService == "21BIRTHHOME"){
+        submitAction({
+          ChildDetails: [applicationData],
+        });
+      }
       // console.log('dash',applicationData,selectedAction,selectedAssigne,workflow);
-      submitAction({
-        Property: applicationData,
-      });
+     
       
     }
     // let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
