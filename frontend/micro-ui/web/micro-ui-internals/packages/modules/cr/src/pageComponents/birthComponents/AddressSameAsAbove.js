@@ -4,7 +4,7 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
-  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditBirthNAC = false,
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditBirthNAC = false,isEditAdoption=false,
   presentaddressCountry, setaddressCountry, presentaddressStateName, setaddressStateName, presentOutsideKeralaDistrict,
   setoutsideKeralaDistrict, value, setValue, countryvalue, setCountryValue, countryValuePermanent, setCountryValuePermanent,
   valuePermanent, setValuePermanent, permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, presentWardNo, setPresentWardNo,

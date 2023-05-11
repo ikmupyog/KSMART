@@ -94,7 +94,7 @@ const BirthInclusionAcknowledgement = () => {
             t={t}
               data={mutationData?.data} isSuccess={mutationData?.isSuccess} isLoading={mutationData?.isLoading}
           />
-          {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
+          {<CardText>{t("CR_CREATE_APPLICATION_FAILED")}</CardText>}
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>

@@ -89,7 +89,7 @@ const MarriageCorrectionAcknowledgement = () => {
           t={t}
            data={mutationData.data} isSuccess={mutationData.isSuccess} isLoading={(mutationData?.isLoading)}
          />
-         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
+         {<CardText>{t("CR_CREATE_APPLICATION_FAILED")}</CardText>}
          <Link to={`/digit-ui/citizen`}>
            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
          </Link>
