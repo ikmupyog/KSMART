@@ -256,6 +256,12 @@ public class TLQueryBuilder {
                 }
             }
 
+            if (criteria.getApplicationType() != null
+                    && !criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_CORRECTION)) {
+                builder.append(" tl.status=? ");
+                preparedStmtList.add(TLConstants.STATUS_APPROVED);
+            }
+
             if (criteria.getApplicationNumber() != null) {
                 if (criteria.getApplicationType() != null
                         && criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_CORRECTION)) {
@@ -383,7 +389,6 @@ public class TLQueryBuilder {
             }
 
         }
-        System.out.println("rohit" + builder);
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 
         if (!isCount) {
@@ -399,21 +404,25 @@ public class TLQueryBuilder {
             TradeLicenseSearchCriteria criteria) {
         addClauseIfRequired(preparedStmtList, builder);
         builder.append(" (tl.validTo <= ?) ");
-        long renewalPeriod = 1680220800000L;
+        // long renewalPeriod = 1680220800000L;
+        long renewalPeriod = 1711843200000L;
         preparedStmtList.add(renewalPeriod);
 
         addClauseIfRequired(preparedStmtList, builder);
-        builder.append("  ((tl.workflowcode = ? AND tl.status=?) ");
+        builder.append("  ((tl.workflowcode = ? AND tl.status=? AND renewalactive=?) ");
         preparedStmtList.add("PdeTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
+        preparedStmtList.add(true);
 
-        builder.append(" OR (tl.workflowcode = ? AND tl.status=?) ");
+        builder.append(" OR (tl.workflowcode = ? AND tl.status=? AND renewalactive=?) ");
         preparedStmtList.add("RenewalTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
+        preparedStmtList.add(true);
 
-        builder.append(" OR (tl.workflowcode = ? AND tl.status=?)) ");
+        builder.append(" OR (tl.workflowcode = ? AND tl.status=? AND renewalactive=?)) ");
         preparedStmtList.add("NewTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
+        preparedStmtList.add(true);
     }
 
     // private void addRenewalCriteria(StringBuilder builder, List<Object>

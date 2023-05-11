@@ -89,8 +89,9 @@ public class EnrichmentService {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            Calendar c = Calendar.getInstance();
+            Calendar c = Calendar.getInstance(TimeZone.getTimeZone(config.getEgovAppTimeZone()));
             c.setTime(date);
+            c.add(Calendar.DATE, -1);
             c.add(Calendar.YEAR, tradeLicense.getDesiredLicensePeriod());
             Date finaldt = c.getTime();
             long epochValidTo = finaldt.getTime(); // / 1000
@@ -726,23 +727,5 @@ public class EnrichmentService {
         date.append("-").append(month).append("-").append(day);
         return date.toString();
     }
-
-    // tradeLicense.getTradeLicenseDetail().getTradeUnits().forEach(tradeUnit -> {
-    // if (tradeUnit.getId() == null and active=true) {
-    // tradeUnit.setTenantId(tradeLicense.getTenantId());
-    // tradeUnit.setId(UUID.randomUUID().toString());
-    // tradeUnit.setActive(true);
-    // }
-    // if (tradeUnit.getId() != null and active=true) {
-    // tradeUnit.setTenantId(tradeLicense.getTenantId());
-    // tradeUnit.setId(getid);
-    // tradeUnit.setActive(true);
-    // }
-    // if (tradeUnit.getId() != null and active=false) {
-    // tradeUnit.setTenantId(tradeLicense.getTenantId());
-    // tradeUnit.setId(getid);
-    // tradeUnit.setActive(true);
-    // }
-    // });
 
 }
