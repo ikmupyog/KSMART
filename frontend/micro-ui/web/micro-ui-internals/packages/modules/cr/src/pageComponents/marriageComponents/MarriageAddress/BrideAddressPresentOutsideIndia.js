@@ -237,7 +237,7 @@ const BrideAddressPresentOutsideIndia = ({
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : e.target.value.replace(/[^a-zA-Z0-9]/ig, '').substring(0, 6));
     if (isPrsentAddress) {
       setPermantpostCode(
         e.target.value.trim().length <= 6
@@ -381,7 +381,7 @@ const BrideAddressPresentOutsideIndia = ({
               disable={isDisableEdit}
               placeholder={`${t("CR_ZIP_CODE")}`}
               {...(validation = {
-                pattern: "^[0-9]*$",
+                pattern: "^[a-zA-Z0-9]*$",
                 isRequired: true,
                 type: "text",
                 maxLength: 6,
