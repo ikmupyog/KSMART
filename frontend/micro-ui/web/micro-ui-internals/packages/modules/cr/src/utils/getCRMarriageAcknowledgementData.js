@@ -76,8 +76,8 @@ const getMarriageDetails = (application, t) => {
     title: "",
     values: [
       { title: t("Date of Marriage"), value: application?.marriageDOM ? Digit.DateUtils.ConvertTimestampToDate(application?.marriageDOM, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("Name of Groom"), value: `${application?.GroomDetails?.groomFirstnameEn} ${application?.GroomDetails?.groomMiddlenameEn} ${application?.GroomDetails?.groomLastnameEn}`},
-      { title: t("Name of Bride"), value: `${application?.BrideDetails?.brideFirstnameEn} ${application?.BrideDetails?.brideMiddlenameEn} ${application?.BrideDetails?.brideLastnameEn}`},
+      { title: t("Name of Groom"), value: `${application?.GroomDetails?.groomFirstnameEn} ${application?.GroomDetails?.groomMiddlenameEn || ""} ${application?.GroomDetails?.groomLastnameEn || ""}`},
+      { title: t("Name of Bride"), value: `${application?.BrideDetails?.brideFirstnameEn} ${application?.BrideDetails?.brideMiddlenameEn || ""} ${application?.BrideDetails?.brideLastnameEn || ""}`},
       // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
       // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
       // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },

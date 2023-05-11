@@ -962,10 +962,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             (groomResidentShip === "INDIAN" ? !groomAadharNo : false) ||
             (groomResidentShip === "NRI" ? !groomPassportNo || !groomSocialSecurityNo : false) ||
             (groomResidentShip === "FOREIGN" ? !groomSocialSecurityNo || !groomPassportNo : false) ||
-            (groomParentGuardian === "PARENT"
-              ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo
-              : false) ||
-            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo : false)
+            (groomParentGuardian === "PARENT" ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl : false) ||
+            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl : false)
           }
         >
           <div className="row">
@@ -1053,7 +1051,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       inputProps={{
                         maxLength: 12,
                       }}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: groomResidentShip === "INDIAN" ? true : false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                      {...(validation = {
+                        pattern: "^([0-9]){12}$",
+                        isRequired: groomResidentShip === "INDIAN" ? true : false,
+                        type: "text",
+                        title: t("CR_AADHAR_NO_ERROR"),
+                      })}
                     />
                   </div>
                 )}
@@ -1400,10 +1403,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div>
               <div className="row">
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_GROOM_FATHER_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1414,7 +1414,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectGroomFatherAdharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1462,10 +1462,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <div className="row">
                 <div className="col-md-4">
                   {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_MOTHER_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1476,7 +1473,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectGroomMotherAdharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1528,10 +1525,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div>
               <div className="row">
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_GROOM_GUARDIAN_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1542,7 +1536,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectGroomGardianAdhar}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
