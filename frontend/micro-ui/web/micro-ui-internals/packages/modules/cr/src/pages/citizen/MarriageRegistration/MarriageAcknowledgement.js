@@ -208,7 +208,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           <Link
             to={{
               pathname: `/digit-ui/citizen/payment/collect/${mutation.data.MarriageDetails[0].businessService}/${mutation.data.MarriageDetails[0].applicationNumber}`,
-              state: { tenantId: mutation.data.MarriageDetails[0].tenantId },
+              state: { tenantId: mutation.data.MarriageDetails[0].marriageTenantid },
             }}
           >
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
