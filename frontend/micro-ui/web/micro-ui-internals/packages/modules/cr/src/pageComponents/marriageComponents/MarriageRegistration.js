@@ -23,7 +23,6 @@ import _ from "lodash";
 // import { TimePicker } from '@material-ui/pickers';
 
 const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -33,8 +32,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-
-  console.log({ tenantId });
   const [tenantWard, setTenantWard] = useState(tenantId);
   const [lbs, setLbs] = useState([]);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
@@ -54,6 +51,11 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setIsWardChange(false);
   }
 
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "WorkFlowMarriage"
+  );
   const { data: District = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
@@ -83,43 +85,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     { i18nKey: "Not Applicable", code: "NOT Applicable" },
   ];
 
-  // const cmbPlaceNameReligious = [
-  //   { i18nKey: "Religious Institution 1", code: "RELIGIOUSINSTITUTION1", namelocal: "മത സ്ഥാപനം 1" },
-  //   { i18nKey: "Religious Institution 2", code: "RELIGIOUSINSTITUTION2", namelocal: "മത സ്ഥാപനം 2" },
-  //   { i18nKey: "Others", name: "OTHERS", namelocal: "മറ്റുള്ളവ" },
-  // ];
-
-  // const cmbPlaceNameMandapam = [
-  //   {
-  //     i18nKey: "Mandapam 1",
-  //     code: "RELIGIOUSINSTITUTION1",
-  //     namelocal: "മണ്ഡപം 1",
-  //   },
-  //   {
-  //     i18nKey: "Mandapam 2",
-  //     code: "RELIGIOUSINSTITUTION2",
-  //     namelocal: "മണ്ഡപം 2",
-  //   },
-  //   {
-  //     i18nKey: "Others",
-  //     code: "OTHERS",
-  //     namelocal: "മറ്റുള്ളവ",
-  //   },
-  // ];
-
-  const cmbSubRegistarOffice = [
-    {
-      i18nKey: "SubRegistrar Office 1",
-      code: "SUBREGISTRAROFFICE1",
-      namelocal: "സബ് രജിസ്ട്രാർ ഓഫീസ് 1",
-    },
-    {
-      i18nKey: "SubRegistrar Office 2",
-      code: "SUBREGISTRAROFFICE2",
-      namelocal: "സബ് രജിസ്ട്രാർ ഓഫീസ് 2",
-    },
-  ];
-
   let cmbDistrict = [];
   let cmbTaluk = [];
   let cmbVillage = [];
@@ -130,12 +95,21 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   let cmbWardNoFinal = [];
   let cmbFilterTaluk = [];
   let cmbFilterVillage = [];
+  let cmbSubRegistarOffice = [];
   let MarriagePlaceTypeName = "";
   let workFlowData = [];
   let cmbMarriagePlaceIds = [];
   const cmbTypeOfMarriage = [];
   const cmbPlaceType = [];
   let naturetype = null;
+
+  WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] &&
+    WorkFlowDetails["birth-death-service"].WorkFlowMarriage &&
+    WorkFlowDetails["birth-death-service"].WorkFlowMarriage.map((ob) => {
+      workFlowData.push(ob);
+    });
+
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
@@ -206,14 +180,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       cmbMarriagePlaceIds.push(ob);
     });
 
-  const uniquecmbWards = _.uniqWith(cmbWardNoFinal, (value1, value2) => value1.name === value2.name);
-  console.log({ uniquecmbWards });
-
-  const cmbSortedWards = uniquecmbWards.sort((a, b) => a.wardno - b.wardno);
-  console.log({ cmbSortedWards });
-
+  const cmbSortedWards = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
   const cmbPlaceNameReligious = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
-  console.log({ cmbPlaceNameReligious });
   const cmbPlaceNameMandapam = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
 
   const [marriageDOM, setmarriageDOM] = useState(formData?.MarriageDetails?.marriageDOM ? formData?.MarriageDetails?.marriageDOM : "");
@@ -283,15 +251,14 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [marriageLandmark, setmarriageLandmark] = useState(
     formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
   );
-  const [file, setFile] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.MarriageDetails?.workFlowCode ? formData?.MarriageDetails?.workFlowCode : null);
+  const [isPayment, setIsPayment] = useState(formData?.MarriageDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.MarriageDetails?.Amount);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.MarriageDetails?.DifferenceInTime);
 
   const stateDist = cmbDistrict?.filter((dist) => dist.statecode == "kl");
 
   const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
-
-  function handleChange(e) {
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -313,10 +280,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
 
   const filteredSubRegistrarOfficeList = cmbSubRegistarOffice?.filter((sOffice) => sOffice.districtCode === marriageDistrictid?.code);
-  console.log({ filteredSubRegistrarOfficeList });
 
   const [toast, setToast] = useState(false);
-  const [DOBError, setDOBError] = useState(formData?.MarriageDetails?.marriageDOM ? false : false);
+  const [DOMError, setDOMError] = useState(false);
   const [marriageDistrictidError, setMarriageDistrictidError] = useState(false);
   const [marriageTalukIDError, setmarriageTalukIDError] = useState(false);
   const [marriageVillageNameError, setmarriageVillageNameError] = useState(false);
@@ -359,17 +325,26 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   }
   // });
   function setSelectmarriageDOM(value) {
+    setDifferenceInTime(null);
     setmarriageDOM(value);
     const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
+    today.setHours(0, 0, 0, 0);
+    const marriageDate = new Date(value);
+    marriageDate.setHours(0, 0, 0, 0);
+    if (marriageDate.getTime() <= today.getTime()) {
+      setDOMError(false);
       // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
+      let Difference_In_Time = today.getTime() - marriageDate.getTime();
+
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
+
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      // setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
     } else {
       setmarriageDOM(null);
-      setDOBError(true);
+      setDOMError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
@@ -377,7 +352,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
   function setSelectMarriageDistrictid(value) {
-    console.log({ value });
     setMarriageDistrictid(value);
     setLbs(null);
     districtid = value.districtid;
@@ -401,7 +375,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidMl("");
   }
   function setSelectmarriageTalukID(value) {
-    console.log("taluk", value);
     setmarriageTalukID(value);
     setmarriageVillageName("");
     setMarriageLBtype("");
@@ -416,6 +389,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriageLBtype(value) {
     setMarriageLBtype(value);
+    if (cmbLB.length > 0) {
+      const currentLBType = filteredLBType.map(lb=>lb);
+      setMarriageLBtype(currentLBType[0]);
+    }
     setMarriageTenantid("");
     setMarriageWardCode("");
     setMarriagePlacetype("");
@@ -423,7 +400,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidMl("");
   }
   function setSelectmarriageTenantid(value) {
-    console.log("tenant", value);
     setIsWardChange(true);
     setMarriageWardCode(null);
     setTenantWard(value.code);
@@ -433,16 +409,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setplaceidEn("");
     setplaceidMl("");
   }
-  console.log({ cmbTypeOfMarriage });
   function setSelectmarriagePlacetype(value) {
     setMarriagePlacetype(value);
     setValue(value.code);
     if (value.code === "SUB_REGISTRAR_OFFICE") {
-      console.log({ cmbTypeOfMarriage });
       const specialType = cmbTypeOfMarriage.filter((type) => type.code === "MARRIAGE_TYPE_SPECIAL_ACT");
       setmarriageType(specialType[0]);
-    } else {
-      setmarriageType("");
     }
     setplaceidEn("");
     setplaceidMl("");
@@ -478,13 +450,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     if (value.code === "MARRIAGE_TYPE_SPECIAL_ACT") {
       const typeOfPlace = cmbPlaceType.filter((place) => place.code === "SUB_REGISTRAR_OFFICE");
       setMarriagePlacetype(typeOfPlace[0]);
-    } else {
-      setMarriagePlacetype("");
     }
-
-    // setAgeMariageStatus(value.code);
   }
-  console.log({ cmbPlaceType });
   function setSelectmarriageWardCode(value) {
     setTenantWard(value.code);
     setMarriageWardCode(value);
@@ -501,7 +468,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
   function setMarriagePlace(place) {
-    console.log({ place });
     if (place.code === "RELIGIOUS_INSTITUTION") {
       return cmbPlaceNameReligious;
     } else if (place.code === "MANDAPAM_HALL_AND_OTHER") {
@@ -520,18 +486,30 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       districtid = currentDistrict[0].districtid;
       cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
       setLbsTalukvalue(cmbFilterTaluk);
-      console.log({ setLbsTalukvalue });
       cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
       setLbsVillagevalue(cmbFilterVillage);
-      console.log({ setLbsTalukvalue });
       const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
       setMarriageLBtype(currentLBType[0]);
-      console.log({ setLbsTalukvalue });
       const currentTaluk = cmbFilterTaluk?.filter((taluk) => taluk.code === currentLB[0].city.talukcode);
       setmarriageTalukID(currentTaluk[0]);
-      console.log({ setLbsTalukvalue });
     }
   }, [cmbLB.length]);
+
+  console.log({ filteredLBType });
+
+  useEffect(() => {
+    if (DifferenceInTime != null) {
+      console.log({ DifferenceInTime });
+      let currentWorkFlow = workFlowData.filter((workFlowData) => {
+        return workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime;
+      });
+      if (currentWorkFlow.length > 0) {
+        setWorkFlowCode(currentWorkFlow[0].WorkflowCode);
+        setIsPayment(currentWorkFlow[0].payment);
+        setAmount(currentWorkFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime]);
 
   let validFlag = true;
   const goNext = () => {
@@ -950,13 +928,15 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         marriageLandmark: marriageLandmark.trim(),
         marriageHouseNoAndNameEn: marriageHouseNoAndNameEn.trim(),
         marriageHouseNoAndNameMl: marriageHouseNoAndNameMl.trim(),
+        workFlowCode,
+        isPayment,
+        Amount,
       });
     }
   };
 
   console.log("Registration", formData);
-  console.log({ marriageType });
-  console.log({ marriageTenantid });
+  console.log({ workFlowCode });
 
   if (
     isLoading ||
@@ -967,7 +947,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     isWardLoaded ||
     isTypeOfMarriageLoading ||
     isMarriagePlaceTypeLoading ||
-    isMarriagePlaceId
+    isMarriagePlaceId ||
+    isWorkFlowDetailsLoading
   ) {
     return <Loader></Loader>;
   } else
@@ -1054,6 +1035,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectMarriageDistrictid}
                     selected={marriageDistrictid}
                     placeholder={t("CS_COMMON_DISTRICT")}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1071,6 +1053,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectmarriageTalukID}
                     selected={marriageTalukID}
                     placeholder={t("CS_COMMON_TALUK")}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1107,6 +1090,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     select={setSelectmarriageLBtype}
                     selected={marriageLBtype}
                     placeholder={t("CS_LBTYPE")}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1124,6 +1108,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     selected={marriageTenantid}
                     select={setSelectmarriageTenantid}
                     placeholder={`${t("CS_LB")}`}
+                    disable={true}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1315,7 +1300,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           {toast && (
             <Toast
               error={
-                DOBError ||
+                DOMError ||
                 marriageDistrictidError ||
                 marriageTalukIDError ||
                 marriageVillageNameError ||
@@ -1336,7 +1321,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                 marriageTypeError
               }
               label={
-                DOBError ||
+                DOMError ||
                 marriageDistrictidError ||
                 marriageTalukIDError ||
                 marriageVillageNameError ||
@@ -1355,7 +1340,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                 marriagePlacenameEnError ||
                 marriagePlacenameMlError ||
                 marriageTypeError
-                  ? DOBError
+                  ? DOMError
                     ? t(`MARRIAGE_DATE_VALIDATION_MSG`)
                     : marriageDistrictidError
                     ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
