@@ -422,23 +422,21 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
-    console.log()
+    console.log();
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
     if (newValue != '' && (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo)) {
-      setbrideFatherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.GroomDetails?.groomAadharNo ||
-      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
-      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.GroomDetails?.groomAadharNo ||
+        newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+        newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+        newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setbrideFatherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -459,20 +457,18 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo)) {
-      setBrideAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.GroomDetails?.groomAadharNo ||
-      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
-      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.GroomDetails?.groomAadharNo ||
+        newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+        newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+        newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setBrideAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -492,20 +488,18 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo)) {
-      setbrideMotherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.GroomDetails?.groomAadharNo ||
-      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
-      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.GroomDetails?.groomAadharNo ||
+        newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+        newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+        newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setbrideMotherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -525,20 +519,18 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo)) {
-      setbrideGuardianAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.GroomDetails?.groomAadharNo ||
-      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
-      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.GroomDetails?.groomAadharNo ||
+        newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+        newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+        newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setbrideGuardianAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -716,8 +708,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       setbrideSocialSecurityNoError(true);
       setToast(true);
       setTimeout(() => {
-          setToast(false);
-        }, 2000);
+        setToast(false);
+      }, 2000);
     } else {
       setbrideSocialSecurityNoError(false);
     }
@@ -746,7 +738,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideMiddlenameEn.trim() == null || brideMiddlenameEn.trim() == "" || brideMiddlenameEn.trim() == undefined) {
       setbrideMiddlenameEn("");
-    }else{
+    } else {
       if (brideMiddlenameMl.trim() == null || brideMiddlenameMl.trim() == "" || brideMiddlenameMl.trim() == undefined) {
         validFlag = false;
         setbrideMiddlenameMl("");
@@ -762,7 +754,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     if (brideMiddlenameMl.trim() == null || brideMiddlenameMl.trim() == "" || brideMiddlenameMl.trim() == undefined) {
       setbrideMiddlenameMl("");
       setbrideMiddlenameEnError(false);
-    }else{
+    } else {
       if (brideMiddlenameEn.trim() == null || brideMiddlenameEn.trim() == "" || brideMiddlenameEn.trim() == undefined) {
         validFlag = false;
         setbrideMiddlenameEn("");
@@ -777,7 +769,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
     if (brideLastnameEn.trim() == null || brideLastnameEn.trim() == "" || brideLastnameEn.trim() == undefined) {
       setbrideLastnameEn("");
-    }else{
+    } else {
       if (brideLastnameMl.trim() == null || brideLastnameMl.trim() == "" || brideLastnameMl.trim() == undefined) {
         validFlag = false;
         setbrideLastnameMl("");
@@ -793,7 +785,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     if (brideLastnameMl.trim() == null || brideLastnameMl.trim() == "" || brideLastnameMl.trim() == undefined) {
       setbrideLastnameMl("");
       setbrideLastnameEnError(false);
-    }else{
+    } else {
       if (brideLastnameEn.trim() == null || brideLastnameEn.trim() == "" || brideLastnameEn.trim() == undefined) {
         validFlag = false;
         setbrideLastnameEn("");
@@ -806,8 +798,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setbrideLastnameEnError(false);
       }
     }
-    if(brideParentGuardian === "PARENT"){
-      if (brideFathernameEn.trim() == null || brideFathernameEn.trim() == '' || brideFathernameEn.trim() == undefined) {
+    if (brideParentGuardian === "PARENT") {
+      if (brideFathernameEn.trim() == null || brideFathernameEn.trim() == "" || brideFathernameEn.trim() == undefined) {
         validFlag = false;
         setbrideFathernameEn("");
         setbrideFathernameEnError(true);
@@ -818,7 +810,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       } else {
         setbrideFathernameEnError(false);
       }
-      if (brideFathernameMl.trim() == null || brideFathernameMl.trim() == '' || brideFathernameMl.trim() == undefined) {
+      if (brideFathernameMl.trim() == null || brideFathernameMl.trim() == "" || brideFathernameMl.trim() == undefined) {
         validFlag = false;
         setbrideFathernameMl("");
         setbrideFathernameMlError(true);
@@ -829,7 +821,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       } else {
         setbrideFathernameMlError(false);
       }
-      if (brideMothernameEn.trim() == null || brideMothernameEn.trim() == '' || brideMothernameEn.trim() == undefined) {
+      if (brideMothernameEn.trim() == null || brideMothernameEn.trim() == "" || brideMothernameEn.trim() == undefined) {
         validFlag = false;
         setbrideMothernameEn("");
         setbrideMothernameEnError(true);
@@ -840,7 +832,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       } else {
         setbrideMothernameEnError(false);
       }
-      if (brideMothernameMl.trim() == null || brideMothernameMl.trim() == '' || brideMothernameMl.trim() == undefined) {
+      if (brideMothernameMl.trim() == null || brideMothernameMl.trim() == "" || brideMothernameMl.trim() == undefined) {
         validFlag = false;
         setbrideMothernameMl("");
         setbrideMothernameMlError(true);
@@ -852,8 +844,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setbrideMothernameMlError(false);
       }
     }
-    if(brideParentGuardian === "GUARDIAN"){
-      if (brideGuardiannameEn.trim() == null || brideGuardiannameEn.trim() == '' || brideGuardiannameEn.trim() == undefined) {
+    if (brideParentGuardian === "GUARDIAN") {
+      if (brideGuardiannameEn.trim() == null || brideGuardiannameEn.trim() == "" || brideGuardiannameEn.trim() == undefined) {
         validFlag = false;
         setbrideGuardiannameEn("");
         setbrideGuardiannameEnError(true);
@@ -864,7 +856,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       } else {
         setbrideGuardiannameEnError(false);
       }
-      if (brideGuardiannameMl.trim() == null || brideGuardiannameMl.trim() == '' || brideGuardiannameMl.trim() == undefined) {
+      if (brideGuardiannameMl.trim() == null || brideGuardiannameMl.trim() == "" || brideGuardiannameMl.trim() == undefined) {
         validFlag = false;
         setbrideGuardiannameMl("");
         setbrideGuardiannameMlError(true);
@@ -876,7 +868,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         setbrideGuardiannameMlError(false);
       }
     }
-    
+
     if (brideMobile != null || brideMobile != "" || brideMobile != undefined) {
       let mobileLength = brideMobile;
       if (mobileLength.length < 10 || mobileLength.length > 10) {
@@ -998,10 +990,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             (brideResidentShip === "INDIAN" ? !brideAadharNo : false) ||
             (brideResidentShip === "NRI" ? !bridePassportNo || !brideSocialSecurityNo : false) ||
             (brideResidentShip === "FOREIGN" ? !brideSocialSecurityNo || !bridePassportNo : false) ||
-            (brideParentGuardian === "PARENT"
-              ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo
-              : false) ||
-            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo : false)
+            (brideParentGuardian === "PARENT" ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl : false) ||
+            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false)
           }
         >
           <div className="row">
@@ -1069,33 +1059,33 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </div>
             ) : (
               <React.Fragment>
-                {brideResidentShip === "NRI" &&(
+                {brideResidentShip === "NRI" && (
                   <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {`${t("CR_BRIDE_AADHAR_NO")}`}
-                    {brideResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="brideAadharNo"
-                    value={brideAadharNo}
-                    onChange={setSelectbrideAadharNo}
-                    onKeyPress={setCheckSpecialChar}
-                    placeholder={`${t("CR_BRIDE_AADHAR_NO")}`}
-                    inputProps={{
-                      maxLength: 12,
-                    }}
-                    {...(brideResidentShip === "INDIAN" && {
-                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
-                    })}
-                  />
-                </div>
+                    {" "}
+                    <CardLabel>
+                      {`${t("CR_BRIDE_AADHAR_NO")}`}
+                      {brideResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="brideAadharNo"
+                      value={brideAadharNo}
+                      onChange={setSelectbrideAadharNo}
+                      onKeyPress={setCheckSpecialChar}
+                      placeholder={`${t("CR_BRIDE_AADHAR_NO")}`}
+                      inputProps={{
+                        maxLength: 12,
+                      }}
+                      {...(brideResidentShip === "INDIAN" && {
+                        ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
+                      })}
+                    />
+                  </div>
                 )}
-                
+
                 <div className="col-md-4">
                   {" "}
                   <CardLabel>
@@ -1439,10 +1429,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             <div>
               <div className="row">
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_BRIDE_FATHER_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_BRIDE_FATHER_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1453,7 +1440,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     onChange={setSelectbrideFatherAadharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_BRIDE_FATHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1501,10 +1488,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <div className="row">
                 <div className="col-md-4">
                   {" "}
-                  <CardLabel>
-                    {t("CR_BRIDE_MOTHER_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_BRIDE_MOTHER_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1515,7 +1499,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     onChange={setSelectbrideMotherAadharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_BRIDE_MOTHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1567,10 +1551,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             <div>
               <div className="row">
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_BRIDE_GUARDIAN_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_BRIDE_GUARDIAN_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1581,7 +1562,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     onChange={setSelectbrideGuardianAadharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_BRIDE_GUARDIAN_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1670,44 +1651,44 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 brideGuardiannameEnError ||
                 brideGuardiannameMlError ||
                 brideMobileError
-                 ? AadharError
+                  ? AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : AgeValidationMsg
-                       ? t(`CR_INVALID_BRIDE_AGE`)
-                       : AdhaarDuplicationError
-                         ? t("DUPLICATE_AADHAR_NO")
-                         : brideFirstnameEnError
-                           ? t(`CR_FIRST_NAME_EN_ERROR`)
-                           : brideFirstnameMlError
-                             ? t(`CR_FIRST_NAME_ML_ERROR`)
-                             : brideMiddlenameEnError
-                               ? t(`CR_MIDDLE_NAME_EN_ERROR`)
-                               : brideMiddlenameMlError
-                                 ? t(`CR_MIDDLE_NAME_ML_ERROR`)
-                                 : brideLastnameEnError
-                                   ? t(`CR_LAST_NAME_EN_ERROR`)
-                                   : brideLastnameMlError
-                                     ? t(`CR_LAST_NAME_ML_ERROR`)
-                                     : bridePassportNoError
-                                       ? t(`CR_PASSPORT_NO_ERROR`)
-                                       : bridePassportNoError
-                                         ? t(`CR_SOCIAL_SECURITY_NO_ERROR`)
-                                         : brideFathernameEnError
-                                           ? t(`CR_FATHER_NAME_EN_ERROR`)
-                                           : brideFathernameMlError
-                                             ? t(`CR_FATHER_NAME_ML_ERROR`)
-                                             : brideMothernameEnError
-                                               ? t(`CR_MOTHER_NAME_EN_ERROR`)
-                                               : brideMothernameMlError
-                                                 ? t(`CR_MOTHER_NAME_ML_ERROR`)
-                                                 : brideGuardiannameEnError
-                                                   ? t(`CR_GUARDIAN_NAME_EN_ERROR`)
-                                                   : brideGuardiannameMlError
-                                                     ? t(`CR_GUARDIAN_NAME_ML_ERROR`)
-                                                     : brideMobileError
-                                                       ? t(`CR_MOBILE_NO_ERROR`)
-                                                       : setToast(false)
-                 : setToast(false)
+                    ? t(`CR_INVALID_BRIDE_AGE`)
+                    : AdhaarDuplicationError
+                    ? t("DUPLICATE_AADHAR_NO")
+                    : brideFirstnameEnError
+                    ? t(`CR_FIRST_NAME_EN_ERROR`)
+                    : brideFirstnameMlError
+                    ? t(`CR_FIRST_NAME_ML_ERROR`)
+                    : brideMiddlenameEnError
+                    ? t(`CR_MIDDLE_NAME_EN_ERROR`)
+                    : brideMiddlenameMlError
+                    ? t(`CR_MIDDLE_NAME_ML_ERROR`)
+                    : brideLastnameEnError
+                    ? t(`CR_LAST_NAME_EN_ERROR`)
+                    : brideLastnameMlError
+                    ? t(`CR_LAST_NAME_ML_ERROR`)
+                    : bridePassportNoError
+                    ? t(`CR_PASSPORT_NO_ERROR`)
+                    : bridePassportNoError
+                    ? t(`CR_SOCIAL_SECURITY_NO_ERROR`)
+                    : brideFathernameEnError
+                    ? t(`CR_FATHER_NAME_EN_ERROR`)
+                    : brideFathernameMlError
+                    ? t(`CR_FATHER_NAME_ML_ERROR`)
+                    : brideMothernameEnError
+                    ? t(`CR_MOTHER_NAME_EN_ERROR`)
+                    : brideMothernameMlError
+                    ? t(`CR_MOTHER_NAME_ML_ERROR`)
+                    : brideGuardiannameEnError
+                    ? t(`CR_GUARDIAN_NAME_EN_ERROR`)
+                    : brideGuardiannameMlError
+                    ? t(`CR_GUARDIAN_NAME_ML_ERROR`)
+                    : brideMobileError
+                    ? t(`CR_MOBILE_NO_ERROR`)
+                    : setToast(false)
+                  : setToast(false)
               }
               onClose={() => setToast(false)}
             />

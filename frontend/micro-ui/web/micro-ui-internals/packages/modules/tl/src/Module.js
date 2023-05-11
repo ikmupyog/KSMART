@@ -54,6 +54,11 @@ import TLCorrectionDocumentUpload from "./pageComponents/TLCorrectionDocumentUpl
 import TLCorrectionAcknowledgement from "./pages/citizen/Correction/TLCorrectionAcknowledgement"
 import MyApplicationDetails from "./pages/citizen/Applications/MyApplicationDetails"
 import SearchCitizenApplication from "./components/SearchCitizenApplication"
+import CancelTradeLicence from "./pages/citizen/Cancellation";
+import TLCancelTradeLicenceDetails from "./pageComponents/TLCancelTradeLicenceDetails"
+import TLCancellationAcknowledgement from "./pages/citizen/Cancellation/TLCancellationAcknowledgement"
+
+
 
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -98,7 +103,11 @@ export const TLLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/tradelicence/license-correction-search`,
       i18nKey: t("TL_CORRECTION_HEADER"),
-    },
+    }, 
+    // {
+    //   link: `${matchPath}/tradelicence/license-cancellation-search`,
+    //   i18nKey: t("TL_CANCELLATION_HEADER"),
+    // }
   ];
 
   return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
@@ -152,7 +161,10 @@ const componentsToRegister = {
   TLCorrectionAcknowledgement,
   TLCorrectionDocumentUpload,
   MyApplicationDetails,
-  SearchCitizenApplication
+  SearchCitizenApplication,
+  CancelTradeLicence,
+  TLCancelTradeLicenceDetails,
+  TLCancellationAcknowledgement
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
