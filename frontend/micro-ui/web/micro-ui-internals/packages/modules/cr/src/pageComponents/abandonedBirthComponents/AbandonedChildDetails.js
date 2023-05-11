@@ -9,8 +9,8 @@ import AbandonedBirthPlaceHome from "../../pageComponents/abandonedBirthComponen
 import AbandonedBirthPlaceVehicle from "../../pageComponents/abandonedBirthComponents/AbandonedBirthPlaceVehicle";
 import AbandonedBirthPlacePublicPlace from "../../pageComponents/abandonedBirthComponents/AbandonedBirthPlacePublicPlace";
 const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth  = false  }) => {
-
-  // const [isEditAbandonedBirthPageComponents , setisEditAbandonedBirthPageComponents] = useState(false);
+  sessionStorage.removeItem("applicationNumber");
+  const [isEditAbandonedBirthPageComponents , setisEditAbandonedBirthPageComponents] = useState(false);
   // const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
 
   // const [workFlowCode, setWorkFlowCode] = useState();
@@ -35,6 +35,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -858,7 +859,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
       // sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
       // sessionStorage.setItem("addressOfMother", addressOfMother ? addressOfMother : null);
       
-      // let IsEditChangeScreen = (isEditAbandonedBirth ? isEditAbandonedBirth : false);
+      let IsEditChangeScreen = (isEditAbandonedBirth ? isEditAbandonedBirth : false);
 
       onSelect(config.key, {
          stateId,
@@ -916,40 +917,40 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
         addressOfMother,
         isMotherInfo,
         DifferenceInTime,
-          // IsEditChangeScreen
+        IsEditChangeScreen
       });
     }
   };
-  // if (isEditAbandonedBirth && isEditAbandonedBirthPageComponents  === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined)) {
+  if (isEditAbandonedBirth && isEditAbandonedBirthPageComponents  === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined)) {
 
-  //   if (formData?.AbandonedChildDetails?.gender != null) {
-  //     if (menu.length > 0 && (gender === undefined || gender === "")) {
-  //       selectGender(menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]);
-  //     }
-  //   }
-  //   if (formData?.AbandonedChildDetails?.birthPlace != null) {
-  //     if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-  //       selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]);
-  //       setValue(formData?.AbandonedChildDetails?.birthPlace);
-  //     }
-  //   }
-  //   if (formData?.AbandonedChildDetails?.medicalAttensionSub != null) {
-  //     if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-  //       setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]);
-  //     }
-  //   }
-  //   // if (formData?.AbandonedChildDetails?.pregnancyDuration != null) {
-  //   //   console.log("pregnancyDuration" + pregnancyDuration);
-  //   //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-  //   //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.AbandonedChildDetails?.pregnancyDuration)[0]);
-  //   //   }
-  //   // }
-  //   if (formData?.AbandonedChildDetails?.deliveryMethods != null) {
-  //     if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-  //       setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]);
-  //     }
-  //   } 
-  // }
+    if (formData?.AbandonedChildDetails?.gender != null) {
+      if (menu.length > 0 && (gender === undefined || gender === "")) {
+        selectGender(menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]);
+      }
+    }
+    if (formData?.AbandonedChildDetails?.birthPlace != null) {
+      if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
+        selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]);
+        setValue(formData?.AbandonedChildDetails?.birthPlace);
+      }
+    }
+    if (formData?.AbandonedChildDetails?.medicalAttensionSub != null) {
+      if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+        setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]);
+      }
+    }
+    // if (formData?.AbandonedChildDetails?.pregnancyDuration != null) {
+    //   console.log("pregnancyDuration" + pregnancyDuration);
+    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.AbandonedChildDetails?.pregnancyDuration)[0]);
+    //   }
+    // }
+    if (formData?.AbandonedChildDetails?.deliveryMethods != null) {
+      if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+        setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]);
+      }
+    } 
+  }
     
   if (
     // isWorkFlowDetailsLoading || 
@@ -991,8 +992,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   max={convertEpochToDate(new Date())}
                   //min={convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
-                  // disable={isDisableEdit}
-                  disable={isEdit}
+                  disable={isDisableEdit}
+                  // disable={isEdit}
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -1003,8 +1004,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={val => handleTimeChange(val, setbirthDateTime)}
                   value={birthDateTime}
-                  // disable={isDisableEdit}
-                  disable={isEdit}
+                  disable={isDisableEdit}
+                  // disable={isEdit}
                 />
               </div>
               <div className="col-md-3">
@@ -1016,8 +1017,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   option={menu}
                   selected={gender}
                   select={setselectGender}
-                   // disable={isDisableEdit}
-                   disable={isEdit}
+                  disable={isDisableEdit}
+                  //  disable={isEdit}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1044,8 +1045,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
-                 // disable={isDisableEdit}
-                 disable={isEdit}
+                  disable={isDisableEdit}
+                //  disable={isEdit}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -1059,8 +1060,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 hospitalName={hospitalName}
                 hospitalNameMl={hospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
-                // disable={isDisableEdit}
-                disable={isEdit}
+                disable={isDisableEdit}
+                // disable={isEdit}
                 isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
@@ -1079,7 +1080,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 isInitialRenderInstitutionList={isInitialRenderInstitutionList}
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}
@@ -1107,7 +1108,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}
@@ -1137,7 +1138,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 wardNo={wardNo}
                 setWardNo={setWardNo}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}
@@ -1159,7 +1160,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 setpublicPlaceDecpEn={setpublicPlaceDecpEn}
                 setWardNo={setWardNo}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}   
@@ -1192,8 +1193,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                       name="motherAadhar"
                       value={motherAadhar}
                       onChange={setSelectMotherAadhar}
-                       // disable={isDisableEdit}
-                      disable={isEdit}
+                      disable={isDisableEdit}
+                      // disable={isEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
                       {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
@@ -1212,8 +1213,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                       name="motherFirstNameEn"
                       value={motherFirstNameEn}
                       onChange={setSelectMotherFirstNameEn}
-                       // disable={isDisableEdit}
-                       disable={isEdit}
+                      disable={isDisableEdit}
+                      //  disable={isEdit}
                        placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                       {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
                     />
@@ -1233,8 +1234,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                       value={motherFirstNameMl}
                       onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectMotherFirstNameMl}
-                       // disable={isDisableEdit}
-                       disable={isEdit}
+                      disable={isDisableEdit}
+                      //  disable={isEdit}
                        placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1254,8 +1255,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 name="addressOfMother"
                 value={addressOfMother}
                 onChange={setSelectmotherAddress}
-                // disable={isDisableEdit}
-                disable={isEdit}
+                disable={isDisableEdit}
+                // disable={isEdit}
                       placeholder={`${t("CR_MOTHER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_ADDRESS") })}
               />
@@ -1347,6 +1348,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   name="birthWeight"
                   value={birthWeight}
                   onChange={setSelectBirthWeight}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BIRTH_WEIGHT")}`}
                   {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
                 />

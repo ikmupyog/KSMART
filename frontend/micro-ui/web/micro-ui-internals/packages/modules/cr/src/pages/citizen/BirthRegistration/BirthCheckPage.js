@@ -74,7 +74,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   }
   function onBirthSubmit() {
     // && window.location.href.includes("/citizen")
-    if (isInitiatorDeclaration === false ) {
+    if (isInitiatorDeclaration === false) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -151,7 +151,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NA"}
+                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -219,7 +219,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                   </div>
                 </div>
               </div>
@@ -1632,114 +1632,181 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
-        <Accordion
-          expanded={false}
-          title={t("CR_INITIATOR_DETAILS")}
-          content={
-            <StatusTable>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  {InitiatorinfoDetails?.isCaretaker === true && (
-                    <div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi}</CardText>
-                      </div>
-                    </div>
-                  )}
-                  {InitiatorinfoDetails?.isCaretaker === false && (
-                    <div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.i18nKey}</CardText>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
-                  </div>
-                  <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
-                  </div>
-                  {InitiatorinfoDetails?.isCaretaker === true && (
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_ADDRESS")}`} :</CardText>
-                    </div>
-                  )}
-                  {InitiatorinfoDetails?.isCaretaker === false && (
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
-                    </div>
-                  )}
-                  <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                  </div>
-                </div>
-              </div>
-            </StatusTable>
-          }
-        />
-
-        {/* {window.location.href.includes("/citizen") && ( */}
+        {InitiatorinfoDetails?.initiatorAadhar != null && (
           <div>
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="summaryheadingh">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-                </h1>
-              </div>
+            <Accordion
+              expanded={false}
+              title={t("CR_INITIATOR_DETAILS")}
+              content={
+                <StatusTable>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-12">
+                        <h1 className="summaryheadingh">
+                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      {InitiatorinfoDetails?.isCaretaker === true && (
+                        <div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :
+                            </CardText>
+                          </div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi}</CardText>
+                          </div>
+                        </div>
+                      )}
+                      {InitiatorinfoDetails?.isCaretaker === false && (
+                        <div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
+                          </div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.i18nKey}</CardText>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
+                      </div>
+                      {InitiatorinfoDetails?.isCaretaker === true && (
+                        <div className="col-md-3">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_ADDRESS")}`} :</CardText>
+                        </div>
+                      )}
+                      {InitiatorinfoDetails?.isCaretaker === false && (
+                        <div className="col-md-3">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                        </div>
+                      )}
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                      </div>
+                    </div>
+                  </div>
+                </StatusTable>
+              }
+            />
+          </div>
+        )}
+        {InformarHosInstDetails?.initiatorAadhar != null && (
+          <div>
+            <Accordion
+              expanded={false}
+              title={t("CR_INFORMER_VERIFICATION")}
+              content={
+                <StatusTable>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-12">
+                        <h1 className="summaryheadingh">
+                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantAadhar}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantFirstNameEn}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_DESIGNATION")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.informerDesi}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantMobile}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.informerAddress}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                      </div>
+                    </div>
+                  </div>
+                </StatusTable>
+              }
+            />
+          </div>
+        )}
+        {/* {window.location.href.includes("/citizen") && ( */}
+        <div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="summaryheadingh">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+              </h1>
             </div>
+          </div>
 
-            <div className="row">
+          <div className="row">
+            <div className="col-md-12">
               <div className="col-md-12">
-                <div className="col-md-12">
-                  <CheckBox
-                    label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                    onChange={setDeclarationInfo}
-                    value={isInitiatorDeclaration}
-                    checked={isInitiatorDeclaration}
-                  // disable={isDisableEdit}
-                  />
-                </div>
+                <CheckBox
+                  label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                  onChange={setDeclarationInfo}
+                  value={isInitiatorDeclaration}
+                  checked={isInitiatorDeclaration}
+                // disable={isDisableEdit}
+                />
               </div>
             </div>
           </div>
+        </div>
         {/* )} */}
 
         {toast && (
@@ -1750,7 +1817,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           />
         )}
         {""}
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit}  disabled={!isInitiatorDeclaration }  />
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} disabled={!isInitiatorDeclaration} />
         {/* disabled={!isInitiatorDeclaration } */}
       </Card>
     </React.Fragment>

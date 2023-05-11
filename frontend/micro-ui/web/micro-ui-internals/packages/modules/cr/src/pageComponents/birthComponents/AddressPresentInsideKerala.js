@@ -433,6 +433,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }
     function setSelectinsideKeralaTaluk(value) {
+        setinsideKeralaVillage(null);
         setinsideKeralaTaluk(value);
         if (cmbVillage.length > 0) {
             setLbsVillagevalue(cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code));

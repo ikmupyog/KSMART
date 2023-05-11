@@ -32,7 +32,6 @@ const getAddressType = (details) => {
 };
 
 const computeInitialValue = (data) => {
-  console.log("data ===>", data);
   let initialValue = {};
   if (data.BrideAddressDetails.permtaddressCountry !== "COUNTRY_INDIA") {
     initialValue = {

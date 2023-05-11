@@ -44,6 +44,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [certificateDob, setCertificateDob] = useState("");
   const [hasError, setHasError] = useState(false);
   const [errorDocIds, setErrorDocIds] = useState([]);
+  
 
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   let conditionalComponent = "";
@@ -64,6 +65,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       setUploadedFiles([...filteredData]);
     }
   }, [selectedDocuments]);
+
+
 
 
   function onDeleteown(e) {
@@ -202,7 +205,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if ((Object.keys(inclusionStudentCondition)?.length > 0) && (inclusionStudentCondition.code === "STUDENT")) {
       
       childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-      console.log("reached",childAge,selectedBirthData?.dateofbirth);
+      console.log("reached",childAge,inclusionStudentCondition);
       if(childAge < 6){
         docCondition = `NAME_LESS_THAN_SIX`;
       } else if (childAge >= 6 && childAge < 15) {
@@ -236,7 +239,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
        
-    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(checkStudentCondition)?.length > 0) {
+    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
       console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
@@ -503,7 +506,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
 
         <EditButton
           selected={true}
-          label={"Save"}
+          label={(t("CR_SAVE"))}
           onClick={() => {
             if (selectedDocuments?.length === 1) {
               if (!isLoading && selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length) {
@@ -519,7 +522,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         />
         <EditButton
           selected={false}
-          label={"Cancel"}
+          label={(t("CR_CANCEL"))}
           onClick={() => {
             hideModal();
           }}

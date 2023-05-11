@@ -124,12 +124,13 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   const [MotherAadharError, setMotherAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
 
   const [FatherAadharError, setFatherAadharError] = useState(formData?.BirthNACParentsDetails?.fatherAadhar ? false : false);
+  const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
 
   const onSkip = () => onSelect();
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setMotherFirstNameEn(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.trim().match("^[a-zA-Z]*$") != null) {
+      setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -147,28 +148,44 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   }
   function setSelectMotherFirstNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
+    if (!e.target.value.match(pattern) && e.target.value.trim() !== " ") {
       e.preventDefault();
       setMotherFirstNameMl("");
     } else {
-      setMotherFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMotherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectMotherAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === formData?.BirthNACDetails.childAadharNo) {
+      setMotherAadhar("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setMotherAadhar(newValue);
     }
   }
 
   function setSelectFatherAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === motherAadhar) {
+      setFatherAadhar("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setFatherAadhar(newValue);
     }
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.trim().match("^[a-zA-Z]*$") != null) {
       setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
@@ -178,7 +195,7 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
       e.preventDefault();
       setFatherFirstNameMl("");
     } else {
-      setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setFatherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -403,13 +420,15 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
 
           {toast && (
             <Toast
-              error={MotherAadharError || FatherAadharError}
+              error={MotherAadharError || FatherAadharError || AadharError}
               label={
-                MotherAadharError || FatherAadharError
+                MotherAadharError || FatherAadharError || AadharError
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
                     : FatherAadharError
                     ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
+                    : AadharError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : setToast(false)
                   : setToast(false)
               }

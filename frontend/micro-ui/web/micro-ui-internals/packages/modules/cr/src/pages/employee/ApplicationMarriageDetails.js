@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+import ApplicationDetailsTemplate from "../../../../templates/CR/CommonTemplate";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";

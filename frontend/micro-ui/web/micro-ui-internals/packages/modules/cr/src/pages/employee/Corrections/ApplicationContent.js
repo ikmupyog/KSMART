@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 // import PropertyOwners from "../../ApplicationDetails/components/PropertyOwners";
 // import ScruntinyDetails from "../../ApplicationDetails/components/ScruntinyDetails";
 // import SubOccupancyTable from "../../ApplicationDetails/components/SubOccupancyTable";
-// import TLCaption from "../../ApplicationDetails/components/TLCaption";
+import TLCaption from "../../../../../templates/ApplicationDetails/components/TLCaption";
 // import TLTradeAccessories from "../../ApplicationDetails/components/TLTradeAccessories";
 // import TLTradeUnits from "../../ApplicationDetails/components/TLTradeUnits";
 // import DocumentsPreview from "../../ApplicationDetails/components/DocumentsPreview";
@@ -24,7 +24,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
 
     const { t } = useTranslation();
-
+console.log("applicationDetails in content==",applicationDetails);
     function OpenImage(imageSource, index, thumbnailsToShow) {
         window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }
@@ -134,13 +134,14 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
   };
 
   const renderSummaryCard = (detail, index) => {
+    console.log("render summary==",detail);
     //  switch()
     return (
       <React.Fragment key={index}>
         <div style={getMainDivStyles()}>
           <Accordion
             expanded={index === 0 ? true : false}
-            title={t(detail?.correctionFieldName)}
+            title={t(detail?.title)}
             style={{ margin: "10px" }}
             content={
               <StatusTable style={getTableStyles()}>
@@ -192,117 +193,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
         <>
             <div className="file-main">
                 <div className={"cr-wrapper-app"}>
-                    {applicationDetails?.applicationDetails?.map((detail, index) => (
-                        <React.Fragment key={index}>
-                            <div style={getMainDivStyles()}>
-
-                                {index === 0 ?
-                                    <CardSubHeader style={{ marginBottom: "16px", fontSize: "18px" }}>{t(detail.title)}</CardSubHeader>
-                                    :
-                                    <Accordion expanded={index === 1 ? true : false} title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
-                                        style={{ margin: "10px" }}
-                                        content={<StatusTable style={getTableStyles()}>
-                                            <div className="row">
-                                                <div className="col-md-12">
-                                                    <div className="col-md-4"> <h3></h3> </div>
-                                                    <div className="col-md-4"> <h5>{t("OLD_VALUE")}</h5> </div>
-                                                    <div className="col-md-4"> <h5>{t("NEW_VALUE")}</h5> </div>
-                                                </div>
-                                            </div>
-                                            {detail?.title &&
-                                                !detail?.title.includes("NOC") &&
-                                                detail?.values?.map((value, index) => {
-                                                    if (value.map === true && value.value !== "N/A") {
-                                                        return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
-                                                    }
-                                                    if (value?.isLink == true) {
-                                                        return (
-                                                            <Row
-                                                                key={t(value.title)}
-                                                                label={
-                                                                    window.location.href.includes("tl") ? (
-                                                                        <div style={{ width: "200%" }}>
-                                                                            <Link to={value?.to}>
-                                                                                <span className="link" style={{ color: "#F47738" }}>
-                                                                                    {t(value?.title)}
-                                                                                </span>
-                                                                            </Link>
-                                                                        </div>
-                                                                    ) : isNocLocation || isBPALocation ? (
-                                                                        `${t(value.title)}`
-                                                                    ) : (
-                                                                        t(value.title)
-                                                                    )
-                                                                }
-                                                                text={
-                                                                    <div>
-                                                                        <Link to={value?.to}>
-                                                                            <span className="link" style={{ color: "#F47738" }}>
-                                                                                {value?.value}
-                                                                            </span>
-                                                                        </Link>
-                                                                    </div>
-                                                                }
-                                                                last={index === detail?.values?.length - 1}
-                                                                caption={value.caption}
-                                                                className="border-none"
-                                                                rowContainerStyle={getRowStyles()}
-                                                            />
-                                                        );
-                                                    }
-                                                    return (
-                                                        <div className="row">
-                                                            <div className="col-md-12">
-                                                                <div className="col-md-3">
-                                                                    <h3 style={{ overflowWrap: "break-word" }}>{t(value.title)} :</h3>
-                                                                </div>
-                                                                <div className="col-md-4">
-                                                                    <h4><strong>{getTextValue(value)}</strong></h4>
-                                                                </div>
-                                                                <div className="col-md-4">
-                                                                    <h4><strong>{getTextValue(value)}</strong></h4>
-                                                                </div>
-                                                                <div className="col-md-1">
-                                                                    <LinkButton label="View" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    );
-                                                })}
-                                        </StatusTable>} />
-                                }
-                            </div>
-                            {/* {detail?.belowComponent && <detail.belowComponent />}
-                            {detail?.additionalDetails?.inspectionReport && (<ScruntinyDetails scrutinyDetails={detail?.additionalDetails} paymentsList={paymentsList} />)}
-                            {applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending?.length > 0 && detail?.additionalDetails?.fiReport && (
-                                <InspectionReport fiReport={applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending} />
-                            )}
-                            {detail?.additionalDetails?.floors && <PropertyFloors floors={detail?.additionalDetails?.floors} />}
-                            {detail?.additionalDetails?.owners && <PropertyOwners owners={detail?.additionalDetails?.owners} />}
-                            {detail?.additionalDetails?.units && <TLTradeUnits units={detail?.additionalDetails?.units} />}
-                            {detail?.additionalDetails?.accessories && <TLTradeAccessories units={detail?.additionalDetails?.accessories} />}
-                            {detail?.additionalDetails?.permissions && workflowDetails?.data?.nextActions?.length > 0 && (
-                                <PermissionCheck applicationData={applicationDetails?.applicationData} t={t} permissions={detail?.additionalDetails?.permissions} />
-                            )}
-                            {detail?.additionalDetails?.obpsDocuments && (
-                                <BPADocuments t={t} applicationData={applicationDetails?.applicationData} docs={detail.additionalDetails.obpsDocuments} bpaActionsDetails={workflowDetails} />
-                            )}
-                            {detail?.additionalDetails?.noc && (
-                                <NOCDocuments t={t} isNoc={true} NOCdata={detail.values} applicationData={applicationDetails?.applicationData}
-                                    docs={detail.additionalDetails.noc} noc={detail.additionalDetails?.data} bpaActionsDetails={workflowDetails} />
-                            )}
-                            {detail?.additionalDetails?.scruntinyDetails && <ScruntinyDetails scrutinyDetails={detail?.additionalDetails} />}
-                            {detail?.additionalDetails?.buildingExtractionDetails && <ScruntinyDetails scrutinyDetails={detail?.additionalDetails} />}
-                            {detail?.additionalDetails?.subOccupancyTableDetails && (
-                                <SubOccupancyTable edcrDetails={detail?.additionalDetails} applicationData={applicationDetails?.applicationData} />
-                            )}
-                            {detail?.additionalDetails?.documentsWithUrl && <DocumentsPreview documents={detail?.additionalDetails?.documentsWithUrl} />}
-                            {detail?.additionalDetails?.documents && <PropertyDocuments documents={detail?.additionalDetails?.documents} />}
-                            {detail?.additionalDetails?.taxHeadEstimatesCalculation && (
-                                <PropertyEstimates taxHeadEstimatesCalculation={detail?.additionalDetails?.taxHeadEstimatesCalculation} />
-                            )} */}
-                        </React.Fragment>
-                    ))}
+                    {applicationDetails?.applicationDetails?.length > 0 && applicationDetails?.applicationDetails?.map((detail, index) => renderSummaryCard(detail, index))}
                 </div>
                 <div className={"cr-timeline-wrapper"}>
                     <Carousel {...{ carouselItems }}

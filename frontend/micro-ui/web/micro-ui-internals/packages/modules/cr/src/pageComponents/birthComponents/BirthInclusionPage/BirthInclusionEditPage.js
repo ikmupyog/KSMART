@@ -76,13 +76,13 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   const FieldComponentContainer = ({ children }) => {
-    return <div className="col-md-9">{children}</div>;
+    return <div className="col-md-10">{children}</div>;
   };
 
   const ButtonContainer = ({ children }) => {
     return (
       <div
-        className="col-md-3"
+        className="col-md-2"
         style={{ cursor: "pointer", background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "3rem", width: "3rem" }}
       >
         {children}
@@ -217,7 +217,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
           </div>
           {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
-          <div className="col-md-9">
+          <div className="col-md-10">
               <div className="col-md-5">
                 <CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}</CardLabel>
                 <DatePicker
@@ -235,7 +235,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               </div>
             </div>
             {birthInclusionFormsObj?.CHILD_DOB?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_DOB"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
@@ -262,7 +262,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               </div>
             </FieldComponentContainer>
             {birthInclusionFormsObj?.CHILD_SEX?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_SEX"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
@@ -278,7 +278,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                 <TextInput
                   t={t}
                   disabled={birthInclusionFormsObj?.CHILD_AADHAAR?.isDisabled}
-                  autoFocus={birthInclusionFormsObj?.CHILD_AADHAAR?.isFocused}
+                  // autoFocus={birthInclusionFormsObj?.CHILD_AADHAAR?.isFocused}
                   max="12"
                   optionKey="i18nKey"
                   name="AadharNumber"
@@ -294,7 +294,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               </div>
             </FieldComponentContainer>
             {birthInclusionFormsObj?.CHILD_AADHAAR?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_AADHAAR"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
@@ -350,7 +350,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
 
             {birthInclusionFormsObj?.CHILD_NAME?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_NAME"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
@@ -417,7 +417,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameEn}
                   onBlur={(e) => onChangeMotherDetails(e, "motherNameEn")}
                   disabled={birthInclusionFormsObj?.MOTHER_DETAILS?.isDisabled}
-                  autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
+                  // autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
                   placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
                 />
@@ -454,7 +454,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
 
             {birthInclusionFormsObj?.MOTHER_DETAILS?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["MOTHER_DETAILS"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
@@ -473,7 +473,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="FatherNameEn"
                   defaultValue={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameEn}
                   disabled={birthInclusionFormsObj?.FATHER_DETAILS?.isDisabled}
-                  autoFocus={birthInclusionFormsObj?.FATHER_DETAILS?.isFocused}
+                  // autoFocus={birthInclusionFormsObj?.FATHER_DETAILS?.isFocused}
                   onBlur={(e) => onChangeFatherDetails(e, "fatherNameEn")}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
@@ -514,7 +514,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
 
             {birthInclusionFormsObj?.FATHER_DETAILS?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["FATHER_DETAILS"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />
@@ -566,7 +566,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               </div>
             </FieldComponentContainer>
             {birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled && (
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.2rem" }}>
                 <ButtonContainer>
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["PRESENT_ADDRESS"])}>
                     <EditIcon style={{ position: "absolute", top: "0.8rem" }} />

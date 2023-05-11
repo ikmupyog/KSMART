@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
+import { sortDropdownNames } from "../../utils";
 
 const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl, isEditAbandonedBirth
@@ -16,8 +17,8 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
-
+  // const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
   if (tenantboundary) {
@@ -94,10 +95,11 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
                 t={t}
                 optionKey="hospitalName"
                 isMandatory={true}
-                option={cmbhospital}
+                // option={cmbhospital}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={hospitalName}
                 select={setselectHospitalName}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
@@ -110,7 +112,8 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
                 t={t}
                 optionKey="hospitalNamelocal"
                 isMandatory={true}
-                option={cmbhospital}
+                // option={cmbhospital}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalNamelocal",t)}
                 selected={hospitalNameMl}
                 select={setselectHospitalNameMl}
                 placeholder={`${t("CR_HOSPITAL_ML")}`}

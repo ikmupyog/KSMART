@@ -119,18 +119,15 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   };
 
   const getFileUploadFieldError = (item) => {
-    console.log("looped---item", error);
     let errorMessage = "";
     const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
     if (fieldErrorIndex > -1) {
       errorMessage = error[fieldErrorIndex]?.message;
     }
-    console.log("errorMessage==", fieldErrorIndex, errorMessage);
     return errorMessage;
   };
 
   // const setFileUploadFieldError = (errorObj) => {
-  //   console.log("error", error);
   //   const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
 
   //   if (errorIndex === -1) {
@@ -200,7 +197,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   const getFilteredInclusionDocs = (selectedObj) => {
     let filteredDocs = [];
     filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == selectedObj.condition);
-    console.log("selectedObj==", selectedConfig.documentData, selectedObj, filteredDocs);
     return filteredDocs;
   };
 
@@ -238,7 +234,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   const renderConditionalComponent = () => {
     let selectedMenu = [];
     let menu = [];
-    console.log("reached modal==", selectedConfig);
     switch (selectedConfig.docFlag) {
       case "GROOM_NAME":
         selectedMenu = [

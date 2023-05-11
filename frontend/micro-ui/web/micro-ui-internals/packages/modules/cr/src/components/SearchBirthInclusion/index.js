@@ -37,12 +37,13 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
   const {path} = useRouteMatch();
   const { t } = useTranslation();
 
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
       sortBy: "applicationNumber",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
   
@@ -52,6 +53,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
     register("limit", 10);
     register("sortBy", "applicationNumber");
     register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -139,7 +141,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
       <div style={mystyle}>
         <h1 style={hstyle}>{t("INCLUSIONS_CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
+          <SearchFields {...{ register, control,watch, reset, previousPage, t }} />
         </SearchForm>
       </div>
       {isLoading && <Loader/>}

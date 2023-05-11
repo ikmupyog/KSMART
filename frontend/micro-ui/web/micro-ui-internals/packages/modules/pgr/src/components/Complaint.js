@@ -9,6 +9,7 @@ import { LOCALIZATION_KEY } from "../constants/Localization";
 
 const Complaint = ({ data, path }) => {
   let { serviceCode, serviceRequestId, applicationStatus } = data;
+  const tenantId = Digit.ULBService.getCurrentTenantId();
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -32,13 +33,11 @@ const Complaint = ({ data, path }) => {
       <Card onClick={handleClick} >
         <CardSubHeader style={headerStyle}>{t(`SERVICEDEFS.${serviceCode.toUpperCase()}`)}</CardSubHeader>
 
-        <div className="col-md-12" style={{ paddingLeft: "2px", paddingRight: "2px" }}>
-          <div className="col-md-6">
-            <KeyNote keyValue={t(`${LOCALIZATION_KEY.CS_COMMON}_COMPLAINT_NO`)} note={serviceRequestId} />
-          </div>
-          <div className="col-md-6">
-            <DateWrap date={Digit.DateUtils.ConvertTimestampToDate(data.auditDetails.createdTime)} />
-          </div>
+        <div className="col-md-12">
+          <DateWrap date={Digit.DateUtils.ConvertTimestampToDate(data.auditDetails.createdTime)} />
+        </div>
+        <div className="col-md-12">
+          <KeyNote keyValue={t(`${LOCALIZATION_KEY.CS_COMMON}_COMPLAINT_NO`)} note={serviceRequestId} />
         </div>
 
         <div className="col-md-12" style={{ paddingLeft: "2px", paddingRight: "2px" }}>
