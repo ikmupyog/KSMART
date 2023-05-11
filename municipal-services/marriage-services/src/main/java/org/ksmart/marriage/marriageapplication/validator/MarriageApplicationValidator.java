@@ -440,20 +440,20 @@ public class MarriageApplicationValidator {
                                                                                                 groomInfo.getFathernameMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getFatherAadharno())) {
-                                                                throw new CustomException(
-                                                                                "GROOM FATHER AADHAR INVALID ",
-                                                                                "The  groom Father Aadhar number " +
-                                                                                                groomInfo.getFatherAadharno()
-                                                                                                + " is invalid");
-                                                        }
-                                                        if (StringUtils.isEmpty(groomInfo.getMotherAadharno())) {
-                                                                throw new CustomException(
-                                                                                " GROOM MOTHER AADHAR INVALID ",
-                                                                                "The  groom Father Aadhar number " +
-                                                                                                groomInfo.getMotherAadharno()
-                                                                                                + " is invalid");
-                                                        }
+//                                                        if (StringUtils.isEmpty(groomInfo.getFatherAadharno())) {
+//                                                                throw new CustomException(
+//                                                                                "GROOM FATHER AADHAR INVALID ",
+//                                                                                "The  groom Father Aadhar number " +
+//                                                                                                groomInfo.getFatherAadharno()
+//                                                                                                + " is invalid");
+//                                                        }
+//                                                        if (StringUtils.isEmpty(groomInfo.getMotherAadharno())) {
+//                                                                throw new CustomException(
+//                                                                                " GROOM MOTHER AADHAR INVALID ",
+//                                                                                "The  groom Father Aadhar number " +
+//                                                                                                groomInfo.getMotherAadharno()
+//                                                                                                + " is invalid");
+//                                                        }
 
                                                         if (StringUtils.isEmpty(groomInfo.getMothernameEn())) {
                                                                 throw new CustomException(" GROOM MOTHER NAME ENGLISH ",
@@ -469,14 +469,14 @@ public class MarriageApplicationValidator {
                                                                                                 groomInfo.getMothernameMl()
                                                                                                 + " is invalid");
                                                         }
-                                                } else {
-                                                        if (StringUtils.isEmpty(groomInfo.getGuardianAadharno())) {
-                                                                throw new CustomException(
-                                                                                " GROOM GUARDIAN AADHAR INVALID ",
-                                                                                "The  groom Guardian Aadhar number " +
-                                                                                                groomInfo.getGuardianAadharno()
-                                                                                                + " is invalid");
-                                                        }
+//                                                } else {
+//                                                        if (StringUtils.isEmpty(groomInfo.getGuardianAadharno())) {
+//                                                                throw new CustomException(
+//                                                                                " GROOM GUARDIAN AADHAR INVALID ",
+//                                                                                "The  groom Guardian Aadhar number " +
+//                                                                                                groomInfo.getGuardianAadharno()
+//                                                                                                + " is invalid");
+//                                                        }
                                                         if (StringUtils.isEmpty(groomInfo.getGuardiannameEn())) {
                                                                 throw new CustomException(
                                                                                 " GROOM GUARDIAN NAME ENGLISH ",
@@ -657,21 +657,21 @@ public class MarriageApplicationValidator {
                                                                                                 brideInfo.getFathernameMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getFatherAadharno())) {
-                                                                throw new CustomException(
-                                                                                "BRIDE: FATHER AADHAR INVALID ",
-                                                                                "The Father's Aadhar number " +
-                                                                                                brideInfo.getFatherAadharno()
-                                                                                                + " is invalid");
-                                                        }
-                                                        if (StringUtils.isEmpty(brideInfo.getMotherAadharno())) {
-                                                                throw new CustomException(
-                                                                                "BRIDE:MOTHER AADHAR INVALID ",
-                                                                                "The mother's Aadhar number " +
-                                                                                                brideInfo.getMotherAadharno()
-                                                                                                + " is invalid");
-                                                        }
-                                                        
+//                                                        if (StringUtils.isEmpty(brideInfo.getFatherAadharno())) {
+//                                                                throw new CustomException(
+//                                                                                "BRIDE: FATHER AADHAR INVALID ",
+//                                                                                "The Father's Aadhar number " +
+//                                                                                                brideInfo.getFatherAadharno()
+//                                                                                                + " is invalid");
+//                                                        }
+//                                                        if (StringUtils.isEmpty(brideInfo.getMotherAadharno())) {
+//                                                                throw new CustomException(
+//                                                                                "BRIDE:MOTHER AADHAR INVALID ",
+//                                                                                "The mother's Aadhar number " +
+//                                                                                                brideInfo.getMotherAadharno()
+//                                                                                                + " is invalid");
+//                                                        }
+//
                                                         if (StringUtils.isEmpty(brideInfo.getMothernameEn())) {
                                                                 throw new CustomException(" BRIDE MOTHER NAME ENGLISH ",
                                                                                 "The  bride Mother  Name in english " +
@@ -687,13 +687,13 @@ public class MarriageApplicationValidator {
                                                                                                 + " is invalid");
                                                         }
                                                 } else {
-                                                        if (StringUtils.isEmpty(brideInfo.getGuardianAadharno())) {
-                                                                throw new CustomException(
-                                                                                " BRIDE GUARDIAN AADHAR INVALID ",
-                                                                                "The  bride Guardian Aadhar number " +
-                                                                                                brideInfo.getGuardianAadharno()
-                                                                                                + " is invalid");
-                                                        }
+//                                                        if (StringUtils.isEmpty(brideInfo.getGuardianAadharno())) {
+//                                                                throw new CustomException(
+//                                                                                " BRIDE GUARDIAN AADHAR INVALID ",
+//                                                                                "The  bride Guardian Aadhar number " +
+//                                                                                                brideInfo.getGuardianAadharno()
+//                                                                                                + " is invalid");
+//                                                        }
                                                         if (StringUtils.isEmpty(brideInfo.getGuardiannameEn())) {
                                                                 throw new CustomException(
                                                                                 " BRIDE GUARDIAN NAME ENGLISH ",
