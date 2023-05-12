@@ -24,9 +24,9 @@ const ActionModal = (props) => {
   }
   if (
     props?.businessService.includes("WFBIRTH21DAYS") ||
-    props?.businessService.includes("BIRTH30DAYSWF") ||
-    props?.businessService.includes("BIRTH30TO1YR") ||
-    props?.businessService.includes("ABOVE1YRBIRTH") ||
+    props?.businessService.includes("BIRTH30DAYS") ||
+    props?.businessService.includes("BIRTH30TO1YEAR") ||
+    props?.businessService.includes("ABOVE1YEARBIRTH") ||
     props?.businessService.includes("WFBIRTH21DAYSHOME") ||
     props?.businessService.includes("BIRTH30DAYSHOME") ||
     props?.businessService.includes("BIRTH30TO1YRHOME") ||
@@ -48,9 +48,9 @@ const ActionModal = (props) => {
   }
   if (
     props?.businessService.includes("WFDEATH21DAYS") ||
-    props?.businessService.includes("WFDEATH30DAYS") ||
-    props?.businessService.includes("DEATH30TO1YR") ||
-    props?.businessService.includes("ABOVE1YRDEATH") ||
+    props?.businessService.includes("DEATH30DAYS") ||
+    props?.businessService.includes("DEATH30TO1YEAR") ||
+    props?.businessService.includes("ABOVE1YEARDEATH") ||
     props?.businessService.includes("WFDEATH21DAYSHOME") ||
     props?.businessService.includes("DEATH30DAYSHOME") ||
     props?.businessService.includes("DEATH30TO1YRHOME") ||
