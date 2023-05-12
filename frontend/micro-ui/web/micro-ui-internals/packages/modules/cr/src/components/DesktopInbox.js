@@ -76,9 +76,15 @@ const DesktopInbox = ({
 
   const goto = (data, inboxType) => {
     const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber;
-    const correctionCode = applicationNumber?.split('-')?.[4];
-    console.log("applicationNumber in correction", applicationNumber);
-    let url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
+    let applCode =(["CRBRNR" || "CRBRSB" || "CRBRBO" || "CRBRAB" || "CRBRAD" || "CRBRNC" 
+    || "CRDRAD" || "CRDRNC" || "CRBRCN" || "CRDRCN" || "CRMRCR"]);
+    // const result1 = applCode.some(term => applicationNumber.includes(term));
+    // const correctionCode = applicationNumber?.includes();
+
+    // const correctionCode = applicationNumber?.split('-')?.[4];
+    // console.log();
+    // console.log("applicationNumber in correction", applicationNumber);
+    let url = '';
     switch (inboxType) {
       case "death":
         url = `/digit-ui/employee/cr/application-deathdetails/${applicationNumber}`;
@@ -86,22 +92,23 @@ const DesktopInbox = ({
       case "marriage":
         url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
     }
-
-    if (["CRBRCN", "CRDRCN", "CRMRCR"].includes(correctionCode)) {
+    if (["CRBRCN", "CRDRCN", "CRMRCR"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
-    } else if (["CRBRSB"].includes(correctionCode)) {
+    } else if (["CRBRNR"].some(term => applicationNumber.includes(term))) {
+      url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
+    } else if (["CRBRSB"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-stillbirth/${applicationNumber}`;
-    } else if (["CRBRBO"].includes(correctionCode)) {
+    } else if (["CRBRBO"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-bornOutsideIndia/${applicationNumber}`;
-    } else if (["CRBRAB"].includes(correctionCode)) {
+    } else if (["CRBRAB"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-abandonedbirth/${applicationNumber}`;
-    } else if (["CRBRAD"].includes(correctionCode)) {
+    } else if (["CRBRAD"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`;
-    } else if (["CRBRNC"].includes(correctionCode)) {
+    } else if (["CRBRNC"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-nacbirth/${applicationNumber}`;
-    } else if (["CRDRAD"].includes(correctionCode)) {
+    } else if (["CRDRAD"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-abandoneddeathdetails/${applicationNumber}`;
-    } else if (["CRDRNC"].includes(correctionCode)) {
+    } else if (["CRDRNC"].some(term => applicationNumber.includes(term))) {
       url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
     } else {
       url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
@@ -228,6 +235,7 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
+        console.log("row data birth==",row.original);
         return (
           <div>
             <span className="link">
@@ -259,6 +267,59 @@ const DesktopInbox = ({
     }
   ]), [])
 
+  const BirthInboxColumns = React.useMemo(() => ([
+    {
+      Header: t("CR_COMMON_COL_APP_NO"),
+      accessor: "applicationNumber",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        console.log("row data birth==",row.original);
+        return (
+          <div>
+            <span className="link">
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original,SearchInbox)}>
+                {/* {row.original.applicationNumber} */}
+                {row.original.applicationId}
+              </Link>
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      Header: t("CR_COMMON_COL_APP_DATE"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row?.date ? convertEpochToDateDMY(row.date) : ""),
+    },
+    {
+      Header: t("WF_INBOX_HEADER_LOCALITY"),
+      Cell: ({ row }) => {
+        return GetCell(t((row.original["wardNo"])));
+      },
+    },
+    {
+      Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
+      Cell: ({ row }) => {
+        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+      },
+    }
+  ]), []);
+
+  const getColumns = () =>{
+    let columns = []
+    if(SearchInbox === "birth"){ 
+      // columns = BirthColumns;
+      columns = BirthInboxColumns;  
+  } else if(SearchInbox === "marriage"){
+      columns =  MarriageColumns;
+  } else if(SearchInbox === "death"){
+      columns = Deathcolumns;
+  }
+  return columns;
+}
+
+ 
+
   let result;
   if (isLoading) {
     result = <Loader />;
@@ -279,7 +340,7 @@ const DesktopInbox = ({
       <CRTable
         t={t}
         data={data}
-        columns={SearchInbox == "birth" ? BirthColumns : SearchInbox == "marriage" ? MarriageColumns : Deathcolumns}
+        columns={getColumns()}
         getCellProps={(cellInfo) => {
           return {
             style: {

@@ -56,7 +56,7 @@ const DeathInclusion = () => {
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
-console.log("payload.......", payload);
+
   const {
     data: { deathCertificateDtls: searchResult, Count: count } = {},
     isLoading,
@@ -81,6 +81,7 @@ console.log("payload.......", payload);
         t={t}
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : []) : ""}
+        isSuccess={isSuccess}
         // filestoreId={storeId}
         // isSuccess={isSuccess}
         // isLoading={isLoading}

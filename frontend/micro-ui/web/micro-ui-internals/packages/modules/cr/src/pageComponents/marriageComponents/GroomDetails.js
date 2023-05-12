@@ -33,11 +33,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_GROOM_GUARDIAN", code: "GUARDIAN" },
   ];
   const groomParent = parentDetails.map((parent) => parent.code);
-  let menu = [];
+  let gender = [];
   let cmbMaritalStatus = [];
   Menu &&
     Menu.map((groomGenderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
+      gender.push({
+        i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`,
+        code: `${groomGenderDetails.code}`,
+        value: `${groomGenderDetails.code}`,
+      });
     });
   maritalStatus &&
     maritalStatus["birth-death-service"] &&
@@ -185,6 +189,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
+    console.log({ value });
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
@@ -441,7 +446,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo)) {
-      setGroomAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -467,7 +471,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo)) {
-      setGroomFatherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -493,7 +496,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo)) {
-      setGroomGuardianAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -520,7 +522,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             .substring(0, 12);
 
     if (newValue != "" && (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo)) {
-      setGroomMotherAadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -538,6 +539,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
     }
   }
+
+  useEffect(() => {
+    if (gender.length > 0) {
+      const selectedGender = gender.filter((option) => option.code === "MALE");
+      console.log({ selectedGender });
+      selectGroomGender(selectedGender[0]);
+    }
+  }, [gender.length]);
 
   let validFlag = true;
   const goNext = () => {
@@ -937,7 +946,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   };
 
   console.log("Groom", formData);
-  console.log({ groomDOB });
 
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
@@ -962,10 +970,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             (groomResidentShip === "INDIAN" ? !groomAadharNo : false) ||
             (groomResidentShip === "NRI" ? !groomPassportNo || !groomSocialSecurityNo : false) ||
             (groomResidentShip === "FOREIGN" ? !groomSocialSecurityNo || !groomPassportNo : false) ||
-            (groomParentGuardian === "PARENT"
-              ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo
-              : false) ||
-            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo : false)
+            (groomParentGuardian === "PARENT" ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl : false) ||
+            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl : false)
           }
         >
           <div className="row">
@@ -1053,7 +1059,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       inputProps={{
                         maxLength: 12,
                       }}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: groomResidentShip === "INDIAN" ? true : false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                      {...(validation = {
+                        pattern: "^([0-9]){12}$",
+                        isRequired: groomResidentShip === "INDIAN" ? true : false,
+                        type: "text",
+                        title: t("CR_AADHAR_NO_ERROR"),
+                      })}
                     />
                   </div>
                 )}
@@ -1267,7 +1278,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={true}
-                option={menu}
+                option={gender}
                 selected={groomGender}
                 select={setselectGroomGender}
                 placeholder={`${t("CR_GROOM_GENDER")}`}
@@ -1400,10 +1411,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div>
               <div className="row">
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_GROOM_FATHER_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1414,7 +1422,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectGroomFatherAdharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1462,10 +1470,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <div className="row">
                 <div className="col-md-4">
                   {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_MOTHER_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1476,7 +1481,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectGroomMotherAdharNo}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -1528,10 +1533,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div>
               <div className="row">
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_GROOM_GUARDIAN_AADHAR_NO")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -1542,7 +1544,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectGroomGardianAdhar}
                     onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
                   />
                 </div>
                 <div className="col-md-4">

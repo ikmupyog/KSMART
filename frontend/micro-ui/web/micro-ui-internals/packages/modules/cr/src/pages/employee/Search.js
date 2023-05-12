@@ -15,7 +15,7 @@ const Search = ({ path }) => {
 
     const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication');
     const SearchDeath = Digit.ComponentRegistryService.getComponent('SearchDeathApplication');
-    const SearchMarriage = Digit.ComponentRegistryService.getComponent('SearchMarriageApplication')
+    const SearchMarriage = Digit.ComponentRegistryService.getComponent('SearchMarriageApplication');
 
     function onSubmit(_data) {
         var fromDate = new Date(_data?.fromDate)
@@ -30,7 +30,7 @@ const Search = ({ path }) => {
 
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
     }
-console.log(window.location.href.includes("/marriagesearch"));
+    console.log(window.location.href.includes("/marriagesearch"));
     const config = {
         enabled: !!(payload && Object.keys(payload).length > 0)
     }
@@ -82,8 +82,8 @@ console.log(window.location.href.includes("/marriagesearch"));
     else if (window.location.href.includes("/marriagesearch") == true) {
         console.log("initial");
         const { data: { MarriageDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useMarriageSearch({ tenantId, filters: payload, config })
-        return <SearchMarriage t={t} tenantId={tenantId} onSubmit={onSubmit}  data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
-    } 
+        return <SearchMarriage t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    }
 
 
 
