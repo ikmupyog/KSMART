@@ -84,7 +84,6 @@ public class PaymentUpdateService {
 		try {
 			PaymentRequest paymentRequest = mapper.convertValue(record, PaymentRequest.class);
 			RequestInfo requestInfo = paymentRequest.getRequestInfo();
-			
 			List<PaymentDetail> paymentDetails = paymentRequest.getPayment().getPaymentDetails();
 			String tenantId = paymentRequest.getPayment().getTenantId();
 			for (PaymentDetail paymentDetail : paymentDetails) {
@@ -98,11 +97,11 @@ public class PaymentUpdateService {
 //			System.out.println(" payment detail tenantId:"+paymentDetail.getBusinessService());
 			List<MarriageApplicationDetails> marriage = marriageService.searchMarriageDetails(searchCriteria,requestInfo);
 			if(null!=marriage && marriage.size()==1){
-				System.out.println("Search application size>1...................>");
-				if(marriage.get(0).getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
+				System.out.println("Search application size>1...................>"+marriage.get(0).getStatus());
+				//if(marriage.get(0).getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
 					System.out.println("Inside status -PAY...................>");
 					marriage.get(0).setAction(MarriageConstants.ACTION_PAY);
-				}
+				//}
 			}
 			MarriageDetailsRequest updateRequest = MarriageDetailsRequest.builder().requestInfo(requestInfo)
 												   .marriageDetails(marriage).build();
