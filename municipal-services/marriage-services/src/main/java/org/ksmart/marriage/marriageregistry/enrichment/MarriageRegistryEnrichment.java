@@ -83,6 +83,12 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setSerial_no1(1);
                 marriage.getWitnessDetails().setSerial_no2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
+                    if(StringUtils.isNotBlank(marriage.getWitnessDetails().getBrideUrl())){
+                        marriage.getWitnessDetails().setBrideUrl(marriage.getWitnessDetails().getBrideUrl().replaceAll(config.getImageURLStartPath(),""));
+                    }
+                    if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
+                        marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().replaceAll(config.getImageURLStartPath(),""));
+                    }
             }
             //Added on 09.05.2023 Jasmine
             if(marriage.getBrideAddressDetails()!=null){
@@ -861,7 +867,18 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
         request.getMarriageDetails()
-                .forEach(marriage -> marriage.setAuditDetails(auditDetails));
+                .forEach(marriage -> {
+                    marriage.setAuditDetails(auditDetails);
+                    if(marriage.getWitnessDetails()!=null){
+                        if(StringUtils.isNotBlank(marriage.getWitnessDetails().getBrideUrl())){
+                            marriage.getWitnessDetails().setBrideUrl(marriage.getWitnessDetails().getBrideUrl().replaceAll(config.getImageURLStartPath(),""));
+                        }
+                        if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
+                            marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().replaceAll(config.getImageURLStartPath(),""));
+                        }
+                    }
+
+                });
     }
 
     private List<String> getIds(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String fnType, int count) {

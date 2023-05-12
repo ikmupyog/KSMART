@@ -1,5 +1,6 @@
 package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ksmart.marriage.marriageregistry.web.model.WitnessRegistryDetails;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface WitnessRegistryRowMapper {
+
    default WitnessRegistryDetails getWitnessDetails(ResultSet rs) throws SQLException {
 
        return WitnessRegistryDetails.builder()
@@ -44,11 +46,14 @@ public interface WitnessRegistryRowMapper {
                .brideUrl(rs.getString("MD_brideurl"))
                .brideFilestoreId(rs.getString("MD_bride_filestoreid"))
                .groomExpired(rs.getBoolean("MD_groom_expired"))
-               .groomUrl(rs.getString("MD_groomurl"))
+               .groomUrl(createFullURL(rs.getString("MD_groomurl")))
                .groomFilestoreId(rs.getString("MD_groom_filestoreid"))
                .imageUuid(rs.getString("MD_imageuuid"))
                .isBackward(rs.getBoolean("MD_is_backward"))
                .build();
    }
+
+    String createFullURL(String url);
+
 
 }

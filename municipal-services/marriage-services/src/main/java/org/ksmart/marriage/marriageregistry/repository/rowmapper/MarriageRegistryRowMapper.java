@@ -1,5 +1,7 @@
 package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
+import org.apache.commons.lang3.StringUtils;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -11,11 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MarriageRegistryRowMapper implements ResultSetExtractor<List<MarriageRegistryDetails>>, 
+public class MarriageRegistryRowMapper implements ResultSetExtractor<List<MarriageRegistryDetails>>,
                         BaseRowMapper,BrideRegistryRowMapper,
                         GroomRegistryRowMapper,GroomRegistryAddressRowMapper,BrideRegistryAddressRowMapper,
                        WitnessRegistryRowMapper
                        {
+   private final MarriageApplicationConfiguration marriageApplicationConfiguration;
+
+   public MarriageRegistryRowMapper(MarriageApplicationConfiguration marriageApplicationConfiguration) {
+       this.marriageApplicationConfiguration = marriageApplicationConfiguration;
+   }
 
     @Override
     public List<MarriageRegistryDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
@@ -66,4 +73,14 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
         return result;
     }
 
-}
+       @Override
+       public String createFullURL(String url) {
+               if(StringUtils.isNotBlank(url)){
+//                   System.out.println("---------------"+url);
+//                   System.out.println("---------------"+marriageApplicationConfiguration.getImageURLStartPath()+url);
+                   return marriageApplicationConfiguration.getImageURLStartPath()+url;
+               }
+//               System.out.println("-else--------------"+url);
+               return url;
+       }
+                       }
