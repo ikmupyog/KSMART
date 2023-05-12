@@ -22,7 +22,8 @@ import { useQueryClient } from "react-query";
 import _ from "lodash";
 // import { TimePicker } from '@material-ui/pickers';
 
-const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
+const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage=false }) => {
+  console.log({isEditMarriage, formData});
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};

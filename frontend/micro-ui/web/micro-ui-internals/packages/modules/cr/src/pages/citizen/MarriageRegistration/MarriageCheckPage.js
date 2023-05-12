@@ -855,7 +855,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               </React.Fragment>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/groom-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -1623,7 +1623,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               )}
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/address-groom`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -1978,7 +1978,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               </React.Fragment>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/bride-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -2746,7 +2746,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               )}
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/address-bride`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -2941,7 +2941,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/witness-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -3792,7 +3792,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               </React.Fragment>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                  <div className="col-md-12">{<ActionButton jumpTo={`${routeLink}/marriage-documents`} />}</div>
                 </div>
               </div>
             </StatusTable>
