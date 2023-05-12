@@ -201,7 +201,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   if (Object.keys(birthInclusionFormsObj)?.length > 0) {
-    console.log("birthInclusionFormData??.curValue", birthInclusionFormsObj);
+    // console.log("birthInclusionFormData??.curValue", birthInclusionFormsObj);
     const config = { texts: { submitBarLabel: "Next" } };
     return (
       <React.Fragment>

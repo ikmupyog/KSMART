@@ -74,7 +74,8 @@ const DesktopInbox = ({
     }
   }
 
-  const goto = (data, inboxType) => {
+  const goto = (data) => {
+    console.log("data==",data);
     const applicationNumber = SearchInbox === "death" ? data?.InformationDeath?.["DeathACKNo"] : data.applicationNumber;
     let applCode =(["CRBRNR" || "CRBRSB" || "CRBRBO" || "CRBRAB" || "CRBRAD" || "CRBRNC" 
     || "CRDRAD" || "CRDRNC" || "CRBRCN" || "CRDRCN" || "CRMRCR"]);
@@ -85,30 +86,30 @@ const DesktopInbox = ({
     // console.log();
     // console.log("applicationNumber in correction", applicationNumber);
     let url = '';
-    switch (inboxType) {
+    switch (SearchInbox) {
       case "death":
         url = `/digit-ui/employee/cr/application-deathdetails/${applicationNumber}`;
         break;
       case "marriage":
         url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
     }
-    if (["CRBRCN", "CRDRCN", "CRMRCR"].some(term => applicationNumber.includes(term))) {
+    if (["CRBRCN", "CRDRCN", "CRMRCR"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
-    } else if (["CRBRNR"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRBRNR"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
-    } else if (["CRBRSB"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRBRSB"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-stillbirth/${applicationNumber}`;
-    } else if (["CRBRBO"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRBRBO"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-bornOutsideIndia/${applicationNumber}`;
-    } else if (["CRBRAB"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRBRAB"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-abandonedbirth/${applicationNumber}`;
-    } else if (["CRBRAD"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRBRAD"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`;
-    } else if (["CRBRNC"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRBRNC"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-nacbirth/${applicationNumber}`;
-    } else if (["CRDRAD"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRDRAD"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-abandoneddeathdetails/${applicationNumber}`;
-    } else if (["CRDRNC"].some(term => applicationNumber.includes(term))) {
+    } else if (["CRDRNC"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
     } else {
       url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
@@ -122,10 +123,11 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
+        console.log("marriage row",row.original);
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={() => goto(row.original, SearchInbox)}>
+              <Link onClick={event => handleLinkClick(row.original)} to={() => goto(row.original)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -170,7 +172,7 @@ const DesktopInbox = ({
             // </div>
             <div>
               <span className="link">
-                <Link onClick={handleLinkClick(row.original)} to={() => goto(row.original, SearchInbox)}>
+                <Link onClick={handleLinkClick(row.original)} to={() => goto(row.original)}>
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
               </span>
@@ -235,10 +237,11 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
+        console.log("row data birth==",row.original);
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={() => goto(row.original, SearchInbox)}>
+              <Link onClick={event => handleLinkClick(row.original)} to={() => goto(row.original)}>
                 {/* {row.original.applicationNumber} */}
                 {row.original.applicationNumber}
               </Link>
@@ -266,6 +269,59 @@ const DesktopInbox = ({
     }
   ]), [])
 
+  const BirthInboxColumns = React.useMemo(() => ([
+    {
+      Header: t("CR_COMMON_COL_APP_NO"),
+      accessor: "applicationNumber",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        console.log("row data birth==",row.original);
+        return (
+          <div>
+            <span className="link">
+              <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original)}>
+                {/* {row.original.applicationNumber} */}
+                {row.original.applicationId}
+              </Link>
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      Header: t("CR_COMMON_COL_APP_DATE"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row?.date ? convertEpochToDateDMY(row.date) : ""),
+    },
+    {
+      Header: t("WF_INBOX_HEADER_LOCALITY"),
+      Cell: ({ row }) => {
+        return GetCell(t((row.original["wardNo"])));
+      },
+    },
+    {
+      Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
+      Cell: ({ row }) => {
+        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+      },
+    }
+  ]), []);
+
+  const getColumns = () =>{
+    let columns = []
+    if(SearchInbox === "birth"){ 
+      // columns = BirthColumns;
+      columns = BirthInboxColumns;  
+  } else if(SearchInbox === "marriage"){
+      columns =  MarriageColumns;
+  } else if(SearchInbox === "death"){
+      columns = Deathcolumns;
+  }
+  return columns;
+}
+
+ 
+
   let result;
   if (isLoading) {
     result = <Loader />;
@@ -286,7 +342,7 @@ const DesktopInbox = ({
       <CRTable
         t={t}
         data={data}
-        columns={SearchInbox == "birth" ? BirthColumns : SearchInbox == "marriage" ? MarriageColumns : Deathcolumns}
+        columns={getColumns()}
         getCellProps={(cellInfo) => {
           return {
             style: {
