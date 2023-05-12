@@ -189,7 +189,7 @@ const CreateEmployee = ({userType}) => {
         setcheck(true);
       }
     }
-
+    
     let setassigncheck = false;
     for (let i = 0; i < formData?.Assignments?.length; i++) {
       let key = formData?.Assignments[i];
@@ -210,7 +210,7 @@ const CreateEmployee = ({userType}) => {
       formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress &&
       formData?.SelectEmployeeGender?.gender.code &&
       formData?.SelectEmployeeName?.employeeName &&
-      formData?.SelectEmployeeAadharNumber?.AadharNumber &&
+      formData?.SelectEmployeeAadhaarNumber?.aadhaarNumber &&
       formData?.SelectEmployeeType?.code &&
       formData?.SelectEmployeePhoneNumber?.mobileNumber 
       &&
@@ -292,7 +292,7 @@ const CreateEmployee = ({userType}) => {
         user: {
           mobileNumber: data?.SelectEmployeePhoneNumber?.mobileNumber,
           name: data?.SelectEmployeeName?.employeeName,
-          aadhaarNumber: data?.SelectEmployeeAadharNumber?.AadharNumber,
+          aadhaarNumber: data?.SelectEmployeeAadhaarNumber?.aadhaarNumber,
           correspondenceAddress: data?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress,
           emailId: data?.SelectEmployeeEmailId?.emailId ? data?.SelectEmployeeEmailId?.emailId : undefined,
           gender: data?.SelectEmployeeGender?.gender.code,

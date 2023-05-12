@@ -259,7 +259,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === witness2AadharNo)) {
-      setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -272,7 +271,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
       newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);motherMarriageAge
       setTimeout(() => {
@@ -285,7 +283,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
       newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
-      setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -305,7 +302,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === witness1AadharNo)) {
-      setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -318,7 +314,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
       newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -331,7 +326,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
       newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
-      setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -422,7 +416,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness1AddressEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
       setwitness1AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
@@ -438,7 +432,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness2AddressEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
       setwitness2AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
@@ -876,7 +870,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       onChange={setSelectwitness1AddressEn}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
+                      {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
                     />
                   </div>
 
@@ -999,7 +993,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       onChange={setSelectwitness2AddressEn}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
+                      {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
                     />
                   </div>
 

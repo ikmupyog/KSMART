@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import {
   BackButton,
   TextInput,
@@ -60,7 +61,7 @@ const DeathInclusion = () => {
     data: { deathCertificateDtls: searchResult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: payload, config }); 
+  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: {...payload,DeathDate: payload.DeathDate && moment(payload.DeathDate, 'YYYY-MM-DD').valueOf()}, config }); 
   useEffect(()=>{
     console.log("searchResult==",searchResult,path);
   },[searchResult,isLoading])
@@ -80,6 +81,7 @@ const DeathInclusion = () => {
         t={t}
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : []) : ""}
+        isSuccess={isSuccess}
         // filestoreId={storeId}
         // isSuccess={isSuccess}
         // isLoading={isLoading}

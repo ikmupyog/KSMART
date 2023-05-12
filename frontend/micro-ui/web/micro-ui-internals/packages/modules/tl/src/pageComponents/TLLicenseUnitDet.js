@@ -223,9 +223,11 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
 
 
   cmbWardNo.map((wardmst) => {
-    wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-    wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-    cmbWardNoFinal.push(wardmst);
+    if(zonalOffice){
+      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+      cmbWardNoFinal.push(wardmst);
+    }
   });
 
   if (zonalOffice) {
@@ -547,9 +549,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
 
   const changesetPincode = (e => {
     setPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
-    setPostOffice(cmbPostOffice.filter((postoffice) => {
-      postoffice.pincode === e.target.value.pincode
-    }));
+    e.target.value.length === 6 ? setPostOffice(cmbPostOffice.find(poffice => poffice.pincode == e.target.value)) : ""; //
   });
 
   const selectsetPostOffice = (value => {
@@ -872,18 +872,165 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       if (validation === false) setErrorMessage(t("TL_DOOR_ALREADY_SELECT"));
     }
 
-    if (!contactNo.match(mobilevalidation)) {
+           
+    
+    if (!DistrictList) {
+      setErrorMessage(t("TL_INVALID_DISTRICT"));
+      validation = false;
+    }
+    if (!LBTypeList) {
+      setErrorMessage(t("TL_INVALID_LOCALBODY_TYPE"));
+      validation = false;
+    }
+    if (!Localbody) {
+      setErrorMessage(t("TL_INVALID_LOCALBODY"));
+      validation = false;
+    }
+    if (!zonalOffice) {
+      setErrorMessage(t("TL_INVALID_ZONAL_NAME"));
+      validation = false;
+    }
+    if (!WardNo) {
+      setErrorMessage(t("TL_INVALID_WARD_NO"));
+      validation = false;
+    }
+    if (!businessSector) {
+      setErrorMessage(t("TL_INVALID_BUSINESS_SECTOR"));
+      validation = false;
+    }
+  
+    if (!fields[0].businessCategory) {
+      setErrorMessage(t("TL_INVALID_BUSINESS_CATEGORY"));
+      validation = false;
+    }
+    if (!fields[0].businessType) {
+      setErrorMessage(t("TL_INVALID_BUSINESS_TYPE"));
+      validation = false;
+    }
+    if (!fields[0].businessSubtype) {
+      setErrorMessage(t("TTL_INVALID_SUB_BUSINESS_TYPE"));
+      validation = false;
+    }
+    if(!commencementDate) {
+      setErrorMessage(t("TL_INVALID_COMMENCEMENT_DATE"));
+      validation = false;
+    }
+    if ((contactNo === "") || (!contactNo.match(mobilevalidation))) {
       setErrorMessage(t("TL_INVALID_MOBILE_NO"));
       validation = false;
     }
-    if (desiredLicensePeriod > 5) {
+    if ((!desiredLicensePeriod) || (desiredLicensePeriod > 5)) {
       setErrorMessage(t("TL_INVALID_License_PERIOD"));
       validation = false;
     }
-    if (capitalInvestment < 0) {
+    if ((capitalInvestment < 0) || (!capitalInvestment === "")){
       setErrorMessage(t("TL_INVALID_CAPITAL_AMOUNT"));
       validation = false;
     }
+    if(noOfEmployees === ""){
+      setErrorMessage(t("TL_INVALID_NO_EMPLOYEES"));
+      validation = false;
+    }
+    if(licenseUnitName === ""){
+      setErrorMessage(t("TL_INVALID_LICENSING_UNIT_NAME"));
+      validation = false;
+    }
+    if(licenseUnitNameLocal === ""){
+      setErrorMessage(t("TL_INVALID_LICENSING_UNIT_NAME"));
+      validation = false;
+    }
+    if(email === ""){
+      setErrorMessage(t("TL_INVALID_EMAIL_ID"));
+      validation = false;
+    }
+    if(!structureType) {
+      setErrorMessage(t("TL_INVALID_PLACE_STRUCTURE"));
+      validation = false;
+    }
+    if(!structurePlaceSubtype) {
+      setErrorMessage(t("TL_INVALID_SUB_PLACE_STRUCTURE"));
+      validation = false;
+    }
+    if(!ownershipCategory) {
+      setErrorMessage(t("TL_INVALID_OwnershipCategory"));
+      validation = false;
+    }
+    if(value2 === "LAND") {
+      if(value3 === "") {
+        setErrorMessage(t("TL_INVALID_RESURVEY"));
+        validation = false;
+      } 
+      if(formStateDoor[0].blockNo == "") {
+        setErrorMessage(t("TL_INVALID_BLOCK_NO"));
+        validation = false;
+      } 
+      if(formStateDoor[0].surveyNo == "") {
+        setErrorMessage(t("TL_INVALID_SURVEY_NO"));
+        validation = false;
+      } 
+      if(formStateDoor[0].subDivisionNo == "") {
+        setErrorMessage(t("TL_INVALID_SUBDIVISION_NO"));
+        validation = false;
+      }
+      if(value3 === "YES") {
+        if(formStateDoor[0].partitionNo == "") {
+          setErrorMessage(t("TL_INVALID_PARTITION_NO"));
+          validation = false;
+        }
+      }
+      if(locality === "") {
+        setErrorMessage(t("TL_INVALID_LOCALITY"));
+        validation = false;
+      } 
+      if(!postOffice) {
+        setErrorMessage(t("TL_INVALID_POSTOFFICE"));
+        validation = false;
+      } 
+      if(pincode === "") {
+        setErrorMessage(t("TL_INVALID_PIN"));
+        validation = false;
+      }
+    }
+    if(value2 === "BUILDING") {
+      if(formStateDoor[0].doorNo === "") {
+        setErrorMessage(t("TL_INVALID_DOOR_NO"));
+        validation = false;
+      }
+      if((ownershipCategory.code === "LBBUILDING") && (formStateDoor[0].stallNo === "")) {
+        setErrorMessage(t("TL_INVALID_STALL_NO"));
+        validation = false;
+      }
+      
+      if(locality === "") {
+        setErrorMessage(t("TL_INVALID_LOCALITY"));
+        validation = false;
+      } 
+      if(!postOffice) {
+        setErrorMessage(t("TL_INVALID_POSTOFFICE"));
+        validation = false;
+      } 
+      if(pincode === "") {
+        setErrorMessage(t("TL_INVALID_PIN"));
+        validation = false;
+      }
+    }
+    if((value2 === "VEHICLE") && (structurePlaceSubtype.code === "MOTOR_VEHICLE") && (formStateDoor[0].vehicleNo === "")) {
+      setErrorMessage(t("TL_INVALID_VECHICLE_NO"));
+      validation = false;
+    }
+    if((value2 === "WATER") && (formStateDoor[0].vesselNo === "")){
+      setErrorMessage(t("TL_INVALID_VESSEL_NO"));
+      validation = false;
+    }
+    if((value2 === "WATER") && (formStateDoor[0].waterbody === "")){
+      setErrorMessage(t("TL_INVALID_WATER_BODY"));
+      validation = false;
+    }
+    if((value2 === "WATER") && (formStateDoor[0].serviceArea === "")){
+      setErrorMessage(t("TL_INVALID_SERVICE_AREA"));
+      validation = false;
+    }
+
     return Promise.resolve(validation);
 
   }
@@ -908,9 +1055,9 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         "street": street?.trim(),
         "landmark": landmark?.trim(),
         "buildingName": buildingName?.trim(),
-        "zonalId": WardNo.zonecode,
-        "wardId": WardNo.code,
-        "wardNo": WardNo.wardno,
+        "zonalId": zonalOffice,// WardNo.zonecode
+        "wardId": WardNo,//WardNo.code
+        "wardNo": WardNo,//WardNo.wardno
         "postOffice": postOffice,
         "pincode": pincode,
         "contactNo": contactNo,
@@ -947,20 +1094,20 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       {isLoading ? (<Loader />) : (
         <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}
-          isDisabled={!DistrictList || !LBTypeList || !Localbody || !zonalOffice || !WardNo || !businessSector
-            || !fields[0].businessCategory || !fields[0].businessType || !fields[0].businessSubtype || capitalInvestment === "" || !commencementDate
-            || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" || licenseUnitNameLocal === "" || contactNo === "" || email === ""
-            || !structureType || !structurePlaceSubtype || !ownershipCategory
-            || (value2 === "LAND" ? (value3 === "" || locality === "" || !postOffice || pincode === ""
-              || formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "") : false)
-            // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
-            || (value2 === "BUILDING" ? (formStateDoor[0].doorNo === "" || locality === "" || !postOffice || pincode === "") : false)
-            || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo === "") : false)
-            || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code === "MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
-            || (value2 === "WATER" ? (formStateDoor[0].vesselNo === "" || waterbody === "" || serviceArea === "") : false)
-            || (value2 === "DESIGNATEDPLACE" ? false : false)
-            // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
-          }
+          // isDisabled={!DistrictList || !LBTypeList || !Localbody || !zonalOffice || !WardNo || !businessSector
+          //   || !fields[0].businessCategory || !fields[0].businessType || !fields[0].businessSubtype || capitalInvestment === "" || !commencementDate
+          //   || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" || licenseUnitNameLocal === "" || contactNo === "" || email === ""
+          //   || !structureType || !structurePlaceSubtype || !ownershipCategory
+          //   || (value2 === "LAND" ? (value3 === "" || locality === "" || !postOffice || pincode === ""
+          //     || formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "") : false)
+          //   // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
+          //   || (value2 === "BUILDING" ? (formStateDoor[0].doorNo === "" || locality === "" || !postOffice || pincode === "") : false)
+          //   || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo === "") : false)
+          //   || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code === "MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
+          //   || (value2 === "WATER" ? (formStateDoor[0].vesselNo === "" || waterbody === "" || serviceArea === "") : false)
+          //   || (value2 === "DESIGNATEDPLACE" ? false : false)
+          //   // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
+          // }
         >
 
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >

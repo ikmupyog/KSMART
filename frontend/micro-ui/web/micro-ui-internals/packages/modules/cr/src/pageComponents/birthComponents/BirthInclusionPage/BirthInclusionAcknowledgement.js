@@ -40,7 +40,7 @@ const BirthInclusionAcknowledgement = () => {
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
 
-  const gotoHome = () =>{
+  const gotoHome = () => {
     history.go(-3);
   }
 
@@ -52,7 +52,7 @@ const BirthInclusionAcknowledgement = () => {
   }, []);
 
   const handleDownloadPdf = async () => {
-  
+
     const { CorrectionApplication = [] } = mutationData.data
     const CorrectionData = (CorrectionApplication && CorrectionApplication[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === CorrectionData.tenantid);
@@ -60,47 +60,58 @@ const BirthInclusionAcknowledgement = () => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
-  
-    if (mutationData?.isSuccess) {
-      return (
-        <Card>
-          <BannerPicker t={t} data={birthInclusionData} isSuccess={true} />
-          {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
-           */}
-          <LinkButton
-            label={
-              <div className="response-download-button">
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                </span>
-                <span className="download-button">{t("Acknowledgment")}</span>
-              </div>
-            }
-            //style={{ width: "100px" }}
-            onClick={handleDownloadPdf}
-          />
 
-          <Link to={`/digit-ui/citizen`}>
-            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+  if (mutationData?.isSuccess) {
+    return (
+      <Card>
+        <BannerPicker t={t} data={birthInclusionData} isSuccess={true} />
+        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+           */}
+        <LinkButton
+          label={
+            <div className="response-download-button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+              </span>
+              <span className="download-button">{t("Acknowledgment")}</span>
+            </div>
+          }
+          //style={{ width: "100px" }}
+          onClick={handleDownloadPdf}
+        />
+
+        {mutationData?.data?.CorrectionApplication[0]?.applicationStatus === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.CorrectionApplication[0].businessservice}/${mutationData.data.CorrectionApplication[0].applicationNumber}`,
+              state: { tenantId: mutationData.data.CorrectionApplication[0].tenantid },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
           </Link>
-        </Card>
-      );
-    } else {
-      return (
-        <Card>
-          <BannerPicker
-            t={t}
-              data={mutationData?.data} isSuccess={mutationData?.isSuccess} isLoading={mutationData?.isLoading}
-          />
-          {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
-          <Link to={`/digit-ui/citizen`}>
-            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-          </Link>
-        </Card>
-      );
-    }
+        )}
+
+        <Link to={`/digit-ui/citizen`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
+      </Card>
+    );
+  } else {
+    return (
+      <Card>
+        <BannerPicker
+          t={t}
+          data={mutationData?.data} isSuccess={mutationData?.isSuccess} isLoading={mutationData?.isLoading}
+        />
+        {<CardText>{t("CR_CREATE_APPLICATION_FAILED")}</CardText>}
+        <Link to={`/digit-ui/citizen`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
+      </Card>
+    );
+  }
 };
 
 export default BirthInclusionAcknowledgement;

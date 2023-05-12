@@ -7,6 +7,6 @@ export const useComplaintsList = (tenantId, filters) => {
   return { isLoading, error, data, revalidate: () => client.invalidateQueries(["complaintsList", filters]) };
 };
 
-export const useComplaintsListByMobile = (tenantId, mobileNumber) => {
-  return useComplaintsList(tenantId, { mobileNumber });
+export const useComplaintsListByMobile = (tenantId, filters) => {
+  return useComplaintsList(tenantId, filters);
 };

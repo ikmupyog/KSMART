@@ -813,13 +813,19 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     );
   }
   const setSelectAgencyName = (e) => {
-    setAdoptionAgentName(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setAdoptionAgentName(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
   };
   const setSelectAgencyAddress = (e) => {
-    setAdoptionAgencyAddress(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
+      setAdoptionAgencyAddress(e.target.value.length <= 200 ? e.target.value : e.target.value.substring(0, 200));
+    }
   };
   const setSelectContactPersonName = (e) => {
-    setAdoptionAgencyPersonName(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setAdoptionAgencyPersonName(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
   };
   const setSelectAgencyContactNo = (e) => {
     if (e.target.value.trim().length != 0) {
@@ -845,7 +851,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     setAdoptionDecreOrderDate(value);
   };
   const setSelectIssuingAuthority = (e) => {
-    setIssuingAuthority(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setIssuingAuthority(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
   };
   const setSelectDeedNo = (e) => {
     setAdoptionDeedNo(e.target.value);
@@ -1951,7 +1959,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     {...(validation = {
                       // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: AdoptionDeedNo === "" ? true : false,
-                      type: "text",
+                      pattern: "^[0-9`' ]*$",
+                      type: "number",
                       title: t("CR_INVALID_ADOPTION_DECREE"),
                     })}
                   />

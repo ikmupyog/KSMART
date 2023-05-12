@@ -2,9 +2,11 @@ import React from "react";
 import { CheckBox, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const Status = ({ complaints, onAssignmentChange, pgrfilters }) => {
+const Status = ({ complaints, onAssignmentChange, pgrfilters, assignedTo }) => {
   const { t } = useTranslation();
-  const complaintsWithCount = Digit.Hooks.pgr.useComplaintStatusCount(complaints);
+  const { uuid = '' } = Digit.UserService.getUser().info;
+  const UUID = assignedTo?.code === "ASSIGNED_TO_ME" ? uuid : ""
+  const complaintsWithCount = Digit.Hooks.pgr.useComplaintStatusCount(complaints, UUID);
   let hasFilters = pgrfilters?.applicationStatus?.length;
   return (
     <div className="status-container">
