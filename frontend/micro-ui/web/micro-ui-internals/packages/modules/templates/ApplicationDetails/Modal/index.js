@@ -65,10 +65,10 @@ const ActionModal = (props) => {
     return <BirthNACActionModal {...props} />;
   }
   if (
-    props?.businessService.includes("MARRIAGE45DAYS") ||
-    props?.businessService.includes("MARRIAGE5YRS") ||
-    props?.businessService.includes("45MARRIAGE") ||
-    props?.businessService.includes("MARRIAGEABOVE5YRS")
+    props?.businessService.includes("MARRIAGE45DYS") ||
+    props?.businessService.includes("MARRIAGE5YEARS") ||
+    props?.businessService.includes("MARRIAGEABOVE5YEARS") ||
+    props?.businessService.includes("MARRIAGECORRECTION")
   ) {
     return <MarriageActionModal {...props} />;
   }
