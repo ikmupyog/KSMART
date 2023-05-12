@@ -74,14 +74,14 @@ public class PaymentUpdateService {
 			// searchCriteria.setAppNumber(paymentDetail.getBill().getConsumerCode());
 			searchCriteria.setDeathACKNo(paymentDetail.getBill().getConsumerCode());
 			searchCriteria.setBusinessService(paymentDetail.getBusinessService());
-			// System.out.println(" payment detail tenantId:"+tenantId);
-			// System.out.println(" payment detail tenantId:"+paymentDetail.getBill().getConsumerCode());
-			// System.out.println(" payment detail tenantId:"+paymentDetail.getBusinessService());
+			System.out.println(" payment detail tenantId:"+tenantId);
+			System.out.println(" payment detail tenantId:"+paymentDetail.getBill().getConsumerCode());
+			System.out.println(" payment detail tenantId:"+paymentDetail.getBusinessService());
 			
 			List<DeathDtl> death = newDeathService.searchPayment(searchCriteria,requestInfo);
 			
 			DeathDtlRequest updateRequest = DeathDtlRequest.builder().requestInfo(requestInfo).deathCertificateDtls(death).build();
-			// System.out.println(" payment detail updateRequest:"+updateRequest);
+			System.out.println(" payment detail updateRequest:"+updateRequest);
 			wfIntegrator.callWorkFlow(updateRequest);
 			}	
 
