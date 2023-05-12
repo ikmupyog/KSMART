@@ -10,6 +10,7 @@ import {
   Loader,
   EditButton,
   PopUp,
+  Toast,
   UploadFile,
   EditIcon,
 } from "@egovernments/digit-ui-react-components";
@@ -31,7 +32,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-
+  const [toast, setToast] = useState({ show: false, message: "" });
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_BIRTH_INCLUSION", {});
 
   const [showModal, setShowModal] = useState(false);
@@ -136,6 +137,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   const onSubmitBirthInclusion = () => {
+    if (!birthInclusionFormsObj?.CHILD_SEX?.curValue && birthInclusionFormsObj?.CHILD_SEX?.isEditable) {
+      setToast({ show: true, message: t("CR_INVALID_GENDER") });
+      return false;
+    }
+    setToast({ show: false, message: "" });
     const formattedResp = formatApiParams(birthInclusionFormsObj, navigationData);
     if (formattedResp?.CorrectionDetails?.[0]?.CorrectionField?.length > 0) {
       setParams(birthInclusionFormsObj);
@@ -148,7 +154,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
 
   const formatDob = (date) => {
     // return moment(date).format("DD/MM/YYYY");
-    return moment(date,"YYYY-MM-DD").format("DD/MM/YYYY");
+    return moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
     // return date;
   };
 
@@ -200,8 +206,18 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     setbirthInclusionFormsObj(tempObj);
   };
 
+  const checkLangRequired = (columnName, fieldName, lang ="Ml") => {
+    const langKeys = ["En","Ml"];
+    const reverseLangkeys = lang === "Ml" ? langKeys : langKeys.reverse();
+    let enKey = fieldName?.replace(lang, reverseLangkeys[0]);
+    if (birthInclusionFormsObj?.[columnName]?.isEditable && birthInclusionFormsObj?.[columnName]?.curValue?.[enKey]?.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   if (Object.keys(birthInclusionFormsObj)?.length > 0) {
-    // console.log("birthInclusionFormData??.curValue", birthInclusionFormsObj);
     const config = { texts: { submitBarLabel: "Next" } };
     return (
       <React.Fragment>
@@ -217,7 +233,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
           </div>
           {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
-          <div className="col-md-10">
+            <div className="col-md-10">
               <div className="col-md-5">
                 <CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}</CardLabel>
                 <DatePicker
@@ -230,7 +246,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   formattingFn={formatDob}
                   inputFormat="DD/MM/YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                  {...(validation = { ValidationRequired: true, isRequired: birthInclusionFormsObj?.CHILD_DOB?.isEditable, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                  {...(validation = {
+                    ValidationRequired: true,
+                    isRequired: birthInclusionFormsObj?.CHILD_DOB?.isEditable,
+                    title: t("CR_DATE_OF_BIRTH_TIME"),
+                  })}
                 />
               </div>
             </div>
@@ -289,7 +309,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                     maxLength: 12,
                   }}
                   // ValidationRequired = {true}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: birthInclusionFormsObj?.CHILD_AADHAAR?.isEditable, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = {
+                    pattern: "^[0-9]{12}$",
+                    type: "text",
+                    isRequired: birthInclusionFormsObj?.CHILD_AADHAAR?.isEditable,
+                    title: t("CS_COMMON_INVALID_AADHAR_NO"),
+                  })}
                 />
               </div>
             </FieldComponentContainer>
@@ -316,7 +341,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "firstNameEn")}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: birthInclusionFormsObj?.CHILD_NAME?.isEditable, title: t("CR_INVALID_FIRST_NAME_EN") })}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`' ]*$",
+                    type: "text",
+                    isRequired: birthInclusionFormsObj?.CHILD_NAME?.isEditable,
+                    title: t("CR_INVALID_FIRST_NAME_EN"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -330,7 +360,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "middleNameEn")}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("CHILD_NAME", "middleNameEn", "En"), title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -344,7 +374,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "lastNameEn")}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("CHILD_NAME", "lastNameEn", "En"), title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
               </div>
             </FieldComponentContainer>
@@ -372,7 +402,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "firstNameMl")}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: birthInclusionFormsObj?.CHILD_NAME?.isEditable, title: t("CR_INVALID_FIRST_NAME_ML") })}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    type: "text",
+                    isRequired: birthInclusionFormsObj?.CHILD_NAME?.isEditable,
+                    title: t("CR_INVALID_FIRST_NAME_ML"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -386,7 +421,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "middleNameMl")}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title:  t("CR_INVALID_MIDDLE_NAME_ML") })}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    type: "text",
+                    isRequired: checkLangRequired("CHILD_NAME", "middleNameMl"),
+                    title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -400,7 +440,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "lastNameMl")}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
-                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_LAST_NAME_ML"), })}
+                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("CHILD_NAME", "lastNameMl"), title: t("CR_INVALID_LAST_NAME_ML") })}
                 />
               </div>
             </FieldComponentContainer>
@@ -419,7 +459,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   disabled={birthInclusionFormsObj?.MOTHER_DETAILS?.isDisabled}
                   // autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
                   placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: birthInclusionFormsObj?.MOTHER_DETAILS?.isEditable, title: t("CR_INVALID_MOTHER_NAME_EN") })}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`' ]*$",
+                    type: "text",
+                    isRequired: checkLangRequired("MOTHER_DETAILS", "motherNameEn", "En"),
+                    title: t("CR_INVALID_MOTHER_NAME_EN"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -433,7 +478,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
                   onBlur={(e) => onChangeMotherDetails(e, "motherNameMl")}
                   placeholder={`${t("CR_MOTHER_NAME_ML")}`}
-                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: birthInclusionFormsObj?.MOTHER_DETAILS?.isEditable, title: t("CR_INVALID_MOTHER_NAME_ML") })}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    type: "text",
+                    isRequired: checkLangRequired("MOTHER_DETAILS", "motherNameMl"),
+                    title: t("CR_INVALID_MOTHER_NAME_ML"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -448,7 +498,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
                   onBlur={(e) => onChangeMotherDetails(e, "motherAdhar")}
                   placeholder={`${t("CR_AADHAR")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: birthInclusionFormsObj?.MOTHER_DETAILS?.isEditable, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = {
+                    pattern: "^[0-9]{12}$",
+                    type: "text",
+                    title: t("CS_COMMON_INVALID_AADHAR_NO"),
+                  })}
                 />
               </div>
             </FieldComponentContainer>
@@ -476,7 +530,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // autoFocus={birthInclusionFormsObj?.FATHER_DETAILS?.isFocused}
                   onBlur={(e) => onChangeFatherDetails(e, "fatherNameEn")}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: birthInclusionFormsObj?.FATHER_DETAILS?.isEditable, title: t("CR_INVALID_FATHER_NAME_EN") })}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`' ]*$",
+                    type: "text",
+                    isRequired: checkLangRequired("FATHER_DETAILS", "fatherNameEn", "En"),
+                    title: t("CR_INVALID_FATHER_NAME_EN"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -491,7 +550,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   onBlur={(e) => onChangeFatherDetails(e, "fatherNameMl")}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_ML")}`}
-                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: birthInclusionFormsObj?.FATHER_DETAILS?.isEditable, title: t("CR_INVALID_FATHER_NAME_ML") })}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    type: "text",
+                    isRequired: checkLangRequired("FATHER_DETAILS", "fatherNameMl"),
+                    title: t("CR_INVALID_FATHER_NAME_ML"),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -508,7 +572,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // value={DeceasedAadharNumber}
                   // onChange={setSelectDeceasedAadharNumber}
                   placeholder={`${t("CR_FATHER_AADHAR")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: birthInclusionFormsObj?.FATHER_DETAILS?.isEditable, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = {
+                    pattern: "^[0-9]{12}$",
+                    type: "text",
+                    title: t("CS_COMMON_INVALID_AADHAR_NO"),
+                  })}
                 />
               </div>
             </FieldComponentContainer>
@@ -535,7 +603,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   disabled={birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled}
                   onBlur={(e) => onPresentAddressChange(e, "houseNameEn")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: birthInclusionFormsObj?.PRESENT_ADDRESS?.isEditable, title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`'0-9 ]*$",
+                    type: "text",
+                    isRequired: checkLangRequired("PRESENT_ADDRESS", "houseNameEn", "En"),
+                    title: t("CR_INVALID_HOUSE_NAME_EN"),
+                  })}
                 />
               </div>
               <div className="col-md-3">
@@ -548,7 +621,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   disabled={birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled}
                   onBlur={(e) => onPresentAddressChange(e, "localityEn")}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: birthInclusionFormsObj?.PRESENT_ADDRESS?.isEditable, title: t("CR_INVALID_LOCALITY_EN") })}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`'0-9 ]*$",
+                    type: "text",
+                    isRequired: checkLangRequired("PRESENT_ADDRESS", "localityEn", "En"),
+                    title: t("CR_INVALID_LOCALITY_EN"),
+                  })}
                 />
               </div>
               <div className="col-md-3">
@@ -561,7 +639,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   disabled={birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled}
                   onBlur={(e) => onPresentAddressChange(e, "streetEn")}
                   placeholder={`${t("CR_STREET_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: birthInclusionFormsObj?.PRESENT_ADDRESS?.isEditable, title: t("CR_INVALID_STREET_NAME_EN") })}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`'0-9 ]*$",
+                    type: "text",
+                    isRequired: checkLangRequired("PRESENT_ADDRESS", "streetEn", "En"),
+                    title: t("CR_INVALID_STREET_NAME_EN"),
+                  })}
                 />
               </div>
             </FieldComponentContainer>
@@ -588,9 +671,9 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_ML")}`}
                   {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
                     type: "text",
-                    isRequired: birthInclusionFormsObj?.PRESENT_ADDRESS?.isEditable,
+                    isRequired: checkLangRequired("PRESENT_ADDRESS", "houseNameMl"),
                     title: t("CR_INVALID_HOUSE_NAME_ML"),
                   })}
                 />
@@ -608,7 +691,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                     type: "text",
-                    isRequired: birthInclusionFormsObj?.PRESENT_ADDRESS?.isEditable,
+                    isRequired: checkLangRequired("PRESENT_ADDRESS", "localityMl"),
                     title: t("CR_INVALID_LOCALITY_ML"),
                   })}
                 />
@@ -626,7 +709,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                     type: "text",
-                    isRequired: birthInclusionFormsObj?.PRESENT_ADDRESS?.isEditable,
+                    isRequired: checkLangRequired("PRESENT_ADDRESS", "streetMl"),
                     title: t("CR_INVALID_STREET_NAME_ML"),
                   })}
                 />
@@ -645,6 +728,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             />
           )}
         </FormStep>
+        {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
       </React.Fragment>
     );
   } else {
