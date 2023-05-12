@@ -316,7 +316,7 @@ export const convertToTrade = (data = {}) => {
         action: "INITIATE",
         applicationType: "NEW",
         commencementDate: Date.parse(data?.TradeDetails?.commencementDate),
-        financialYear: Financialyear ? Financialyear : "2022-23",
+        financialYear: Financialyear ? Financialyear : "2023-24",
         licenseType: "PERMANENT",
         tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         tradeLicenseDetail: {
@@ -557,7 +557,7 @@ export const convertToEditTrade = (data = {}) => {
         action: "INITIATE",
         applicationType: "RENEWAL",
         commencementDate: Date.parse(data?.commencementDate),
-        financialYear: Financialyear ? Financialyear : "2022-23",
+        financialYear: Financialyear ? Financialyear : "2023-24",
         licenseType: "PERMANENT",
         tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         tradeLicenseDetail: {
@@ -723,7 +723,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   let unitFlag = false;
   let addressFlag = false;
   let isEdit = false;
-
   if(data?.tradeLicenseDetail?.address?.wardId !== dataCorr?.tradeLicenseDetail?.address?.wardId){
     wardNoCorr = dataCorr?.tradeLicenseDetail?.address?.wardNo;
     wardIdCorr = dataCorr?.tradeLicenseDetail?.address?.wardId;
@@ -767,7 +766,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   })
   let Subtype = dataCorr?.tradeLicenseDetail?.tradeUnits.length > 0 ? 
   Array.from(new Set(dataCorr?.tradeLicenseDetail?.tradeUnits.map(type => type.businessSubtype))) : [];
-
   if(Subtype.length > 0) {
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
       if(Subtype.filter(subUnit => subUnit.includes(unitOld.businessSubtype)).length === 0 ){
@@ -835,7 +833,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       ownerFlag = true;
     }
   });
-
   // let ownerid = dataCorr?.tradeLicenseDetail?.owners.length > 0 ? 
   // Array.from(new Set(dataCorr?.tradeLicenseDetail?.owners.map(type => type?.uuid))) : [];
   
@@ -863,13 +860,13 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   if(ownerFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.owners;
   }
-  let structurePlaceID = [];
+  let structurePlaceID;
   dataCorr?.tradeLicenseDetail?.structurePlace.length > 0 ? 
-  structurePlaceID.push(Array.from(new Set(dataCorr?.tradeLicenseDetail?.structurePlace.map(sPlace => sPlace?.id)))) : [];
-  
+  structurePlaceID = (Array.from(new Set(dataCorr?.tradeLicenseDetail?.structurePlace.map(sPlace => sPlace?.id)))) : [];
+
   dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
     data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
-      if(structurePlaceID.filter(placeID => placeID.includes(placeOld.id)).length > 0){
+      if(placeNew.id !== null && placeNew.id === placeOld.id){
         if ((placeOld.doorNo !== placeNew.doorNo)||(placeOld.doorNoSub !== placeNew.doorNoSub)||(placeOld.blockNo !== placeNew.blockNo)
         ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
         ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
@@ -889,7 +886,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
             isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
             stallNo : placeNew?.stallNo && placeNew?.stallNo !== "" ? placeNew?.stallNo?.trim() : null,
           });
-
           isEdit = true;
           structureplaceFlag = true;
         }
@@ -919,7 +915,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
 
   if(structurePlaceID.length > 0) {
     data?.tradeLicenseDetail?.structurePlace.map((place) => {
-      if(structurePlaceID.filter(id => id.includes(place.id)).length === 0 ){
+    if(!(structurePlaceID.find(placeID => placeID === place.id))){ 
         structurePlaceCorr.push({id : place.id?.trim(), active : false});
         isEdit = true;
         structureplaceFlag = true;
