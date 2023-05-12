@@ -86,10 +86,10 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setSerialNo2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
                 if(StringUtils.isNotBlank(marriage.getWitnessDetails().getBrideUrl())){
-                    marriage.getWitnessDetails().setBrideUrl(marriage.getWitnessDetails().getBrideUrl().replaceAll(config.getImageURLStartPath(),""));
+                    marriage.getWitnessDetails().setBrideUrl(marriage.getWitnessDetails().getBrideUrl().trim().replaceAll(config.getImageURLStartPath(),""));
                 }
                 if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
-                    marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().replaceAll(config.getImageURLStartPath(),""));
+                    marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().trim().replaceAll(config.getImageURLStartPath(),""));
                 }
             }
             setApplicationNumbers(request);
