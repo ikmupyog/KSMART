@@ -216,6 +216,9 @@ public class DeathRegistryRequestService {
         registryStatisticalInfo.setSmokingType(statisticalDtls.getSmokingType());
         registryStatisticalInfo.setTobaccoType(statisticalDtls.getTobaccoType());
         registryStatisticalInfo.setAlcoholType(statisticalDtls.getAlcoholType());
+        registryStatisticalInfo.setAlcoholNumYears(statisticalDtls.getAlcoholNumYears());
+        registryStatisticalInfo.setTobaccoNumYears(statisticalDtls.getTobaccoNumYears());
+        registryStatisticalInfo.setSmokingNumYears(statisticalDtls.getSmokingNumYears());
         return registryStatisticalInfo;
         
     }

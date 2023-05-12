@@ -40,10 +40,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 
-    @Slf4j
-    @RestController
-    @RequestMapping("/v1")
-    @Validated
+@Slf4j
+@RestController
+@RequestMapping("/v1")
+@Validated
 public class DeathApplnController {
 
     //Rakhi S on 06.02.2023
@@ -64,9 +64,7 @@ public class DeathApplnController {
         this.repository = repository;
     }
 
-
     //Rakhi S on 06.02.2023 - Death Create Controller 
-    // @Override
     @PostMapping("/deathdetails/_createdeath")
     public ResponseEntity<DeathDtlResponse> create(@Valid @RequestBody DeathDtlRequest request) {
        
@@ -79,23 +77,7 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);
     }
-      // System.out.println("hai");
-           /********************************************* */
 
-    //        try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         Object obj = request;
-    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
-    // }catch(Exception e) {
-    //     log.error("Exception while fetching from searcher: ",e);
-    // }
-
-    
-    /********************************************** */
-
-   // @Override
-     //Jasmine  on 06.02.2023 - Death search Controller 
     @PostMapping("/deathdetails/_searchdeath")
     public ResponseEntity<DeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute DeathSearchCriteria criteria) {
@@ -114,7 +96,6 @@ public class DeathApplnController {
     
     //Jasmine on 07.02.2023    
     @PostMapping("/deathdetails/_updatedeath")
-
     public ResponseEntity<DeathDtlResponse> update(@RequestBody DeathDtlRequest request) {
  
         List<DeathDtl> deathDetails = deathService.update(request);
@@ -125,13 +106,6 @@ public class DeathApplnController {
             DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
             List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
         }
-    //    if((status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED))&&  (applicationType.equals(DeathConstants.APPLICATION_CORRECTION))){
-
-    //         DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
-
-    //         List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.update(registryRequest);                   
-       
-    //     }
         DeathDtlResponse response = DeathDtlResponse
                                         .builder()
                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
@@ -139,133 +113,149 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);    
 }
+   //Rakhi S on 06.03.2023 - Death Abandoned Create Controller 
+   @PostMapping("/deathdetails/_createdeathabandoned")
+   public ResponseEntity<DeathAbandonedResponse> create(@Valid @RequestBody DeathAbandonedRequest request) {
+      
+       List<DeathAbandonedDtls> deathDetails = deathService.createAbandoned(request);
+
+       DeathAbandonedResponse response = DeathAbandonedResponse
+                                       .builder()
+                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                       .deathAbandonedDtls(deathDetails)
+                                       .build();
+       return ResponseEntity.ok(response);
+   }
+
+   //Rakhi S on 08.03.2023 - Death Abandoned Update  
+   @PostMapping("/deathdetails/_updatedeathabandoned")
+   public ResponseEntity<DeathAbandonedResponse> update(@RequestBody DeathAbandonedRequest request) {
+
+       List<DeathAbandonedDtls> deathDetails = deathService.updateAbandoned(request);
+       String status=request.getDeathAbandonedDtls().get(0).getApplicationStatus();
+       String applicationType =request.getDeathAbandonedDtls().get(0).getApplicationType();
+
+       if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathAbandonedDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){         
+           DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryAbandonedRequest(request);
+           List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
+       }  
+
+       DeathAbandonedResponse response = DeathAbandonedResponse
+                                       .builder()
+                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                       .deathAbandonedDtls(deathDetails)
+                                       .build();
+       return ResponseEntity.ok(response);    
+   }
+   //Rakhi S on 25.03.2023 - Death NAC Create Controller 
+   @PostMapping("/deathdetails/_createdeathnac")
+   public ResponseEntity<DeathNACResponse> create(@Valid @RequestBody DeathNACRequest request) {
+      
+       List<DeathNACDtls> deathNACDetails = deathService.createNAC(request);
+
+       DeathNACResponse response = DeathNACResponse
+                                       .builder()
+                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                       .deathNACDtls(deathNACDetails)
+                                       .build();
+       return ResponseEntity.ok(response);
+   }
+
+      //Rakhi S on 30.03.2023 - Death NAC Update  
+      @PostMapping("/deathdetails/_updatedeathnac")
+      public ResponseEntity<DeathNACResponse> update(@RequestBody DeathNACRequest request) {
+   
+          List<DeathNACDtls> deathDetails = deathService.updateNAC(request);
+          String status=request.getDeathNACDtls().get(0).getApplicationStatus();
+          String applicationType =request.getDeathNACDtls().get(0).getApplicationType();
+  
+       if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_TYPE)){  
+           DeathRegistryNACRequest registryRequest = deathRegistryRequestService.createRegistryNACRequest(request);
+           List<DeathRegistryNACDtls> registryDeathDetails =  deathRegistryService.createNAC(registryRequest);
+       }
+  
+       DeathNACResponse response = DeathNACResponse
+                           .builder()
+                           .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                           .deathNACDtls(deathDetails)
+                           .build();
+           return ResponseEntity.ok(response);
+       }
+
+   //Death NAC Search by Rakhi S ikm on 08.04.2023
+   @PostMapping("/deathdetails/_searchdeathnac")
+   public ResponseEntity<DeathNACResponse> searchNAC(@RequestBody RequestInfoWrapper request,
+                                                           @ModelAttribute DeathSearchCriteria criteria) {
+
+       List<DeathNACDtls> deathDetails = deathService.searchNAC(criteria, request.getRequestInfo());
+
+       DeathNACResponse response = DeathNACResponse
+                                       .builder()
+                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                       .deathNACDtls(deathDetails)
+                                       .build();
+       return ResponseEntity.ok(response);
+   }
+
+   //Death Abandoned Search by Rakhi S ikm on 08.04.2023
+   @PostMapping("/deathdetails/_searchdeathabandoned")
+   public ResponseEntity<DeathAbandonedResponse> searchAbandoned(@RequestBody RequestInfoWrapper request,
+                                                           @ModelAttribute DeathSearchCriteria criteria) {
+
+       List<DeathAbandonedDtls> deathDetails = deathService.searchAbandoned(criteria, request.getRequestInfo());
+
+       DeathAbandonedResponse response = DeathAbandonedResponse
+                                       .builder()
+                                       .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                       .deathAbandonedDtls(deathDetails)
+                                       .build();
+       return ResponseEntity.ok(response);
+   }
     //Jasmine 03.03.2023- Death Create Correction Controller 
-    @PostMapping("/deathdetails/_createdeathcorrection")
-    public ResponseEntity<DeathCorrectionResponse> create(@Valid @RequestBody DeathCorrectionRequest request) {    
-        List<DeathCorrectionDtls> deathCorrDetails = deathService.createcorrection(request);
+    // @PostMapping("/deathdetails/_createdeathcorrection")
+    // public ResponseEntity<DeathCorrectionResponse> create(@Valid @RequestBody DeathCorrectionRequest request) {    
+    //     List<DeathCorrectionDtls> deathCorrDetails = deathService.createcorrection(request);
 
-        DeathCorrectionResponse response = DeathCorrectionResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                        .deathCorrection(deathCorrDetails)
-                                        .build();
-        return ResponseEntity.ok(response);
-    }//Jasmine        
-    @PostMapping("/deathdetails/_updatedeathcorrection")
-    public ResponseEntity<DeathCorrectionResponse> update(@RequestBody DeathCorrectionRequest request) {
+    //     DeathCorrectionResponse response = DeathCorrectionResponse
+    //                                     .builder()
+    //                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+    //                                     .deathCorrection(deathCorrDetails)
+    //                                     .build();
+    //     return ResponseEntity.ok(response);
+    // }//Jasmine        
+//     @PostMapping("/deathdetails/_updatedeathcorrection")
+//     public ResponseEntity<DeathCorrectionResponse> update(@RequestBody DeathCorrectionRequest request) {
 
-        List<DeathCorrectionDtls> deathDetails = deathService.updateCorrection(request);
-        String status=request.getDeathCorrection().get(0).getApplicationStatus();
-        String applicationType =request.getDeathCorrection().get(0).getApplicationType();
-        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
-            DeathRegistryCorrectionRequest registryRequest = deathRegistryRequestService.createRegistrycorrectionRequest(request);
-            List<DeathRegistryCorrectionDtls> registryDeathDetails =  deathRegistryService.update(registryRequest);
-        }
+//         List<DeathCorrectionDtls> deathDetails = deathService.updateCorrection(request);
+//         String status=request.getDeathCorrection().get(0).getApplicationStatus();
+//         String applicationType =request.getDeathCorrection().get(0).getApplicationType();
+//         if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
+//             DeathRegistryCorrectionRequest registryRequest = deathRegistryRequestService.createRegistrycorrectionRequest(request);
+//             List<DeathRegistryCorrectionDtls> registryDeathDetails =  deathRegistryService.update(registryRequest);
+//         }
 
-        DeathCorrectionResponse response = DeathCorrectionResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                        .deathCorrection(deathDetails)
-                                        .build();
-        return ResponseEntity.ok(response);    
-}
+//         DeathCorrectionResponse response = DeathCorrectionResponse
+//                                         .builder()
+//                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+//                                         .deathCorrection(deathDetails)
+//                                         .build();
+//         return ResponseEntity.ok(response);    
+// }
 
-    //Rakhi S on 06.03.2023 - Death Abandoned Create Controller 
-    @PostMapping("/deathdetails/_createdeathabandoned")
-    public ResponseEntity<DeathAbandonedResponse> create(@Valid @RequestBody DeathAbandonedRequest request) {
-       
-        List<DeathAbandonedDtls> deathDetails = deathService.createAbandoned(request);
-
-        DeathAbandonedResponse response = DeathAbandonedResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                        .deathAbandonedDtls(deathDetails)
-                                        .build();
-        return ResponseEntity.ok(response);
-    }
-
-    //Rakhi S on 08.03.2023 - Death Abandoned Update  
-    @PostMapping("/deathdetails/_updatedeathabandoned")
-    public ResponseEntity<DeathAbandonedResponse> update(@RequestBody DeathAbandonedRequest request) {
  
-        List<DeathAbandonedDtls> deathDetails = deathService.updateAbandoned(request);
-        String status=request.getDeathAbandonedDtls().get(0).getApplicationStatus();
-        String applicationType =request.getDeathAbandonedDtls().get(0).getApplicationType();
-
-        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathAbandonedDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){         
-            DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryAbandonedRequest(request);
-            List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
-        }  
-
-        DeathAbandonedResponse response = DeathAbandonedResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                        .deathAbandonedDtls(deathDetails)
-                                        .build();
-        return ResponseEntity.ok(response);    
-    }
-    //Rakhi S on 25.03.2023 - Death NAC Create Controller 
-    @PostMapping("/deathdetails/_createdeathnac")
-    public ResponseEntity<DeathNACResponse> create(@Valid @RequestBody DeathNACRequest request) {
-       
-        List<DeathNACDtls> deathNACDetails = deathService.createNAC(request);
-
-        DeathNACResponse response = DeathNACResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                        .deathNACDtls(deathNACDetails)
-                                        .build();
-        return ResponseEntity.ok(response);
-    }
-
-       //Rakhi S on 30.03.2023 - Death NAC Update  
-       @PostMapping("/deathdetails/_updatedeathnac")
-       public ResponseEntity<DeathNACResponse> update(@RequestBody DeathNACRequest request) {
-    
-           List<DeathNACDtls> deathDetails = deathService.updateNAC(request);
-           String status=request.getDeathNACDtls().get(0).getApplicationStatus();
-           String applicationType =request.getDeathNACDtls().get(0).getApplicationType();
-   
-        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_TYPE)){  
-            DeathRegistryNACRequest registryRequest = deathRegistryRequestService.createRegistryNACRequest(request);
-            List<DeathRegistryNACDtls> registryDeathDetails =  deathRegistryService.createNAC(registryRequest);
-        }
-   
-        DeathNACResponse response = DeathNACResponse
-                            .builder()
-                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                            .deathNACDtls(deathDetails)
-                            .build();
-            return ResponseEntity.ok(response);
-        }
-
-    //Death NAC Search by Rakhi S ikm on 08.04.2023
-    @PostMapping("/deathdetails/_searchdeathnac")
-    public ResponseEntity<DeathNACResponse> searchNAC(@RequestBody RequestInfoWrapper request,
-                                                            @ModelAttribute DeathSearchCriteria criteria) {
-
-        List<DeathNACDtls> deathDetails = deathService.searchNAC(criteria, request.getRequestInfo());
-
-        DeathNACResponse response = DeathNACResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                        .deathNACDtls(deathDetails)
-                                        .build();
-        return ResponseEntity.ok(response);
-    }
-
-    //Death Abandoned Search by Rakhi S ikm on 08.04.2023
-    @PostMapping("/deathdetails/_searchdeathabandoned")
-    public ResponseEntity<DeathAbandonedResponse> searchAbandoned(@RequestBody RequestInfoWrapper request,
-                                                            @ModelAttribute DeathSearchCriteria criteria) {
-
-        List<DeathAbandonedDtls> deathDetails = deathService.searchAbandoned(criteria, request.getRequestInfo());
-
-        DeathAbandonedResponse response = DeathAbandonedResponse
-                                        .builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                        .deathAbandonedDtls(deathDetails)
-                                        .build();
-        return ResponseEntity.ok(response);
-    }
 }
+
+   // System.out.println("hai");
+           /********************************************* */
+
+    //        try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+
+    
+    /********************************************** */

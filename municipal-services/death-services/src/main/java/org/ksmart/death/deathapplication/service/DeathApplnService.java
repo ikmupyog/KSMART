@@ -70,11 +70,7 @@ public class DeathApplnService {
           validatorService.ruleEngineDeath(request, wfc, mdmsData);
           validatorService.validateCommonFields(request);
           mdmsValidator.validateDeathMDMSData(request,mdmsData);
-          enrichmentService.setDeathPlaceTypes(request);
-          enrichmentService.setPresentAddress(request);
-          enrichmentService.setPermanentAddress(request);
-          enrichmentService.enrichCreate(request);
-          enrichmentService.setACKNumber(request);         
+          enrichmentService.enrichCreate(request);     
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           workflowIntegrator.callWorkFlow(request);
           request.getDeathCertificateDtls().forEach(death->{

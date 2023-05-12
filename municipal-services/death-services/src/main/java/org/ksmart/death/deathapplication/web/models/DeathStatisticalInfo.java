@@ -1,7 +1,6 @@
 package org.ksmart.death.deathapplication.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,15 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.validation.constraints.Size;
-// import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-/*
-     * Creates main model class  
-     * Jasmine on 4.02.2023      
-*/
-//@Schema(name = "Death Statistical Details", description = "An Object holds the  statistical data ")
-@Validated
 
+@Validated
 @Getter
 @Setter
 @ToString
@@ -107,11 +100,9 @@ public class DeathStatisticalInfo {
     @JsonProperty("AlcoholType")
     private String alcoholType;
 
-    //Jasmine 9.02.2023
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
-    //Rakhi S on 03.03.2023
     @JsonProperty("MPName")
     private String mPName;
 
@@ -161,5 +152,15 @@ public class DeathStatisticalInfo {
 
     @JsonProperty("mannerOfDeathMl")
     private String mannerOfDeathMl;
+
+    //Rakhi S ikm on 12.05.2023 modification
+    @JsonProperty("smokingNumYears")
+    private Integer smokingNumYears;
+
+    @JsonProperty("tobaccoNumYears")
+    private Integer tobaccoNumYears;
+
+    @JsonProperty("alcoholNumYears")
+    private Integer alcoholNumYears;
 
 }

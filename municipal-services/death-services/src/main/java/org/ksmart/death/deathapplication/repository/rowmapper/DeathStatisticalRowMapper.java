@@ -6,17 +6,11 @@ import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-
-/**
-     * Creates CrDeathStatisticalRowMapper
-     * Jasmine
-     * on  06/02/2023
-     */
-    
+// STATISTICAL
 @Component
 public class DeathStatisticalRowMapper implements ResultSetExtractor  , BaseRowMapper{
-  //  @Override
-    public DeathStatisticalInfo extractData(ResultSet rs) throws SQLException, DataAccessException { // STATISTICAL
+
+    public DeathStatisticalInfo extractData(ResultSet rs) throws SQLException, DataAccessException { 
 
         return DeathStatisticalInfo.builder()
         .statisticalId(rs.getString("statid"))
@@ -53,6 +47,10 @@ public class DeathStatisticalRowMapper implements ResultSetExtractor  , BaseRowM
         .mPRegistrationNumber(rs.getString("medical_practitioner_regno"))
         .mPDesignation(rs.getString("medical_practitioner_desig"))
         .mPAddress(rs.getString("medical_practitioner_address"))
+        //Rakhi S on 12.05.2023
+        .alcoholNumYears(rs.getInt("alcohol_num_years"))
+        .smokingNumYears(rs.getInt("smoking_num_years"))
+        .tobaccoNumYears(rs.getInt("tobacco_num_years"))
         .build();
     }
 
