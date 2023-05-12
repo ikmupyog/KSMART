@@ -53,7 +53,7 @@ const MarriageInbox = () => {
     console.log("params for seRCH",params);
     setSearchParams({ ...searchParams,search: {applicationNo: params.applicationNumber}});
     // mutation.mutate({},{onSuccess});
-    refetch();
+    // refetch();
   };
 
   let complaints = []

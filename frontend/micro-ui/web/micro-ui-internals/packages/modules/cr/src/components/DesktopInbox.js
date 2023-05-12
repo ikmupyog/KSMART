@@ -123,6 +123,7 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
+        console.log("marriage row",row.original);
         return (
           <div>
             <span className="link">
