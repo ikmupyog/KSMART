@@ -610,81 +610,81 @@ public class DeathRegistryRepository {
                 else{
                     cert.getDeathAddressInfo().setPresentAddrHoueNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrStreetNameEn() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrStreetNameEn() != null && cert.getDeathAddressInfo().getPresentAddrStreetNameEn() != ""){
                     cert.getDeathAddressInfo().setPresentAddrStreetNameEn(", "+cert.getDeathAddressInfo().getPresentAddrStreetNameEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrStreetNameEn("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrStreetNameMl() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrStreetNameMl() != null && cert.getDeathAddressInfo().getPresentAddrStreetNameMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrStreetNameMl(", "+cert.getDeathAddressInfo().getPresentAddrStreetNameMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrStreetNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrCityEn() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrCityEn() != null && cert.getDeathAddressInfo().getPresentAddrCityEn() != ""){
                     cert.getDeathAddressInfo().setPresentAddrCityEn(", "+cert.getDeathAddressInfo().getPresentAddrCityEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrCityEn("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrCityMl() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrCityMl() != null && cert.getDeathAddressInfo().getPresentAddrCityMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrCityMl(", "+cert.getDeathAddressInfo().getPresentAddrCityMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrCityMl("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrLocalityEn() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrLocalityEn() != null && cert.getDeathAddressInfo().getPresentAddrLocalityEn() != ""){
                     cert.getDeathAddressInfo().setPresentAddrLocalityEn(", "+cert.getDeathAddressInfo().getPresentAddrLocalityEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrLocalityEn("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrLocalityMl() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrLocalityMl() != null && cert.getDeathAddressInfo().getPresentAddrLocalityMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrLocalityMl(", "+cert.getDeathAddressInfo().getPresentAddrLocalityMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrLocalityMl("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn() != null && cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn() != ""){
                     cert.getDeathAddressInfo().setPresentAddrPostofficeNameEn(", "+cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrPostofficeNameEn("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl() != null && cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrPostofficeNameMl(", "+cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrPostofficeNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrPincode() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrPincode() != null && cert.getDeathAddressInfo().getPresentAddrPincode() != ""){
                     cert.getDeathAddressInfo().setPresentAddrPincode(", "+cert.getDeathAddressInfo().getPresentAddrPincode());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrPincode("");
                 }
                 //Rakhi S ikm on 12.02.2023
-                if(cert.getDeathAddressInfo().getPresentAddrVillageNameEn() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrVillageNameEn() != null && cert.getDeathAddressInfo().getPresentAddrVillageNameEn() != ""){
                     cert.getDeathAddressInfo().setPresentAddrVillageNameEn(", "+cert.getDeathAddressInfo().getPresentAddrVillageNameEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrVillageNameEn("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrVillageNameMl() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrVillageNameMl() != null && cert.getDeathAddressInfo().getPresentAddrVillageNameMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrVillageNameMl(", "+cert.getDeathAddressInfo().getPresentAddrVillageNameMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrVillageNameMl("");
                 }
 
-                if(cert.getDeathAddressInfo().getPresentAddrTalukNameEn() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrTalukNameEn() != null && cert.getDeathAddressInfo().getPresentAddrTalukNameEn() != ""){
                     cert.getDeathAddressInfo().setPresentAddrTalukNameEn(", "+cert.getDeathAddressInfo().getPresentAddrTalukNameEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPresentAddrTalukNameEn("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrTalukNameMl() != null){
+                if(cert.getDeathAddressInfo().getPresentAddrTalukNameMl() != null && cert.getDeathAddressInfo().getPresentAddrTalukNameMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrTalukNameMl(", "+cert.getDeathAddressInfo().getPresentAddrTalukNameMl());
                 }
                 else{
@@ -716,55 +716,55 @@ public class DeathRegistryRepository {
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrHoueNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrStreetNameEn() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrStreetNameEn() != null && cert.getDeathAddressInfo().getPermanentAddrStreetNameEn() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrStreetNameEn(", "+cert.getDeathAddressInfo().getPermanentAddrStreetNameEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrStreetNameEn("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrStreetNameMl() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrStreetNameMl() != null && cert.getDeathAddressInfo().getPermanentAddrStreetNameMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrStreetNameMl(", "+cert.getDeathAddressInfo().getPermanentAddrStreetNameMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrStreetNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrCityEn() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrCityEn() != null && cert.getDeathAddressInfo().getPermanentAddrCityEn() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrCityEn(", "+cert.getDeathAddressInfo().getPermanentAddrCityEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrCityEn("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrCityMl() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrCityMl() != null && cert.getDeathAddressInfo().getPermanentAddrCityMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrCityMl(", "+cert.getDeathAddressInfo().getPermanentAddrCityMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrCityMl("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrLocalityEn() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrLocalityEn() != null && cert.getDeathAddressInfo().getPermanentAddrLocalityEn() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrLocalityEn(", "+cert.getDeathAddressInfo().getPermanentAddrLocalityEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrLocalityEn("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrLocalityMl() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrLocalityMl() != null && cert.getDeathAddressInfo().getPermanentAddrLocalityMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrLocalityMl(", "+cert.getDeathAddressInfo().getPermanentAddrLocalityMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrLocalityMl("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn() != null && cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameEn(", "+cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameEn("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl() != null && cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl(", "+cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl());
                 }
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null){
+                if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null && cert.getDeathAddressInfo().getPermanentAddrPincode() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrPincode(", "+cert.getDeathAddressInfo().getPermanentAddrPincode());
                 }
                 else{
@@ -772,128 +772,128 @@ public class DeathRegistryRepository {
                 }
 
                  //Rakhi S ikm on 12.02.2023
-                 if(cert.getDeathAddressInfo().getPermanentAddrVillageNameEn() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrVillageNameEn() != null && cert.getDeathAddressInfo().getPermanentAddrVillageNameEn() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrVillageNameEn(", "+cert.getDeathAddressInfo().getPermanentAddrVillageNameEn());
                  }
                  else{
                      cert.getDeathAddressInfo().setPermanentAddrVillageNameEn("");
                  }
-                 if(cert.getDeathAddressInfo().getPermanentAddrVillageNameMl() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrVillageNameMl() != null && cert.getDeathAddressInfo().getPermanentAddrVillageNameMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrVillageNameMl(", "+cert.getDeathAddressInfo().getPermanentAddrVillageNameMl());
                  }
                  else{
                      cert.getDeathAddressInfo().setPermanentAddrVillageNameMl("");
                  }
  
-                 if(cert.getDeathAddressInfo().getPermanentAddrTalukNameEn() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrTalukNameEn() != null && cert.getDeathAddressInfo().getPermanentAddrTalukNameEn() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrTalukNameEn(", "+cert.getDeathAddressInfo().getPermanentAddrTalukNameEn());
                  }
                  else{
                      cert.getDeathAddressInfo().setPermanentAddrTalukNameEn("");
                  }
-                 if(cert.getDeathAddressInfo().getPermanentAddrTalukNameMl() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrTalukNameMl() != null && cert.getDeathAddressInfo().getPermanentAddrTalukNameMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrTalukNameMl(", "+cert.getDeathAddressInfo().getPermanentAddrTalukNameMl());
                  }
                  else{
                      cert.getDeathAddressInfo().setPermanentAddrTalukNameMl("");
                  }
-                 if(cert.getDeathAddressInfo().getPresentAddrDistrictId() != null){
+                 if(cert.getDeathAddressInfo().getPresentAddrDistrictId() != null && cert.getDeathAddressInfo().getPresentAddrDistrictId() != ""){
                     cert.getDeathAddressInfo().setPresentAddrDistrictId(", "+cert.getDeathAddressInfo().getPresentAddrDistrictId());
                  }
                  else{
                     cert.getDeathAddressInfo().setPresentAddrDistrictId("");
                  }
-                 if(cert.getDeathAddressInfo().getPresentAddrStateId() != null){
+                 if(cert.getDeathAddressInfo().getPresentAddrStateId() != null && cert.getDeathAddressInfo().getPresentAddrStateId() != ""){
                     cert.getDeathAddressInfo().setPresentAddrStateId(", "+cert.getDeathAddressInfo().getPresentAddrStateId());
                  }
                  else{
                     cert.getDeathAddressInfo().setPresentAddrStateId("");
                  }
-                 if(cert.getDeathAddressInfo().getPresentAddrDistrictMl() != null){
+                 if(cert.getDeathAddressInfo().getPresentAddrDistrictMl() != null && cert.getDeathAddressInfo().getPresentAddrDistrictMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrDistrictMl(", "+cert.getDeathAddressInfo().getPresentAddrDistrictMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPresentAddrDistrictMl("");
                  }
-                 if(cert.getDeathAddressInfo().getPresentAddrStateMl() != null){
+                 if(cert.getDeathAddressInfo().getPresentAddrStateMl() != null && cert.getDeathAddressInfo().getPresentAddrStateMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrStateMl(", "+cert.getDeathAddressInfo().getPresentAddrStateMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPresentAddrStateMl("");
                  }
 
-                 if(cert.getDeathAddressInfo().getPermanentAddrDistrictId() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrDistrictId() != null && cert.getDeathAddressInfo().getPermanentAddrDistrictId() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrDistrictId(", "+cert.getDeathAddressInfo().getPermanentAddrDistrictId());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermanentAddrDistrictId("");
                  }
 
-                 if(cert.getDeathAddressInfo().getPermanentAddrStateId() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrStateId() != null && cert.getDeathAddressInfo().getPermanentAddrStateId() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrStateId(", "+cert.getDeathAddressInfo().getPermanentAddrStateId());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermanentAddrStateId("");
                  }
 
-                 if(cert.getDeathAddressInfo().getPermanentAddrDistrictMl() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrDistrictMl() != null && cert.getDeathAddressInfo().getPermanentAddrDistrictMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrDistrictMl(", "+cert.getDeathAddressInfo().getPermanentAddrDistrictMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermanentAddrDistrictMl("");
                  }
 
-                 if(cert.getDeathAddressInfo().getPermanentAddrStateMl() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrStateMl() != null && cert.getDeathAddressInfo().getPermanentAddrStateMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrStateMl(", "+cert.getDeathAddressInfo().getPermanentAddrStateMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermanentAddrStateMl("");
                  }
-                 if(cert.getDeathAddressInfo().getPermanentAddrcountryMl() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrcountryMl() != null && cert.getDeathAddressInfo().getPermanentAddrcountryMl() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrcountryMl(", "+cert.getDeathAddressInfo().getPermanentAddrcountryMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermanentAddrcountryMl("");
                  }
-                 if(cert.getDeathAddressInfo().getPermanentAddrCountryId() != null){
+                 if(cert.getDeathAddressInfo().getPermanentAddrCountryId() != null && cert.getDeathAddressInfo().getPermanentAddrCountryId() != ""){
                     cert.getDeathAddressInfo().setPermanentAddrCountryId(", "+cert.getDeathAddressInfo().getPermanentAddrCountryId());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermanentAddrCountryId("");
                  }
 
-                 if(cert.getDeathAddressInfo().getPresentAddrCountryId() != null){
+                 if(cert.getDeathAddressInfo().getPresentAddrCountryId() != null && cert.getDeathAddressInfo().getPresentAddrCountryId() != ""){
                     cert.getDeathAddressInfo().setPresentAddrCountryId(", "+cert.getDeathAddressInfo().getPresentAddrCountryId());
                  }
                  else{
                     cert.getDeathAddressInfo().setPresentAddrCountryId("");
                  }
 
-                 if(cert.getDeathAddressInfo().getPresentAddrcountryMl() != null){
+                 if(cert.getDeathAddressInfo().getPresentAddrcountryMl() != null && cert.getDeathAddressInfo().getPresentAddrcountryMl() != ""){
                     cert.getDeathAddressInfo().setPresentAddrcountryMl(", "+cert.getDeathAddressInfo().getPresentAddrcountryMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPresentAddrcountryMl("");
                  }
-                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn() != null){
+                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn() != null && cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn() != ""){
                     cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceEn(", "+cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceEn());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceEn("");
                  }
-                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl() != null){
+                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl() != null && cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl() != ""){
                     cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceMl(", "+cert.getDeathAddressInfo().getPermntOutsideIndiaprovinceMl());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermntOutsideIndiaprovinceMl("");
                  }
-                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown() != null){
+                 if(cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown() != null && cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown() != ""){
                     cert.getDeathAddressInfo().setPermntOutsideIndiaCityTown(", "+cert.getDeathAddressInfo().getPermntOutsideIndiaCityTown());
                  }
                  else{
                     cert.getDeathAddressInfo().setPermntOutsideIndiaCityTown("");
                  }
-                 if(cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode() != null){
+                 if(cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode() != null && cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode() != ""){
                     cert.getDeathAddressInfo().setPermanentOutsideIndiaPostCode(", "+cert.getDeathAddressInfo().getPermanentOutsideIndiaPostCode());
                  }
                  else{
