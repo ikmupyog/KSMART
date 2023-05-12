@@ -5,10 +5,6 @@ import { PgrRoutes, getRoute } from "../../constants/Routes";
 import { useRouteMatch, Switch, useLocation } from "react-router-dom";
 import { AppContainer, BackButton, PrivateRoute } from "@egovernments/digit-ui-react-components";
 
-import { CreateComplaint } from "./Create";
-import { ComplaintsList } from "./ComplaintsList";
-import ComplaintDetailsPage from "./ComplaintDetails";
-import Response from "./Response";
 import { useTranslation } from "react-i18next";
 
 const App = () => {

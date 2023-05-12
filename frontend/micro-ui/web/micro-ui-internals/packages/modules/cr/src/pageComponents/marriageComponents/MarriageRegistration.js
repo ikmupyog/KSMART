@@ -34,6 +34,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   const [tenantWard, setTenantWard] = useState(tenantId);
   const [lbs, setLbs] = useState([]);
+  const [filterLBs, setfilterLBs] = useState(null);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
   const [tenantboundary, setTenantboundary] = useState(false);
@@ -95,7 +96,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   let cmbWardNoFinal = [];
   let cmbFilterTaluk = [];
   let cmbFilterVillage = [];
-  let cmbCurrentLBType = [];
+  // let filterLBs = [];
   let cmbSubRegistarOffice = [];
   let MarriagePlaceTypeName = "";
   let workFlowData = [];
@@ -325,6 +326,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //     }
   //   }
   // });
+
+  console.log({Villagevalues})
+
   function setSelectmarriageDOM(value) {
     setDifferenceInTime(null);
     setmarriageDOM(value);
@@ -354,23 +358,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectMarriageDistrictid(value) {
     setMarriageDistrictid(value);
-    setLbs(null);
+    // setLbs(null);
+    setmarriageTalukID("")
     districtid = value.districtid;
     setTenantboundary(true);
-    if (cmbLB.length > 0) {
-      console.log("Hiiii");
-      const currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
-      setLbs(currentLB);
-      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
-      setLbsTalukvalue(cmbFilterTaluk);
-      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
-      setLbsVillagevalue(cmbFilterVillage);
-      cmbCurrentLBType = filteredLBType.flter((lb) => lb.code === currentLB[0].city.lbtypecode);
-      setMarriageLBtype(cmbCurrentLBType[0]);
-      console.log({ cmbCurrentLBType });
-      setIsInitialRender(false);
-    }
-    setmarriageTalukID("");
+    cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+    setLbsTalukvalue(cmbFilterTaluk);
     setmarriageVillageName("");
     setMarriageLBtype("");
     setMarriageTenantid("");
@@ -382,12 +375,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   function setSelectmarriageTalukID(value) {
     setmarriageTalukID(value);
     setmarriageVillageName("");
-    setMarriageLBtype("");
-    setMarriageTenantid("");
-    setMarriageWardCode("");
-    setMarriagePlacetype("");
-    setplaceidEn("");
-    setplaceidMl("");
+    cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code);
+    setLbsVillagevalue(cmbFilterVillage);
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
@@ -395,6 +384,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   function setSelectmarriageLBtype(value) {
     setMarriageLBtype(value);
     setMarriageTenantid("");
+    const filteredLBs = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === marriageDistrictid.code && cmbLB.city.lbtypecode === value.code)
+    setfilterLBs(filteredLBs);
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
@@ -458,16 +449,16 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode(value);
   }
 
-  function setCSLB(selectedLBType) {
-    const localbodies = lbs?.filter((LB) => LB?.city?.districtid === marriageDistrictid?.districtid);
-    if (selectedLBType?.code === "LB_TYPE_MUNICIPALITY") {
-      const filteredMunicipality = localbodies?.filter((LB) => LB?.city?.lbtypecode?.split("_")[2] === "MUNICIPALITY");
-      return filteredMunicipality;
-    } else if (selectedLBType?.code === "LB_TYPE_CORPORATION") {
-      const filteredCorporation = localbodies?.filter((LB) => LB?.city?.lbtypecode.split("_")[2] === "CORPORATION");
-      return filteredCorporation;
-    }
-  }
+  // function setCSLB(selectedLBType) {
+  //   const localbodies = lbs?.filter((LB) => LB?.city?.districtid === marriageDistrictid?.districtid);
+  //   if (selectedLBType?.code === "LB_TYPE_MUNICIPALITY") {
+  //     const filteredMunicipality = localbodies?.filter((LB) => LB?.city?.lbtypecode?.split("_")[2] === "MUNICIPALITY");
+  //     return filteredMunicipality;
+  //   } else if (selectedLBType?.code === "LB_TYPE_CORPORATION") {
+  //     const filteredCorporation = localbodies?.filter((LB) => LB?.city?.lbtypecode.split("_")[2] === "CORPORATION");
+  //     return filteredCorporation;
+  //   }
+  // }
   function setMarriagePlace(place) {
     if (place.code === "RELIGIOUS_INSTITUTION") {
       return cmbPlaceNameReligious;
@@ -482,6 +473,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     if (cmbLB?.length > 0) {
       const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
       setMarriageTenantid(currentLB[0]);
+      setfilterLBs(cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0].city.distCodeStr && cmbLB.city.lbtypecode === currentLB[0].city.lbtypecode));      
       const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
       setMarriageDistrictid(currentDistrict[0]);
       districtid = currentDistrict[0].districtid;
@@ -494,7 +486,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }, [cmbLB.length]);
 
-  console.log({ filteredLBType });
+  console.log({marriageDistrictid})
 
   useEffect(() => {
     if (DifferenceInTime != null) {
@@ -935,7 +927,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
 
   console.log("Registration", formData);
-  console.log({ workFlowCode });
 
   if (
     isLoading ||
@@ -947,6 +938,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     isTypeOfMarriageLoading ||
     isMarriagePlaceTypeLoading ||
     isMarriagePlaceId ||
+    isSubRegistarOfficeLoading ||
     isWorkFlowDetailsLoading
   ) {
     return <Loader></Loader>;
@@ -1096,9 +1088,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   </CardLabel>
                   <Dropdown
                     t={t}
-                    optionKey="code"
+                    optionKey="name"
                     isMandatory={true}
-                    option={setCSLB(marriageLBtype)}
+                    option={filterLBs}
                     name="marriageTenantid"
                     value={marriageTenantid}
                     selected={marriageTenantid}
