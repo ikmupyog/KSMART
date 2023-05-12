@@ -259,7 +259,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === witness2AadharNo)) {
-      setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -272,7 +271,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
       newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);motherMarriageAge
       setTimeout(() => {
@@ -285,7 +283,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
       newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
-      setwitness1AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -305,7 +302,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     if (newValue != '' && (newValue === witness1AadharNo)) {
-      setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -318,7 +314,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.GroomDetails?.groomMotherAadharNo ||
       newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
-      setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
@@ -331,7 +326,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       newValue === formData?.BrideDetails?.brideMotherAadharNo ||
       newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
-      setwitness2AadharNo("");
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {

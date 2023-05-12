@@ -377,8 +377,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setmarriageVillageName("");
     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.talukCode === value.code);
     setLbsVillagevalue(cmbFilterVillage);
-    console.log({cmbFilterVillage});
-
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);

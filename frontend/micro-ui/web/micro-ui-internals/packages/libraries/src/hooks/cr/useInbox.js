@@ -1,16 +1,16 @@
 import React from "react"
 import useInbox from "../useInbox"
 
-const useCRInbox = ({ tenantId, filters, config }) => {
-
-    const {applicationStatus, mobileNumber, applicationNumber, sortBy, sortOrder, locality, uuid, limit, offset,businessServiceCode = "BIRTHHOSP21" } = filters
+const useCRInbox = ({ tenantId, filters={}, config }) => {
+console.log("reached",filters);
+    const {applicationStatus = "", mobileNumber="", applicationNumber="", sortBy="", sortOrder="", locality="", uuid ="", limit="", offset="",businessServiceCodes = ["WFBIRTH21DAYS"] } = filters
     const USER_UUID = Digit.UserService.getUser()?.info?.uuid;
-
+    console.log("reached22");
     const _filters = {
         tenantId,
         processSearchCriteria: {
             moduleName: "birth-services",
-			businessService: [businessServiceCode],
+			businessService: [...businessServiceCodes],
             ...(applicationStatus?.length > 0 ? {status: applicationStatus} : {}),
             ...(uuid && Object.keys(uuid).length > 0 ? {assignee: uuid.code === "ASSIGNED_TO_ME" ? USER_UUID : ""} : {}),
         },
@@ -24,7 +24,7 @@ const useCRInbox = ({ tenantId, filters, config }) => {
         limit,
         offset
     }
-
+console.log("filetrrr",_filters);
     return useInbox({
         tenantId, filters: _filters, config: {
             select: (data) => ({
