@@ -132,7 +132,7 @@ function ApplicationContent({
   };
 
   const deathNACurl = window.location.href.includes("application-deathnacdetails") ? true : false;
-  const birthNACurl = window.location.href.includes("application-birthnacdetails") ? true : false;
+  const birthNACurl = window.location.href.includes("application-nacbirth") ? true : false;
 
   const getMainDivStyles = () => {
     if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
