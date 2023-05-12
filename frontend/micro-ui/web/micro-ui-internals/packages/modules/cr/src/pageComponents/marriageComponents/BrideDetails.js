@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import { TimePicker } from '@material-ui/pickers';
 import moment from "moment";
+import { sortDropdownNames } from "../../utils";
 
 const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -1311,7 +1312,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={gender}
+                  option={sortDropdownNames(gender ? gender : [], "code", t)}
                   selected={brideGender}
                   select={setSelectbrideGender}
                   placeholder={`${t("CR_BRIDE_GENDER")}`}
@@ -1369,7 +1370,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbMaritalStatus}
+                  option={sortDropdownNames(cmbMaritalStatus ? cmbMaritalStatus : [], "name", t)}
                   selected={brideMaritalstatusID}
                   select={setSelectbrideMaritalstatusID}
                   placeholder={`${t("CR_BRIDE_MARITAL_STATUS")}`}

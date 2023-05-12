@@ -15,6 +15,7 @@ import {
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
+import { sortDropdownNames } from "../../utils";
 
 const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -1284,7 +1285,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={gender}
+                  option={sortDropdownNames(gender ? gender : [], "code", t)}
                   selected={groomGender}
                   select={setselectGroomGender}
                   placeholder={`${t("CR_GROOM_GENDER")}`}
@@ -1342,7 +1343,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbMaritalStatus}
+                  option={sortDropdownNames(cmbMaritalStatus ? cmbMaritalStatus : [], "name", t)}
                   selected={groomMaritalstatusID}
                   select={setSelectGroomMaritalstatusID}
                   placeholder={`${t("CR_GROOM_MARITAL_STATUS")}`}

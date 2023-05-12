@@ -20,10 +20,11 @@ import MarriageInstitution from "./MarriageInstitution";
 import MarriagePublicPlace from "./MarriagePublicPlace";
 import { useQueryClient } from "react-query";
 import _ from "lodash";
+import { sortDropdownNames } from "../../utils";
 // import { TimePicker } from '@material-ui/pickers';
 
-const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage=false }) => {
-  console.log({isEditMarriage, formData});
+const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage = false }) => {
+  console.log({ isEditMarriage, formData });
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -1026,7 +1027,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       isMandatory={true}
                       optionKey="name"
-                      option={stateDist}
+                      option={sortDropdownNames(stateDist ? stateDist : [], "name", t)}
                       // name="marriageDistrictid"
                       // value={marriageDistrictid}
                       select={setSelectMarriageDistrictid}
@@ -1043,7 +1044,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       isMandatory={true}
                       optionKey="name"
-                      option={Talukvalues}
+                      option={sortDropdownNames(Talukvalues ? Talukvalues : [], "name", t)}
                       name="marriageTalukID"
                       value={marriageTalukID}
                       select={setSelectmarriageTalukID}
@@ -1060,7 +1061,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       optionKey="name"
                       isMandatory={true}
-                      option={Villagevalues}
+                      option={sortDropdownNames(Villagevalues ? Villagevalues : [], "name", t)}
                       name="marriageVillageName"
                       value={marriageVillageName}
                       select={setSelectmarriageVillageName}
@@ -1081,7 +1082,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       optionKey="name"
                       isMandatory={true}
-                      option={filteredLBType}
+                      option={sortDropdownNames(filteredLBType ? filteredLBType : [], "name", t)}
                       name="marriageLBtype"
                       value={marriageLBtype}
                       select={setSelectmarriageLBtype}
@@ -1098,7 +1099,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       optionKey="name"
                       isMandatory={true}
-                      option={filterLBs}
+                      option={sortDropdownNames(filterLBs ? filterLBs : [], "name", t)}
                       name="marriageTenantid"
                       value={marriageTenantid}
                       selected={marriageTenantid}
@@ -1134,7 +1135,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       type={"text"}
                       optionKey="name"
-                      option={cmbPlaceType}
+                      option={sortDropdownNames(cmbPlaceType ? cmbPlaceType : [], "name", t)}
                       selected={marriagePlacetype}
                       select={setSelectmarriagePlacetype}
                       placeholder={t("CR_MARRIAGE_PLACE_TYPE")}
@@ -1155,7 +1156,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                           t={t}
                           type={"text"}
                           optionKey={marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? "locationOfOffice" : "name"}
-                          option={setMarriagePlace(marriagePlacetype)}
+                          option={sortDropdownNames(marriagePlacetype ? setMarriagePlace(marriagePlacetype) : [], "name", t)}
                           selected={placeidEn}
                           select={setSelectPlaceidEn}
                           placeholder={t("CR_NAME_OF_PLACE_EN")}
@@ -1260,7 +1261,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       type={"text"}
                       optionKey="name"
-                      option={cmbTypeOfMarriage}
+                      option={sortDropdownNames(cmbTypeOfMarriage ? cmbTypeOfMarriage : [], "name", t)}
                       selected={marriageType}
                       select={setSelectmarriageType}
                       placeholder={t("CR_MARRIAGE_TYPE")}
