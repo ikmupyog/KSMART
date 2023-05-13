@@ -129,13 +129,6 @@ function ApplicationDetailsContent({
   };
   const { roles: userRoles,} = Digit.UserService.getUser().info;
   const [isHospitalUser, setIsHospitalUser] = useState(false);
-  const employeeInfo = JSON.parse(window.localStorage.getItem("Employee.user-info"));
-  const employeeTenantId = window.localStorage.getItem("Employee.tenant-id");
-  console.log("employeeInfo", employeeInfo);
-  console.log("employeeTenantId", employeeTenantId);
-  const responseRoles = employeeInfo["roles"];
-  console.log(responseRoles[0].code);
-  let hospUserFlag = false;
   useEffect(() => {
     console.log("userRoles",userRoles);
     if (userRoles.length > 0) {
