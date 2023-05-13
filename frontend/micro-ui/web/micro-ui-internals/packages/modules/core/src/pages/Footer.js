@@ -15,9 +15,9 @@ const Footer = () => {
                     <img style={{ cursor: "pointer", display: "inline-flex", height: '1.4em' }} alt={"UPYOG"} src={poweredByLogo} />
                 </div>
                 <span style={{ margin: "0 10px" }}>|</span>
-                <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400" }} onClick={() => { window.open('https://niua.in/', '_blank').focus(); }}>2023©Ksmart</span>
+                <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400" }} onClick={() => { window.open('https://ikm.gov.in/', '_blank').focus(); }}>Designed, Developed and Maintained by Information Kerala Mission</span>
                 <span style={{ margin: "0 10px" }}>|</span>
-                <a style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400" }} href={pdfUrl} target='_blank'>UPYOG License</a>
+                <a style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400" }} href={'https://www.kerala.gov.in/'} target='_blank'>Government of Kerala</a>
             </div>
         </div>
     )
