@@ -312,7 +312,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
 
         <EditButton
           selected={true}
-          label={"Save"}
+          label={t("CR_SAVE")}
           onClick={() => {
             // resetFields();
             // onSubmit({fileData:uploadedFiles,documentCondition: selectedDocuments?.[0]?.conditionCode});
@@ -330,7 +330,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
         />
         <EditButton
           selected={false}
-          label={"Cancel"}
+          label={t("CR_CANCEL")}
           onClick={() => {
             hideModal();
           }}
