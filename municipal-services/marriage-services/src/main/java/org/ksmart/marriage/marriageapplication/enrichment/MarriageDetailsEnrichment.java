@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriageapplication.enrichment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
@@ -84,6 +85,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setSerialNo1(1);
                 marriage.getWitnessDetails().setSerialNo2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
+                if(StringUtils.isNotBlank(marriage.getWitnessDetails().getBrideUrl())){
+                    marriage.getWitnessDetails().setBrideUrl(marriage.getWitnessDetails().getBrideUrl().trim().replaceAll(config.getImageURLStartPath(),""));
+                }
+                if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
+                    marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().trim().replaceAll(config.getImageURLStartPath(),""));
+                }
             }
             setApplicationNumbers(request);
             setBrideAddressNull(request);
@@ -252,6 +259,14 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);
         witnessDetails.setWitness1AadharNo(witnessDetailsEnc.getWitness1AadharNo());
         witnessDetails.setWitness2AadharNo(witnessDetailsEnc.getWitness2AadharNo());
+            if(marriage.getWitnessDetails()!=null){
+                if(StringUtils.isNotBlank(marriage.getWitnessDetails().getBrideUrl())){
+                    marriage.getWitnessDetails().setBrideUrl(marriage.getWitnessDetails().getBrideUrl().replaceAll(config.getImageURLStartPath(),""));
+                }
+                if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
+                    marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().replaceAll(config.getImageURLStartPath(),""));
+                }
+            }
     });   
 }
     private void setGroomPresentAddress(MarriageDetailsRequest request) {

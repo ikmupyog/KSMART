@@ -1,5 +1,7 @@
 package org.ksmart.marriage.marriageapplication.repository.rowmapper;
 
+import org.apache.commons.lang3.StringUtils;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -13,6 +15,11 @@ import java.util.List;
 @Component
 public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper, BrideAddressDetailsRowMapper, GroomAddressDetailsRowMapper,WitnessDetailsRowMapper,DocumentRowMapper{
 
+    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
+
+    public MarriageApplicationRowMapper(MarriageApplicationConfiguration marriageApplicationConfiguration) {
+        this.marriageApplicationConfiguration = marriageApplicationConfiguration;
+    }
     @Override
     public List<MarriageApplicationDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
         List<MarriageApplicationDetails> result = new ArrayList<>();
@@ -64,5 +71,15 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
 
 
         return result;
+    }
+    @Override
+    public String createFullURL(String url) {
+        if(StringUtils.isNotBlank(url)){
+//            System.out.println("---------------"+url);
+//            System.out.println("---------------"+marriageApplicationConfiguration.getImageURLStartPath()+url);
+            return marriageApplicationConfiguration.getImageURLStartPath()+url;
+        }
+//        System.out.println("-else--------------"+url);
+        return url;
     }
 }
