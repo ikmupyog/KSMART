@@ -31,7 +31,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoading, toast, setToast }) => {
+const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoading, toast, setToast, isSuccess }) => {
   const history = useHistory();
   const { path } = useRouteMatch();
   const { t } = useTranslation();
@@ -45,7 +45,6 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
       tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
-  console.log("isSuccess....", isSuccess);
 
   useEffect(() => {
     register("offset", 0);
@@ -78,7 +77,7 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
   const isMobile = window.Digit.Utils.browser.isMobile();
 
   if (isMobile) {
-    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, data, onSubmit }} />;
+    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, data, onSubmit, isSuccess }} />;
   }
 
   const handleLinkClick = () => {

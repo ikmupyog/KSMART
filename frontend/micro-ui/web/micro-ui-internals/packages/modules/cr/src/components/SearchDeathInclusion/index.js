@@ -1,6 +1,6 @@
  import React, { useCallback, useState, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SubmitBar, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -30,7 +30,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionClick, isSuccess }) => {
+const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, toast, setToast, onCorrectionClick, isSuccess }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
   const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
@@ -210,7 +210,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
             <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
           </Card>
         ): null}
-      
+      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
     </React.Fragment>
   );
 };

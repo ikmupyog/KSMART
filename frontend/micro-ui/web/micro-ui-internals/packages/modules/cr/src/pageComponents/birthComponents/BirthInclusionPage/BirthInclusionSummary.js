@@ -193,7 +193,7 @@ function BirthInclusionSummary({
   };
 
   const renderSummaryCard = (detail, index) => {
-    //  switch()
+  
     return (
       <React.Fragment key={index}>
         <div style={getMainDivStyles()}>
