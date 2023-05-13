@@ -116,6 +116,19 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       setisInitiatorDeclaration(e.target.checked);
     }
   }
+  const { roles: userRoles, } = Digit.UserService.getUser().info;
+  const [isHospitalUser, setIsHospitalUser] = useState(false);
+  useEffect(() => {
+    console.log("userRoles", userRoles);
+    if (userRoles.length > 0) {
+      if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER" ||
+        userRoles[0].code === "BND_LOCAL_REGISTRAR" || userRoles[0].code === "BND_SUB_REGISTRAR" || userRoles[0].code === "BND_DISTRICT_REGISTRAR") {
+        setIsHospitalUser(true);
+      } else {
+        setIsHospitalUser(false);
+      }
+    }
+  }, [userRoles]);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -1818,7 +1831,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
 
           </div>
         )}
-        {InformarHosInstDetails?.initiatorAadhar != null && (
+
+        {InformarHosInstDetails?.initiatorAadhar != null && isHospitalUser === true && (
           <div>
             <Accordion
               expanded={false}
@@ -1882,51 +1896,52 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             />
           </div>
         )}
-        <Accordion
-          expanded={false}
-          title={t("CR_HOSPITAL_ADMISION_DETAILS")}
-          content={
-            <StatusTable>
-              <div className="row">
-                <div className="col-md-12">
+        {isHospitalUser === true && (
+          <Accordion
+            expanded={false}
+            title={t("CR_HOSPITAL_ADMISION_DETAILS")}
+            content={
+              <StatusTable>
+                <div className="row">
                   <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}</span>{" "}
-                    </h1>
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}</span>{" "}
+                      </h1>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP")}`} :</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopList?.i18nKey}</CardText>
-                  </div>
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP_NO")}`} :</CardText>
-                  </div>
-                  <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopNumber}</CardText>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GYNC_REG_NO")}`} :</CardText>
-                  </div>
-                  <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.obstetricsNumber}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopList?.i18nKey}</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP_NO")}`} :</CardText>
+                    </div>
+                    <div className="col-md-4">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopNumber}</CardText>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </StatusTable>
-          }
-        />
-
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GYNC_REG_NO")}`} :</CardText>
+                    </div>
+                    <div className="col-md-4">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.obstetricsNumber}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                    </div>
+                  </div>
+                </div>
+              </StatusTable>
+            }
+          />
+        )}
         {/* {window.location.href.includes("/citizen") && ( */}
         <div>
           <div className="row">
