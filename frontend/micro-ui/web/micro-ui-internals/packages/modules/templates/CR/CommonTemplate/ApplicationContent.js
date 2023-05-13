@@ -169,6 +169,7 @@ function ApplicationContent({
         return { image: key.url, key: key.id };
       }
     });
+    console.log({newdocuments})
     setDocuments(newdocuments);
   };
 

@@ -192,7 +192,7 @@ const CRApplicationDetails = (props) => {
             />
           ) : null}
           <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
-          <ApplicationDetailsActionBar
+          {window.location.href.includes("/employee/") && <ApplicationDetailsActionBar
             workflowDetails={workflowDetails}
             displayMenu={displayMenu}
             onActionSelect={onActionSelect}
@@ -201,7 +201,7 @@ const CRApplicationDetails = (props) => {
             forcedActionPrefix={forcedActionPrefix}
             ActionBarStyle={ActionBarStyle}
             MenuStyle={MenuStyle}
-          />
+          />}
         </React.Fragment>
       ) : (
         <Loader />
