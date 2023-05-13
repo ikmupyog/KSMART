@@ -17,10 +17,19 @@ const Search = ({path}) => {
         fromDate?.setSeconds(fromDate?.getSeconds() - 19800 )
         var toDate = new Date(_data?.toDate)
         toDate?.setSeconds(toDate?.getSeconds() + 86399 - 19800)
+        let applicationType = "";
+
+        if((_data?.applicationType === undefined) && (_data?.applicationNumber !== "")){
+            console.log("_data?.applicationNumber " + _data?.applicationNumber);
+            let _key = _data.applicationNumber.split("-")[4];
+            _key === "BFIFLC" ? applicationType = "CORRECTION" : applicationType = "" ;
+        }
+
         const data = {
             ..._data,
             ...(_data.toDate ? {toDate: toDate?.getTime()} : {}),
-            ...(_data.fromDate ? {fromDate: fromDate?.getTime()} : {})
+            ...(_data.fromDate ? {fromDate: fromDate?.getTime()} : {}),
+            ...(applicationType !== "" ? {applicationType: applicationType} : {}),
         }
 
         setPayload(Object.keys(data).filter( k => data[k] ).reduce( (acc, key) => ({...acc,  [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {} ))

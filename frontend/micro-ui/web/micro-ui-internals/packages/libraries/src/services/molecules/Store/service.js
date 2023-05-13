@@ -58,9 +58,13 @@ export const StoreService = {
     const { MdmsRes } = await MdmsService.init(stateCode);
     const stateInfo = MdmsRes["common-masters"].StateInfo[0];
     const districts = MdmsRes["common-masters"].District;
-    const filterDistricts = districts.filter(districts => districts.statecode === "kl" && (districts.districtid === 1 || 
-    districts.districtid === 9 || districts.districtid === 7 || districts.districtid === 4 || districts.districtid === 8 || districts.districtid === 6 ||
-    districts.districtid === 13));
+    const filterDistricts = districts.filter(districts => districts.statecode === "kl" && (
+    //   districts.districtid === 1 || 
+    // districts.districtid === 9 || 
+    districts.districtid === 7 
+    // || districts.districtid === 4 || districts.districtid === 8 || districts.districtid === 6 ||
+    // districts.districtid === 13
+    ));
     const localities = {};
     const revenue_localities = {};
     const initData = {
@@ -88,7 +92,11 @@ export const StoreService = {
       .map((module) => module.tenants)
       .flat()
       .reduce((unique, ele) => (unique.find((item) => item.code === ele.code) ? unique : [...unique, ele]), []);
-    initData.tenants = MdmsRes?.tenant?.tenants
+      let filtertenants = MdmsRes?.tenant?.tenants;
+      // console.log(filtertenants);
+      // console.log("filtertenants",filtertenants.filter(filtertenants => filtertenants.code === "kl.cochin"));
+      initData.tenants = filtertenants.filter(filtertenants => filtertenants.code === "kl.cochin")
+    // initData.tenants = MdmsRes?.tenant?.tenants
       .map((tenant) => ({ i18nKey: `TENANT_TENANTS_${tenant.code.replace(".", "_").toUpperCase()}`, ...tenant }));
     // .filter((item) => !!moduleTenants.find((mt) => mt.code === item.code))
     // .map((tenant) => ({ i18nKey: `TENANT_TENANTS_${tenant.code.replace(".", "_").toUpperCase()}`, ...tenant }));

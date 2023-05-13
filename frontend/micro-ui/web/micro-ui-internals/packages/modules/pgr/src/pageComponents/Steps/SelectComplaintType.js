@@ -32,6 +32,7 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
     onSelect({ complaintType: value });
     // SessionStorage.set("complaintType", value);
   }
+
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline /> : null}

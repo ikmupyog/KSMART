@@ -549,7 +549,7 @@ const HouseMarriageRegistration = ({
             isMandatory={false}
             disable={isDisableEdit}
             placeholder={`${t("CR_LOCALITY_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_ERROR_LOCALITY_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_ERROR_LOCALITY_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -567,7 +567,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectmarriageStreetEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_STREET_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -584,7 +584,7 @@ const HouseMarriageRegistration = ({
             value={marriagePlacenameEn}
             onChange={setSelectOtherMarriagePlacenameEn}
             disable={isDisableEdit}
-            placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+            placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN_SAMPLE")}`}
             {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: true, type: "text", title: t("CR_ERROR_HOUSE_NAME_EN") })}
           />
         </div>
@@ -627,7 +627,7 @@ const HouseMarriageRegistration = ({
             disable={isDisableEdit}
             placeholder={`${t("CR_LOCALITY_MAL")}`}
             {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
               isRequired: true,
               type: "text",
               title: t("CR_ERROR_LOCALITY_ML"),
@@ -651,7 +651,7 @@ const HouseMarriageRegistration = ({
             isMandatory={false}
             placeholder={`${t("CR_STREET_MAL")}`}
             {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
               isRequired: false,
               type: "text",
               title: t("BIRTH_ERROR_ADDRESS_PRESENT_STREET_ML"),
@@ -683,54 +683,7 @@ const HouseMarriageRegistration = ({
           />
         </div>
       </div>
-      {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_FOLLOWED_FOR_SOLEMNIZATION")}`}</span>{" "}
-            </h1>
-          </div>
-          </div>
-          <div className="col_md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_MARRIAGE_TYPE")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                option={cmbPlaceType}
-                selected={marriageType}
-                select={setSelectmarriageType}
-                placeholder={t("CR_MARRIAGE_TYPE")}
-                isMandatory={false}
-                // option={cmbCountry}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="marriageOthersSpecify"
-                  value={marriageOthersSpecify}
-                  onChange={setSelectmarriageOthersSpecify}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                  
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
-                />
-             
-              
-            </div>
-          </div> */}
-
+      
       <div className="row">
         <div className="col-md-12">
           <h1 className="">

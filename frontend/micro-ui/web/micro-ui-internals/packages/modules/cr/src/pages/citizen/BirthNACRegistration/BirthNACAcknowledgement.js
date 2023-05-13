@@ -108,7 +108,6 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-  console.log(mutation, "mutation");
   let enableLoader = mutation.isIdle || mutation.isLoading;
   if (enableLoader) {
     if (
@@ -132,7 +131,11 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
-        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
+        {
+          <CardText>
+            {t("COMMON_REASON")} : {mutation?.error?.response?.data?.Errors[0]?.message}
+          </CardText>
+        }
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>

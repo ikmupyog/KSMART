@@ -628,7 +628,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
     });
     console.log({ newThumbnails });
     return newThumbnails;
@@ -1184,9 +1184,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     })();
   }, [witness2AadharDocument]);
 
-  console.log({ formData });
-  console.log({ witness1Aadhar });
-
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
@@ -1463,32 +1460,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     });
   };
   const onSkip = () => onSelect();
-
-  console.log({
-    groomAadharDocument,
-    groomPassportDocument,
-    groomSSNDocument,
-    brideAadharDocument,
-    bridePassportDocument,
-    brideSSNDocument,
-    groomDrivingLicenseDocument,
-    groomSchoolCertificateDocument,
-    groomBirthCertificateDocument,
-    brideDrivingLicenseDocument,
-    brideSchoolCertificateDocument,
-    brideBirthCertificateDocument,
-    marriageOfficerCertificateDocument,
-    instituitionCertificateDocument,
-    groomDivorceAnnulledDecreeCertificateDocument,
-    brideDivorceAnnulledDecreeCertificateDocument,
-    groomExpirationCertificateDocument,
-    brideExpirationCertificateDocument,
-    witness1AadharDocument,
-    witness2AadharDocument,
-    groomAgeDocument,
-    brideAgeDocument
-  });
-
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
@@ -1504,14 +1475,13 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
           (brideResidentShip === "INDIAN" && !brideAadhar) ||
           ((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (!bridePassport || !brideSSN)) ||
           !groomAgeDocument ||
-          (groomAgeDocument === "DRIVING_LICENSE" && !groomDrivingLicense) ||
-          (groomAgeDocument === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
-          (groomAgeDocument === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
-          // !groomDrivingLicense ||!groomSchoolCertificate ||!groomBirthCertificate ||
+          (groomAgeDocument?.code === "DRIVING_LICENSE" && !groomDrivingLicense) ||
+          (groomAgeDocument?.code === "SCHOOL_CERTIFICATE" && !groomSchoolCertificate) ||
+          (groomAgeDocument?.code === "BIRTH_CERTIFICATE" && !groomBirthCertificate) ||
           !brideAgeDocument ||
-          (brideAgeDocument === "DRIVING_LICENSE" && !brideDrivingLicense) ||
-          (brideAgeDocument === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
-          (brideAgeDocument === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
+          (brideAgeDocument?.code === "DRIVING_LICENSE" && !brideDrivingLicense) ||
+          (brideAgeDocument?.code === "SCHOOL_CERTIFICATE" && !brideSchoolCertificate) ||
+          (brideAgeDocument?.code === "BIRTH_CERTIFICATE" && !brideBirthCertificate) ||
           ((marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
             marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
             marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
@@ -1546,68 +1516,22 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 </h1>
               </div>
             </div>
+
             <div className="row">
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`}</span>{" "}
-                    </h1>
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`}</span>{" "}
+                      </h1>
+                    </div>
                   </div>
-                </div>
-                <div className="row">
-                  {groomResidentShip === "INDIAN" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_AADHAR`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      {/* {!selectedDocs.includes(item.DocumentId) && ( */}
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectGroomAadhar}
-                        onDelete={() => {
-                          setGroomAadhar(null);
-                        }}
-                        message={groomAadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {groomAadhar && (
-                    <div className="col-md-4">
-                      {_.head(groomAadhar)?.type === "pdf" ? (
-                        <object
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          data={trimURL(_.head(groomAadhar)?.pdfUrl)}
-                          alt="Groom Aadhaar Pdf"
-                        />
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(groomAadhar)?.small)}
-                          alt="Groom Aadhaar Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={_.head(groomAadhar)?.type === "pdf" ? trimURL(_.head(groomAadhar)?.pdfUrl) : trimURL(_.head(groomAadhar)?.large)}
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-                  {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && (
-                    <React.Fragment>
+                  <div className="row">
+                    {groomResidentShip === "INDIAN" && (
                       <div className="col-md-8">
                         <CardLabel>
-                          {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                          {`${t(`CR_UPLOAD_YOUR_AADHAR`)}`}
                           <span className="mandatorycss">*</span>
                         </CardLabel>
                         {/* {!selectedDocs.includes(item.DocumentId) && ( */}
@@ -1615,406 +1539,435 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           id={"marriage-docs"}
                           extraStyleName={"propertyCreate"}
                           accept=".jpg,.png,.pdf"
-                          onUpload={selectGroomPassport}
+                          onUpload={selectGroomAadhar}
                           onDelete={() => {
-                            setGroomPassport(null);
+                            setGroomAadhar(null);
                           }}
-                          message={groomPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          message={groomAadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                         />
                       </div>
-                      {groomPassport && (
-                        <div className="col-md-4">
-                          {_.head(groomPassport)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
+                    )}
+                    {groomAadhar && (
+                      <div className="col-md-4">
+                        {_.head(groomAadhar)?.type === "pdf" ? (
+                          <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(groomAadhar)?.pdfUrl} alt="Groom Aadhaar Pdf" />
+                        ) : (
+                          <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(groomAadhar)?.small} alt="Groom Aadhaar Image" />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={_.head(groomAadhar)?.type === "pdf" ? _.head(groomAadhar)?.pdfUrl : _.head(groomAadhar)?.large}
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                    {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && (
+                      <React.Fragment>
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectGroomPassport}
+                            onDelete={() => {
+                              setGroomPassport(null);
+                            }}
+                            message={groomPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {groomPassport && (
+                          <div className="col-md-4">
+                            {_.head(groomPassport)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(groomPassport)?.pdfUrl}
+                                  alt="Groom Passport Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(groomPassport)?.pdfUrl)}
-                                alt="Groom Passport Pdf"
+                                src={_.head(groomPassport)?.small}
+                                alt="Groom Passport Image"
                               />
-                            </React.Fragment>
-                          ) : (
-                            <img
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={_.head(groomPassport)?.type === "pdf" ? _.head(groomPassport)?.pdfUrl : _.head(groomPassport)?.large}
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectGroomSSN}
+                            onDelete={() => {
+                              setGroomSSN(null);
+                            }}
+                            message={groomSSN ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {groomSSN && (
+                          <div className="col-md-4">
+                            {_.head(groomSSN)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(groomSSN)?.pdfUrl} alt="Groom SSN Pdf" />
+                              </React.Fragment>
+                            ) : (
+                              <img style={{ margin: "5px 0" }} height={120} src={_.head(groomSSN)?.small} alt="Groom SSN Image" />
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={_.head(groomSSN)?.type === "pdf" ? _.head(groomSSN)?.pdfUrl : _.head(groomSSN)?.large}
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_AGE")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-7">
+                      <CardLabel>
+                        {`${t("CR_SELECT_DOCUMENT")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <Dropdown
+                        t={t}
+                        optionKey="name"
+                        isMandatory={true}
+                        placeholder={t("CR_SELECT_DOCUMENT")}
+                        option={crAgeDocuments}
+                        selected={groomAgeDocument}
+                        select={setSelectGroomAgeDocument}
+                        {...(validation = { isRequired: true, title: t("CR_INVALID_SELECT_DOCUMENT") })}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    {groomAgeDocument?.code === "DRIVING_LICENSE" && (
+                      <div className="col-md-8">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_DRIVING_LICENSE`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectGroomDrivingLicense}
+                          onDelete={() => {
+                            setGroomDrivingLicense(null);
+                          }}
+                          message={groomDrivingLicense ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    )}
+                    {groomDrivingLicense && (
+                      <div className="col-md-4">
+                        {_.head(groomDrivingLicense)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(groomPassport)?.small)}
-                              alt="Groom Passport Image"
+                              data={_.head(groomDrivingLicense)?.pdfUrl}
+                              alt="Groom Driving License Pdf"
                             />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(groomPassport)?.type === "pdf" ? trimURL(_.head(groomPassport)?.pdfUrl) : trimURL(_.head(groomPassport)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(groomDrivingLicense)?.small}
+                            alt="Groom Driving License Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(groomDrivingLicense)?.type === "pdf" ? _.head(groomDrivingLicense)?.pdfUrl : _.head(groomDrivingLicense)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                    {groomAgeDocument?.code === "SCHOOL_CERTIFICATE" && (
                       <div className="col-md-8">
                         <CardLabel>
-                          {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                          {`${t(`CR_UPLOAD_YOUR_SCHOOL_CERTIFICATE`)}`}
                           <span className="mandatorycss">*</span>
                         </CardLabel>
-                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
                         <UploadFile
                           id={"marriage-docs"}
                           extraStyleName={"propertyCreate"}
                           accept=".jpg,.png,.pdf"
-                          onUpload={selectGroomSSN}
+                          onUpload={selectGroomSchoolCertificate}
                           onDelete={() => {
-                            setGroomSSN(null);
+                            setGroomSchoolCertificate(null);
                           }}
-                          message={groomSSN ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          message={groomSchoolCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                         />
                       </div>
-                      {groomSSN && (
-                        <div className="col-md-4">
-                          {_.head(groomSSN)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
-                                style={{ margin: "5px 0" }}
-                                height={120}
-                                width={100}
-                                data={trimURL(_.head(groomSSN)?.pdfUrl)}
-                                alt="Groom SSN Pdf"
-                              />
-                            </React.Fragment>
-                          ) : (
-                            <img style={{ margin: "5px 0" }} height={120} src={trimURL(_.head(groomSSN)?.small)} alt="Groom SSN Image" />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={_.head(groomSSN)?.type === "pdf" ? trimURL(_.head(groomSSN)?.pdfUrl) : trimURL(_.head(groomSSN)?.large)}
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
-                    </React.Fragment>
-                  )}
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_AGE")}`}</span>{" "}
-                    </h1>
+                    )}
+                    {groomSchoolCertificate && (
+                      <div className="col-md-4">
+                        {_.head(groomSchoolCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(groomSchoolCertificate)?.pdfUrl}
+                              alt="School Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(groomSchoolCertificate)?.small}
+                            alt="School Certificate Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(groomSchoolCertificate)?.type === "pdf"
+                              ? _.head(groomSchoolCertificate)?.pdfUrl
+                              : _.head(groomSchoolCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                    {groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
+                      <div className="col-md-8">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_BIRTH_CERTIFICATE`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectGroomBirthCertificate}
+                          onDelete={() => {
+                            setGroomBirthCertificate(null);
+                          }}
+                          message={groomBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    )}
+                    {groomBirthCertificate && (
+                      <div className="col-md-4">
+                        {_.head(groomBirthCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(groomBirthCertificate)?.pdfUrl}
+                              alt="Groom Birth Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(groomBirthCertificate)?.small}
+                            alt="Groom Birth Certificate Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(groomBirthCertificate)?.type === "pdf"
+                              ? _.head(groomBirthCertificate)?.pdfUrl
+                              : _.head(groomBirthCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-7">
-                    <CardLabel>
-                      {`${t("CR_SELECT_DOCUMENT")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={true}
-                      placeholder={t("CR_SELECT_DOCUMENT")}
-                      option={crAgeDocuments}
-                      selected={groomAgeDocument}
-                      select={setSelectGroomAgeDocument}
-                      {...(validation = { isRequired: true, title: t("CR_INVALID_SELECT_DOCUMENT") })}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  {groomAgeDocument?.code === "DRIVING_LICENSE" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_DRIVING_LICENSE`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectGroomDrivingLicense}
-                        onDelete={() => {
-                          setGroomDrivingLicense(null);
-                        }}
-                        message={groomDrivingLicense ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {groomDrivingLicense && (
-                    <div className="col-md-4">
-                      {_.head(groomDrivingLicense)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            data={trimURL(_.head(groomDrivingLicense)?.pdfUrl)}
-                            alt="Groom Driving License Pdf"
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(groomDrivingLicense)?.small)}
-                          alt="Groom Driving License Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(groomDrivingLicense)?.type === "pdf"
-                            ? trimURL(_.head(groomDrivingLicense)?.pdfUrl)
-                            : trimURL(_.head(groomDrivingLicense)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-                  {groomAgeDocument?.code === "SCHOOL_CERTIFICATE" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_SCHOOL_CERTIFICATE`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectGroomSchoolCertificate}
-                        onDelete={() => {
-                          setGroomSchoolCertificate(null);
-                        }}
-                        message={groomSchoolCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {groomSchoolCertificate && (
-                    <div className="col-md-4">
-                      {_.head(groomSchoolCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            data={trimURL(_.head(groomSchoolCertificate)?.pdfUrl)}
-                            alt="School Certificate Pdf"
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(groomSchoolCertificate)?.small)}
-                          alt="School Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(groomSchoolCertificate)?.type === "pdf"
-                            ? trimURL(_.head(groomSchoolCertificate)?.pdfUrl)
-                            : trimURL(_.head(groomSchoolCertificate)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-                  {groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_BIRTH_CERTIFICATE`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectGroomBirthCertificate}
-                        onDelete={() => {
-                          setGroomBirthCertificate(null);
-                        }}
-                        message={groomBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {groomBirthCertificate && (
-                    <div className="col-md-4">
-                      {_.head(groomBirthCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            data={trimURL(_.head(groomBirthCertificate)?.pdfUrl)}
-                            alt="Groom Birth Certificate Pdf"
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(groomBirthCertificate)?.small)}
-                          alt="Groom Birth Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(groomBirthCertificate)?.type === "pdf"
-                            ? trimURL(_.head(groomBirthCertificate)?.pdfUrl)
-                            : trimURL(_.head(groomBirthCertificate)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
             <div className="row">
-              <React.Fragment>
-                {(groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") && (
-                  <div className="col-md-6">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="headingh1">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_ALREADY_MARRIED")}`}</span>{" "}
-                        </h1>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-8">
-                        <CardLabel>
-                          {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
-                          <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <UploadFile
-                          id={"marriage-docs"}
-                          extraStyleName={"propertyCreate"}
-                          accept=".jpg,.png,.pdf"
-                          onUpload={selectGroomDivorceAnnulledDecreeCertificate}
-                          onDelete={() => {
-                            setGroomDivorceAnnulledDecreeCertificate(null);
-                          }}
-                          message={groomDivorceAnnulledDecreeCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        />
-                      </div>
-                      {groomDivorceAnnulledDecreeCertificate && (
-                        <div className="col-md-4">
-                          {_.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
-                                style={{ margin: "5px 0" }}
-                                height={120}
-                                width={100}
-                                data={trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl)}
-                                alt="Divorce/Annulled Certificate Pdf"
-                              />
-                            </React.Fragment>
-                          ) : (
-                            <img
-                              style={{ margin: "5px 0" }}
-                              width={100}
-                              height={120}
-                              src={trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.small)}
-                              alt="Divorce/Annulled Certificate Image"
-                            />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
-                                ? trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl)
-                                : trimURL(_.head(groomDivorceAnnulledDecreeCertificate)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
+              <div className="col-md-12">
+                <React.Fragment>
+                  {(groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") && (
+                    <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <h1 className="headingh1">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_ALREADY_MARRIED")}`}</span>{" "}
+                          </h1>
                         </div>
-                      )}
+                      </div>
+                      <div className="row">
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectGroomDivorceAnnulledDecreeCertificate}
+                            onDelete={() => {
+                              setGroomDivorceAnnulledDecreeCertificate(null);
+                            }}
+                            message={groomDivorceAnnulledDecreeCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {groomDivorceAnnulledDecreeCertificate && (
+                          <div className="col-md-4">
+                            {_.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl}
+                                  alt="Divorce/Annulled Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                width={100}
+                                height={120}
+                                src={_.head(groomDivorceAnnulledDecreeCertificate)?.small}
+                                alt="Divorce/Annulled Certificate Image"
+                              />
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={
+                                _.head(groomDivorceAnnulledDecreeCertificate)?.type === "pdf"
+                                  ? _.head(groomDivorceAnnulledDecreeCertificate)?.pdfUrl
+                                  : _.head(groomDivorceAnnulledDecreeCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {isExpiredHusband && (
-                  <div className="col-md-6">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="headingh1">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_SPOUSE_DIED")}`}</span>{" "}
-                        </h1>
+                  {isExpiredHusband && (
+                    <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <h1 className="headingh1">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_SPOUSE_DIED")}`}</span>{" "}
+                          </h1>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-8">
-                        <CardLabel>
-                          {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_GROOM")}`}
-                          <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <UploadFile
-                          id={"marriage-docs"}
-                          extraStyleName={"propertyCreate"}
-                          accept=".jpg,.png,.pdf"
-                          onUpload={selectGroomExpirationCertificate}
-                          onDelete={() => {
-                            setGroomExpirationCertificate(null);
-                          }}
-                          message={groomExpirationCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        />
-                      </div>
-                      {groomExpirationCertificate && (
-                        <div className="col-md-4">
-                          {_.head(groomExpirationCertificate)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
+                      <div className="row">
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_GROOM")}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectGroomExpirationCertificate}
+                            onDelete={() => {
+                              setGroomExpirationCertificate(null);
+                            }}
+                            message={groomExpirationCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {groomExpirationCertificate && (
+                          <div className="col-md-4">
+                            {_.head(groomExpirationCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(groomExpirationCertificate)?.pdfUrl}
+                                  alt="Groom Expiration Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(groomExpirationCertificate)?.pdfUrl)}
-                                alt="Groom Expiration Certificate Pdf"
+                                src={_.head(groomExpirationCertificate)?.small}
+                                alt="Groom Expiration Certificate Image"
                               />
-                            </React.Fragment>
-                          ) : (
-                            <img
-                              style={{ margin: "5px 0" }}
-                              height={120}
-                              width={100}
-                              src={trimURL(_.head(groomExpirationCertificate)?.small)}
-                              alt="Groom Expiration Certificate Image"
-                            />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(groomExpirationCertificate)?.type === "pdf"
-                                ? trimURL(_.head(groomExpirationCertificate)?.pdfUrl)
-                                : trimURL(_.head(groomExpirationCertificate)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={
+                                _.head(groomExpirationCertificate)?.type === "pdf"
+                                  ? _.head(groomExpirationCertificate)?.pdfUrl
+                                  : _.head(groomExpirationCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </React.Fragment>
+                  )}
+                </React.Fragment>
+              </div>
             </div>
 
             <div className="row">
@@ -2025,67 +1978,20 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`}</span>{" "}
-                    </h1>
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`}</span>{" "}
+                      </h1>
+                    </div>
                   </div>
-                </div>
-                <div className="row">
-                  {brideResidentShip === "INDIAN" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_AADHAR`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      {/* {!selectedDocs.includes(item.DocumentId) && ( */}
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectBrideAadhar}
-                        onDelete={() => {
-                          setBrideAadhar(null);
-                        }}
-                        message={brideAadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {brideAadhar && (
-                    <div className="col-md-4">
-                      {_.head(brideAadhar)?.type === "pdf" ? (
-                        <object
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          data={trimURL(_.head(brideAadhar)?.pdfUrl)}
-                          alt="Bride Aadhaar Pdf"
-                        />
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(brideAadhar)?.small)}
-                          alt="Bride Aadhaar Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={_.head(brideAadhar)?.type === "pdf" ? trimURL(_.head(brideAadhar)?.pdfUrl) : trimURL(_.head(brideAadhar)?.large)}
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-                  {(brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (
-                    <React.Fragment>
+                  <div className="row">
+                    {brideResidentShip === "INDIAN" && (
                       <div className="col-md-8">
                         <CardLabel>
-                          {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                          {`${t(`CR_UPLOAD_YOUR_AADHAR`)}`}
                           <span className="mandatorycss">*</span>
                         </CardLabel>
                         {/* {!selectedDocs.includes(item.DocumentId) && ( */}
@@ -2093,407 +1999,438 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                           id={"marriage-docs"}
                           extraStyleName={"propertyCreate"}
                           accept=".jpg,.png,.pdf"
-                          onUpload={selectBridePassport}
+                          onUpload={selectBrideAadhar}
                           onDelete={() => {
-                            setBridePassport(null);
+                            setBrideAadhar(null);
                           }}
-                          message={bridePassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          message={brideAadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                         />
                       </div>
-                      {bridePassport && (
-                        <div className="col-md-4">
-                          {_.head(bridePassport)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
+                    )}
+                    {brideAadhar && (
+                      <div className="col-md-4">
+                        {_.head(brideAadhar)?.type === "pdf" ? (
+                          <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(brideAadhar)?.pdfUrl} alt="Bride Aadhaar Pdf" />
+                        ) : (
+                          <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(brideAadhar)?.small} alt="Bride Aadhaar Image" />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={_.head(brideAadhar)?.type === "pdf" ? _.head(brideAadhar)?.pdfUrl : _.head(brideAadhar)?.large}
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                    {(brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && (
+                      <React.Fragment>
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectBridePassport}
+                            onDelete={() => {
+                              setBridePassport(null);
+                            }}
+                            message={bridePassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {bridePassport && (
+                          <div className="col-md-4">
+                            {_.head(bridePassport)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(bridePassport)?.pdfUrl}
+                                  alt="Bride Passport Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(bridePassport)?.pdfUrl)}
-                                alt="Bride Passport Pdf"
+                                src={_.head(bridePassport)?.small}
+                                alt="Bride Passport Image"
                               />
-                            </React.Fragment>
-                          ) : (
-                            <img
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={_.head(bridePassport)?.type === "pdf" ? _.head(bridePassport)?.pdfUrl : _.head(bridePassport)?.large}
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectBrideSSN}
+                            onDelete={() => {
+                              setBrideSSN(null);
+                            }}
+                            message={brideSSN ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {brideSSN && (
+                          <div className="col-md-4">
+                            {_.head(brideSSN)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(brideSSN)?.pdfUrl} alt="Bride SSN Pdf" />
+                              </React.Fragment>
+                            ) : (
+                              <img style={{ margin: "5px 0" }} height={120} src={_.head(brideSSN)?.small} alt="Bride SSN Image" />
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={_.head(brideSSN)?.type === "pdf" ? _.head(brideSSN)?.pdfUrl : _.head(brideSSN)?.large}
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_AGE")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-7">
+                      <CardLabel>
+                        {`${t("CR_SELECT_DOCUMENT")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <Dropdown
+                        t={t}
+                        optionKey="name"
+                        isMandatory={true}
+                        placeholder={t("CR_SELECT_DOCUMENT")}
+                        option={crAgeDocuments}
+                        selected={brideAgeDocument}
+                        select={setSelectBrideAgeDocument}
+                        {...(validation = { isRequired: true, title: t("CR_INVALID_SELECT_DOCUMENT") })}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    {brideAgeDocument?.code === "DRIVING_LICENSE" && (
+                      <div className="col-md-8">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_DRIVING_LICENSE`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectBrideDrivingLicense}
+                          onDelete={() => {
+                            setBrideDrivingLicense(null);
+                          }}
+                          message={brideDrivingLicense ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    )}
+                    {brideDrivingLicense && (
+                      <div className="col-md-4">
+                        {_.head(brideDrivingLicense)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
                               style={{ margin: "5px 0" }}
                               height={120}
                               width={100}
-                              src={trimURL(_.head(bridePassport)?.small)}
-                              alt="Bride Passport Image"
+                              data={_.head(brideDrivingLicense)?.pdfUrl}
+                              alt="Bride Driving License Pdf"
                             />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(bridePassport)?.type === "pdf" ? trimURL(_.head(bridePassport)?.pdfUrl) : trimURL(_.head(bridePassport)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(brideDrivingLicense)?.small}
+                            alt="Bride Driving License Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(brideDrivingLicense)?.type === "pdf" ? _.head(brideDrivingLicense)?.pdfUrl : _.head(brideDrivingLicense)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                    {brideAgeDocument?.code === "SCHOOL_CERTIFICATE" && (
                       <div className="col-md-8">
                         <CardLabel>
-                          {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                          {`${t(`CR_UPLOAD_YOUR_SCHOOL_CERTIFICATE`)}`}
                           <span className="mandatorycss">*</span>
                         </CardLabel>
-                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
                         <UploadFile
                           id={"marriage-docs"}
                           extraStyleName={"propertyCreate"}
                           accept=".jpg,.png,.pdf"
-                          onUpload={selectBrideSSN}
+                          onUpload={selectBrideSchoolCertificate}
                           onDelete={() => {
-                            setBrideSSN(null);
+                            setBrideSchoolCertificate(null);
                           }}
-                          message={brideSSN ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          message={brideSchoolCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                         />
                       </div>
-                      {brideSSN && (
-                        <div className="col-md-4">
-                          {_.head(brideSSN)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
-                                style={{ margin: "5px 0" }}
-                                height={120}
-                                width={100}
-                                data={trimURL(_.head(brideSSN)?.pdfUrl)}
-                                alt="Bride SSN Pdf"
-                              />
-                            </React.Fragment>
-                          ) : (
-                            <img style={{ margin: "5px 0" }} height={120} src={trimURL(_.head(brideSSN)?.small)} alt="Bride SSN Image" />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={_.head(brideSSN)?.type === "pdf" ? trimURL(_.head(brideSSN)?.pdfUrl) : trimURL(_.head(brideSSN)?.large)}
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
-                    </React.Fragment>
-                  )}
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_AGE")}`}</span>{" "}
-                    </h1>
+                    )}
+                    {brideSchoolCertificate && (
+                      <div className="col-md-4">
+                        {_.head(brideSchoolCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(brideSchoolCertificate)?.pdfUrl}
+                              alt="Bride School Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(brideSchoolCertificate)?.small}
+                            alt="Bride School Certificate Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(brideSchoolCertificate)?.type === "pdf"
+                              ? _.head(brideSchoolCertificate)?.pdfUrl
+                              : _.head(brideSchoolCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                    {brideAgeDocument?.code === "BIRTH_CERTIFICATE" && (
+                      <div className="col-md-8">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_BIRTH_CERTIFICATE`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectBrideBirthCertificate}
+                          onDelete={() => {
+                            setBrideBirthCertificate(null);
+                          }}
+                          message={brideBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    )}
+                    {brideBirthCertificate && (
+                      <div className="col-md-4">
+                        {_.head(brideBirthCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(brideBirthCertificate)?.pdfUrl}
+                              alt="Bride Birth Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(brideBirthCertificate)?.small}
+                            alt="Bride Birth Certificate Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(brideBirthCertificate)?.type === "pdf"
+                              ? _.head(brideBirthCertificate)?.pdfUrl
+                              : _.head(brideBirthCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-7">
-                    <CardLabel>
-                      {`${t("CR_SELECT_DOCUMENT")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={true}
-                      placeholder={t("CR_SELECT_DOCUMENT")}
-                      option={crAgeDocuments}
-                      selected={brideAgeDocument}
-                      select={setSelectBrideAgeDocument}
-                      {...(validation = { isRequired: true, title: t("CR_INVALID_SELECT_DOCUMENT") })}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  {brideAgeDocument?.code === "DRIVING_LICENSE" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_DRIVING_LICENSE`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectBrideDrivingLicense}
-                        onDelete={() => {
-                          setBrideDrivingLicense(null);
-                        }}
-                        message={brideDrivingLicense ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {brideDrivingLicense && (
-                    <div className="col-md-4">
-                      {_.head(brideDrivingLicense)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            data={trimURL(_.head(brideDrivingLicense)?.pdfUrl)}
-                            alt="Bride Driving License Pdf"
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(brideDrivingLicense)?.small)}
-                          alt="Bride Driving License Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(brideDrivingLicense)?.type === "pdf"
-                            ? trimURL(_.head(brideDrivingLicense)?.pdfUrl)
-                            : trimURL(_.head(brideDrivingLicense)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-                  {brideAgeDocument?.code === "SCHOOL_CERTIFICATE" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_SCHOOL_CERTIFICATE`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectBrideSchoolCertificate}
-                        onDelete={() => {
-                          setBrideSchoolCertificate(null);
-                        }}
-                        message={brideSchoolCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {brideSchoolCertificate && (
-                    <div className="col-md-4">
-                      {_.head(brideSchoolCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            data={trimURL(_.head(brideSchoolCertificate)?.pdfUrl)}
-                            alt="Bride School Certificate Pdf"
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(brideSchoolCertificate)?.small)}
-                          alt="Bride School Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(brideSchoolCertificate)?.type === "pdf"
-                            ? trimURL(_.head(brideSchoolCertificate)?.pdfUrl)
-                            : trimURL(_.head(brideSchoolCertificate)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
-                  {brideAgeDocument?.code === "BIRTH_CERTIFICATE" && (
-                    <div className="col-md-8">
-                      <CardLabel>
-                        {`${t(`CR_UPLOAD_YOUR_BIRTH_CERTIFICATE`)}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                        id={"marriage-docs"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-                        onUpload={selectBrideBirthCertificate}
-                        onDelete={() => {
-                          setBrideBirthCertificate(null);
-                        }}
-                        message={brideBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      />
-                    </div>
-                  )}
-                  {brideBirthCertificate && (
-                    <div className="col-md-4">
-                      {_.head(brideBirthCertificate)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            data={trimURL(_.head(brideBirthCertificate)?.pdfUrl)}
-                            alt="Bride Birth Certificate Pdf"
-                          />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(brideBirthCertificate)?.small)}
-                          alt="Bride Birth Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(brideBirthCertificate)?.type === "pdf"
-                            ? trimURL(_.head(brideBirthCertificate)?.pdfUrl)
-                            : trimURL(_.head(brideBirthCertificate)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
-            <div className="row">
-              <React.Fragment>
-                {(brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") && (
-                  <div className="col-md-6">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="headingh1">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_ALREADY_MARRIED")}`}</span>{" "}
-                        </h1>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-8">
-                        <CardLabel>
-                          {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
-                          <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <UploadFile
-                          id={"marriage-docs"}
-                          extraStyleName={"propertyCreate"}
-                          accept=".jpg,.png,.pdf"
-                          onUpload={selectBrideDivorceAnnulledDecreeCertificate}
-                          onDelete={() => {
-                            setBrideDivorceAnnulledDecreeCertificate(null);
-                          }}
-                          message={brideDivorceAnnulledDecreeCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        />
-                      </div>
-                      {brideDivorceAnnulledDecreeCertificate && (
-                        <div className="col-md-4">
-                          {_.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
-                                style={{ margin: "5px 0" }}
-                                height={120}
-                                width={100}
-                                data={trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl)}
-                                alt="Divorce/Annulled Cetificate Pdf"
-                              />
-                            </React.Fragment>
-                          ) : (
-                            <img
-                              style={{ margin: "5px 0" }}
-                              width={100}
-                              height={120}
-                              src={trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.small)}
-                              alt="Divorce/Annulled Cetificate Image"
-                            />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
-                                ? trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl)
-                                : trimURL(_.head(brideDivorceAnnulledDecreeCertificate)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
 
-                {isExpiredWife && (
-                  <div className="col-md-6">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="headingh1">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_SPOUSE_DIED")}`}</span>{" "}
-                        </h1>
+            <div className="row">
+              <div className="col-md-12">
+                <React.Fragment>
+                  {(brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") && (
+                    <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <h1 className="headingh1">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_ALREADY_MARRIED")}`}</span>{" "}
+                          </h1>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectBrideDivorceAnnulledDecreeCertificate}
+                            onDelete={() => {
+                              setBrideDivorceAnnulledDecreeCertificate(null);
+                            }}
+                            message={brideDivorceAnnulledDecreeCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {brideDivorceAnnulledDecreeCertificate && (
+                          <div className="col-md-4">
+                            {_.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl}
+                                  alt="Divorce/Annulled Cetificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                width={100}
+                                height={120}
+                                src={_.head(brideDivorceAnnulledDecreeCertificate)?.small}
+                                alt="Divorce/Annulled Cetificate Image"
+                              />
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={
+                                _.head(brideDivorceAnnulledDecreeCertificate)?.type === "pdf"
+                                  ? _.head(brideDivorceAnnulledDecreeCertificate)?.pdfUrl
+                                  : _.head(brideDivorceAnnulledDecreeCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-8">
-                        <CardLabel>
-                          {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_BRIDE")}`}
-                          <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <UploadFile
-                          id={"marriage-docs"}
-                          extraStyleName={"propertyCreate"}
-                          accept=".jpg,.png,.pdf"
-                          onUpload={selectBrideExpirationCertificate}
-                          onDelete={() => {
-                            setBrideExpirationCertificate(null);
-                          }}
-                          message={brideExpirationCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        />
+                  )}
+
+                  {isExpiredWife && (
+                    <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <h1 className="headingh1">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_SPOUSE_DIED")}`}</span>{" "}
+                          </h1>
+                        </div>
                       </div>
-                      {brideExpirationCertificate && (
-                        <div className="col-md-4">
-                          {_.head(brideExpirationCertificate)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
+                      <div className="row">
+                        <div className="col-md-8">
+                          <CardLabel>
+                            {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_BRIDE")}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          <UploadFile
+                            id={"marriage-docs"}
+                            extraStyleName={"propertyCreate"}
+                            accept=".jpg,.png,.pdf"
+                            onUpload={selectBrideExpirationCertificate}
+                            onDelete={() => {
+                              setBrideExpirationCertificate(null);
+                            }}
+                            message={brideExpirationCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          />
+                        </div>
+                        {brideExpirationCertificate && (
+                          <div className="col-md-4">
+                            {_.head(brideExpirationCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(brideExpirationCertificate)?.pdfUrl}
+                                  alt="Bride Expiration Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(brideExpirationCertificate)?.pdfUrl)}
-                                alt="Bride Expiration Certificate Pdf"
+                                src={_.head(brideExpirationCertificate)?.small}
+                                alt="Bride Expiration Certificate Image"
                               />
-                            </React.Fragment>
-                          ) : (
-                            <img
-                              style={{ margin: "5px 0" }}
-                              height={120}
-                              width={100}
-                              src={trimURL(_.head(brideExpirationCertificate)?.small)}
-                              alt="Bride Expiration Certificate Image"
-                            />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(brideExpirationCertificate)?.type === "pdf"
-                                ? trimURL(_.head(brideExpirationCertificate)?.pdfUrl)
-                                : trimURL(_.head(brideExpirationCertificate)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={
+                                _.head(brideExpirationCertificate)?.type === "pdf"
+                                  ? _.head(brideExpirationCertificate)?.pdfUrl
+                                  : _.head(brideExpirationCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </React.Fragment>
+                  )}
+                </React.Fragment>
+              </div>
             </div>
+
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -2501,194 +2438,197 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 </h1>
               </div>
             </div>
+
             <div className="row">
-              <div className="col-md-6">
-                {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
-                  marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
-                  marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
-                  marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
-                  marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
-                  marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
-                  marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM" ||
-                  marriageType === "MARRIAGE_TYPE_SPECIAL_ACT") && (
-                  <React.Fragment>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="headingh1">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_MARRIAGE")}`}</span>{" "}
-                        </h1>
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
+                    marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
+                    marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
+                    marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
+                    marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
+                    marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
+                    marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM" ||
+                    marriageType === "MARRIAGE_TYPE_SPECIAL_ACT") && (
+                    <React.Fragment>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <h1 className="headingh1">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_MARRIAGE")}`}</span>{" "}
+                          </h1>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
-                        marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
-                        marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
-                        marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
-                        marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
-                        marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
-                        marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") && (
-                        <div className="col-md-8">
-                          <CardLabel>
-                            {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_RELIGIOUS_INSTITUTION`)}`}
-                            <span className="mandatorycss">*</span>
-                          </CardLabel>
-                          <UploadFile
-                            id={"marriage-docs"}
-                            extraStyleName={"propertyCreate"}
-                            accept=".jpg,.png,.pdf"
-                            onUpload={selectInstituitionCertificate}
-                            onDelete={() => {
-                              setInstituitionCertificate(null);
-                            }}
-                            message={instituitionCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                          />
-                        </div>
-                      )}
-                      {instituitionCertificate && (
-                        <div className="col-md-4">
-                          {_.head(instituitionCertificate)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
+                      <div className="row">
+                        {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
+                          marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
+                          marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
+                          marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
+                          marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
+                          marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
+                          marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") && (
+                          <div className="col-md-8">
+                            <CardLabel>
+                              {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_RELIGIOUS_INSTITUTION`)}`}
+                              <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <UploadFile
+                              id={"marriage-docs"}
+                              extraStyleName={"propertyCreate"}
+                              accept=".jpg,.png,.pdf"
+                              onUpload={selectInstituitionCertificate}
+                              onDelete={() => {
+                                setInstituitionCertificate(null);
+                              }}
+                              message={instituitionCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                            />
+                          </div>
+                        )}
+                        {instituitionCertificate && (
+                          <div className="col-md-4">
+                            {_.head(instituitionCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(instituitionCertificate)?.pdfUrl}
+                                  alt="Instituition Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(instituitionCertificate)?.pdfUrl)}
-                                alt="Instituition Certificate Pdf"
+                                src={_.head(instituitionCertificate)?.small}
+                                alt="Instituition Certificate Image"
                               />
-                            </React.Fragment>
-                          ) : (
-                            <img
-                              style={{ margin: "5px 0" }}
-                              height={120}
-                              width={100}
-                              src={trimURL(_.head(instituitionCertificate)?.small)}
-                              alt="Instituition Certificate Image"
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={
+                                _.head(instituitionCertificate)?.type === "pdf"
+                                  ? _.head(instituitionCertificate)?.pdfUrl
+                                  : _.head(instituitionCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                        {marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && (
+                          <div className="col-md-8">
+                            <CardLabel>
+                              {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_MARRIAGE_OFFICER`)}`}
+                              <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <UploadFile
+                              id={"marriage-docs"}
+                              extraStyleName={"propertyCreate"}
+                              accept=".jpg,.png,.pdf"
+                              onUpload={selectMarriageOfficerCertificate}
+                              onDelete={() => {
+                                setMarriageOfficerCertificate(null);
+                              }}
+                              message={marriageOfficerCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                             />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(instituitionCertificate)?.type === "pdf"
-                                ? trimURL(_.head(instituitionCertificate)?.pdfUrl)
-                                : trimURL(_.head(instituitionCertificate)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
-                      {marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && (
-                        <div className="col-md-8">
-                          <CardLabel>
-                            {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_MARRIAGE_OFFICER`)}`}
-                            <span className="mandatorycss">*</span>
-                          </CardLabel>
-                          <UploadFile
-                            id={"marriage-docs"}
-                            extraStyleName={"propertyCreate"}
-                            accept=".jpg,.png,.pdf"
-                            onUpload={selectMarriageOfficerCertificate}
-                            onDelete={() => {
-                              setMarriageOfficerCertificate(null);
-                            }}
-                            message={marriageOfficerCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                          />
-                        </div>
-                      )}
-                      {marriageOfficerCertificate && (
-                        <div className="col-md-4">
-                          {_.head(marriageOfficerCertificate)?.type === "pdf" ? (
-                            <React.Fragment>
-                              <object
+                          </div>
+                        )}
+                        {marriageOfficerCertificate && (
+                          <div className="col-md-4">
+                            {_.head(marriageOfficerCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(marriageOfficerCertificate)?.pdfUrl}
+                                  alt="Marriage Officer Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
                                 style={{ margin: "5px 0" }}
                                 height={120}
                                 width={100}
-                                data={trimURL(_.head(marriageOfficerCertificate)?.pdfUrl)}
-                                alt="Marriage Officer Certificate Pdf"
+                                src={_.head(marriageOfficerCertificate)?.small}
+                                alt="Marriage Officer Certificate Image"
                               />
-                            </React.Fragment>
-                          ) : (
-                            <img
-                              style={{ margin: "5px 0" }}
-                              height={120}
-                              width={100}
-                              src={trimURL(_.head(marriageOfficerCertificate)?.small)}
-                              alt="Marriage Officer Certificate Image"
-                            />
-                          )}
-                          <a
-                            style={{ color: "blue" }}
-                            target="_blank"
-                            href={
-                              _.head(marriageOfficerCertificate)?.type === "pdf"
-                                ? trimURL(_.head(marriageOfficerCertificate)?.pdfUrl)
-                                : trimURL(_.head(marriageOfficerCertificate)?.large)
-                            }
-                          >
-                            Preview
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </React.Fragment>
-                )}
-              </div>
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_OTHER_DOCUMENTS")}`}</span>{" "}
-                    </h1>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-8">
-                    <CardLabel>{`${t(`CR_UPLOAD_OTHER_DOCUMENTS_TO_PROVE_SOLEMNIZATION`)}`}</CardLabel>
-                    <UploadFile
-                      id={"marriage-docs"}
-                      extraStyleName={"propertyCreate"}
-                      accept=".jpg,.png,.pdf"
-                      onUpload={selectOtherMarriageCertificate}
-                      onDelete={() => {
-                        setOtherMarriageCertificate(null);
-                      }}
-                      // file={otherMarriageCertificateDocument}
-                      message={otherMarriageCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    />
-                  </div>
-                  {otherMarriageCertificate && (
-                    <div className="col-md-4">
-                      {_.head(otherMarriageCertificate)?.type === "pdf" ? (
-                        <object
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          data={trimURL(_.head(otherMarriageCertificate)?.pdfUrl)}
-                          alt="Other Certificate Pdf"
-                        />
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(otherMarriageCertificate)?.small)}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(otherMarriageCertificate)?.type === "pdf"
-                            ? trimURL(_.head(otherMarriageCertificate)?.pdfUrl)
-                            : trimURL(_.head(otherMarriageCertificate)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
+                            )}
+                            <a
+                              style={{ color: "blue" }}
+                              target="_blank"
+                              href={
+                                _.head(marriageOfficerCertificate)?.type === "pdf"
+                                  ? _.head(marriageOfficerCertificate)?.pdfUrl
+                                  : _.head(marriageOfficerCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </React.Fragment>
                   )}
+                </div>
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_OTHER_DOCUMENTS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-8">
+                      <CardLabel>{`${t(`CR_UPLOAD_OTHER_DOCUMENTS_TO_PROVE_SOLEMNIZATION`)}`}</CardLabel>
+                      <UploadFile
+                        id={"marriage-docs"}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectOtherMarriageCertificate}
+                        onDelete={() => {
+                          setOtherMarriageCertificate(null);
+                        }}
+                        // file={otherMarriageCertificateDocument}
+                        message={otherMarriageCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                      />
+                    </div>
+                    {otherMarriageCertificate && (
+                      <div className="col-md-4">
+                        {_.head(otherMarriageCertificate)?.type === "pdf" ? (
+                          <object
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            data={_.head(otherMarriageCertificate)?.pdfUrl}
+                            alt="Other Certificate Pdf"
+                          />
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(otherMarriageCertificate)?.small}
+                            alt="Other Certificate Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(otherMarriageCertificate)?.type === "pdf"
+                              ? _.head(otherMarriageCertificate)?.pdfUrl
+                              : _.head(otherMarriageCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -2700,123 +2640,121 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS1_AADHAR")}`}</span>{" "}
-                    </h1>
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS1_AADHAR")}`}</span>{" "}
+                      </h1>
+                    </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-8">
-                    <CardLabel>
-                      {`${t("CR_WITNESS1_ADHAR")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <UploadFile
-                      id={"marriage-docs"}
-                      extraStyleName={"propertyCreate"}
-                      accept=".jpg,.png,.pdf"
-                      onUpload={selectWitness1Aadhar}
-                      onDelete={() => {
-                        setWitness1Aadhar(null);
-                      }}
-                      message={witness1Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    />
-                  </div>
-                  {witness1Aadhar && (
-                    <div className="col-md-4">
-                      {_.head(witness1Aadhar)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
+                  <div className="row">
+                    <div className="col-md-8">
+                      <CardLabel>
+                        {`${t("CR_WITNESS1_ADHAR")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <UploadFile
+                        id={"marriage-docs"}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectWitness1Aadhar}
+                        onDelete={() => {
+                          setWitness1Aadhar(null);
+                        }}
+                        message={witness1Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                      />
+                    </div>
+                    {witness1Aadhar && (
+                      <div className="col-md-4">
+                        {_.head(witness1Aadhar)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(witness1Aadhar)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(witness1Aadhar)?.pdfUrl)}
-                            alt="Other Certificate Pdf"
+                            src={_.head(witness1Aadhar)?.small}
+                            alt="Other Certificate Image"
                           />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(witness1Aadhar)?.small)}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(witness1Aadhar)?.type === "pdf" ? trimURL(_.head(witness1Aadhar)?.pdfUrl) : trimURL(_.head(witness1Aadhar)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={_.head(witness1Aadhar)?.type === "pdf" ? _.head(witness1Aadhar)?.pdfUrl : _.head(witness1Aadhar)?.large}
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="col-md-6">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS2_AADHAR")}`}</span>{" "}
-                    </h1>
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESS2_AADHAR")}`}</span>{" "}
+                      </h1>
+                    </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-8">
-                    <CardLabel>
-                      {`${t("CR_WITNESS2_ADHAR")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <UploadFile
-                      id={"marriage-docs"}
-                      extraStyleName={"propertyCreate"}
-                      accept=".jpg,.png,.pdf"
-                      onUpload={selectWitness2Aadhar}
-                      onDelete={() => {
-                        setWitness2Aadhar(null);
-                      }}
-                      message={witness2Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    />
-                  </div>
-                  {witness2Aadhar && (
-                    <div className="col-md-4">
-                      {_.head(witness2Aadhar)?.type === "pdf" ? (
-                        <React.Fragment>
-                          <object
+                  <div className="row">
+                    <div className="col-md-8">
+                      <CardLabel>
+                        {`${t("CR_WITNESS2_ADHAR")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <UploadFile
+                        id={"marriage-docs"}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectWitness2Aadhar}
+                        onDelete={() => {
+                          setWitness2Aadhar(null);
+                        }}
+                        message={witness2Aadhar ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                      />
+                    </div>
+                    {witness2Aadhar && (
+                      <div className="col-md-4">
+                        {_.head(witness2Aadhar)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(witness2Aadhar)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
                             style={{ margin: "5px 0" }}
                             height={120}
                             width={100}
-                            data={trimURL(_.head(witness2Aadhar)?.pdfUrl)}
-                            alt="Other Certificate Pdf"
+                            src={_.head(witness2Aadhar)?.small}
+                            alt="Other Certificate Image"
                           />
-                        </React.Fragment>
-                      ) : (
-                        <img
-                          style={{ margin: "5px 0" }}
-                          height={120}
-                          width={100}
-                          src={trimURL(_.head(witness2Aadhar)?.small)}
-                          alt="Other Certificate Image"
-                        />
-                      )}
-                      <a
-                        style={{ color: "blue" }}
-                        target="_blank"
-                        href={
-                          _.head(witness2Aadhar)?.type === "pdf" ? trimURL(_.head(witness2Aadhar)?.pdfUrl) : trimURL(_.head(witness2Aadhar)?.large)
-                        }
-                      >
-                        Preview
-                      </a>
-                    </div>
-                  )}
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={_.head(witness2Aadhar)?.type === "pdf" ? _.head(witness2Aadhar)?.pdfUrl : _.head(witness2Aadhar)?.large}
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

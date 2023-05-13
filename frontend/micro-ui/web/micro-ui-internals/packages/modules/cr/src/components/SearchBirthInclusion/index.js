@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo, useEffect,useState } from "react";
+import React, { useCallback, useMemo, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SubmitBar, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -31,27 +31,27 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoading }) => {
-
+const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoading, toast, setToast, isSuccess }) => {
   const history = useHistory();
-  const {path} = useRouteMatch();
+  const { path } = useRouteMatch();
   const { t } = useTranslation();
 
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "applicationNumber",
-      sortOrder: "DESC",
+      // sortBy: "applicationNumber",
+      // sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
-  
 
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "applicationNumber");
-    register("sortOrder", "DESC");
+    // register("sortBy", "applicationNumber");
+    // register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -77,13 +77,13 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
   const isMobile = window.Digit.Utils.browser.isMobile();
 
   if (isMobile) {
-    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit,  data, onSubmit }} />;
+    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, data, onSubmit, isSuccess }} />;
   }
 
-  const handleLinkClick = () =>{
-    console.log("path",path);
+  const handleLinkClick = () => {
+    console.log("path", path);
     history.push(`${path}/birth-inclusion-edit`);
-  }
+  };
 
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -96,8 +96,8 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link"  onClick={() => onInclusionClick(row.original)}>
-                    {row.original.ack_no}
+              <span className="link" onClick={() => onInclusionClick(row.original)}>
+                {row.original.ack_no}
               </span>
             </div>
           );
@@ -106,7 +106,7 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
       {
         Header: t("CR_COMMON_CHILD_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.fullName ? row?.fullName: "-"),
+        accessor: (row) => GetCell(row?.fullName ? row?.fullName : "-"),
       },
       {
         Header: t("CR_COMMON_COL_APP_DATE"),
@@ -139,39 +139,41 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick, isLoad
       <div style={mystyle}>
         <h1 style={hstyle}>{t("INCLUSIONS_CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
+          <SearchFields {...{ register, control, watch, reset, previousPage, t }} />
         </SearchForm>
       </div>
-      {isLoading && <Loader/>}
-      {
-        data !== "" && (
-          <React.Fragment>
-            <Table
-              t={t}
-              data={data}
-              totalRecords={count}
-              columns={columns}
-              getCellProps={(cellInfo) => {
-                return {
-                  style: {
-                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
-                    padding: "20px 18px",
-                    fontSize: "16px",
-                  },
-                };
-              }}
-              onPageSizeChange={onPageSizeChange}
-              currentPage={getValues("offset") / getValues("limit")}
-              onNextPage={nextPage}
-              onPrevPage={previousPage}
-              pageSizeLimit={getValues("limit")}
-              onSort={onSort}
-              disableSort={false}
-              sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-            />
-          </React.Fragment>
-        )
-      }
+      {data?.length > 0 && isSuccess ? (
+        <React.Fragment>
+          <Table
+            t={t}
+            data={data}
+            totalRecords={count}
+            columns={columns}
+            getCellProps={(cellInfo) => {
+              return {
+                style: {
+                  minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                  padding: "20px 18px",
+                  fontSize: "16px",
+                },
+              };
+            }}
+            onPageSizeChange={onPageSizeChange}
+            currentPage={getValues("offset") / getValues("limit")}
+            onNextPage={nextPage}
+            onPrevPage={previousPage}
+            pageSizeLimit={getValues("limit")}
+            onSort={onSort}
+            disableSort={false}
+            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+          />
+        </React.Fragment>
+      ) : isSuccess ? (
+        <Card style={{ marginTop: 20 }}>
+          <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
+        </Card>
+      ) : null}
+      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
     </React.Fragment>
   );
 };

@@ -1,6 +1,7 @@
 import { CRService } from "../../elements/CR";
 import { NA, getFormattedValue } from "../../../utils/dataFormatter";
 import { useTranslation } from "react-i18next";
+//import { useEffect, useState } from "react";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
   if (searcher == "") return str;
@@ -32,6 +33,20 @@ const convertEpochToDate = (dateEpoch) => {
 //     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
 //   }`;
 // };
+// const [isHospitalUser, setIsHospitalUser] = useState(false);
+// let RolesTemp ="";
+// const getUserRoles= async (Roles) => {
+//   const { roles: userRoles } = await Digit.UserService.getUser().info; 
+//      if (userRoles.length > 0) {
+//         if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER") {
+//           setIsHospitalUser(true);
+//         } else {
+//           setIsHospitalUser(false);
+//         }
+//       }
+// };
+
+
 export const CRsearch = {
   all: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
@@ -48,11 +63,27 @@ export const CRsearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    console.log("userinfo",Digit.UserService.getUser().info);
-    const { name : Informername,roles: userRoles, uuid: uuid,mobileNumber : InformermobileNumber , } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
-    const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_APPROVER"));
-  // console.log(roletemp[0].code);
-    // console.log("applicationNumber" + applicationNumber);
+    // console.log("userinfo", Digit.UserService.getUser().info);
+    // const [isHospitalUser, setIsHospitalUser] = useState(false);
+
+    //  if (responseRoles.length > 0) {
+    //     if (responseRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER") {
+    //       setIsHospitalUser(true);
+    //     } else {
+    //       setIsHospitalUser(false);
+    //     }
+    //   }
+    // console.log(temproles);
+
+    // useEffect(() => {
+    //   if (userRoles.length > 0) {
+    //     if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER") {
+    //       setIsHospitalUser(true);
+    //     } else {
+    //       setIsHospitalUser(false);
+    //     }
+    //   }
+    // }, [userRoles]);
     const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
     console.log(response);
@@ -78,10 +109,10 @@ export const CRsearch = {
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NOT_RECORDED" },
         { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NOT_RECORDED" },
         { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : "NOT_RECORDED" },
-        { title: "CR_GENDER", value: response?.gender },
+        { title: "CR_GENDER", value: response?.gender ? response?.gender : "NOT_RECORDED" },
         { title: "CS_COMMON_CHILD_AADHAAR", value: response?.childAadharNo ? response?.childAadharNo : "NOT_RECORDED" },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn || + " " + response?.childLastNameEn },
-        { title: "PDF_BIRTH_CHILD_NAME_ML", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl },
+        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn || "NOT_RECORDED" },
+        { title: "PDF_BIRTH_CHILD_NAME_ML", value: response?.childFirstNameMl + " " + response?.childMiddleNameMl + " " + response?.childLastNameMl || "NOT_RECORDED" },
 
       ],
     };
@@ -166,7 +197,7 @@ export const CRsearch = {
         { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
         { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },
         { title: "CR_NATIONALITY", value: response?.ParentsDetails?.motherNationalityEn + " / " + (response?.ParentsDetails?.motherNationalityMl != null ? response?.ParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
-        { title: "CR_MOTHER_MARITAL_STATUS", value: response?.ParentsDetails?.motherMaritalStatus || "NOT_RECORDED" },
+        { title: "CR_MOTHER_MARITAL_STATUS", value: response?.ParentsDetails?.motherMaritalStatusEn + " / " + (response?.ParentsDetails?.motherMaritalStatusMl != null ? response?.ParentsDetails?.motherMaritalStatusMl : "") || "NOT_RECORDED" },
         { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.ParentsDetails?.motherMarriageAge || "NOT_RECORDED" },
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.ParentsDetails?.motherMarriageBirth || "NOT_RECORDED" },
         { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.ParentsDetails?.orderofChildren || "NOT_RECORDED" },
@@ -193,7 +224,7 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NOT_RECORDED" },
@@ -210,7 +241,7 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTalukEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillageEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.permntInKeralaAdrLBNameEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNoEn + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNoText + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoEn + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoMl || "NOT_RECORDED" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn || "NOT_RECORDED" },
@@ -288,13 +319,37 @@ export const CRsearch = {
       title: "CR_INITIATOR_DETAILS",
       // asSectionHeader: true,
       values: [
+        { title: "CR_INITIATOR", value: response?.InitiatorinfoDetails?.initiator || "NOT_RECORDED" },
+        { title: "CS_COMMON_AADHAAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
+        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },        
+        { title: "CR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
+        { title: "CR_INFORMER_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
+      ],
+    };
+    const InitiatorDetailsGuardian = {
+      title: "CR_INITIATOR_DETAILS",
+      // asSectionHeader: true,
+      values: [
+        { title: "CR_INITIATOR", value: response?.InitiatorinfoDetails?.initiator || "NOT_RECORDED" },
         { title: "CR_RELATION", value: response?.InitiatorinfoDetails?.relation || "NOT_RECORDED" },
-        { title: "PDF_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },
-        { title: "PDF_INITIATOR_AADHAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
-        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
-        { title: "PDF_INITIATOR_DESIGNATION", value: response?.InitiatorinfoDetails?.initiatorDesi || "NOT_RECORDED" },
-        { title: "PDF_INITIATOR_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
+        { title: "CS_COMMON_AADHAAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
+        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },        
+        { title: "CR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
+        { title: "CR_INFORMER_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
 
+      ],
+    };
+    const InitiatorDetailsCaretaker = {
+      title: "CR_INITIATOR_DETAILS",
+      // asSectionHeader: true,
+      values: [
+        { title: "CR_INITIATOR", value: response?.InitiatorinfoDetails?.initiator || "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME", value: response?.InitiatorinfoDetails?.initiatorInstitutionName || "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_DESIGNATION", value: response?.InitiatorinfoDetails?.initiatorDesi || "NOT_RECORDED" },
+        { title: "CS_COMMON_AADHAAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
+        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },        
+        { title: "CR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
+        { title: "CR_CARE_TAKER_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
       ],
     };
     const InformarHospitalInstitution = {
@@ -307,6 +362,15 @@ export const CRsearch = {
         { title: "CR_INFORMER_DESIGNATION", value: response?.InformarHosInstDetails?.informerDesi || "NOT_RECORDED" },
         { title: "CR_INFORMER_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NOT_RECORDED" },
 
+      ],
+    };
+    const HospitalAdmissionDetails = {
+      title: "CR_HOSPITAL_ADMISION_DETAILS",
+      // asSectionHeader: true,
+      values: [
+        { title: "CR_IP_OP", value: response?.InformarHosInstDetails?.ipopList || "NOT_RECORDED" },
+        { title: "CR_IP_OP_NO", value: response?.InformarHosInstDetails?.ipopNumber || "NOT_RECORDED" },
+        { title: "CR_GYNC_REG_NO", value: response?.InformarHosInstDetails?.obstetricsNumber || "NOT_RECORDED" },
       ],
     };
 
@@ -332,11 +396,22 @@ export const CRsearch = {
       response && employeeResponse.push(AddressBirthDetailsPresentOutsideIndiaInfo);
     }
     response && employeeResponse.push(statisticalInfo);
-    if (response?.InitiatorinfoDetails?.initiatorAadhar != null) {
+    if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === false && 
+      response?.InitiatorinfoDetails?.isGuardian === false ) {
       response && employeeResponse.push(InitiatorDetails);
-    } else if (response?.InformarHosInstDetails?.infomantAadhar != null) {
+    } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === false && 
+      response?.InitiatorinfoDetails?.isGuardian === true ) {
+      response && employeeResponse.push(InitiatorDetailsGuardian);
+    } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === true && 
+      response?.InitiatorinfoDetails?.isGuardian === false ) {
+      response && employeeResponse.push(InitiatorDetailsGuardian);
+    } 
+    if (response?.InformarHosInstDetails?.infomantAadhar != null) {
       response && employeeResponse.push(InformarHospitalInstitution);
     }
+    // else if (responseRoles[0].code === "HOSPITAL_OPERATOR" || responseRoles[0].code === "HOSPITAL_APPROVER") {
+      response && employeeResponse.push(HospitalAdmissionDetails);
+    // }
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,

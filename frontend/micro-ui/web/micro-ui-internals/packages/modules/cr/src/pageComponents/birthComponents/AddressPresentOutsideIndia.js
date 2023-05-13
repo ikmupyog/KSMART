@@ -185,9 +185,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : (e.target.value.replace(/[^a-zA-Z0-9]/ig, '')).substring(0, 6));
     if (isPrsentAddress) {
-      setPermantpostCode(e.target.value.trim().length <= 6 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 6));
+      setPermantpostCode(e.target.value.trim().length <= 6 ? e.target.value.trim().replace(/[^a-zA-Z0-9]/ig, '') : (e.target.value.trim().replace(/[^a-zA-Z0-9]/ig, '')).substring(0, 6));
     }
   }
   function setCheckMalayalamInputField(e) {
@@ -302,10 +302,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 name="presentOutSideIndiaPostCode"
                 value={presentOutSideIndiaPostCode}
                 onChange={setSelectPostCode}
+                style={{ textTransform: "uppercase" }}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
-                  pattern: "^[0-9]*$",
+                  pattern: "^[a-zA-Z0-9]*$",
                   isRequired: true,
                   type: "text",
                   maxLength: 6,

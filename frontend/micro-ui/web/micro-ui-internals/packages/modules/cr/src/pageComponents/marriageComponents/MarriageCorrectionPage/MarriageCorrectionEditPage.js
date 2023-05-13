@@ -384,6 +384,17 @@ const MarriageCorrectionEditPage = ({
     }
   };
 
+  const checkLangRequired = (columnName, fieldName, lang ="Ml") => {
+    const langKeys = ["En","Ml"];
+    const reverseLangkeys = lang === "Ml" ? langKeys : langKeys.reverse();
+    let enKey = fieldName?.replace(lang, reverseLangkeys[0]);
+    if (marriageCorrectionFormsObj?.[columnName]?.isEditable && marriageCorrectionFormsObj?.[columnName]?.curValue?.[enKey]?.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   if (Object.keys(marriageCorrectionFormsObj)?.length > 0) {
     const config = { texts: { submitBarLabel: "Next" } };
     return (
@@ -598,7 +609,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onGroomNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: marriageCorrectionFormsObj?.GROOM_NAME?.isEditable, title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -614,7 +625,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onGroomNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("GROOM_NAME", "middleNameEn", "En"), title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -630,7 +641,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onGroomNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("GROOM_NAME", "lastNameEn", "En"), title: t("CR_INVALID_LAST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -663,7 +674,7 @@ const MarriageCorrectionEditPage = ({
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: true,
+                          isRequired: marriageCorrectionFormsObj?.GROOM_NAME?.isEditable,
                           type: "text",
                           title: t("CR_INVALID_FIRST_NAME_ML"),
                         })}
@@ -682,7 +693,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameMl}
                         onBlur={(e) => onGroomNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("GROOM_NAME", "middleNameMl"), title: t("CR_INVALID_MIDDLE_NAME_ML") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -698,7 +709,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameMl}
                         onBlur={(e) => onGroomNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
-                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("GROOM_NAME", "lastNameMl"), title: t("CR_INVALID_LAST_NAME_ML") })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -740,7 +751,7 @@ const MarriageCorrectionEditPage = ({
                         // value={DeceasedFirstNameEn}
                         onChange={onGroomDOBChange}
                         placeholder={`${t("CR_AGE")}`}
-                        {...(validation = { pattern: "^[0-9]{2}$", type: "text" })}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: marriageCorrectionFormsObj.GROOM_AGE?.isEditable })}
                       />
                     </div>
                   </div>
@@ -771,7 +782,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameEn}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_MOTHER_NAME_EN_ERROR") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("GROOM_MOTHER", "groomMotherNameEn", "En"), title: t("CR_MOTHER_NAME_EN_ERROR") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -789,7 +800,7 @@ const MarriageCorrectionEditPage = ({
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: true,
+                          isRequired: checkLangRequired("GROOM_MOTHER", "groomMotherNameMl"),
                           type: "text",
                           title: t("CR_MOTHER_NAME_ML_ERROR"),
                         })}
@@ -824,7 +835,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameEn}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_FATHER_NAME_EN_ERROR") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("GROOM_FATHER", "groomFatherNameEn", "En"), title: t("CR_FATHER_NAME_EN_ERROR") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -843,6 +854,7 @@ const MarriageCorrectionEditPage = ({
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           type: "text",
+                          isRequired: checkLangRequired("GROOM_FATHER", "groomFatherNameMl"),
                           title: t("CR_FATHER_NAME_ML_ERROR"),
                         })}
                       />
@@ -874,7 +886,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameEn}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_GUARDIAN_NAME_EN_ERROR") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("GROOM_GUARDIAN", "groomGuardianNameEn", "En"), title: t("CR_GUARDIAN_NAME_EN_ERROR") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -893,6 +905,7 @@ const MarriageCorrectionEditPage = ({
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           type: "text",
+                          isRequired: checkLangRequired("GROOM_GUARDIAN", "groomGuardianNameMl"),
                           title: t("CR_GUARDIAN_NAME_ML_ERROR"),
                         })}
                       />
@@ -933,7 +946,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("GROOM_PERADD", "houseNameEn", "En"), title: t("CR_INVALID_HOUSE_NAME_EN") })}
                           />
                         </div>
                         <div className="col-md-3">
@@ -947,7 +960,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
                             placeholder={`${t("CR_LOCALITY_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("GROOM_PERADD", "localityNameEn", "En"), title: t("CR_INVALID_LOCALITY_EN") })}
                           />
                         </div>
                         <div className="col-md-3">
@@ -961,7 +974,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.streetNameEn}
                             onBlur={(e) => onGroomAddressChange(e, "streetNameEn")}
                             placeholder={`${t("CR_STREET_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("GROOM_PERADD", "streetNameEn", "En"), title: t("CR_INVALID_STREET_NAME_EN") })}
                           />
                         </div>
                       </FieldComponentContainer>
@@ -991,6 +1004,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
                               type: "text",
+                              isRequired: checkLangRequired("GROOM_PERADD", "houseNameMl"),
                               title: t("CR_INVALID_HOUSE_NAME_ML"),
                             })}
                           />
@@ -1009,6 +1023,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                               type: "text",
+                              isRequired: checkLangRequired("GROOM_PERADD", "localityNameMl"),
                               title: t("CR_INVALID_LOCALITY_ML"),
                             })}
                           />
@@ -1027,6 +1042,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                               type: "text",
+                              isRequired: checkLangRequired("GROOM_PERADD", "streetNameMl"),
                               title: t("CR_INVALID_STREET_NAME_ML"),
                             })}
                           />
@@ -1046,10 +1062,10 @@ const MarriageCorrectionEditPage = ({
                             name="groomAddressLine1En"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
-                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameEn}
-                            onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
+                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.addressLine1En}
+                            onBlur={(e) => onGroomAddressChange(e, "addressLine1En")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_ADDRES_LINE_ONE_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("GROOM_PERADD", "addressLine1En", "En"), title: t("CR_ADDRES_LINE_ONE_EN") })}
                           />
                         </div>
                         <div className="col-md-4">
@@ -1060,10 +1076,10 @@ const MarriageCorrectionEditPage = ({
                             name="groomAddressLine2En"
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
-                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameEn}
-                            onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
+                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.addressLine2En}
+                            onBlur={(e) => onGroomAddressChange(e, "addressLine2En")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_ADDRES_LINE_TWO_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("GROOM_PERADD", "addressLine2En", "En"), title: t("CR_ADDRES_LINE_TWO_EN") })}
                           />
                         </div>
                       </FieldComponentContainer>
@@ -1085,14 +1101,15 @@ const MarriageCorrectionEditPage = ({
                             t={t}
                             type={"text"}
                             name="groomAddressLine1Ml"
-                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameMl}
+                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.addressLine1Ml}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
-                            onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
+                            onBlur={(e) => onGroomAddressChange(e, "addressLine1Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
                               type: "text",
+                              isRequired: checkLangRequired("GROOM_PERADD", "addressLine1Ml"),
                               title: t("CR_ADDRES_LINE_ONE_ML"),
                             })}
                           />
@@ -1103,14 +1120,15 @@ const MarriageCorrectionEditPage = ({
                             t={t}
                             type={"text"}
                             name="groomAddressLine2Ml"
-                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameMl}
+                            defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.addressLine2Ml}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
-                            onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
+                            onBlur={(e) => onGroomAddressChange(e, "addressLine2Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
                               type: "text",
+                              isRequired: checkLangRequired("GROOM_PERADD", "addressLine2Ml"),
                               title: t("CR_ADDRES_LINE_TWO_ML"),
                             })}
                           />
@@ -1143,7 +1161,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameEn}
                         onBlur={(e) => onBrideNameChange(e, "firstNameEn")}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: marriageCorrectionFormsObj.BRIDE_NAME?.isEditable, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1159,7 +1177,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameEn}
                         onBlur={(e) => onBrideNameChange(e, "middleNameEn")}
                         placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("BRIDE_NAME", "middleNameEn", "En"), title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1175,7 +1193,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameEn}
                         onBlur={(e) => onBrideNameChange(e, "lastNameEn")}
                         placeholder={`${t("CR_LAST_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("BRIDE_NAME", "lastNameEn", "En"), title: t("CR_INVALID_LAST_NAME_EN") })}
                       />
                     </div>
                   </FieldComponentContainer>
@@ -1208,7 +1226,7 @@ const MarriageCorrectionEditPage = ({
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: true,
+                          isRequired: marriageCorrectionFormsObj.BRIDE_NAME?.isEditable,
                           type: "text",
                           title: t("CR_INVALID_FIRST_NAME_ML"),
                         })}
@@ -1229,8 +1247,8 @@ const MarriageCorrectionEditPage = ({
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: false,
                           type: "text",
+                          isRequired: checkLangRequired("BRIDE_NAME", "middleNameMl"),
                           title: t("CR_INVALID_MIDDLE_NAME_ML"),
                         })}
                       />
@@ -1250,8 +1268,8 @@ const MarriageCorrectionEditPage = ({
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: false,
                           type: "text",
+                          isRequired: checkLangRequired("BRIDE_NAME", "lastNameMl"),
                           title: t("CR_INVALID_LAST_NAME_ML"),
                         })}
                       />
@@ -1295,7 +1313,7 @@ const MarriageCorrectionEditPage = ({
                         // value={DeceasedFirstNameEn}
                         onChange={onBrideDOBChange}
                         placeholder={`${t("CR_AGE")}`}
-                        {...(validation = { pattern: "^[0-9]{2}$", type: "text" })}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: marriageCorrectionFormsObj.BRIDE_AGE?.isEditable })}
                       />
                     </div>
                   </div>
@@ -1326,7 +1344,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER?.curValue?.brideMotherNameEn}
                         onBlur={(e) => onBrideMotherNameChange(e, "brideMotherNameEn")}
                         placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_MOTHER_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("BRIDE_MOTHER", "brideMotherNameEn", "En"), title: t("CR_MOTHER_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1345,6 +1363,7 @@ const MarriageCorrectionEditPage = ({
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           type: "text",
+                          isRequired: checkLangRequired("BRIDE_MOTHER", "brideMotherNameMl"),
                           title: t("CR_MOTHER_NAME_ML"),
                         })}
                       />
@@ -1377,7 +1396,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER?.curValue?.brideFatherNameEn}
                         onBlur={(e) => onBrideFatherNameChange(e, "brideFatherNameEn")}
                         placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_FATHER_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("BRIDE_FATHER", "brideFatherNameEn", "En"), title: t("CR_FATHER_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1396,6 +1415,7 @@ const MarriageCorrectionEditPage = ({
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           type: "text",
+                          isRequired: checkLangRequired("BRIDE_FATHER", "brideFatherNameMl"),
                           title: t("CR_FATHER_NAME_ML"),
                         })}
                       />
@@ -1426,7 +1446,7 @@ const MarriageCorrectionEditPage = ({
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.curValue?.brideGuardianNameEn}
                         onBlur={(e) => onBrideGuardianNameChange(e, "brideGuardianNameEn")}
                         placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", title: t("CR_GUARDIAN_NAME_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: checkLangRequired("BRIDE_GUARDIAN", "brideGuardianNameEn", "En"), title: t("CR_GUARDIAN_NAME_EN") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1445,6 +1465,7 @@ const MarriageCorrectionEditPage = ({
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           type: "text",
+                          isRequired: checkLangRequired("BRIDE_GUARDIAN", "brideGuardianNameMl"),
                           title: t("CR_GUARDIAN_NAME_ML"),
                         })}
                       />
@@ -1485,7 +1506,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.houseNameEn}
                             onBlur={(e) => onBrideAddressChange(e, "houseNameEn")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("BRIDE_PERADD", "houseNameEn", "En"), title: t("CR_INVALID_HOUSE_NAME_EN") })}
                           />
                         </div>
                         <div className="col-md-3">
@@ -1499,7 +1520,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.localityNameEn}
                             onBlur={(e) => onBrideAddressChange(e, "localityNameEn")}
                             placeholder={`${t("CR_LOCALITY_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("BRIDE_PERADD", "localityNameEn", "En"), title: t("CR_INVALID_LOCALITY_EN") })}
                           />
                         </div>
                         <div className="col-md-3">
@@ -1513,7 +1534,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.streetNameEn}
                             onBlur={(e) => onBrideAddressChange(e, "streetNameEn")}
                             placeholder={`${t("CR_STREET_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("BRIDE_PERADD", "streetNameEn", "En"), title: t("CR_INVALID_STREET_NAME_EN") })}
                           />
                         </div>
                       </FieldComponentContainer>
@@ -1543,6 +1564,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
                               type: "text",
+                              isRequired: checkLangRequired("BRIDE_PERADD", "houseNameMl"),
                               title: t("CR_INVALID_HOUSE_NAME_ML"),
                             })}
                           />
@@ -1561,6 +1583,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                               type: "text",
+                              isRequired: checkLangRequired("BRIDE_PERADD", "localityNameMl"),
                               title: t("CR_INVALID_LOCALITY_ML"),
                             })}
                           />
@@ -1579,6 +1602,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                               type: "text",
+                              isRequired: checkLangRequired("BRIDE_PERADD", "streetNameMl"),
                               title: t("CR_INVALID_STREET_NAME_ML"),
                             })}
                           />
@@ -1601,7 +1625,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine1En}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine1En")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_ADDRES_LINE_ONE_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("BRIDE_PERADD", "addressLine1En", "En"), title: t("CR_ADDRES_LINE_ONE_EN") })}
                             />
                         </div>
                         <div className="col-md-4">
@@ -1615,7 +1639,7 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine2En}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine2En")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", title: t("CR_ADDRES_LINE_TWO_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", type: "text", isRequired: checkLangRequired("BRIDE_PERADD", "addressLine2En", "En"), title: t("CR_ADDRES_LINE_TWO_EN") })}
                           />
                         </div>
                       </FieldComponentContainer>
@@ -1645,6 +1669,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                               type: "text",
+                              isRequired: checkLangRequired("BRIDE_PERADD", "addressLine1Ml"),
                               title: t("CR_ADDRES_LINE_ONE_ML"),
                             })}
                             />
@@ -1663,6 +1688,7 @@ const MarriageCorrectionEditPage = ({
                             {...(validation = {
                               pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                               type: "text",
+                              isRequired: checkLangRequired("BRIDE_PERADD", "addressLine2Ml"),
                               title: t("CR_ADDRES_LINE_TWO_ML"),
                             })}
                             />

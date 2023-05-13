@@ -114,7 +114,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     sortBy: "commencementDate",
                     sortOrder: "DESC"
                 });
-                previousPage();
+             //   previousPage();
             }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
         </SearchField>
     </>

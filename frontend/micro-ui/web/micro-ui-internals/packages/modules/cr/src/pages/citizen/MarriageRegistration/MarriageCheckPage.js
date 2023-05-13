@@ -49,7 +49,7 @@ const getPath = (path, params) => {
 };
 
 const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
-  console.log({formData});
+  console.log({ formData });
   let isEdit = window.location.href.includes("renew-trade");
 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
@@ -72,6 +72,12 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
   const match = useRouteMatch();
   const { MarriageDetails, BrideDetails, BrideAddressDetails, GroomDetails, GroomAddressDetails, WitnessDetails, MarriageDocuments } = value;
   console.log({ value });
+  let routeLink = "";
+  // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
+  // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/check", "");
+
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -103,7 +109,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
   } else {
     userType = "employee";
   }
-  console.log({val1: WitnessDetails?.isExpiredWife, val2: WitnessDetails?.isExpiredHusband});
+  console.log({ val1: WitnessDetails?.isExpiredWife, val2: WitnessDetails?.isExpiredHusband });
   console.log(value);
   console.log("abc", MarriageDocuments?.OtherDetails?.groomAgeDocument?.code === "DRIVING_LICENSE");
   return (
@@ -154,7 +160,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageDistrictid ? MarriageDetails?.marriageDistrictid?.name : "NA"}
+                      {MarriageDetails?.marriageDistrictid ? MarriageDetails?.marriageDistrictid?.name : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -162,7 +168,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageTalukID ? MarriageDetails?.marriageTalukID?.name : "NA"}
+                      {MarriageDetails?.marriageTalukID ? MarriageDetails?.marriageTalukID?.name : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -182,7 +188,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageLBtype ? MarriageDetails?.marriageLBtype?.name : "NA"}
+                      {MarriageDetails?.marriageLBtype ? MarriageDetails?.marriageLBtype?.name : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -190,7 +196,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageTenantid ? MarriageDetails?.marriageTenantid?.name : "NA"}
+                      {MarriageDetails?.marriageTenantid ? MarriageDetails?.marriageTenantid?.name : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -198,7 +204,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriageWardCode ? MarriageDetails?.marriageWardCode?.name : "NA"}
+                      {MarriageDetails?.marriageWardCode ? MarriageDetails?.marriageWardCode?.name : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -210,7 +216,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {MarriageDetails?.marriagePlacetype ? MarriageDetails?.marriagePlacetype?.name : "NA"}
+                      {MarriageDetails?.marriagePlacetype ? MarriageDetails?.marriagePlacetype?.name : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   {(MarriageDetails?.marriagePlacetype?.code === "RELIGIOUS_INSTITUTION" ||
@@ -222,7 +228,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.placeidEn ? MarriageDetails?.placeidEn?.name : "NA"}
+                          {MarriageDetails?.placeidEn ? MarriageDetails?.placeidEn?.name : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -230,14 +236,14 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.placeidMl ? MarriageDetails?.placeidMl?.nameLocal : "NA"}
+                          {MarriageDetails?.placeidMl ? MarriageDetails?.placeidMl?.nameLocal : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </React.Fragment>
                   )}
                 </div>
               </div>
-              {MarriageDetails?.marriagePlaceType?.code === "OTHER" && (
+              {MarriageDetails?.marriagePlacetype?.code === "OTHER" && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
@@ -248,7 +254,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePlacenameEn ? MarriageDetails?.marriagePlacenameEn : "NA"}
+                          {MarriageDetails?.marriagePlacenameEn ? MarriageDetails?.marriagePlacenameEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -256,7 +262,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "NA"}
+                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -268,7 +274,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "NA"}
+                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -276,7 +282,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "NA"}
+                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -290,7 +296,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : "NA"}
+                          {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -298,7 +304,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "NA"}
+                          {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -310,14 +316,14 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : "NA"}
+                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </React.Fragment>
               )}
-              {MarriageDetails?.marriagePlaceType?.code === "HOUSE" && (
+              {MarriageDetails?.marriagePlacetype?.code === "HOUSE" && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
@@ -326,7 +332,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "NA"}
+                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -334,7 +340,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "NA"}
+                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -346,7 +352,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageHouseNoAndNameEn ? MarriageDetails?.marriageHouseNoAndNameEn : "NA"}
+                          {MarriageDetails?.marriageHouseNoAndNameEn ? MarriageDetails?.marriageHouseNoAndNameEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -354,7 +360,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "NA"}
+                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -366,7 +372,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : "NA"}
+                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -374,7 +380,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "NA"}
+                          {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -386,25 +392,23 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageHouseNoAndNameMl ? MarriageDetails?.marriageHouseNoAndNameMl : "NA"}
+                          {MarriageDetails?.marriageHouseNoAndNameMl ? MarriageDetails?.marriageHouseNoAndNameMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </React.Fragment>
               )}
-              {(MarriageDetails?.marriagePlaceType?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
+              {(MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`} :
-                        </CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePublicOrPrivateNamePlaceEn ? MarriageDetails?.marriagePublicOrPrivateNamePlaceEn : "NA"}
+                          {MarriageDetails?.marriagePlacenameEn ? MarriageDetails?.marriagePlacenameEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -412,7 +416,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "NA"}
+                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -424,7 +428,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "NA"}
+                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -432,7 +436,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "NA"}
+                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
@@ -440,13 +444,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :
-                        </CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePublicOrPrivateNamePlaceMl ? MarriageDetails?.marriagePublicOrPrivateNamePlaceMl : "NA"}
+                          {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-12">
@@ -455,7 +457,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-3">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : "NA"}
+                            {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </div>
@@ -467,7 +469,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "NA"}
+                        {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -496,6 +498,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -522,7 +529,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {GroomDetails?.groomResidentShip ? GroomDetails?.groomResidentShip : "NA"}
+                      {GroomDetails?.groomResidentShip ? GroomDetails?.groomResidentShip : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -545,7 +552,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomAadharNo ? GroomDetails?.groomAadharNo : "NA"}
+                          {GroomDetails?.groomAadharNo ? GroomDetails?.groomAadharNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -557,7 +564,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomPassportNo ? GroomDetails?.groomPassportNo : "NA"}
+                          {GroomDetails?.groomPassportNo ? GroomDetails?.groomPassportNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -567,7 +574,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomSocialSecurityNo ? GroomDetails?.groomSocialSecurityNo : "NA"}
+                          {GroomDetails?.groomSocialSecurityNo ? GroomDetails?.groomSocialSecurityNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -591,7 +598,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomFirstnameEn ? GroomDetails?.groomFirstnameEn : "NA"}
+                        {GroomDetails?.groomFirstnameEn ? GroomDetails?.groomFirstnameEn : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -599,7 +606,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomFirstnameMl ? GroomDetails?.groomFirstnameMl : "NA"}
+                        {GroomDetails?.groomFirstnameMl ? GroomDetails?.groomFirstnameMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -611,7 +618,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomMiddlenameEn ? GroomDetails?.groomMiddlenameEn : "NA"}
+                        {GroomDetails?.groomMiddlenameEn ? GroomDetails?.groomMiddlenameEn : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -619,7 +626,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomMiddlenameMl ? GroomDetails?.groomMiddlenameMl : "NA"}
+                        {GroomDetails?.groomMiddlenameMl ? GroomDetails?.groomMiddlenameMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -631,7 +638,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomLastnameEn ? GroomDetails?.groomLastnameEn : "NA"}
+                        {GroomDetails?.groomLastnameEn ? GroomDetails?.groomLastnameEn : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -639,7 +646,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomLastnameMl ? GroomDetails?.groomLastnameMl : "NA"}
+                        {GroomDetails?.groomLastnameMl ? GroomDetails?.groomLastnameMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -651,7 +658,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomMobile ? GroomDetails?.groomMobile : "NA"}
+                        {GroomDetails?.groomMobile ? GroomDetails?.groomMobile : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -659,7 +666,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomEmailid ? GroomDetails?.groomEmailid : "NA"}
+                        {GroomDetails?.groomEmailid ? GroomDetails?.groomEmailid : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -680,7 +687,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomGender ? GroomDetails?.groomGender?.value : "NA"}
+                        {GroomDetails?.groomGender ? GroomDetails?.groomGender?.value : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-2">
@@ -688,7 +695,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomDOB ? GroomDetails?.groomDOB : "NA"}
+                        {GroomDetails?.groomDOB ? GroomDetails?.groomDOB : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-2">
@@ -696,7 +703,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomAge ? GroomDetails?.groomAge : "NA"}
+                        {GroomDetails?.groomAge ? GroomDetails?.groomAge : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -708,7 +715,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomMaritalstatusID ? GroomDetails?.groomMaritalstatusID?.name : "NA"}
+                        {GroomDetails?.groomMaritalstatusID ? GroomDetails?.groomMaritalstatusID?.name : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     {GroomDetails?.groomMaritalstatusID?.code === "MARRIED" && (
@@ -718,7 +725,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.code : "NA"}
+                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.code : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
@@ -733,7 +740,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomNoOfSpouse ? GroomDetails?.groomNoOfSpouse : "NA"}
+                            {GroomDetails?.groomNoOfSpouse ? GroomDetails?.groomNoOfSpouse : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
@@ -760,7 +767,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomFatherAadharNo ? GroomDetails?.groomFatherAadharNo : "NA"}
+                            {GroomDetails?.groomFatherAadharNo ? GroomDetails?.groomFatherAadharNo : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -768,7 +775,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomFathernameEn ? GroomDetails?.groomFathernameEn : "NA"}
+                            {GroomDetails?.groomFathernameEn ? GroomDetails?.groomFathernameEn : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -776,7 +783,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomFathernameMl ? GroomDetails?.groomFathernameMl : "NA"}
+                            {GroomDetails?.groomFathernameMl ? GroomDetails?.groomFathernameMl : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </div>
@@ -790,7 +797,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomMotherAadharNo ? GroomDetails?.groomMotherAadharNo : "NA"}
+                            {GroomDetails?.groomMotherAadharNo ? GroomDetails?.groomMotherAadharNo : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -798,7 +805,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomMothernameEn ? GroomDetails?.groomMothernameEn : "NA"}
+                            {GroomDetails?.groomMothernameEn ? GroomDetails?.groomMothernameEn : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -806,7 +813,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomMothernameMl ? GroomDetails?.groomMothernameMl : "NA"}
+                            {GroomDetails?.groomMothernameMl ? GroomDetails?.groomMothernameMl : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </div>
@@ -823,7 +830,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomGuardianAadharNo ? GroomDetails?.groomGuardianAadharNo : "NA"}
+                          {GroomDetails?.groomGuardianAadharNo ? GroomDetails?.groomGuardianAadharNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -831,7 +838,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomGuardiannameEn ? GroomDetails?.groomGuardiannameEn : "NA"}
+                          {GroomDetails?.groomGuardiannameEn ? GroomDetails?.groomGuardiannameEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -839,13 +846,18 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomDetails?.groomGuardiannameMl ? GroomDetails?.groomGuardiannameMl : "NA"}
+                          {GroomDetails?.groomGuardiannameMl ? GroomDetails?.groomGuardiannameMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 )}
               </React.Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/groom-details`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -1609,6 +1621,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               )}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/address-groom`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -1635,7 +1652,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {BrideDetails?.brideResidentShip ? BrideDetails?.brideResidentShip : "NA"}
+                      {BrideDetails?.brideResidentShip ? BrideDetails?.brideResidentShip : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -1658,7 +1675,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.brideAadharNo ? BrideDetails?.brideAadharNo : "NA"}
+                          {BrideDetails?.brideAadharNo ? BrideDetails?.brideAadharNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -1670,7 +1687,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.bridePassportNo ? BrideDetails?.bridePassportNo : "NA"}
+                          {BrideDetails?.bridePassportNo ? BrideDetails?.bridePassportNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1680,7 +1697,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.brideSocialSecurityNo ? BrideDetails?.brideSocialSecurityNo : "NA"}
+                          {BrideDetails?.brideSocialSecurityNo ? BrideDetails?.brideSocialSecurityNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </React.Fragment>
@@ -1704,7 +1721,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideFirstnameEn ? BrideDetails?.brideFirstnameEn : "NA"}
+                        {BrideDetails?.brideFirstnameEn ? BrideDetails?.brideFirstnameEn : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1712,7 +1729,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideFirstnameMl ? BrideDetails?.brideFirstnameMl : "NA"}
+                        {BrideDetails?.brideFirstnameMl ? BrideDetails?.brideFirstnameMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -1724,7 +1741,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideMiddlenameEn ? BrideDetails?.brideMiddlenameEn : "NA"}
+                        {BrideDetails?.brideMiddlenameEn ? BrideDetails?.brideMiddlenameEn : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1732,7 +1749,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideMiddlenameMl ? BrideDetails?.brideMiddlenameMl : "NA"}
+                        {BrideDetails?.brideMiddlenameMl ? BrideDetails?.brideMiddlenameMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -1744,7 +1761,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideLastnameEn ? BrideDetails?.brideLastnameEn : "NA"}
+                        {BrideDetails?.brideLastnameEn ? BrideDetails?.brideLastnameEn : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1752,7 +1769,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideLastnameMl ? BrideDetails?.brideLastnameMl : "NA"}
+                        {BrideDetails?.brideLastnameMl ? BrideDetails?.brideLastnameMl : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -1764,7 +1781,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideMobile ? BrideDetails?.brideMobile : "NA"}
+                        {BrideDetails?.brideMobile ? BrideDetails?.brideMobile : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1772,7 +1789,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideEmailid ? BrideDetails?.brideEmailid : "NA"}
+                        {BrideDetails?.brideEmailid ? BrideDetails?.brideEmailid : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -1793,7 +1810,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideGender ? BrideDetails?.brideGender?.value : "NA"}
+                        {BrideDetails?.brideGender ? BrideDetails?.brideGender?.value : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-2">
@@ -1801,7 +1818,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideDOB ? BrideDetails?.brideDOB : "NA"}
+                        {BrideDetails?.brideDOB ? BrideDetails?.brideDOB : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     <div className="col-md-2">
@@ -1809,7 +1826,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideAge ? BrideDetails?.brideAge : "NA"}
+                        {BrideDetails?.brideAge ? BrideDetails?.brideAge : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                   </div>
@@ -1821,7 +1838,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideMaritalstatusID ? BrideDetails?.brideMaritalstatusID?.name : "NA"}
+                        {BrideDetails?.brideMaritalstatusID ? BrideDetails?.brideMaritalstatusID?.name : "CR_NOT_RECORDED"}
                       </CardText>
                     </div>
                     {BrideDetails?.brideMaritalstatusID?.code === "MARRIED" && (
@@ -1831,7 +1848,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.code : "NA"}
+                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.code : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
@@ -1846,7 +1863,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideNoOfSpouse ? BrideDetails?.brideNoOfSpouse : "NA"}
+                            {BrideDetails?.brideNoOfSpouse ? BrideDetails?.brideNoOfSpouse : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragement>
@@ -1873,7 +1890,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideFatherAadharNo ? BrideDetails?.brideFatherAadharNo : "NA"}
+                            {BrideDetails?.brideFatherAadharNo ? BrideDetails?.brideFatherAadharNo : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -1881,7 +1898,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideFathernameEn ? BrideDetails?.brideFathernameEn : "NA"}
+                            {BrideDetails?.brideFathernameEn ? BrideDetails?.brideFathernameEn : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -1889,7 +1906,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideFathernameMl ? BrideDetails?.brideFathernameMl : "NA"}
+                            {BrideDetails?.brideFathernameMl ? BrideDetails?.brideFathernameMl : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </div>
@@ -1903,7 +1920,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideMotherAadharNo ? BrideDetails?.brideMotherAadharNo : "NA"}
+                            {BrideDetails?.brideMotherAadharNo ? BrideDetails?.brideMotherAadharNo : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -1911,7 +1928,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideMothernameEn ? BrideDetails?.brideMothernameEn : "NA"}
+                            {BrideDetails?.brideMothernameEn ? BrideDetails?.brideMothernameEn : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                         <div className="col-md-2">
@@ -1919,7 +1936,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideMothernameMl ? BrideDetails?.brideMothernameMl : "NA"}
+                            {BrideDetails?.brideMothernameMl ? BrideDetails?.brideMothernameMl : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </div>
@@ -1936,7 +1953,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.brideGuardianAadharNo ? BrideDetails?.brideGuardianAadharNo : "NA"}
+                          {BrideDetails?.brideGuardianAadharNo ? BrideDetails?.brideGuardianAadharNo : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1944,7 +1961,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.brideGuardiannameEn ? BrideDetails?.brideGuardiannameEn : "NA"}
+                          {BrideDetails?.brideGuardiannameEn ? BrideDetails?.brideGuardiannameEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1952,13 +1969,18 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideDetails?.brideGuardiannameMl ? BrideDetails?.brideGuardiannameMl : "NA"}
+                          {BrideDetails?.brideGuardiannameMl ? BrideDetails?.brideGuardiannameMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 )}
               </React.Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/bride-details`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -2722,6 +2744,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               )}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/address-bride`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -2746,7 +2773,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness1AadharNo ? WitnessDetails?.witness1AadharNo : "NA"}
+                      {WitnessDetails?.witness1AadharNo ? WitnessDetails?.witness1AadharNo : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2754,7 +2781,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness1NameEn ? WitnessDetails?.witness1NameEn : "NA"}
+                      {WitnessDetails?.witness1NameEn ? WitnessDetails?.witness1NameEn : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2762,7 +2789,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness1Age ? WitnessDetails?.witness1Age : "NA"}
+                      {WitnessDetails?.witness1Age ? WitnessDetails?.witness1Age : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -2774,7 +2801,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness1AddressEn ? WitnessDetails?.witness1AddressEn : "NA"}
+                      {WitnessDetails?.witness1AddressEn ? WitnessDetails?.witness1AddressEn : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2782,7 +2809,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness1Mobile ? WitnessDetails?.witness1Mobile : "NA"}
+                      {WitnessDetails?.witness1Mobile ? WitnessDetails?.witness1Mobile : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -2803,7 +2830,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness2AadharNo ? WitnessDetails?.witness2AadharNo : "NA"}
+                      {WitnessDetails?.witness2AadharNo ? WitnessDetails?.witness2AadharNo : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2811,7 +2838,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness2NameEn ? WitnessDetails?.witness2NameEn : "NA"}
+                      {WitnessDetails?.witness2NameEn ? WitnessDetails?.witness2NameEn : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2819,7 +2846,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness2Age ? WitnessDetails?.witness2Age : "NA"}
+                      {WitnessDetails?.witness2Age ? WitnessDetails?.witness2Age : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -2831,7 +2858,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness2AddressEn ? WitnessDetails?.witness2AddressEn : "NA"}
+                      {WitnessDetails?.witness2AddressEn ? WitnessDetails?.witness2AddressEn : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2839,7 +2866,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness2Mobile ? WitnessDetails?.witness2Mobile : "NA"}
+                      {WitnessDetails?.witness2Mobile ? WitnessDetails?.witness2Mobile : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -2898,12 +2925,23 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-6">
-                    {WitnessDetails?.uploadedGroomImageId ? <img src={WitnessDetails?.uploadedGroomImageId} alt="Groom Image" /> : "NR"}
+                  <div className="col-md-3">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GROOM_PHOTO")}`} :</CardText>
                   </div>
-                  <div className="col-md-6">
-                    {WitnessDetails?.uploadedGroomImageId ? <img src={WitnessDetails?.uploadedBrideImageId} alt="Groom Image" /> : "NR"}
+                  <div className="col-md-3">
+                    {WitnessDetails?.groomURL ? <img height={120} width={100} src={WitnessDetails?.groomURL} alt="Groom Image" /> : "NR"}
                   </div>
+                  <div className="col-md-3">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BRIDE_PHOTO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-3">
+                    {WitnessDetails?.brideURL ? <img height={120} width={100} src={WitnessDetails?.brideURL} alt="Groom Image" /> : "NR"}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/witness-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -3752,6 +3790,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               </React.Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">{<ActionButton jumpTo={`${routeLink}/marriage-documents`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -3922,7 +3965,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
+            <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} disabled={!isInitiatorDeclaration} />
           </div>
         </div>
       </Card>

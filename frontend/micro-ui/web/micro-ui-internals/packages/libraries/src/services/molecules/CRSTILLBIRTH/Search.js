@@ -94,9 +94,9 @@ export const CRStillBirthsearch = {
       asSectionHeader: true,
       values: [
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_NAME_EN", value: response?.hospitalNameMl || "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_NAME_ML", value: response?.hospitalNameMl || "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionIdMl || "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NOT_RECORDED" },
       ],
     };
     const stillbirthPlaceHOMEDetails = {
@@ -145,62 +145,58 @@ export const CRStillBirthsearch = {
         { title: "CR_DESCRIPTION", value: response?.publicPlaceDecpEn || "NOT_RECORDED" },
       ],
     };
+    const statisticalInfo = {
+      title: "CR_STATISTICAL_DETAILS",
+     // asSectionHeader: true,
+      values: [
+        
+        { title: "CR_NATURE_OF_MEDICAL_ATTENTION", value: response?.medicalAttensionSubEn + " / " + response?.medicalAttensionSubMl || "NOT_RECORDED" },
+        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.pregnancyDuration   || "NOT_RECORDED" },
+        { title: "CR_DELIVERY_METHOD", value: response?.deliveryMethodsEn + " / " + response?.deliveryMethodsMl || "NOT_RECORDED" },
+        { title: "PDF_CAUSE_FOETAL_DEATH", value: response?.causeFoetalDeathEn  + " / " + response?.causeFoetalDeathMl || "NOT_RECORDED" },
+          
+       ],
+    };
     const StillBirthParentsDetails = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
         
         { title: "CR_BIRTH_MOTHER_AADHAR", value: response?.StillBirthParentsDetails?.motherAadhar || "NOT_RECORDED"},   
-        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.StillBirthParentsDetails?.motherFirstNameEn + " / " + response?.StillBirthParentsDetails?.motherFirstNameMl || "NOT_RECORDED"},
-     
-        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NOT_RECORDED"},   
+        { title: "CR_MOTHER_NAME_EN", value: response?.StillBirthParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_MOTHER_NAME_ML", value: response?.StillBirthParentsDetails.motherFirstNameMl || "NOT_RECORDED" },
+        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationalityEn + " / " + (response?.StillBirthParentsDetails?.motherNationalityMl != null ? response?.StillBirthParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
+       
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.StillBirthParentsDetails?.motherMarriageBirth || "NOT_RECORDED"},   
-        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NOT_RECORDED"},   
-        { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.motherEducation || "NOT_RECORDED"},   
-        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfession || "NOT_RECORDED"}, 
-      
+        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NOT_RECORDED"},        
+        { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.motherEducationEn + " / " + response?.StillBirthParentsDetails?.motherEducationMl || "NOT_RECORDED" },
+        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfessionEn + " / " + response?.StillBirthParentsDetails?.motherProfessionMl || "NOT_RECORDED" },
        
         { title: "CR_BIRTH_FATHER_AADHAR", value: response?.StillBirthParentsDetails?.fatherAadhar || "NOT_RECORDED"},  
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.StillBirthParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NOT_RECORDED"},       
-        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.fatherNationality || "NOT_RECORDED" },       
-       { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.fatherEducation || "NOT_RECORDED" },
-       { title: "CR_PROFESSIONAL", value: response?.fatherProfession   || "NOT_RECORDED" },
-     
-       { title: "CS_COMMON_RELIGION", value: response?.StillBirthParentsDetails?.Religion || "NOT_RECORDED" },  
+        { title: "CR_FATHER_NAME_EN", value: response?.StillBirthParentsDetails.fatherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_FATHER_NAME_ML", value: response?.StillBirthParentsDetails.fatherFirstNameMl || "NOT_RECORDED" },
+        
+       { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.fatherNationalityEn + " / " + (response?.StillBirthParentsDetails?.fatherNationalityMl != null ? response?.StillBirthParentsDetails?.fatherNationalityMl : "") || "NOT_RECORDED" },
+       { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.fatherEducationEn + " / " + response?.StillBirthParentsDetails?.fatherEducationMl || "NOT_RECORDED" },
+       { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.fatherProfessionEn + " / " + response?.StillBirthParentsDetails?.fatherProfessionMl || "NOT_RECORDED" },
+       { title: "CS_COMMON_RELIGION", value: response?.StillBirthParentsDetails?.ReligionEn + " / " + response?.StillBirthParentsDetails?.ReligionMl || "NOT_RECORDED" },
        { title: "PDF_BIRTH_FATHER_MOBILE_NO", value: response?.StillBirthParentsDetails?.fatherMobile || "NOT_RECORDED" },
        { title: "PDF_BIRTH_FATHER_EMAIL", value: response?.StillBirthParentsDetails?.fatherEmail || "NOT_RECORDED" },       
       
       ],
     };
-    // const AddressBirthDetails = {
-    //   title: "CR_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-   
-    //     { title: "PDF_BIRTH_PRESENT_ADDRESS",  value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameEn  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice.name + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode
-    //     + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict    + " , " +  response?.AddressBirthDetails.presentaddressStateName + " , " +    response?.AddressBirthDetails.presentaddressCountry },
-    //       {  value:response?.AddressBirthDetails.presentInsideKeralaHouseNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameMl  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode   + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict     + " , " +  response?.AddressBirthDetails.presentaddressStateName  + " , " +    response?.AddressBirthDetails.presentaddressCountry  || "CR_NOT_RECORDED"},
-    //       { title: "PDF_BIRTH_PERMANENT_ADDRESS",  value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn + " , " + response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn  + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn + " , " + response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name + " , " + response?.AddressBirthDetails.permntInKeralaAdrPincode
-    //       + " , " +  response?.AddressBirthDetails.permntInKeralaAdrDistrict.name     + " , " +  response?.AddressBirthDetails.permtaddressStateName.name + " , " +    response?.AddressBirthDetails.permtaddressCountry.name },
-    //   {value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameMl + " , " + response?.AddressBirthDetails.permntInKeralaAdrStreetNameMl  + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl.name + " , " + response?.AddressBirthDetails.permntInKeralaAdrPincode
-    //   + " , " +  response?.AddressBirthDetails.permntInKeralaAdrDistrict.namelocal     + " , " +  response?.AddressBirthDetails.permtaddressStateName.namelocal + " , " +    response?.AddressBirthDetails.permtaddressCountry.namelocal },
-      
-     
-        
-      
-    //   ],
-      
-
-    // };
+    
     const AddressBirthDetailsPresentInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
+        { subTitle: true, title: "CR_PRESENT_ADDRESS", value: "CR_PRESENT_ADDRESS" },
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPresentEn + " / " + (response?.AddressBirthDetails?.countryIdPresentMl != null ? response?.AddressBirthDetails?.countryIdPresentMl : "") || "NOT_RECORDED" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPresentEn + " / " + response?.AddressBirthDetails.stateIdPresentMl || "NOT_RECORDED" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPresentEn + " / " + response?.AddressBirthDetails.districtIdPresentMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTaluk || "NOT_RECORDED" },
-        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillage || "NOT_RECORDED" },
+        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNo || "NOT_RECORDED" },
-        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaPostOfficeMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NOT_RECORDED" },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || "NOT_RECORDED" },
@@ -209,13 +205,14 @@ export const CRStillBirthsearch = {
         { title: "CR_HOUSE_NAME_EN", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || "NOT_RECORDED" },
         { title: "CR_HOUSE_NAME_ML", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameMl || "NOT_RECORDED" },
         //Permanent Address
+        { subTitle: true, title: "CR_PERMANENT_ADDRESS", value: "CR_PERMANENT_ADDRESS" },
         { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.countryIdPermanentEn + " / " + (response?.AddressBirthDetails?.countryIdPermanentMl != null ? response?.AddressBirthDetails?.countryIdPermanentMl : "") || "NOT_RECORDED" },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails.stateIdPermanentEn + " / " + response?.AddressBirthDetails.stateIdPermanentMl || "NOT_RECORDED" },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.districtIdPermanentEn + " / " + response?.AddressBirthDetails.districtIdPermanentMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTaluk || "NOT_RECORDED" },
-        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillage || "NOT_RECORDED" },
+        { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.permntInKeralaAdrTalukEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrTalukMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.permntInKeralaAdrVillageEn + " / " + response?.AddressBirthDetails.permntInKeralaAdrVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.permntInKeralaAdrLBNameEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNo || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNoEn + " / " + response?.AddressBirthDetails?.permntInKeralaWardNoMl || "NOT_RECORDED" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrPostOfficeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn || "NOT_RECORDED" },
@@ -227,8 +224,6 @@ export const CRStillBirthsearch = {
 
       ]
     }
-
-
     const AddressBirthDetailsPresentOutsideKeralaInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
@@ -263,6 +258,7 @@ export const CRStillBirthsearch = {
         { title: "CR_HOUSE_NAME_ML", value: response?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl || "NOT_RECORDED" },
       ]
     }
+    // } else if (response?.AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA") {
 
     const AddressBirthDetailsPresentOutsideIndiaInfo = {
       title: "CR_ADDRESS_DETAILS",
@@ -291,20 +287,9 @@ export const CRStillBirthsearch = {
       ]
     }
     
-    
    // };
     
-    const statisticalInfo = {
-      title: "CR_STATISTICAL_DETAILS",
-     // asSectionHeader: true,
-      values: [
-        { title: "PDF_BIRTH_NATURE_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.pregnancyDuration   || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_DELIVERYMETHOD", value: response?.deliveryMethods },
-        { title: "PDF_CAUSE_FOETAL_DEATH", value: response?.causeFoetalDeath || "NOT_RECORDED" },
-          
-       ],
-    };
+   
     const StillBirthInitiatorDetails = {
       title: "CR_INITIATOR_DETAILS",
      // asSectionHeader: true,

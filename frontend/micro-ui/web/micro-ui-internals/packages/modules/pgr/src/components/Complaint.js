@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
-import { Card, DateWrap, KeyNote } from "@egovernments/digit-ui-react-components";
+import { useHistory, Link } from "react-router-dom";
+import { Card, DateWrap, KeyNote, Table } from "@egovernments/digit-ui-react-components";
 import { CardSubHeader } from "@egovernments/digit-ui-react-components";
 import { LOCALIZATION_KEY } from "../constants/Localization";
 
 // import { ConvertTimestampToDate } from "../@egovernments/digit-utils/services/date";
 
-const Complaint = ({ data, path }) => {
-  let { serviceCode, serviceRequestId, applicationStatus } = data;
-
+const Complaint = ({ data, path, onNextPage, onPrevPage, currentPage, onPageSizeChange, pageSizeLimit }) => {
+  // let { serviceCode, serviceRequestId, applicationStatus } = data;
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const history = useHistory();
   const { t } = useTranslation();
 
-  const handleClick = () => {
-    history.push(`${path}/${serviceRequestId}`);
-  };
+  // const handleClick = () => {
+  //   history.push(`${path}/${serviceRequestId}`);
+  // };
+
+  // const fetchData = async () => {
+  //   const serviceIds = data.map(item => item.serviceRequestId)
+  //   const serviceIdParams = serviceIds.join();
+  //   const workflowInstances = await Digit.WorkflowService.getByBusinessId(tenantId, serviceIdParams);
+  //   console.log("wfi", workflowInstances)
+  // }
+
+  useEffect(() => {
+    // fetchData()
+  }, [data])
 
   const closedStatus = ["RESOLVED", "REJECTED", "CLOSEDAFTERREJECTION", "CLOSEDAFTERRESOLUTION"];
 
@@ -27,32 +38,66 @@ const Complaint = ({ data, path }) => {
     fontSize: "26px"
   }
 
-  return (
-    <div className="col-md-4">
-      <Card onClick={handleClick} >
-        <CardSubHeader style={headerStyle}>{t(`SERVICEDEFS.${serviceCode.toUpperCase()}`)}</CardSubHeader>
+  const GetCell = (value) => <span className="cell-text">{value}</span>;
 
-        <div className="col-md-12" style={{ paddingLeft: "2px", paddingRight: "2px" }}>
-          <div className="col-md-6">
-            <KeyNote keyValue={t(`${LOCALIZATION_KEY.CS_COMMON}_COMPLAINT_NO`)} note={serviceRequestId} />
-          </div>
-          <div className="col-md-6">
-            <DateWrap date={Digit.DateUtils.ConvertTimestampToDate(data.auditDetails.createdTime)} />
-          </div>
-        </div>
-
-        <div className="col-md-12" style={{ paddingLeft: "2px", paddingRight: "2px" }}>
-          <div className="col-md-6">
-            <p>{t(`${LOCALIZATION_KEY.CS_COMMON}_${applicationStatus}`)}</p>
-          </div>
-          <div className="col-md-6">
-            <div className={`status-highlight ${closedStatus.includes(applicationStatus) ? "success" : ""}`}
-              style={{ cursor: "pointer", marginLeft: "auto" }}>
-              <p>{(closedStatus.includes(applicationStatus) ? t("CS_COMMON_CLOSED") : t("CS_COMMON_OPEN")).toUpperCase()}</p>
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: t("CS_COMMON_COMPLAINT_NO"),
+        Cell: ({ row }) => {
+          return (
+            <div>
+              <span className="link">
+                <Link to={`${path}/${row.original["serviceRequestId"]}`}>{row.original["serviceRequestId"]}</Link>
+              </span>
+              <br />
             </div>
-          </div>
-        </div>
-      </Card>
+          );
+        },
+      },
+      {
+        Header: t("CS_ADDCOMPLAINT_COMPLAINT_TYPE"),
+        Cell: ({ row }) => {
+          return GetCell(t(`SERVICEDEFS.${row.original["serviceCode"].toUpperCase()}`));
+        },
+      },
+      {
+        Header: t("CS_COMPLAINT_FILED_DATE"),
+        Cell: ({ row }) => {
+          return GetCell(Digit.DateUtils.ConvertTimestampToDate(row.original?.auditDetails["createdTime"]));
+        },
+      },
+      {
+        Header: t("CS_COMPLAINT_DETAILS_APPLICATION_STATUS"),
+        Cell: ({ row }) => {
+          return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+        },
+      }
+    ],
+    [t]
+  );
+
+  return (
+    <div className="col-md-12">
+      <Table
+        t={t}
+        getCellProps={(cellInfo) => {
+          return {
+            style: {
+              minWidth: cellInfo.column.Header === t("CS_COMMON_COMPLAINT_NO") ? "240px" : "",
+              padding: "20px 18px",
+              fontSize: "16px",
+            },
+          };
+        }}
+        data={data}
+        columns={columns}
+        onNextPage={onNextPage}
+        onPrevPage={onPrevPage}
+        currentPage={currentPage}
+        onPageSizeChange={onPageSizeChange}
+        pageSizeLimit={pageSizeLimit}
+      />
     </div>
   );
 };
