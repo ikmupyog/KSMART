@@ -151,6 +151,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 document.setApplicationNumber(applicationNumber);
                 document.setApplicationType(applicationType);
                 document.setMarriageDocAuditDetails(auditDetails);
+                document.setActive(true);
                
                 });
             }
