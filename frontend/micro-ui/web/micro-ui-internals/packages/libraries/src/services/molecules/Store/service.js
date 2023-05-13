@@ -58,9 +58,13 @@ export const StoreService = {
     const { MdmsRes } = await MdmsService.init(stateCode);
     const stateInfo = MdmsRes["common-masters"].StateInfo[0];
     const districts = MdmsRes["common-masters"].District;
-    const filterDistricts = districts.filter(districts => districts.statecode === "kl" && (districts.districtid === 1 || 
-    districts.districtid === 9 || districts.districtid === 7 || districts.districtid === 4 || districts.districtid === 8 || districts.districtid === 6 ||
-    districts.districtid === 13));
+    const filterDistricts = districts.filter(districts => districts.statecode === "kl" && (
+    //   districts.districtid === 1 || 
+    // districts.districtid === 9 || 
+    districts.districtid === 7 
+    // || districts.districtid === 4 || districts.districtid === 8 || districts.districtid === 6 ||
+    // districts.districtid === 13
+    ));
     const localities = {};
     const revenue_localities = {};
     const initData = {
