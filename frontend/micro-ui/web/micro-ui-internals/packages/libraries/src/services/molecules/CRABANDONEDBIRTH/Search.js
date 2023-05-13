@@ -156,18 +156,18 @@ export const CRAbandonedsearch = {
     const motherInfo = {
       title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
       values: [
-        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NOT_RECORDED"},
-        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar  || "NOT_RECORDED"},
+        { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar  || "NOT_RECORDED"},
         { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother  || "NOT_RECORDED"},
       ],
     };
     const statisticalInfo = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [
-        { title: "PDF_BIRTH_NATURE_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.pregnancyDuration || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_DELIVERYMETHOD", value: response?.deliveryMethods || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_WEIGHT", value: response?.birthWeight || "NOT_RECORDED" },
+        { title: "CR_NATURE_OF_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NOT_RECORDED" },
+        { title: "CR_PREGNANCY_DURATION", value: response?.pregnancyDuration || "NOT_RECORDED" },
+        { title: "CR_DELIVERY_METHOD", value: response?.deliveryMethods || "NOT_RECORDED" },
+        { title: "CR_BIRTH_WEIGHT", value: response?.birthWeight || "NOT_RECORDED" },
       ],
     };
     const childCustodyInfo = {
