@@ -75,7 +75,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("GPSA.talukid as GPSA_talukid  , GPSA.taluk_name as GPSA_taluk_name  ,  GPSA.tenantid as GPSA_tenantid  , GPSA.ward_code as GPSA_ward_code,") 
     .append("GPSA.locality_en as GPSA_locality_en,GPSA.locality_ml as GPSA_locality_ml  ,  GPSA.street_name_en as  GPSA_street_name_en  , GPSA.street_name_ml as  GPSA_street_name_ml  , ")
     .append("GPSA.districtid as  GPSA_districtid  ,  GPSA.stateid  GPSA_stateid  ,  GPSA.poid as GPSA_poid  , GPSA.poname_en as GPSA_poname_en  ,  GPSA.poname_ml as GPSA_poname_ml  , ") 
-    .append("GPSA.pinno   GPSA_pinno  , GPSA.countryid  GPSA_countryid , GPSA.marriageid as GPSA_marriageid  ,  GPSA.bride_groom as GPSA_bride_groom  ,  ")
+    .append("GPSA.pinno   GPSA_pinno  , GPSA.countryid  GPSA_countryid , GPSA.marriageid as GPSA_marriageid  ,  GPSA.bride_groom as GPSA_bride_groom  ,GPSA.same_as_permanent as GPSA_same_as_permanent ,  ")
     .append("GPSA.ot_address1_en as GPSA_ot_address1_en,GPSA.ot_address1_ml as GPSA_ot_address1_ml  , GPSA.ot_address2_en as GPSA_ot_address2_en  , ") 
     .append("GPSA.ot_address2_ml as GPSA_ot_address2_ml,GPSA.ot_state_region_province_en as GPSA_ot_state_region_province_en,")
     .append("GPSA.ot_state_region_province_ml as GPSA_ot_state_region_province_ml, GPSA.ot_zipcode as GPSA_ot_zipcode,")
@@ -85,7 +85,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("BPSA.locality_en as BPSA_locality_en  ,  BPSA.locality_ml as BPSA_locality_ml  ,")  
     .append("BPSA.street_name_en as  BPSA_street_name_en  , BPSA.street_name_ml as  BPSA_street_name_ml  , BPSA.districtid as  BPSA_districtid  ,  BPSA.stateid  BPSA_stateid  ,")  
     .append("BPSA.poid as BPSA_poid,BPSA.poname_en as BPSA_poname_en,BPSA.poname_ml as BPSA_poname_ml,BPSA.pinno   BPSA_pinno  , BPSA.countryid  BPSA_countryid ,") 
-    .append("BPSA.marriageid as BPSA_marriageid  ,  BPSA.bride_groom as BPSA_bride_groom  ,  BPSA.ot_address1_en as BPSA_ot_address1_en  ,")  
+    .append("BPSA.marriageid as BPSA_marriageid  ,  BPSA.bride_groom as BPSA_bride_groom  , BPSA.same_as_permanent as BPSA_same_as_permanent ,  BPSA.ot_address1_en as BPSA_ot_address1_en  ,")  
     .append("BPSA.ot_address1_ml as BPSA_ot_address1_ml,BPSA.ot_address2_en as BPSA_ot_address2_en,BPSA.ot_address2_ml as BPSA_ot_address2_ml,")
     .append("BPSA.ot_state_region_province_en BPSA_ot_state_region_province_en  ,  BPSA.ot_state_region_province_ml as BPSA_ot_state_region_province_ml,BPSA.ot_zipcode as BPSA_ot_zipcode,  ")
 

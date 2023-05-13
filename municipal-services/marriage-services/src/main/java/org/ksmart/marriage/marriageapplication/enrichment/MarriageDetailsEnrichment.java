@@ -91,7 +91,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
                     marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().trim().replaceAll(config.getImageURLStartPath(),""));
                 }
+
+
             }
+
+           
             setApplicationNumbers(request);
             setBrideAddressNull(request);
             setGroomAddressNull(request);
