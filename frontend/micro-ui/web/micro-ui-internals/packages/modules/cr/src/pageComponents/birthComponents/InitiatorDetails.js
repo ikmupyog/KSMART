@@ -5,7 +5,7 @@ import Timeline from "../../components/CRTimeline";
 import { sortDropdownNames } from "../../utils";
 
 const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
-  console.log(formData);
+  //console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -49,23 +49,23 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   const { data: IPOPListDetails = {}, isIPOPListDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IPOPList");
   
   InitiatorDetails &&
-  InitiatorDetails["birth-death-service"] && InitiatorDetails["birth-death-service"].WorkFlowBirth &&
-  InitiatorDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+  InitiatorDetails["birth-death-service"] && InitiatorDetails["birth-death-service"].Initiator &&
+  InitiatorDetails["birth-death-service"].Initiator.map((ob) => {
     cmbInitiator.push(ob);
     });
     RelationDetails &&
-    RelationDetails["birth-death-service"] && RelationDetails["birth-death-service"].WorkFlowBirth &&
-    RelationDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    RelationDetails["birth-death-service"] && RelationDetails["birth-death-service"].Relation &&
+    RelationDetails["birth-death-service"].Relation.map((ob) => {
       cmbRelation.push(ob);
     });
     CareTakerDesigDetails &&
-    CareTakerDesigDetails["birth-death-service"] && CareTakerDesigDetails["birth-death-service"].WorkFlowBirth &&
-    CareTakerDesigDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    CareTakerDesigDetails["birth-death-service"] && CareTakerDesigDetails["birth-death-service"].CareTakerDesignation &&
+    CareTakerDesigDetails["birth-death-service"].CareTakerDesignation.map((ob) => {
       cmbCareTakerDesign.push(ob);
     });
     IPOPListDetails &&
-    IPOPListDetails["birth-death-service"] && IPOPListDetails["birth-death-service"].WorkFlowBirth &&
-    IPOPListDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    IPOPListDetails["birth-death-service"] && IPOPListDetails["birth-death-service"].IPOPList &&
+    IPOPListDetails["birth-death-service"].IPOPList.map((ob) => {
       cmbIpopList.push(ob);
     });
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
@@ -180,7 +180,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     setinitiatorDesi(value);
   }
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
       setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }
@@ -399,7 +399,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
               <CardLabel>{`${t("CR_INITIATOR")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="i18nKey"
+                optionKey="name"
                 isMandatory={false}
                 option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "code", t)}
                 selected={initiator}
@@ -413,7 +413,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                 <CardLabel>{`${t("CR_RELATION")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="i18nKey"
+                  optionKey="name"
                   isMandatory={false}
                   option={sortDropdownNames(cmbRelation ? cmbRelation : [], "code", t)}
                   selected={relation}
@@ -444,7 +444,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                   <CardLabel>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
                   <Dropdown
                     t={t}
-                    optionKey="i18nKey"
+                    optionKey="name"
                     isMandatory={false}
                     option={sortDropdownNames(cmbCareTakerDesign ? cmbCareTakerDesign : [], "code", t)}
                     selected={initiatorDesi}
@@ -517,7 +517,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z,-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
@@ -537,7 +537,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                   <CardLabel>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}<span className="mandatorycss">*</span></CardLabel>
                   <Dropdown
                     t={t}
-                    optionKey="i18nKey"
+                    optionKey="name"
                     isMandatory={false}
                     option={sortDropdownNames(cmbIpopList ? cmbIpopList : [], "code", t)}
                     selected={ipopList}
