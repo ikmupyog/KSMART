@@ -76,6 +76,17 @@ const MarriageCorrectionAcknowledgement = () => {
             //style={{ width: "100px" }}
             onClick={handleDownloadPdf}
           />
+          {mutationData?.data?.marriageCorrectionDetails[0]?.applicationStatus === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.marriageCorrectionDetails[0].businessservice}/${mutationData.data.marriageCorrectionDetails[0].applicationNumber}`,
+              state: { tenantId: mutationData.data.marriageCorrectionDetails[0].tenantid },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>
+        )}
+
 
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />

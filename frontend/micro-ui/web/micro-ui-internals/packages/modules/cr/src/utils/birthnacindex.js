@@ -328,8 +328,8 @@ export const convertToNACRegistration = (data = {}) => {
         deliveryMethods: null,
         action: "INITIATE",
         applicationtype: "CRBRNC",
-        businessservice: "birth-services",
-        workflowcode: "NACAPP",
+        businessService: "CR",
+        workflowcode: "BIRTHNAC",
         isPayment: data?.BirthNACDetails?.isPayment,
         Amount: data?.BirthNACDetails?.Amount,
         applicationStatus: data?.BirthNACDetails?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
@@ -481,6 +481,27 @@ export const convertToNACRegistration = (data = {}) => {
           declarationId: data?.BirthNACInitiator?.declarationId,
           isEsigned: data?.BirthNACInitiator?.declarationId,
         },
+        // Demands: [
+        //   {
+        //     tenantId: data?.nacDetails?.tenantId,
+        //     consumerCode: data?.nacDetails?.applicationNumber,
+        //     consumerType: "FEE",
+        //     businessService: "CR",
+        //     taxPeriodFrom: "1554076800000",
+        //     taxPeriodTo: "1901145600000",
+        //     demandDetails: [
+        //       {
+        //         taxHeadMasterCode: "140130200",
+        //         taxAmount: data?.nacDetails?.Amount,
+        //         collectionAmount: 0,
+        //       },
+        //     ],
+        //     minimumAmountPayable: data?.nacDetails?.Amount,
+        //     additionalDetails: {
+        //       HI: "NAC Birth Digital Payment",
+        //     },
+        //   },
+        // ],
         OtherChildren: data.BirthNACInitiator.ownerState,
         BirthNACDocuments: [
           {
@@ -511,7 +532,6 @@ export const convertToNACRegistration = (data = {}) => {
       },
     ],
   };
-
   return formdata;
 };
 

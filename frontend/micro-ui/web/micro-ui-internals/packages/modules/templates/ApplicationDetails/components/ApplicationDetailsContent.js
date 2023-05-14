@@ -9,7 +9,7 @@ import {
   StatusTable,
   Accordion
 } from "@egovernments/digit-ui-react-components";
-import React, { Fragment } from "react";
+import React, { Fragment,useState,useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import BPADocuments from "./BPADocuments";
@@ -44,9 +44,9 @@ function ApplicationDetailsContent({
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
 
-  const getTimelineCaptions = (checkpoint,index=100) => {
-    if (checkpoint.state === "OPEN" 
-    // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
+  const getTimelineCaptions = (checkpoint, index = 100) => {
+    if (checkpoint.state === "OPEN"
+      // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
     ) {
       const caption = {
         date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
@@ -127,6 +127,19 @@ function ApplicationDetailsContent({
     else if (value?.isUnit) return value?.value ? `${getTranslatedValues(value?.value, value?.isNotTranslated)} ${t(value?.isUnit)}` : t("N/A");
     else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
   };
+  const { roles: userRoles,} = Digit.UserService.getUser().info;
+  const [isHospitalUser, setIsHospitalUser] = useState(false);
+  useEffect(() => {
+    console.log("userRoles",userRoles);
+    if (userRoles.length > 0) {
+      if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER" ||
+      userRoles[0].code === "BND_LOCAL_REGISTRAR" || userRoles[0].code === "BND_SUB_REGISTRAR" || userRoles[0].code === "BND_DISTRICT_REGISTRAR") {
+        setIsHospitalUser(true);
+      } else {
+        setIsHospitalUser(false);
+      }
+    }
+  }, [userRoles]);
   return (
     <>
       <div className="file-main">
@@ -135,7 +148,7 @@ function ApplicationDetailsContent({
             <React.Fragment key={index}>
               <div style={getMainDivStyles()}>
                 {index === 0 ? <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
-                  :
+                  : (detail?.title === "CR_HOSPITAL_ADMISION_DETAILS" && isHospitalUser === false) ? "" :
                   <Accordion expanded={index === 1 ? true : false} title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
                     content={<StatusTable style={getTableStyles()}>
                       {detail?.title &&
@@ -145,7 +158,7 @@ function ApplicationDetailsContent({
                             return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
                           }
                           if (value.subTitle === true) {
-                            return <div style={{color:"#C14C12", fontSize:"16px" ,fontWeight:"800",}}>{t(value.value)}</div>;
+                            return <div style={{ color: "#C14C12", fontSize: "16px", fontWeight: "800", }}>{t(value.value)}</div>;
                           }
 
                           if (value?.isLink == true) {
@@ -287,7 +300,7 @@ function ApplicationDetailsContent({
                                   `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
-                                customChild={getTimelineCaptions(checkpoint,index)}
+                                customChild={getTimelineCaptions(checkpoint, index)}
                               />
                             </React.Fragment>
                           );

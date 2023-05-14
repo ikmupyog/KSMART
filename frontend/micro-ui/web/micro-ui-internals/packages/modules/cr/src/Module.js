@@ -222,6 +222,7 @@ import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandone
 import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
 import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
 import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
+import CreateMarriageRegistrationEmp from "./pages/employee/MarriageRegistration";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -305,6 +306,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  CreateMarriageRegistrationEmp,
   BirthInclusionSummary,
   BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,

@@ -758,54 +758,22 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                           {AdoptionParentsDetails?.motherMaritalStatus.code ? AdoptionParentsDetails?.motherMaritalStatus.code : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMarriageAge ? AdoptionParentsDetails?.motherMarriageAge : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMarriageBirth ? AdoptionParentsDetails?.motherMarriageBirth : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.orderofChildren ? AdoptionParentsDetails?.orderofChildren : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionParentsDetails?.motherEducation.name ? AdoptionParentsDetails?.motherEducation.name : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionParentsDetails?.motherProfession.name ? AdoptionParentsDetails?.motherProfession.name : t("CR_NOT_RECORDED")}
                         </CardText>
