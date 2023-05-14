@@ -53,7 +53,7 @@ const BrideAddressPresentOutsideIndia = ({
   setPermantpostCode,
   permntOutsideIndiaCountry,
   setPermntOutsideIndiaCountry,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditAdoption,
   isEditStillBirth = false,
@@ -83,12 +83,12 @@ const BrideAddressPresentOutsideIndia = ({
     { i18nKey: "Village", code: "VILLAGE" },
   ];
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
+  if (isEditMarriage) {
+    if (formData?.BrideAddressDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
         setadrsVillage(
           cmbUrbanRural.filter(
-            (cmbUrbanRural) => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
+            (cmbUrbanRural) => cmbUrbanRural.code === formData?.BrideAddressDetails?.presentOutSideIndiaadrsVillage
           )[0]
         );
       }
