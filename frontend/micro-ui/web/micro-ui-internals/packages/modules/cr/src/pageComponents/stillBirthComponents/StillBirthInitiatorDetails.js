@@ -230,11 +230,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
     //     setToast(false);
     //   }, 2000);
     // }
-
-
-    if (initiatorAadhar.trim() == null || initiatorAadhar.trim() == '' || initiatorAadhar.trim() == undefined) {
-      setinitiatorAadhar("");
-    } else if (initiatorAadhar != null && initiatorAadhar != "") {
+    if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
       let adharLength = initiatorAadhar;
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
@@ -246,10 +242,30 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       } else {
         setinitiatorAadharError(false);
       }
+    } else {
+      validFlag = false;
+      setinitiatorAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
 
-
-
+    // if (initiatorAadhar.trim() == null || initiatorAadhar.trim() == '' || initiatorAadhar.trim() == undefined) {
+    //   setinitiatorAadhar("");
+    // } else if (initiatorAadhar != null && initiatorAadhar != "") {
+    //   let adharLength = initiatorAadhar;
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setinitiatorAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setinitiatorAadharError(false);
+    //   }
+    // }
     if (initiatorMobile != null || initiatorMobile != "" || initiatorMobile != undefined) {
       let mobileLength = initiatorMobile;
       if (mobileLength.length < 10 || mobileLength.length > 10) {
@@ -274,11 +290,11 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
 
       onSelect(config.key, {
         relation,
-        initiatorNameEn,
+        initiatorNameEn : initiatorNameEn.trim(),
         initiatorAadhar,
         initiatorMobile,
-        initiatorDesi,
-        initiatorAddress,
+        initiatorDesi : initiatorDesi.trim(),
+        initiatorAddress: initiatorAddress.trim(),
         isInitiatorDeclaration,
         isCaretaker,
       });
@@ -290,36 +306,11 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep
-        t={t}
-        config={config}
-        onSelect={goNext}
-        onSkip={onSkip}
-        isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress}
-      >
-        {/* !isInitiatorDeclaration */}
-        {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div> */}
-
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} 
+      isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile 
+        || (isCaretaker === true ? (initiatorDesi === "" || initiatorAddress === "") : false)
+      }>      
+        
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

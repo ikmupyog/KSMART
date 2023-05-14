@@ -7,7 +7,22 @@ import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/SBRTimeline";
-
+const ActionButton = ({ jumpTo }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  function routeTo() {
+    sessionStorage.setItem("isDirectRenewal", false);
+    history.push(jumpTo);
+  }
+  return (
+    <LinkButton
+      label={t("CS_COMMON_CHANGE")}
+      className="check-page-link-button"
+      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      onClick={routeTo}
+    />
+  );
+};
 // const ActionButton = ({ jumpTo }) => {
 //   const { t } = useTranslation();
 //   const history = useHistory();
@@ -59,8 +74,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
   let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
-  //   routeLink = `${getPath(match.path, match.params)}`;
-  //   routeLink = routeLink.replace("/check", "");
+    routeLink = `${getPath(match.path, match.params)}`;
+    routeLink = routeLink.replace("/check", "");
   // }
 
   if (window.location.href.includes("/citizen") == "citizen") {
@@ -149,68 +164,12 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.gender.code}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                 </div>
-                {/* <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_CHILD_AADHAAR")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.childAadharNo}</CardText>
-                </div> */}
+               
               </div>
             </div>
-            {/* <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-12">
-                  <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
-                  </h1>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childFirstNameEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childMiddleNameEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameEn}</CardText>
-                </div>
-              </div>
-            </div> */}
-            {/* <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childFirstNameMl}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childMiddleNameMl}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
-                </div>
-              </div>
-            </div> */}
+         
 
           </StatusTable>}
         />
@@ -278,6 +237,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.birthPlace.name}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                 </div>
               </div>
             </div>
@@ -295,6 +255,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.hospitalName.hospitalNamelocal}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                   </div>
                 </div>
               </div>
@@ -324,6 +285,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.institutionId.institutionNamelocal}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -398,6 +360,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.adrsHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -486,6 +449,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-9">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.vehicleDesDetailsEn}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -548,6 +512,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-9">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.publicPlaceDecpEn}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -580,6 +545,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.pregnancyDuration}</CardText>
+               
                 </div>
               </div>
             </div>
@@ -590,13 +556,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.deliveryMethods.name}</CardText>
-                </div>
-                {/* <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`} :</CardText>
-                </div> */}
-                {/* <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.birthWeight}</CardText>
-                </div> */}
+                  {<ActionButton jumpTo={`${routeLink}/StillBirthChildDetails`} />}
+                </div>                
               </div>
             </div>
 
@@ -803,6 +764,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-6">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthParentsDetails?.fatherEmail}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/stillbirth-parents-details`} />}
                 </div>
               </div>
             </div>
@@ -921,6 +883,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AddressBirthDetails?.presentInsideKeralaHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/stillbirth-address`} />}
                     </div>
                   </div>
                 </div>
@@ -1029,6 +992,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AddressBirthDetails?.presentOutsideKeralaHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/stillbirth-address`} />}
                     </div>
                   </div>
                 </div>
@@ -1115,6 +1079,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AddressBirthDetails?.presentOutSideIndiaAdressMlB}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/stillbirth-address`} />}
                     </div>
                   </div>
                 </div>
@@ -1229,6 +1194,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AddressBirthDetails?.permntInKeralaAdrHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/stillbirth-address`} />}
                     </div>
                   </div>
                 </div>
@@ -1337,6 +1303,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AddressBirthDetails?.permntOutsideKeralaHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/stillbirth-address`} />}
                     </div>
                   </div>
                 </div>
@@ -1423,6 +1390,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AddressBirthDetails?.permntOutsideIndiaLinetwoMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/stillbirth-address`} />}
                     </div>
                   </div>
                 </div>
@@ -1430,8 +1398,13 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             )}
           </StatusTable>}
         />
-        <Accordion expanded={false} title={t("CR_INITIATOR_DETAILS")}
-          content={<StatusTable >
+ 
+     {StillBirthInitiatorDetails?.initiatorAadhar != null && ( 
+       <div>
+        <Accordion expanded={false} 
+        title={t("CR_INITIATOR_DETAILS")}
+          content={
+          <StatusTable >
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-12">
@@ -1446,7 +1419,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 {StillBirthInitiatorDetails?.isCaretaker === true && (
                   <div>
                     <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInitiatorDetails?.initiatorDesi}</CardText>
@@ -1501,12 +1475,81 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 )}
                 <div className="col-md-4">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInitiatorDetails?.initiatorAddress}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/stillbirth-initiator-details`} />}
                 </div>
               </div>
             </div>
 
           </StatusTable>}
         />
+         </div>
+        )}
+   {StillBirthInformarDetails?.infomantAadhar != null && (
+    <div>
+      <Accordion
+        expanded={false}
+        title={t("CR_INFORMER_VERIFICATION")}
+        content={
+          <StatusTable>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInformarDetails?.infomantAadhar}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME")}`} :</CardText>
+                </div>
+                <div className="col-md-4">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInformarDetails?.infomantFirstNameEn}</CardText>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_DESIGNATION")}`} :</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInformarDetails?.informerDesi}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInformarDetails?.infomantMobile}</CardText>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                </div>
+                <div className="col-md-4">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthInformarDetails?.informerAddress}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/stillbirth-informer-details`} />}
+                </div>
+              </div>
+            </div>
+          </StatusTable>
+        }
+      />
+    </div>
+  )}
+   <div>
+
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">
@@ -1528,22 +1571,19 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           </div>
 
-
-          {toast && (
-            <Toast
-              error={InitiatorDeclareError}
-              label={
-                InitiatorDeclareError
-                  ? InitiatorDeclareError
-                    ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
-                  : setToast(false)
-              }
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onStillBirthSubmit} />
-        </div>
+          </div>
+          </div>
+        {toast && (
+          <Toast
+            error={InitiatorDeclareError}
+            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
+            onClose={() => setToast(false)}
+          />
+        )}
+        {""}
+         
+          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onStillBirthSubmit} disabled={!isInitiatorDeclaration} />
+     
 
       </Card>
     </React.Fragment>
