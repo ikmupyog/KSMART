@@ -2,6 +2,19 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+
+  const useCRInitiatorDetails = () => {
+    return useQuery("CR_INITIATOR_LIST", () => MdmsService.getCRInitiatorDetails(tenantId, moduleCode, type), config);
+  };
+  const useCRRelationDetails = () => {
+    return useQuery("CR_RELATION_LIST", () => MdmsService.getCRRelationDetails(tenantId, moduleCode, type), config);
+  };
+  const useCRCareTakerDesignation = () => {
+    return useQuery("CR_CARE_TAKER_DESIG_LIST", () => MdmsService.getCRCareTakerDesignation(tenantId, moduleCode, type), config);
+  };
+  const useCRIPPOList = () => {
+    return useQuery("CR_IP_OP_LIST", () => MdmsService.getCRIPPODetails(tenantId, moduleCode, type), config);
+  };
   const useCRPresentAddressWard = () => {
     return useQuery("CR_PRESENT_ADDR_WARD", () => MdmsService.getTLZonalOffice(tenantId, moduleCode, type), config);
   };
@@ -324,6 +337,14 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "Initiator" :
+    return useCRInitiatorDetails();
+    case "Relation" :
+    return useCRRelationDetails();
+    case "CareTakerDesignation" :
+      return useCRCareTakerDesignation();
+      case "IPOPList" :
+      return useCRIPPOList();
     case "PresentWard":
       return useCRPresentAddressWard();
     case "PresentVillage":

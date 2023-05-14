@@ -35,7 +35,22 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
     anonymous = true
   } = value;
 
-  const tenantId = city_complaint.code;
+  const tenantId = city_complaint?.code || "kl";
+
+  const roleCode = complaintType?.deptCode == "HTH" ? "WARD_JHI" : "WARD_OVERSEER"
+
+  const { uuid = "" } = Digit.UserService.getUser()?.info;
+
+  const { data: userData = {} } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: [{ code: roleCode }],
+      wardcodes: locality_complaint?.code || "",
+      uuid: uuid
+    }
+  );
+
+  const assignes = userData?.Employees?.map(e => e.uuid) || []
 
   useEffect(() => {
     if (uploadedImages?.length > 0) {
@@ -65,7 +80,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
   }
 
   const goNext = () => {
-    onSelect();
+    onSelect({ assignes });
   };
 
   let userType = "employee"

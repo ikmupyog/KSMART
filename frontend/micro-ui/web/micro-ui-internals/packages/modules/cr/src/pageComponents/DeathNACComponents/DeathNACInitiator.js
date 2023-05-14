@@ -36,6 +36,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const [toast, setToast] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
+  const [initiatorAadharMissmatch, setinitiatorAadharMissmatch] = useState(false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
   const [initiatorEmailError, setinitiatorEmailError] = useState(formData?.InitiatorinfoDetails?.initiatorEmail ? false : false);
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
@@ -94,8 +95,59 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
 
 
   function setSelectinitiatorAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12);
+    if (newValue.length === 12 && RelationwithDeceased === "FATHER") {
+      if (newValue === formData?.DeathNACParentsDetails?.fatherAadhar) {
+        setinitiatorAadhar(newValue);
+      }
+      else {
+        setinitiatorAadhar("");
+        setinitiatorAadharMissmatch(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
+    }
+    else if (newValue.length === 12 && RelationwithDeceased === "MOTHER") {
+      if (newValue === formData?.DeathNACParentsDetails?.motherAadhar) {
+        setinitiatorAadhar(newValue);
+      }
+      else {
+        setinitiatorAadhar("");
+        setinitiatorAadharMissmatch(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
+    }
+    else if (newValue.length === 12 && RelationwithDeceased === "WIFE" || RelationwithDeceased === "HUSBAND") {
+      if (newValue === formData?.DeathNACParentsDetails?.SpouseAadhaar) {
+        setinitiatorAadhar(newValue);
+      }
+      else {
+        setinitiatorAadhar("");
+        setinitiatorAadharMissmatch(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
+    }
+    else {
+      if (newValue.length === 12 && newValue === formData?.DeathNACParentsDetails?.SpouseAadhaar || newValue === formData?.DeathNACParentsDetails?.motherAadhar || newValue === formData?.DeathNACParentsDetails?.fatherAadhar || newValue === formData?.DeathNACDetails?.DeceasedAadharNumber) {
+        setinitiatorAadhar("");
+        setinitiatorAadharMissmatch(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
+      else {
+        setinitiatorAadhar(newValue);
+      }
     }
   }
   function setSelectinitiatorMobile(e) {
@@ -394,7 +446,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         config={config}
         onSelect={goNext}
         onSkip={onSkip}
-        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !uploadedFile || !uploadedFile1 || !uploadedFile2 || !uploadedFile3 || !uploadedFile4 || !uploadedFile5 || !uploadedFile6}
+        isDisabled={!isInitiatorDeclaration || !isDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !uploadedFile || !uploadedFile1 || !uploadedFile2 || !uploadedFile3 || !uploadedFile4 || !uploadedFile5 || !uploadedFile6}
       >
 
         <div className="row">
@@ -407,98 +459,96 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAadhar"
-                value={initiatorAadhar}
-                onChange={setSelectinitiatorAadhar}
-                disable={isDisableEdit}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
-            </div>
-
-            <div className="col-md-6">
-              <CardLabel>
-                {`${t("CR_APPLICANT_NAME")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorNameEn"
-                value={initiatorNameEn}
-                onChange={setSelectinitiatorNameEn}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_APPLICANT_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
+          <div className="col-md-4">
+            <CardLabel>
+              {`${t("CR_APPLICANT_NAME")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="initiatorNameEn"
+              value={initiatorNameEn}
+              onChange={setSelectinitiatorNameEn}
+              disable={isDisableEdit}
+              placeholder={`${t("CR_APPLICANT_NAME")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+            />
+          </div>
+          <div className="col-md-4">
+          <CardLabel>
               {`${t("CR_RELATION_WITH_DECEASED")}`}<span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="label"
-                isMandatory={false}
-                option={selectedRelation}
-                selected={'RelationwithDeceased'}
-                select={selectRelationwithDeceased}
-                placeholder={`${t("CR_RELATION_WITH_APPLICANT_AND_DECEASED")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_RELATION_WITH_DECEASED") })}
-              />
-            </div>
-
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_MOBILE_NO")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"number"}
-                optionKey="i18nKey"
-                name="initiatorMobile"
-                value={initiatorMobile}
-                onChange={setSelectinitiatorMobile}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-              {`${t("CR_EMAIL_ID")}`}
-              </CardLabel>
-              <TextInput
-                t={t}
-                type="email"
-                optionKey="i18nKey"
-                isMandatory={false}
-                name="initiatorEmail"
-                value={initiatorEmail}
-                onChange={setSelectinitiatorEmail}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_EMAIL_ID")}`}
-                {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
-                />
-            </div>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="label"
+              isMandatory={false}
+              option={selectedRelation}
+              selected={'RelationwithDeceased'}
+              select={selectRelationwithDeceased}
+              placeholder={`${t("CR_RELATION_WITH_APPLICANT_AND_DECEASED")}`}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_RELATION_WITH_DECEASED") })}
+            />
+          </div>
+          <div className="col-md-4">
+          <CardLabel>
+              {`${t("CS_COMMON_AADHAAR")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="initiatorAadhar"
+              value={initiatorAadhar}
+              onChange={setSelectinitiatorAadhar}
+              disable={isDisableEdit}
+              placeholder={`${t("CS_COMMON_AADHAAR")}`}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+            />
+          </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}
+            <div className="col-md-4">
+            <CardLabel>
+              {`${t("CR_MOBILE_NO")}`}
               <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"number"}
+              optionKey="i18nKey"
+              name="initiatorMobile"
+              value={initiatorMobile}
+              onChange={setSelectinitiatorMobile}
+              disable={isDisableEdit}
+              placeholder={`${t("CR_MOBILE_NO")}`}
+              {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
+            />
+            </div>
+            <div className="col-md-4">
+            <CardLabel>
+              {`${t("CR_EMAIL_ID")}`}
+            </CardLabel>
+            <TextInput
+              t={t}
+              type="email"
+              optionKey="i18nKey"
+              isMandatory={false}
+              name="initiatorEmail"
+              value={initiatorEmail}
+              onChange={setSelectinitiatorEmail}
+              disable={isDisableEdit}
+              placeholder={`${t("CR_EMAIL_ID")}`}
+              {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
+            />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}
+                <span className="mandatorycss">*</span>
               </CardLabel>
               <TextArea
                 t={t}
@@ -557,7 +607,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 />
               </div>
             </div>
-            <div className="row" style={{ clear: "both"}}>
+            <div className="row" style={{ clear: "both" }}>
               <div className="col-md-6">
                 <CardLabel>{`${t("CR_ID_RELATION")}`}<span className="mandatorycss">*</span></CardLabel>
               </div>
@@ -677,28 +727,32 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
             </div>
           </div>
         </div>
-        {toast && (
-          <Toast
-            error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}
-            label={
-              infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
-                ? infomantFirstNmeEnError
-                  ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
-                  : initiatorAadharError
-                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                    : initiatorMobileError
-                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                      : initiatorDesiError
-                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                        : setToast(false)
-                : setToast(false)
-            }
-            onClose={() => setToast(false)}
-          />
-        )}
+        {
+          toast && (
+            <Toast
+              error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError || initiatorAadharMissmatch}
+              label={
+                infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError || initiatorAadharMissmatch
+                  ? infomantFirstNmeEnError
+                    ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
+                    : initiatorAadharError
+                      ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                      : initiatorMobileError
+                        ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                        : initiatorDesiError
+                          ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                          : initiatorAadharMissmatch
+                            ? ("Aadhar Number is not matching with the Aadhar Number in the document")
+                            : setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )
+        }
         {""}
-      </FormStep>
-    </React.Fragment>
+      </FormStep >
+    </React.Fragment >
   );
 };
 export default DeathNACInitiatorDetails;

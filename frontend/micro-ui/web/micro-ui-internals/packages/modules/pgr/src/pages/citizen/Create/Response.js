@@ -20,6 +20,7 @@ const GetActionMessage = ({ action }) => {
 
 const BannerPicker = ({ response }) => {
   const { complaints } = response;
+  const { t } = useTranslation();
 
   if (complaints && complaints.response && complaints.response.responseInfo) {
     return (
