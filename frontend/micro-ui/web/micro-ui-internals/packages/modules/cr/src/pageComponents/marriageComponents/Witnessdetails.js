@@ -20,9 +20,9 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
 import { trimURL } from "../../utils";
-// import { TimePicker } from '@material-ui/pickers';
+import _ from "lodash";
 
-const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
+const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -117,11 +117,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [witness1NameEn, setwitness1NameEn] = useState(formData?.WitnessDetails?.witness1NameEn ? formData?.WitnessDetails?.witness1NameEn : "");
   const [witness1Age, setwitness1Age] = useState(formData?.WitnessDetails?.witness1Age ? formData?.WitnessDetails?.witness1Age : "");
   const [witness2Age, setwitness2Age] = useState(formData?.WitnessDetails?.witness2Age ? formData?.WitnessDetails?.witness2Age : "");
-  const [witness1AddressEn, setwitness1AddressEn] = useState(
-    formData?.WitnessDetails?.witness1AddressEn ? formData?.WitnessDetails?.witness1AddressEn : ""
+  const [witness1AddresSEn, setwitness1AddressEn] = useState(
+    formData?.WitnessDetails?.witness1AddresSEn ? formData?.WitnessDetails?.witness1AddresSEn : ""
   );
-  const [witness2AddressEn, setwitness2AddressEn] = useState(
-    formData?.WitnessDetails?.witness2AddressEn ? formData?.WitnessDetails?.witness2AddressEn : ""
+  const [witness2AddresSEn, setwitness2AddressEn] = useState(
+    formData?.WitnessDetails?.witness2AddresSEn ? formData?.WitnessDetails?.witness2AddresSEn : ""
   );
   const [witness1AadharError, setwitness1AadharError] = useState(formData?.WitnessDetails?.witness1AadharNo ? false : false);
   const [witness2AadharError, setwitness2AadharError] = useState(formData?.WitnessDetails?.witness2AadharNo ? false : false);
@@ -156,16 +156,16 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [isOpenWifeModal, setIsOpenWifeModal] = useState(false);
   const [uniqueId, setUniqueId] = useState(null);
 
-  const [uploadedBrideImageId, setUploadedBrideImageId] = useState(
-    formData?.WitnessDetails?.uploadedBrideImageId ? formData?.WitnessDetails?.uploadedBrideImageId : null
+  const [brideFilestoreId, setUploadedBrideImageId] = useState(
+    _.isArray(formData?.WitnessDetails?.brideFilestoreId) ? formData?.WitnessDetails?.brideFilestoreId : [formData?.WitnessDetails?.brideFilestoreId]
   );
-  const [uploadedGroomImageId, setUploadedGroomImageId] = useState(
-    formData?.WitnessDetails?.uploadedGroomImageId ? formData?.WitnessDetails?.uploadedGroomImageId : null
+  const [groomFilestoreId, setUploadedGroomImageId] = useState(
+    _.isArray(formData?.WitnessDetails?.groomFilestoreId) ? formData?.WitnessDetails?.groomFilestoreId : [formData?.WitnessDetails?.groomFilestoreId]
   );
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({ groomURL });
+  console.log({ brideFilestoreId, groomFilestoreId });
 
   const currentYear = new Date().getFullYear();
 
@@ -603,7 +603,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setwitness1AgeError(false);
       }
     }
-    if (witness2Age == null || witness2AddressEn == "" || witness2Age == undefined) {
+    if (witness2Age == null || witness2AddresSEn == "" || witness2Age == undefined) {
       if (witness2AgeError) {
         validFlag = false;
         setwitness2AgeError(true);
@@ -626,7 +626,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     } else {
       setwitness2NameEnError(false);
     }
-    if (witness1AddressEn.trim() == null || witness1AddressEn.trim() == "" || witness1AddressEn.trim() == undefined) {
+    if (witness1AddresSEn.trim() == null || witness1AddresSEn.trim() == "" || witness1AddresSEn.trim() == undefined) {
       validFlag = false;
       setwitness1AddressEn("");
       setwitness1AddressEnError(true);
@@ -637,7 +637,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     } else {
       setwitness1AddressEnError(false);
     }
-    if (witness2AddressEn.trim() == null || witness2AddressEn.trim() == "" || witness2AddressEn.trim() == undefined) {
+    if (witness2AddresSEn.trim() == null || witness2AddresSEn.trim() == "" || witness2AddresSEn.trim() == undefined) {
       validFlag = false;
       setwitness2AddressEn("");
       setwitness2AddressEnError(true);
@@ -701,8 +701,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       // sessionStorage.setItem("witness2NameEn", witness2NameEn ? witness2NameEn : null);
       // sessionStorage.setItem("witness1Age", witness1Age ? witness1Age : null);
       // sessionStorage.setItem("witness2Age", witness2Age ? witness2Age : null);
-      // sessionStorage.setItem("witness1AddressEn", witness1AddressEn ? witness1AddressEn : null);
-      // sessionStorage.setItem("witness2AddressEn", witness2AddressEn ? witness2AddressEn : null);
+      // sessionStorage.setItem("witness1AddresSEn", witness1AddresSEn ? witness1AddresSEn : null);
+      // sessionStorage.setItem("witness2AddresSEn", witness2AddresSEn ? witness2AddresSEn : null);
       // sessionStorage.setItem("witness1Mobile", witness1Mobile ? witness1Mobile : null);
       // sessionStorage.setItem("witness2Mobile", witness2Mobile ? witness2Mobile : null);
       // sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
@@ -723,8 +723,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2NameEn: witness2NameEn.trim(),
         witness1Age,
         witness2Age,
-        witness1AddressEn: witness1AddressEn.trim(),
-        witness2AddressEn: witness2AddressEn.trim(),
+        witness1AddresSEn: witness1AddresSEn.trim(),
+        witness2AddresSEn: witness2AddresSEn.trim(),
         witness1Mobile,
         witness2Mobile,
         witness1Esigned,
@@ -733,8 +733,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         isExpiredWife,
         brideURL,
         groomURL,
-        uploadedBrideImageId,
-        uploadedGroomImageId,
+        brideFilestoreId,
+        groomFilestoreId,
         uniqueId,
       });
     }
@@ -790,15 +790,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                 !witness1AadharNo ||
                 !witness1NameEn ||
                 !witness1Age ||
-                !witness1AddressEn ||
+                !witness1AddresSEn ||
                 !witness1Mobile ||
                 !witness2AadharNo ||
                 !witness2NameEn ||
                 !witness2Age ||
-                !witness2AddressEn ||
+                !witness2AddresSEn ||
                 !witness2Mobile ||
-                !uploadedGroomImageId ||
-                !uploadedBrideImageId
+                !groomFilestoreId ||
+                !brideFilestoreId
               }
             >
               <div className="row">
@@ -887,8 +887,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       type={"text"}
                       optionKey="i18nKey"
                       isMandatory={false}
-                      name="witness1AddressEn"
-                      value={witness1AddressEn}
+                      name="witness1AddresSEn"
+                      value={witness1AddresSEn}
                       onChange={setSelectwitness1AddressEn}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
@@ -1010,8 +1010,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       type={"text"}
                       optionKey="i18nKey"
                       isMandatory={false}
-                      name="witness2AddressEn"
-                      value={witness2AddressEn}
+                      name="witness2AddresSEn"
+                      value={witness2AddresSEn}
                       onChange={setSelectwitness2AddressEn}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
@@ -1076,7 +1076,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           type={"text"}
                           optionKey="i18nKey"
                           name="husbandname"
-                          value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
+                          value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                            formData?.GroomDetails?.groomLastnameEn || ""
+                          }`}
                           placeholder={t("CR_HUSBAND_NAME")}
                           {...(validation = { isRequired: true })}
                         />
@@ -1103,7 +1105,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           type={"text"}
                           optionKey="i18nKey"
                           name="wifename"
-                          value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
+                          value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                            formData?.BrideDetails?.brideLastnameEn || ""
+                          }`}
                           placeholder={t("CR_WIFE_NAME")}
                           {...(validation = { isRequired: true })}
                         />
@@ -1137,7 +1141,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
-                            uploadedImages={uploadedGroomImageId}
+                            uploadedImages={groomFilestoreId}
                             onPhotoChange={handleUploadGroom}
                             isMulti={false}
                             moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
@@ -1150,7 +1154,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
-                            uploadedImages={uploadedBrideImageId}
+                            uploadedImages={brideFilestoreId}
                             onPhotoChange={handleUploadBride}
                             isMulti={false}
                             moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
@@ -1245,9 +1249,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                 <div style={{ fontSize: "18px", margin: "10px" }}>
                   You opted that{" "}
                   {isOpenHusbandModal &&
-                    `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn} `}
+                    `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                      formData?.GroomDetails?.groomLastnameEn || ""
+                    } `}
                   {isOpenWifeModal &&
-                    `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn} `}
+                    `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                      formData?.BrideDetails?.brideLastnameEn || ""
+                    } `}
                   has Expired, Do you want to continue?
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
