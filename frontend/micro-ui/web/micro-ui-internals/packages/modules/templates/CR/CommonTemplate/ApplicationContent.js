@@ -300,7 +300,7 @@ function ApplicationContent({
               <div className="row">
                 <div className="col-md-6">
                   <h1>
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NIA / NAC ?")}`}</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IS_NAC_OR_NIA")}`}</span>{" "}
                   </h1>
                 </div>
                 <div className="col-md-6">
@@ -331,7 +331,7 @@ function ApplicationContent({
               <div className="row">
                 <div className="col-md-6">
                   <h1>
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NIA / NAC ?")}`}</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IS_NAC_OR_NIA")}`}</span>{" "}
                   </h1>
                 </div>
                 <div className="col-md-6">

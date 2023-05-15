@@ -20,22 +20,22 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 // import Timeline from "../../../components/CRTimeline";
 import Timeline from "../../../components/CRABTimeline";
 
-// const ActionButton = ({ jumpTo }) => {
-//   const { t } = useTranslation();
-//   const history = useHistory();
-//   function routeTo() {
-//     sessionStorage.setItem("isDirectRenewal", false);
-//     history.push(jumpTo);
-//   }
-//   return (
-//     <LinkButton
-//       label={t("CS_COMMON_CHANGE")}
-//       className="check-page-link-button"
-//       style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
-//       onClick={routeTo}
-//     />
-//   );
-// };
+const ActionButton = ({ jumpTo }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  function routeTo() {
+    sessionStorage.setItem("isDirectRenewal", false);
+    history.push(jumpTo);
+  }
+  return (
+    <LinkButton
+      label={t("CS_COMMON_CHANGE")}
+      className="check-page-link-button"
+      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      onClick={routeTo}
+    />
+  );
+};
 
 const getPath = (path, params) => {
   params &&
@@ -127,8 +127,9 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
   let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
-  //   routeLink = `${getPath(match.path, match.params)}`;
-  //   routeLink = routeLink.replace("/check", "");
+    routeLink = `${getPath(match.path, match.params)}`;
+    routeLink = routeLink.replace("/check", "");
+  
   // }
 
   if (window.location.href.includes("/citizen") == "citizen") {
@@ -136,7 +137,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
   } else {
     userType = "employee";
   }
-  console.log(value);
+  // console.log(value);
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -204,13 +205,14 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.birthDateTime ? AbandonedChildDetails?.birthDateTime : "NA"}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.birthDateTime ? AbandonedChildDetails?.birthDateTime :"NOT_RECORDED"}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.gender.code}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                 </div>
                 
               </div>
@@ -298,6 +300,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                   </div>
                   <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.hospitalName.hospitalNamelocal}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                   </div>
                 </div>
               </div>
@@ -327,6 +330,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.institutionId.institutionNamelocal}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                     </div>
                   </div>
                 </div>
@@ -401,6 +405,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.adrsHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                     </div>
                   </div>
                 </div>
@@ -489,6 +494,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                     </div>
                     <div className="col-md-9">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.vehicleDesDetailsEn}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                     </div>
                   </div>
                 </div>
@@ -551,6 +557,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                     </div>
                     <div className="col-md-9">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.publicPlaceDecpEn}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                     </div>
                   </div>
                 </div>
@@ -572,33 +579,34 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} :</CardText>
                 </div>
-                <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.medicalAttensionSub?.name}</CardText>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.medicalAttensionSub?.name ? AbandonedChildDetails?.medicalAttensionSub?.name :  "NOT_RECORDED" }</CardText>
                 </div>
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PREGNANCY_DURATION")}`} :</CardText>
                 </div>
                 <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.pregnancyDuration}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.pregnancyDuration ? AbandonedChildDetails?.pregnancyDuration :  "NOT_RECORDED"}</CardText>
                 </div>
               </div>
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DELIVERY_METHOD")}`} :</CardText>
                 </div>
-                <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.deliveryMethods.name}</CardText>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.deliveryMethods.name ? AbandonedChildDetails?.deliveryMethods.name :  "NOT_RECORDED"}</CardText>
                 </div>
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`} :</CardText>
                 </div>
                 <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.birthWeight}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.birthWeight ? AbandonedChildDetails?.birthWeight :  "NOT_RECORDED" }</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                 </div>
               </div>
             </div>
@@ -620,6 +628,8 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                 <div className="col-md-12">
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_INFORMATION_MISSING")}`} :</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
+
                   </div>
                 </div>
               </div>
@@ -633,13 +643,13 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherFirstNameEn}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherFirstNameEn ? AbandonedChildDetails?.motherFirstNameEn   :  "NOT_RECORDED"}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherFirstNameMl}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherFirstNameMl ? AbandonedChildDetails?.motherFirstNameMl  :  "NOT_RECORDED"}</CardText>
                     </div>
                   </div>
                 </div>
@@ -649,13 +659,14 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherAadhar}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.motherAadhar ? AbandonedChildDetails?.motherAadhar  :  "NOT_RECORDED"}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CR_MOTHER_ADDRESS")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.addressOfMother}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.addressOfMother ? AbandonedChildDetails?.addressOfMother   :  "NOT_RECORDED"}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/abandoned-child-details`} />}
                     </div>                    
                   </div>
                 </div> 
@@ -676,41 +687,49 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_EN")}`} :</CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.institutionName}</CardText>
+                <div className="col-md-3">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.institutionName ? AbandonedBirthInformarDetails?.institutionName  :  "NOT_RECORDED"}</CardText>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_NAME_EN")}`} :</CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerName ? AbandonedBirthInformarDetails?.caretakerName : "NA"}</CardText>
+                <div className="col-md-3">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerName ? AbandonedBirthInformarDetails?.caretakerName : "NOT_RECORDED"}</CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_DESIGNATION")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerDesignation}</CardText>
-                </div>                
+                           
               </div>
             </div>
             <div className="row">
               <div className="col-md-12">
+              <div className="col-md-3">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_DESIGNATION")}`} :</CardText>
+                </div>
+                <div className="col-md-3">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerDesignation ? AbandonedBirthInformarDetails?.caretakerDesignation  : "NOT_RECORDED"}</CardText>
+                </div>    
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
                 </div>
                 <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerMobile}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerMobile ? AbandonedBirthInformarDetails?.caretakerMobile  : "NOT_RECORDED" }</CardText>
                 </div>
+                </div> 
+                </div>
+                <div className="row">
+                <div className="col-md-12">
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRESS")}`} :</CardText>
                 </div>
-                <div className="col-md-3">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerAddress}</CardText>
+                <div className="col-md-8">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.caretakerAddress  ? AbandonedBirthInformarDetails?.caretakerAddress: "NOT_RECORDED"}</CardText>
+                  
                 </div>
-                         
+                <div className="col-md-1"> {<ActionButton jumpTo={`${routeLink}/abandoned-birth-informar-details`} />}</div>
+               
+                     
               </div>
             </div>
           </StatusTable>}
@@ -728,42 +747,49 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_OFFICE_INSTITUTION")}`} :</CardText>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.infomantinstitution}</CardText>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_DESIGNATION")}`} :</CardText>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.informerDesi }</CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.infomantFirstNameEn}</CardText>
-                </div>                
+                           
               </div>
             </div>
             <div className="row">
               <div className="col-md-12">
+              <div className="col-md-3">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME_EN")}`} :</CardText>
+                </div>
+                <div className="col-md-3">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.infomantFirstNameEn}</CardText>
+                </div>    
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                 </div>
                 <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.infomantAadhar}</CardText>
-                </div>
-                <div className="col-md-3">
+                </div>   
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+            <div className="col-md-3">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-8">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedBirthInformarDetails?.infomantMobile}</CardText>
                 </div>
-                         
-              </div>
+                <div className="col-md-1">
+                {<ActionButton jumpTo={`${routeLink}/abandoned-birth-informar-details`} />}
+                </div>
+                </div>
             </div>
           </StatusTable>}
         />
@@ -821,6 +847,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                           </div>
                         );
                       })}
+                      {<ActionButton jumpTo={`${routeLink}/abandoned-birth-informar-details`} />}
                   </div>
                 </div>
               )}

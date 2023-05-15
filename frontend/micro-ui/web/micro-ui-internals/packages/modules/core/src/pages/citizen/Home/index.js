@@ -90,11 +90,11 @@ const Home = () => {
       //   }),
 
       // },
-      {
-        name: t("FILE_MANAGEMENT"),
-        Icon: <EditIcon className="fill-path-primary-main" />,
-        onClick: () => history.push("/digit-ui/citizen/dfm-home"),
-      },
+      // {
+      //   name: t("FILE_MANAGEMENT"),
+      //   Icon: <EditIcon className="fill-path-primary-main" />,
+      //   onClick: () => history.push("/digit-ui/citizen/dfm-home"),
+      // },
     ],
     styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
   };
@@ -124,11 +124,11 @@ const Home = () => {
         Icon: <DocumentIcon />,
         onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
       },
-      {
-        name: t("CS_COMMON_INBOX_BPA"),
-        Icon: <OBPSIcon />,
-        onClick: () => history.push("/digit-ui/citizen/obps-home"),
-      },
+      // {
+      //   name: t("CS_COMMON_INBOX_BPA"),
+      //   Icon: <OBPSIcon />,
+      //   onClick: () => history.push("/digit-ui/citizen/obps-home"),
+      // },
       // {
       //     name: t("CS_COMMON_HELP"),
       //     Icon: <HelpIcon/>

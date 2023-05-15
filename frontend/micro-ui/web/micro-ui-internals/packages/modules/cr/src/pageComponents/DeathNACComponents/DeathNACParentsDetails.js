@@ -105,6 +105,7 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
   const [toast, setToast] = useState(false);
   const [MotherAadharError, setMotherAadharError] = useState(formData?.DeathNACParentsDetails?.motherAadhar ? false : false);
 
+  const [SpouseAadhaarError, setSpuseAadhaarError] = useState(false);
 
   const [FatherAadharError, setFatherAadharError] = useState(formData?.DeathNACParentsDetails?.fatherAadhar ? false : false);
   const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.DeathNACParentsDetails?.fatherFirstNameEn ? false : false);
@@ -144,14 +145,34 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
   }
 
   function setSelectMotherAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
+
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === SpouseAadhaar || newValue === fatherAadhar || newValue === formData?.DeathNACDetails.DeceasedAadharNumber){
+      setMotherAadhar("");
+      setMotherAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setMotherAadhar(newValue);
+      setMotherAadharError(false);
     }
   }
 
   function setSelectFatherAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
+
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === SpouseAadhaar || newValue === motherAadhar || newValue === formData?.DeathNACDetails.DeceasedAadharNumber){
+      setFatherAadhar("");
+      setFatherAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setFatherAadhar(newValue);
+      setFatherAadharError(false);
     }
   }
 
@@ -197,8 +218,19 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
   }
 
   function setSelectSpouseAadhaar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setSpouseAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
+
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    if (newValue === formData?.DeathNACDetails.DeceasedAadharNumber || newValue === motherAadhar || newValue === fatherAadhar){
+      setSpouseAadhaar("");
+      setSpuseAadhaarError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }
+    else{
+      setSpouseAadhaar(newValue);
+      setSpuseAadhaarError(false);
     }
   }
 
@@ -633,6 +665,23 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
               onClose={() => setToast(false)}
             />
           )} */}
+          {toast && (
+            <Toast
+              error={SpouseAadhaarError || MotherAadharError || FatherAadharError}
+              label={
+                MotherAadharError || FatherAadharError || SpouseAadhaarError
+                  ? MotherAadharError
+                    ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
+                    : FatherAadharError
+                    ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
+                    : SpouseAadhaarError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    : setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )}
           {""}
         </FormStep>
       </React.Fragment>

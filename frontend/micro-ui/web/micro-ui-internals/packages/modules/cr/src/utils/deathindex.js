@@ -477,6 +477,8 @@ export const convertToDeathRegistration = (data = {}) => {
           SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType.code : null,
           SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEn ? data?.FamilyInformationDeath?.SpouseNameEn : null,
           SpouseNameML: data?.FamilyInformationDeath?.SpouseNameML ? data?.FamilyInformationDeath?.SpouseNameML : null,
+          spouseAge: data?.FamilyInformationDeath?.spouseAge,
+          spouseAgeIfAlive: data?.FamilyInformationDeath?.spouseAgeIfAlive ? data?.FamilyInformationDeath?.spouseAgeIfAlive.code : null,
           FatherUnavailable: data?.FamilyInformationDeath?.FatherUnavailable,
           FatherNameEn: data?.FamilyInformationDeath?.FatherNameEn,
           FatherNameMl: data?.FamilyInformationDeath?.FatherNameMl,
@@ -814,6 +816,9 @@ export const convertToEditDeathRegistration = (data = {}) => {
           SpouseType: data?.InformationDeath?.FamilyInformationDeath?.SpouseType ? data?.InformationDeath?.FamilyInformationDeath?.SpouseType?.code : null,
           SpouseNameEn: data?.InformationDeath?.FamilyInformationDeath?.SpouseNameEN ? data?.InformationDeath?.FamilyInformationDeath?.SpouseNameEN : null,
           SpouseNameML: data?.InformationDeath?.FamilyInformationDeath?.SpouseNameMl ? data?.InformationDeath?.FamilyInformationDeath?.SpouseNameMl : null,
+          spouseAge: data?.FamilyInformationDeath?.spouseAge ? data?.FamilyInformationDeath?.spouseAge : data?.InformationDeath?.FamilyInformationDeath?.spouseAge,
+          spouseAgeIfAlive: data?.FamilyInformationDeath?.spouseAgeIfAlive ? data?.FamilyInformationDeath?.spouseAgeIfAlive.code :
+          data?.InformationDeath?.FamilyInformationDeath?.spouseAgeIfAlive ? data?.InformationDeath?.FamilyInformationDeath?.spouseAgeIfAlive : null,          
           FatherUnavailable: data?.InformationDeath?.FamilyInformationDeath?.FatherUnavailable,
           FatherNameEn: data?.InformationDeath?.FamilyInformationDeath?.FatherNameEn,
           FatherNameMl: data?.InformationDeath?.FamilyInformationDeath?.FatherNameMl,
