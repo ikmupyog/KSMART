@@ -24,7 +24,7 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
-const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading, count, onRestClick }) => {
+const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading, count, onRestClick, payload: {deathType = "CRDRNR"} }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -34,7 +34,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading
     },
   });
 
-  const fileSource = Digit.Hooks.cr.getDeathFileSourceDetails(tenantId);
+  const fileSource = deathType === "CRDRNA" ? Digit.Hooks.cr.getNacDeathFileSourceDetails({ params: { tenantId } }) : Digit.Hooks.cr.getDeathFileSourceDetails(tenantId);
 
   useEffect(() => {
     register("offset", 0);
