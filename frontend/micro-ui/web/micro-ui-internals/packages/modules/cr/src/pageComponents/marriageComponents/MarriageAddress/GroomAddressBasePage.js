@@ -293,6 +293,7 @@ const GroomAddressBasePage = ({
   const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(
     formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl : ""
   );
+  console.log(formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn, "PIKLNE")
   const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] = useState(
     formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn : ""
   );
