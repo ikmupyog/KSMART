@@ -1,15 +1,13 @@
-import React, { useState} from "react";
-import { Loader, SearchForm} from "@egovernments/digit-ui-react-components";
+import React, { useState } from "react";
+import { Loader, SearchForm } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import SearchFields from "./SearchFields";
 import { useForm } from "react-hook-form";
 import ResultTable from "../SearchMarriageInclusion/ResultTable";
-import { useHistory } from "react-router-dom";
 
 const SearchParent = ({
-                          searchType = 'application'
-                      }) => {
-    let history = useHistory();
+    searchType = 'application'
+}) => {
 
     const searchDefaultFields = {
         marriageDOM: "",
@@ -34,7 +32,7 @@ const SearchParent = ({
     });
 
     const tenantId = Digit.ULBService.getCurrentTenantId();
-    const { mutate, isLoading } = searchType == 'application' ? Digit.Hooks.cr.useSearchMarriage(tenantId) : Digit.Hooks.cr.useRegistrySearchMarriage(tenantId) ;
+    const { mutate, isLoading } = searchType == 'application' ? Digit.Hooks.cr.useSearchMarriage(tenantId) : Digit.Hooks.cr.useRegistrySearchMarriage(tenantId);
     const { t } = useTranslation();
     const { register, control, handleSubmit, reset } = useForm({
         defaultValues: searchDefaultFields
@@ -82,12 +80,7 @@ const SearchParent = ({
     const downloadLink = (data) => {
         console.log("download certificate");
     }
-    const goToLink = (data) => {
-        history.push({
-            pathname: `/digit-ui/citizen/cr/marriage-correction-edit`,
-            state: { marriageCorrectionData: data },
-        });
-    };
+
 
 
     return (
@@ -100,8 +93,8 @@ const SearchParent = ({
                         {...{ t, register, control, reset, emptyRecords }} />
                 </SearchForm>
             </div>
-            {isLoading && <Loader/>}
-            { results && results.length > 0 && (
+            {isLoading && <Loader />}
+            {results && results.length > 0 && (
                 <React.Fragment>
                     <ResultTable
                         setValue={setValue}
@@ -111,7 +104,6 @@ const SearchParent = ({
                         handleSubmit={handleSubmit}
                         t={t}
                         onSubmit={onSubmit}
-                        goToLink={goToLink}
                         downloadLink={downloadLink}
                         searchType={searchType}
                         tenantId={tenantId}

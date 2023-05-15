@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import moment from "moment";
 import { sortDropdownNames } from "../../utils";
 
-const GroomDetails = ({ config, onSelect, userType, formData }) => {
+const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   Menu;
   const { t } = useTranslation();

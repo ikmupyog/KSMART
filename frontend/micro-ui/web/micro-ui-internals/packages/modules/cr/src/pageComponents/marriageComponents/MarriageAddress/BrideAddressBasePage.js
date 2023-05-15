@@ -19,7 +19,7 @@ const BrideAddressBasePage = ({
   onSelect,
   userType,
   formData,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption = false,
@@ -93,10 +93,10 @@ const BrideAddressBasePage = ({
     formData?.BrideAddressDetails?.presentaddressStateName?.code ? formData?.BrideAddressDetails?.presentaddressStateName : ""
   );
   let countrycode = "";
-  if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA") {
+  if (formData?.BrideAddressDetails?.presentaddressCountry === "COUNTRY_INDIA") {
     countrycode = "IND";
   } else {
-    countrycode = formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry;
+    countrycode = formData?.BrideAddressDetails?.presentaddressCountry;
   }
   const [countryvalue, setCountryValue] = useState(
     formData?.BrideAddressDetails?.presentaddressCountry?.code ? formData?.BrideAddressDetails?.presentaddressCountry.countrycode : "IND"
@@ -166,7 +166,7 @@ const BrideAddressBasePage = ({
   const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(
     formData?.BrideAddressDetails?.presentOutsideKeralaTaluk ? formData?.BrideAddressDetails?.presentOutsideKeralaTaluk : ""
   );
-  // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? "" : "");
+  // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.BrideAddressDetails?.presentOutsideKeralaTaluk ? "" : "");
   const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(
     formData?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn ? formData?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn : ""
   );
@@ -238,7 +238,11 @@ const BrideAddressBasePage = ({
   //############################################### Same As Above ##################################################################################################
 
   const [isPrsentAddress, setIsPrsentAddress] = useState(
-    formData?.BrideAddressDetails?.isPrsentAddress ? formData?.BrideAddressDetails?.isPrsentAddress : false
+    formData?.BrideAddressDetails?.isPrsentAddress
+      ? formData?.BrideAddressDetails?.isPrsentAddress
+      : formData?.BrideAddressDetails?.isPermanentAddress
+      ? formData?.BrideAddressDetails?.isPermanentAddress
+      : false
   );
 
   //################################################### Country State Permanent ###########################################################################
@@ -481,6 +485,8 @@ const BrideAddressBasePage = ({
   const [PermanentOutSideIndiaLineOneMlError, setPermanentOutSideIndiaLineOneMlError] = useState(false);
   const [PermanentOutSideIndiaLineTwoEnError, setPermanentOutSideIndiaLineTwoEnError] = useState(false);
   const [PermanentOutSideIndiaLineTwoMlError, setPermanentOutSideIndiaLineTwoMlError] = useState(false);
+
+  console.log({ presentOutSideIndiaadrsCityTown });
 
   const onSkip = () => onSelect();
   function setSameAsPresent(e) {
@@ -1660,8 +1666,8 @@ const BrideAddressBasePage = ({
   return (
     <React.Fragment>
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="accordion-wrapper">
           <BrideAddressPresent
@@ -1683,7 +1689,7 @@ const BrideAddressBasePage = ({
             setpermtaddressStateName={setpermtaddressStateName}
             isPrsentAddress={isPrsentAddress}
             setIsPrsentAddress={setIsPrsentAddress}
-            isEditBirth={isEditBirth}
+            isEditMarriage={isEditMarriage}
             isEditDeath={isEditDeath}
             isEditStillBirth={isEditStillBirth}
             isEditAdoption={isEditAdoption}
@@ -1766,7 +1772,7 @@ const BrideAddressBasePage = ({
               setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
               permntInKeralaWardNo={permntInKeralaWardNo}
               setpermntInKeralaWardNo={setpermntInKeralaWardNo}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}
@@ -1836,7 +1842,7 @@ const BrideAddressBasePage = ({
               setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
               setinsideKeralaDistrict={setinsideKeralaDistrict}
               setinsideKeralaLBName={setinsideKeralaLBName}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}
@@ -1868,6 +1874,9 @@ const BrideAddressBasePage = ({
               setPostCode={setPostCode}
               // presentOutSideCountry={presentOutSideCountry}
               // setOutSideCountry={setOutSideCountry}
+              setinsideKeralaDistrict={setinsideKeralaDistrict}
+              setinsideKeralaLBName={setinsideKeralaLBName}
+              setaddressStateName={setaddressStateName}
               countryvalue={countryvalue}
               setCountryValue={setCountryValue}
               isPrsentAddress={isPrsentAddress}
@@ -1892,10 +1901,7 @@ const BrideAddressBasePage = ({
               setPermantpostCode={setPermantpostCode}
               // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
               // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
-              setinsideKeralaDistrict={setinsideKeralaDistrict}
-              setinsideKeralaLBName={setinsideKeralaLBName}
-              setaddressStateName={setaddressStateName}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}
@@ -1927,7 +1933,7 @@ const BrideAddressBasePage = ({
           <BrideAddressSameAsAbove
             isPrsentAddress={isPrsentAddress}
             setIsPrsentAddress={setIsPrsentAddress}
-            isEditBirth={isEditBirth}
+            isEditMarriage={isEditMarriage}
             isEditDeath={isEditDeath}
             isEditStillBirth={isEditStillBirth}
             isEditAdoption={isEditAdoption}
@@ -2110,7 +2116,7 @@ const BrideAddressBasePage = ({
               setCountryValuePermanent={setCountryValuePermanent}
               valuePermanent={valuePermanent}
               setValuePermanent={setValuePermanent}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}
@@ -2168,7 +2174,7 @@ const BrideAddressBasePage = ({
               setLbsVillagePermvalue={setLbsVillagePermvalue}
               PostOfficePermvalues={PostOfficePermvalues}
               setPostOfficePermvalues={setPostOfficePermvalues}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}
@@ -2216,7 +2222,7 @@ const BrideAddressBasePage = ({
               setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
               value={value}
               setValue={setValue}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}
@@ -2259,7 +2265,7 @@ const BrideAddressBasePage = ({
               setpermtaddressStateName={setpermtaddressStateName}
               countryvalue={countryvalue}
               setCountryValue={setCountryValue}
-              isEditBirth={isEditBirth}
+              isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
               isEditAdoption={isEditAdoption}

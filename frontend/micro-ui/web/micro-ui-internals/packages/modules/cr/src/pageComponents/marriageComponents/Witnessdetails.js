@@ -151,6 +151,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   // );
 
   const [isExpiredWife, setIsExpiredWife] = useState(formData?.WitnessDetails?.isExpiredWife ? formData?.WitnessDetails?.isExpiredWife : false);
+  const [isBackward, setIsBackward] = useState(formData?.WitnessDetails?.isBackward ? formData?.WitnessDetails?.isBackward : false);
   const [isOpenHusbandModal, setIsOpenHusbandModal] = useState(false);
   const [isOpenWifeModal, setIsOpenWifeModal] = useState(false);
   const [uniqueId, setUniqueId] = useState(null);
@@ -229,6 +230,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
     setIsExpiredWife(e.target.checked);
   }
+
+  function setSelectIsBackward(e) {
+    console.log(e);
+    setIsBackward(e.target.checked);
+  }
+
+  console.log({ isBackward });
 
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
@@ -1150,6 +1158,17 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           />
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CheckBox
+                        label={`${t("CR_WHETHER_BACKWARD")}`}
+                        onChange={setSelectIsBackward}
+                        value={isBackward}
+                        checked={isBackward}
+                        style={{ marginBottom: "40px" }}
+                      />
                     </div>
                   </div>
                 </div>
