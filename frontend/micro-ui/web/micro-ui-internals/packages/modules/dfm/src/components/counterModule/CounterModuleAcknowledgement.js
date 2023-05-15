@@ -36,15 +36,26 @@ const BannerPicker = (props) => {
 };
 
 const CounterModuleAcknowledgement = ({ data = {}, onSuccess = () => null, userType }) => {
-  const { data: storeData } = Digit.Hooks.useStore.getInitData();
-
-  const { tenants } = storeData || {};
-  const { t } = useTranslation();
 
   const location = useLocation();
   const fileCodeValue = location?.state?.fileData;
   const fileStatusValue = location?.state?.fileStatus;
   const fileCodeData = location?.state?.fileData;
+  // const [institution, setInstitution] = useState();
+  // const [individual, setIndividual] = useState();
+  // useEffect(() => {
+  //   if (institutionName) {
+  //     setInstitution(institutionName)
+  //   } else if (firstName) {
+  //     setIndividual(firstName)
+  //   }
+  // }, [])
+
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+
+  const { tenants } = storeData || {};
+  const { t } = useTranslation();
+
 
   let navigationData = location?.state?.navData;
 

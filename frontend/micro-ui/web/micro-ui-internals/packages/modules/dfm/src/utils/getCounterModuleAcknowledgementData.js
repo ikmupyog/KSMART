@@ -3,33 +3,37 @@ import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocali
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
+
+
+
 const getApplicantDetails = (application, t) => {
+    let firstName = sessionStorage.getItem("firstName") || "Not Recorded";
+    let institutionName = sessionStorage.getItem("institutionName") || "Not Recorded";
     application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
+    if (firstName) {
+        return {
+            title: "",
+            values: [
 
-    return {
-        title: "",
-        values: [
+                { title: t("APPLICANT_NAME"), value: application?.arisingFileApplicant?.firstName ? application?.arisingFileApplicant?.firstName : t("NOT_RECORDED") },
+                { title: t("MIDDLE_NAME"), value: application?.arisingFileApplicant?.middleName ? application?.arisingFileApplicant?.middleName : t("NOT_RECORDED") },
+                { title: t("LAST_NAME"), value: application?.arisingFileApplicant?.lastName ? application?.arisingFileApplicant?.lastName : t("NOT_RECORDED") },
+            ],
+        }
+    } else {
+        return {
+            title: "",
+            values: [
 
-            { title: t("APPLICANT_NAME"), value: application?.arisingFileApplicant?.firstName ? application?.arisingFileApplicant?.firstName : t("NOT_RECORDED") },
-            { title: t("MIDDLE_NAME"), value: application?.arisingFileApplicant?.middleName ? application?.arisingFileApplicant?.middleName : t("NOT_RECORDED") },
-            { title: t("LAST_NAME"), value: application?.arisingFileApplicant?.lastName ? application?.arisingFileApplicant?.lastName : t("NOT_RECORDED") },
-        ],
-    };
+                { title: t("INSTITUTION_NAME"), value: application?.arisingFileApplicant?.institutionName ? application?.arisingFileApplicant?.institutionName : t("NOT_RECORDED") },
+                { title: t("OFFICER_NAME"), value: application?.arisingFileApplicant?.officerName ? application?.arisingFileApplicant?.officerName : t("NOT_RECORDED") },
+                { title: t("DESIGNATION"), value: application?.arisingFileApplicant?.designation ? application?.arisingFileApplicant?.designation : t("NOT_RECORDED") },
+            ],
+        }
+    }
 };
 
-const getInstitutionDetails = (application, t) => {
-    application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
 
-    return {
-        title: "",
-        values: [
-
-            { title: t("INSTITUTION_NAME"), value: application?.arisingFileApplicant?.institutionName ? application?.arisingFileApplicant?.institutionName : t("NOT_RECORDED") },
-            { title: t("OFFICER_NAME"), value: application?.arisingFileApplicant?.officerName ? application?.arisingFileApplicant?.officerName : t("NOT_RECORDED") },
-            { title: t("DESIGNATION"), value: application?.arisingFileApplicant?.designation ? application?.arisingFileApplicant?.designation : t("NOT_RECORDED") },
-        ],
-    };
-};
 
 
 const getDataDetails = (application, t) => {
@@ -39,7 +43,7 @@ const getDataDetails = (application, t) => {
         title: "",
         values: [
 
-            { title: t("ID_DETAILS"), value: application?.arisingFileApplicant?.idDetails ? application?.arisingFileApplicant?.idDetails : t("NOT_RECORDED") },
+            // { title: t("ID_DETAILS"), value: application?.arisingFileApplicant?.idDetails ? application?.arisingFileApplicant?.idDetails : t("NOT_RECORDED") },
             { title: t("EMAIL"), value: application?.arisingFileApplicant?.emailId ? application?.arisingFileApplicant?.emailId : t("NOT_RECORDED") },
             { title: t("MOBILE"), value: application?.arisingFileApplicant?.mobileNo ? application?.arisingFileApplicant?.mobileNo : t("NOT_RECORDED") },
 
@@ -93,7 +97,6 @@ const getCounterModuleAcknowledgementData = async (application, tenantInfo, t) =
 
             getAddressDetails(application, t),
             getApplicantDetails(application, t),
-            getInstitutionDetails(application, t),
             getDataDetails(application, t),
             getDataPlaceDetails(application, t)
         ],

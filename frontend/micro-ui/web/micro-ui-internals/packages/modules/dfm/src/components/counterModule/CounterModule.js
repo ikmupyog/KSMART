@@ -79,6 +79,10 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const [postOffice, setPostOffice] = useState();
     const [checkAdhar, setCheckAdhar] = useState(true);
     const [checkUDID, setCheckUDID] = useState(false);
+    const [serviceId, setServiceId] = useState();
+    const [serviceName, setServiceName] = useState();
+    const [applicationType, setApplicationType] = useState("IndianInsideIndividual");
+
     //////////////
     const [isNonIndianActive, setIsNonIndianActive] = useState(() => {
         return { isNonIndianActive: true };
@@ -136,7 +140,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const { tenants } = Digit.SessionStorage.get("initData");
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const tenantIdd = Digit.ULBService.getCitizenCurrentTenant();
-    const mutation = Digit.Hooks.dfm.useApplicationArisingFile(tenantId);
+
 
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
@@ -247,6 +251,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
     }
     const handleInsideIndividual = (e) => {
+        setApplicationType("IndianInsideIndividual")
         setIsactive(true)
         setIndividualIndian(true)
         setIndividualNonIndian(false)
@@ -257,6 +262,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
     }
     const handleOutsideIndividual = (e) => {
+        setApplicationType("IndianOutsideIndividual")
         setIndividualIndian(true)
         setIndividualNonIndian(false)
         setIsactive("")
@@ -266,6 +272,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         setIndividualInside(false);
     }
     const handleNonIndianIndividual = (e) => {
+        setApplicationType("NonIndianIndividual")
         setIndividualIndian(false)
         setIndividualNonIndian(true)
         setIsactiveCheck("")
@@ -285,6 +292,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         }
     }
     const handleInstitution = (e) => {
+        setApplicationType("Institution")
         setIndividualIndian(false)
         setIndividualNonIndian(false)
         setIsactive("")
@@ -455,7 +463,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                     setToastError(false);
                 }, 2000);
             }
-            if (email?.length > 2) {
+            if (email?.length > 0) {
                 if (!email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)) {
                     validFlag = false;
                     setToastError(`${t("ERROR_INVALID_EMAIL_CHOOSE")}`);
@@ -525,7 +533,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                 }, 2000);
             }
 
-            if (email?.length > 2) {
+            if (email?.length > 0) {
                 if (!email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)) {
                     validFlag = false;
                     setToastError(`${t("ERROR_INVALID_EMAIL_CHOOSE")}`);
@@ -542,15 +550,15 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
 
-        if (title == null || title == "" || title == undefined) {
-            validFlag = false;
-            setToastError(`${t("ERROR_TITLE_CHOOSE")}`);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-                setToastError(false);
-            }, 2000);
-        }
+        // if (title == null || title == "" || title == undefined) {
+        //     validFlag = false;
+        //     setToastError(`${t("ERROR_TITLE_CHOOSE")}`);
+        //     setToast(true);
+        //     setTimeout(() => {
+        //         setToast(false);
+        //         setToastError(false);
+        //     }, 2000);
+        // }
         if (MinorFunctionDet == null || MinorFunctionDet == "" || MinorFunctionDet == undefined) {
             validFlag = false;
             setToastError(`${t("ERROR_SERVICE_CHOOSE")}`);
@@ -562,118 +570,124 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         }
 
         if (validFlag == true) {
-            sessionStorage.setItem("title", title ? title : "Not Recorded");
-            sessionStorage.setItem("description", description ? description : "Not Recorded");
-            sessionStorage.setItem("MinorFunctionDet", MinorFunctionDet ? MinorFunctionDet : "Not Recorded");
-            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "Not Recorded");
-            sessionStorage.setItem("idNumber", idNumber ? idNumber : "Not Recorded");
-            sessionStorage.setItem("firstName", firstName ? firstName : "Not Recorded");
-            sessionStorage.setItem("middleName", middleName ? middleName : "Not Recorded");
-            sessionStorage.setItem("lastName", lastName ? lastName : "Not Recorded");
-            sessionStorage.setItem("institutionName", institutionName ? institutionName : "Not Recorded");
-            sessionStorage.setItem("officerName", officerName ? officerName : "Not Recorded");
-            sessionStorage.setItem("designation", designation ? designation : "Not Recorded");
-            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "Not Recorded");
-            sessionStorage.setItem("email", email ? email : "Not Recorded");
-            sessionStorage.setItem("mobile", mobile ? mobile : "Not Recorded");
-            sessionStorage.setItem("mainPlace", mainPlace ? mainPlace : "Not Recorded");
-            sessionStorage.setItem("wardNo", wardNo ? wardNo : "Not Recorded");
-            sessionStorage.setItem("streetName", streetName ? streetName : "Not Recorded");
-            sessionStorage.setItem("pincode", pincode ? pincode : "Not Recorded");
-            sessionStorage.setItem("postOffice", postOffice ? postOffice : "Not Recorded"
-            );
+            sessionStorage.setItem("title", title ? title : "");
+            sessionStorage.setItem("description", description ? description : "");
+            sessionStorage.setItem("services", serviceName ? serviceName : "");
+            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "");
+            sessionStorage.setItem("idNumber", idNumber ? idNumber : "");
+            sessionStorage.setItem("firstName", firstName ? firstName : "");
+            sessionStorage.setItem("middleName", middleName ? middleName : "");
+            sessionStorage.setItem("lastName", lastName ? lastName : "");
+            sessionStorage.setItem("institutionName", institutionName ? institutionName : "");
+            sessionStorage.setItem("officerName", officerName ? officerName : "");
+            sessionStorage.setItem("designation", designation ? designation : "");
+            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : '');
+            sessionStorage.setItem("email", email ? email : "");
+            sessionStorage.setItem("mobile", mobile ? mobile : "");
+            sessionStorage.setItem("whatsapp", whatsapp ? whatsapp : "");
+            sessionStorage.setItem("mainPlace", mainPlace ? mainPlace : "");
+            sessionStorage.setItem("wardNo", wardNo ? wardNo : "");
+            sessionStorage.setItem("streetName", streetName ? streetName : "");
+            sessionStorage.setItem("pincode", pincode ? pincode : "");
+            sessionStorage.setItem("postOffice", postOffice ? postOffice : "");
+            sessionStorage.setItem("applicationType", applicationType ? applicationType : "");
+            sessionStorage.setItem("doorNo", doorNo ? doorNo : "");
+            sessionStorage.setItem("subNo", subNo ? subNo : "");
+            sessionStorage.setItem("houseName", houseName ? houseName : "");
+            sessionStorage.setItem("localPlace", localPlace ? localPlace : "");
 
-            const formData = {
-                RequestInfo: {
-                    apiId: "Rainmaker",
-                    authToken: "e5eac662-d0d8-4477-ab11-8c207bbb002f",
-                    userInfo: {
-                        id: 97,
-                        uuid: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
-                        userName: "GRO",
-                        name: "GRO",
-                        mobileNumber: "9999999999",
-                        emailId: null,
-                        locale: null,
-                        type: "EMPLOYEE",
-                        roles: [
-                            {
-                                name: "File Management Counter Employee",
-                                code: "CITIZEN",
-                                tenantId: "kl"
-                            }
-                        ]
-                    }
-                },
-                arisingFile: {
+            history.push("/digit-ui/employee/dfm/counter-module-summary");
+            // const formData = {
+            //     RequestInfo: {
+            //         apiId: "Rainmaker",
+            //         authToken: "e5eac662-d0d8-4477-ab11-8c207bbb002f",
+            //         userInfo: {
+            //             id: 97,
+            //             uuid: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
+            //             userName: "GRO",
+            //             name: "GRO",
+            //             mobileNumber: "9999999999",
+            //             emailId: null,
+            //             locale: null,
+            //             type: "EMPLOYEE",
+            //             roles: [
+            //                 {
+            //                     name: "File Management Counter Employee",
+            //                     code: "CITIZEN",
+            //                     tenantId: "kl"
+            //                 }
+            //             ]
+            //         }
+            //     },
+            //     arisingFile: {
 
-                    id: null,
-                    tenantId: "kl.cochin",
-                    fileCode: "Arising",
-                    fileArisingMode: "1",
-                    fileArisingDate: "18032023",
-                    year: "2023",
-                    workflowCode: "NewDFM",
-                    businessService: "NewDFM",
-                    employeeDesignation: "PM",
-                    employeeName: "Krishna",
-                    penNumber: "123456",
-                    assignees: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
-                    action: "APPLY",
-                    wfDocuments: [],
-                    comments: "ForSarath",
-                    fileStatus: "running",
-                    serviceId: "4",
-                    title: title,
-                    description: description,
-                    auditDetails: {
-                        createdBy: null,
-                        createdTime: "111111111",
-                        lastModifiedBy: null,
-                        lastModifiedTime: null
-                    },
+            //         id: null,
+            //         tenantId: "kl.cochin",
+            //         fileCode: "Arising",
+            //         fileArisingMode: "1",
+            //         fileArisingDate: "18032023",
+            //         year: "2023",
+            //         workflowCode: "NewDFM",
+            //         businessService: "NewDFM",
+            //         employeeDesignation: "PM",
+            //         employeeName: "Krishna",
+            //         penNumber: "123456",
+            //         assignees: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
+            //         action: "APPLY",
+            //         wfDocuments: [],
+            //         comments: "ForSarath",
+            //         fileStatus: "running",
+            //         serviceId: serviceId,
+            //         title: title,
+            //         description: description,
+            //         auditDetails: {
+            //             createdBy: null,
+            //             createdTime: "111111111",
+            //             lastModifiedBy: null,
+            //             lastModifiedTime: null
+            //         },
 
-                    arisingFileApplicant: {
-                        id: null,
-                        tenantId: "kl.cochin",
-                        arisingFileId: "1",
-                        fileCode: "131",
-                        applicantType: "ODD",
-                        firstName: firstName,
-                        middleName: middleName,
-                        lastName: lastName,
-                        mobileNo: mobile,
-                        whatsappNo: whatsapp,
-                        emailId: email,
-                        wardNo: wardNo,
-                        doorNo: doorNo,
-                        doorSubNo: subNo,
-                        streetName: streetName,
-                        localPlace: localPlace,
-                        mainPlace: mainPlace,
-                        cityName: "townCity",
-                        pinCode: pincode,
-                        documentTypeId: documentTypeId || "",
-                        documentNumber: idNumber,
-                        documentFileStoreId: uploadedFile || "",
-                        institutionName: institutionName,
-                        officerName: officerName,
-                        designation: designation,
-                        auditDetails: {
-                            createdBy: null,
-                            createdTime: null,
-                            lastModifiedBy: null,
-                            lastModifiedTime: null
-                        },
-                        houseName: houseName
-                    }
-                }
-
-
+            //         arisingFileApplicant: {
+            //             id: null,
+            //             tenantId: "kl.cochin",
+            //             arisingFileId: "1",
+            //             fileCode: "131",
+            //             applicantType: applicationType,
+            //             firstName: firstName,
+            //             middleName: middleName,
+            //             lastName: lastName,
+            //             mobileNo: mobile,
+            //             whatsappNo: whatsapp,
+            //             emailId: email,
+            //             wardNo: wardNo,
+            //             doorNo: doorNo,
+            //             doorSubNo: subNo,
+            //             streetName: streetName,
+            //             localPlace: localPlace,
+            //             mainPlace: mainPlace,
+            //             cityName: "townCity",
+            //             pinCode: pincode,
+            //             documentTypeId: documentTypeId || "",
+            //             documentNumber: idNumber,
+            //             documentFileStoreId: uploadedFile || "",
+            //             institutionName: institutionName,
+            //             officerName: officerName,
+            //             designation: designation,
+            //             auditDetails: {
+            //                 createdBy: null,
+            //                 createdTime: null,
+            //                 lastModifiedBy: null,
+            //                 lastModifiedTime: null
+            //             },
+            //             houseName: houseName
+            //         }
+            //     }
 
 
-            }
-            mutation.mutate(formData)
+
+
+            // }
+            // mutation.mutate(formData)
 
         }
     };
@@ -697,6 +711,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
         });
     function setSelectMinorFunctionDet(value) {
+        setServiceId(value?.code);
+        setServiceName(value?.name);
         setMinorFunctionDet(value);
         SubFunction &&
             SubFunction["FileManagement"] &&
@@ -730,7 +746,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         setDescription(e.target.value)
     }
 
-        ;
+    // ;
 
     const getData = (e) => {
         setFile(e.target.files[0]);
@@ -753,7 +769,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const setIdNumbertField = (e) => {
         if (e.target.value.trim().length >= 0) {
             setIdNumber(
-                e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "")
+                e.target.value.length <= 10 ? e.target.value.replace(/[^0-9^/]/gi, "") : e.target.value.replace(/[^0-9^/]/gi, "")
             );
         }
 
@@ -849,12 +865,12 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     }
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (mutation.isSuccess || mutation.isError == true) {
-            history.push("/digit-ui/employee/dfm/counter-module-summery", { responseValue: mutation?.data, responseStatus: mutation?.status })
-        }
-    }, [mutation.isSuccess || mutation.isError])
+    //     if (mutation.isSuccess || mutation.isError == true) {
+    //         history.push("/digit-ui/employee/dfm/counter-module-summary", { responseValue: mutation?.data, responseStatus: mutation?.status })
+    //     }
+    // }, [mutation.isSuccess || mutation.isError])
     return (
         <React.Fragment>
 
@@ -878,7 +894,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                     optionKey="name"
                                     name="services"
                                     option={cmbMinorFunction}
-                                    selected={MinorFunctionDet} select={setSelectMinorFunctionDet}
+                                    selected={MinorFunctionDet}
+                                    select={setSelectMinorFunctionDet}
                                     placeholder={t("SEARCH_SELECT_SERVICE")}
                                 />
                             </div>
@@ -932,7 +949,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                             <div className="col-md-12 col-sm-12"  >
                                 <CardLabel>
                                     {t("TITLE")}
-                                    <span className="mandatorycss">*</span>
+
                                 </CardLabel>
 
                                 <TextInput
@@ -996,7 +1013,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 {indianInsideTypes.map((type, index) => (
                                     <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                                         <input
-                                            className="groom-residentship"
+                                            className="indianInsideIndividual"
                                             type="radio"
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
@@ -1012,7 +1029,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 {indianOutsideTypes.map((type, index) => (
                                     <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                                         <input
-                                            className="groom-residentship file-radio"
+                                            className="indianOutsideIndividual"
                                             type="radio"
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
@@ -1031,7 +1048,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 {nonIndianTypes.map((type, index) => (
                                     <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                                         <input
-                                            className="groom-residentship"
+                                            className="nonIndian"
                                             type="radio"
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
@@ -1051,6 +1068,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 {institutionTypes.map((type, index) => (
                                     <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                                         <input
+                                            className="institution"
                                             type="radio"
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
@@ -1107,7 +1125,58 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                     </div>}
                     <div className="row subject-section" >
                         <div className="col-md-12 col-sm-12">
+                            {institution &&
+                                <div className="col-md-4 col-sm-4">
+                                    <CardLabel>
+                                        {t("INSTITUTION_NAME")}
+                                        <span className="mandatorycss">*</span>
+                                    </CardLabel>
+                                    <TextInput
+                                        onChange={setInstitutionNameField}
+                                        value={institutionName}
+                                        t={t}
+                                        type={"text"}
+                                        optionKey="i18nKey"
+                                        name="institutionName"
+                                        placeholder={t("INSTITUTION_NAME")}
 
+                                    />
+                                </div>}
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("OFFICER_NAME")}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setOfficerNameField}
+                                    value={officerName}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="officerName"
+                                    placeholder={t("OFFICER_NAME")}
+                                />
+
+                            </div>}
+
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("DESIGNATION")}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setDesignationField}
+                                    value={designation}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="designation"
+                                    placeholder={t("DESIGNATION")}
+                                />
+
+                            </div>}
+                        </div>
+                        <div className="col-md-12 col-sm-12">
                             {individualIndian && <div className="col-md-4 col-sm-4"  >
 
                                 {checkAdhar && <div> <CardLabel>
@@ -1136,7 +1205,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                         type={"text"}
                                         optionKey="i18nKey"
                                         name="idNumber"
-                                        placeholder={t("UDID_NUMBER")}
+                                        placeholder={t("XXXXX/XXXXX/XXXXX")}
 
                                     /></div>}
 
@@ -1191,111 +1260,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
 
                             </div>}
-                            {institution &&
-                                <div className="col-md-4 col-sm-4">
-                                    <CardLabel>
-                                        {t("INSTITUTION_NAME")}
-                                        <span className="mandatorycss">*</span>
-                                    </CardLabel>
-                                    <TextInput
-                                        onChange={setInstitutionNameField}
-                                        value={institutionName}
-                                        t={t}
-                                        type={"text"}
-                                        optionKey="i18nKey"
-                                        name="institutionName"
-                                        placeholder={t("INSTITUTION_NAME")}
 
-                                    />
-                                </div>}
-                            {institution && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("OFFICER_NAME")}
-                                    <span className="mandatorycss">*</span>
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setOfficerNameField}
-                                    value={officerName}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="officerName"
-                                    placeholder={t("OFFICER_NAME")}
-                                />
-
-                            </div>}
-
-                            {institution && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("DESIGNATION")}
-                                    <span className="mandatorycss">*</span>
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setDesignationField}
-                                    value={designation}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="designation"
-                                    placeholder={t("DESIGNATION")}
-                                />
-
-                            </div>}
-                            {institution && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("WARD_NAME")}
-
-                                </CardLabel>
-                                <Dropdown
-
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="namecmb"
-                                    option={arraySort(cmbWard || [], 'namecmb', t)}
-                                    name="Ward"
-                                    selected={selected.ward}
-                                    select={wardChange}
-                                    placeholder={t("WARD_NAME")}
-                                />
-
-                            </div>}
-
-                            {institution && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("POST_OFFICE")}
-                                </CardLabel>
-                                <Dropdown
-                                    option={PostOfficevalues}
-                                    optionKey="name"
-                                    selected={selected.postOffice}
-
-                                    select={setPostOfficeField}
-                                    t={t}
-                                    type={"text"}
-                                    name="postOffice"
-                                    placeholder={t("POST_OFFICE")}
-                                />
-
-                            </div>}
-                            {institution && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("PINCODE")}
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setPincodeField}
-                                    value={pincode}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="pincode"
-                                    placeholder={t("PINCODE")}
-                                    disabled={true}
-                                />
-
-                            </div>}
                         </div>
-
-
                         <div className="col-md-12 col-sm-12">
                             {individual && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
@@ -1313,7 +1279,24 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
                             </div>}
 
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("WARD_NAME")}
 
+                                </CardLabel>
+                                <Dropdown
+
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="namecmb"
+                                    option={arraySort(cmbWard || [], 'namecmb', t)}
+                                    name="Ward"
+                                    selected={selected.ward}
+                                    select={wardChange}
+                                    placeholder={t("WARD_NAME")}
+                                />
+
+                            </div>}
 
                             {individualOutside && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
@@ -1334,25 +1317,6 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
 
                             </div>}
-                            {individualOutside && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("POST_OFFICE")}
-                                </CardLabel>
-                                <Dropdown
-                                    option={PostOfficevalues}
-                                    optionKey="name"
-                                    selected={selected.postOffice}
-
-                                    select={setPostOfficeField}
-                                    t={t}
-                                    type={"text"}
-                                    name="postOffice"
-                                    placeholder={t("POST_OFFICE")}
-                                />
-
-                            </div>}
-
-
                             {individualInside && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("WARD_NAME")}
@@ -1372,95 +1336,6 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
 
                             </div>}
-
-                            {individualInside && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("POST_OFFICE")}
-                                    <span className="mandatorycss">*</span>
-                                </CardLabel>
-                                <Dropdown
-                                    option={PostOfficevalues}
-                                    optionKey="name"
-                                    selected={selected.postOffice}
-                                    select={setPostOfficeField}
-                                    t={t}
-                                    type={"text"}
-                                    name="postOffice"
-                                    placeholder={t("POST_OFFICE")}
-                                />
-
-                            </div>}
-                        </div>
-                        <div className="col-md-12 col-sm-12">
-                            {individualInside && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("PINCODE")}
-                                    <span className="mandatorycss">*</span>
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setPincodeField}
-                                    value={pincode}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="pincode"
-                                    placeholder={t("PINCODE")}
-                                    disabled={true}
-                                />
-
-                            </div>}
-
-
-                            {individualOutside && <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("PINCODE")}
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setPincodeField}
-                                    value={pincode}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="pincode"
-                                    placeholder={t("PINCODE")}
-                                    disabled={true}
-                                />
-
-                            </div>}
-
-
-
-                            <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("SUB_NO")}
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setSubNoField}
-                                    value={subNo}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="subNo"
-                                    placeholder={t("SUB_NO")}
-                                />
-
-                            </div>
-                            <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("STREET_NAME")}
-                                </CardLabel>
-                                <TextInput
-                                    onChange={setStreetNameField}
-                                    value={streetName}
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="streetName"
-                                    placeholder={t("STREET_NAME")}
-                                />
-                            </div>
-
-
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("DOOR_NO")}
@@ -1477,6 +1352,201 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
                             </div>
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("SUB_NO")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setSubNoField}
+                                    value={subNo}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="subNo"
+                                    placeholder={t("SUB_NO")}
+                                />
+
+                            </div>}
+                        </div>
+                        <div className="col-md-12 col-sm-12">
+                            {individual && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("SUB_NO")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setSubNoField}
+                                    value={subNo}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="subNo"
+                                    placeholder={t("SUB_NO")}
+                                />
+
+                            </div>}
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("POST_OFFICE")}
+                                </CardLabel>
+                                <Dropdown
+                                    option={PostOfficevalues}
+                                    optionKey="name"
+                                    selected={selected.postOffice}
+
+                                    select={setPostOfficeField}
+                                    t={t}
+                                    type={"text"}
+                                    name="postOffice"
+                                    placeholder={t("POST_OFFICE")}
+                                />
+
+                            </div>}
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("PINCODE")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setPincodeField}
+                                    value={pincode}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="pincode"
+                                    placeholder={t("PINCODE")}
+                                    disabled={true}
+                                />
+
+                            </div>}
+                            {/* </div>
+
+
+
+
+
+
+
+
+
+                        <div className="col-md-12 col-sm-12"> */}
+
+
+
+
+
+
+                            {individualOutside && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("POST_OFFICE")}
+                                </CardLabel>
+                                <Dropdown
+                                    option={PostOfficevalues}
+                                    optionKey="name"
+                                    selected={selected.postOffice}
+
+                                    select={setPostOfficeField}
+                                    t={t}
+                                    type={"text"}
+                                    name="postOffice"
+                                    placeholder={t("POST_OFFICE")}
+                                />
+
+                            </div>}
+
+
+
+
+                            {individualInside && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("POST_OFFICE")}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <Dropdown
+                                    option={PostOfficevalues}
+                                    optionKey="name"
+                                    selected={selected.postOffice}
+                                    select={setPostOfficeField}
+                                    t={t}
+                                    type={"text"}
+                                    name="postOffice"
+                                    placeholder={t("POST_OFFICE")}
+                                />
+
+                            </div>}
+                            {/* </div>
+
+                        <div className="col-md-12 col-sm-12"> */}
+                            {individualInside && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("PINCODE")}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setPincodeField}
+                                    value={pincode}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="pincode"
+                                    placeholder={t("PINCODE")}
+                                    disabled={true}
+                                />
+
+                            </div>}
+
+
+                            {individualOutside && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("PINCODE")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setPincodeField}
+                                    value={pincode}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="pincode"
+                                    placeholder={t("PINCODE")}
+                                    disabled={true}
+                                />
+
+                            </div>}
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("STREET_NAME")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setStreetNameField}
+                                    value={streetName}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="streetName"
+                                    placeholder={t("STREET_NAME")}
+                                />
+                            </div>}
+
+
+                        </div>
+                        <div className="col-md-12 col-sm-12">
+
+
+                            {individual && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("STREET_NAME")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setStreetNameField}
+                                    value={streetName}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="streetName"
+                                    placeholder={t("STREET_NAME")}
+                                />
+                            </div>}
+
+
+
 
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
@@ -1509,6 +1579,23 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
 
                             </div>
+                            {institution && <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("EMAIL_ID")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setEmailField}
+                                    value={email}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="email"
+                                    placeholder={t("EMAIL_ID")}
+                                />
+
+                            </div>}
+                        </div>
+                        <div className="col-md-12 col-sm-12">
                             {individual && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("HOUSE_NAME")}
@@ -1525,7 +1612,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
                             </div>}
 
-                            <div className="col-md-4 col-sm-4"  >
+                            {individual && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("EMAIL_ID")}
                                 </CardLabel>
@@ -1539,7 +1626,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                     placeholder={t("EMAIL_ID")}
                                 />
 
-                            </div>
+                            </div>}
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("MOBILE_NO")}
@@ -1556,7 +1643,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
 
                             </div>
-                            <div className="col-md-4 col-sm-4"  >
+                            {institution && <div> <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("WHATSAPP_NO")}
                                 </CardLabel>
@@ -1573,16 +1660,46 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
                             </div>
 
-                            <div className="col-md-4 col-sm-4 check-field"  >
-                                <div className="col-md-1 col-sm-2 col-xs-2">
-                                    <CheckBox t={t} optionKey="name"
-                                        onChange={(e) => handleMobileChange(e)} />
-                                </div>
-                                <div className="col-md-4 col-sm-4">
-                                    <CardLabel >{`${t("SAME_AS_MOBILE_NUMBER")}`}</CardLabel>
-                                </div>
+                                <div className="col-md-4 col-sm-4 check-field"  >
+                                    <div className="col-md-1 col-sm-2 col-xs-2">
+                                        <CheckBox t={t} optionKey="name"
+                                            onChange={(e) => handleMobileChange(e)} />
+                                    </div>
+                                    <div className="col-md-4 col-sm-4">
+                                        <CardLabel >{`${t("SAME_AS_MOBILE_NUMBER")}`}</CardLabel>
+                                    </div>
+
+                                </div> </div>}
+                        </div>
+                        <div className="col-md-12 col-sm-12">
+                            {individual && <div><div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("WHATSAPP_NO")}
+                                </CardLabel>
+                                <TextInput
+                                    onChange={setWhatsappNoField}
+                                    value={whatsapp}
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="whatsapp"
+                                    placeholder={t("WHATSAPP_NO")}
+                                />
+
 
                             </div>
+
+                                <div className="col-md-4 col-sm-4 check-field"  >
+                                    <div className="col-md-1 col-sm-2 col-xs-2">
+                                        <CheckBox t={t} optionKey="name"
+                                            onChange={(e) => handleMobileChange(e)} />
+                                    </div>
+                                    <div className="col-md-4 col-sm-4">
+                                        <CardLabel >{`${t("SAME_AS_MOBILE_NUMBER")}`}</CardLabel>
+                                    </div>
+
+                                </div>
+                            </div>}
                         </div>
 
 

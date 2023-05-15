@@ -31,7 +31,8 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
     const User = Digit.UserService.getUser();
 
     const userName = User?.userName || User?.info?.userName || User?.info?.userInfo?.userName;
-
+    const location = useLocation();
+    const locationData = location?.state?.fileData || "";
     const { t } = useTranslation();
     const history = useHistory();
     const state = useSelector((state) => state);
@@ -40,25 +41,43 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
     const [userInfoName, setUserInfoName] = useState(userName);
     const [toastError, setToastError] = useState(null);
     const [toast, setToast] = useState(false);
-    const [MinorFunctionDet, setMinorFunctionDet] = useState();
-    const [MajorFunctionDet, setMajorFunctionDet] = useState();
-    const [SubFunctionDet, setSubFunctionDet] = useState();
-    const [title, setTitle] = useState();
-    const [description, setDescription] = useState();
+    const [MinorFunctionDet, setMinorFunctionDet] = useState(JSON.parse(sessionStorage.getItem("MinorFunctionDet")) || "");
+    const [MajorFunctionDet, setMajorFunctionDet] = useState(JSON.parse(sessionStorage.getItem("MajorFunctionDet")) || "");
+    const [SubFunctionDet, setSubFunctionDet] = useState(JSON.parse(sessionStorage.getItem("SubFunctionDet")) || "");
+    const [title, setTitle] = useState(sessionStorage.getItem("title") || "");
+    const [description, setDescription] = useState(sessionStorage.getItem("description") || "");
     const [penNo, setPenNo] = useState();
     const [designation, setDesignation] = useState();
     const [serviceId, setServiceId] = useState();
-
+    const [imagesThumbs, setImagesThumbs] = useState(null);
+    const [serviceName, setServiceName] = useState(sessionStorage.getItem("serviceName") || "");
 
     const [isActiveCheck, setIsactiveCheck] = useState(() => {
         return { isActiveCheck: true };
     });
     const [districtId, setDistrictId] = useState("");
 
-    const [uploadedFile, setUploadedFile] = useState(null)
-    const [file, setFile] = useState("")
+    const [uploadedFile, setUploadedFile] = useState(sessionStorage.getItem("uploadedFile") || null)
+    const [file, setFile] = useState()
     const [error, setError] = useState(null)
+    /////////////////////////////////////////////
+    useEffect(() => {
+        if (uploadedFile) {
+            fetchImage()
+        }
+    }, [uploadedFile])
 
+    const fetchImage = async () => {
+        setImagesThumbs(null)
+        const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([uploadedFile], tenantId);
+        const newThumbnails = fileStoreIds.map((key) => {
+            const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url)
+            return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+        });
+        setImagesThumbs(newThumbnails);
+    }
+
+    ////////////
     let validation = {};
 
     const { tenants } = Digit.SessionStorage.get("initData");
@@ -80,7 +99,8 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
             cmbMinorFunction.push(item);
         });
     function setSelectMinorFunctionDet(value) {
-
+        setServiceId(value?.code);
+        setServiceName(value?.name);
         setMinorFunctionDet(value);
         SubFunction &&
             SubFunction["FileManagement"] &&
@@ -122,7 +142,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
         setDesignation(e.target.value)
     }
 
-    const mutation = Digit.Hooks.dfm.useApplicationArisingFile(tenantId);
+
 
 
     useEffect(() => {
@@ -189,100 +209,105 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
 
         if (validFlag == true) {
 
-            sessionStorage.setItem("title", title ? title : null);
-            sessionStorage.setItem("description", description ? description : null);
-            sessionStorage.setItem("serviceId", serviceId ? serviceId : null);
-            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : null);
+            sessionStorage.setItem("title", title ? title : "");
+            sessionStorage.setItem("description", description ? description : "");
+            sessionStorage.setItem("services", serviceName ? serviceName : "");
+            sessionStorage.setItem("MinorFunctionDet", MinorFunctionDet ? JSON.stringify(MinorFunctionDet) : "");
+            sessionStorage.setItem("SubFunctionDet", SubFunctionDet ? JSON.stringify(SubFunctionDet) : "");
+            sessionStorage.setItem("MajorFunctionDet", MajorFunctionDet ? JSON.stringify(MajorFunctionDet) : "");
+            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "");
+            // sessionStorage.setItem("file", file ? file : "");
 
+            history.push("/digit-ui/employee/dfm/arising-file-summary")
 
-            const formData = {
-                RequestInfo: {
-                    apiId: "Rainmaker",
-                    authToken: "c87f676f-6acb-41ea-a3b6-9d7fbbed5577",
-                    userInfo: {
-                        id: 97,
-                        uuid: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
-                        userName: "GRO",
-                        name: "GRO",
-                        mobileNumber: "9999999999",
-                        emailId: null,
-                        locale: null,
-                        type: "EMPLOYEE",
-                        roles: [
-                            {
-                                name: "File Management Counter Employee",
-                                code: "CITIZEN",
-                                tenantId: "kl"
-                            }
-                        ]
-                    }
-                },
-                arisingFile: {
+            // const formData = {
+            //     RequestInfo: {
+            //         apiId: "Rainmaker",
+            //         authToken: "c87f676f-6acb-41ea-a3b6-9d7fbbed5577",
+            //         userInfo: {
+            //             id: 97,
+            //             uuid: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
+            //             userName: "GRO",
+            //             name: "GRO",
+            //             mobileNumber: "9999999999",
+            //             emailId: null,
+            //             locale: null,
+            //             type: "EMPLOYEE",
+            //             roles: [
+            //                 {
+            //                     name: "File Management Counter Employee",
+            //                     code: "CITIZEN",
+            //                     tenantId: "kl"
+            //                 }
+            //             ]
+            //         }
+            //     },
+            //     arisingFile: {
 
-                    id: null,
-                    tenantId: "kl.cochin",
-                    fileCode: "Arising",
-                    fileArisingMode: "1",
-                    fileArisingDate: "18032023",
-                    year: "2023",
-                    workflowCode: "NewDFM",
-                    businessService: "NewDFM",
-                    employeeDesignation: designation,
-                    employeeName: userInfoName,
-                    penNumber: penNo,
-                    assignees: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
-                    action: "APPLY",
-                    wfDocuments: [],
-                    comments: "ForSarath",
-                    fileStatus: "running",
-                    serviceId: "4",
-                    title: title,
-                    description: description,
-                    auditDetails: {
-                        createdBy: null,
-                        createdTime: "111111111",
-                        lastModifiedBy: null,
-                        lastModifiedTime: null
-                    },
+            //         id: null,
+            //         tenantId: "kl.cochin",
+            //         fileCode: "Arising",
+            //         fileArisingMode: "1",
+            //         fileArisingDate: "18032023",
+            //         year: "2023",
+            //         workflowCode: "NewDFM",
+            //         businessService: "NewDFM",
+            //         employeeDesignation: designation,
+            //         employeeName: userInfoName,
+            //         penNumber: penNo,
+            //         assignees: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
+            //         action: "APPLY",
+            //         wfDocuments: [],
+            //         comments: "ForSarath",
+            //         fileStatus: "running",
+            //         serviceId: serviceId,
+            //         title: title,
+            //         description: description,
+            //         auditDetails: {
+            //             createdBy: null,
+            //             createdTime: "111111111",
+            //             lastModifiedBy: null,
+            //             lastModifiedTime: null
+            //         },
 
-                    arisingFileApplicant: {
-                        id: null,
-                        tenantId: "kl.cochin",
-                        arisingFileId: "1",
-                        fileCode: "131",
-                        applicantType: "ODD",
-                        firstName: "Raju",
-                        middleName: "rdgd",
-                        lastName: "dhhd",
-                        mobileNo: "9746402315",
-                        whatsappNo: "9746402315",
-                        emailId: "priyamalu@gmail.com",
-                        wardNo: "1",
-                        doorNo: "1",
-                        doorSubNo: "1",
-                        streetName: "bcc",
-                        localPlace: "rthf",
-                        mainPlace: "sgsgs",
-                        cityName: "gukg",
-                        pinCode: "695020",
-                        documentTypeId: "1",
-                        documentNumber: "1",
-                        documentFileStoreId: uploadedFile || "",
-                        institutionName: "qq",
-                        officerName: "ww",
-                        designation: "ee",
-                        auditDetails: {
-                            createdBy: null,
-                            createdTime: null,
-                            lastModifiedBy: null,
-                            lastModifiedTime: null
-                        },
-                        houseName: "kk"
-                    }
-                }
+            //         arisingFileApplicant: {
+            //             id: null,
+            //             tenantId: "kl.cochin",
+            //             arisingFileId: "1",
+            //             fileCode: "131",
+            //             applicantType: "ODD",
+            //             firstName: "Raju",
+            //             middleName: "rdgd",
+            //             lastName: "dhhd",
+            //             mobileNo: "9746402315",
+            //             whatsappNo: "9746402315",
+            //             emailId: "priyamalu@gmail.com",
+            //             wardNo: "1",
+            //             doorNo: "1",
+            //             doorSubNo: "1",
+            //             streetName: "bcc",
+            //             localPlace: "rthf",
+            //             mainPlace: "sgsgs",
+            //             cityName: "gukg",
+            //             pinCode: "695020",
+            //             documentTypeId: "1",
+            //             documentNumber: "1",
+            //             documentFileStoreId: uploadedFile || "",
+            //             institutionName: "qq",
+            //             officerName: "ww",
+            //             designation: "ee",
+            //             auditDetails: {
+            //                 createdBy: null,
+            //                 createdTime: null,
+            //                 lastModifiedBy: null,
+            //                 lastModifiedTime: null
+            //             },
+            //             houseName: "kk"
+            //         }
+            //     }
 
-            }
-            mutation.mutate(formData)
+            // }
+            // mutation.mutate(formData)
 
         }
     };
@@ -296,13 +321,16 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
 
     const getData = (e) => {
         setFile(e.target.files[0]);
+        if (locationData) {
+            setFile(e.target.files[0]);
+        }
     }
 
-    useEffect(() => {
-        if (mutation.isSuccess == true || mutation.isError == true) {
-            history.push("/digit-ui/employee/dfm/arising-file-summery", { responseValue: mutation?.data, responseStatus: mutation?.status })
-        }
-    }, [mutation.isSuccess || mutation.isError])
+    // useEffect(() => {
+    //     if (mutation.isSuccess == true || mutation.isError == true) {
+    //         history.push("/digit-ui/employee/dfm/arising-file-summary", { responseValue: mutation?.data, responseStatus: mutation?.status })
+    //     }
+    // }, [mutation.isSuccess || mutation.isError])
 
 
 
@@ -431,7 +459,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
 
                     </div>
 
-                    <div className="row" >
+                    {/* <div className="row" >
                         <div className="col-md-12 col-sm-12" style={{ marginTop: "20px" }}>
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
@@ -484,7 +512,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
                         </div>
 
 
-                    </div>
+                    </div> */}
 
 
                     <div className="row subject-section" >
@@ -502,12 +530,34 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
                                     extraStyleName={"propertyCreate"}
                                     accept=".jpg,.pdf"
                                     onUpload={getData}
-                                    message={uploadedFile ? `${uploadedFile.length} - ${t(`CR_DOCUMENTS`)}` : t(`CR_DOCUMENTS`)}
+                                    // message={uploadedFile ? `${uploadedFile.length} - ${t(`CR_DOCUMENTS`)}` : t(`CR_DOCUMENTS`)}
+                                    message={uploadedFile ? `${uploadedFile} - ${t(`CR_DOCUMENTS`)}` : t(`CR_DOCUMENTS`)}
 
                                 />
+
                             </div>
 
-
+                            <div className="col-md-4">
+                                {/* {uploadedFile.length > 0 && */}
+                                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                                    <div className="col-md-12" style={{ display: "flex", marginLeft: "15px" }}>
+                                        {imagesThumbs && imagesThumbs.map((thumbnail, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    {thumbnail.type == "pdf" ?
+                                                        <React.Fragment>
+                                                            <object style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} data={thumbnail.pdfUrl}
+                                                                alt={`upload-thumbnails-${index}`} />
+                                                        </React.Fragment> :
+                                                        <img style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} src={thumbnail.small}
+                                                            alt={`upload-thumbnails-${index}`} onClick={() => setImageZoom(thumbnail.large)} />}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                                {/* } */}
+                            </div>
 
                         </div>
 

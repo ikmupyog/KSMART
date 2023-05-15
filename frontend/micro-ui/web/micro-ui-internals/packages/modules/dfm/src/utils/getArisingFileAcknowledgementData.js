@@ -36,7 +36,7 @@ const getArisingFileAcknowledgementData = async (application, tenantInfo, t) => 
                     },
                 ],
             },
-            // getNACChildDetails(application, t),
+
             getAddressDetails(application, t),
         ],
     };

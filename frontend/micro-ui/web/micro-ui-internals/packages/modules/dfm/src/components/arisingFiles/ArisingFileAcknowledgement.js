@@ -46,7 +46,6 @@ const ArisingFileAcknowledgement = ({ data = {}, onSuccess = () => null, userTyp
   const fileCodeValue = location?.state?.fileData;
   const fileStatusValue = location?.state?.fileStatus;
   const fileCodeData = location?.state?.fileData;
-
   let navigationData = location?.state?.navData;
 
   const handleDownloadPdf = async () => {

@@ -36,9 +36,9 @@ import MajorFunctionAdding from "./components/MajorFunctionAdding";
 import SubFunctionAdding from "./components/SubFunctionAdding";
 import ServiceAdding from "./components/ServiceAdding";
 import ArisingFileAcknowledgement from "./components/arisingFiles/ArisingFileAcknowledgement";
-import ArisingFileSummery from "./components/arisingFiles/ArisingFileSummery";
+import ArisingFileSummary from "./components/arisingFiles/ArisingFileSummary";
 import CounterModule from "./components/counterModule/CounterModule"
-import CounterModuleSummery from "./components/counterModule/CounterModuleSummery"
+import CounterModuleSummary from "./components/counterModule/CounterModuleSummary"
 import CounterModuleAcknowledgement from "./components/counterModule/CounterModuleAcknowledgement"
 // import ArisingFiled from "./components/arisingFiles/ArisingFiled";
 
@@ -117,11 +117,11 @@ const componentsToRegister = {
   SubFunctionAdding,
   ServiceAdding,
   ArisingFileAcknowledgement,
-  ArisingFileSummery,
+  ArisingFileSummary,
   CounterModule,
   SearchModuleApplication,
-  ArisingFileSummery,
-  CounterModuleSummery,
+  ArisingFileSummary,
+  CounterModuleSummary,
   CounterModuleAcknowledgement
   // ArisingFiled
 };
