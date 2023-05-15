@@ -41,7 +41,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
 
   const { uuid = "" } = Digit.UserService.getUser()?.info;
 
-  const { data: userData = {} } = Digit.Hooks.useEmployeeSearch(
+  const { data: userData = {}, isSuccess = false } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
       roles: [{ code: roleCode }],
@@ -93,7 +93,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
     <React.Fragment>
       {userType == "citizen" ? <PGRTimeline currentStep={7} /> : null}
       {userType == "employee" ? <EmpTimeLine currentStep={6} /> : null}
-      <FormStep config={config} onSelect={goNext} isDisabled={!declaration}>
+      <FormStep config={config} onSelect={goNext} isDisabled={!declaration && isSuccess}>
         <Card>
           <Accordion expanded={true} title={t("CS_ADDCOMPLAINT_DETAILS")}
             content={<StatusTable >
