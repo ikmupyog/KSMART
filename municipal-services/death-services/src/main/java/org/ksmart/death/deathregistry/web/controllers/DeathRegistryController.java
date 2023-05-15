@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathregistry.service.DeathRegistryService;
+import org.ksmart.death.deathregistry.util.DeathRegistryConstants;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
@@ -64,21 +65,35 @@ public class DeathRegistryController {
                                             .build();
         return ResponseEntity.ok(response);
     }    
+
         //Search  Jasmine 08.02.2023
         @PostMapping("/deathregistry/_searchdeath")
     
-        public ResponseEntity<DeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
+        public ResponseEntity<Object> search(@RequestBody RequestInfoWrapper request,
                                                               @ModelAttribute DeathRegistryCriteria criteria) {
-    
-            List<DeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
-    
+            if(!criteria.getDeathType().equals(DeathRegistryConstants.DEATH_NAC) ){  
+                System.out.println("criteria"+criteria.getDeathType());                                          
+            List<DeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());    
             DeathRegistryResponse response = DeathRegistryResponse
                                                 .builder()
                                                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
                                                 .deathCertificateDtls(deathDetails)
                                                 .build();
             return ResponseEntity.ok(response);
-        }
+            }else{
+                System.out.println("criteria1"+criteria.getDeathType());      
+                DeathNACCriteria nacCriteria = new DeathNACCriteria();
+                nacCriteria.setDeathACKNo(criteria.getDeathACKNo());
+                List<DeathRegistryNACDtls> deathDetails = deathService.searchNAC(nacCriteria, request.getRequestInfo());
+
+                DeathRegistryNACResponse response = DeathRegistryNACResponse
+                                                    .builder()
+                                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                                    .deathNACDtls(deathDetails)
+                                                    .build();
+                return ResponseEntity.ok(response);
+             }
+    }
 
     //Certificate Download by Rakhi S on 10.02.2023
     @PostMapping("/deathregistry/_downloaddeath")
@@ -167,7 +182,7 @@ public class DeathRegistryController {
     @PostMapping("/deathregistry/_searchdeathnac")    
     public ResponseEntity<DeathRegistryNACResponse> searchNAC(@RequestBody RequestInfoWrapper request,
                                                           @ModelAttribute DeathNACCriteria criteria) {
-
+                                                           
         List<DeathRegistryNACDtls> deathDetails = deathService.searchNAC(criteria, request.getRequestInfo());
 
         DeathRegistryNACResponse response = DeathRegistryNACResponse

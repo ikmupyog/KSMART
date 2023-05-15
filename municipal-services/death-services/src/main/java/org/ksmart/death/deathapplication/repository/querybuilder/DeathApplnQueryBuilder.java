@@ -84,6 +84,8 @@ public class DeathApplnQueryBuilder extends BaseQueryBuilder {
          .append(",dt.informant_designation")
          .append(",dt.informant_pen_no")
          .append(",dt.informant_office_address")
+         .append(",dt.spouse_if_alive")
+         .append(",dt.spouse_age")
          .append(",stat.medical_practitioner_name")
          .append(",stat.medical_practitioner_aadhaar")
          .append(",stat.medical_practitioner_mobile")

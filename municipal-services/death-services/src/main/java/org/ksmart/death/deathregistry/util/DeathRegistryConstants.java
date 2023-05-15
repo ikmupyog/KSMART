@@ -92,7 +92,7 @@ public class DeathRegistryConstants {
      public static final String CERT_NUMBER_CAPTION="CT";
      public static final String HOSPITAL_DATA="hospitalList";
      public static final String DEATH_PLACE_PUBLICPLACES = "PUBLIC_PLACES";
-
+     public static final String DEATH_NAC="CRDRNA";
 
 
 }

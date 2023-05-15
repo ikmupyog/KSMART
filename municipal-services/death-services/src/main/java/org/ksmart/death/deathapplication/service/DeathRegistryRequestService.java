@@ -294,6 +294,8 @@ public class DeathRegistryRequestService {
         registryFamilyInfo.setMotherAadharNo(deathFamilyInfo.getMotherAadharNo());
         registryFamilyInfo.setFamilyMobileNo(deathFamilyInfo.getFamilyMobileNo());
         registryFamilyInfo.setFamilyEmailId(deathFamilyInfo.getFamilyEmailId());
+        registryFamilyInfo.setSpouseAgeIfAlive(deathFamilyInfo.getSpouseAgeIfAlive());
+        registryFamilyInfo.setSpouseAge(deathFamilyInfo.getSpouseAge());
         return registryFamilyInfo;
     }
     public DeathRegistryInformantDtls createRegistryInformantDtls(DeathDtlRequest deathrequest){
@@ -627,25 +629,27 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
 
         DeathFamilyInfo deathFamilyInfo = deathrequest.getDeathAbandonedDtls().get(0).getDeathFamilyInfo();
         DeathRegistryFamilyInfo registryFamilyInfo = new DeathRegistryFamilyInfo();
-       // registryFamilyInfo.setSpouseUnavailable(deathFamilyInfo.getSpouseUnavailable());
+        registryFamilyInfo.setSpouseUnavailable(deathFamilyInfo.isSpouseUnavailable());
         registryFamilyInfo.setSpouseType(deathFamilyInfo.getSpouseType());
         registryFamilyInfo.setSpouseNameEn(deathFamilyInfo.getSpouseNameEn());
         registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
         registryFamilyInfo.setSpouseAadhaar(deathFamilyInfo.getSpouseAadhaar());
         registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
-       // registryFamilyInfo.setFatherUnavailable(deathFamilyInfo.getFatherUnavailable());
+        registryFamilyInfo.setFatherUnavailable(deathFamilyInfo.isFatherUnavailable());
         registryFamilyInfo.setFatherNameEn(deathFamilyInfo.getFatherNameEn());
         registryFamilyInfo.setFatherNameMl(deathFamilyInfo.getFatherNameMl());
         registryFamilyInfo.setFatherAadharNo(deathFamilyInfo.getFatherAadharNo());
-       // registryFamilyInfo.setMotherUnavailable(deathFamilyInfo.getMotherUnavailable());
+        registryFamilyInfo.setMotherUnavailable(deathFamilyInfo.isMotherUnavailable());
         registryFamilyInfo.setMotherNameEn(deathFamilyInfo.getMotherNameEn());
         registryFamilyInfo.setMotherNameMl(deathFamilyInfo.getMotherNameMl());
         registryFamilyInfo.setMotherAadharNo(deathFamilyInfo.getMotherAadharNo());
         registryFamilyInfo.setFamilyMobileNo(deathFamilyInfo.getFamilyMobileNo());
         registryFamilyInfo.setFamilyEmailId(deathFamilyInfo.getFamilyEmailId());
+        registryFamilyInfo.setSpouseAgeIfAlive(deathFamilyInfo.getSpouseAgeIfAlive());
+        registryFamilyInfo.setSpouseAge(deathFamilyInfo.getSpouseAge());
         return registryFamilyInfo;
     }
-//Rakhi S ikm on 08.03.2023 Abandoned Registry family info Request create
+//Rakhi S ikm on 08.03.2023 Abandoned Registry address info Request create
     public DeathRegistryAddressInfo createRegistryAddressAbandoned(DeathAbandonedRequest deathrequest){
 
         DeathAddressInfo deathAddress = deathrequest.getDeathAbandonedDtls().get(0).getDeathAddressInfo();

@@ -15,8 +15,8 @@ serviceMaps:
           family_mobile_no ,family_email ,initiator_relation,initiator_name,initiator_aadhar_submitted,initiator_aadhar_no,initiator_mobile_no , assignee ,informant_address ,initiator_address,
           is_declaration_initiator,is_declaration_informant,
           death_date_unavailable,date_of_death_to,time_of_death_to,timeofdeath_unit_to,deceased_unidentified,
-          normal_regn,delayed_within_thirty,delayed_within_oneyear,delayed_after_oneyear)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ? ,? ,? ,? ,?);
+          normal_regn,delayed_within_thirty,delayed_within_oneyear,delayed_after_oneyear,spouse_if_alive,spouse_age)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ? ,? ,? ,? ,?,? ,?);
      
 
       basePath: deathCertificateDtls.*
@@ -244,6 +244,10 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.delayedWithinOneyear    
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.delayedAfterOneyear  
+
+      - jsonPath: $.deathCertificateDtls.*.FamilyInformationDeath.spouseAgeIfAlive
+
+      - jsonPath: $.deathCertificateDtls.*.FamilyInformationDeath.spouseAge
 
 
 
@@ -658,7 +662,8 @@ serviceMaps:
          death_place_street_ml = ? , death_place_country = ? , 
          death_place_state = ? , death_place_district = ? , death_place_city = ? ,
          death_place_remarks_en = ? , death_place_remarks_ml = ? , place_of_burial_en = ? , 
-         place_of_burial_ml = ? ,action = ? , status = ?  , informant_address = ? ,initiator_address = ? 
+         place_of_burial_ml = ? ,action = ? , status = ?  , informant_address = ? ,initiator_address = ? ,
+         spouse_if_alive = ? ,spouse_age = ?
          WHERE  tenantid = ? AND ack_no = ?
       
 
@@ -802,6 +807,10 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddress
 
       - jsonPath: $.deathCertificateDtls.*.Initiator.InitiatorAddress
+
+      - jsonPath: $.deathCertificateDtls.*.FamilyInformationDeath.spouseAgeIfAlive
+
+      - jsonPath: $.deathCertificateDtls.*.FamilyInformationDeath.spouseAge
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
@@ -1239,8 +1248,8 @@ serviceMaps:
           family_mobile_no ,family_email, assignee ,informant_address ,
           death_date_unavailable,date_of_death_to,time_of_death_to,timeofdeath_unit_to,deceased_unidentified,
           burial_district,burial_lbtype,burial_lbname,burial_lb_ward,burial_description,deceased_description,
-          informant_office,informant_designation,informant_pen_no,informant_office_address)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?);
+          informant_office,informant_designation,informant_pen_no,informant_office_address,spouse_if_alive,spouse_age)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?);
      
 
       basePath: deathAbandonedDtls.*
@@ -1446,6 +1455,10 @@ serviceMaps:
       - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantPENNo
 
       - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantOfficeAddress
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.spouseAgeIfAlive
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.spouseAge
 
 
 
@@ -1746,7 +1759,7 @@ serviceMaps:
          place_of_burial_ml = ? ,action = ? , status = ?  , informant_address = ? ,
          burial_lb_ward = ? , burial_description = ? , deceased_description = ?,
          informant_office = ? , informant_designation = ? , 
-         informant_pen_no = ? , informant_office_address = ?
+         informant_pen_no = ? , informant_office_address = ? , spouse_if_alive = ? ,spouse_age = ?
          WHERE  tenantid = ? AND ack_no = ?
       
 
@@ -1898,6 +1911,10 @@ serviceMaps:
       - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantPENNo
 
       - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantOfficeAddress
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.spouseAgeIfAlive
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.spouseAge
 
       - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TenantId
 

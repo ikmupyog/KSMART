@@ -1,6 +1,5 @@
 package org.ksmart.death.deathregistry.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
-// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,15 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.validation.constraints.Size;
-// import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
-/*
-     * Creates main model class  
-     * Jasmine on 7.02.2023      
-*/
-
-//@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
 @Validated
 @Getter
 @Setter
@@ -65,7 +57,6 @@ public class DeathRegistryFamilyInfo {
     @JsonProperty("FamilyEmailId")
     private String familyEmailId;
 
-    //Rakhi S on 08.02.2023
     @Size(max = 12)
     @JsonProperty("SpouseAadhaar")
     private String spouseAadhaar;
@@ -78,11 +69,16 @@ public class DeathRegistryFamilyInfo {
     @JsonProperty("MotherAadharNo")
     private String motherAadharNo;
 
-    //Rakhi S on 11.02.2023
     private String spouseName;
 
     private String motherName;
 
     private String fatherName;
+
+    @JsonProperty("spouseAgeIfAlive")
+    private String spouseAgeIfAlive;
+
+    @JsonProperty("spouseAge")
+    private Integer spouseAge;
       
 }

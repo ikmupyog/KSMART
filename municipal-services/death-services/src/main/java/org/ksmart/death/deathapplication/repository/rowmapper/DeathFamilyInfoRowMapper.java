@@ -6,15 +6,11 @@ import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-/**
-     * Created by
-     * JASMINE IKM
-     * 
-     */
+// FamilyInformation
 @Component
 public class  DeathFamilyInfoRowMapper   implements ResultSetExtractor  , BaseRowMapper{
 
-      public DeathFamilyInfo extractData(ResultSet rs) throws SQLException, DataAccessException { // STATISTICAL
+      public DeathFamilyInfo extractData(ResultSet rs) throws SQLException, DataAccessException { 
         return DeathFamilyInfo.builder()
                          .spouseUnavailable(rs.getBoolean("spouse_unavailable"))
                          .spouseType(rs.getString("spouse_type"))
@@ -31,6 +27,8 @@ public class  DeathFamilyInfoRowMapper   implements ResultSetExtractor  , BaseRo
                          .spouseAadhaar(rs.getString("spouse_aadhaar"))
                          .fatherAadharNo(rs.getString("male_dependent_aadharno"))
                          .motherAadharNo(rs.getString("female_dependent_aadharno"))
+                         .spouseAgeIfAlive(rs.getString("spouse_if_alive"))
+                         .spouseAge(rs.getInt("spouse_age"))
                          .build();
                     }
                 

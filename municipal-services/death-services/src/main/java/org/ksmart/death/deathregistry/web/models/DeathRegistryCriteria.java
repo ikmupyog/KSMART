@@ -138,5 +138,6 @@ public class DeathRegistryCriteria {
     @JsonProperty("CertificateNo")
     private String certificateNo;
 
-    private String deathType;
+    @Builder.Default
+    private String deathType="CRDRNR";
 }
