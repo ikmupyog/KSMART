@@ -919,7 +919,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             registryDetails.getGroomAddressDetails().setStreetNameEnPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn());
                             registryDetails.getGroomAddressDetails().setLocalityEnPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn());
                             registryDetails.getGroomAddressDetails().setPinNoPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPincode());
-                            registryDetails.getGroomAddressDetails().setPoNoPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
+                       //     registryDetails.getGroomAddressDetails().setPoNoPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
 
 
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getHouseNameNoEnPermanent(), groomAddressBuilder, true);
