@@ -71,8 +71,7 @@ public class DeathRegistryController {
     
         public ResponseEntity<Object> search(@RequestBody RequestInfoWrapper request,
                                                               @ModelAttribute DeathRegistryCriteria criteria) {
-            if(!criteria.getDeathType().equals(DeathRegistryConstants.DEATH_NAC) ){  
-                System.out.println("criteria"+criteria.getDeathType());                                          
+            if(!criteria.getDeathType().equals(DeathRegistryConstants.DEATH_NAC) ){                                         
             List<DeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());    
             DeathRegistryResponse response = DeathRegistryResponse
                                                 .builder()
@@ -80,8 +79,7 @@ public class DeathRegistryController {
                                                 .deathCertificateDtls(deathDetails)
                                                 .build();
             return ResponseEntity.ok(response);
-            }else{
-                System.out.println("criteria1"+criteria.getDeathType());      
+            }else{ 
                 DeathNACCriteria nacCriteria = new DeathNACCriteria();
                 nacCriteria.setDeathACKNo(criteria.getDeathACKNo());
                 List<DeathRegistryNACDtls> deathDetails = deathService.searchNAC(nacCriteria, request.getRequestInfo());

@@ -137,6 +137,8 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .append(" ,dt.death_place_locality_ml")
          .append(" ,dt.death_place_street_en")
          .append(" ,dt.death_place_street_ml")
+         .append(" ,dt.spouse_if_alive")
+         .append(" ,dt.spouse_age")
          .append(" ,presentaddress.addr_sameas_present as  P_addr_sameas_present")
          .append(" ,permanentAddress.addr_lb_name as  R_addr_lb_name")
          .append(" ,presentaddress.addr_lb_name as  P_addr_lb_name")     
