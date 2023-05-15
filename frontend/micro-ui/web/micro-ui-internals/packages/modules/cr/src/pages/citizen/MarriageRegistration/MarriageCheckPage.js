@@ -72,6 +72,12 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
   const match = useRouteMatch();
   const { MarriageDetails, BrideDetails, BrideAddressDetails, GroomDetails, GroomAddressDetails, WitnessDetails, MarriageDocuments } = value;
   console.log({ value });
+  let routeLink = "";
+  // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
+  // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/check", "");
+
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -402,9 +408,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePlacenameEn
-                            ? MarriageDetails?.marriagePlacenameEn
-                            : "CR_NOT_RECORDED"}
+                          {MarriageDetails?.marriagePlacenameEn ? MarriageDetails?.marriagePlacenameEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -444,9 +448,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePlacenameMl
-                            ? MarriageDetails?.marriagePlacenameMl
-                            : "CR_NOT_RECORDED"}
+                          {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-12">
@@ -494,6 +496,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       {MarriageDetails?.marriageType ? MarriageDetails?.marriageType?.name : null}
                     </CardText>
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/marriage-registration`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -846,6 +853,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 )}
               </React.Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/groom-details`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -1609,6 +1621,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               )}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/address-groom`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -1959,6 +1976,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 )}
               </React.Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/bride-details`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -2722,6 +2744,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               )}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/address-bride`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -2910,6 +2937,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="col-md-3">
                     {WitnessDetails?.brideURL ? <img height={120} width={100} src={WitnessDetails?.brideURL} alt="Groom Image" /> : "NR"}
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/witness-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -3758,6 +3790,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </div>
               </React.Fragment>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">{<ActionButton jumpTo={`${routeLink}/marriage-documents`} />}</div>
+                </div>
+              </div>
             </StatusTable>
           }
         />

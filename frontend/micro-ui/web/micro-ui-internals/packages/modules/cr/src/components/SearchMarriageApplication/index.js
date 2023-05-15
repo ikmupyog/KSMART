@@ -60,7 +60,7 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
   }
   const handleLinkClick = (finaldata) => {
     console.log({ finaldata });
-    Digit.SessionStorage.set("CR_MARRIAGE_EDIT", finaldata);
+    Digit.SessionStorage.set("CR_EDIT_MARRIAGE_REG", finaldata);
     sessionStorage.setItem("CR_MARRIAGE_EDIT_FLAG", true);
   };
 
@@ -79,11 +79,12 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
         accessor: "applicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
+          console.log({data: GetCell(row)});
           return (
             <div>
               <span className="link">
                 <Link
-                  onClick={(event) => handleLinkClick(row.original)}
+                  onClick={() => handleLinkClick(row.original)}
                   to={`/digit-ui/employee/cr/application-marriagedetails/${row.original.applicationNumber}`}
                 >
                   {/* {row.original.applicationNumber} */}
@@ -95,15 +96,29 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
         },
       },
       {
-        Header: t("CR_COMMON_COL_APP_DATE"),
+        Header: t("CR_DATE_OF_MARRIAGE"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+        accessor: (row) => GetCell(row.marriageDOM ? convertEpochToDateDMY(row.marriageDOM) : ""),
       },
-      // {
-      //   Header: t("CR_COMMON_COL_DOB"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
-      // },
+      {
+        Header: t("CR_GROOM_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(`${row?.GroomDetails?.groomFirstnameEn ? row?.GroomDetails?.groomFirstnameEn : ""} ${
+          row?.GroomDetails?.groomMiddlenameEn ? row?.GroomDetails?.groomMiddlenameEn : ""
+        } ${row?.GroomDetails?.groomLastnameEn ? response?.GroomDetails?.groomLastnameEn : ""}`),
+      },
+      {
+        Header: t("CR_BRIDE_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(`${row?.BrideDetails?.brideFirstnameEn ? row?.BrideDetails?.brideFirstnameEn : ""} ${
+          row?.BrideDetails?.brideMiddlenameEn ? row?.BrideDetails?.brideMiddlenameEn : ""
+        } ${row?.BrideDetails?.brideLastnameEn ? response?.BrideDetails?.brideLastnameEn : ""}`),
+      },
+      {
+        Header: t("CR_APPLICATION_STATUS"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.status ? row.status : ""),
+      },
       // {
       //     Header: t("TL_APPLICATION_TYPE_LABEL"),
       //     disableSortBy: true,

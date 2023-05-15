@@ -72,7 +72,7 @@ const ActionModal = (props) => {
   ) {
     return <MarriageActionModal {...props} />;
   }
-  if (props?.businessService.includes("NACDEATH")) {
+  if (props?.businessService.includes("DEATHNAC")) {
     return <DeathNACActionModal {...props} />;
   }
   if (props?.businessService.includes("NewDFM")) {

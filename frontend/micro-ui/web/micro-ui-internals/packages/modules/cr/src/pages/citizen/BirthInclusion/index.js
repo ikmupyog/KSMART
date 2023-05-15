@@ -31,10 +31,10 @@ const BirthInclusion = () => {
 
   function onSubmit(_data) {
     console.log("error data", _data);
-    // if (!_data.Gender) {    
-    //   setToast({ show: true, message: "Please select gender" });
-    //   return false;
-    // }
+    if (!_data.Gender && !_data.id) {    
+      setToast({ show: true, message: t("CR_INVALID_GENDER") });
+      return false;
+    }
     setToast({ show: false, message: "" });
     var fromDate = new Date(_data?.fromDate);
     fromDate?.setSeconds(fromDate?.getSeconds() - 19800);

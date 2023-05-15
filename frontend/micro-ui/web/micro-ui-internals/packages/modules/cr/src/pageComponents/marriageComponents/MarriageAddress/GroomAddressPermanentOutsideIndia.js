@@ -30,7 +30,7 @@ const GroomAddressPermanentOutsideIndia = ({
   setpermntInKeralaAdrDistrict,
   setpermntInKeralaAdrLBName,
   setpermtaddressStateName,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
@@ -38,7 +38,7 @@ const GroomAddressPermanentOutsideIndia = ({
   isPrsentAddress,
   setIsPrsentAddress,
   // isInitialRender, setIsInitialRender
-  //isEditBirth ? isEditBirth : isEditDeath ? false :
+  //isEditMarriage ? isEditMarriage : isEditDeath ? false :
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
   const [isDisableEdit, setisDisableEdit] = useState(false);
@@ -65,11 +65,11 @@ const GroomAddressPermanentOutsideIndia = ({
     { i18nKey: "Village", code: "VILLAGE" },
   ];
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
+  if (isEditMarriage) {
+    if (formData?.GroomAddressDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(
-          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.GroomAddressDetails?.permntOutsideIndiaVillage)[0]
         );
       }
     }

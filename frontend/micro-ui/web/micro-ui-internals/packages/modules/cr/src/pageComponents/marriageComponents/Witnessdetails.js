@@ -151,6 +151,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   // );
 
   const [isExpiredWife, setIsExpiredWife] = useState(formData?.WitnessDetails?.isExpiredWife ? formData?.WitnessDetails?.isExpiredWife : false);
+  const [isBackward, setIsBackward] = useState(formData?.WitnessDetails?.isBackward ? formData?.WitnessDetails?.isBackward : false);
   const [isOpenHusbandModal, setIsOpenHusbandModal] = useState(false);
   const [isOpenWifeModal, setIsOpenWifeModal] = useState(false);
   const [uniqueId, setUniqueId] = useState(null);
@@ -202,7 +203,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   };
 
-
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
   const [witness2NameEnError, setwitness2NameEnError] = useState(false);
@@ -231,6 +231,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     setIsExpiredWife(e.target.checked);
   }
 
+  function setSelectIsBackward(e) {
+    console.log(e);
+    setIsBackward(e.target.checked);
+  }
+
+  console.log({ isBackward });
+
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
   //   const today = new Date();
@@ -258,30 +265,31 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue != '' && (newValue === witness2AadharNo)) {
+    if (newValue != "" && newValue === witness2AadharNo) {
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.GroomDetails?.groomAadharNo ||
-      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
-      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.GroomDetails?.groomAadharNo ||
+        newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+        newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+        newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
       setAdhaarDuplicationError(true);
-      setToast(true);motherMarriageAge
+      setToast(true);
+      motherMarriageAge;
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.BrideDetails?.brideAdharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.BrideDetails?.brideAdharNo ||
+        newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+        newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+        newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -301,18 +309,18 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue != '' && (newValue === witness1AadharNo)) {
+    if (newValue != "" && newValue === witness1AadharNo) {
       setAdhaarDuplicationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.GroomDetails?.groomAadharNo ||
-      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
-      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
-      newValue === formData?.GroomDetails?.groomGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.GroomDetails?.groomAadharNo ||
+        newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+        newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+        newValue === formData?.GroomDetails?.groomGuardianAadharNo)
     ) {
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -320,11 +328,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 3000);
     } else if (
-      newValue != '' && (
-      newValue === formData?.BrideDetails?.brideAdharNo ||
-      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
-      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
-      newValue === formData?.BrideDetails?.brideGuardianAadharNo)
+      newValue != "" &&
+      (newValue === formData?.BrideDetails?.brideAdharNo ||
+        newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+        newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+        newValue === formData?.BrideDetails?.brideGuardianAadharNo)
     ) {
       setAdhaarDuplicationError(true);
       setToast(true);
@@ -371,7 +379,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
 
   function setSelectwitness1Age(e) {
-    setwitness1Age(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
+    setwitness1Age(
+      e.target.value.trim().length <= 2
+        ? e.target.value.trim().replace(/[^0-9]/gi, "")
+        : e.target.value
+            .trim()
+            .replace(/[^0-9]/gi, "")
+            .substring(0, 2)
+    );
     if (e.target.value < 18) {
       console.log("agge", e.target.value);
       setAgeValidationMsg(true);
@@ -397,7 +412,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness2Age(e) {
-    setwitness2Age(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
+    setwitness2Age(
+      e.target.value.trim().length <= 2
+        ? e.target.value.trim().replace(/[^0-9]/gi, "")
+        : e.target.value
+            .trim()
+            .replace(/[^0-9]/gi, "")
+            .substring(0, 2)
+    );
     if (e.target.value < 18) {
       setAgeValidationMsg(true);
       setToast(true);
@@ -702,7 +724,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness1Age,
         witness2Age,
         witness1AddressEn: witness1AddressEn.trim(),
-        witness2AddressEn: witness2AddressEn.trim(),  
+        witness2AddressEn: witness2AddressEn.trim(),
         witness1Mobile,
         witness2Mobile,
         witness1Esigned,
@@ -1045,58 +1067,60 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-4">
-                      <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="husbandname"
-                        value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
-                        placeholder={t("CR_HUSBAND_NAME")}
-                        {...(validation = { isRequired: true })}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <CardLabel>
-                        {`${t("CR_EXPIRATION")}`}
-                        {/* <span className="mandatorycss">*</span> */}
-                      </CardLabel>
-                      <CheckBox
-                        label={t("CR_EXPIRATION_TYPE")}
-                        onChange={setSelectExpirationTypeHusband}
-                        value={isExpiredHusband}
-                        checked={isExpiredHusband}
-                        disable={isDisableEdit}
-                        style={{ marginBottom: "40px" }}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="wifename"
-                        value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
-                        placeholder={t("CR_WIFE_NAME")}
-                        {...(validation = { isRequired: true })}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <CardLabel>
-                        {`${t("CR_EXPIRATION")}`}
-                        {/* <span className="mandatorycss">*</span> */}
-                      </CardLabel>
-                      <CheckBox
-                        label={t("CR_EXPIRATION_TYPE")}
-                        onChange={setSelectExpirationTypeWife}
-                        value={isExpiredWife}
-                        checked={isExpiredWife}
-                        disable={isDisableEdit}
-                      />
+                    <div className="col-md-12">
+                      <div className="col-md-4">
+                        <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
+                        <TextInput
+                          t={t}
+                          isMandatory={false}
+                          type={"text"}
+                          optionKey="i18nKey"
+                          name="husbandname"
+                          value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
+                          placeholder={t("CR_HUSBAND_NAME")}
+                          {...(validation = { isRequired: true })}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <CardLabel>
+                          {`${t("CR_EXPIRATION")}`}
+                          {/* <span className="mandatorycss">*</span> */}
+                        </CardLabel>
+                        <CheckBox
+                          label={t("CR_EXPIRATION_TYPE")}
+                          onChange={setSelectExpirationTypeHusband}
+                          value={isExpiredHusband}
+                          checked={isExpiredHusband}
+                          disable={isDisableEdit}
+                          style={{ marginBottom: "40px" }}
+                        />
+                      </div>
+                      <div className="col-md-4">
+                        <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
+                        <TextInput
+                          t={t}
+                          isMandatory={false}
+                          type={"text"}
+                          optionKey="i18nKey"
+                          name="wifename"
+                          value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
+                          placeholder={t("CR_WIFE_NAME")}
+                          {...(validation = { isRequired: true })}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <CardLabel>
+                          {`${t("CR_EXPIRATION")}`}
+                          {/* <span className="mandatorycss">*</span> */}
+                        </CardLabel>
+                        <CheckBox
+                          label={t("CR_EXPIRATION_TYPE")}
+                          onChange={setSelectExpirationTypeWife}
+                          value={isExpiredWife}
+                          checked={isExpiredWife}
+                          disable={isDisableEdit}
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="row">
@@ -1107,31 +1131,44 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
-                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
-                        <ImageUploadHandler
-                          tenantId={tenantId}
-                          uploadedImages={uploadedGroomImageId}
-                          onPhotoChange={handleUploadGroom}
-                          isMulti={false}
-                          moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
-                          extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
-                        />
+                    <div className="col-md-12">
+                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
+                          <ImageUploadHandler
+                            tenantId={tenantId}
+                            uploadedImages={uploadedGroomImageId}
+                            onPhotoChange={handleUploadGroom}
+                            isMulti={false}
+                            moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
+                            extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
+                          <ImageUploadHandler
+                            tenantId={tenantId}
+                            uploadedImages={uploadedBrideImageId}
+                            onPhotoChange={handleUploadBride}
+                            isMulti={false}
+                            moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
+                            extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
-                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
-                        <ImageUploadHandler
-                          tenantId={tenantId}
-                          uploadedImages={uploadedBrideImageId}
-                          onPhotoChange={handleUploadBride}
-                          isMulti={false}
-                          moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
-                          extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
-                        />
-                      </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <CheckBox
+                        label={`${t("CR_WHETHER_BACKWARD")}`}
+                        onChange={setSelectIsBackward}
+                        value={isBackward}
+                        checked={isBackward}
+                        style={{ marginBottom: "40px" }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -1150,7 +1187,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     witness2AddressEnError ||
                     witness1MobileError ||
                     witness2MobileError ||
-                    AdhaarDuplicationError 
+                    AdhaarDuplicationError
                   }
                   label={
                     witness1AadharError ||
@@ -1164,21 +1201,32 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     witness2AddressEnError ||
                     witness1MobileError ||
                     witness2MobileError ||
-                    AdhaarDuplicationError 
+                    AdhaarDuplicationError
                       ? witness1AadharError
                         ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                        : AgeValidationMsg ? t(`CR_MOTHER_AGE_WARNING`)
-                            : witness1NameEnError ? t(`CR_INVALID_WITNESS1_NAME`)
-                              : witness2AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                                : witness2NameEnError ? t(`CR_INVALID_WITNESS2_NAME`)
-                                  : witness1AgeError ? t(`CR_INVALID_WITNESS1_AGE`)
-                                    : witness2AgeError ? t(`CR_INVALID_WITNESS2_AGE`)
-                                      : witness1AddressEnError ? t(`CR_INVALID_WITNESS1_ADDRESS`)
-                                        : witness2AddressEnError ? t(`CR_INVALID_WITNESS2_ADDRESS`)
-                                          : witness1MobileError ? t(`CR_INVALID_WITNESS1_MOBILENO`)
-                                            : witness2MobileError ? t(`CR_INVALID_WITNESS2_MOBILENO`)
-                                              : AdhaarDuplicationError ? t(`DUPLICATE_AADHAR_NO`)
-                                                : setToast(false)
+                        : AgeValidationMsg
+                        ? t(`CR_MOTHER_AGE_WARNING`)
+                        : witness1NameEnError
+                        ? t(`CR_INVALID_WITNESS1_NAME`)
+                        : witness2AadharError
+                        ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                        : witness2NameEnError
+                        ? t(`CR_INVALID_WITNESS2_NAME`)
+                        : witness1AgeError
+                        ? t(`CR_INVALID_WITNESS1_AGE`)
+                        : witness2AgeError
+                        ? t(`CR_INVALID_WITNESS2_AGE`)
+                        : witness1AddressEnError
+                        ? t(`CR_INVALID_WITNESS1_ADDRESS`)
+                        : witness2AddressEnError
+                        ? t(`CR_INVALID_WITNESS2_ADDRESS`)
+                        : witness1MobileError
+                        ? t(`CR_INVALID_WITNESS1_MOBILENO`)
+                        : witness2MobileError
+                        ? t(`CR_INVALID_WITNESS2_MOBILENO`)
+                        : AdhaarDuplicationError
+                        ? t(`DUPLICATE_AADHAR_NO`)
+                        : setToast(false)
                       : setToast(false)
                   }
                   onClose={() => setToast(false)}

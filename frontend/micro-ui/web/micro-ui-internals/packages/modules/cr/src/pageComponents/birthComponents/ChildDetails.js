@@ -302,7 +302,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
     // { enabled: !action?.isTerminateState }
   );
-
   // const operatorward = [];
   // const appward = [];
   // operatorwardtemp?.map((ob) => {
@@ -646,10 +645,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-      console.log(value);
-      let time = value;
-      let timeParts = time.split(":");
-      console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
+      // console.log(value);
+      // let time = value;
+      // let timeParts = time.split(":");
+      // console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
       // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
       // // Usage
       // const milliSecTime = milliseconds(24, 36,0);
@@ -1264,7 +1263,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck != ".") {
-        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 9) {
           validFlag = false;
           setBirthWeightError(true);
           setToast(true);
@@ -1442,7 +1441,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
         vehicleType,
         vehicleHaltPlace: vehicleHaltPlace.trim(),
-        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleRegistrationNo: (vehicleRegistrationNo.toUpperCase()).trim(),
         vehicleFromEn: vehicleFromEn.trim(),
         vehicleToEn: vehicleToEn.trim(),
         vehicleFromMl: vehicleFromMl.trim(),
