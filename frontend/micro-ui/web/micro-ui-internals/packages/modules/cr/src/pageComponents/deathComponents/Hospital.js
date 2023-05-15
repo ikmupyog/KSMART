@@ -78,7 +78,7 @@ const Hospital = ({
   function setselecthospitalNameEn(value) {
     selecthospitalNameEn(value);
     selectHospitalNameMl(value);
-    setIsInitialRender(true);
+   // setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
