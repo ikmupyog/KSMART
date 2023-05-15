@@ -1441,7 +1441,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
         vehicleType,
         vehicleHaltPlace: vehicleHaltPlace.trim(),
-        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleRegistrationNo: (vehicleRegistrationNo.toUpperCase()).trim(),
         vehicleFromEn: vehicleFromEn.trim(),
         vehicleToEn: vehicleToEn.trim(),
         vehicleFromMl: vehicleFromMl.trim(),
