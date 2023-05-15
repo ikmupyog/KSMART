@@ -76,6 +76,7 @@ public interface GroomAddressDetailsRowMapper {
         .permntOthrIndiaprovinceMl(rs.getString("GPMA_ot_state_region_province_ml"))
         .outSideIndiaPostCodePermanent(rs.getString("GPMA_ot_zipcode"))
         .brideGroomPermanent(rs.getString("GPMA_bride_groom"))
+        .isPermanentAddress(rs.getBoolean("GPSA_same_as_permanent"))
         .build();
 
 // //              PRESENT

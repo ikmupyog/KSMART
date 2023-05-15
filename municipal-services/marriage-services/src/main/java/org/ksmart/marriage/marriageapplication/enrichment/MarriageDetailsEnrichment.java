@@ -91,7 +91,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
                     marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().trim().replaceAll(config.getImageURLStartPath(),""));
                 }
+
+
             }
+
+           
             setApplicationNumbers(request);
             setBrideAddressNull(request);
             setGroomAddressNull(request);
@@ -158,6 +162,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 document.setApplicationNumber(applicationNumber);
                 document.setApplicationType(applicationType);
                 document.setMarriageDocAuditDetails(auditDetails);
+                document.setActive(true);
                
                 });
             }

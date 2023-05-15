@@ -115,6 +115,7 @@ public interface GroomRegistryAddressRowMapper {
                 .permntOutSideIndiaProvinceMl(rs.getString("GPMA_ot_state_region_province_ml"))
                 .permntOutSideIndiaProvinceEn(rs.getString("GPMA_ot_state_region_province_en"))
                 .brideGroomPermanent(rs.getString("GPMA_bride_groom"))
+                .isPermanentAddress(rs.getBoolean("GPSA_same_as_permanent"))
 
 //                .isPermanentAddress(rs.getInt("GPMA_same_as_present")==1?true:false)
 //                .isPermanentAddressInt(rs.getInt("GPMA_same_as_present"))

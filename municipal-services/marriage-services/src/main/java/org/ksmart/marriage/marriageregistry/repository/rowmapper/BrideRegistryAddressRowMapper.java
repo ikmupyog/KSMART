@@ -118,8 +118,8 @@ public interface BrideRegistryAddressRowMapper {
                 .brideGroomPermanent(rs.getString("BPMA_bride_groom"))
 
 
-//                .isPermanentAddress(rs.getInt("BPMA_same_as_present")==1?true:false)
-//                .isPermanentAddressInt(rs.getInt("BPMA_same_as_present"))
+                .isPermanentAddress(rs.getBoolean("BPSA_same_as_permanent"))
+//        
                 .build();
 
 

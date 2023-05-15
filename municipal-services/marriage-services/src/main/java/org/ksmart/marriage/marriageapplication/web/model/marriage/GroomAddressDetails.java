@@ -428,8 +428,8 @@ public class GroomAddressDetails {
     @JsonProperty("permanentUuid")
     private String permanentUuid;
 
-    @JsonProperty("isPermanentAddressInt")
-    private Integer isPermanentAddressInt;
+    // @JsonProperty("isPermanentAddressInt")
+    // private Integer isPermanentAddressInt;
 
     @JsonProperty("permanentAddrTalukId")
     private String permanentAddrTalukId ;
