@@ -40,7 +40,7 @@ export const DFMService = {
       setTimeParam: false,
       userService: true,
       method: "POST",
-      params: {tenantId, moduleId},
+      params: { tenantId, moduleId },
       auth: true,
     }),
   submodulesearch: (details) =>
@@ -159,9 +159,31 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
+  updatemajor: (details, ) =>
+    Request({
+      url: Urls.dfm.updatemajor,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {  },
+      auth: true,
+    }),
   deleteModule: (details, tenantId) =>
     Request({
       url: Urls.dfm.deleteModule,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
+  deleteMajor: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.deleteMajor,
       data: details,
       useCache: false,
       setTimeParam: false,

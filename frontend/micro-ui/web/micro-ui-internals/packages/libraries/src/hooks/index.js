@@ -33,6 +33,8 @@ import useCreateModule from "./dfm/useCreateModule";
 import useCreateSubModule from "./dfm/useCreateSubModule";
 import useUpdateModule from "./dfm/useUpdateModule";
 import useDeleteModule from "./dfm/useDeleteModule";
+import useDeleteMajorFunc from "./dfm/useDeleteMajorFunc";
+import useUpdateMajorFunc from "./dfm/useUpdateMajorFunc";
 import useSearchmajorFunction from "./dfm/useSearchmajorFunction";
 import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
 import useComplaintDetails from "./pgr/useComplaintDetails";
@@ -487,6 +489,8 @@ const dfm = {
   useCreateSubModule,
   useUpdateModule,
   useDeleteModule,
+  useDeleteMajorFunc,
+  useUpdateMajorFunc,
   useMajorFunctionAdd
 };
 const receipts = {

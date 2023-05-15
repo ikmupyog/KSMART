@@ -10,19 +10,22 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
   const { t } = useTranslation();
   const history = useHistory();
   const mutation = Digit.Hooks.dfm.useMajorFunctionAdd(tenantId);
+  const deleteItem = Digit.Hooks.dfm.useDeleteMajorFunc(tenantId);
+  const [moduleIdvalue, setModuleidvalue ] = useState("")
   const [majorFunctionCode, setMajorFunctionCode] = useState("");
   const [majorFunctionNameEnglish, setMajorFunctionNameEnglish] = useState("");
   const [majorFunctionNameMalayalam, setMajorFunctionNameMalayalam] = useState("");
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
-  console.log("datamodule", moduleNameEnglish.label);
+  // console.log("datamodule", moduleNameEnglish.label);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
-  const { refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
-  // const Value = data?.ModuleDetails?.map((item) => item.moduleNameEnglish);
+  const { data: searchData, refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
+  const updatemutation = Digit.Hooks.dfm.useUpdateMajorFunc();
+
   const Value = data?.ModuleDetails?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
   }));
-  console.log("valluuee", Value);
+  // console.log("valluuee", Value);
   const setsetMajorFunctionCode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setMajorFunctionCode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -39,58 +42,98 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       setMajorFunctionNameMalayalam(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   };
-
-  //   const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId });
-
-  //   const draftTextValue = data?.Drafting[0]?.draftText;
+  function setsetmoduleNameEnglish(value) {
+    setmoduleNameEnglish(value);
+  }
+  const [edit, setIsEdit] = useState(false);
+  function handleLinkClick(row) {
+    setIsEdit(true);
+    // moduleNameEnglish(moduleNameEnglish)
+    // setmoduleNameEnglish(row.moduleNameEnglish)
+    setModuleidvalue(row.moduleId);
+    setMajorFunctionCode(row.majorFunctionCode);
+    setMajorFunctionNameEnglish(row.majorFunctionNameEnglish);
+    setMajorFunctionNameMalayalam(row.majorFunctionNameMalayalam);
+  }
+  const majorData = searchData?.MajorFunctionDetails;
+  // const moduleId = searchData?.MajorFunctionDetails?.moduleId;
+  // console.log("moduleIdsearch", moduleId);
+  const Delete = () => {
+    const formData = {
+      MajorFunctionDetails: {
+        id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        tenantId: tenantId,
+        majorFunctionCode: majorFunctionCode,
+        moduleId: moduleNameEnglish.label,
+        majorFunctionNameEnglish: majorFunctionNameEnglish,
+        majorFunctionNameMalayalam: majorFunctionNameMalayalam,
+        status: "string",
+      },
+    };
+    deleteItem.mutate(formData);
+  };
+  const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(
     () => [
       {
-        Header: t("SL_NO"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(row.original.fileNumber || ""),
-      },
-
-      {
-        Header: t("MODULE_CODE"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      },
-      {
         Header: t("MF_CODE"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          return (
+            <div>
+              <span className="link">
+                <div>
+                  <a onClick={() => handleLinkClick(row.original)}> {row.original.majorFunctionCode}</a>
+                </div>
+              </span>
+            </div>
+          );
+        },
         disableSortBy: true,
       },
-
       {
-        Header: t("MAJOR_FUNCTION_NAME_ENG"),
+        Header: t("MODULE_NAME"),
         disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
+        Cell: ({ row }) => GetCell(t(row.original.majorFunctionNameMalayalam) || ""),
+      },
+      // {
+      //   Header: t("MAJOR_FUNCT_EN"),
+      //   disableSortBy: true,
+      //   Cell: ({ row }) => GetCell(t(row.original.moduleNameEnglish.label) || ""),
+      // },
+      {
+        Header: t("MAJOR_FUNCT_ML"),
+        Cell: ({ row }) => GetCell(t(row?.original?.majorFunctionNameMalayalam || "NA")),
+        disableSortBy: true,
       },
       {
-        Header: t("MAJOR_FUNCTION_NAME_MAL"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+        Header: t("Download Certificate"),
         disableSortBy: true,
-      },
-      {
-        Header: t("-"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-        disableSortBy: true,
+        Cell: ({ row }) => {
+          return (
+            <div onClick={Delete}>
+              <button class="btn btn-delete">
+                <span class="mdi mdi-delete mdi-24px"></span>
+                <span class="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+              </button>
+            </div>
+          );
+        },
       },
     ],
     []
   );
-
   const saveDraft = () => {
     const formData = {
       MajorFunctionDetails: {
-        id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        tenantId: "kl",
+        id: "",
+        tenantId: tenantId,
         majorFunctionCode: majorFunctionCode,
-        moduleId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        moduleId: moduleNameEnglish.label,
         majorFunctionNameEnglish: majorFunctionNameEnglish,
         majorFunctionNameMalayalam: majorFunctionNameMalayalam,
-        status: "string",
+        status: "",
         auditDetails: {
           createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           createdTime: 0,
@@ -99,22 +142,37 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         },
       },
     };
-
     mutation.mutate(formData);
-    refetch();
+    refetch()
   };
-  //   useEffect(() => {
-  //     if (mutation.isSuccess == true) {
-  //       history.push("/digit-ui/employee/dfm/note-drafting");
-  //     }
-  //   }, [mutation.isSuccess]);
-  function setsetmoduleNameEnglish(value) {
-    setmoduleNameEnglish(value);
+  function handleClick() {
+    updateDraft();
   }
+
+  const updateDraft = () => {
+    const formData = {
+      MajorFunctionDetails: {
+        id: "",
+        tenantId: tenantId,
+        majorFunctionCode: majorFunctionCode,
+        moduleId: moduleIdvalue,
+        majorFunctionNameEnglish: majorFunctionNameEnglish,
+        majorFunctionNameMalayalam: majorFunctionNameMalayalam,
+        status: "",
+        auditDetails: {
+          createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          createdTime: 0,
+          lastModifiedBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          lastModifiedTime: 0,
+        },
+      },
+    };
+    updatemutation.mutate(formData);
+  };
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
-        <div className="FileFlowWrapper module-wrapper">
+        <div className="FileFlowWrapper major-wrapper">
           <div className="row wrapper-file">
             <div className="col-md-12 col-sm-12 col-xs-12">
               <div className="col-md-4 col-sm-12 col-xs-12">
@@ -123,7 +181,6 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown optionKey="value" option={Value} selected={moduleNameEnglish} select={setsetmoduleNameEnglish} />
-                {/* <Dropdown optionKey="moduleCode" option={Value} selected={moduleNameEnglish} select={setsetmoduleNameEnglish} /> */}
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
                 <CardLabel>
@@ -172,20 +229,19 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
               </div>
             </div>
           </div>
-
           <div className="btn-flex">
-            <SubmitBar label={t("NEW")} className="btn-row" />
+            <button className="btn-row" onClick={handleClick} >Update</button>
             <SubmitBar onSubmit={saveDraft} label={t("save")} className="btn-row" />
             <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
         </div>
       </div>
       <div className="moduleLinkHomePageModuleLinks">
-        {/* <div className="FileFlowWrapper customSubFunctionTable">
-          {textValue?.length > 0 && (
+        <div className="FileFlowWrapper customSubFunctionTable">
+          {majorData?.length > 0 && (
             <Table
               t={t}
-              data={textValue}
+              data={majorData}
               columns={columns}
               getCellProps={(cellInfo) => {
                 return {
@@ -198,7 +254,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
               }}
             />
           )}
-        </div>   */}
+        </div>
       </div>
     </React.Fragment>
   );
