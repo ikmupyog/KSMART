@@ -163,7 +163,7 @@ public class MarriageRegistryRepository {
                     if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getLastname_en())) {
                         groomFullName.append(" " + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getLastname_en().trim());
                     }
-                    req.getMarriageCertificate().get(0).setGroomFullName(groomFullName.toString());
+                    req.getMarriageCertificate().get(0).setGroomFullName(StringUtils.upperCase(groomFullName.toString()));
                 }else{
                     log.info("PDF_ERROR. Marriage Certificate , Groom Details not found!!!");
                     throw new CustomException("PDF_ERROR", "Groom Details not found!!!" );
@@ -178,7 +178,7 @@ public class MarriageRegistryRepository {
                     if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getLastname_en())) {
                         brideFullName.append(" " + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getLastname_en().trim());
                     }
-                    req.getMarriageCertificate().get(0).setBrideFullName(brideFullName.toString());
+                    req.getMarriageCertificate().get(0).setBrideFullName(StringUtils.upperCase(brideFullName.toString()));
                 }else{
                     log.info("PDF_ERROR. Marriage Certificate , Bride Details not found!!!");
                     throw new CustomException("PDF_ERROR", "Bride Details not found!!!" );
