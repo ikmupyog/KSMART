@@ -107,6 +107,24 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const cmbPlaceType = [];
   let naturetype = null;
 
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      console.log(`{${year}-${month}-${day}}`);
+      return `${year}-${month}-${day}`;
+
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
+
   WorkFlowDetails &&
     WorkFlowDetails["birth-death-service"] &&
     WorkFlowDetails["birth-death-service"].WorkFlowMarriage &&
@@ -117,12 +135,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      // if(ob?.boundary){
       Zonal.push(...ob.boundary.children);
       ob.boundary.children.map((obward) => {
         cmbWardNo.push(...obward.children);
       });
-      // }
     });
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
@@ -184,14 +200,21 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       cmbMarriagePlaceIds.push(ob);
     });
 
+  console.log({ cmbMarriagePlaceIds });
+
+  const stateDist = cmbDistrict?.filter((dist) => dist.statecode == Digit.ULBService.getStateId());
+
+  const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
+
   const cmbSortedWards = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
   const cmbPlaceNameReligious = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
   const cmbPlaceNameMandapam = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
 
-  const [marriageDOM, setmarriageDOM] = useState(formData?.MarriageDetails?.marriageDOM ? formData?.MarriageDetails?.marriageDOM : "");
+  const [marriageDOM, setmarriageDOM] = useState(isEditMarriage ? convertEpochToDate(formData?.marriageDOM) : formData?.MarriageDetails?.marriageDOM);
   const [marriageDistrictid, setMarriageDistrictid] = useState(
-    formData?.MarriageDetails?.marriageDistrictid.code ? formData?.MarriageDetails?.marriageDistrictid : ""
+    formData?.MarriageDetails?.marriageDistrictid?.code ? formData?.MarriageDetails?.marriageDistrictid : ""
   );
+
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderMarriagePlace, setisInitialRenderMarriagePlace] = useState(true);
   const [marriageTalukID, setmarriageTalukID] = useState(
@@ -260,27 +283,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [Amount, setAmount] = useState(formData?.MarriageDetails?.Amount);
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.MarriageDetails?.DifferenceInTime);
 
-  const stateDist = cmbDistrict?.filter((dist) => dist.statecode == "kl");
-
-  const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
-
-  const handleOptionChange = (event) => {
+  const handleOptionChaenge = (event) => {
     setSelectedOption(event.target.value);
-  };
-  const convertEpochToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${year}-${month}-${day}`;
-      //  return `${day}-${month}-${year}`;
-    } else {
-      return null;
-    }
   };
 
   const filteredSubRegistrarOfficeList = cmbSubRegistarOffice?.filter((sOffice) => sOffice.districtCode === marriageDistrictid?.code);
@@ -329,9 +333,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   }
   // });
 
-  console.log({ Villagevalues });
-
   function setSelectmarriageDOM(value) {
+    console.log({value})
     setDifferenceInTime(null);
     setmarriageDOM(value);
     const today = new Date();
@@ -412,6 +415,15 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
     setplaceidEn("");
     setplaceidMl("");
+    setmarriagePlacenameEn("");
+    setmarriagePlacenameMl("");
+    setmarriageLocalityEn("");
+    setmarriageLocalityMl("");
+    setmarriageStreetEn("");
+    setmarriageStreetMl("");
+    setmarriageLandmark("");
+    setmarriageHouseNoAndNameEn("");
+    setmarriageHouseNoAndNameMl("");
     // let currentWorkFlow = workFlowData.filter(
     //   (workFlowData) =>
     //     workFlowData.marriagePlacetype === value.code &&
@@ -472,25 +484,79 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
 
   useEffect(() => {
-    if (cmbLB?.length > 0) {
-      const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-      setMarriageTenantid(currentLB[0]);
-      setfilterLBs(
-        cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0].city.distCodeStr && cmbLB.city.lbtypecode === currentLB[0].city.lbtypecode)
-      );
-      const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
-      setMarriageDistrictid(currentDistrict[0]);
-      districtid = currentDistrict[0].districtid;
-      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
-      setLbsTalukvalue(cmbFilterTaluk);
-      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
-      setLbsVillagevalue(cmbFilterVillage);
-      const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
-      setMarriageLBtype(currentLBType[0]);
+    if (!isEditMarriage) {
+      if (cmbLB?.length > 0) {
+        const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        setMarriageTenantid(currentLB[0]);
+        setfilterLBs(
+          cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0].city.distCodeStr && cmbLB.city.lbtypecode === currentLB[0].city.lbtypecode)
+        );
+        const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
+        setMarriageDistrictid(currentDistrict[0]);
+        districtid = currentDistrict[0].districtid;
+        cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+        setLbsTalukvalue(cmbFilterTaluk);
+        cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+        setLbsVillagevalue(cmbFilterVillage);
+        const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
+        setMarriageLBtype(currentLBType[0]);
+      }
     }
   }, [cmbLB.length]);
 
-  console.log({ marriageDistrictid });
+  useEffect(() => {
+    if (isEditMarriage) {
+      if (
+        cmbDistrict.length > 0 &&
+        cmbTaluk.length > 0 &&
+        cmbVillage.length > 0 &&
+        cmbLBType.length > 0 &&
+        cmbLB.length > 0 &&
+        cmbWardNoFinal.length > 0 &&
+        cmbPlaceType.length > 0 &&
+        cmbMarriagePlaceIds.length > 0 &&
+        cmbSubRegistarOffice.length > 0 &&
+        cmbTypeOfMarriage.length > 0
+      ) {
+        const currentDistrict = cmbDistrict?.filter((dist) => dist.code === formData?.marriageDistrictid);
+        setMarriageDistrictid(currentDistrict[0]);
+        const filterTaluks = cmbTaluk?.filter((taluk) => taluk.distId === currentDistrict[0].districtid);
+        setLbsTalukvalue(filterTaluks);
+        const currentTaluk = cmbTaluk?.filter((taluk) => taluk.code === formData?.marriageTalukID);
+        setmarriageTalukID(currentTaluk[0]);
+        const filteredVillage = cmbVillage?.filter((village) => village.talukCode === currentTaluk[0].code);
+        setLbsVillagevalue(filteredVillage);
+        const currentVillage = cmbVillage?.filter((village) => village.code === formData?.marriageVillageName);
+        setmarriageVillageName(currentVillage[0]);
+        const currentLBType = cmbLBType?.filter((type) => type?.code === formData?.marriageLBtype);
+        setMarriageLBtype(currentLBType[0]);
+        const filteredLBs = cmbLB?.filter((lb) => lb.city.lbtypecode === currentLBType[0].code && lb.city.distCodeStr === currentDistrict[0].code);
+        setfilterLBs(filteredLBs);
+        const currentLB = cmbLB?.filter((lb) => lb.code === formData?.marriageTenantid);
+        setMarriageTenantid(currentLB[0]);
+        const currentWard = cmbWardNoFinal?.filter((ward) => ward.code === formData?.marriageWardCode);
+        setMarriageWardCode(currentWard[0]);
+        const currentPlaceType = cmbPlaceType?.filter((type) => type.code === formData?.marriagePlacetype);
+        setMarriagePlacetype(currentPlaceType[0]);
+        const currentPlaceName = setMarriagePlace(currentPlaceType[0])?.filter((name) => name.code === formData?.placeid);
+        setplaceidEn(currentPlaceName[0]);
+        setplaceidMl(currentPlaceName[0]);
+        const currentMarriageType = cmbTypeOfMarriage?.filter((type) => type.code === formData?.marriageType);
+        setmarriageType(currentMarriageType[0]);
+      }
+    }
+  }, [
+    cmbDistrict.length,
+    cmbTaluk.length,
+    cmbVillage.length,
+    cmbLBType.length,
+    cmbLB.length,
+    cmbWardNoFinal.length,
+    cmbPlaceType.length,
+    cmbMarriagePlaceIds.length,
+    cmbSubRegistarOffice.length,
+    cmbTypeOfMarriage.length,
+  ]);
 
   useEffect(() => {
     if (DifferenceInTime != null) {

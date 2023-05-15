@@ -1441,7 +1441,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
         vehicleType,
         vehicleHaltPlace: vehicleHaltPlace.trim(),
-        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleRegistrationNo: (vehicleRegistrationNo.toUpperCase()).trim(),
         vehicleFromEn: vehicleFromEn.trim(),
         vehicleToEn: vehicleToEn.trim(),
         vehicleFromMl: vehicleFromMl.trim(),
@@ -1455,7 +1455,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
         uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
-        proceedNoRDO, regNoNAC, docPreview
+        proceedNoRDO: (proceedNoRDO.toUpperCase()).trim(),
+        regNoNAC: (regNoNAC.toUpperCase()).trim(), docPreview
       });
     }
   };
@@ -1607,6 +1608,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
+                      style={{ textTransform: "uppercase" }}
                       placeholder={`${t("CR_RDO_PROCEED_NO")}`}
                       {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
                     />
@@ -1622,6 +1624,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       value={regNoNAC}
                       onChange={setSelectregNoNAC}
                       disable={isDisableEdit}
+                      style={{ textTransform: "uppercase" }}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
                       placeholder={`${t("CR_NAC_REG_NO")}`}

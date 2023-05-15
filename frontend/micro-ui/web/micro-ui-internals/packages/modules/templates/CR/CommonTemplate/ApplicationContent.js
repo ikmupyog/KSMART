@@ -132,6 +132,9 @@ function ApplicationContent({
   };
 
   const deathNACurl = window.location.href.includes("application-deathnacdetails") ? true : false;
+  const { roles: userRoles,} = Digit.UserService.getUser().info; 
+  
+  const isLocalRegistrator = userRoles[0]?.code === "BND_LOCAL_REGISTRAR" ? true : false;
   const birthNACurl = window.location.href.includes("application-nacbirth") ? true : false;
 
   const getMainDivStyles = () => {
@@ -295,7 +298,7 @@ function ApplicationContent({
               )}
             </React.Fragment>
           ))}
-          {deathNACurl && (
+          {deathNACurl && isLocalRegistrator && (
             <div style={{ marginTop: "50px" }}>
               <div className="row">
                 <div className="col-md-6">

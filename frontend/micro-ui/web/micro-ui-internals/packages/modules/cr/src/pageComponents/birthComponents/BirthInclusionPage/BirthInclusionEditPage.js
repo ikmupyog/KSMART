@@ -217,6 +217,24 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     }
   };
 
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+
+  function onChangeMalayalam(e, columnName, fieldType) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      let tempObj = { ...birthInclusionFormsObj };
+      let { curValue } = tempObj[columnName];
+      tempObj = { ...tempObj, columnName: { ...columnName, curValue: { ...curValue, [fieldType]: "" } } };
+      setbirthInclusionFormsObj(tempObj);
+    }
+  }
+
   if (Object.keys(birthInclusionFormsObj)?.length > 0) {
     const config = { texts: { submitBarLabel: "Next" } };
     return (
@@ -337,7 +355,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   name="firstNameEn"
                   defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstNameEn}
-                  disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
+                  disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}z
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "firstNameEn")}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
@@ -400,6 +418,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstNameMl}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "CHILD_NAME", "firstNameMl")}
                   onBlur={(e) => onChildNameChange(e, "firstNameMl")}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   {...(validation = {
@@ -418,6 +438,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="middleNameMl"
                   defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.middleNameMl}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "CHILD_NAME", "middleNameMl")}
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "middleNameMl")}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -437,6 +459,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="lastNameMl"
                   defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.lastNameMl}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "CHILD_NAME", "lastNameMl")}
                   // autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
                   onBlur={(e) => onChildNameChange(e, "lastNameMl")}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
@@ -475,6 +499,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="MotherNameMl"
                   defaultValue={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameMl}
                   disabled={birthInclusionFormsObj?.MOTHER_DETAILS?.isDisabled}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "MOTHER_DETAILS", "motherNameMl")}
                   // autoFocus={birthInclusionFormsObj?.MOTHER_DETAILS?.isFocused}
                   onBlur={(e) => onChangeMotherDetails(e, "motherNameMl")}
                   placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -547,6 +573,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   defaultValue={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameMl}
                   disabled={birthInclusionFormsObj?.FATHER_DETAILS?.isDisabled}
                   // autoFocus={birthInclusionFormsObj?.FATHER_DETAILS?.isFocused}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "FATHER_DETAILS", "fatherNameMl")}
                   onBlur={(e) => onChangeFatherDetails(e, "fatherNameMl")}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -668,6 +696,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="HouseNameMl"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameMl}
                   disabled={birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "PRESENT_ADDRESS", "houseNameMl")}
                   onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_ML")}`}
                   {...(validation = {
@@ -686,6 +716,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="LocalityMl"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityMl}
                   disabled={birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "PRESENT_ADDRESS", "localityMl")}
                   onBlur={(e) => onPresentAddressChange(e, "localityMl")}
                   placeholder={`${t("CR_LOCALITY_ML")}`}
                   {...(validation = {
@@ -704,6 +736,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   name="StreetMl"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetMl}
                   disabled={birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled}
+                  onKeyPress={setCheckMalayalamInputField}
+                  onChange={(e) => onChangeMalayalam(e, "PRESENT_ADDRESS", "streetMl")}
                   onBlur={(e) => onPresentAddressChange(e, "streetMl")}
                   placeholder={`${t("CR_STREET_ML")}`}
                   {...(validation = {

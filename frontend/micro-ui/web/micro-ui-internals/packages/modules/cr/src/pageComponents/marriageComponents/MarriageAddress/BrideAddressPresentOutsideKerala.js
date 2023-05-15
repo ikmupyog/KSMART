@@ -66,7 +66,7 @@ const BrideAddressPresentOutsideKerala = ({
   setpermntoutsideKeralaPostOfficeMl,
   setinsideKeralaDistrict,
   setinsideKeralaLBName,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
@@ -145,23 +145,23 @@ const BrideAddressPresentOutsideKerala = ({
     }
   }, [cmbFilterDistrict, isInitialRender]);
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict != null) {
+  if (isEditMarriage) {
+    if (formData?.BrideAddressDetails?.presentOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (presentOutsideKeralaDistrict === undefined || presentOutsideKeralaDistrict === "")) {
         setoutsideKeralaDistrict(
-          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict)[0]
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.BrideAddressDetails?.presentOutsideKeralaDistrict)[0]
         );
       }
     }
-    // if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk != null) {
+    // if (formData?.BrideAddressDetails?.presentOutsideKeralaTaluk != null) {
     //   if (cmbTaluk.length > 0 && (presentOutsideKeralaTaluk === undefined || presentOutsideKeralaTaluk === "")) {
-    //     setoutsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk)[0]);
+    //     setoutsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.BrideAddressDetails?.presentOutsideKeralaTaluk)[0]);
     //   }
     // }
-    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage != null) {
+    if (formData?.BrideAddressDetails?.presentOutsideKeralaVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutsideKeralaVillage === undefined || presentOutsideKeralaVillage === "")) {
         setoutsideKeralaVillage(
-          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage)[0]
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.BrideAddressDetails?.presentOutsideKeralaVillage)[0]
         );
       }
     }
@@ -419,12 +419,13 @@ const BrideAddressPresentOutsideKerala = ({
       e.preventDefault();
     }
   }
-  const goNext = () => {};
 
   useEffect(() => {
     setinsideKeralaDistrict(null);
     setinsideKeralaLBName(null);
   }, []);
+
+  const goNext = () => {};
 
   if (isDistrictLoading) {
     return <Loader></Loader>;

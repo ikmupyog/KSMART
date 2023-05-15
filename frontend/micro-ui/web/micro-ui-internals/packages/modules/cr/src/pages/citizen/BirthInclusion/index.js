@@ -31,7 +31,7 @@ const BirthInclusion = () => {
 
   function onSubmit(_data) {
     console.log("error data", _data);
-    if (!_data.Gender && !_data.id) {    
+    if (!_data.gender && !_data.id) {    
       setToast({ show: true, message: t("CR_INVALID_GENDER") });
       return false;
     }
@@ -61,7 +61,7 @@ const BirthInclusion = () => {
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess, status } = Digit.Hooks.cr.useRegistrySearchBirth({
-    filters: { ...payload, dateofbirth: payload.dateofbirth && moment(payload.dateofbirth, "YYYY-MM-DD").valueOf() },
+    filters: { ...payload, birthDate: payload.birthDate && moment(payload.birthDate, "YYYY-MM-DD").valueOf() },
     config,
   });
 

@@ -161,14 +161,13 @@ export const CRNACDeathsearch = {
       title: "Death Place Details",
       asSectionHeader: true,
       values: [
-        { title: "PLACE OF DEATH", value: response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.InformationDeath?.publicPlaceEn + " / " + response?.InformationDeath?.publicPlaceMl || NA },
-        { title: "CS_COMMON_WARD", value: response?.InformationDeath?.DeathPlace + " / " + response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_LOCALITY_EN", value: response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_LOCALITY_ML", value: response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_STREET_NAME_EN", value: response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_STREET_NAME_ML", value: response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_DESCRIPTION", value: response?.InformationDeath?.DeathPlace || NA },
+        { title: "PLACE OF DEATH", value: response?.InformationDeath?.publicPlaceEn + " / " + response?.InformationDeath?.publicPlaceMl || NA },
+        { title: "CS_COMMON_WARD_EN", value: response?.InformationDeath?.deathPlaceWardEn || NA },
+        { title: "CS_COMMON_WARD_ML", value: response?.InformationDeath?.deathPlaceWardMl || NA },
+        { title: "CR_LOCALITY_EN", value: response?.InformationDeath?.DeathPlaceLocalityEn || NA },
+        { title: "CR_LOCALITY_ML", value: response?.InformationDeath?.DeathPlaceLocalityMl || NA },
+        { title: "CR_STREET_NAME_EN", value: response?.InformationDeath?.DeathPlaceStreetEn || NA },
+        { title: "CR_STREET_NAME_ML", value: response?.InformationDeath?.DeathPlaceStreetMl || NA },
       ],
     };
     const DeathParentDetail = {
