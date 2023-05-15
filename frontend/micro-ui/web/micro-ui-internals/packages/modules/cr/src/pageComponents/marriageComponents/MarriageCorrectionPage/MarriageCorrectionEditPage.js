@@ -276,6 +276,24 @@ const MarriageCorrectionEditPage = ({
     setMarriageCorrectionFormsObj(tempObj);
   };
 
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+
+  function onChangeMalayalam(e, columnName, fieldType) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      let tempObj = { ...marriageCorrectionFormsObj };
+      let { curValue } = tempObj[columnName];
+      tempObj = { ...tempObj, columnName: { ...columnName, curValue: { ...curValue, [fieldType]: "" }, isFocused: false } };
+      setMarriageCorrectionFormsObj(tempObj);
+    }
+  }
+
   const onBackButtonEvent = () => {
     setParams({});
   };
@@ -670,6 +688,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj?.GROOM_NAME?.isDisable}
                         // autofocus={marriageCorrectionFormsObj?.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.firstNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "GROOM_NAME", "firstNameMl")}
                         onBlur={(e) => onGroomNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
                         {...(validation = {
@@ -691,6 +711,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.GROOM_NAME?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.middleNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "GROOM_NAME", "middleNameMl")}
                         onBlur={(e) => onGroomNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                         {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("GROOM_NAME", "middleNameMl"), title: t("CR_INVALID_MIDDLE_NAME_ML") })}
@@ -707,6 +729,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.GROOM_NAME?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.GROOM_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_NAME?.curValue?.lastNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "GROOM_NAME", "lastNameMl")}
                         onBlur={(e) => onGroomNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
                         {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("GROOM_NAME", "lastNameMl"), title: t("CR_INVALID_LAST_NAME_ML") })}
@@ -796,6 +820,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.GROOM_MOTHER?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.GROOM_MOTHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_MOTHER?.curValue?.groomMotherNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "GROOM_MOTHER", "groomMotherNameMl")}
                         onBlur={(e) => onGroomMotherNameChange(e, "groomMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                         {...(validation = {
@@ -849,6 +875,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.GROOM_FATHER?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.GROOM_FATHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_FATHER?.curValue?.groomFatherNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "GROOM_FATHER", "groomFatherNameMl")}
                         onBlur={(e) => onGroomFatherNameChange(e, "groomFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
                         {...(validation = {
@@ -900,6 +928,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.GROOM_GUARDIAN?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.GROOM_GUARDIAN?.curValue?.groomGuardianNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "GROOM_GUARDIAN", "groomGuardianNameMl")}
                         onBlur={(e) => onGroomGuardianNameChange(e, "groomGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
                         {...(validation = {
@@ -999,6 +1029,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.houseNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "GROOM_PERADD", "houseNameMl")}
                             onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                             {...(validation = {
@@ -1017,6 +1049,8 @@ const MarriageCorrectionEditPage = ({
                             name="groomLocalityMl"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.localityNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "GROOM_PERADD", "localityNameMl")}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
                             placeholder={`${t("CR_LOCALITY_MAL")}`}
@@ -1036,6 +1070,8 @@ const MarriageCorrectionEditPage = ({
                             name="groomStreetMl"
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.streetNameMl}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "GROOM_PERADD", "streetNameMl")}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
                             onBlur={(e) => onGroomAddressChange(e, "streetNameMl")}
                             placeholder={`${t("CR_STREET_MAL")}`}
@@ -1104,6 +1140,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.addressLine1Ml}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "GROOM_PERADD", "addressLine1Ml")}
                             onBlur={(e) => onGroomAddressChange(e, "addressLine1Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                             {...(validation = {
@@ -1123,6 +1161,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.GROOM_PERADD?.curValue.addressLine2Ml}
                             disabled={marriageCorrectionFormsObj.GROOM_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "GROOM_PERADD", "addressLine2Ml")}
                             onBlur={(e) => onGroomAddressChange(e, "addressLine2Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                             {...(validation = {
@@ -1222,6 +1262,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.firstNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "BRIDE_NAME", "firstNameMl")}
                         onBlur={(e) => onBrideNameChange(e, "firstNameMl")}
                         placeholder={`${t("CR_FIRST_NAME_ML")}`}
                         {...(validation = {
@@ -1243,6 +1285,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.middleNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "BRIDE_NAME", "middleNameMl")}
                         onBlur={(e) => onBrideNameChange(e, "middleNameMl")}
                         placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                         {...(validation = {
@@ -1264,6 +1308,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.BRIDE_NAME?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.BRIDE_NAME?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_NAME?.curValue?.lastNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "BRIDE_NAME", "lastNameMl")}
                         onBlur={(e) => onBrideNameChange(e, "lastNameMl")}
                         placeholder={`${t("CR_LAST_NAME_MAL")}`}
                         {...(validation = {
@@ -1358,6 +1404,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.BRIDE_MOTHER?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.BRIDE_MOTHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_MOTHER?.curValue?.brideMotherNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "BRIDE_MOTHER", "brideMotherNameMl")}
                         onBlur={(e) => onBrideMotherNameChange(e, "brideMotherNameMl")}
                         placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                         {...(validation = {
@@ -1410,6 +1458,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.BRIDE_FATHER?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.BRIDE_FATHER?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_FATHER?.curValue?.brideFatherNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "BRIDE_FATHER", "brideFatherNameMl")}
                         onBlur={(e) => onBrideFatherNameChange(e, "brideFatherNameMl")}
                         placeholder={`${t("CR_FATHER_NAME_ML")}`}
                         {...(validation = {
@@ -1460,6 +1510,8 @@ const MarriageCorrectionEditPage = ({
                         disabled={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isDisable}
                         // autofocus={marriageCorrectionFormsObj.BRIDE_GUARDIAN?.isFocused}
                         defaultValue={marriageCorrectionFormsObj?.BRIDE_GUARDIAN?.curValue?.brideGuardianNameMl}
+                        onKeyPress={setCheckMalayalamInputField}
+                        onChange={(e) => onChangeMalayalam(e, "BRIDE_GUARDIAN", "brideGuardianNameMl")}
                         onBlur={(e) => onBrideGuardianNameChange(e, "brideGuardianNameMl")}
                         placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
                         {...(validation = {
@@ -1559,6 +1611,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.houseNameMl}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "BRIDE_PERADD", "houseNameMl")}
                             onBlur={(e) => onBrideAddressChange(e, "houseNameMl")}
                             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                             {...(validation = {
@@ -1578,6 +1632,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.localityNameMl}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "BRIDE_PERADD", "localityNameMl")}
                             onBlur={(e) => onBrideAddressChange(e, "localityNameMl")}
                             placeholder={`${t("CR_LOCALITY_MAL")}`}
                             {...(validation = {
@@ -1597,6 +1653,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue?.streetNameMl}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "BRIDE_PERADD", "streetNameMl")}
                             onBlur={(e) => onBrideAddressChange(e, "streetNameMl")}
                             placeholder={`${t("CR_STREET_MAL")}`}
                             {...(validation = {
@@ -1664,6 +1722,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine1Ml}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "BRIDE_PERADD", "addressLine1Ml")}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine1Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                             {...(validation = {
@@ -1683,6 +1743,8 @@ const MarriageCorrectionEditPage = ({
                             defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.addressLine2Ml}
                             disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
                             // autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                            onKeyPress={setCheckMalayalamInputField}
+                            onChange={(e) => onChangeMalayalam(e, "BRIDE_PERADD", "addressLine2Ml")}
                             onBlur={(e) => onBrideAddressChange(e, "addressLine2Ml")}
                             placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                             {...(validation = {
