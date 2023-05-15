@@ -43,7 +43,7 @@ public interface WitnessRegistryRowMapper {
               // .witness2Esigned(Boolean.valueOf(rs.getString("WD2_is_esigned")))
                .tenentId(rs.getString("MD_tenantid"))
                .brideExpired(rs.getBoolean("MD_bride_expired"))
-               .brideUrl(rs.getString("MD_brideurl"))
+               .brideUrl(createFullURL(rs.getString("MD_brideurl")))
                .brideFilestoreId(rs.getString("MD_bride_filestoreid"))
                .groomExpired(rs.getBoolean("MD_groom_expired"))
                .groomUrl(createFullURL(rs.getString("MD_groomurl")))
