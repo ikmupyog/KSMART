@@ -69,7 +69,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
           {t("BC_CHILD_NAME")}
         </label>
         <TextInput
-          name="fullName"
+          name="childName"
           inputRef={register({})}
           placeholder={`${t("BC_CHILD_NAME")}`}
           // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}
@@ -88,7 +88,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
               {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: checkIsRequired, title: t("CR_INVALID_DATE") })}
             />
           )}
-          name="dateofbirth"
+          name="birthDate"
           control={control}
         />
       </SearchField>
@@ -99,7 +99,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
         </label>
         <Controller
           control={control}
-          name="Gender"
+          name="gender"
           render={(props) => (
             <Dropdown
               selected={props.value}
@@ -119,7 +119,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
           {t("BC_MOTHER_NAME")}
         </label>
         <TextInput
-          name="WifeorMotherName"
+          name="nameOfMother"
           inputRef={register({})}
           placeholder={`${t("DC_NAME_MOTHER_OR_WIFE")}`}
           // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_OR_WIFE") })}
@@ -129,7 +129,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
       <SearchField>
         <label>{t("BC_FATHER_NAME")}</label>
         <TextInput
-          name="HusbandorfatherName"
+          name="nameOfFather"
           inputRef={register({})}
           placeholder={`${t("DC_NAME_FATHER_OR_HUSBAND")}`}
           // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND") })}
@@ -139,7 +139,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
         <label>{`${t("BC_HOSPITAL_NAME")}`}</label>
         <Controller
           control={control}
-          name="HospitalName"
+          name="hospitalId"
           render={(props) => (
             <Dropdown
               selected={props.value}

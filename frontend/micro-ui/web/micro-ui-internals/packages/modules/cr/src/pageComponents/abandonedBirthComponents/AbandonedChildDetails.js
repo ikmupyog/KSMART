@@ -105,33 +105,32 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
-  const cmbPregWeek = [
-    { i18nKey: "20", code: "20" },
-    { i18nKey: "21", code: "21" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "23", code: "23" },
-    { i18nKey: "25", code: "25" },
-    { i18nKey: "26", code: "26" },
-    { i18nKey: "27", code: "27" },
-    { i18nKey: "28", code: "28" },
-    { i18nKey: "29", code: "29" },
-    { i18nKey: "30", code: "30" },
-    { i18nKey: "31", code: "31" },
-    { i18nKey: "32", code: "32" },
-    { i18nKey: "33", code: "33" },
-    { i18nKey: "34", code: "34" },
-    { i18nKey: "35", code: "35" },
-    { i18nKey: "36", code: "36" },
-    { i18nKey: "37", code: "37" },
-    { i18nKey: "38", code: "38" },
-    { i18nKey: "39", code: "39" },
-    { i18nKey: "40", code: "40" },
-    { i18nKey: "41", code: "41" },
-    { i18nKey: "42", code: "42" },
-  ];
-  // const [childDOB, setChildDOB] = useState(isEditAbandonedBirth && isEditAbandonedBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AbandonedChildDetails?.childDOB) : formData?.AbandonedChildDetails?.childDOB); //formData?.AbandonedChildDetails?.childDOB
-  const [childDOB, setChildDOB] = useState(formData?.AbandonedChildDetails?.childDOB ? formData?.AbandonedChildDetails?.childDOB : formData?.AbandonedChildDetails?.childDOB ? "" : "");
+  // const cmbPregWeek = [
+  //   { i18nKey: "20", code: "20" },
+  //   { i18nKey: "21", code: "21" },
+  //   { i18nKey: "22", code: "22" },
+  //   { i18nKey: "22", code: "22" },
+  //   { i18nKey: "23", code: "23" },
+  //   { i18nKey: "25", code: "25" },
+  //   { i18nKey: "26", code: "26" },
+  //   { i18nKey: "27", code: "27" },
+  //   { i18nKey: "28", code: "28" },
+  //   { i18nKey: "29", code: "29" },
+  //   { i18nKey: "30", code: "30" },
+  //   { i18nKey: "31", code: "31" },
+  //   { i18nKey: "32", code: "32" },
+  //   { i18nKey: "33", code: "33" },
+  //   { i18nKey: "34", code: "34" },
+  //   { i18nKey: "35", code: "35" },
+  //   { i18nKey: "36", code: "36" },
+  //   { i18nKey: "37", code: "37" },
+  //   { i18nKey: "38", code: "38" },
+  //   { i18nKey: "39", code: "39" },
+  //   { i18nKey: "40", code: "40" },
+  //   { i18nKey: "41", code: "41" },
+  //   { i18nKey: "42", code: "42" },
+  // ];
+  const [childDOB, setChildDOB] = useState(isEditAbandonedBirth ? convertEpochToDate( formData?.AbandonedChildDetails?.childDOB) : formData?.AbandonedChildDetails?.childDOB);
   const [gender, selectGender] = useState(formData?.AbandonedChildDetails?.gender?.code ? formData?.AbandonedChildDetails?.gender : formData?.AbandonedChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]) : "");
 
@@ -139,7 +138,10 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   // const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   // const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AbandonedChildDetails?.birthDateTime ? formData?.AbandonedChildDetails?.birthDateTime :
+  // const [birthDateTime, setbirthDateTime] = useState(""); 
+  const [birthDateTime, setbirthDateTime] = useState(isEditAbandonedBirth === false && formData?.AbandonedChildDetails?.birthDateTime ? formData?.AbandonedChildDetails?.birthDateTime : "");
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+
   const [birthPlace, selectBirthPlace] = useState(formData?.AbandonedChildDetails?.birthPlace?.code ? formData?.AbandonedChildDetails?.birthPlace : formData?.AbandonedChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
@@ -192,7 +194,6 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   const [birthWeight, setBirthWeight] = useState(formData?.AbandonedChildDetails?.birthWeight ? formData?.AbandonedChildDetails?.birthWeight : null);
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
 
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.AbandonedChildDetails?.childDOB ? false : false);
@@ -399,8 +400,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
       cb(value);
       setbirthDateTime(value);
       // console.log(value);
-      let time = value;
-      let timeParts = time.split(":");
+      // let time = value;
+      // let timeParts = time.split(":");
       // let hour = value;
       // let period = hour > 12 ? "PM" : "AM";
       // console.log(period);

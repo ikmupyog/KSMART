@@ -67,7 +67,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   useEffect(() => {
     if (
       isInitialRender
-      // && applicationNumber === null
+      && applicationNumber === null
     ) {
       // const onSuccessedit = () => {
       //   setMutationHappened(true);

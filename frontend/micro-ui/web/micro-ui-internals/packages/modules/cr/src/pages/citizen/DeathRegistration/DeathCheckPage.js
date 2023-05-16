@@ -2164,13 +2164,13 @@ content={<StatusTable >
           </div>
         )}
 
-        {/* {toast && (
+        {toast && (
           <Toast
             error={InitiatorDeclareError}
-            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
+            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`DEATH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
-        )} */}
+        )}
         {""}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onDeathSubmit} />
       </Card>

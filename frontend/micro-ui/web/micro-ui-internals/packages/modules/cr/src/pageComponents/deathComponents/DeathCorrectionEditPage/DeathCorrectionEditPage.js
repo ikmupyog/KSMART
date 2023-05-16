@@ -219,6 +219,25 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
     }
   };
 
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+
+
+  function onChangeMalayalam(e, columnName, fieldType) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      let tempObj = { ...deathCorrectionFormsObj };
+      let { curValue } = tempObj[columnName];
+      tempObj = { ...tempObj,  columnName: { ...columnName, curValue: { ...curValue, [fieldType]: "" }, isFocused: false } };
+      setDeathCorrectionFormsObj(tempObj);
+    }
+  }
+
   const config = { texts: { submitBarLabel: "Next" } };
  
 
@@ -327,10 +346,11 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameMl}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                    // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                    onKeyPress={setCheckMalayalamInputField}
                     onBlur={(e) => onNameChange(e, "firstNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "DECEASED_NAME", "firstNameMl")}
                     placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: deathCorrectionFormsObj?.DECEASED_NAME?.isEditable, title: t("CR_INVALID_FIRST_NAME_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("DECEASED_NAME", "firstNameMl"), title: t("CR_INVALID_FIRST_NAME_ML") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -340,8 +360,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameMl}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                    onKeyPress={setCheckMalayalamInputField}
                     // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "middleNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "DECEASED_NAME", "middleNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("DECEASED_NAME", "middleNameMl"), title:  t("CR_INVALID_MIDDLE_NAME_ML") })}
@@ -354,8 +376,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameMl}
                     disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                    onKeyPress={setCheckMalayalamInputField}
                     // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                     onBlur={(e) => onNameChange(e, "lastNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "DECEASED_NAME", "lastNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_LAST_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("DECEASED_NAME", "lastNameMl"), title: t("CR_INVALID_LAST_NAME_ML"), })}
@@ -440,8 +464,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameMl}
                     disabled={deathCorrectionFormsObj.DECEASED_MOTHER?.isDisabled}
+                    onKeyPress={setCheckMalayalamInputField}
                     // autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                     onBlur={(e) => onBlurMotherName(e, "mothersNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "DECEASED_MOTHER", "mothersNameMl")}
                     placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("DECEASED_MOTHER", "mothersNameMl"), title: t("CR_INVALID_MOTHER_NAME_ML") })}
                   />
@@ -480,7 +506,9 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameMl}
                     disabled={deathCorrectionFormsObj.DECEASED_FATHER?.isDisabled}
                     // autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
+                    onKeyPress={setCheckMalayalamInputField}
                     onBlur={(e) => onBlurFatherName(e, "fathersNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "DECEASED_MOTHER", "mothersNameMl")}
                     // onBlur={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("DECEASED_FATHER", "fathersNameMl"), title: t("CR_INVALID_FATHER_NAME_ML") })}
@@ -521,7 +549,9 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameMl}
                     disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
                     // autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
+                    onKeyPress={setCheckMalayalamInputField}
                     onBlur={(e) => onBlurSpouseName(e, "spouseNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "DECEASED_SPOUSE", "spouseNameMl")}
                     placeholder={`${t("CR_SPOUSE_NAME_ML")}`}
                     {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", type: "text", isRequired: checkLangRequired("DECEASED_SPOUSE", "spouseNameMl"), title: t("CR_INVALID_SPOUSE_NAME_ML") })}
                   />
@@ -598,8 +628,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameMl}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                    onKeyPress={setCheckMalayalamInputField}
                     // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "PERMANENT_ADDRESS", "houseNameMl")}
                     placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
@@ -616,8 +648,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameMl}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                    onKeyPress={setCheckMalayalamInputField}
                     // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "localityNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "PERMANENT_ADDRESS", "localityNameMl")}
                     placeholder={`${t("CR_LOCALITY_MAL")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
@@ -634,8 +668,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                     type={"text"}
                     defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameMl}
                     disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                    onKeyPress={setCheckMalayalamInputField}
                     // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                     onBlur={(e) => onPresentAddressChange(e, "streetNameMl")}
+                    onChange={(e) => onChangeMalayalam(e, "PERMANENT_ADDRESS", "streetNameMl")}
                     placeholder={`${t("CR_STREET_MAL")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",

@@ -108,7 +108,7 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     (async () => {
       setError(null);
       if (file) {
-        if (file.size >= 5242880) {
+        if (file.size >= 2242880) {
           setError(t("CS_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
@@ -161,6 +161,20 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     setSelectedReopenReason(reason);
   }
 
+  const handleSubmit = (selectedEmployee, comments, uploadedFile) => {
+    if (selectedAction !== "REJECT" || selectedAction !== "RESOLVE" || selectedAction !== "REOPEN" || selectedAction == "RETURN") {
+      if (selectedEmployee) {
+        if (comments) {
+          onAssign(selectedEmployee, comments, uploadedFile)
+        } else {
+          setError(t("PGR_COMMENT_REQUIRED"));
+        }
+      } else {
+        setError(t("PGR_EMPLOYEE_REQUIRED"));
+      }
+    }
+  }
+
   return (
     <Modal
       headerBarMain={
@@ -197,7 +211,7 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
                   : t("CS_COMMON_RESOLVE")
       }
       actionSaveOnSubmit={() => {
-        onAssign(selectedEmployee, comments, uploadedFile);
+        handleSubmit(selectedEmployee, comments, uploadedFile);
       }}
       error={error}
       setError={setError}
