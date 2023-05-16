@@ -52,9 +52,8 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
                                        @NotNull final List<Object> preparedStmtValues, @NotNull final Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
-
-        addFilter("md.modulecode", criteria.getModuleCode(), query, preparedStmtValues);
         addFilter("md.tenantid", criteria.getTenantId(), query, preparedStmtValues);
+        addFilter("md.modulecode", criteria.getModuleCode(), query, preparedStmtValues);
         addFilter("md.status", criteria.getStatus(), query, preparedStmtValues );
         return query.toString();
     }
@@ -64,7 +63,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
                                               @NotNull final Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
-
+        addFilter("mf.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("mf.mfcode", criteria.getMajorFunctionCode(), query, preparedStmtValues);
         addFilter("mf.moduleid", criteria.getModuleId(), query, preparedStmtValues);
         addFilter("mf.status", criteria.getStatus(), query, preparedStmtValues );
@@ -76,8 +75,9 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
                                             @NotNull final Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
-
+        addFilter("sf.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("sf.sfcode", criteria.getSubFunctionCode(), query, preparedStmtValues);
+        addFilter("sf.mfid", criteria.getMajorFunctionId(), query, preparedStmtValues);
         addFilter("sf.status", criteria.getStatus(), query, preparedStmtValues );
         return query.toString();
     }
@@ -87,9 +87,11 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
                                         @NotNull final Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERY.toString());
-
+        addFilter("sv.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("sv.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
         addFilter("sv.status", criteria.getStatus(), query, preparedStmtValues );
+        addFilter("sv.sfid", criteria.getSubFunctionId(), query, preparedStmtValues);
+
 
         return query.toString();
     }
