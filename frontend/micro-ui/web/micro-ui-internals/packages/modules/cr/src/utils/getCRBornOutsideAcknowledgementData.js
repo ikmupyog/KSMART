@@ -8,12 +8,12 @@ const getChildDetails = (application, t) => {
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
  
   return {
-    title: "CR_BIRTH_CHILD_DETAILS",
+    title: "Child Information",
     values: [
       { title: "Child Aadhaar", value: application?.childAadharNo ? application?.childAadharNo : t("CR_NOT_RECORDED") },
       { title: "Date of Birth", value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CR_NOT_RECORDED") },
       { title: "Sex", value: application?.gender ? application?.gender : t("CR_NOT_RECORDED") },
-      { title: "Child Passport No", value: application?.childPassportNo ? application?.childPassortNo : t("CR_NOT_RECORDED") },
+      { title: "Child Passport No", value: application?.childPassportNo ? application?.childPassportNo : t("CR_NOT_RECORDED") },
       { title: "Date of Arrival", value: application?.childArrivalDate ? Digit.DateUtils.ConvertTimestampToDate(application?.childArrivalDate, "dd/MM/yyyy") : t("CR_NOT_RECORDED") },
       { title: "Child Name", value:  application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
       ? application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
@@ -28,13 +28,13 @@ const getChildDetails = (application, t) => {
 };
 const getParentsDetails = (application, t) => {
   return{
-    title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+    title: "Parent Information",
     values: [
       { title: "Mother's Name", value: application?.BornOutsideParentsDetails?.motherFirstNameEn ? application?.BornOutsideParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED") },
-        { title: "Passport No", value: application?.BornOutsideParentsDetails?.motherPassport ? application?.BornOutsideParentsDetails?.motherPassport : t("CR_NOT_RECORDED") },
+        { title: "Passport No", value: application?.BornOutsideParentsDetails?.motherPassportNo ? application?.BornOutsideParentsDetails?.motherPassportNo : t("CR_NOT_RECORDED") },
         { title: "Nationality", value: application?.BornOutsideParentsDetails?.motherNationality ? application?.BornOutsideParentsDetails?.motherNationality : t("CR_NOT_RECORDED") },
         { title: "Father's Name", value: application?.BornOutsideParentsDetails?.fatherFirstNameEn ? application?.BornOutsideParentsDetails?.fatherFirstNameEn : t("CR_NOT_RECORDED") },
-          { title: "Passport No", value: application?.BornOutsideParentsDetails?.fatherPassport ? application?.BornOutsideParentsDetails?.fatherPassport : t("CR_NOT_RECORDED") },
+          { title: "Passport No", value: application?.BornOutsideParentsDetails?.fatherPassportNo ? application?.BornOutsideParentsDetails?.fatherPassportNo : t("CR_NOT_RECORDED") },
           { title: "Nationality", value: application?.BornOutsideParentsDetails?.fatherNationality ? application?.BornOutsideParentsDetails?.fatherNationality : t("CR_NOT_RECORDED") },
           { title: "Age of the mother at the time of marriage", value: application?.BornOutsideParentsDetails?.motherMarriageAge ? application?.BornOutsideParentsDetails?.motherMarriageAge : t("CR_NOT_RECORDED") },
           { title: "Age of the mother at the time of this birth", value: application?.BornOutsideParentsDetails?.motherMarriageBirth ? application?.BornOutsideParentsDetails?.motherMarriageBirth : t("CR_NOT_RECORDED") },
@@ -51,7 +51,7 @@ const getParentsDetails = (application, t) => {
 const getPermanantAddressDetails = (application, t) => {
   console.log(application, "application");
   return {
-    title: "CR_PERMANENT_ADDRESS",
+    title: "Address Details",
     values: [
       { title: "House No & Name", value:
       application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn : t("CR_NOT_RECORDED") },
@@ -71,13 +71,13 @@ const getPermanantAddressDetails = (application, t) => {
 };
     const getForeignAddressDetails = (application, t) => {
       return{
-    title: "CR_PARENTS_FOREIGN_ADDRESS",
+    title: "Parent's Foreign Address at the time of Birth",
     values: [
       { title: "Country", value: application?.BornOutsideAddressBirthDetails?.presentOutSideCountry ? application?.BornOutsideAddressBirthDetails?.presentOutSideCountry : t("CR_NOT_RECORDED") },
       { title: "State/Province/Region", value:
       application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn : t("CR_NOT_RECORDED") },
-        { title: "Whether City/Town or Village", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage : t("CR_NOT_RECORDED") },
-        { title: "City/Town/Village Name ", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown : t("CR_NOT_RECORDED") },
+        { title: "Whether City/Town or Village", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown : t("CR_NOT_RECORDED") },
+        { title: "City/Town/Village Name ", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage : t("CR_NOT_RECORDED") },
         { title: "Postal Code", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode : t("CR_NOT_RECORDED") },
         { title: "Address Line 1", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn : t("CR_NOT_RECORDED") },
         { title: "Address Line 2", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB : t("CR_NOT_RECORDED") },
