@@ -424,7 +424,7 @@ export const convertToEditAbandonedBirthRegistration = (data = {}) => {
     AbandonedDetails: [
       {
         childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.AbandonedChildDetails?.birthDateTime),
+        birthDateTime:data?.AbandonedChildDetails?.birthDateTime,
         gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
         tenantid: data?.AbandonedChildDetails?.tenantId,
         hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,

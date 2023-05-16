@@ -30,7 +30,7 @@ const DeathInclusion = () => {
 
   function onSubmit(_data) {
     console.log("error data", _data);
-    if (!_data.deceasedGender && !_data.deathACKNo) {    
+    if (!_data.DeceasedGender && !_data.DeathACKNo) {    
       setToast({ show: true, message: t("CR_INVALID_GENDER") });
       return false;
     }
@@ -67,7 +67,7 @@ const DeathInclusion = () => {
     data: { deathCertificateDtls: searchResult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: {...payload,DeathDate: payload.DeathDate && moment(payload.DeathDate, 'YYYY-MM-DD').valueOf()}, config }); 
+  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: {...payload,DateOfDeath: payload.DateOfDeath && moment(payload.DateOfDeath, 'YYYY-MM-DD').valueOf()}, config }); 
   useEffect(()=>{
     console.log("searchResult==",searchResult,path);
   },[searchResult,isLoading])

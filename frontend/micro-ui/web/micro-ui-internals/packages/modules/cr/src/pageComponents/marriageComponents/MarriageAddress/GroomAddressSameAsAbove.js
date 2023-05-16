@@ -177,7 +177,7 @@ const GroomAddressSameAsAbove = ({
   const { t } = useTranslation();
   let validation = {};
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 

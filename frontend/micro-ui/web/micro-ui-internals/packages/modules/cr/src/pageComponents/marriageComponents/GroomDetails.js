@@ -34,6 +34,23 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     { i18nKey: "CR_GROOM_GUARDIAN", code: "GUARDIAN" },
   ];
   const groomParent = parentDetails.map((parent) => parent.code);
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      console.log(`{${year}-${month}-${day}}`);
+      return `${year}-${month}-${day}`;
+
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
   let gender = [];
   let cmbMaritalStatus = [];
   Menu &&
@@ -50,12 +67,17 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     maritalStatus["birth-death-service"].MaritalStatus.map((ob) => {
       cmbMaritalStatus.push(ob);
     });
+
+  const filteredGender = gender?.filter((gen) => gen.code === "MALE" || gen.code === "FEMALE");
+
+  console.log({ gender });
+
   const [isParent, setIsParent] = useState(formData?.GroomDetails?.isParent ? formData?.GroomDetails?.isParent : false);
   const [isGuardian, setIsGuardian] = useState(formData?.GroomDetails?.isGuardian ? formData?.GroomDetails?.isGuardian : false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   // const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
-  const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
+  const [groomDOB, setGroomDOB] = useState(isEditMarriage ? convertEpochToDate(formData?.GroomDetails?.groomDOB) : formData?.GroomDetails?.groomDOB);
   const [groomFathernameEn, setGroomFathernameEn] = useState(
     formData?.GroomDetails?.groomFathernameEn ? formData?.GroomDetails?.groomFathernameEn : ""
   );
@@ -542,10 +564,12 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   }
 
   useEffect(() => {
-    if (gender.length > 0) {
-      const selectedGender = gender.filter((option) => option.code === "MALE");
-      console.log({ selectedGender });
-      selectGroomGender(selectedGender[0]);
+    if (!isEditMarriage) {
+      if (gender.length > 0) {
+        const selectedGender = gender.filter((option) => option.code === "MALE");
+        console.log({ selectedGender });
+        selectGroomGender(selectedGender[0]);
+      }
     }
   }, [gender.length]);
 
@@ -946,6 +970,20 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     }
   };
 
+  useEffect(() => {
+    if (cmbMaritalStatus.length > 0 && gender.length > 0) {
+      const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.GroomDetails?.groomMaritalstatusID);
+      setGroomMaritalstatusID(currentMarritalStatus[0]);
+      console.log({ currentMarritalStatus });
+      const currentGender = gender?.filter((gender) => gender.code === formData?.GroomDetails?.groomGender);
+      selectGroomGender(currentGender[0]);
+      console.log({ currentGender });
+      const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.GroomDetails?.groomIsSpouseLiving);
+      setGroomIsSpouseLiving(currentIsSpouseLiving[0]);
+      console.log({ currentIsSpouseLiving });
+    }
+  }, [cmbMaritalStatus.length, gender.length]);
+
   console.log("Groom", formData);
 
   if (isLoading || isMaritalStatusLoading) {
@@ -1285,7 +1323,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={sortDropdownNames(gender ? gender : [], "code", t)}
+                  option={sortDropdownNames(filteredGender ? filteredGender : [], "code", t)}
                   selected={groomGender}
                   select={setselectGroomGender}
                   placeholder={`${t("CR_GROOM_GENDER")}`}

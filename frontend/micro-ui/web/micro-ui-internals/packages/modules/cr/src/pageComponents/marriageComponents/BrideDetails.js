@@ -20,7 +20,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import moment from "moment";
 import { sortDropdownNames } from "../../utils";
 
-const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => {
+const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -33,10 +33,27 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   );
   // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
-  const cmbYesOrNo = [
+  const cmbSpouseLiving  = [
     { i18nKey: "Yes", code: true },
     { i18nKey: "No", code: false },
   ];
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      console.log(`{${year}-${month}-${day}}`);
+      return `${year}-${month}-${day}`;
+
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
   let gender = [];
   let cmbMaritalStatus = [];
   // let cmbProfession = [];
@@ -57,6 +74,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   //   Profession["birth-death-service"].Profession.map((ob) => {
   //     cmbProfession.push(ob);
   //   });
+
+  const filteredGender = gender?.filter((gen) => gen.code === "MALE" || gen.code === "FEMALE");
 
   const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
   const [brideResidentShip, setBrideResidentShip] = useState(
@@ -88,7 +107,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   //   formData?.BrideDetails?.brideProfessionMal ? formData?.BrideDetails?.brideProfessionMal : ""
   // );
   const [toast, setToast] = useState(false);
-  const [brideDOB, setbrideDOB] = useState(formData?.BrideDetails?.brideDOB ? formData?.BrideDetails?.brideDOB : "");
+  const [brideDOB, setbrideDOB] = useState(isEditMarriage ? convertEpochToDate(formData?.BrideDetails?.brideDOB) : formData?.BrideDetails?.brideDOB);
   const [DOBError, setDOBError] = useState(formData?.BrideDetails?.brideDOB ? false : false);
   const [brideAge, setbrideAge] = useState(formData?.BrideDetails?.brideAge ? formData?.BrideDetails?.brideAge : "");
   const [brideParentGuardian, setBrideParentGuardian] = useState(
@@ -197,21 +216,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   ];
 
   const brideParent = parentDetails.map((parent) => parent.code);
-  const convertEpochToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${year}-${month}-${day}`;
-      //  return `${day}-${month}-${year}`;
-    } else {
-      return null;
-    }
-  };
 
   function setSelectbrideFirstnameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -618,12 +622,28 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   }
 
   useEffect(() => {
-    if (gender.length > 0) {
-      const selectedGender = gender.filter((option) => option.code === "FEMALE");
-      console.log({ selectedGender });
-      setbrideGender(selectedGender[0]);
+    if (!isEditMarriage) {
+      if (gender.length > 0) {
+        const selectedGender = gender.filter((option) => option.code === "FEMALE");
+        console.log({ selectedGender });
+        setbrideGender(selectedGender[0]);
+      }
     }
   }, [gender.length]);
+
+  useEffect(() => {
+    if (cmbMaritalStatus.length > 0 && gender.length > 0) {
+      const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.BrideDetails?.brideMaritalstatusID);
+      setbrideMaritalstatusID(currentMarritalStatus[0]);
+      console.log({ currentMarritalStatus });
+      const currentGender = gender?.filter((gender) => gender.code === formData?.BrideDetails?.brideGender);
+      setbrideGender(currentGender[0]);
+      console.log({ currentGender });
+      const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.BrideDetails?.brideIsSpouseLiving);
+      setbrideIsSpouseLiving(currentIsSpouseLiving[0]);
+      console.log({ currentIsSpouseLiving });
+    }
+  }, [cmbMaritalStatus.length, gender.length]);
 
   let validFlag = true;
   const goNext = () => {
@@ -1312,7 +1332,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   t={t}
                   optionKey="code"
                   isMandatory={true}
-                  option={sortDropdownNames(gender ? gender : [], "code", t)}
+                  option={sortDropdownNames(filteredGender ? filteredGender : [], "code", t)}
                   selected={brideGender}
                   select={setSelectbrideGender}
                   placeholder={`${t("CR_BRIDE_GENDER")}`}
@@ -1387,7 +1407,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     t={t}
                     optionKey="i18nKey"
                     isMandatory={false}
-                    option={cmbYesOrNo}
+                    option={cmbSpouseLiving }
                     selected={brideIsSpouseLiving}
                     select={setSelectbrideIsSpouseLiving}
                     placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}

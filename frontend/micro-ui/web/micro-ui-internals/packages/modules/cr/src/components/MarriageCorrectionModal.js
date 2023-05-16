@@ -29,9 +29,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     setUploadDoc({ ...uploadDoc, ...tempObj });
   };
 
-  
-
-
   useEffect(() => {
     if (selectedDocuments?.length === 1) {
       const existingDocIds = selectedDocuments?.[0]?.Documents?.map((item) => {
