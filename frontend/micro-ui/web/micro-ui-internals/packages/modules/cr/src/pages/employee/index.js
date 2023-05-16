@@ -6,7 +6,9 @@ import Inbox from "./Inbox";
 // import NewApplication from "./NewApplication";
 import Search from "./Search";
 // import Response from "../Response";
-import CorrectionApplicationDetails from "./Corrections";
+import BirthCorrectionApplicationDetails from "./BirthCorrection";
+import DeathCorrectionApplicationDetails from "./DeathCorrections";
+import MarriageCorrectionApplicationDetails from "./MarriageCorrection";
 import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from "./ApplicationAdoptionDetails";
 import ApplicationAbandonedDeathDetails from "./ApplicationAbandonedDeathDetails";
@@ -297,7 +299,9 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
 
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
-          <PrivateRoute path={`${path}/correction-details/:id/:type`} component={() => <CorrectionApplicationDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/birth-correction-details/:id/:type`} component={() => <BirthCorrectionApplicationDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/death-correction-details/:id/:type`} component={() => <DeathCorrectionApplicationDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/marriage-correction-details/:id/:type`} component={() => <MarriageCorrectionApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
           <PrivateRoute
             path={`${path}/application-bornOutsideIndia/:id`}

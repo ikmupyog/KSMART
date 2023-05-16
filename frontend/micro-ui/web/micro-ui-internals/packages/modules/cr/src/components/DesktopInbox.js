@@ -94,7 +94,7 @@ const DesktopInbox = ({
         url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
     }
     if (["CRBRCN", "CRDRCN", "CRMRCR"].some(term => applicationNumber?.includes(term))) {
-      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+      url = `/digit-ui/employee/cr/marriage-correction-details/${applicationNumber}/${SearchInbox}`;
     } else if (["CRBRNR"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
     } else if (["CRBRSB"].some(term => applicationNumber?.includes(term))) {
@@ -112,7 +112,7 @@ const DesktopInbox = ({
     } else if (["CRDRNC"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
     } else {
-      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+      url = `/digit-ui/employee/cr/birth-correction-details/${applicationNumber}/${SearchInbox}`;
     }
     return url;
   }
