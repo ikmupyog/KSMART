@@ -281,7 +281,7 @@ const DesktopInbox = ({
             <span className="link">
               <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original)}>
                 {/* {row.original.applicationNumber} */}
-                {row.original.applicationId}
+                {row.original.applicationNumber}
               </Link>
             </span>
           </div>
@@ -289,15 +289,14 @@ const DesktopInbox = ({
       },
     },
     {
-      Header: t("CR_COMMON_COL_APP_DATE"),
+      Header: t("CR_MOTHER_NAME"),
       disableSortBy: true,
-      accessor: (row) => GetCell(row?.date ? convertEpochToDateDMY(row.date) : ""),
+      accessor: (row) => GetCell(row?.motherName ? row.motherName : ""),
     },
     {
-      Header: t("WF_INBOX_HEADER_LOCALITY"),
-      Cell: ({ row }) => {
-        return GetCell(t((row.original["wardNo"])));
-      },
+      Header: t("CR_CHILD_GENDER"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row.gender ? row.gender : ""),
     },
     {
       Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),

@@ -105,14 +105,14 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
         disableSortBy: true,
         accessor: (row) => GetCell(`${row?.GroomDetails?.groomFirstnameEn ? row?.GroomDetails?.groomFirstnameEn : ""} ${
           row?.GroomDetails?.groomMiddlenameEn ? row?.GroomDetails?.groomMiddlenameEn : ""
-        } ${row?.GroomDetails?.groomLastnameEn ? response?.GroomDetails?.groomLastnameEn : ""}`),
+        } ${row?.GroomDetails?.groomLastnameEn ? row?.GroomDetails?.groomLastnameEn : ""}`),
       },
       {
         Header: t("CR_BRIDE_NAME"),
         disableSortBy: true,
         accessor: (row) => GetCell(`${row?.BrideDetails?.brideFirstnameEn ? row?.BrideDetails?.brideFirstnameEn : ""} ${
           row?.BrideDetails?.brideMiddlenameEn ? row?.BrideDetails?.brideMiddlenameEn : ""
-        } ${row?.BrideDetails?.brideLastnameEn ? response?.BrideDetails?.brideLastnameEn : ""}`),
+        } ${row?.BrideDetails?.brideLastnameEn ? row?.BrideDetails?.brideLastnameEn : ""}`),
       },
       {
         Header: t("CR_APPLICATION_STATUS"),
