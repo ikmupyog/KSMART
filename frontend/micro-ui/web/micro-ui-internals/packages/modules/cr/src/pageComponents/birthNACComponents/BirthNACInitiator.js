@@ -74,6 +74,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [initiatorAddressError, setinitiatorAddressError] = useState(formData?.BirthNACInitiator?.initiatorAddress ? false : false);
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
+
   const storedAppData = null;
   const storedOwnerData = null;
   let menu = [];
@@ -248,10 +250,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     setcareofapplicant(e.target.value);
   }
   function setSelectinitiatorAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === formData?.BirthNACParentsDetails.motherAadhar && newValue === formData?.BirthNACParentsDetails.fatherAadhar) {
+      setinitiatorAadhar("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setinitiatorAadhar(newValue);
     }
   }
   function setSelectinitiatorMobile(e) {
@@ -1010,6 +1018,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ? t(`BIRTH_NAC_DATE_OF_BIRTH_MISSMATCH`)
                     : OrderofBirthMissmatchError
                     ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
+                    : AadharError
+                    ? t(`CS_COMMON_DUPLICATE_AADHAR_NO`)
                     : setToast(false)
                   : setToast(false)
               }
