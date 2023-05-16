@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
 import AdoptionChildDetails from "../src/pageComponents/adoptionComponents/AdoptionChildDetails";
-import AdoptionAddressBasePage from "../src/pageComponents/adoptionComponents/AdoptionAddressBasePage";
 import AdoptionParentsDetails from "./pageComponents/adoptionComponents/AdoptionParentsDetails";
 import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
 import AdoptionDocuments from "../src/pageComponents/adoptionComponents/AdoptionDocuments";
@@ -223,6 +222,7 @@ import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandone
 import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
 import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
 import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
+import CreateMarriageRegistrationEmp from "./pages/employee/MarriageRegistration";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -306,6 +306,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  CreateMarriageRegistrationEmp,
   BirthInclusionSummary,
   BirthInclusionAcknowledgement,
   DeathCorrectionAcknowledgement,
@@ -322,7 +323,6 @@ const componentsToRegister = {
   CRLinks,
   CRCard,
   AdoptionChildDetails,
-  AdoptionAddressBasePage,
   AdoptionParentsDetails,
   AdoptionInitiatorDetails,
   AdoptionDocuments,

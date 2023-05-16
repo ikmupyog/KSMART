@@ -58,7 +58,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     status: "",
                     RenewalPending: true
                 });
-                previousPage ();
+              //  previousPage ();
                 }
             }>{t(`ES_COMMON_CLEAR_ALL`)}</p>
         </SearchField>

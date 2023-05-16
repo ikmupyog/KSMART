@@ -43,8 +43,6 @@ const BannerPicker = (props) => {
       />
     );
   }
-
-
 };
 
 const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
@@ -64,14 +62,13 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
   // console.log(applicationNumber);
   //console.log("isEditMarriage" + isEditMarriage);
-  const mutation = Digit.Hooks.cr.useCivilRegistrationMarriageAPI(
-    tenantId, isEditMarriage ? false : true
-  );
+  const mutation = Digit.Hooks.cr.useCivilRegistrationMarriageAPI(tenantId, isEditMarriage ? false : true);
 
   useEffect(() => {
-    if (isInitialRender 
-      // && applicationNumber === null
-      ) {
+    if (
+      isInitialRender
+      && applicationNumber === null
+    ) {
       // const onSuccessedit = () => {
       //   setMutationHappened(true);
       // };
@@ -89,7 +86,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           // } else {
           mutation.mutate(formdata, {
             onSuccess,
-          })
+          });
           // }
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
@@ -119,10 +116,8 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
           //   onSuccessedit,
           // })
-
         }
-      } catch (err) {
-      }
+      } catch (err) {}
     }
     // else {
     //   history.push(`/digit-ui/citizen`)
@@ -141,10 +136,12 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation.isSuccess]);
 
+  console.log({ data: mutation.data });
+
   const handleDownloadPdf = async () => {
-    const { MarriageDetails = [] } = mutation.data
+    const { MarriageDetails = [] } = mutation.data;
     const MarriageDet = (MarriageDetails && MarriageDetails[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === MarriageDet.tenantid);
+    const tenantInfo = tenants.find((tenant) => tenant.code === MarriageDet.marriageTenantid);
     console.log(tenantInfo);
     let res = MarriageDet;
     console.log(res);
@@ -152,39 +149,46 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
 
-  let enableLoader = (mutation.isIdle || mutation.isLoading);
+  let enableLoader = mutation.isIdle || mutation.isLoading;
   // console.log(JSON.stringify(mutation));
   if (enableLoader) {
-    if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
+    if (
+      mutation?.isLoading === false &&
+      mutation?.isSuccess === false &&
+      mutation?.isError == false &&
+      mutation?.isIdle === true &&
+      applicationNumber != null
+    ) {
       return (
         <Card>
           <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>
         </Card>
-      )
+      );
     } else if (mutation.isIdle || mutation.isLoading) {
-      return (<Loader />)
+      return <Loader />;
     }
-  }
-  else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+  } else if (mutation?.isSuccess == false && mutation?.isIdle == false) {
     return (
       <Card>
-        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
         {<CardText>{t("CR_MARRIAGE_CREATION_FAILED_RESPONSE")}</CardText>}
+        <CardText>
+          {t("COMMON_REASON")} : {mutation?.error?.response?.data?.Errors[0]?.message}
+        </CardText>
         <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
-      </Card>)
-  }
-  else
-    console.log(JSON.stringify(mutation));
+      </Card>
+    );
+  } else console.log(JSON.stringify(mutation));
   if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
     return (
       <Card>
-        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
         {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
-     */}
+         */}
         <LinkButton
           label={
             <div className="response-download-button">
@@ -200,12 +204,16 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           onClick={handleDownloadPdf}
         />
 
-        {mutation?.data?.MarriageDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-          pathname: `/digit-ui/citizen/payment/collect/${mutation.data.MarriageDetails[0].businessservice}/${mutation.data.MarriageDetails[0].applicationNumber}`,
-          state: { tenantId: mutation.data.MarriageDetails[0].tenantid },
-        }}>
-          <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-        </Link>}
+        {mutation?.data?.MarriageDetails[0]?.status === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.MarriageDetails[0].businessService}/${mutation.data.MarriageDetails[0].applicationNumber}`,
+              state: { tenantId: mutation.data.MarriageDetails[0].marriageTenantid },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>
+        )}
         <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
@@ -213,7 +221,6 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
     );
   } else {
     return (
-
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
         {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
@@ -222,11 +229,8 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
       </Card>
-
-
     );
   }
-
 };
 
 export default MarriageAcknowledgement;

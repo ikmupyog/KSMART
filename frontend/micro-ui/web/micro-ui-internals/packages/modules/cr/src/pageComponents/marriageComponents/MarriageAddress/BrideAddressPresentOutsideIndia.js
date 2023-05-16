@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -46,14 +46,14 @@ const BrideAddressPresentOutsideIndia = ({
   setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown,
   setadrsPermntOutsideIndiaCityTown,
+  setinsideKeralaDistrict,
+  setinsideKeralaLBName,
+  setaddressStateName,
   permanentOutsideIndiaPostCode,
   setPermantpostCode,
   permntOutsideIndiaCountry,
   setPermntOutsideIndiaCountry,
-  setaddressStateName,
-  setinsideKeralaLBName,
-  setinsideKeralaDistrict,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditAdoption,
   isEditStillBirth = false,
@@ -83,12 +83,12 @@ const BrideAddressPresentOutsideIndia = ({
     { i18nKey: "Village", code: "VILLAGE" },
   ];
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
+  if (isEditMarriage) {
+    if (formData?.BrideAddressDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
         setadrsVillage(
           cmbUrbanRural.filter(
-            (cmbUrbanRural) => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
+            (cmbUrbanRural) => cmbUrbanRural.code === formData?.BrideAddressDetails?.presentOutSideIndiaadrsVillage
           )[0]
         );
       }
@@ -133,7 +133,7 @@ const BrideAddressPresentOutsideIndia = ({
   }
 
   function setSelectadrsCityTown(e) {
-    if (e.target.value.trim().length >= 0 && e.target.valksue.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setadrsCityTown(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -237,7 +237,7 @@ const BrideAddressPresentOutsideIndia = ({
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : e.target.value.replace(/[^a-zA-Z0-9]/ig, '').substring(0, 6));
     if (isPrsentAddress) {
       setPermantpostCode(
         e.target.value.trim().length <= 6
@@ -255,14 +255,12 @@ const BrideAddressPresentOutsideIndia = ({
       e.preventDefault();
     }
   }
-
+  const goNext = () => {};
   useEffect(() => {
     setinsideKeralaDistrict(null);
     setinsideKeralaLBName(null);
     setaddressStateName(null);
   }, []);
-
-  const goNext = () => {};
   if (isCountryLoading) {
     return <Loader></Loader>;
   } else
@@ -381,7 +379,7 @@ const BrideAddressPresentOutsideIndia = ({
               disable={isDisableEdit}
               placeholder={`${t("CR_ZIP_CODE")}`}
               {...(validation = {
-                pattern: "^[0-9]*$",
+                pattern: "^[a-zA-Z0-9]*$",
                 isRequired: true,
                 type: "text",
                 maxLength: 6,

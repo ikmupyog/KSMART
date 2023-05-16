@@ -30,7 +30,7 @@ const GroomAddressPermanentOutsideIndia = ({
   setpermntInKeralaAdrDistrict,
   setpermntInKeralaAdrLBName,
   setpermtaddressStateName,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
@@ -38,7 +38,7 @@ const GroomAddressPermanentOutsideIndia = ({
   isPrsentAddress,
   setIsPrsentAddress,
   // isInitialRender, setIsInitialRender
-  //isEditBirth ? isEditBirth : isEditDeath ? false :
+  //isEditMarriage ? isEditMarriage : isEditDeath ? false :
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
   const [isDisableEdit, setisDisableEdit] = useState(false);
@@ -65,11 +65,11 @@ const GroomAddressPermanentOutsideIndia = ({
     { i18nKey: "Village", code: "VILLAGE" },
   ];
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
+  if (isEditMarriage) {
+    if (formData?.GroomAddressDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(
-          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.GroomAddressDetails?.permntOutsideIndiaVillage)[0]
         );
       }
     }
@@ -208,7 +208,7 @@ const GroomAddressPermanentOutsideIndia = ({
   //   setPermantpostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    setPermantpostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
+    setPermantpostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : e.target.value.replace(/[^a-zA-Z0-9]/ig, '').substring(0, 6));
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
@@ -340,7 +340,7 @@ const GroomAddressPermanentOutsideIndia = ({
               disable={isDisableEdit}
               placeholder={`${t("CR_ZIP_CODE")}`}
               {...(validation = {
-                pattern: "^[0-9]*$",
+                pattern: "^[a-zA-Z0-9]*$",
                 isRequired: false,
                 type: "text",
                 title: t("CR_INVALID_ZIP_CODE"),

@@ -279,8 +279,6 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       for(let i=0; i<tradeUnitJSON.length; i++){
         subUnitSelect.length > 0 ? ((subUnitSelect.filter(subUnit => subUnit?.code !== "" && subUnit?.code.includes(tradeUnitJSON[i]?.businessSubtype))).length === 0) ? delete tradeUnitJSON[i] : null :null;
       }
-      console.log("tradeUnitFill2 :"+JSON.stringify(tradeUnitFill));
-      console.log("tradeUnitJSON2 :"+JSON.stringify(tradeUnitJSON));
       setFillFields(tradeUnitFill);
       setFeilds(tradeUnitJSON);
       Digit.SessionStorage.set("activityedit", true);

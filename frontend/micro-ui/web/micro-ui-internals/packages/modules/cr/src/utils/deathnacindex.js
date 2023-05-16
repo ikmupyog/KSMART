@@ -51,7 +51,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlaceHomeStreetNameEn:_.get(DeathNACDetails, "DeathPlaceHomeStreetNameEn",null),
         DeathPlaceHomeStreetNameMl:_.get(DeathNACDetails, "DeathPlaceHomeStreetNameMl",null),
         DeathPlaceHomeHoueNameEn:_.get(DeathNACDetails, "DeathPlaceHomeHoueNameEn",null),
-        DeathPlaceHomeHoueNameMl:_.get(DeathNACDetails, "DeathPlaceHomeHoueNameMl",null),
+        DeathPlaceHomeHoueNameMl:_.get(DeathNACDetails, "DeathPlaceHomehoueNameMl",null),
         PlaceOfBurialEn:_.get(DeathNACDetails, "placeofBurial",null),
 
 
@@ -215,7 +215,7 @@ export const DeathNACRegistrationData = (data = {}) => {
             "businessService": "CR",
             "action": "INITIATE",
             "assignee": [],
-            "workflowcode": "NACDEATH",
+            "workflowcode": "DEATHNAC",
             "wfDocuments": null
         }
         ]

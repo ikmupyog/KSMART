@@ -40,7 +40,7 @@ const GroomAddressPermanentOutsideKerala = ({
   setpermntInKeralaAdrDistrict,
   value,
   setValue,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
@@ -71,7 +71,7 @@ const GroomAddressPermanentOutsideKerala = ({
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   // const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  //isEditBirth ? isEditBirth : isEditDeath ? false :
+  //isEditMarriage ? isEditMarriage : isEditDeath ? false :
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(false);
@@ -134,25 +134,25 @@ const GroomAddressPermanentOutsideKerala = ({
     }
   }, [cmbFilterPerDistrict, isInitialRender]);
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
+  if (isEditMarriage) {
+    if (formData?.GroomAddressDetails?.permntOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
         setpermntOutsideKeralaDistrict(
-          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict)[0]
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.GroomAddressDetails?.permntOutsideKeralaDistrict)[0]
         );
       }
     }
-    if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk != null) {
+    if (formData?.GroomAddressDetails?.permntOutsideKeralaTaluk != null) {
       if (cmbTaluk.length > 0 && (permntOutsideKeralaTaluk === undefined || permntOutsideKeralaTaluk === "")) {
         setpermntOutsideKeralaTaluk(
-          cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk)[0]
+          cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.GroomAddressDetails?.permntOutsideKeralaTaluk)[0]
         );
       }
     }
-    if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
+    if (formData?.GroomAddressDetails?.permntOutsideKeralaVillage != null) {
       if (cmbUrbanRural.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(
-          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.GroomAddressDetails?.permntOutsideKeralaVillage)[0]
         );
       }
     }
@@ -262,12 +262,12 @@ const GroomAddressPermanentOutsideKerala = ({
     }
   }
   function setSelectpermntOutsideKeralaHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9/, ]*$") != null) {
       setpermntOutsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntOutsideKeralaHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/,-]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setpermntOutsideKeralaHouseNameMl("");
@@ -315,7 +315,7 @@ const GroomAddressPermanentOutsideKerala = ({
     }
   }
   function setCheckMalayalamInputFieldWithSplChar(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/,-]/;
     if (!e.key.match(pattern)) {
       e.preventDefault();
     }
@@ -370,7 +370,7 @@ const GroomAddressPermanentOutsideKerala = ({
               onChange={setSelectpermntOutsideKeralaTaluk}
               placeholder={`${t("CR_TALUK_TEHSIL")}`}
               disable={isDisableEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_TALUK_NAME_EN") })}
             />
             {/* <Dropdown
             t={t}
@@ -470,7 +470,7 @@ const GroomAddressPermanentOutsideKerala = ({
               onChange={setSelectoutsideKeralaPostOfficeEn}
               disable={isDisableEdit}
               placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_POSTOFFICE_EN") })}
             />
           </div>
           {/* <div className="col-md-4">
@@ -589,7 +589,7 @@ const GroomAddressPermanentOutsideKerala = ({
               onChange={setSelectpermntOutsideKeralaHouseNameEn}
               disable={isDisableEdit}
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-0-9/, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -608,7 +608,7 @@ const GroomAddressPermanentOutsideKerala = ({
               disable={isDisableEdit}
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 /-]*$",
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 /,-]*$",
                 isRequired: true,
                 type: "text",
                 title: t("CR_INVALID_HOUSE_NAME_ML"),

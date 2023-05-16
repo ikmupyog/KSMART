@@ -108,7 +108,7 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     (async () => {
       setError(null);
       if (file) {
-        if (file.size >= 5242880) {
+        if (file.size >= 2242880) {
           setError(t("CS_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
@@ -161,6 +161,20 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     setSelectedReopenReason(reason);
   }
 
+  const handleSubmit = (selectedEmployee, comments, uploadedFile) => {
+    if (selectedAction !== "REJECT" || selectedAction !== "RESOLVE" || selectedAction !== "REOPEN" || selectedAction == "RETURN") {
+      if (selectedEmployee) {
+        if (comments) {
+          onAssign(selectedEmployee, comments, uploadedFile)
+        } else {
+          setError(t("PGR_COMMENT_REQUIRED"));
+        }
+      } else {
+        setError(t("PGR_EMPLOYEE_REQUIRED"));
+      }
+    }
+  }
+
   return (
     <Modal
       headerBarMain={
@@ -197,7 +211,7 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
                   : t("CS_COMMON_RESOLVE")
       }
       actionSaveOnSubmit={() => {
-        onAssign(selectedEmployee, comments, uploadedFile);
+        handleSubmit(selectedEmployee, comments, uploadedFile);
       }}
       error={error}
       setError={setError}
@@ -268,9 +282,9 @@ export const ComplaintDetails = (props) => {
 
   useEffect(() => {
     if (initialRender && workflowDetails) {
-      const { data: { timeline: complaintTimelineData } = {} } = workflowDetails;
+      const { data: { timeline: complaintTimelineData = [] } = {} } = workflowDetails;
       if (complaintTimelineData) {
-        const actionByCitizenOnComplaintCreation = complaintTimelineData?.find((e) => e?.performedAction === "APPLY");
+        const actionByCitizenOnComplaintCreation = complaintTimelineData?.find((e) => e?.performedAction === "APPLY") || { wfDocuments: [] };
         // const { thumbnailsToShow } = actionByCitizenOnComplaintCreation;
         // thumbnailsToShow ? setImagesToShowBelowComplaintDetails(thumbnailsToShow) : null;
         const { wfDocuments } = actionByCitizenOnComplaintCreation;
@@ -391,7 +405,13 @@ export const ComplaintDetails = (props) => {
 
   async function onAssign(selectedEmployee, comments, uploadedFile) {
     setPopup(false);
-    const response = await Digit.Complaint.assign(complaintDetails, selectedAction, selectedEmployee, comments, uploadedFile, tenantId);
+    let newDetails = Object.keys(complaintDetails).filter(key =>
+      key !== 'rowDetails').reduce((obj, key) => {
+        obj[key] = complaintDetails[key];
+        return obj;
+      }, {}
+      );
+    const response = await Digit.Complaint.assign(newDetails, selectedAction, selectedEmployee, comments, uploadedFile, tenantId);
 
     setAssignResponse(response);
     setToast(true);
@@ -501,7 +521,7 @@ export const ComplaintDetails = (props) => {
                   <div className="col-md-12">
                     {
                       Object.entries(complaintDetails?.rowDetails?.basicDetails).map(([key, val], i) =>
-                        <div className={i == 0 ? "col-md-12" : "col-md-6"} style={{ marginBottom: "20px" }} key={key}>
+                        <div className={"col-md-12"} style={{ marginBottom: "20px" }} key={key}>
                           <p style={{ overflowWrap: "break-word" }}><strong>{t(key)} : </strong> {t(val) || 'N/A'}</p>
                         </div>
                       )
@@ -545,12 +565,13 @@ export const ComplaintDetails = (props) => {
                   </StatusTable>} />
               )
             )}
-            <Accordion title={`${t('CS_ADDCOMPLAINT_DOCUMENTS')}`}
-              content={<StatusTable>
-                {/* {imagesToShowBelowComplaintDetails?.thumbs ? (
+            {imagesThumbs && imagesThumbs.length > 0 ?
+              <Accordion title={`${t('CS_ADDCOMPLAINT_DOCUMENTS')}`}
+                content={<StatusTable>
+                  {/* {imagesToShowBelowComplaintDetails?.thumbs ? (
                   <DisplayPhotos srcs={imagesToShowBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
                 ) : <p>N/A</p>} */}
-                {imagesThumbs ?
+
                   <div className="row">
                     <div className="col-md-12" style={{ display: "flex", marginLeft: "15px" }}>
                       {imagesThumbs.map((thumbnail, index) => {
@@ -567,8 +588,9 @@ export const ComplaintDetails = (props) => {
                         );
                       })}
                     </div>
-                  </div> : <p>N/A</p>}
-              </StatusTable>} />
+                  </div>
+                </StatusTable>} />
+              : null}
           </div>
         </div>
         <div className={"timeline-wrapper"}>

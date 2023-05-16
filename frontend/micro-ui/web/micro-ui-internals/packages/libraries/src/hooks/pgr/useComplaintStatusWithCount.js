@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import useComplaintStatus from "./useComplaintStatus";
 
-const useComplaintStatusCount = (complaints) => {
+const useComplaintStatusCount = (complaints, UUID) => {
   const [complaintStatusWithCount, setcomplaintStatusWithCount] = useState([]);
   let complaintStatus = useComplaintStatus();
   let tenantId = Digit.ULBService.getCurrentTenantId();
 
   const getCount = async (value) => {
-    let response = await Digit.PGRService.count(tenantId, { applicationStatus: value });
+    let response = await Digit.PGRService.count(tenantId, { applicationStatus: value, userIds: UUID });
     return response?.count || "";
   };
+
 
   useEffect(() => {
     let getStatusWithCount = async () => {

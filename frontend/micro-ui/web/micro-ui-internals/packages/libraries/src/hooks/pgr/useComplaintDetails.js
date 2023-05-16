@@ -10,9 +10,9 @@ const getThumbnails = async (ids, tenantId) => {
   }
 };
 
-const getDetailsRow = ({ id, service, complaintType }) => ({
+const getDetailsRow = ({ id, service, complaintType, workState }) => ({
   CS_COMPLAINT_DETAILS_COMPLAINT_NO: id,
-  CS_COMPLAINT_DETAILS_APPLICATION_STATUS: `CS_COMMON_${service.applicationStatus}`,
+  CS_COMPLAINT_DETAILS_APPLICATION_STATUS: `CS_COMMON_${workState?.state?.applicationStatus || service.applicationStatus}`,
   CS_ADDCOMPLAINT_COMPLAINT_TYPE: complaintType === "" ? `SERVICEDEFS.OTHERS` : `SERVICEDEFS.${complaintType}`,
   CS_ADDCOMPLAINT_COMPLAINT_SUB_TYPE: `SERVICEDEFS.${service.serviceCode.toUpperCase()}`,
   CS_COMPLAINT_ADDTIONAL_DETAILS: service.description,
@@ -53,7 +53,7 @@ const transformDetails = ({ id, service, workflow, thumbnails, complaintType, wo
     ? Customizations.PGR.getComplaintDetailsTableRows({ id, service, role })
     : {};
   return {
-    details: !isEmptyOrNull(customDetails) ? customDetails : getDetailsRow({ id, service, complaintType }),
+    details: !isEmptyOrNull(customDetails) ? customDetails : getDetailsRow({ id, service, complaintType, workState }),
     rowDetails: !isEmptyOrNull(customDetails) ? customDetails : getRow({ id, service, complaintType, workState }),
     thumbnails: thumbnails?.thumbs,
     images: thumbnails?.images,

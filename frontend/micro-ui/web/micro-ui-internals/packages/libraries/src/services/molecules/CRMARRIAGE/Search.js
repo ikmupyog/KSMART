@@ -977,7 +977,7 @@ export const CRSearchMarriage = {
       title: "CR_MARRIAGE_DOCUMENTS",
       tenentId: tenantId,
       documents: true,
-      values: response?.MarriageDocuments.map((doc) => doc?.fileStoreId),
+      values: [...response?.MarriageDocuments.map((doc) => doc?.fileStoreId), response?.WitnessDetails?.groomFilestoreId,response?.WitnessDetails?.brideFilestoreId],
     };
 
     //Groom groom GROOM

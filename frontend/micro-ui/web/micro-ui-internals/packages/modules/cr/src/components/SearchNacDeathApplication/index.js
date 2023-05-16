@@ -31,7 +31,6 @@ const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count })
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const fileSource = Digit.Hooks.cr.getNacDeathFileSourceDetails({ params: { tenantId } });
-  console.log("fileSource", fileSource);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -98,7 +97,7 @@ const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count })
         },
       },
       {
-        Header: t("Decent Name"),
+        Header: t("Applicant Name"),
         disableSortBy: true,
         accessor: (row) => GetCell(row?.DeathApplicantDtls?.ApplicantName + " " + row?.DeathApplicantDtls?.ApplicantName),
       },
@@ -108,9 +107,9 @@ const SearchNacRegistryDeath = ({ onSubmit, data, isSuccess, isLoading, count })
       //   accessor: (row) => GetCell(row?.DeathApplicantDtls?.ApplicantName),
       // },
       {
-        Header: t("CR_COMMON_COL_APP_DATE"),
+        Header: t("Decesed Name"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.InformationDeath?.ApplicationDate ? convertEpochToDateDMY(row?.InformationDeath?.ApplicationDate) : ""),
+        accessor: (row) => GetCell(row?.InformationDeath?.DeceasedFirstNameEn + " " + row?.InformationDeath?.DeceasedFirstNameEn + " " + row?.InformationDeath?.DeceasedLastNameEn),
       },
       {
         Header: t("Date of Death"),

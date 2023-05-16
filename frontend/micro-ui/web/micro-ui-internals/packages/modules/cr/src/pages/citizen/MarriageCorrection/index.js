@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import {
   BackButton,
   TextInput,
@@ -33,7 +34,6 @@ const MarriageCorrection = () => {
   const mutation = Digit.Hooks.cr.useRegistrySearchMarriage(tenantId);
 
   const onSuccess = (data) => {
-    console.log("success data==", data);
     setFetchData(data?.MarriageDetails);
   };
 
@@ -62,9 +62,10 @@ const MarriageCorrection = () => {
 
   useEffect(()=>{
    if( Object.keys(payload)?.length > 0) {
+    console.log("payload==",payload);
     mutation.mutate(
       {
-        filters: payload,
+        filters: {...payload,marriageDOM: payload.marriageDOM && moment(payload.marriageDOM, 'YYYY-MM-DD').valueOf()},
       },
       { onSuccess }
     );
@@ -82,8 +83,6 @@ const MarriageCorrection = () => {
   //   enabled: !!(payload && Object.keys(payload).length > 0),
   //   };
 
-  console.log("mutation.isLoading", mutation.isFetching, mutation.isLoading);
-
   return (
     <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
@@ -94,6 +93,7 @@ const MarriageCorrection = () => {
       data={fetchData?.length > 0 ? fetchData : ""}
       count={mutation.data?.Count}
       isLoading={mutation.isLoading}
+      isSuccess={mutation.isSuccess}
       onCorrectionClick={gotoEditCorrection}
     />
     </React.Fragment>

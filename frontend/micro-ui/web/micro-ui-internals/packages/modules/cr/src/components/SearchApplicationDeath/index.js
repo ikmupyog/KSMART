@@ -132,7 +132,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
         },
       },
       {
-        Header: t("CR_SEARCH_ACK_NO"),
+        Header: t("CR_DECEASED_DOB"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.InformationDeath?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath?.DateOfDeath) : ""),
       },
@@ -142,7 +142,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
         disableSortBy: true,
         accessor: (row) =>
           GetCell(
-            row.InformationDeath?.DeceasedFirstNameEn + row.InformationDeath?.DeceasedMiddleNameEn + row.InformationDeath?.DeceasedLastNameEn ||
+            row.InformationDeath?.DeceasedFirstNameEn + " " + row.InformationDeath?.DeceasedMiddleNameEn +" " + row.InformationDeath?.DeceasedLastNameEn ||
             t("CR_NOT_RECORDED")
           ),
       },

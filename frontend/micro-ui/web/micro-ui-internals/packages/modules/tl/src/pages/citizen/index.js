@@ -26,6 +26,7 @@ const App = () => {
   const MyApplicationDetails= Digit?.ComponentRegistryService?.getComponent('MyApplicationDetails');
   const SearchRenewalTrade = Digit?.ComponentRegistryService?.getComponent('TLSearchRenewalTrade');
   const CorrectionTradeLicence=Digit?.ComponentRegistryService?.getComponent('CorrectionTradeLicence');
+  const CancelTradeLicence=Digit?.ComponentRegistryService?.getComponent('CancelTradeLicence');
   const getBackPageNumber = () => {
     let goBacktoFromProperty = -1;
   if(sessionStorage.getItem("VisitedCommonPTSearch") === "true" && (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") && isCommonPTPropertyScreen)
@@ -55,9 +56,11 @@ const App = () => {
           <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
           {/* <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} /> */}
           <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={()=><SearchRenewalTrade isCorrectionreq={false}/>} />
-          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isCorrectionreq={true}/>}/>
+          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isProcessreq="correction"/>}/>
           <PrivateRoute path={`${path}/tradelicence/license-renewal-pde`}   component={() => <CreateTradeLicence  isRenewal={true}/>} />
            <PrivateRoute path={`${path}/tradelicence/license-correction`} component={() => <CorrectionTradeLicence  isRenewal={false}/>} /> 
+           <PrivateRoute path={`${path}/tradelicence/license-cancellation-search`} component={()=><SearchRenewalTrade isProcessreq="cancellation"/>}/>
+           <PrivateRoute path={`${path}/tradelicence/license-cancellation`} component={() => <CancelTradeLicence  isRenewal={false}/>} /> 
           {/* component={() => <CreateTradeLicence  isRenewal={true}/>} />	 */}
         </AppContainer>
       </Switch>

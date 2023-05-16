@@ -54,6 +54,24 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const [toast, setToast] = useState(false);
   const { ChildDetails, ParentsDetails, AddressBirthDetails, InitiatorinfoDetails, InformarHosInstDetails } = value;
   // console.log(AddressBirthDetails);
+  const uploadedImages = [ChildDetails.uploadedFile];
+  useEffect(() => {
+    if (uploadedImages?.length > 0) {
+      fetchImage();
+    }
+  }, []);
+  const [imagesThumbs, setImagesThumbs] = useState(null);
+  const [imageZoom, setImageZoom] = useState(null);
+
+  const fetchImage = async () => {
+    setImagesThumbs(null);
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    setImagesThumbs(newThumbnails);
+  };
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
@@ -116,6 +134,19 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       setisInitiatorDeclaration(e.target.checked);
     }
   }
+  const { roles: userRoles, } = Digit.UserService.getUser().info;
+  const [isHospitalUser, setIsHospitalUser] = useState(false);
+  useEffect(() => {
+    console.log("userRoles", userRoles);
+    if (userRoles.length > 0) {
+      if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER" ||
+        userRoles[0].code === "BND_LOCAL_REGISTRAR" || userRoles[0].code === "BND_SUB_REGISTRAR" || userRoles[0].code === "BND_DISTRICT_REGISTRAR") {
+        setIsHospitalUser(true);
+      } else {
+        setIsHospitalUser(false);
+      }
+    }
+  }, [userRoles]);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -312,7 +343,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {ChildDetails?.hospitalName.hospitalNamelocal}
                       </CardText>
-                      {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/ChildDetails`} />}
+                      {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/child-details`} />}
                     </div>
                   </div>
                 </div>
@@ -345,7 +376,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {ChildDetails?.institutionId.institutionNamelocal}
-                          {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                          {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                         </CardText>
                       </div>
                     </div>
@@ -421,7 +452,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsHouseNameMl}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                       </div>
                     </div>
                   </div>
@@ -486,7 +517,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleToMl}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                       </div>
                     </div>
                   </div>
@@ -515,7 +546,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-9">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleDesDetailsEn}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                       </div>
                     </div>
                   </div>
@@ -578,10 +609,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-9">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.publicPlaceDecpEn}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
-                      </div>
-                      <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                       </div>
                     </div>
                   </div>
@@ -633,7 +661,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.birthWeight}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/ChildDetails`} />}
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                   </div>
                 </div>
               </div>
@@ -674,16 +702,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherAadhar}</CardText>
                       </div>
-                      <div className="col-md-2">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherFirstNameEn}</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherFirstNameMl}</CardText>
                       </div>
                     </div>
@@ -710,7 +742,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-8">
+                      <div className="col-md-10">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
@@ -720,16 +752,16 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-4">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-1">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherMarriageBirth}</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.orderofChildren}</CardText>
                       </div>
                     </div>
@@ -1632,6 +1664,89 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
+        {ChildDetails?.proceedNoRDO != null && ChildDetails?.regNoNAC != null && (
+          <Accordion
+            expanded={false}
+            title={t("CR_DOCUMENTS")}
+            content={
+              <StatusTable>
+
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RDO_PROCEED_NO")}`} :</CardText>
+                    </div>
+                    <div className="col-md-3">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.proceedNoRDO}</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAC_REG_NO")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.regNoNAC}</CardText>
+                    </div>
+                  </div>
+                </div>
+
+                {uploadedImages.length > 0 && (
+                  <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                    <div className="col-md-12">
+                      <div className="col-md-12">
+                        <h1 className="summaryheadingh">
+                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {uploadedImages.length > 0 && (
+                  <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                    <div
+                      className="col-md-12"
+                      style={{
+                        display: "flex",
+                        marginLeft: "15px",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {imagesThumbs &&
+                        imagesThumbs.map((thumbnail, index) => {
+                          return (
+                            <div key={index}>
+                              {thumbnail.type == "pdf" ? (
+                                <React.Fragment>
+                                  <object
+                                    style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                    height={120}
+                                    data={thumbnail.pdfUrl}
+                                    alt={`upload-thumbnails-${index}`}
+                                  />
+                                </React.Fragment>
+                              ) : (
+                                <img
+                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                  height={120}
+                                  src={thumbnail.small}
+                                  alt={`upload-thumbnails-${index}`}
+                                  onClick={() => setImageZoom(thumbnail.large)}
+                                />
+                              )}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+
+                )}
+              </StatusTable>
+            }
+          />
+        )}
+        {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
+
         {InitiatorinfoDetails?.initiatorAadhar != null && (
           <div>
             <Accordion
@@ -1648,78 +1763,177 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      {InitiatorinfoDetails?.isCaretaker === true && (
-                        <div>
-                          <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                              {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :
-                            </CardText>
+                  {InitiatorinfoDetails?.isGuardian === false && InitiatorinfoDetails?.isCaretaker === false && (
+                    <div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`} :</CardText>
                           </div>
                           <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiator.name}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
                           </div>
                         </div>
-                      )}
-                      {InitiatorinfoDetails?.isCaretaker === false && (
-                        <div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                          </div>
+                          <div className="col-md-4">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                          </div>
+                          <div className="col-md-9">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
+                            {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {InitiatorinfoDetails?.isGuardian === true && InitiatorinfoDetails?.isCaretaker === false && (
+                    <div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`} :</CardText>
+                          </div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiator.name}</CardText>
+                          </div>
                           <div className="col-md-2">
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
                           </div>
                           <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.i18nKey}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.name}</CardText>
                           </div>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
-                      </div>
-                      <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
-                      </div>
-                      {InitiatorinfoDetails?.isCaretaker === true && (
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CARE_TAKER_ADDRESS")}`} :</CardText>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                          </div>
+                          <div className="col-md-4">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                          </div>
                         </div>
-                      )}
-                      {InitiatorinfoDetails?.isCaretaker === false && (
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                          </div>
+                          <div className="col-md-5">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
+                            {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                          </div>
                         </div>
-                      )}
-                      <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
                       </div>
                     </div>
-                  </div>
+                  )}
+                  {InitiatorinfoDetails?.isGuardian === false && InitiatorinfoDetails?.isCaretaker === true && (
+                    <div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`} :</CardText>
+                          </div>
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiator.name}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME")}`} :</CardText>
+                          </div>
+                          <div className="col-md-5">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorInstitutionName}</CardText>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :</CardText>
+                          </div>
+                          <div className="col-md-4">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi.name}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                          </div>
+                          <div className="col-md-4">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorMobile}</CardText>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-3">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                          </div>
+                          <div className="col-md-9">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorAddress}</CardText>
+                            {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </StatusTable>
               }
             />
+
           </div>
         )}
-        {InformarHosInstDetails?.initiatorAadhar != null && (
+
+        {InformarHosInstDetails?.initiatorAadhar != null && isHospitalUser === true && (
           <div>
             <Accordion
               expanded={false}
@@ -1782,6 +1996,52 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               }
             />
           </div>
+        )}
+        {isHospitalUser === true && (
+          <Accordion
+            expanded={false}
+            title={t("CR_HOSPITAL_ADMISION_DETAILS")}
+            content={
+              <StatusTable>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopList?.name}</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP_NO")}`} :</CardText>
+                    </div>
+                    <div className="col-md-4">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopNumber}</CardText>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GYNC_REG_NO")}`} :</CardText>
+                    </div>
+                    <div className="col-md-4">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.obstetricsNumber}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                    </div>
+                  </div>
+                </div>
+              </StatusTable>
+            }
+          />
         )}
         {/* {window.location.href.includes("/citizen") && ( */}
         <div>

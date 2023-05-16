@@ -136,13 +136,13 @@ const formFielColumns = {
       CorrectionDetails: [
         {
           id: userData?.id,
-        //   tenantid: "kl.cochin",
-          // applicationtype: "CRDRCN",
-          InformationDeath: { 
           funcionUID: "CRDRNR",
-          },
-          businessservice: "birth-services",
-          workflowcode: "BIRTHHOSP21",
+          // InformationDeath: { 
+          // funcionUID: "CRDRNR",
+          // },
+          businessservice: "CR",
+          // workflowcode: "BIRTHHOSP21",
+          workflowcode: "DEATHCORRECTION",
           action: "",
           registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
           registrationNo: userData?.InformationDeath.registrationNo,

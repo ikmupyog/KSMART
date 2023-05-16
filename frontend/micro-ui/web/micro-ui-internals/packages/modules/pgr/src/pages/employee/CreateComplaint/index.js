@@ -26,7 +26,6 @@ export const CreateComplaint = () => {
   const [paramState, setParamState] = useState(params);
   const [nextStep, setNextStep] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
-  const [rerender, setRerender] = useState(0);
   const client = useQueryClient();
   config.indexRoute = "complaint-type";
 
@@ -81,40 +80,21 @@ export const CreateComplaint = () => {
         documentUid: "",
         additionalDetails: {},
       }));
-      if (window.location.href.includes("/citizen")) {
-        const data = {
-          ...values,
-          complaintType: subType.key,
-          cityCode,
-          city,
-          description: details,
-          deptCode: deptCode,
-          district: city,
-          region: city,
-          localityCode,
-          localityName,
-          state: stateInfo.name,
-          uploadedImages: _uploadImages,
-        };
-        await dispatch(createComplaint(data));
-      }
-      if (window.location.href.includes("/employee")) {
-        const data = {
-          ...values,
-          complaintType: subType.key,
-          cityCode,
-          city,
-          description: details,
-          deptCode: deptCode,
-          localityCode,
-          localityName,
-          state: stateInfo.name,
-          uploadedImages: _uploadImages,
-        };
-        await dispatch(createComplaint(data));
-      }
+      const data = {
+        ...values,
+        complaintType: subType.key,
+        cityCode,
+        city,
+        description: details,
+        deptCode: deptCode,
+        localityCode,
+        localityName,
+        state: stateInfo.name,
+        uploadedImages: _uploadImages,
+      };
+      await dispatch(createComplaint(data));
       await client.refetchQueries(["complaintsList"]);
-      history.push(`${match.path}/response`);
+      history.push({ pathname: `${match.path}/response`, state: data });
     }
   };
 
@@ -141,7 +121,7 @@ export const CreateComplaint = () => {
         );
       })}
       <Route path={`${match.path}/response`}>
-        <Response match={match} />
+        <Response />
       </Route>
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />

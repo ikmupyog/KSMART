@@ -86,6 +86,12 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     cmbWardNoFinal.push(wardmst);
   });
 
+  cmbWardNoFinal = cmbWardNoFinal.sort((a, b) => {
+    if (parseInt(a.wardno) > parseInt(b.wardno)) { return 1; }
+    if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
+    return 0;
+  });
+
   const goNext = () => {
     onSelect({
       district: selected.district?.code,
@@ -174,7 +180,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="namecmb" option={arraySort(cmbWardNoFinal || [], "namecmb", t)} placeholder={`${t("CS_COMMON_WARD")}`}
+              <Dropdown t={t} optionKey="namecmb" option={cmbWardNoFinal} placeholder={`${t("CS_COMMON_WARD")}`}
                 selected={selected.ward} select={(val) => handleChange("Ward", val)}
               />
             </div>

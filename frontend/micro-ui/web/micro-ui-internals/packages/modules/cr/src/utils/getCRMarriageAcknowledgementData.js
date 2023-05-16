@@ -76,8 +76,8 @@ const getMarriageDetails = (application, t) => {
     title: "",
     values: [
       { title: t("Date of Marriage"), value: application?.marriageDOM ? Digit.DateUtils.ConvertTimestampToDate(application?.marriageDOM, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("Name of Groom"), value: `${application?.GroomDetails?.groomFirstNameEn} ${application?.GroomDetails?.groomMiddleNameEn} ${application?.GroomDetails?.groomLastNameEn} / ${application?.GroomDetails?.groomFirstNameMl} ${application?.GroomDetails?.groomMiddleNameMl} ${application?.GroomDetails?.groomLastNameMl}`},
-      { title: t("Name of Bride"), value: `${application?.BrideDetails?.brideFirstNameEn} ${application?.BrideDetails?.brideMiddleNameEn} ${application?.BrideDetails?.brideLastNameEn} / ${application?.BrideDetails?.brideFirstNameMl} ${application?.BrideDetails?.brideMiddleNameMl} ${application?.BrideDetails?.brideLastNameMl}`},
+      { title: t("Name of Groom"), value: `${application?.GroomDetails?.groomFirstnameEn} ${application?.GroomDetails?.groomMiddlenameEn || ""} ${application?.GroomDetails?.groomLastnameEn || ""}`},
+      { title: t("Name of Bride"), value: `${application?.BrideDetails?.brideFirstnameEn} ${application?.BrideDetails?.brideMiddlenameEn || ""} ${application?.BrideDetails?.brideLastnameEn || ""}`},
       // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
       // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
       // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
@@ -110,18 +110,18 @@ const getMarriageDetails = (application, t) => {
   //   };
   // }
 };
-const getAddressDetails = (application, t) => {
-  return {
-    title: "",
-    values: [
-      // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
-      // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
-      // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-      { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
-    ],
-  };
-};
+// const getAddressDetails = (application, t) => {
+//   return {
+//     title: "",
+//     values: [
+//       // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
+//       // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
+//       // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
+//       { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
+//       { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
+//     ],
+//   };
+// };
 
 const getCRMarriageAcknowledgementData = async (application, tenantInfo, t) => {
   //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
@@ -143,7 +143,7 @@ const getCRMarriageAcknowledgementData = async (application, tenantInfo, t) => {
           { title: t("Application No"), value: application?.applicationNumber },
           {
             title: t("Application Date"),
-            value: Digit.DateUtils.ConvertTimestampToDate(application?.dateofreport, "dd/MM/yyyy"),
+            value: application?.marriageDOM ? Digit.DateUtils.ConvertTimestampToDate(application?.marriageDOM, "dd/MM/yyyy") : t("CS_NA") ,
           },
         ],
       },

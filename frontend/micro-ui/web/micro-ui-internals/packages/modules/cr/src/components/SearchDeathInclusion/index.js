@@ -1,6 +1,6 @@
  import React, { useCallback, useState, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SubmitBar, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -30,17 +30,19 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionClick }) => {
+const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, toast, setToast, onCorrectionClick, isSuccess }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
-  const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+  const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
       sortOrder: "DESC",
+      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
+  console.log("isSuccess", isSuccess);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
     register("limit", 10);
     register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
+    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -171,16 +174,13 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("DEATH INCLUSION")}</h1>
+        <h1 style={hstyle}>{t("CR_DEATH_CORRECTION")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
+          <SearchFields {...{ register, watch, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
       </div>
-      {data?.length > 0 && (
+      {(data?.length > 0 && isSuccess) ? (
           <React.Fragment>
-            {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
-        <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-       </div>:<Loader/>} */}
             <Table
               t={t}
               data={data}
@@ -205,8 +205,12 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionCl
               sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
             />
           </React.Fragment>
-        )
-      }
+        ) : isSuccess ? (
+          <Card style={{ marginTop: 20 }}>
+            <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
+          </Card>
+        ): null}
+      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
     </React.Fragment>
   );
 };
