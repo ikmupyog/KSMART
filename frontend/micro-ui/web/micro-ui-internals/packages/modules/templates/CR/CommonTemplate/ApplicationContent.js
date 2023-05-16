@@ -72,8 +72,10 @@ function ApplicationContent({
   const getTimelineCaptions = (checkpoint) => {
     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
       const caption = {
-        date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
+        date: checkpoint?.auditDetails?.created,
         source: applicationData?.channel || "",
+        name: checkpoint?.assigner?.name,
+        mobileNumber: checkpoint?.assigner?.mobileNumber,
       };
       return <TLCaption data={caption} />;
     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
@@ -87,12 +89,13 @@ function ApplicationContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
+      console.log({checkpoint})
       const caption = {
-        date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-        name: checkpoint?.assignes?.[0]?.name,
+        date: checkpoint?.auditDetails?.lastModified,
+        name: checkpoint?.assigner?.name,
         // mobileNumber: checkpoint?.assigner?.mobileNumber,
         wfComment: checkpoint?.wfComment,
-        mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
+        mobileNumber: checkpoint?.assigner?.mobileNumber,
       };
       return <TLCaption data={caption} />;
     }
