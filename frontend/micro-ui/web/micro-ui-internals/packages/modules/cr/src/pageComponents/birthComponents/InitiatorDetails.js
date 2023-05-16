@@ -8,6 +8,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   //console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   let cmbInitiator =[];
   let cmbRelation =[];
@@ -399,7 +400,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
               <CardLabel>{`${t("CR_INITIATOR")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                 isMandatory={false}
                 option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "code", t)}
                 selected={initiator}
@@ -413,7 +414,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                 <CardLabel>{`${t("CR_RELATION")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : "namelocal"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbRelation ? cmbRelation : [], "code", t)}
                   selected={relation}
@@ -444,7 +445,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                   <CardLabel>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
                   <Dropdown
                     t={t}
-                    optionKey="name"
+                    optionKey={locale === "en_IN" ? "name" : "namelocal"}
                     isMandatory={false}
                     option={sortDropdownNames(cmbCareTakerDesign ? cmbCareTakerDesign : [], "code", t)}
                     selected={initiatorDesi}
@@ -537,7 +538,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                   <CardLabel>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}<span className="mandatorycss">*</span></CardLabel>
                   <Dropdown
                     t={t}
-                    optionKey="name"
+                    optionKey={locale === "en_IN" ? "name" : "namelocal"}
                     isMandatory={false}
                     option={sortDropdownNames(cmbIpopList ? cmbIpopList : [], "code", t)}
                     selected={ipopList}

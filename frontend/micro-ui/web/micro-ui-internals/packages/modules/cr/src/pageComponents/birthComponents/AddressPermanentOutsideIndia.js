@@ -17,6 +17,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -33,8 +34,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
     });
   let cmbVillage = [];
   const cmbUrbanRural = [
-    { i18nKey: "Town", code: "TOWN" },
-    { i18nKey: "Village", code: "VILLAGE" },
+    { name: "Town", namelocal: "ടൌണ്‍", code: "TOWN" },
+    { name: "Village", namelocal: "വില്ലേജ്", code: "VILLAGE" },
   ];
 
   if (isEditBirth) {
@@ -267,7 +268,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="i18nKey"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [], "code", t)}
               selected={permntOutsideIndiaVillage}
               select={setSelectadrsPermntOutsideIndiaVillage}

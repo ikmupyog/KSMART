@@ -519,7 +519,7 @@ export const convertToBirthRegistration = (data = {}) => {
         ],
         BirthNACDocuments: [
           {
-            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            DocumentType: "CR_RDO_PROCEEDINGS_DOC",
             filestoreId: data?.ChildDetails?.uploadedFile,
             proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
             regNoNAC: data?.ChildDetails?.regNoNAC,
@@ -751,7 +751,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         },
         BirthNACDocuments: [
           {
-            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            DocumentType: "CR_RDO_PROCEEDINGS_DOC",
             filestoreId: data?.ChildDetails?.uploadedFile,
             proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
             regNoNAC: data?.ChildDetails?.regNoNAC,
