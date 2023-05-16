@@ -437,39 +437,42 @@
         height: 3772px;
     }
 }
-
 .module-adding {
     margin-top: 40px;
-
     @media (max-width: 1020px) {
         margin-top: 10px;
     }
 }
-
 .module-wrapper {
-    height: 270px;
-
-    @media (max-width: 1020px) {
-        height: 340px;
-    }
-
-    @media (max-width: 600px) {
-        height: 520px;
-    }
+    padding: 25px;
+   @media (max-width: 768px){
+    padding-bottom: 50%;
+   }
+   @media (max-width: 640px){
+    padding-bottom: 50%;
+   }
+   @media (max-width: 480px){
+    padding-bottom: 75%;
+   }
+   @media (max-width: 360px){
+    padding-bottom: 85%;
+   }
 }
-
 .major-wrapper {
-    height: 360px;
-
-    @media (max-width: 1020px) {
-        height: 440px;
+    padding: 25px;
+    @media (max-width: 768px){
+     padding-bottom: 21%;
     }
-
-    @media (max-width: 600px) {
-        height: 620px;
+    @media (max-width: 640px){
+     padding-bottom: 22%;
+    }
+    @media (max-width: 480px){
+     padding-bottom: 35%;
+    }
+    @media (max-width: 360px){
+     padding-bottom: 38%;
     }
 }
-
 .customSubFunctionTable {
     @media (max-width: 1020px) {
         max-width: 645px;
@@ -477,13 +480,14 @@
     }
 
     @media (max-width: 600px) {
-        max-width: 340px;
+        max-width: 100%;
         overflow-x: scroll;
     }
 }
 
 .sub-wrapper {
     height: 340px;
+    padding: 25px;
 
     @media (max-width: 1020px) {
         height: 290px;

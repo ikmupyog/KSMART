@@ -116,10 +116,181 @@ function ApplicationDetailsActionBar({
             ]
           : null,
       };
+      if(businessService == "PT") {
+        submitAction({
+          Property: {
+            ...applicationData,
+            workflow,
+          },
+        });
+      }
+      // else if(businessService == "ADOPTIONHOME"){
+      //   submitAction({
+      //     Property: applicationData,
+      //   });
+      // }
+      else if(businessService == "WFBIRTH21DAYS" || businessService == "WFBIRTH30DAYS"||
+      businessService == "WFBIRTH1YR"||
+      businessService == "WFBIRTHABOVE1YR"||
+      businessService == "WFBIRTH21DAYSHOME"||
+      businessService == "WFBIRTH30DAYSHOME"||
+      businessService == "WFBIRTH1YRHOME"||
+      businessService == "ABOVE1YRBIRTHHOME"){
+        submitAction({
+          ChildDetails: [applicationData],
+        });;
+      }
+      else if(businessService == "STILLBIRTHHOSP"){
+        submitAction({
+          StillBirthChildDetails: [applicationData],
+        });
+      }
+      else if(businessService == "ADOPTIONHOME"){
+        submitAction({
+          Property: applicationData,
+        });
+      }
+      else if(businessService == "WFBORNOUTSIDE60"){
+        submitAction({
+          BornOutsideChildDetails: [applicationData],
+        });
+      }
+      else if(businessService == "BIRTHABANDONED"){
+        submitAction({
+          AbandonedDetails: [applicationData],
+        });
+      }
+      else if(businessService == "WFDEATH21DAYS" ||
+      businessService == "WFDEATH30DAYS"||
+      businessService == "WFDEATH1YR"||
+      businessService == "WFDEATHABOVE1YR"||
+      businessService == "WFDEATH21DAYSHOME"||
+      businessService == "WFDEATH30DAYSHOME"||
+      businessService == "WFDEATH1YEARHOME"||
+      businessService == "WFDEATHHOME1YEARABOVE"
+      ){
+        submitAction({
+          deathCertificateDtls: [applicationData],
+        });
+      }
+      else if(businessService == "DEATHABANDONED"){
+        submitAction({
+          deathAbandonedDtls: [applicationData],
+        });
+      }
+      else if(businessService == "NACAPP"){
+        submitAction({
+          nacDetails: [applicationData],
+        });
+      }
+      else if(businessService == "MARRIAGE45DAYS"||
+      businessService == "MARRIAGE5YRS"||
+      businessService == "45MARRIAGE"||
+      businessService == "MARRIAGEABOVE5YRS"){
+        submitAction({
+          MarriageDetails: [applicationData],
+        });
+      }
+      else if(businessService == "NACDEATH"){
+        submitAction({
+          deathNACDtls: [applicationData],
+        });
+      }
+      else if(businessService == "NewDFM"){
+        submitAction({
+          ApplicantPersonals: [applicationData],
+        });
+      }
+      else if(businessService == "NewTL"||
+      businessService == "TL"||
+      businessService == "EDITRENEWAL"||
+      businessService == "DIRECTRENEWAL"){
+        submitAction({
+          LicenseCorrection: [applicationData],
+        });
+      }
+      else if(businessService == "BPAREG"){
+        submitAction({
+          Licenses: [applicationData],
+        }, false, {isStakeholder: true, bpa: false});
+      }
+       else if(businessService == "BPA"){
+        submitAction({
+          BPA:applicationData
+        }, nocData?.length > 0 ? nocData : false, {isStakeholder: false, bpa: true});
+       }
+      else if(businessService == "NOC"){
+        let workflow = { action: selectedAction?.action, comments: noteText, businessService, moduleName: moduleCode };
+        applicationData = {
+          ...applicationData,
+          documents: getDocuments(applicationData),
+          additionalDetails: {...applicationData?.additionalDetails, fieldinspection_pending:getfeildInspection(applicationData), pendingapproval: getPendingApprovals() },
+           workflow:{
+            action: selectedAction?.action,
+            comments: noteText,
+            comment: noteText,
+            assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+            assignes: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+            varificationDocuments: uploadedFile
+            ? [
+              {
+                documentType: action?.action + " DOC",
+                fileName: file?.name,
+                fileStoreId: uploadedFile,
+              },
+            ]
+            : null,
+          },
+          action: action?.action,
+          comment: data?.comments,
+          assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
+          wfDocuments: uploadedFile
+            ? [
+              {
+                documentType: action?.action + " DOC",
+                fileName: file?.name,
+                fileStoreId: uploadedFile,
+              },
+            ]
+            : null,
+        };
+    
+        const nocDetails = applicationDetails?.nocData?.map(noc => {
+          const uploadedDocuments = Digit.SessionStorage.get(noc?.nocType) || [];
+          return {
+            Noc: {
+              ...noc,
+              documents: [
+                ...(noc?.documents?noc?.documents:[]),
+                ...(uploadedDocuments?uploadedDocuments:[])
+              ]
+            }
+          }
+        })
+    
+        let nocData = [];
+        if (nocDetails) {
+          nocDetails.map(noc => {
+            if (
+                noc?.Noc?.applicationStatus?.toUpperCase() != "APPROVED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "AUTO_APPROVED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "REJECTED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "AUTO_REJECTED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "VOIDED"
+              ) {
+                nocData.push(noc);
+              }
+          })
+        }
+        submitAction({
+          Noc: {
+            ...applicationData,
+            workflow,
+          },
+        }, false, {isNoc: true});
+      }
       // console.log('dash',applicationData,selectedAction,selectedAssigne,workflow);
-      submitAction({
-        Property: applicationData,
-      });
+     
       
     }
     // let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };

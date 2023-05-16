@@ -193,11 +193,21 @@ const Urls = {
     create_draft: "/filemgmnt/v1/applicantservices/_createDraftingMain",
     create_note: "/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
     fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
+    arising_file: "/filemgmnt/v1/applicantservices/_createArisingFile",
+    createmodule:"/filemgmnt/v1/masterdata/modules/_create",
+    updatemodule:"/filemgmnt/v1/masterdata/modules/_update",
+    updatemajor:"/filemgmnt/v1/masterdata/majorfunctions/_update",
+    deleteModule:"/filemgmnt/v1/masterdata/modules/_delete",
+    deleteMajor:"/filemgmnt/v1/masterdata/majorfunctions/_delete",
+    submodulesearch:"/filemgmnt/v1/masterdata/subfunctions/_search",
+    modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
+    majorFunctionSearch:"/filemgmnt/v1/masterdata/majorfunctions/_search",
+    createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create",
     arising_file: "/filemgmnt/v1/arisingfiles/_create",
-    createmodule: "/filemgmnt/v1/globalmaster/_createmodule",
-    modulesearch: "/filemgmnt/v1/globalmaster/_searchmodule"
+    majorFunction:"/filemgmnt/v1/masterdata/majorfunctions/_create"
 
   },
+
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",
     payments: "/collection-services/payments",
@@ -257,6 +267,6 @@ const Urls = {
   noc: {
     nocSearch: "/noc-services/v1/noc/_search",
   },
-};
 
+};
 export default Urls;

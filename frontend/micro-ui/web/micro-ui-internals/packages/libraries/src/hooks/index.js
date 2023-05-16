@@ -28,7 +28,15 @@ import { useEvents, useClearNotifications, useNotificationCount } from "./events
 import useCreateEvent from "./events/useCreateEvent";
 import useUpdateEvent from "./events/useUpdateEvent";
 import useNewInboxGeneral from "./useInboxGeneral/useNewInbox";
+import useApplicationModule from "./dfm/useApplicationModule";
 import useCreateModule from "./dfm/useCreateModule";
+import useCreateSubModule from "./dfm/useCreateSubModule";
+import useUpdateModule from "./dfm/useUpdateModule";
+import useDeleteModule from "./dfm/useDeleteModule";
+import useDeleteMajorFunc from "./dfm/useDeleteMajorFunc";
+import useUpdateMajorFunc from "./dfm/useUpdateMajorFunc";
+import useSearchmajorFunction from "./dfm/useSearchmajorFunction";
+import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -197,7 +205,8 @@ import useDFMApplicationActions from "./dfm/useApplicationActions";
 import useDFMGenderMDMS from "./dfm/useDFMGenderMDMS";
 import useDFMMDMS from "./dfm/useMDMS";
 import useDFMSearch from "./dfm/useSearch";
-import useSearchmodule from "./dfm/useSearchmodule"
+import useSearchmodule from "./dfm/useSearchmodule";
+import useSearchsubModule from "./dfm/useSearchsubModule";
 import useApplicationDrafting from "./dfm/useApplicationDrafting";
 import useApplicationNoteDrafting from "./dfm/useApplicationNoteDrafting";
 import useApplicationFetchDraft from "./dfm/useApplicationFetchDraft";
@@ -478,7 +487,16 @@ const dfm = {
   useApplicationNoteDrafting,
   useApplicationFetchDraft,
   useApplicationArisingFile,
-  useCreateModule
+  useCreateModule,
+  useApplicationModule,
+  useSearchsubModule,
+  useSearchmajorFunction,
+  useCreateSubModule,
+  useUpdateModule,
+  useDeleteModule,
+  useDeleteMajorFunc,
+  useUpdateMajorFunc,
+  useMajorFunctionAdd
 };
 const receipts = {
   useReceiptsMDMS,

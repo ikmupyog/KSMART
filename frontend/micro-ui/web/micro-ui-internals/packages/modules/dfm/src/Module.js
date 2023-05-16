@@ -43,6 +43,7 @@ import CounterModuleAcknowledgement from "./components/counterModule/CounterModu
 // import ArisingFiled from "./components/arisingFiles/ArisingFiled";
 
 import SearchModuleApplication from "./components/SearchModuleApplication";
+import SubFunctionApplication from "./components/SubFunctionApplication";
 export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -122,8 +123,10 @@ const componentsToRegister = {
   SearchModuleApplication,
   ArisingFileSummary,
   CounterModuleSummary,
-  CounterModuleAcknowledgement
+  CounterModuleAcknowledgement,
   // ArisingFiled
+  SubFunctionApplication,
+  //ArisingFileSummery
 };
 
 export const initDFMComponents = () => {

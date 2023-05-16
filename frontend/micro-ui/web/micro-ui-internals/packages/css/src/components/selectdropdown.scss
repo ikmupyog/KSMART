@@ -26,7 +26,6 @@
     @apply relative block w-full h-10 border border-solid border-input-border;
     border-radius: 5px;
     border: 1px solid #c9cccf;
-    margin-top: 16px;
    
     &:hover {
       @apply border-2 border-solid border-primary-main;
@@ -149,7 +148,6 @@
     p {
       padding-top: 9px;
     }
-
     img {
       @apply float-right h-6 w-6 mt-sm mr-sm;
     }

@@ -21,13 +21,17 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
-
+// const { data: { ModuleDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.dfm.useSearchmodule({
+//   tenantId,
+//   filters: payload,
+//   config,
+// });
 const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "",
+      sortBy: "moduleCode",
       sortOrder: "DESC",
     },
   });
@@ -35,7 +39,7 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "");
+    register("sortBy", "moduleCode");
     register("sortOrder", "DESC");
   }, [register]);
 
@@ -67,62 +71,19 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
 
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-  const moduleId = 1;
-  // const searchModule = Digit.Hooks.dfm.useSearchmodule(tenantId);
-  useEffect(() => {
-    const getColumns = async () => {
-      try {
-        const searchModule = Digit.Hooks.dfm.useSearchmodule();
-        if (searchModule) {
-          const data = await searchModule.search(moduleId);
-          const columns = [
-            {
-              Header: t("SL_NO"),
-              disableSortBy: true,
-              Cell: ({ row }) => GetCell(row.original.fileNumber || ""),
-            },
-            {
-              Header: t("MODULE_CODE"),
-              disableSortBy: true,
-              Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-            },
-            {
-              Header: t("MODULE_NAME_ENG"),
-              Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-              disableSortBy: true,
-            },
-            {
-              Header: t("MODULE_NAME_MAL"),
-              disableSortBy: true,
-              Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-            },
-            {
-              Header: t("-"),
-              Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-              disableSortBy: true,
-            },
-          ];
-          setTableData({ columns, data });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    getColumns();
-  }, [moduleId]);
+
   const columns = useMemo(
     () => [
       {
         Header: t("File Number"),
-        accessor: "ModuleDetails",
+        accessor: "fileCode",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
             <div>
               <span className="link">
                 <Link to={`/digit-ui/employee/dfm/searchDetails/${row.original?.fileDetail["fileCode"]}`}>
-                  {row.original?.ModuleDetails["fileCode"]}
+                  {row.original?.fileDetail["fileCode"]}
                 </Link>
               </span>
             </div>
@@ -180,7 +141,7 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("DFM_MODULE_MASTER_DATA ")}</h1>
+        <h1 style={hstyle}>{t("DFM_SUB_MODULE_MASTER_DATA ")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, tenantId, t }} />
         </SearchForm>
