@@ -36,6 +36,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
+  // console.log(locale);
   let validation = {};
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -2002,7 +2004,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={ locale === "en_IN" ?  "name" : "namelocal"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [], "name", t)}
                   selected={medicalAttensionSub}
@@ -2048,7 +2050,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={ locale === "en_IN" ?  "name" : "namelocal"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [], "name", t)}
                   selected={deliveryMethods}
