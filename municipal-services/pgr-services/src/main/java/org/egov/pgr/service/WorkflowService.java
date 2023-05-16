@@ -190,7 +190,7 @@ public class WorkflowService {
 
         Service service = request.getService();
         Workflow workflow = request.getWorkflow();
-
+       
         ProcessInstance processInstance = new ProcessInstance();
         processInstance.setBusinessId(service.getServiceRequestId());
         processInstance.setAction(request.getWorkflow().getAction());
@@ -218,7 +218,7 @@ public class WorkflowService {
 
             processInstance.setAssignes(users);
         }
-
+ 
         return processInstance;
     }
 
@@ -261,6 +261,8 @@ public class WorkflowService {
 
         ProcessInstanceResponse response = null;
         StringBuilder url = new StringBuilder(pgrConfiguration.getWfHost().concat(pgrConfiguration.getWfTransitionPath()));
+        System.out.println(" url" +url);
+        System.out.println(" workflowReq" +workflowReq);
         Object optional = repository.fetchResult(url, workflowReq);
         response = mapper.convertValue(optional, ProcessInstanceResponse.class);
         return response.getProcessInstances().get(0).getState();

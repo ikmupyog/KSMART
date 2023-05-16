@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 import static org.egov.pgr.util.PGRConstants.HRMS_DEPARTMENT_JSONPATH;
+import static org.egov.pgr.util.PGRConstants.HRMS_UUID;
 
 @Component
 public class HRMSUtil {
@@ -44,7 +45,7 @@ public class HRMSUtil {
         RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();
  
         Object res = serviceRequestRepository.fetchResult(url, requestInfoWrapper);
-
+       
         List<String> departments = null;
 
         try {
@@ -73,9 +74,55 @@ public class HRMSUtil {
         builder.append(config.getHrmsEndPoint());
         builder.append("?uuids=");
         builder.append(StringUtils.join(uuids, ","));
-
         return builder;
     }
 
+    public String getHRMSUser(String uuid,String tenantId,String role,String ward, RequestInfo requestInfo) {
+    	List<String> userIds = null;
+    	String userId = null;
+    	StringBuilder url = getHRMSURIUser(uuid,tenantId,role,ward);    	 
+    	
+    	 RequestInfoWrapper requestInfoWrapper = RequestInfoWrapper.builder().requestInfo(requestInfo).build();   	 
+    	 
+    	 
+    	 Object res = serviceRequestRepository.fetchResult(url, requestInfoWrapper);
+    	 
+    	 try {
+    		 userIds = JsonPath.read(res, HRMS_UUID);
+        }
+        catch (Exception e){
+            throw new CustomException("PARSING_ERROR","Failed to parse HRMS response");
+        }
+
+    	  if(CollectionUtils.isEmpty(userIds)) {
+    		  userId =null;
+//    		  throw new CustomException("USER_NOT_FOUND","The user with role: "+role.toString()+" is not found in  ward :"+ward.toString() );
+    	  }
+    	  else
+    		  userId = userIds.get(0).toString();
+    		
+    	 
+//        if(StringUtils.isEmpty(userId))
+//            throw new CustomException("USER_NOT_FOUND","The  user with role: "+role.toString()+" is not found in  ward "+ward.toString());
+
+        return userId;
+        
+    	 
+    	
+    }
+    private StringBuilder getHRMSURIUser(String uuid,String tenantId,String role, String ward) {
+
+        StringBuilder url = new StringBuilder(config.getHrmsHost());
+        url.append(config.getHrmsEndPoint());
+        url.append("?tenantId=");
+        url.append(tenantId);
+        url.append("&roles=");
+        url.append(role);
+        url.append("&wardcodes=");
+        url.append(ward);
+        url.append("&uuid=");
+        url.append(uuid);
+        return url;
+    }
 
 }

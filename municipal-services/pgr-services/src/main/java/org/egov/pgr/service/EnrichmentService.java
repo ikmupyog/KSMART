@@ -3,6 +3,7 @@ package org.egov.pgr.service;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.pgr.config.PGRConfiguration;
 import org.egov.pgr.repository.IdGenRepository;
+import org.egov.pgr.util.HRMSUtil;
 import org.egov.pgr.util.PGRUtils;
 import org.egov.pgr.web.models.*;
 import org.egov.pgr.web.models.Idgen.IdResponse;
@@ -19,6 +20,12 @@ import java.util.stream.Collectors;
 import static org.egov.pgr.util.PGRConstants.USERTYPE_CITIZEN;
 import static org.egov.pgr.util.PGRConstants.ACTION_REJECT;
 import static org.egov.pgr.util.PGRConstants.ACTION_RESOLVE;
+import static org.egov.pgr.util.PGRConstants.PGR_BUSINESSSERVICE_ENGG;
+import static org.egov.pgr.util.PGRConstants.PGR_BUSINESSSERVICE_HEALTH;
+import static org.egov.pgr.util.PGRConstants.PGR_SERVICE_ENGG_DEPT;
+import static org.egov.pgr.util.PGRConstants.PGR_SERVICE_HEALTH_DEPT;
+import static org.egov.pgr.util.PGRConstants.PGR_ENG_ROLE;
+import static org.egov.pgr.util.PGRConstants.PGR_HEALTH_ROLE;
 
 @org.springframework.stereotype.Service
 public class EnrichmentService {
@@ -32,12 +39,15 @@ public class EnrichmentService {
 
     private UserService userService;
 
+    private HRMSUtil hrmsUtil;
+    
     @Autowired
-    public EnrichmentService(PGRUtils utils, IdGenRepository idGenRepository, PGRConfiguration config, UserService userService) {
+    public EnrichmentService(PGRUtils utils, IdGenRepository idGenRepository, PGRConfiguration config, UserService userService,HRMSUtil hrmsUtil) {
         this.utils = utils;
         this.idGenRepository = idGenRepository;
         this.config = config;
         this.userService = userService;
+        this.hrmsUtil= hrmsUtil;
     }
 
 
@@ -53,8 +63,8 @@ public class EnrichmentService {
         String tenantId = service.getTenantId();
 
         // Enrich accountId of the logged in citizen
-        if(requestInfo.getUserInfo().getType().equalsIgnoreCase(USERTYPE_CITIZEN))
-            serviceRequest.getService().setAccountId(requestInfo.getUserInfo().getUuid());
+//        if(requestInfo.getUserInfo().getType().equalsIgnoreCase(USERTYPE_CITIZEN))
+//            serviceRequest.getService().setAccountId(requestInfo.getUserInfo().getUuid());
 
         userService.callUserService(serviceRequest);
 
@@ -77,34 +87,41 @@ public class EnrichmentService {
                 document.setId(UUID.randomUUID().toString());
             });
         }
-
-        if(StringUtils.isEmpty(service.getAccountId())) {
-        	if(!StringUtils.isEmpty(service.getCitizen())) {
-        		service.setAccountId(service.getCitizen().getUuid());
-        	}
-        	else {
-             service.setAccountId(requestInfo.getUserInfo().getUuid());
-        	}
-        }
-//        	else if(!StringUtils.isEmpty(service.getInformer())) {
-//        		 service.setAccountId(service.getInformer().getId());
+//
+//        if(StringUtils.isEmpty(service.getAccountId())) {
+//        	if(!StringUtils.isEmpty(service.getCitizen())) {
+//        		service.setAccountId(service.getCitizen().getUuid());
 //        	}
-//        	
-
-//        List<String> customIds = getIdList(requestInfo,tenantId,config.getServiceRequestIdGenName(),config.getServiceRequestIdGenFormat(),1);
-        List<String> customIds = getIds(requestInfo,
+//        	else {
+//             service.setAccountId(requestInfo.getUserInfo().getUuid());
+//        	}
+//        }
+        
+        
+        // account Id set
+        String wardCode = serviceRequest.getService().getAddress().getLocality().getCode();
+        String uuid = serviceRequest.getService().getEmployee().getUuid();
+       
+        String role =null;
+        		   if (serviceRequest.getService().getDeptCode().equals(PGR_SERVICE_ENGG_DEPT)) {
+        	            role = PGR_ENG_ROLE;
+        	        } else if (serviceRequest.getService().getDeptCode().equals(PGR_SERVICE_HEALTH_DEPT)) {
+        	           role= PGR_HEALTH_ROLE;
+        	        }
+        String UserId = hrmsUtil.getHRMSUser(uuid,tenantId,role, wardCode,requestInfo);
+       
+         if  (!StringUtils.isEmpty(UserId)) {	    	   
+	        	 service.setAccountId(UserId);	         
+	      }
+         
+         //Account Id
+      List<String> customIds = getIds(requestInfo,
                 tenantId,
                 config.getServiceRequestIdGenName(),
                 "PGR",
                 "ACK",
                 1);
-//        
-//        ListIterator<String> itr = customIds.listIterator();
-//        serviceRequest.getService()
-//                .forEach(adoption -> {
-//                	adoption.setApplicationNo(itr.next());
-//                });
-        
+ 
         service.setServiceRequestId(customIds.get(0));
 
 
@@ -128,21 +145,21 @@ public class EnrichmentService {
 //	      if(workflow.getAssignes() != null ) {
 	    	  
 	     if  (workflow.getAssignes()!=null && !workflow.getAssignes().isEmpty()) {
-	    	  System.out.println("action 1 "+ workflow.getAssignes());
+	    	  
 	        if(workflow.getAssignes().get(0) != null) {
 	        	 service.setAccountId(workflow.getAssignes().get(0));
 	        }    
 	      }
-        
+	     
        if((workflow.getAction().equals(ACTION_REJECT)) || (workflow.getAction().equals(ACTION_RESOLVE))){
-    	  System.out.println("getCreatedBy  "+service.getAuditDetails().getCreatedBy());
+    	  
     	  service.setAccountId(service.getAuditDetails().getCreatedBy());
       }
         if(serviceRequest.getService().getEmployee().getRolecode() == USERTYPE_CITIZEN) {
         	userService.callUserService(serviceRequest);
         }
         
-        System.out.println("setAccountId  "+ service.getAccountId());
+      
         
         
     }

@@ -178,7 +178,7 @@ public class ServiceRequestValidator {
      * @param request
      */
     private void validateReOpen(ServiceRequest request){
-
+ 
         if(!request.getWorkflow().getAction().equalsIgnoreCase(PGR_WF_REOPEN))
             return;
 

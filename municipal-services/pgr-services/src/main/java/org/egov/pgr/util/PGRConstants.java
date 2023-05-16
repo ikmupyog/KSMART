@@ -19,6 +19,9 @@ public class PGRConstants {
 //    		"PGR_HEALTH";
    
 
+    public static final String PGR_ENG_ROLE = "WARD_OVERSEER";
+    public static final String PGR_HEALTH_ROLE = "WARD_JHI";
+    
     public static final String PGR_SERVICE_ENGG_DEPT = "PWD";
 
     public static final String PGR_SERVICE_HEALTH_DEPT = "HTH";
@@ -40,6 +43,8 @@ public class PGRConstants {
     public static final String MDMS_DEPARTMENT_SEARCH = "$.MdmsRes.RAINMAKER-PGR.ServiceDefs[?(@.serviceCode=='{SERVICEDEF}')].department";
 
     public static final String HRMS_DEPARTMENT_JSONPATH = "$.Employees.*.assignments.*.department";
+    
+    public static final String HRMS_UUID = "$.Employees.*.uuid";
 
     public static final String HRMS_DESIGNATION_JSONPATH = "$.Employees.*.assignments[?(@.department=='{department}')].designation";
 
