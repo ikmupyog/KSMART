@@ -173,7 +173,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BirthNACDetails?.birthDateTime}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BirthNACDetails?.birthDateTime ? BirthNACDetails?.birthDateTime : t("CR_NOT_RECORDED")}
+                    </CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
@@ -189,7 +191,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_CHILD_AADHAAR")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BirthNACDetails?.childAadharNo}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BirthNACDetails?.childAadharNo ? BirthNACDetails?.childAadharNo : t("CR_NOT_RECORDED")}
+                    </CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("ORDER_OF_BIRTH")}`} :</CardText>
