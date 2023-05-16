@@ -903,10 +903,13 @@ public class MarriageMdmsUtil {
                     .build());
         crMarriageMasterDetails
                            .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_PLACE_TYPE)
-                           .build());        
+                           .build());
         crMarriageMasterDetails
                               .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_TYPE)
-                              .build());       
+                              .build());
+        crMarriageMasterDetails
+                             .add(MasterDetail.builder().name(MarriageConstants.SUB_REGISTAR_PLACE_TYPE)
+                              .build());
         // Add Module workflow
         crMarriageMasterDetails.add(MasterDetail.builder()
                                                         .name(MarriageConstants.CR_MDMS_WORKFLOW_NEW)
@@ -1140,6 +1143,19 @@ public class MarriageMdmsUtil {
         return index<0?null:names.get(index);
     }
 
+    public String getMarriagePlaceIdSubRegiEn(Object mdmsData, String placeId) {
+        List<String> tenants  = getPlaceIdCodeSubRegi(mdmsData);
+        int index = tenants.indexOf(placeId);
+        ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACESUBREGISTARID_JSONPATH+".locationOfOffice");
+        return index<0?null:names.get(index);
+    }
+    public String getMarriagePlaceIdSubRegiMl(Object mdmsData, String placeId) {
+        List<String> tenants  = getPlaceIdCodeSubRegi(mdmsData);
+        int index = tenants.indexOf(placeId);
+        ArrayList<String> names =  JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACESUBREGISTARID_JSONPATH+".officeLocal");
+        return index<0?null:names.get(index);
+    }
+
     public String getMarriageLbtypeEn(Object mdmsData, String Lbtype) {
         List<String> tenants  = getLBTypeCode(mdmsData);
         int index = tenants.indexOf(Lbtype);
@@ -1175,5 +1191,9 @@ public class MarriageMdmsUtil {
     }
     private List<String> getTenantIdCode(Object mdmsData) {
         return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH);
+    }
+
+    private List<String> getPlaceIdCodeSubRegi(Object mdmsData) {
+        return JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_PLACESUBREGISTARID_CODE_JSONPATH);
     }
 }

@@ -154,6 +154,8 @@ public class MarriageConstants {
 
        public static final String MARRIAGE_TYPE = "TypeOfMarriage";
 
+       public static final String SUB_REGISTAR_PLACE_TYPE = "SubRegistar";
+
        public static final String WORKFLOW_STATUS_APPROVED = "APPROVED";
        
        public static final String APPLICATION_NEW = "new";
@@ -215,5 +217,7 @@ public class MarriageConstants {
     public static final String CR_MDMS_PLACEID_CODE_JSONPATH = "$.MdmsRes.egov-location.MarriagePlace[*].code";
     public static final String CR_MDMS_PLACEID_JSONPATH = "$.MdmsRes.egov-location.MarriagePlace[*]";
 
+    public static final String CR_MDMS_PLACESUBREGISTARID_CODE_JSONPATH = "$.MdmsRes.birth-death-service.SubRegistar[*].code";
+    public static final String CR_MDMS_PLACESUBREGISTARID_JSONPATH = "$.MdmsRes.birth-death-service.SubRegistar[*]";
     public static final String ACTION_PAY = "PAY";
 }

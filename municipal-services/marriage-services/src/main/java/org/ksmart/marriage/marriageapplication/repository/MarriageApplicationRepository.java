@@ -32,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.ksmart.marriage.utils.MarriageConstants.PLACE_TYPE_REGISTRAR_OFFICE;
+
 @Slf4j
 @Repository
 public class MarriageApplicationRepository {
@@ -158,11 +160,21 @@ public class MarriageApplicationRepository {
                     }
                     //Marriage PlaceId
                     if (marriage.getPlaceid() != null) {
-                        String marriagePlaceIdEn = util.getMarriagePlaceIdEn(mdmsDataLocation, marriage.getPlaceid());
-                        marriage.setMarriagePlaceIdEn(marriagePlaceIdEn);
+                        if(marriage.getPlacetype().equals(PLACE_TYPE_REGISTRAR_OFFICE)){
+                            String marriagePlaceIdSubRegiEn = util.getMarriagePlaceIdSubRegiEn(mdmsData, marriage.getPlaceid());
+                            marriage.setMarriagePlaceIdSubRegiEn(marriagePlaceIdSubRegiEn);
 
-                        String marriagePlaceIdMl = util.getMarriagePlaceIdMl(mdmsDataLocation, marriage.getPlaceid());
-                        marriage.setMarriagePlaceIdMl(marriagePlaceIdMl);
+                            String marriagePlaceIdSubRegiMl = util.getMarriagePlaceIdSubRegiMl(mdmsData, marriage.getPlaceid());
+                            marriage.setMarriagePlaceIdSubRegiMl(marriagePlaceIdSubRegiMl);
+                        }
+                        else{
+                            String marriagePlaceIdEn = util.getMarriagePlaceIdEn(mdmsDataLocation, marriage.getPlaceid());
+                            marriage.setMarriagePlaceIdEn(marriagePlaceIdEn);
+
+                            String marriagePlaceIdMl = util.getMarriagePlaceIdMl(mdmsDataLocation, marriage.getPlaceid());
+                            marriage.setMarriagePlaceIdMl(marriagePlaceIdMl);
+                        }
+
                     }
                     //Marriage TenantId name
                     if (marriage.getTenantid() != null) {
