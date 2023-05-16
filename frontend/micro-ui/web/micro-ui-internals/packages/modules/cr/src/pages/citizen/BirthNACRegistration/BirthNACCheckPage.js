@@ -47,6 +47,7 @@ const getPath = (path, params) => {
 
 const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
   let isEdit = window.location.href.includes("renew-trade");
+  const locale = Digit.SessionStorage.get("locale");
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -725,7 +726,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentInsideKeralaDistrict?.name
+                            : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -733,7 +736,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaTaluk.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentInsideKeralaTaluk?.name
+                            : AddressBirthDetails?.presentInsideKeralaTaluk?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -741,7 +746,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaVillage.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentInsideKeralaVillage?.name
+                            : AddressBirthDetails?.presentInsideKeralaVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -753,7 +760,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaLBName.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentInsideKeralaLBName?.name
+                            : AddressBirthDetails?.presentInsideKeralaLBName?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -861,7 +870,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaDistrict.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentOutsideKeralaDistrict?.name
+                            : AddressBirthDetails?.presentOutsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -877,7 +888,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentOutsideKeralaVillage?.name
+                            : AddressBirthDetails?.presentOutsideKeralaVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -1006,7 +1019,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentOutSideIndiaadrsVillage?.name
+                            : AddressBirthDetails?.presentOutSideIndiaadrsVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -1087,7 +1102,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrDistrict.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntInKeralaAdrDistrict?.name
+                            : AddressBirthDetails?.permntInKeralaAdrDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1095,7 +1112,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrTaluk.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntInKeralaAdrTaluk?.name
+                            : AddressBirthDetails?.permntInKeralaAdrTaluk?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1103,7 +1122,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrVillage.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntInKeralaAdrVillage?.name
+                            : AddressBirthDetails?.permntInKeralaAdrVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -1115,7 +1136,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrLBName.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntInKeralaAdrLBName?.name
+                            : AddressBirthDetails?.permntInKeralaAdrLBName?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1131,7 +1154,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrPostOffice.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntInKeralaAdrPostOffice?.name
+                            : AddressBirthDetails?.permntInKeralaAdrPostOffice?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -1223,7 +1248,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaDistrict.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntOutsideKeralaDistrict?.name
+                            : AddressBirthDetails?.permntOutsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1239,7 +1266,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntOutsideKeralaVillage?.name
+                            : AddressBirthDetails?.permntOutsideKeralaVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -1367,7 +1396,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.permntOutsideIndiaVillage?.name
+                            : AddressBirthDetails?.permntOutsideIndiaVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
