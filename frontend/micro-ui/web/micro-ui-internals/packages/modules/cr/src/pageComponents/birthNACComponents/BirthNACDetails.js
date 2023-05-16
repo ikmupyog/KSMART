@@ -836,7 +836,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
         wardNumber = wardNo.wardno;
         setAdsWardError(false);
       }
-      if (localityNameEn == null || localityNameEn.trim() == "" || localityNameEn.trim() == undefined) {
+      if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
         validFlag = false;
         setlocalNameEnError(true);
         setToast(true);
