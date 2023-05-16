@@ -22,8 +22,14 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
+const DEATH_APPLICATION_TYPE = {
+  "NORMAL": "CRDRNR",
+  "NAC": "CRDRNA"
+}
+
 const generateActions = (rowData) => {
   const status = _.get(rowData, "TL_APPLICATION_STATUS", "INITIATED");
+  const type = _.get(rowData, 'APPLICATION_TYPE', DEATH_APPLICATION_TYPE.NORMAL);
   let response = "";
   switch (status) {
     case "CITIZENACTIONREQUIRED":
@@ -43,7 +49,7 @@ const generateActions = (rowData) => {
     default:
       response = <span className="link">
         <Link
-          to={`/digit-ui/citizen/cr/cr/death/application/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}>
+          to={`/digit-ui/citizen/cr/${type === DEATH_APPLICATION_TYPE.NORMAL ? 'my-application-death' : 'my-application-death-nac'}/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
           VIEW DETAILS
         </Link>
       </span>
@@ -98,20 +104,21 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
         Header: "Status",
         disableSortBy: true,
         Cell: ({ row }) => {
+          console.log({ row })
           return (generateActions(row.original));
         },
       },
     ],
     []
   );
-  let tmpData = data;
+  // let tmpData = data;
 
-  useEffect(() => {
-    if (isSuccess === true) {
-      tmpData[0] = { ...data[0], isSuccess };
-    }
-    setFileData(tmpData);
-  });
+  // useEffect(() => {
+  //   if (isSuccess === true) {
+  //     tmpData[0] = { ...data[0], isSuccess };
+  //   }
+  //   setFileData(tmpData);
+  // });
   const onSort = useCallback((args) => {
     if (args.length === 0) return;
     setValue("sortBy", args.id);
@@ -141,11 +148,11 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
           <SearchDeathFields {...{ register, control, reset, previousPage, t }} />
         </SearchForm>
       </div>
-      {FileData !== [] && (
+      {data !== [] && (
         <React.Fragment>
           <Table
             t={t}
-            data={FileData ? FileData : data}
+            data={data}
             totalRecords={count}
             columns={columns}
             getCellProps={(cellInfo) => {
