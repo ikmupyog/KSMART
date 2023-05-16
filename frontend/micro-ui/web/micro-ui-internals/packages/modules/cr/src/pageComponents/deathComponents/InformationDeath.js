@@ -298,7 +298,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
         : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeath?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
         ? ""
