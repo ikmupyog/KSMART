@@ -90,7 +90,6 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation]);
   useEffect(() => {
-    console.log(mutation.data);
     if (mutation.isSuccess) {
       //console.log(mutation.data?.ChildDetails[0].applicationNumber);
       applicationNumber = mutation.data?.nacDetails[0].applicationNumber;
