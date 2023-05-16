@@ -17,6 +17,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
         tenantId = Digit.ULBService.getCitizenCurrentTenant();
     }
     const { t } = useTranslation();
+    const locale = Digit.SessionStorage.get("locale");
     let validation = {};
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
@@ -202,7 +203,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="name"
+                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                 isMandatory={false}
                                 option={sortDropdownNames(cmbCountry ? cmbCountry : [], "name", t)}
                                 selected={permtaddressCountry}
@@ -218,7 +219,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                                 </CardLabel>
                                 <Dropdown
                                     t={t}
-                                    optionKey="name"
+                                    optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                     isMandatory={false}
                                     option={sortDropdownNames(cmbState ? cmbState : [], "name", t)}
                                     selected={permtaddressStateName}

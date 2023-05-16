@@ -2,29 +2,30 @@ import {
     BreakLine, CardSectionHeader, CardSubHeader, CheckPoint, ConnectingCheckPoints, Loader, Row, StatusTable,
     LinkButton, Carousel, Accordion
 } from "@egovernments/digit-ui-react-components";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-// import BPADocuments from "../../ApplicationDetails/components/BPADocuments";
-// import InspectionReport from "../../ApplicationDetails/components/InspectionReport";
-// import NOCDocuments from "../../ApplicationDetails/components/NOCDocuments";
-// import PermissionCheck from "../../ApplicationDetails/components/PermissionCheck";
-// import PropertyDocuments from "../../ApplicationDetails/components/PropertyDocuments";
-// import PropertyEstimates from "../../ApplicationDetails/components/PropertyEstimates";
-// import PropertyFloors from "../../ApplicationDetails/components/PropertyFloors";
-// import PropertyOwners from "../../ApplicationDetails/components/PropertyOwners";
-// import ScruntinyDetails from "../../ApplicationDetails/components/ScruntinyDetails";
-// import SubOccupancyTable from "../../ApplicationDetails/components/SubOccupancyTable";
+import BPADocuments from "../../../../../templates/ApplicationDetails/components/BPADocuments";
+import InspectionReport from "../../../../../templates/ApplicationDetails/components/InspectionReport";
+import NOCDocuments from "../../../../../templates/ApplicationDetails/components/NOCDocuments";
+import PermissionCheck from "../../../../../templates/ApplicationDetails/components/PermissionCheck";
+import PropertyDocuments from "../../../../../templates/ApplicationDetails/components/PropertyDocuments";
+import PropertyEstimates from "../../../../../templates/ApplicationDetails/components/PropertyEstimates";
+import PropertyFloors from "../../../../../templates/ApplicationDetails/components/PropertyFloors";
+import PropertyOwners from "../../../../../templates/ApplicationDetails/components/PropertyOwners";
+import ScruntinyDetails from "../../../../../templates/ApplicationDetails/components/ScruntinyDetails";
+import SubOccupancyTable from "../../../../../templates/ApplicationDetails/components/SubOccupancyTable";
 import TLCaption from "../../../../../templates/ApplicationDetails/components/TLCaption";
-// import TLTradeAccessories from "../../ApplicationDetails/components/TLTradeAccessories";
-// import TLTradeUnits from "../../ApplicationDetails/components/TLTradeUnits";
-// import DocumentsPreview from "../../ApplicationDetails/components/DocumentsPreview";
+import TLTradeAccessories from "../../../../../templates/ApplicationDetails/components/TLTradeAccessories";
+import TLTradeUnits from "../../../../../templates/ApplicationDetails/components/TLTradeUnits";
+import DocumentsPreview from "../../../../../templates/ApplicationDetails/components/DocumentsPreview";
+import moment from "moment";
 
 function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading, applicationData,
     businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
 
     const { t } = useTranslation();
-console.log("applicationDetails in content==",applicationDetails);
+    console.log("applicationDetails in content==", applicationDetails);
     function OpenImage(imageSource, index, thumbnailsToShow) {
         window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }
@@ -66,6 +67,10 @@ console.log("applicationDetails in content==",applicationDetails);
         }
     };
 
+    useEffect(() => {
+        console.log("workflowDetails==", workflowDetails?.data);
+    }, [workflowDetails])
+
     const checkLocation = window.location.href.includes("employee/tl") || window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc");
     const isNocLocation = window.location.href.includes("employee/noc");
     const isBPALocation = window.location.href.includes("employee/obps");
@@ -106,69 +111,113 @@ console.log("applicationDetails in content==",applicationDetails);
         else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
     };
 
-    
-  const renderCardDetail = (value, fieldName, documentData) => {
-    const type = fieldName === "CHILD_DOB" ? "date" : "text";
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-3">
-            <h3 style={{ overflowWrap: "break-word" }}>{t(value.column)} :</h3>
-          </div>
-          <div className="col-md-4">
-            <h4>
-              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
-            </h4>
-          </div>
-          <div className="col-md-4">
-            <h4>
-              <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
-            </h4>
-          </div>
-          <div className="col-md-1">
-            <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
-          </div>
-        </div>
-      </div>
-    );
-  };
+    const getFieldValue = (data, type = "text") => {
+        let fieldValue = "";
+        switch (type) {
+            case "text":
+                fieldValue = data ? data : t("CR_NOT_RECORDED");
+                break;
+            case "date":
+                fieldValue = data ? moment(parseInt(data, 10)).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
+                break;
+        }
+        return fieldValue;
+    };
 
-  const renderSummaryCard = (detail, index) => {
-    console.log("render summary==",detail);
-    //  switch()
-    return (
-      <React.Fragment key={index}>
-        <div style={getMainDivStyles()}>
-          <Accordion
-            expanded={index === 0 ? true : false}
-            title={t(detail?.title)}
-            style={{ margin: "10px" }}
-            content={
-              <StatusTable style={getTableStyles()}>
-                <div className="row">
-                  <div className="col-md-12">
+
+
+    const renderCardDetail = (value, fieldName, documentData) => {
+        const type = fieldName === "CHILD_DOB" ? "date" : "text";
+        console.log("fieldvalues", value, type);
+        return (
+            <div className="row">
+                <div className="col-md-12">
                     <div className="col-md-3">
-                      {" "}
-                      <h3></h3>{" "}
+                        <h3 style={{ overflowWrap: "break-word" }}>{t(value.title)} :</h3>
                     </div>
                     <div className="col-md-4">
-                      {" "}
-                      <h5>{t("OLD_VALUE")}</h5>{" "}
+                        <h4>
+                            <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
+                        </h4>
                     </div>
-                    <div className="col-md-3">
-                      {" "}
-                      <h5>{t("NEW_VALUE")}</h5>{" "}
+                    <div className="col-md-4">
+                        <h4>
+                            <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
+                        </h4>
                     </div>
-                  </div>
+                    <div className="col-md-1">
+                        <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+                    </div>
                 </div>
-                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value, detail.correctionFieldName, detail.CorrectionDocument))}
-              </StatusTable>
-            }
-          />
-        </div>
-      </React.Fragment>
-    );
-  };
+            </div>
+        );
+    };
+
+    const renderSummaryCard = (detail, index) => {
+        console.log("render summary==", detail);
+        //  switch()
+        return (
+            <React.Fragment key={index}>
+                <div style={getMainDivStyles()}>
+                    <Accordion
+                        expanded={index === 0 ? true : false}
+                        title={t(detail?.title)}
+                        style={{ margin: "10px" }}
+                        content={
+                            <StatusTable style={getTableStyles()}>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="col-md-3">
+                                            {" "}
+                                            <h3></h3>{" "}
+                                        </div>
+                                        <div className="col-md-4">
+                                            {" "}
+                                            <h5>{t("OLD_VALUE")}</h5>{" "}
+                                        </div>
+                                        <div className="col-md-3">
+                                            {" "}
+                                            <h5>{t("NEW_VALUE")}</h5>{" "}
+                                        </div>
+                                    </div>
+                                </div>
+                                {detail?.fieldValues?.map((value, index) => renderCardDetail(value, detail.title, detail.CorrectionDocument))}
+                            </StatusTable>
+                        }
+                    />
+                </div>
+                {detail?.belowComponent && <detail.belowComponent />}
+                {detail?.additionalDetails?.inspectionReport && (<ScruntinyDetails scrutinyDetails={detail?.additionalDetails} paymentsList={paymentsList} />)}
+                {applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending?.length > 0 && detail?.additionalDetails?.fiReport && (
+                    <InspectionReport fiReport={applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending} />
+                )}
+                {detail?.additionalDetails?.floors && <PropertyFloors floors={detail?.additionalDetails?.floors} />}
+                {detail?.additionalDetails?.owners && <PropertyOwners owners={detail?.additionalDetails?.owners} />}
+                {detail?.additionalDetails?.units && <TLTradeUnits units={detail?.additionalDetails?.units} />}
+                {detail?.additionalDetails?.accessories && <TLTradeAccessories units={detail?.additionalDetails?.accessories} />}
+                {detail?.additionalDetails?.permissions && workflowDetails?.data?.nextActions?.length > 0 && (
+                    <PermissionCheck applicationData={applicationDetails?.applicationData} t={t} permissions={detail?.additionalDetails?.permissions} />
+                )}
+                {detail?.additionalDetails?.obpsDocuments && (
+                    <BPADocuments t={t} applicationData={applicationDetails?.applicationData} docs={detail.additionalDetails.obpsDocuments} bpaActionsDetails={workflowDetails} />
+                )}
+                {detail?.additionalDetails?.noc && (
+                    <NOCDocuments t={t} isNoc={true} NOCdata={detail.values} applicationData={applicationDetails?.applicationData}
+                        docs={detail.additionalDetails.noc} noc={detail.additionalDetails?.data} bpaActionsDetails={workflowDetails} />
+                )}
+                {detail?.additionalDetails?.scruntinyDetails && <ScruntinyDetails scrutinyDetails={detail?.additionalDetails} />}
+                {detail?.additionalDetails?.buildingExtractionDetails && <ScruntinyDetails scrutinyDetails={detail?.additionalDetails} />}
+                {detail?.additionalDetails?.subOccupancyTableDetails && (
+                    <SubOccupancyTable edcrDetails={detail?.additionalDetails} applicationData={applicationDetails?.applicationData} />
+                )}
+                {detail?.additionalDetails?.documentsWithUrl && <DocumentsPreview documents={detail?.additionalDetails?.documentsWithUrl} />}
+                {detail?.additionalDetails?.documents && <PropertyDocuments documents={detail?.additionalDetails?.documents} />}
+                {detail?.additionalDetails?.taxHeadEstimatesCalculation && (
+                    <PropertyEstimates taxHeadEstimatesCalculation={detail?.additionalDetails?.taxHeadEstimatesCalculation} />
+                )}
+            </React.Fragment>
+        );
+    };
 
     const carouselItems = [
         {
@@ -197,7 +246,7 @@ console.log("applicationDetails in content==",applicationDetails);
                 </div>
                 <div className={"cr-timeline-wrapper"}>
                     <Carousel {...{ carouselItems }}
-                    imageHeight="300px"
+                        imageHeight="300px"
                         containerStyle={{ height: "300px", width: "auto", overflow: "scroll" }}
                     />
 
@@ -235,6 +284,7 @@ console.log("applicationDetails in content==",applicationDetails);
                                     )}
                                 </Fragment>
                             )}
+
                         </React.Fragment>
                     )}
                 </div>

@@ -28,6 +28,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const [pofilter, setPofilter] = useState(false);
     const [isDisableEdit, setisDisableEdit] = useState(false);
     const { t } = useTranslation();
+    const locale = Digit.SessionStorage.get("locale");
     let validation = {};
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
@@ -605,7 +606,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="name"
+                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                 option={sortDropdownNames(Districtvalues ? Districtvalues : [], "name", t)}
                                 selected={presentInsideKeralaDistrict}
                                 select={setSelectinsideKeralaDistrict}
@@ -632,7 +633,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="name"
+                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                 option={sortDropdownNames(Talukvalues ? Talukvalues : [], "name", t)}
                                 selected={presentInsideKeralaTaluk}
                                 select={setSelectinsideKeralaTaluk}
@@ -647,7 +648,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="name"
+                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                 option={sortDropdownNames(Villagevalues ? Villagevalues : [], "name", t)}
                                 selected={presentInsideKeralaVillage}
                                 select={setSelectinsideKeralaVillage}
@@ -662,7 +663,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="name"
+                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                 option={sortDropdownNames(lbs ? lbs : [], "name", t)}
                                 selected={presentInsideKeralaLBName}
                                 select={setSelectinsideKeralaLBName}
@@ -697,7 +698,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="name"
+                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
                                 option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
                                 selected={presentInsideKeralaPostOffice}
                                 select={setSelectinsideKeralaPostOffice}

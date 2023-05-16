@@ -53,7 +53,8 @@ const DeathCertificateSearch = () => {
     }
   }, [payload])
 
-  const { deathCertificateDtls: searchResult, Count: count } = searchData;
+  const { deathCertificateDtls , deathNACDtls, Count: count } = searchData;
+  const searchResult = deathCertificateDtls || deathNACDtls;
 
   return (
     <React.Fragment>
@@ -67,6 +68,7 @@ const DeathCertificateSearch = () => {
         isLoading={isLoading}
         count={count}
         onRestClick={setSearchData}
+        payload={payload}
       />
     </React.Fragment>
   );

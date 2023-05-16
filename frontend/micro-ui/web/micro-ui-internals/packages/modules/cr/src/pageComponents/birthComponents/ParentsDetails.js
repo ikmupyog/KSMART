@@ -9,6 +9,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   // console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: Qualification = {}, isQualificationLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
   const { data: QualificationSub = {}, isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
@@ -20,9 +21,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const [isDisableEdit, setisDisableEdit] = useState(false);
   let cmbfilterNation = [];
   const cmbMaritalStatus = [
-    { i18nKey: "Married", code: "MARRIED" },
-    { i18nKey: "UnMarried", code: "UNMARRIED" },
-    { i18nKey: "Not Disclosed", code: "NOT_APPLICABLE" },
+    { name: "Married", namelocal: "വിവാഹിത", code: "MARRIED" },
+    { name: "UnMarried", namelocal: "അവിവാഹിത", code: "UNMARRIED" },
+    { name: "Not Disclosed", namelocal: "വെളിപ്പെടുത്തിയിട്ടില്ല", code: "NOT_APPLICABLE" },
   ];
 
   let cmbQualification = [];
@@ -608,9 +609,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
     }
     if (validFlag == true) {
-     
+
       onSelect(config.key, {
-        motherFirstNameEn : (motherFirstNameEn.toUpperCase()).trim(),
+        motherFirstNameEn: (motherFirstNameEn.toUpperCase()).trim(),
         motherFirstNameMl: motherFirstNameMl.trim(),
         motherAadhar,
         motherMaritalStatus,
@@ -743,9 +744,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="nationalityname"
+                      optionKey={locale === "en_IN" ? "nationalityname" : "nationalitynamelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
+                      option={sortDropdownNames(cmbNation ? cmbNation : [], "nationalityname", t)}
                       selected={motherNationality}
                       select={setSelectMotherNationality}
                       disable={isDisableEdit}
@@ -756,9 +757,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="i18nKey"
+                      optionKey={locale === "en_IN" ? "name" : "namelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbMaritalStatus ? cmbMaritalStatus : [],"code",t)}
+                      option={sortDropdownNames(cmbMaritalStatus ? cmbMaritalStatus : [], "code", t)}
                       selected={motherMaritalStatus}
                       select={setSelectMotherMaritalStatus}
                       disable={isDisableEdit}
@@ -827,9 +828,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "en_IN" ? "name" : "namelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbQualification ? cmbQualification : [],"name",t)}
+                      option={sortDropdownNames(cmbQualification ? cmbQualification : [], "name", t)}
                       selected={motherEducation}
                       select={setSelectMotherEducation}
                       disable={isDisableEdit}
@@ -840,9 +841,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "en_IN" ? "name" : "namelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbProfession ? cmbProfession : [],"name",t)}
+                      option={sortDropdownNames(cmbProfession ? cmbProfession : [], "name", t)}
                       selected={motherProfession}
                       select={setSelectMotherProfession}
                       disable={isDisableEdit}
@@ -942,9 +943,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="nationalityname"
+                      optionKey={locale === "en_IN" ? "nationalityname" : "nationalitynamelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
+                      option={sortDropdownNames(cmbNation ? cmbNation : [], "nationalityname", t)}
                       selected={fatherNationality}
                       select={setSelectFatherNationality}
                       disable={isDisableEdit}
@@ -955,9 +956,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_EDUCATION")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "en_IN" ? "name" : "namelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbQualification ? cmbQualification : [],"name",t)}
+                      option={sortDropdownNames(cmbQualification ? cmbQualification : [], "name", t)}
                       selected={fatherEducation}
                       select={setSelectFatherEducation}
                       disable={isDisableEdit}
@@ -968,9 +969,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <CardLabel>{`${t("CR_PROFESSIONAL")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "en_IN" ? "name" : "namelocal"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbProfession ? cmbProfession : [],"name",t)}
+                      option={sortDropdownNames(cmbProfession ? cmbProfession : [], "name", t)}
                       selected={fatherProfession}
                       select={setSelectFatherProfession}
                       disable={isDisableEdit}
@@ -995,9 +996,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                 <CardLabel>{`${t("CS_COMMON_RELIGION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : "namelocal"}
                   isMandatory={false}
-                  option={sortDropdownNames(cmbReligion ? cmbReligion : [],"name",t)}
+                  option={sortDropdownNames(cmbReligion ? cmbReligion : [], "name", t)}
                   selected={Religion}
                   select={setSelectReligion}
                   disable={isDisableEdit}
