@@ -201,7 +201,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   )}
                   {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
                     <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    :{" "} {t(DeathNACDetails.publicPlaceType.name ? DeathNACDetails.publicPlaceType.namelocal : "CR_NOT_RECORDED")} 
+                    :{" "} {t(DeathNACDetails.publicPlaceType.name ? DeathNACDetails.publicPlaceType.name : "CR_NOT_RECORDED")} 
                     </CardText>
                   )}
                   </div>
@@ -278,7 +278,9 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
                       :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn)}
+                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) + 
+                        "/" +
+                        (DeathNACDetails.DeathPlaceHomehoueNameMl) }
                       </CardText>
                     </div>
                     <div className="col-md-6">

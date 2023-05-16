@@ -23,6 +23,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -199,6 +200,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     if (cmbLB.length > 0) {
       currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.AddressBirthDetails?.permntInKeralaAdrLBName.code);
       if (currentLB.length > 0) {
+        setPermLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
         setpermntInKeralaAdrLBName(currentLB[0]);
       }
       if (currentLB.length > 0 && cmbDistrict.length > 0) {
@@ -553,7 +555,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(DistrictPermvalues ? DistrictPermvalues : [], "name", t)}
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
@@ -580,7 +582,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(TalukPermvalues ? TalukPermvalues : [], "name", t)}
               selected={permntInKeralaAdrTaluk}
               select={setSelectpermntInKeralaAdrTaluk}
@@ -595,7 +597,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(VillagePermvalues ? VillagePermvalues : [], "name", t)}
               selected={permntInKeralaAdrVillage}
               select={setSelectpermntInKeralaAdrVillage}
@@ -610,7 +612,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(permlbs ? permlbs : [], "name", t)}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
@@ -645,7 +647,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(PostOfficePermvalues ? PostOfficePermvalues : [], "name", t)}
               selected={permntInKeralaAdrPostOffice}
               select={setSelectpermntInKeralaAdrPostOffice}

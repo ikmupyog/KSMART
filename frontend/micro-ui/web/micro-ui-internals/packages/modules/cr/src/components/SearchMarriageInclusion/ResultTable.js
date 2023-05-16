@@ -1,13 +1,16 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Table } from "@egovernments/digit-ui-react-components";
 import { convertEpochToDateDMY } from "../../utils";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
+import { downloadDocument } from "../../utils/uploadedDocuments";
 
 const GetCell = (value) => <span className="cell-text">{value}</span>;
 
 const ResultTable = ({ setValue, getValues, data = [], count = 0, handleSubmit, t, onSubmit, downloadLink, searchType, tenantId }) => {
   let history = useHistory();
+  const fileSource = Digit.Hooks.cr.getMarriageRegistryFileSourceDetails(tenantId);
+  const [isLoading, setIsLoading] = useState(false);
 
   const goToLink = ({ pathname, state = {} }) => {
     history.push({ pathname, state });
@@ -64,13 +67,56 @@ const ResultTable = ({ setValue, getValues, data = [], count = 0, handleSubmit, 
           GetCell(
             `${row.BrideDetails.brideFirstnameEn || ""} ${row.BrideDetails.brideMiddlenameEn || ""} ${row.BrideDetails.brideLastnameEn || ""}` || "-"
           ),
-      },
-      {
+      }
+    ];
+
+    if (searchType == "certificate") {
+      cols.push({
+        Header: t("Download Certificate"),
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          let id = _.get(row, "original.id", null);
+          return (
+            <div>
+              {id !== null && (
+                <span
+                  className="link"
+                  onClick={() => {
+                    setIsLoading(true);
+                    fileSource.mutate(
+                      { filters: { id, source: "sms" } },
+                      {
+                        onSuccess: (fileDownloadInfo) => {
+                          setIsLoading(false);
+                          const { filestoreId } = fileDownloadInfo;
+                          if (filestoreId) {
+                            downloadDocument(filestoreId);
+                          } else {
+                            console.log("filestoreId is null");
+                          }
+                        },
+                        onError: (err) => {
+                          setIsLoading(false);
+                          alert("Download certificate not available");
+                        },
+                      }
+                    );
+                  }}
+                >
+                  Download
+                </span>
+              )}
+            </div>
+          );
+        },
+      });
+    } else {
+      cols.push({
         Header: t("STATUS"),
         disableSortBy: true,
         Cell: ({ row }) => generateActions(row.original)
-      },
-    ];
+      })
+    }
     return cols;
   }, []);
 
