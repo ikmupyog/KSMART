@@ -40,6 +40,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   const [InitiatorDeclareError, setInitiatorDeclareError] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
+  const [isInitiatorDeclarationOther, setisInitiatorDeclarationOther] = useState(false);
   const { InformationDeath, FamilyInformationDeath, AddressBirthDetails, StatisticalInfo,Initiator,isEditProperty, cpt } = value;
   const [toast, setToast] = useState(false);
   console.log(AddressBirthDetails);
@@ -63,6 +64,18 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   }
   function onDeathSubmit() {
     if (!isInitiatorDeclaration) {
+      setInitiatorDeclareError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setInitiatorDeclareError(false);
+      onSubmit();
+    }
+  }
+  function onDeathSubmit() {
+    if (!isInitiatorDeclarationOther) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -102,6 +115,13 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       setisInitiatorDeclaration(e.target.checked);
     } else {
       setisInitiatorDeclaration(e.target.checked);
+    }
+  }
+  function setDeclarationInfoOther(e) {
+    if (e.target.checked == false) {
+      setisInitiatorDeclarationOther(e.target.checked);
+    } else {
+      setisInitiatorDeclarationOther(e.target.checked);
     }
   }
   return (
@@ -1561,6 +1581,17 @@ content={<StatusTable >
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
               {FamilyInformationDeath?.SpouseAadhaar?FamilyInformationDeath?.SpouseAadhaar:"CR_NOT_RECORDED"}</CardText>
           </div>
+
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_SPOUSE_AGE")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+              {FamilyInformationDeath?.spouseAge?FamilyInformationDeath?.spouseAge:"CR_NOT_RECORDED"}</CardText>
+          </div>
+
+          
+
         </div>
       </div>
       </div>
@@ -2116,16 +2147,30 @@ content={<StatusTable >
                 </div>
               </div>
             </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                  <CheckBox
+                    label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                    onChange={setDeclarationInfoOther}
+                    value={isInitiatorDeclarationOther}
+                    checked={isInitiatorDeclarationOther}
+                    // disable={isDisableEdit}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* {toast && (
+        {toast && (
           <Toast
             error={InitiatorDeclareError}
-            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
+            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`DEATH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
-        )} */}
+        )}
         {""}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onDeathSubmit} />
       </Card>

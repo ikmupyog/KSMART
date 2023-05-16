@@ -190,15 +190,15 @@ const Home = ({
               state: { module: "cr-birth" },
             }),
         },
-        {
-          name: t("CR_NAC_CERT_DOWNLOAD"),
-          Icon: <OBPSIcon />,
-          onClick: () =>
-            history.push({
-              pathname: `${matchPath}/nac-birth-certificate`,
-              state: { module: "cr-birth" },
-            }),
-        },
+        // {
+        //   name: t("CR_NAC_CERT_DOWNLOAD"),
+        //   Icon: <OBPSIcon />,
+        //   onClick: () =>
+        //     history.push({
+        //       pathname: `${matchPath}/nac-birth-certificate`,
+        //       state: { module: "cr-birth" },
+        //     }),
+        // },
         {
           name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
@@ -272,15 +272,15 @@ const Home = ({
               state: { module: "cr-death" },
             }),
         },
-        {
-          name: t("CR_NAC_CERT_DOWNLOAD"),
-          Icon: <OBPSIcon />,
-          onClick: () =>
-            history.push({
-              pathname: `${matchPath}/nac-death-certificate`,
-              state: { module: "cr-death-" },
-            }),
-        },
+        // {
+        //   name: t("CR_NAC_CERT_DOWNLOAD"),
+        //   Icon: <OBPSIcon />,
+        //   onClick: () =>
+        //     history.push({
+        //       pathname: `${matchPath}/nac-death-certificate`,
+        //       state: { module: "cr-death-" },
+        //     }),
+        // },
         {
           name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,

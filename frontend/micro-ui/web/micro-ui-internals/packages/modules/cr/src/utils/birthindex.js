@@ -481,14 +481,20 @@ export const convertToBirthRegistration = (data = {}) => {
           isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo,
         },
         InitiatorinfoDetails: {
+          initiator: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : null,
           relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : null,
+          initiatorInstitutionName: data?.InitiatorinfoDetails?.initiatorInstitutionName,
           initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn,
           initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar,
           initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,
-          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi.code : null,
           initiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress,
           isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
           isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
+          isGuardian: data?.InitiatorinfoDetails?.isGuardian,
+          ipopList: data?.InitiatorinfoDetails?.ipopList ? data?.InitiatorinfoDetails?.ipopList.code : null,
+          ipopNumber: data?.InitiatorinfoDetails?.ipopNumber ? data?.InitiatorinfoDetails?.ipopNumber : null,
+          obstetricsNumber: data?.InitiatorinfoDetails?.obstetricsNumber ? data?.InitiatorinfoDetails?.obstetricsNumber : null,
         },
         Demands: [
           {
@@ -513,7 +519,7 @@ export const convertToBirthRegistration = (data = {}) => {
         ],
         BirthNACDocuments: [
           {
-            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            DocumentType: "CR_RDO_PROCEEDINGS_DOC",
             filestoreId: data?.ChildDetails?.uploadedFile,
             proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
             regNoNAC: data?.ChildDetails?.regNoNAC,
@@ -728,15 +734,29 @@ export const convertToEditBirthRegistration = (data = {}) => {
           isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo ? data?.InformarHosInstDetails?.isDeclarationInfo : data?.ChildDetails?.InformarHosInstDetails?.isDeclarationInfo,
         },
         InitiatorinfoDetails: {
+          initiator: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : data?.ChildDetails?.InitiatorinfoDetails?.initiator,
           relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : data?.ChildDetails?.InitiatorinfoDetails?.relation,
+          initiatorInstitutionName: data?.InitiatorinfoDetails?.initiatorInstitutionName ? data?.InitiatorinfoDetails?.initiatorInstitutionName : data?.ChildDetails?.InitiatorinfoDetails?.initiatorInstitutionName,
           initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn ? data?.InitiatorinfoDetails?.initiatorNameEn : data?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn,
           initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar ? data?.InitiatorinfoDetails?.initiatorAadhar : data?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar,
           initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile ? data?.InitiatorinfoDetails?.initiatorMobile : data?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile,
-          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi : data?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi.code : data?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi,
           initiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress ? data?.InitiatorinfoDetails?.initiatorAddress : data?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress,
           isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration ? data?.InitiatorinfoDetails?.isInitiatorDeclaration : data?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration,
-          isCaretaker: data?.InitiatorinfoDetails?.isCaretaker ? data?.InitiatorinfoDetails?.isCaretaker : data?.ChildDetails?.InitiatorinfoDetails?.isCaretaker,
+          isCaretaker: data?.InitiatorinfoDetails?.isCaretaker ? data?.InitiatorinfoDetails?.isCaretaker : data?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? data?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false,
+          isGuardian: data?.InitiatorinfoDetails?.isGuardian ? data?.InitiatorinfoDetails?.isGuardian : data?.ChildDetails?.InitiatorinfoDetails?.isGuardian ? data?.ChildDetails?.InitiatorinfoDetails?.isGuardian : false,
+          ipopList: data?.InitiatorinfoDetails?.ipopList ? data?.InitiatorinfoDetails?.ipopList.code : data?.ChildDetails?.InitiatorinfoDetails?.ipopList,
+          ipopNumber: data?.InitiatorinfoDetails?.ipopNumber ? data?.InitiatorinfoDetails?.ipopNumber : data?.ChildDetails?.InitiatorinfoDetails?.ipopNumber,
+          obstetricsNumber: data?.InitiatorinfoDetails?.obstetricsNumber ? data?.InitiatorinfoDetails?.obstetricsNumber : data?.ChildDetails?.InitiatorinfoDetails?.obstetricsNumber,
         },
+        BirthNACDocuments: [
+          {
+            DocumentType: "CR_RDO_PROCEEDINGS_DOC",
+            filestoreId: data?.ChildDetails?.uploadedFile,
+            proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
+            regNoNAC: data?.ChildDetails?.regNoNAC,
+          }
+        ],
       },
     ],
   };

@@ -22,7 +22,7 @@ const BrideAddressPermanent = ({
   setCountryValuePermanent,
   valuePermanent,
   setValuePermanent,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
@@ -108,7 +108,7 @@ const BrideAddressPermanent = ({
           // console.log("test",cmbFilterState);
           setpermtaddressStateName(cmbFilterState[0]);
           // console.log(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
-          setValuePermanent(cmbFilterState[0].code);
+          setValuePermanent(cmbFilterState[0]?.code);
         }
         setIsInitialRender(false);
       }
@@ -131,29 +131,29 @@ const BrideAddressPermanent = ({
           // console.log("test",cmbFilterState);
           setpermtaddressStateName(cmbFilterState[0]);
           // console.log(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
-          setValuePermanent(cmbFilterState[0].code);
+          setValuePermanent(cmbFilterState[0]?.code);
         }
         setIsInitialRender(false);
       }
     }
   }, [isPrsentAddress, localbodies, isInitialRender, cmbLB.length, cmbCountry.length]);
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
+  if (isEditMarriage) {
+    if (formData?.BrideAddressDetails?.permtaddressCountry != null) {
       if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
-        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry);
+        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.BrideAddressDetails?.permtaddressCountry);
         if (cmbFilterCountry.length > 0) {
           setpermtaddressCountry(cmbFilterCountry[0]);
           setCountryValuePermanent(cmbFilterCountry[0].countrycode);
         }
       }
     }
-    if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName != null) {
+    if (formData?.BrideAddressDetails?.permtaddressStateName != null) {
       if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
         setpermtaddressStateName(
-          cmbState.filter((cmbState) => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName)[0]
+          cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.permtaddressStateName)[0]
         );
-        setValuePermanent(formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
+        setValuePermanent(formData?.BrideAddressDetails?.permtaddressStateName);
       }
     }
   } else if (isEditAdoption !== false) {

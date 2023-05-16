@@ -7,16 +7,35 @@ import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
+import ActionModal from "../../../../../templates/ApplicationDetails/Modal";
+import ApplicationDetailsToast from "../../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
+import ApplicationDetailsActionBar from "../../../../../templates/ApplicationDetails/components/ApplicationDetailsActionBar";
+import ApplicationDetailsWarningPopup from "../../../../../templates/ApplicationDetails/components/ApplicationDetailsWarningPopup";
 
-const CorrectionApplicationDetails = () => {
+const CorrectionApplicationDetails = (props) => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("WFBIRTH21DAYS"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("CORRECTIONBIRTH"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
+  const [enableApi, setEnableApi] = useState(false);
+  const [displayMenu, setDisplayMenu] = useState(false);
+  const [selectedAction, setSelectedAction] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [isEnableLoader, setIsEnableLoader] = useState(false);
+  const [isWarningPop, setWarningPopUp] = useState(false);
+
+  const {
+    moduleCode,
+    forcedActionPrefix,
+    ActionBarStyle,
+    MenuStyle,
+    wardcodes,
+  } = props;
+  
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
@@ -38,21 +57,45 @@ const CorrectionApplicationDetails = () => {
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
-    moduleCode: businessService,
+    moduleCode: "CORRECTIONBIRTH",
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
-    config: {},
+    config: {enabled:enableApi},
   });
 
   useEffect(()=>{
-  },[workflowDetails])
-
-  useEffect(()=>{
+    if(applicationDetails?.applicationData?.applicationNumber?.length >0){
+      setEnableApi(true)
+    }
     console.log("applicationDetails==",applicationDetails);
   },[applicationDetails])
+
+  useEffect(()=>{
+    console.log("workflowDetails==",workflowDetails);
+  },[workflowDetails])
 
   const closeToast = () => {
     setShowToast(null);
   };
+
+  function onActionSelect(action) {
+    if (action) {
+      if (action?.isWarningPopUp) {
+        setWarningPopUp(true);
+      } else if (action?.redirectionUrll) {
+        window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
+      } else if (!action?.redirectionUrl) {
+        setShowModal(true);
+      } else {
+        history.push({
+          pathname: action.redirectionUrl?.pathname,
+          state: { ...action.redirectionUrl?.state },
+        });
+      }
+    }
+    setSelectedAction(action);
+    setDisplayMenu(false);
+  }
+
 
   useEffect(() => {
     if (applicationDetails?.numOfApplications?.length > 0) {
@@ -203,8 +246,46 @@ const CorrectionApplicationDetails = () => {
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WF_21DAYS_"}
+        timelineStatusPrefix={"WFBIRTH21DAYS"}
       />
+       {showModal ? (
+            <ActionModal
+              t={t}
+              action={selectedAction}
+              tenantId={tenantId}
+              state={state}
+              id={applicationNumber}
+              applicationDetails={applicationDetails}
+              applicationData={applicationDetails?.applicationData}
+              closeModal={closeModal}
+              submitAction={submitAction}
+              actionData={workflowDetails?.data?.timeline}
+              businessService={businessService}
+              workflowDetails={workflowDetails}
+              moduleCode={moduleCode}
+              wardcodes={wardcodes}
+            />
+          ) : null}
+          {isWarningPop ? (
+            <ApplicationDetailsWarningPopup
+              action={selectedAction}
+              workflowDetails={workflowDetails}
+              businessService={businessService}
+              isWarningPop={isWarningPop}
+              closeWarningPopup={closeWarningPopup}
+            />
+          ) : null}
+          <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
+          <ApplicationDetailsActionBar
+            workflowDetails={workflowDetails}
+            displayMenu={displayMenu}
+            onActionSelect={onActionSelect}
+            setDisplayMenu={setDisplayMenu}
+            businessService={businessService}
+            forcedActionPrefix={forcedActionPrefix}
+            ActionBarStyle={ActionBarStyle}
+            MenuStyle={MenuStyle}
+          />
     </div>
   );
 };

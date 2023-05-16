@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
+import { sortDropdownNames } from "../../utils";
 
 const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEditDeathPageComponents  }) => {
   console.log(formData);
@@ -17,6 +18,14 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
     });
     //const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
     const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+
+    const cmbSpouseAge = [
+      { i18nKey: "Yes", code: "YES" },
+      { i18nKey: "No", code: "NO" },     
+    ];
+
+   
+
 
   const [SpouseType, setSpouseType] = useState(
     formData?.FamilyInformationDeath?.SpouseType?.code
@@ -61,7 +70,19 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
   const [SpouseAadhaar, setSpouseAadhaar] = useState(
     formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar :
       formData?.InformationDeath ?.FamilyInformationDeath?.SpouseAadhaar ? formData?.InformationDeath ?.FamilyInformationDeath?.SpouseAadhaar :""  );
-  const [FatherUnavailable, setFatherUnavailablechecked] = useState(
+  
+      const [spouseAgeIfAlive, setspouseAgeIfAlive] = useState(formData?.FamilyInformationDeath?.spouseAgeIfAlive?.code ? formData?.FamilyInformationDeath?.spouseAgeIfAlive : formData?.InformationDeath?.FamilyInformationDeath?.spouseAgeIfAlive ?
+        (cmbSpouseAge.filter(cmbSpouseAge => cmbSpouseAge.code === formData?.InformationDeath?.FamilyInformationDeath?.spouseAgeIfAlive)[0]) : "");
+      const [SpouseAgeStatusHide, setSpouseAgeStatusHide] = useState(formData?.FamilyInformationDeath?.spouseAgeIfAlive?.code ? formData?.FamilyInformationDeath?.spouseAgeIfAlive.code : formData?.InformationDeath?.FamilyInformationDeath?.spouseAgeIfAlive ?
+        formData?.InformationDeath?.FamilyInformationDeath?.spouseAgeIfAlive : "");
+    
+      const [spouseAge, setspouseAge] = useState(formData?.FamilyInformationDeath?.spouseAge ? formData?.FamilyInformationDeath?.spouseAge :
+        formData?.InformationDeath?.FamilyInformationDeath?.spouseAge ? formData?.InformationDeath?.FamilyInformationDeath?.spouseAge : "");
+  
+  
+  
+  
+      const [FatherUnavailable, setFatherUnavailablechecked] = useState(
     formData?.FamilyInformationDeath?.FatherUnavailable
       ? formData?.FamilyInformationDeath?.FatherUnavailable
       : formData?.InformationDeath?.FamilyInformationDeath?.FatherUnavailable
@@ -116,7 +137,10 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
   const [FatherNameMlError, setFatherNameMlError] = useState(false);
   const [MotherNameEnError, setMotherNameEnError] = useState(false);
   const [MotherNameMlError, setMotherNameMlError] = useState(false);
-    const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+  const [spouseAgeIfAliveError, setspouseAgeIfAliveError] = useState(formData?.FamilyInformationDeath?.spouseAgeIfAlive ? false : false);
+  const [spouseAgeError, setspouseAgeError] = useState(formData?.FamilyInformationDeath?.spouseAge ? false : false);
+  const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const onSkip = () => onSelect();
   // function setFatherUnavailablechecked(e){
   //   if (e.target.checked === true) {
@@ -248,6 +272,24 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
       }      
     }
 
+    function setSelectspouseAge(e) {
+      setspouseAge(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
+      if (e.target.value < 18) {
+        setAgeValidationMsg(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAgeValidationMsg(false);
+      }
+    }
+    function setSelectspouseAgeIfAlive(value) {
+      setspouseAgeIfAlive(value);
+      setSpouseAgeStatusHide(value.code);
+  
+    }
+
     function setSelectFatherAadharNo(e) {
       const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
   
@@ -372,7 +414,31 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
     } else {
       setSpouseNameMLError(false);
     }
+    if (spouseAgeIfAlive == null || spouseAgeIfAlive == '' || spouseAgeIfAlive == undefined) {
+      validFlag = false;
+      setspouseAgeIfAliveError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setspouseAgeIfAliveError(false);
+    }
 
+    if (spouseAge == null || spouseAge == '' || spouseAge == undefined) {
+      if (spouseAgeError) {
+        validFlag = false;
+        setspouseAgeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+          setspouseAgeError(false);
+      }
+    }
+
+  
     if (FatherNameEn.trim() == null || FatherNameEn.trim() == '' || FatherNameEn.trim() == undefined) {
       validFlag = false;
       setFatherNameEn("");
@@ -485,6 +551,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
       SpouseUnavailable,
       FamilyMobileNo,
       FamilyEmailId,
+      spouseAgeIfAlive,
+      spouseAge,
     });
   };
 
@@ -517,7 +585,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
 
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!FamilyMobileNo}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!FamilyMobileNo }>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -620,7 +688,52 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
                 </div>
               </div>
             </div>
+
+            <div className="row">
+    <div className="col-md-12">
+                  <div className="col-md-4" >
+                    <CardLabel>{`${t("CR_SPOUSE_AGE_IF_ALIVE")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <Dropdown
+                      t={t}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      option={sortDropdownNames(cmbSpouseAge ? cmbSpouseAge : [],"code",t)}
+                      selected={spouseAgeIfAlive}
+                      select={setSelectspouseAgeIfAlive}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_SPOUSE_AGE_IF_ALIVE")}`}
+                    />
+                  </div>
+               
+              
+                  {SpouseAgeStatusHide === "YES" && (
+
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_SPOUSE_AGE")}`} <span className="mandatorycss">*</span></CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="spouseAge"
+                        value={spouseAge}
+                        onChange={setSelectspouseAge}
+                        disable={isDisableEdit}
+                        placeholder={`${t("CR_SPOUSE_AGE")}`}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CR_INVALID_SPOUSE_AGE") })}
+                      />
+                    </div>
+                    
+                  )}
+                   </div>
+                     </div>
+
           </div>
+
+
+
+
+
         )}
         <div className="row">
           <div className="col-md-12">
@@ -834,8 +947,18 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEdi
         </div>
         {toast && (
           <Toast
-            error={AadharError}
-            label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
+            error={AadharError || spouseAgeIfAliveError ||
+              spouseAgeError 
+             } 
+            label={AadharError || spouseAgeIfAliveError ||
+              spouseAgeError 
+               ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) 
+               : spouseAgeIfAliveError
+                      ? t(`DEATH_ERROR_SPOUSE_ALIVE_CHOOSE`)
+                      : spouseAgeError
+                      ? t(`DEATH_ERROR_SPOUSE_AGE_CHOOSE`):
+
+                setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
         )}

@@ -206,9 +206,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       
       childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
       console.log("reached",childAge,inclusionStudentCondition);
-      if(childAge < 6){
-        docCondition = `NAME_LESS_THAN_SIX`;
-      } else if (childAge >= 6 && childAge < 15) {
+       if (childAge >= 6 && childAge < 15) {
         docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
       } else if (childAge >= 18) {
         setShowDatePicker(true);
@@ -257,9 +255,13 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const renderChildNamePopupComponent = () => {
     let selectedStudentMenu = [];
     let selectedChangeMenu = [];
-
+    let filteredDocs = [];
     const childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-    if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
+    // if(childAge < 6){
+    //   filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == `NAME_LESS_THAN_SIX`);
+    //   setSelectedDocuments(filteredDocs);
+    // } else
+     if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
       selectedStudentMenu = [
         { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT" },
         { i18nKey: "CR_COMMON_NONSTUDENT", code: "NON_STUDENT" },

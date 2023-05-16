@@ -50,7 +50,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
         });
 
         useEffect(() => {
-            if (watch().deathACKNo?.length > 0) {
+            if (watch().DeathACKNo?.length > 0) {
               setCheckIsRequired(false);
             } else {
               setCheckIsRequired(true);
@@ -67,7 +67,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
             <label>
                  {/* <span className="mandatorycss">*</span>  */}
             {t("CR_SEARCH_ACK_NO")}</label>
-            <TextInput name="deathACKNo" inputRef={register({})}
+            <TextInput name="DeathACKNo" inputRef={register({})}
 // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
               placeholder={`${t("CR_SEARCH_ACK_NO")}`}
               />
@@ -77,7 +77,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
             <label> 
                 {/* <span className="mandatorycss">*</span> */}
             {t("DC_NAME_DECEASED")}</label>
-            <TextInput name="deceasedFirstNameEn" inputRef={register({})} 
+            <TextInput name="DeceasedFirstNameEn" inputRef={register({})} 
              placeholder={`${t("DC_NAME_DECEASED")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}/>
         </SearchField>
@@ -88,7 +88,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
             <Controller
                 render={(props) => <DatePicker date={props.value} onChange={props.onChange}
                 {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: checkIsRequired, title: t("CR_DATE_OF_DEATH") })} />}
-                name="DeathDate"
+                name="DateOfDeath"
                 control={control}
             />
         </SearchField>
@@ -98,7 +98,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
                 {t("CR_GENDER")}</label>
             <Controller
                 control={control}
-                name="deceasedGender"
+                name="DeceasedGender"
                 render={(props) => (
                     <Dropdown
                         selected={props.value}
@@ -115,12 +115,12 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
         </SearchField>
         <SearchField>
             <label> {t("CR_FATHER_NAME_EN")}</label>
-            <TextInput name="deceasedFatherName" inputRef={register({})} placeholder={`${t("CR_FATHER_NAME_EN")}`}
+            <TextInput name="FatherNameEn" inputRef={register({})} placeholder={`${t("CR_FATHER_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })} />
         </SearchField>
         <SearchField>
             <label> {t("CR_MOTHER_NAME_EN")}</label>
-            <TextInput name="deceasedMotherName" inputRef={register({})} placeholder={`${t("CR_MOTHER_NAME_EN")}`}
+            <TextInput name="MotherNameEn" inputRef={register({})} placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })} />
         </SearchField>
 

@@ -132,9 +132,15 @@ export const CRService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
-
-
-
+    CRMarriageCorrectionDeatils: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crcorrection.marriage_correction_details, 
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
   update: (details, tenantId) =>
     Request({
       url: Urls.cr.update,
