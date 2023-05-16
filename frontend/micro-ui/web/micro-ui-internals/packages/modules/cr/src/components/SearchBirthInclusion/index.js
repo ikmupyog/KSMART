@@ -45,7 +45,6 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
       tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
-  console.log("isSuccess....", isSuccess);
 
   useEffect(() => {
     register("offset", 0);
@@ -174,7 +173,7 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
           <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
         </Card>
       ) : null}
-      {/* {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />} */}
+      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
     </React.Fragment>
   );
 };

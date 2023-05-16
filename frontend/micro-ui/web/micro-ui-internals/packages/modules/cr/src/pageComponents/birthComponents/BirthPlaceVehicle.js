@@ -107,12 +107,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     }
   }
   function setSelectVehicleFromEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setvehicleFromEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleToEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setvehicleToEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -243,7 +243,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
                 onChange={setSelectVehicleFromEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
+                {...(validation = { pattern: "^a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
               />
             </div>
             <div className="col-md-3" >
@@ -257,7 +257,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
                 onChange={setSelectVehicleToEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_TO_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
               />
             </div>
             <div className="col-md-3" >
