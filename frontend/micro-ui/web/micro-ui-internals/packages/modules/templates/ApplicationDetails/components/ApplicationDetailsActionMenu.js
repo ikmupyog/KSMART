@@ -117,12 +117,44 @@ function ApplicationDetailsActionBar({
           : null,
       };
       if(businessService == "PT") {
-        submitAction({
-          Property: {
-            ...applicationData,
-            workflow,
-          },
-        });
+        if (!selectedAction?.showFinancialYearsModal) {
+          let workflow = { action: selectedAction?.action, comments: noteText, businessService, moduleName: moduleCode };
+          workflow["assignes"] = selectedAction?.isTerminateState || !selectedAssigne ? [] : [selectedAssigne];
+          if (uploadedFileStoreId)
+            workflow["documents"] = [
+              {
+                documentType: selectedAction?.action + " DOC",
+                fileName: file?.name,
+                fileStoreId: uploadedFileStoreId,
+              },
+            ];
+    
+          submitAction({
+            Property: {
+              ...applicationData,
+              workflow,
+            },
+          });
+        } else {
+          submitAction({
+            customFunctionToExecute: selectedAction?.customFunctionToExecute,
+            Assessment: {
+              financialYear: '',
+              // financialYear: selectedFinancialYear?.name,
+              propertyId: applicationData?.propertyId,
+              tenantId,
+              source: applicationData?.source,
+              channel: applicationData?.channel,
+              assessmentDate: Date.now(),
+            },
+          });
+        }
+        // submitAction({
+        //   Property: {
+        //     ...applicationData,
+        //     workflow,
+        //   },
+        // });
       }
       // else if(businessService == "ADOPTIONHOME"){
       //   submitAction({
@@ -205,6 +237,82 @@ function ApplicationDetailsActionBar({
       businessService == "TL"||
       businessService == "EDITRENEWAL"||
       businessService == "DIRECTRENEWAL"){
+        if(applicationData?.correctionId!==null && applicationData?.correctionAppNumber!==null){
+          applicationData = {
+            id:applicationData?.correctionId,
+            tenantId:applicationData?.tenantId,
+            tradeLicenseId:applicationData?.id,
+            status:selectedAction?.action,
+            assignUser: !selectedApprover?.uuid ? null : selectedApprover?.uuid,
+            applicationNumber : applicationData?.correctionAppNumber,//"KL-KOCHI-C-000039-BFIFLC-2023-APLN",
+            action: selectedAction?.action,
+            applicationType: "CORRECTION",
+            workflowCode: "CorrectionTL",
+            assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+            wfDocuments: uploadedFileStoreId
+            ? [
+                {
+                  documentType:selectedAction?.action  + " DOC",
+                  fileName: file?.name,
+                  fileStoreId: uploadedFileStoreId,
+                },
+              ]
+            : null,
+          };
+          if((selectedAction?.action != "APPROVE")&&(selectedAction?.applicationStatus != "APPROVED")){
+            if(selectedAssigne?.uuid)
+            submitAction({
+              LicenseCorrection: [applicationData],
+            });
+            else{
+              setError(t("Please select Assignee"));
+              setToast(true)
+                setTimeout(() => {
+                  setToast(false);
+                }, 2000);
+            }
+          }
+          else{
+            submitAction({
+              LicenseCorrection: [applicationData],
+            });
+          }
+        }else{
+          applicationData = {
+            ...applicationData,
+            action: selectedAction?.action,
+            comment: noteText,
+            assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+            // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
+            wfDocuments: uploadedFileStoreId
+              ? [
+                  {
+                    documentType: selectedAction?.action + " DOC",
+                    fileName: file?.name,
+                    fileStoreId: uploadedFileStoreId,
+                  },
+                ]
+              : null,
+          };
+          if((selectedAction?.action!= "APPROVE")&&(selectedAction?.applicationStatus != "APPROVED")){
+            if(selectedAssigne?.uuid)
+            submitAction({
+              Licenses: [applicationData],
+            });
+            else{
+              setError(t("Please select Assignee"));
+              setToast(true)
+                setTimeout(() => {
+                  setToast(false);
+                }, 2000);
+            }
+          }
+          else{
+            submitAction({
+              Licenses: [applicationData],
+            });
+          }
+        }
         submitAction({
           LicenseCorrection: [applicationData],
         });
@@ -215,6 +323,67 @@ function ApplicationDetailsActionBar({
         }, false, {isStakeholder: true, bpa: false});
       }
        else if(businessService == "BPA"){
+        applicationData = {
+          ...applicationData,
+          documents: getDocuments(applicationData),
+          additionalDetails: {...applicationData?.additionalDetails, fieldinspection_pending:getfeildInspection(applicationData), pendingapproval: getPendingApprovals() },
+           workflow:{
+            action: selectedAction?.action,
+            comments: noteText,
+            comment: noteText,
+            assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+            assignes: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+            varificationDocuments: uploadedFile
+            ? [
+              {
+                documentType: selectedAction?.action + " DOC",
+                fileName: uploadFiles[0]?.name,
+                fileStoreId: uploadedFileStoreId,
+              },
+            ]
+            : null,
+          },
+          action: selectedAction?.action,
+          comment: noteText,
+          assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
+          wfDocuments: uploadedFile
+            ? [
+              {
+                documentType: action?.action + " DOC",
+                fileName: file?.name,
+                fileStoreId: uploadedFile,
+              },
+            ]
+            : null,
+        };
+    
+        const nocDetails = applicationDetails?.nocData?.map(noc => {
+          const uploadedDocuments = Digit.SessionStorage.get(noc?.nocType) || [];
+          return {
+            Noc: {
+              ...noc,
+              documents: [
+                ...(noc?.documents?noc?.documents:[]),
+                ...(uploadedDocuments?uploadedDocuments:[])
+              ]
+            }
+          }
+        })
+    
+        let nocData = [];
+        if (nocDetails) {
+          nocDetails.map(noc => {
+            if (
+                noc?.Noc?.applicationStatus?.toUpperCase() != "APPROVED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "AUTO_APPROVED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "REJECTED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "AUTO_REJECTED" &&
+                noc?.Noc?.applicationStatus?.toUpperCase() != "VOIDED"
+              ) {
+                nocData.push(noc);
+              }
+          })
+        }
         submitAction({
           BPA:applicationData
         }, nocData?.length > 0 ? nocData : false, {isStakeholder: false, bpa: true});
@@ -241,9 +410,9 @@ function ApplicationDetailsActionBar({
             ]
             : null,
           },
-          action: action?.action,
-          comment: data?.comments,
-          assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
+          action: selectedAction?.action,
+          comment: noteText,
+          assignee: !selectedAssigne?.uuid ? null : [selectedAssigne?.uuid],
           wfDocuments: uploadedFile
             ? [
               {
