@@ -62,6 +62,16 @@ export const CRMarriageService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+    CRMarriageCorrectionSearch: ({ tenantId, filters }) =>{
+      console.log("reached==",filters);
+    return Request({
+      url: Urls.crcorrection.marriage_correction_search,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { ...filters },
+    })},
     CRRegDownloadMarriageRegistryDetails: ({params={}, tenantId, additionalProps={}}) =>
         Request({
             url: Urls.crmarriage.registry_download,

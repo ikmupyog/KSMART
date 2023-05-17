@@ -290,11 +290,117 @@ let ownerappmap ={
     }
 
   };
-
+  
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
     let aadharvalidation = /^[0-9]{12}$/;
     let validation = true;
+    if(!LicenseeType){
+      setErrorMessage(t("TL_INVALID_LICENSEE_TYPE"));
+      validation = false;
+    }
+    if(appState[0].name === "") {
+      setErrorMessage(t("TL_INVALID_NAME_APPLICANT"));
+      validation = false;
+    }
+    if(appState[0].applicantNameLocal === "") {
+      setErrorMessage(t("TL_INVALID_NAME_APPLICANT"));
+      validation = false;
+    }
+    if(appState[0].careOfName === "") {
+      setErrorMessage(t("TL_INVALID_CARE_NAME"));
+      validation = false;
+    }
+    if(appState[0].houseName === ""){
+      setErrorMessage(t("TL_INVALID_HOUSE_NAME"));
+      validation = false;
+    } 
+    if(LicenseeType?.code !== "INSTITUTION") {
+      if(appState[0].street === "") {
+        setErrorMessage(t("TL_INVALID_STREET_NAME"));
+        validation = false;
+      }
+      if(appState[0].locality === "") {
+        setErrorMessage(t("TL_INVALID_LOCALITY"));
+        validation = false;
+      } 
+      if(appState[0].postOffice === "") {
+        setErrorMessage(t("TL_INVALID_POSTOFFICE"));
+        validation = false;
+      }
+      if(appState[0].aadhaarNumber === ""){
+        setErrorMessage(t("TL_INVALID_ADHAAR_NO"));
+        validation = false;
+      }
+      if(appState[0].mobileNumber === "") {
+        setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+        validation = false;
+      } 
+      if(appState[0].emailId === "") {
+        setErrorMessage(t("TL_INVALID_EMAIL_ID"));
+        validation = false;
+      }
+    }
+    if(LicenseeType?.code === "INSTITUTION"){
+      if(appState[0].designation === "") {
+        setErrorMessage(t("TL_INVALID_LICENSEE_DESIGNATION"));
+        validation = false;
+      }
+      if(appState[0].contactNo === "") {
+        setErrorMessage(t("TL_INVALID_CONTACT_NO"));
+        validation = false;
+      } 
+      if(email === "") {
+        setErrorMessage(t("TL_INVALID_EMAIL_ID"));
+        validation = false;
+      }
+      if(insaddress === "") {
+        setErrorMessage(t("TL_INVALID_LICENSING_INSTITUTION_ADDRESS"));
+        validation = false;
+      } 
+      if(institutionName === "") {
+        setErrorMessage(t("TL_LICENSING_INSTITUTION_NAME_INVALID"));
+        validation = false;
+      }
+      if(organisationregistrationno === "") {
+        setErrorMessage(t("TL_INVALID_LICENSING_INSTITUTION_ID"));
+        validation = false;
+      } 
+      if(licenseUnitId === "") {
+        setErrorMessage(t("TL_INVALID_LICENSING_INSTITUTION_ID"));
+        validation = false;
+      }
+    }
+  if(formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") {
+    if(ownerState[0].owneraadhaarNo == "") {
+      setErrorMessage(t("TL_INVALID_AADHAR_NO"));
+      validation = false;
+    }
+    if(ownerState[0].ownerName == "") {
+      setErrorMessage(t("TL_INVALID_OWNER_NAME"));
+      validation = false;
+    }
+    if(ownerState[0].houseName == "") {
+      setErrorMessage(t("TL_INVALID_HOUSE_NAME"));
+      validation = false;
+    }
+    if(ownerState[0].street == "") {
+      setErrorMessage(t("TL_INVALID_STREET_NAME"));
+      validation = false;
+    }
+    if(ownerState[0].locality == "") {
+      setErrorMessage(t("TL_INVALID_LOCALITY"));
+      validation = false;
+    }
+    if(ownerState[0].postOffice == "") {
+      setErrorMessage(t("TL_INVALID_POSTOFFICE"));
+      validation = false;
+    }
+    if(ownerState[0].ownerContactNo == "") {
+      setErrorMessage(t("TL_INVALID_CONTACT_NO"));
+      validation = false;
+    }
+  } 
     appState?.map((ob) => {
       if (!ob.mobileNumber.match(mobilevalidation)) {
         setErrorMessage(t("TL_INVALID_MOBILE_NO"));
@@ -342,14 +448,14 @@ let ownerappmap ={
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}
-        isDisabled={!LicenseeType || appState[0].name === "" || appState[0].applicantNameLocal === "" || appState[0].careOfName === ""
-          || appState[0].houseName === "" || (LicenseeType?.code !== "INSTITUTION" ? appState[0].street === "" : false) || appState[0].locality === "" || appState[0].postOffice === ""
-          || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
-          || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
-          || organisationregistrationno === "" || licenseUnitId === "") : false)
-          || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
-          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} >
+      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}>
+       {/* isDisabled={!LicenseeType || appState[0].name === "" || appState[0].applicantNameLocal === "" || appState[0].careOfName === "" */}
+        {/* //   || appState[0].houseName === "" || (LicenseeType?.code !== "INSTITUTION" ? appState[0].street === "" : false) || appState[0].locality === "" || appState[0].postOffice === ""
+        //   || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
+        //   || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
+        //   || organisationregistrationno === "" || licenseUnitId === "") : false)
+        //   || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
+        //   || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} > */}
 
         <div className="row">
           <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>

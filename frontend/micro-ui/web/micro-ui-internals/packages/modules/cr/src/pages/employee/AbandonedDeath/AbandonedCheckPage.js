@@ -344,7 +344,9 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED")}
+                      {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED")
+                       +
+                       "/" +t(AddressBirthDetails.presentInsideKeralaHouseNameMl?AddressBirthDetails.presentInsideKeralaHouseNameMl:"രേഖപ്പെടുത്തിയിട്ടില്ല")}
                     </CardText>
                   </div>
                   {/* CR_STREET_NAME_EN */}
@@ -354,8 +356,10 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                       {t(
-                        AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED"
-                      )}
+                        AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED")
+                        +
+                        "/" +t(AddressBirthDetails.presentInsideKeralaStreetNameMl?AddressBirthDetails.presentInsideKeralaStreetNameMl:"രേഖപ്പെടുത്തിയിട്ടില്ല")
+                      }
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -367,6 +371,8 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                         AddressBirthDetails.presentInsideKeralaLocalityNameEn
                           ? AddressBirthDetails.presentInsideKeralaLocalityNameEn
                           : "CR_NOT_RECORDED"
+                          +
+                          "/" +t(AddressBirthDetails.presentInsideKeralaLocalityNameMl?AddressBirthDetails.presentInsideKeralaLocalityNameMl:"രേഖപ്പെടുത്തിയിട്ടില്ല")   
                       )}
                     </CardText>
                   </div>
@@ -379,7 +385,8 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(AddressBirthDetails.presentInsideKeralaPincode ? AddressBirthDetails.presentInsideKeralaPincode : "CR_NOT_RECORDED")}
+                      {t(AddressBirthDetails.presentInsideKeralaPincode ? 
+                        AddressBirthDetails.presentInsideKeralaPincode : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                   {/* CS_COMMON_DISTRICT */}
@@ -389,6 +396,83 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                       {t(AddressBirthDetails.presentInsideKeralaDistrict ? AddressBirthDetails.presentInsideKeralaDistrict.name : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS_DETAILS")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+{/*  */}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED")
+                       +
+                       "/" +t(AddressBirthDetails.permntInKeralaAdrHouseNameMl?AddressBirthDetails.permntInKeralaAdrHouseNameMl:"രേഖപ്പെടുത്തിയിട്ടില്ല")}
+                    </CardText>
+                  </div>
+                  {/* CR_STREET_NAME_EN */}
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {t(
+                        AddressBirthDetails.permntInKeralaAdrStreetNameEn ? AddressBirthDetails.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED")
+                        +
+                        "/" +t(AddressBirthDetails.permntInKeralaAdrStreetNameMl?AddressBirthDetails.permntInKeralaAdrStreetNameMl:"രേഖപ്പെടുത്തിയിട്ടില്ല")
+                      }
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {t(
+                        AddressBirthDetails.permntInKeralaAdrLocalityNameEn
+                          ? AddressBirthDetails.permntInKeralaAdrLocalityNameEn
+                          : "CR_NOT_RECORDED"
+                          +
+                          "/" +t(AddressBirthDetails.permntInKeralaAdrLocalityNameMl?AddressBirthDetails.permntInKeralaAdrLocalityNameMl:"രേഖപ്പെടുത്തിയിട്ടില്ല")   
+                      )}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {t(AddressBirthDetails.permntInKeralaAdrPincode ? 
+                        AddressBirthDetails.permntInKeralaAdrPincode : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                  {/* CS_COMMON_DISTRICT */}
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {t(AddressBirthDetails.permntInKeralaAdrDistrict ?
+                         AddressBirthDetails.permntInKeralaAdrDistrict.name : "CR_NOT_RECORDED")
+                         +"/" +t(AddressBirthDetails.permntInKeralaAdrDistrict?
+                         AddressBirthDetails.permntInKeralaAdrDistrict.namelocal:"രേഖപ്പെടുത്തിയിട്ടില്ല")   }
                     </CardText>
                   </div>
                 </div>
@@ -418,7 +502,7 @@ const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {t(FamilyAbandonedDeath.SpouseType ? FamilyAbandonedDeath.SpouseType?.name : "CR_NOT_RECORDED")}
+                      {t(FamilyAbandonedDeath.SpouseType ? FamilyAbandonedDeath.SpouseType?.code : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                   {/* CS_COMMON_DISTRICT */}

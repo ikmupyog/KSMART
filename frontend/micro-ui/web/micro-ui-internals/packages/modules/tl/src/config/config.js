@@ -999,8 +999,7 @@ export const newConfig = [
         nextStep:null
       }
     ]
-  }
-  ,
+  },
   {
     head: "New IFTE & OS License Application",
     body: [
@@ -1034,7 +1033,7 @@ export const newConfig = [
         withoutLabel: true,
         hideInEmployee: true,
         nextStep:null
-      }
+      },
       // {
       //   //if want to input index in url just pul @0 after route name owner-ship-details@0
       //   type: "component",
@@ -1052,5 +1051,26 @@ export const newConfig = [
       //   nextStep: null,
       // },
     ]
-  }
+  },
+  {
+    head: "New IFTE & OS License Application",
+    body: [
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "license-cancellation-root",
+        isMandatory: true,
+        component: "TLCancelTradeLicenceDetails", 
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: null
+      }
+    ]
+  },
 ];

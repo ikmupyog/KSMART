@@ -9,7 +9,7 @@ import {
   StatusTable,
   Accordion
 } from "@egovernments/digit-ui-react-components";
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import BPADocuments from "./BPADocuments";
@@ -42,9 +42,9 @@ function ApplicationDetailsContent({
   noteText,
   uploadFiles,
   setUploadFiles,
- uploadedFileStoreId, 
- setUploadedFileStoreId,
- selectedAssigneErr,
+  uploadedFileStoreId,
+  setUploadedFileStoreId,
+  selectedAssigneErr,
   noteTextErr,
   isValidate,
 }) {
@@ -54,11 +54,11 @@ function ApplicationDetailsContent({
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
 
-  const getTimelineCaptions = (checkpoint,index=100) => {
-    if (checkpoint.state === "OPEN" 
-    // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
+  const getTimelineCaptions = (checkpoint, index = 100) => {
+    if (checkpoint.state === "OPEN"
+      // || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))
     ) {
-      
+
       const caption = {
         date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
         source: applicationData?.channel || "",
@@ -76,7 +76,7 @@ function ApplicationDetailsContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
-      
+
       const caption = {
         date: checkpoint?.auditDetails?.lastModified,
         // name: checkpoint?.assigner?.name,
@@ -140,7 +140,19 @@ function ApplicationDetailsContent({
     else if (value?.isUnit) return value?.value ? `${getTranslatedValues(value?.value, value?.isNotTranslated)} ${t(value?.isUnit)}` : t("N/A");
     else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
   };
-  // const NoteDrafting = Digit?.ComponentRegistryService?.getComponent('NoteDrafting')
+  const { roles: userRoles, } = Digit.UserService.getUser().info;
+  const [isHospitalUser, setIsHospitalUser] = useState(false);
+  useEffect(() => {
+    console.log("userRoles", userRoles);
+    if (userRoles.length > 0) {
+      if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER" ||
+        userRoles[0].code === "BND_LOCAL_REGISTRAR" || userRoles[0].code === "BND_SUB_REGISTRAR" || userRoles[0].code === "BND_DISTRICT_REGISTRAR") {
+        setIsHospitalUser(true);
+      } else {
+        setIsHospitalUser(false);
+      }
+    }
+  }, [userRoles]);
   return (
     <>
       <div className="file-main">
@@ -278,15 +290,15 @@ function ApplicationDetailsContent({
             title={"WORKFLOW"}
             content={
               <StatusTable style={getTableStyles()}>
-                <NoteAndDrafting applDetails={applicationDetails?.applicationData} noteText={noteText}  setNoteText={setNoteText}
+                <NoteAndDrafting applDetails={applicationDetails?.applicationData} noteText={noteText} setNoteText={setNoteText}
                   uploadFiles={uploadFiles}
                   setUploadFiles={setUploadFiles}
                   uploadedFileStoreId={uploadedFileStoreId}
                   setUploadedFileStoreId={setUploadedFileStoreId}
                   selectedAssigneErr={selectedAssigneErr}
                   isValidate={isValidate}
-                  noteTextErr={noteTextErr}/>
-                  
+                  noteTextErr={noteTextErr} />
+
               </StatusTable>
             }
           />
@@ -323,7 +335,7 @@ function ApplicationDetailsContent({
                                   `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
-                                customChild={getTimelineCaptions(checkpoint,index)}
+                                customChild={getTimelineCaptions(checkpoint, index)}
                               />
                             </React.Fragment>
                           );

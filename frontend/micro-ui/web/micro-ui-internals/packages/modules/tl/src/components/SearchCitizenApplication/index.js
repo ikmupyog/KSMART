@@ -75,11 +75,16 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
       disableSortBy: true,
       Cell: ({ row }) => {
         return (
+          (row.original["correctionId"] !== null && row.original["correctionAppNumber"] !== null) ?
           <div>
             <span >
-              {/* <Link to={`/digit-ui/employee/tl/applicationcorrection-details/${row.original["applicationNumber"]}`}> */}
+              {row.original["correctionAppNumber"]}
+            </span>
+          </div>
+          :
+          <div>
+            <span >
               {row.original["applicationNumber"]}
-              {/* </Link> */}
             </span>
           </div>
         );
@@ -118,7 +123,7 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
     },
     {
       Header: t("TL_COMMON_TABLE_COL_STATUS"),
-      accessor: (row) => GetCell(t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}` || "NA")),
+      accessor: (row) => GetCell((row.correctionId !== null && row.correctionAppNumber !== null) ? t(row?.workflowCode && row?.correctionStatus && `WF_${row?.workflowCode?.toUpperCase()}_${row.correctionStatus}` || "NA") : t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}` || "NA")),
       disableSortBy: true,
     },
 

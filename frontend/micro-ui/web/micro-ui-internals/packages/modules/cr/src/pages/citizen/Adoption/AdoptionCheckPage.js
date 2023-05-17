@@ -19,22 +19,22 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/CRTimeline";
 
-// const ActionButton = ({ jumpTo }) => {
-//   const { t } = useTranslation();
-//   const history = useHistory();
-//   function routeTo() {
-//     sessionStorage.setItem("isDirectRenewal", false);
-//     history.push(jumpTo);
-//   }
-//   return (
-//     <LinkButton
-//       label={t("CS_COMMON_CHANGE")}
-//       className="check-page-link-button"
-//       style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
-//       onClick={routeTo}
-//     />
-//   );
-// };
+const ActionButton = ({ jumpTo }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  function routeTo() {
+    sessionStorage.setItem("isDirectRenewal", false);
+    history.push(jumpTo);
+  }
+  return (
+    <LinkButton
+      label={t("CS_COMMON_CHANGE")}
+      className="check-page-link-button"
+      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      onClick={routeTo}
+    />
+  );
+};
 
 const getPath = (path, params) => {
   params &&
@@ -52,7 +52,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
-  const { AdoptionChildDetails, AdoptionParentsDetails, AdoptionAddressBasePage, AdoptionDocuments } = value;
+  const { AdoptionChildDetails, AdoptionParentsDetails, AddressBirthDetails, AdoptionDocuments } = value;
 
   const uploadedImages = [
     AdoptionDocuments.uploadedFile,
@@ -86,6 +86,13 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/check", "");
+  useEffect(() => {
+    if (uploadedImages?.length > 0) {
+      fetchImage();
+    }
+  }, []);
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
   //   routeLink = `${getPath(match.path, match.params)}`;
@@ -177,7 +184,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {AdoptionChildDetails?.birthDateTime ? AdoptionChildDetails?.birthDateTime : "NA"}
+                      {AdoptionChildDetails?.birthDateTime ? AdoptionChildDetails?.birthDateTime : t("CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -190,7 +197,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_CHILD_AADHAAR")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.childAadharNo}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {AdoptionChildDetails?.childAadharNo ? AdoptionChildDetails?.childAadharNo : t("CR_NOT_RECORDED")}
+                    </CardText>
                   </div>
                 </div>
               </div>
@@ -222,9 +231,11 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.childLastNameEn}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                   </div>
                 </div>
               </div>
+
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-2">
@@ -247,6 +258,50 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
+              {AdoptionChildDetails?.adoptionAgency ? (
+                <>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_AGENT_NAME")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionAgencyName}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_AGENT_ADDRESS")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionAgencyAddress}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_CONTACT_PERSON")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionContractPersonName}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADOPTION_CONTACT_NO")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionChildDetails?.AdoptionContactNo}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </StatusTable>
           }
         />
@@ -338,6 +393,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                         {AdoptionChildDetails?.hospitalName.hospitalNamelocal}
                       </CardText>
+                      {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                     </div>
                   </div>
                 </div>
@@ -371,6 +427,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.institutionId.institutionNamelocal}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -419,6 +476,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.adrsLocalityNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -451,6 +509,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.adrsHouseNameMl}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -517,6 +576,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.vehicleToMl}</CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -547,6 +607,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.vehicleDesDetailsEn}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -613,7 +674,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.publicPlaceDecpEn}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}
                       </div>
+                      <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/AdoptionChildDetails`} />}</div>
                     </div>
                   </div>
                 </div>
@@ -639,7 +702,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-12">
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {`${t("CR_MOTHER_INFORMATION_MISSING")}`} :
+                        {`${t("CR_MOTHER_INFORMATION_MISSING")}`} : {`${t("CR_NOT_RECORDED")}`}
                       </CardText>
                     </div>
                   </div>
@@ -653,14 +716,16 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionParentsDetails?.motherAadhar}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionParentsDetails?.motherAadhar ? AdoptionParentsDetails?.motherAadhar : t("CR_NOT_RECORDED")}
+                        </CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherFirstNameEn}
+                          {AdoptionParentsDetails?.motherFirstNameEn ? AdoptionParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -668,7 +733,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherFirstNameMl}
+                          {AdoptionParentsDetails?.motherFirstNameMl ? AdoptionParentsDetails?.motherFirstNameMl : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                     </div>
@@ -680,7 +745,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherNationality.nationalityname}
+                          {AdoptionParentsDetails?.motherNationality.nationalityname
+                            ? AdoptionParentsDetails?.motherNationality.nationalityname
+                            : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -688,60 +755,29 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMaritalStatus.code}
+                          {AdoptionParentsDetails?.motherMaritalStatus.code ? AdoptionParentsDetails?.motherMaritalStatus.code : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMarriageAge}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMarriageBirth}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.orderofChildren}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherEducation.name}
+                          {AdoptionParentsDetails?.motherEducation.name ? AdoptionParentsDetails?.motherEducation.name : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherProfession.name}
+                          {AdoptionParentsDetails?.motherProfession.name ? AdoptionParentsDetails?.motherProfession.name : t("CR_NOT_RECORDED")}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionParentsDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -759,7 +795,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-12">
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {`${t("CR_FATHER_INFORMATION_MISSING")}`} :
+                        {`${t("CR_FATHER_INFORMATION_MISSING")}`} : {`${t("CR_NOT_RECORDED")}`}
                       </CardText>
                     </div>
                   </div>
@@ -773,14 +809,16 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionParentsDetails?.fatherAadhar}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AdoptionParentsDetails?.fatherAadhar ? AdoptionParentsDetails?.fatherAadhar : t("CR_NOT_RECORDED")}
+                        </CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherFirstNameEn}
+                          {AdoptionParentsDetails?.fatherFirstNameEn ? AdoptionParentsDetails?.fatherFirstNameEn : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -788,7 +826,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherFirstNameMl}
+                          {AdoptionParentsDetails?.fatherFirstNameMl ? AdoptionParentsDetails?.fatherFirstNameMl : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                     </div>
@@ -800,7 +838,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherNationality.nationalityname}
+                          {AdoptionParentsDetails?.fatherNationality.nationalityname
+                            ? AdoptionParentsDetails?.fatherNationality.nationalityname
+                            : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -808,7 +848,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherEducation.name}
+                          {AdoptionParentsDetails?.fatherEducation.name ? AdoptionParentsDetails?.fatherEducation.name : t("CR_NOT_RECORDED")}
                         </CardText>
                       </div>
                     </div>
@@ -820,8 +860,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherProfession.name}
+                          {AdoptionParentsDetails?.fatherProfession.name ? AdoptionParentsDetails?.fatherProfession.name : t("CR_NOT_RECORDED")}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AdoptionParentsDetails`} />}
                       </div>
                     </div>
                   </div>
@@ -856,7 +897,10 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_EMAIL")}`} :</CardText>
                   </div>
                   <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionParentsDetails?.fatherEmail}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {AdoptionParentsDetails?.fatherEmail ? AdoptionParentsDetails?.fatherEmail : t("CR_NOT_RECORDED")}
+                    </CardText>
+                    {<ActionButton jumpTo={`${routeLink}/AdoptionParentsDetails`} />}
                   </div>
                 </div>
               </div>
@@ -868,279 +912,279 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
           title={t("BIRTH_TIME_LINE_ADDRESS")}
           content={
             <StatusTable>
-              {AdoptionAddressBasePage?.presentaddressCountry?.code === "COUNTRY_INDIA" &&
-                AdoptionAddressBasePage?.presentaddressStateName?.code === "kl" && (
-                  <div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
-                        </h1>
-                      </div>
+              {AddressBirthDetails?.presentaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.presentaddressStateName?.code === "kl" && (
+                <div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
+                      </h1>
                     </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaDistrict.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaTaluk.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaVillage.name}
-                          </CardText>
-                        </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaLBName.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentWardNo.namecmb}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}
+                        </CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaPostOffice.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaPincode}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaTaluk.name}
+                        </CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaVillage.name}
+                        </CardText>
                       </div>
                     </div>
                   </div>
-                )}
-              {AdoptionAddressBasePage?.presentaddressCountry?.code === "COUNTRY_INDIA" &&
-                AdoptionAddressBasePage?.presentaddressStateName?.code != "kl" && (
-                  <div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_ADDRESS")}`}</span>
-                        </h1>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaDistrict.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaTaluk}
-                          </CardText>
-                        </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaLBName.name}
+                        </CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaVillage.i18nKey}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaPincode}
-                          </CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl}
-                          </CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl}
-                          </CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentWardNo.namecmb}
+                        </CardText>
                       </div>
                     </div>
                   </div>
-                )}
-              {AdoptionAddressBasePage?.presentaddressCountry?.code != "COUNTRY_INDIA" && (
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaPostOffice.name}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaPincode}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaLocalityNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaLocalityNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaStreetNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaStreetNameMl}
+                        </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {AddressBirthDetails?.presentaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.presentaddressStateName?.code != "kl" && (
+                <div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_ADDRESS")}`}</span>
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaDistrict.name}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaTaluk}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaVillage.i18nKey}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaCityVilgeEn}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaPostOfficeEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaPincode}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaLocalityNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaLocalityNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaStreetNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaStreetNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
+                        </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1158,7 +1202,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaProvinceEn}
+                          {AddressBirthDetails?.presentOutSideIndiaProvinceEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1168,7 +1212,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaProvinceMl}
+                          {AddressBirthDetails?.presentOutSideIndiaProvinceMl}
                         </CardText>
                       </div>
                     </div>
@@ -1180,7 +1224,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {AddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1188,7 +1232,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown}
+                          {AddressBirthDetails?.presentOutSideIndiaadrsCityTown}
                         </CardText>
                       </div>
                     </div>
@@ -1200,7 +1244,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaPostCode}
+                          {AddressBirthDetails?.presentOutSideIndiaPostCode}
                         </CardText>
                       </div>
                     </div>
@@ -1212,7 +1256,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaAdressEn}
+                          {AddressBirthDetails?.presentOutSideIndiaAdressEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1220,7 +1264,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaAdressMl}
+                          {AddressBirthDetails?.presentOutSideIndiaAdressMl}
                         </CardText>
                       </div>
                     </div>
@@ -1232,7 +1276,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaAdressEnB}
+                          {AddressBirthDetails?.presentOutSideIndiaAdressEnB}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1240,287 +1284,288 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.presentOutSideIndiaAdressMlB}
+                          {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {AdoptionAddressBasePage?.permtaddressCountry?.code === "COUNTRY_INDIA" &&
-                AdoptionAddressBasePage?.permtaddressStateName?.code === "kl" && (
-                  <div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
-                        </h1>
-                      </div>
+              {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code === "kl" && (
+                <div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
+                      </h1>
                     </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrDistrict.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrTaluk.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrVillage.name}
-                          </CardText>
-                        </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrLBName.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaWardNo.namecmb}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrDistrict.name}
+                        </CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrPincode}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrTaluk.name}
+                        </CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrStreetNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrHouseNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrVillage.name}
+                        </CardText>
                       </div>
                     </div>
                   </div>
-                )}
-              {AdoptionAddressBasePage?.permtaddressCountry?.code === "COUNTRY_INDIA" &&
-                AdoptionAddressBasePage?.permtaddressStateName?.code != "kl" && (
-                  <div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>
-                        </h1>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaDistrict.name}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaTaluk}
-                          </CardText>
-                        </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrLBName.name}
+                        </CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaVillage.i18nKey}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaCityVilgeEn}
-                          </CardText>
-                        </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-4">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaPostOfficeEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaPincode}
-                          </CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaLocalityNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaLocalityNameMl}
-                          </CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaStreetNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaStreetNameMl}
-                          </CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaHouseNameEn}
-                          </CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {AdoptionAddressBasePage?.permntOutsideKeralaHouseNameMl}
-                          </CardText>
-                        </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaWardNo.namecmb}
+                        </CardText>
                       </div>
                     </div>
                   </div>
-                )}
-              {AdoptionAddressBasePage?.permtaddressCountry?.code != "COUNTRY_INDIA" && (
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrPostOffice.name}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrPincode}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrLocalityNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrLocalityNameMl}
+                        </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrStreetNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrStreetNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code != "kl" && (
+                <div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaDistrict.name}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaTaluk}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaVillage.i18nKey}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaCityVilgeEn}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-4">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaPostOfficeEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaPincode}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaLocalityNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaLocalityNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaStreetNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaStreetNameMl}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.permntOutsideKeralaHouseNameMl}
+                        </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1538,7 +1583,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaprovinceEn}
+                          {AddressBirthDetails?.permntOutsideIndiaprovinceEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1548,7 +1593,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaprovinceMl}
+                          {AddressBirthDetails?.permntOutsideIndiaprovinceMl}
                         </CardText>
                       </div>
                     </div>
@@ -1560,7 +1605,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaVillage.i18nKey}
+                          {AddressBirthDetails?.permntOutsideIndiaVillage.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1568,7 +1613,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaCityTown}
+                          {AddressBirthDetails?.permntOutsideIndiaCityTown}
                         </CardText>
                       </div>
                     </div>
@@ -1580,7 +1625,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permanentOutsideIndiaPostCode}
+                          {AddressBirthDetails?.permanentOutsideIndiaPostCode}
                         </CardText>
                       </div>
                     </div>
@@ -1592,7 +1637,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaLineoneEn}
+                          {AddressBirthDetails?.permntOutsideIndiaLineoneEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1600,7 +1645,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaLineoneMl}
+                          {AddressBirthDetails?.permntOutsideIndiaLineoneMl}
                         </CardText>
                       </div>
                     </div>
@@ -1612,7 +1657,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaLinetwoEn}
+                          {AddressBirthDetails?.permntOutsideIndiaLinetwoEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1620,8 +1665,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionAddressBasePage?.permntOutsideIndiaLinetwoMl}
+                          {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/AddressBasePage`} />}
                       </div>
                     </div>
                   </div>

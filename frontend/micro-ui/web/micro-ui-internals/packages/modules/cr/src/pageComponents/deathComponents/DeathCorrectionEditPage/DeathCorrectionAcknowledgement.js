@@ -55,7 +55,7 @@ const DeathCorrectionAcknowledgement = () => {
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
   
-  
+ 
     if (mutationData?.isSuccess) {
       return (
         <Card>
@@ -77,6 +77,18 @@ const DeathCorrectionAcknowledgement = () => {
             onClick={handleDownloadPdf}
           />
 
+{mutationData?.data?.deathCorrection[0]?.applicationStatus === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.deathCorrection[0].businessservice}/${mutationData.data.deathCorrection[0].applicationNumber}`,
+              state: { tenantId: mutationData.data.deathCorrection[0].tenantid },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>
+        )}
+
+
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>
@@ -89,7 +101,7 @@ const DeathCorrectionAcknowledgement = () => {
             t={t}
               data={mutationData.data} isSuccess={mutationData.isSuccess} isLoading={mutationData?.isLoading}
           />
-          {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
+          {<CardText>{t("CR_CREATE_APPLICATION_FAILED")}</CardText>}
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>

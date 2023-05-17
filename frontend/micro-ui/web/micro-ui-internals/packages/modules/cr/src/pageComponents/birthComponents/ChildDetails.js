@@ -10,6 +10,8 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 import { sortDropdownNames } from "../../utils";
+import moment from "react";
+import _ from "lodash";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
@@ -48,7 +50,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
   const [hospitalCode, sethospitalCode] = useState(formData?.ChildDetails?.hospitalCode);
-
+  const [docPreview, setDocPreview] = useState(formData?.ChildDetails?.docPreview ? formData?.ChildDetails?.docPreview : null);
   // console.log(Digit.UserService.getUser().info);
   const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
@@ -164,7 +166,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [birthDateTime, setbirthDateTime] = useState(isEditBirth === false && formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
@@ -221,6 +225,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(false);
   const [DateTimeError, setDateTimeError] = useState(false);
+  const [DateTimeHourError, setDateTimeHourError] = useState(false);
+  const [DateTimeMinuteError, setDateTimeMinuteError] = useState(false);
+  const [DateTimeAMPMError, setDateTimeAMPMError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(false);
   const [HospitalError, setHospitalError] = useState(false);
@@ -269,6 +276,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }, [isInitialRender]);
+  const fetchFile = async (fileId) => {
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    return newThumbnails;
+  };
   // console.log(userRoles);
   const roleall = [];
   roleall.push(...roletemp);
@@ -287,7 +302,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
     // { enabled: !action?.isTerminateState }
   );
-
   // const operatorward = [];
   // const appward = [];
   // operatorwardtemp?.map((ob) => {
@@ -438,10 +452,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", NACFile, tenantId);
             if (response?.data?.files?.length > 0) {
-              // console.log("test");
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              setDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -509,6 +524,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         // setUploadNACHIde(false);
         setpopUpState(false);
+        setUploadNACHIde(false);
+        setproceedNoRDO("");
+        setregNoNAC("");
+        setUploadedFile("");
 
       }
     }
@@ -609,14 +628,35 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   // function setSelectArrivalDate(e) {
   //   setChildArrivalDate(e.target.value);
   // }
+
+  useEffect(() => {
+    //console.log("time while onchange", birthDateTime);
+  }, [birthDateTime])
+
   const handleTimeChange = (value, cb) => {
+    //console.log("valuee--", value, value?.target?.value, value?.target?.name);
+    if (value?.target?.name === "hour12") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, hh: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "minute") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, mm: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "amPm") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, amPm: value?.target?.value ? value?.target?.value : null })
+    }
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
-      // let hour = value;
-      // let period = hour > 12 ? "PM" : "AM";
-      // console.log(period);
       setbirthDateTime(value);
+      // console.log(value);
+      // let time = value;
+      // let timeParts = time.split(":");
+      // console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
+      // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
+      // // Usage
+      // const milliSecTime = milliseconds(24, 36,0);
+      // const time = value;
+      // // "34:26";
+      // const timeParts = time.split(":");
+      // const convrtmilliSecTime = milliseconds(timeParts[0], timeParts[1],0);
+      // console.log(convrtmilliSecTime);
     }
   };
   function setChildName(e) {
@@ -806,7 +846,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
   function selectfile(e) {
-    console.log(e.target.files);
     setNACFile(e.target.files[0]);
   }
   function setCheckSpecialChar(e) {
@@ -817,17 +856,78 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
   let validFlag = true;
   const goNext = () => {
-    if (birthDateTime.trim() == null || birthDateTime.trim() == '' || birthDateTime.trim() == undefined) {
+    if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
       setbirthDateTime("");
-    } else if (birthDateTime.trim() != null) {
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      setDateTimeAMPMError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeHourError(false);
       if (childDOB != null) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const childDateofBirth = new Date(childDOB);
-        childDateofBirth.setHours(0, 0, 0, 0); 
-        if(childDateofBirth.getTime() < today.getTime()){
+        childDateofBirth.setHours(0, 0, 0, 0);
+        if (childDateofBirth.getTime() < today.getTime()) {
           setDateTimeError(false);
-        } else if (childDateofBirth.getTime() === today.getTime()){
+        } else if (childDateofBirth.getTime() === today.getTime()) {
           let todayDate = new Date();
           let currenthours = todayDate.getHours();
           let currentMints = todayDate.getHours();
@@ -837,6 +937,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           if (birthDateTime > currentDatetime) {
             validFlag = false;
             setbirthDateTime("");
+            setCheckbirthDateTime({ hh: "", mm: "", amPm: "" });
             setDateTimeError(true);
             setToast(true);
             setTimeout(() => {
@@ -848,7 +949,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           }
         }
       }
-      
+
     }
     if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
       setChildAadharNo("");
@@ -1012,6 +1113,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             setToast(false);
           }, 2000);
         } else {
+          setAdsHomeStreetNameEnError(false);
           setAdsHomeStreetNameMlError(false);
         }
       }
@@ -1028,6 +1130,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           }, 2000);
         } else {
           setAdsHomeStreetNameEnError(false);
+          setAdsHomeStreetNameMlError(false);
         }
       }
     } else if (birthPlace.code === "VEHICLE") {
@@ -1160,7 +1263,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck != ".") {
-        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 9) {
           validFlag = false;
           setBirthWeightError(true);
           setToast(true);
@@ -1206,7 +1309,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setToast(false);
       }, 2000);
     } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 42) {
+      if (pregnancyDuration < 20 || pregnancyDuration > 53) {
         validFlag = false;
         setPregnancyDurationInvalidError(true);
         setToast(true);
@@ -1338,7 +1441,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
         vehicleType,
         vehicleHaltPlace: vehicleHaltPlace.trim(),
-        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleRegistrationNo: (vehicleRegistrationNo.toUpperCase()).trim(),
         vehicleFromEn: vehicleFromEn.trim(),
         vehicleToEn: vehicleToEn.trim(),
         vehicleFromMl: vehicleFromMl.trim(),
@@ -1352,7 +1455,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
         uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
-        proceedNoRDO, regNoNAC
+        proceedNoRDO: (proceedNoRDO.toUpperCase()).trim(),
+        regNoNAC: (regNoNAC.toUpperCase()).trim(), docPreview
       });
     }
   };
@@ -1491,7 +1595,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>{`${t("CR_RDO_PROCEED_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
@@ -1504,11 +1608,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
+                      style={{ textTransform: "uppercase" }}
                       placeholder={`${t("CR_RDO_PROCEED_NO")}`}
                       {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
                     />
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>{`${t("CR_NAC_REG_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
@@ -1519,6 +1624,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       value={regNoNAC}
                       onChange={setSelectregNoNAC}
                       disable={isDisableEdit}
+                      style={{ textTransform: "uppercase" }}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
                       placeholder={`${t("CR_NAC_REG_NO")}`}
@@ -1537,7 +1643,44 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                     />
                   </div>
+                  {
+                    docPreview && (
+                      <div className="col-md-2">
+                        {_.head(docPreview)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(docPreview)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(docPreview)?.small}
+                            alt="Other Certificate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(docPreview)?.type === "pdf"
+                              ? _.head(docPreview)?.pdfUrl
+                              : _.head(docPreview)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )
+                  }
+
                 </div>
+
               </div>
             </div>
           )}
@@ -1827,7 +1970,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             </div>)}
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-12">
                 <CheckBox style={{ Colour: "#be3cb7 !important" }} label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
@@ -1996,7 +2139,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           {toast && (
             <Toast
               error={
-                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || DateTimeHourError || DateTimeMinuteError || DateTimeAMPMError
+                || HospitalError || InstitutionError || InstitutionNameError ||
                 WardError ||
                 AdsHomePincodeError ||
                 AdsHomePostOfficeError ||
@@ -2015,7 +2159,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
               }
               label={
-                AadharError || DOBError || DateTimeError || HospitalError || InstitutionError || InstitutionNameError ||
+                AadharError || DOBError || DateTimeError || DateTimeHourError || DateTimeMinuteError || DateTimeAMPMError
+                  || HospitalError || InstitutionError || InstitutionNameError ||
                   WardError ||
                   AdsHomePincodeError ||
                   AdsHomePostOfficeError ||
@@ -2037,39 +2182,45 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : DateTimeError
                       ? t(`CS_COMMON_DATE_TIME_ERROR`)
-                      : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                        : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                          : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                            : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                              : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                                : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                                  : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                    : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                      : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                        : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                          : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                            : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                                              : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                                                : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-                                                  : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                    : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                      : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                                                        : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                          : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                            : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                              : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                                : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                  : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
-                                                                    : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-                                                                      : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
-                                                                        : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
-                                                                          : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
-                                                                            : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
-                                                                              : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
-                                                                                : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
-                                                                                  : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
-                                                                                    : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
-                                                                                      : setToast(false)
+                      : DateTimeHourError
+                        ? t(`CS_COMMON_DATE_HOUR_ERROR`)
+                        : DateTimeMinuteError
+                          ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
+                          : DateTimeAMPMError
+                            ? t(`CS_COMMON_DATE_AMPM_ERROR`)
+                            : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                              : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                                : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                                  : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                                    : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                                      : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                        : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                          : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                            : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                              : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                                : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                                  : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                                    : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                                      : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                                        : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                          : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                            : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                              : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                                : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                                  : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                                    : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                                      : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                        : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
+                                                                          : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                                            : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                              : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                                : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                                  : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                                    : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                                      : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                                        : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                          : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                            : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

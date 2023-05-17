@@ -3,128 +3,104 @@ import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocali
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
-
-//  const getTradeDetails = (application, t) => {
-//   return {
-//     title: t("TL_COMMON_TR_DETAILS"),
-//     values: [
-//       { title: t("TL_APPLICATION_TYPE"), value: t(`TRADELICENSE_APPLICATIONTYPE_${application?.applicationType}`) || t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL"), value: application?.licenseType ? t(`TRADELICENSE_LICENSETYPE_${application?.licenseType}`) : t("CS_NA") },
-//       { title: t("TL_COMMON_TABLE_COL_TRD_NAME"), value: application?.tradeName || t("CS_NA") },
-//       { title: t("reports.tl.fromDate"), value: application?.validFrom ? Digit.DateUtils.ConvertTimestampToDate(application?.validFrom, "dd/MM/yyyy") : t("CS_NA") },
-//       { title: t("reports.tl.toDate"), value: application?.validTo ? Digit.DateUtils.ConvertTimestampToDate(application?.validTo, "dd/MM/yyyy") : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL"), value: application?.tradeLicenseDetail?.structureType ? t(`COMMON_MASTERS_STRUCTURETYPE_${application?.tradeLicenseDetail?.structureType?.split('.')[0]}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL"), value: application?.tradeLicenseDetail?.structureType ? t(`COMMON_MASTERS_STRUCTURETYPE_${stringReplaceAll(application?.tradeLicenseDetail?.structureType, ".", "_")}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL"), value: Digit.DateUtils.ConvertTimestampToDate(application?.commencementDate, "dd/MM/yyyy") || t("CS_NA"), },
-//       { title: t("TL_NEW_GST_NUMBER_LABEL"), value: application?.tradeLicenseDetail?.additionalDetail?.gstNo || t("CS_NA") },
-//       { title: t("TL_NEW_OPERATIONAL_SQ_FT_AREA_LABEL"), value: application?.tradeLicenseDetail?.operationalArea || t("CS_NA") },
-//       { title: t("TL_NEW_NUMBER_OF_EMPLOYEES_LABEL"), value: application?.tradeLicenseDetail?.noOfEmployees || t("CS_NA") },
-//     ],
-//   };
-// };
-// const getAccessoriesDetails = (application, t) => {
-//   let values = [];
-//   application.tradeLicenseDetail?.accessories?.map((accessory) => {
-//     let accessoryCategory = t("CS_NA");
-//     if (accessory?.accessoryCategory) {
-//       accessoryCategory = stringReplaceAll(accessory?.accessoryCategory, ".", "_");
-//       accessoryCategory = t(`TRADELICENSE_ACCESSORIESCATEGORY_${stringReplaceAll(accessoryCategory, "-", "_")}`);
-//     }
-//     let value = [
-//       { title: t("TL_NEW_TRADE_DETAILS_ACC_LABEL"), value: accessoryCategory },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"), value: accessory?.uom || t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"), value: accessory?.uomValue || t("CS_NA") },
-//       { title: t("TL_ACCESSORY_COUNT_LABEL"), value: accessory?.count || t("CS_NA") }
-//     ];
-//     values.push(...value);
-//   });
-
-//   return {
-//     title: "",
-//     values: values,
-//   };
-// };
-
-// const getTradeUnitsDetails = (application, t) => {
-//   let values = [];
-//   application.tradeLicenseDetail?.tradeUnits?.map((unit) => {
-//     let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
-//     tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
-//     let value = [
-//       { title: t("TRADELICENSE_TRADECATEGORY_LABEL"), value: unit?.tradeType ? t(`TRADELICENSE_TRADETYPE_${unit?.tradeType?.split('.')[0]}`) : t("CS_NA") },
-//       { title: t("TRADELICENSE_TRADETYPE_LABEL"), value: unit?.tradeType ? t(`TRADELICENSE_TRADETYPE_${unit?.tradeType?.split('.')[1]}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_SUB_TYPE_LABEL"), value: tradeSubType ? t(`TRADELICENSE_TRADETYPE_${tradeSubType}`) : t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER"), value: unit?.uom || t("CS_NA") },
-//       { title: t("TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL"), value: unit?.uomValue || t("CS_NA") },
-//       { title: "", value: ""},
-//       { title: "", value: ""},
-//       { title: "", value: ""}
-//     ];
-//     values.push(...value);
-//   });
-
-//   return {
-//     title: "",
-//     values: values,
-//   };
-// };
 const getChildDetails = (application, t) => {
   application.owners = application?.BornOutsideChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
  
   return {
-    title: "",
+    title: "CR_BIRTH_CHILD_DETAILS",
     values: [
-      { title: t("Date of Birth"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
-      { title: t("Birth Place"), value: application?.outsideBirthPlaceEn ? application?.outsideBirthPlaceEn : t("CS_NA") },
-    //   { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
-
-      // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
-      // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
-      // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
-      // // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
-      // { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
+      { title: "Child Aadhaar", value: application?.childAadharNo ? application?.childAadharNo : t("CR_NOT_RECORDED") },
+      { title: "Date of Birth", value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CR_NOT_RECORDED") },
+      { title: "Sex", value: application?.gender ? application?.gender : t("CR_NOT_RECORDED") },
+      { title: "Child Passport No", value: application?.childPassportNo ? application?.childPassortNo : t("CR_NOT_RECORDED") },
+      { title: "Date of Arrival", value: application?.childArrivalDate ? Digit.DateUtils.ConvertTimestampToDate(application?.childArrivalDate, "dd/MM/yyyy") : t("CR_NOT_RECORDED") },
+      { title: "Child Name", value:  application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
+      ? application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
+      : t("CR_NOT_RECORDED"),},
+      { title: "Country", value: application?.country ? application?.country : t("CR_NOT_RECORDED") },
+      { title: "State/Province/Region", value: application?.provinceEn?application?.provinceEn : t("CR_NOT_RECORDED")},
+      { title: "City/Town/Village Name ", value: application?.cityTownEn?application?.cityTownEn : t("CR_NOT_RECORDED")},
+      { title: "Outside Birth Place", value: application?.outsideBirthPlaceEn ? application?.outsideBirthPlaceEn : t("CR_NOT_RECORDED") },
+      { title: "Postal Code", value: application?.postCode ? application?.postCode : t("CR_NOT_RECORDED") },
     ],
   };
-
-  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
-  //   let values = [];
-  //   application?.tradeLicenseDetail.owners.map((owner) => {
-  //     let indOwner = [
-  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
-  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
-  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
-  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
-  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
-  //     ];
-  //     values.push(...indOwner);
-  //   });
-  //   return {
-  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
-  //     values: values,
-  //   };
-  // }
 };
-const getAddressDetails = (application, t) => {
+const getParentsDetails = (application, t) => {
+  return{
+    title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+    values: [
+      { title: "Mother's Name", value: application?.BornOutsideParentsDetails?.motherFirstNameEn ? application?.BornOutsideParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED") },
+        { title: "Passport No", value: application?.BornOutsideParentsDetails?.motherPassport ? application?.BornOutsideParentsDetails?.motherPassport : t("CR_NOT_RECORDED") },
+        { title: "Nationality", value: application?.BornOutsideParentsDetails?.motherNationality ? application?.BornOutsideParentsDetails?.motherNationality : t("CR_NOT_RECORDED") },
+        { title: "Father's Name", value: application?.BornOutsideParentsDetails?.fatherFirstNameEn ? application?.BornOutsideParentsDetails?.fatherFirstNameEn : t("CR_NOT_RECORDED") },
+          { title: "Passport No", value: application?.BornOutsideParentsDetails?.fatherPassport ? application?.BornOutsideParentsDetails?.fatherPassport : t("CR_NOT_RECORDED") },
+          { title: "Nationality", value: application?.BornOutsideParentsDetails?.fatherNationality ? application?.BornOutsideParentsDetails?.fatherNationality : t("CR_NOT_RECORDED") },
+          { title: "Age of the mother at the time of marriage", value: application?.BornOutsideParentsDetails?.motherMarriageAge ? application?.BornOutsideParentsDetails?.motherMarriageAge : t("CR_NOT_RECORDED") },
+          { title: "Age of the mother at the time of this birth", value: application?.BornOutsideParentsDetails?.motherMarriageBirth ? application?.BornOutsideParentsDetails?.motherMarriageBirth : t("CR_NOT_RECORDED") },
+          { title: "Mother Education", value: application?.BornOutsideParentsDetails?.motherEducation ? application?.BornOutsideParentsDetails?.motherEducation : t("CR_NOT_RECORDED") },
+          { title: "MothersOccupation", value: application?.BornOutsideParentsDetails?.motherProfession ? application?.BornOutsideParentsDetails?.motherProfession : t("CR_NOT_RECORDED") },
+          { title: "Father Education", value: application?.BornOutsideParentsDetails?.fatherEducation ? application?.BornOutsideParentsDetails?.fatherEducation : t("CR_NOT_RECORDED") },
+          { title: "FathersOccupation", value: application?.BornOutsideParentsDetails?.fatherProfession ? application?.BornOutsideParentsDetails?.fatherProfession : t("CR_NOT_RECORDED") },
+          { title: "Religion ", value: application?.BornOutsideParentsDetails?.Religion ? application?.BornOutsideParentsDetails?.Religion : t("CR_NOT_RECORDED") },
+          { title: "Parent's Contact No", value: application?.BornOutsideParentsDetails?.fatherMobile ? application?.BornOutsideParentsDetails?.fatherMobile : t("CR_NOT_RECORDED") },
+          { title: "Parent's Email ID", value: application?.BornOutsideParentsDetails?.fatherEmail ? application?.BornOutsideParentsDetails?.fatherEmail : t("CR_NOT_RECORDED") },
+    ]
+  }
+}
+const getPermanantAddressDetails = (application, t) => {
+  console.log(application, "application");
   return {
-    title: "",
+    title: "CR_PERMANENT_ADDRESS",
     values: [
-      // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
-      // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
-      // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-      { title: t("Locality"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn || t("CS_NA") },
-      { title: t("House Name"), value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn || t("CS_NA") }
+      { title: "House No & Name", value:
+      application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn : t("CR_NOT_RECORDED") },
+        { title: "Locality", value:
+        application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn : t("CR_NOT_RECORDED") },
+        { title: "Street Name", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn : t("CR_NOT_RECORDED") },
+        { title: "Post Office", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice : t("CR_NOT_RECORDED") },
+        { title: "Pin Code", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode : t("CR_NOT_RECORDED") },
+        { title: "Ward", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaWardNoEn ? application?.BornOutsideAddressBirthDetails?.permntInKeralaWardNoEn : t("CR_NOT_RECORDED") },
+        { title: "Village", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage : t("CR_NOT_RECORDED") },
+        { title: "Taluk", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk : t("CR_NOT_RECORDED") },
+        { title: "District", value: application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict ? application?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict : t("CR_NOT_RECORDED") },
+        { title: "State", value: application?.BornOutsideAddressBirthDetails?.permtaddressStateName ? application?.BornOutsideAddressBirthDetails?.permtaddressStateName : t("CR_NOT_RECORDED") },
+        { title: "Country", value: application?.BornOutsideAddressBirthDetails?.permtaddressCountry ? application?.BornOutsideAddressBirthDetails?.permtaddressCountry : t("CR_NOT_RECORDED") },
     ],
   };
 };
-
+    const getForeignAddressDetails = (application, t) => {
+      return{
+    title: "CR_PARENTS_FOREIGN_ADDRESS",
+    values: [
+      { title: "Country", value: application?.BornOutsideAddressBirthDetails?.presentOutSideCountry ? application?.BornOutsideAddressBirthDetails?.presentOutSideCountry : t("CR_NOT_RECORDED") },
+      { title: "State/Province/Region", value:
+      application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn : t("CR_NOT_RECORDED") },
+        { title: "Whether City/Town or Village", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage : t("CR_NOT_RECORDED") },
+        { title: "City/Town/Village Name ", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown : t("CR_NOT_RECORDED") },
+        { title: "Postal Code", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode : t("CR_NOT_RECORDED") },
+        { title: "Address Line 1", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn : t("CR_NOT_RECORDED") },
+        { title: "Address Line 2", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB : t("CR_NOT_RECORDED") },
+    ]
+  };
+};
+// const getstatisticalInfo = (application, t) => {
+//   return{
+//     title: "CR_STATSTICAL_INFORMATION_HEADER",
+//     values: [
+//       { title: "Weight at the time of Birth (KG)", value: application?.BornOutsideStaticInfn?.birthWeight ? application?.BornOutsideStaticInfn?.birthWeight : t("CR_NOT_RECORDED") },
+//       { title: "Duration of Pregnancy (Weeks)", value: application?.BornOutsideStaticInfn?.pregnancyDuration ? application?.BornOutsideStaticInfn?.pregnancyDuration : t("CR_NOT_RECORDED") },
+//       { title: "Delivery Method", value: application?.BornOutsideStaticInfn?.deliveryMethods ? application?.BornOutsideStaticInfn?.deliveryMethods : t("CR_NOT_RECORDED") },
+//       { title: "Nature of Medical Attention at Delivery ", value: application?.BornOutsideStaticInfn?.medicalAttensionSub ? application?.BornOutsideStaticInfn?.medicalAttensionSub : t("CR_NOT_RECORDED") },
+//       { title: "No of Child Born Alive Including this Child", value: application?.BornOutsideStaticInfn?.orderofChildren ? application?.BornOutsideStaticInfn?.orderofChildren : t("CR_NOT_RECORDED") },
+//       { title: "Relation", value: application?.BornOutsideStaticInfn?.relation ? application?.BornOutsideStaticInfn?.relation : t("CR_NOT_RECORDED") },
+//       { title: "Aadhaar No.", value: application?.BornOutsideStaticInfn?.informarAadhar ? application?.BornOutsideStaticInfn?.informarAadhar : t("CR_NOT_RECORDED") },
+//       { title: "Informer Name", value: application?.BornOutsideStaticInfn?.informarNameEn ? application?.BornOutsideStaticInfn?.informarNameEn : t("CR_NOT_RECORDED") },
+//       { title: "Mobile No", value: application?.BornOutsideStaticInfn?.informarMobile ? application?.BornOutsideStaticInfn?.informarMobile : t("CR_NOT_RECORDED") },
+//       { title: "Communication address", value: application?.BornOutsideStaticInfn?.informarAddress ? application?.BornOutsideStaticInfn?.informarAddress : t(t("CR_NOT_RECORDED")) },
+//     ]
+//   }
+// }
 const getCRBornOutsideAcknowledgementData = async (application, tenantInfo, t) => {
   //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
   //   let res;
@@ -134,41 +110,27 @@ const getCRBornOutsideAcknowledgementData = async (application, tenantInfo, t) =
   return {
     t: t,
     tenantId: tenantInfo?.code,
-    title: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
-    name: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
+    title: `${tenantInfo?.i18nKey} ${ulbCamel(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`)}`,
+    name: `${tenantInfo?.i18nKey} ${ulbCamel(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`)}`,
     email: "",
     phoneNumber: "",
     details: [
       {
-        title:t("Acknowledgment Details"),
+        title:"Acknowledgment Details",
         values: [
-          { title: t("Application No"), value: application?.applicationNumber },
+          { title: "Application No", value: application?.applicationNumber },
           {
-            title: t("Application Date"),
+            title: "Application Date",
             value: Digit.DateUtils.ConvertTimestampToDate(application?.dateofreport, "dd/MM/yyyy"),
           },
         ],
       },
       getChildDetails(application, t),
-      getAddressDetails(application, t),
-      //       getTradeDetails(application, t),
-      //       getTradeUnitsDetails(application, t),
-      //       getAccessoriesDetails(application, t),
-      //       getAddressDetails(application, t),
-      //       getOwnerDetails(application, t),
-      //       {
-      //         title: t("TL_COMMON_DOCS"),
-      //         values:
-      //           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
-      //             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
-      //               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
-      //               return {
-      //                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
-      //                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
-      //               };
-      //             })
-      //             : [],
-      //       },
+      getParentsDetails(application, t),
+      getPermanantAddressDetails(application, t),
+      getForeignAddressDetails(application, t),
+      // getstatisticalInfo(application, t),
+      
     ],
   };
 };

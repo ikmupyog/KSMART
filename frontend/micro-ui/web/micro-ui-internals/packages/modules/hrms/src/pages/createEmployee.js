@@ -78,6 +78,7 @@ const CreateEmployee = ({userType}) => {
 
     const email = formData?.SelectEmployeeEmailId?.emailId || '';
     const name = formData?.SelectEmployeeName?.employeeName || '';
+    const aadhar = formData?.SelectEmployeeAadharNumber?.AadharNumber || '';
     const address = formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress || '';
     const validEmail = email.length == 0 ? true : email.match(Digit.Utils.getPattern('Email'));
     return validEmail && name.match(Digit.Utils.getPattern('Name')) && address.match(Digit.Utils.getPattern('Address'));
@@ -188,7 +189,7 @@ const CreateEmployee = ({userType}) => {
         setcheck(true);
       }
     }
-
+    
     let setassigncheck = false;
     for (let i = 0; i < formData?.Assignments?.length; i++) {
       let key = formData?.Assignments[i];
@@ -209,6 +210,7 @@ const CreateEmployee = ({userType}) => {
       formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress &&
       formData?.SelectEmployeeGender?.gender.code &&
       formData?.SelectEmployeeName?.employeeName &&
+      formData?.SelectEmployeeAadhaarNumber?.aadhaarNumber &&
       formData?.SelectEmployeeType?.code &&
       formData?.SelectEmployeePhoneNumber?.mobileNumber 
       &&
@@ -290,6 +292,7 @@ const CreateEmployee = ({userType}) => {
         user: {
           mobileNumber: data?.SelectEmployeePhoneNumber?.mobileNumber,
           name: data?.SelectEmployeeName?.employeeName,
+          aadhaarNumber: data?.SelectEmployeeAadhaarNumber?.aadhaarNumber,
           correspondenceAddress: data?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress,
           emailId: data?.SelectEmployeeEmailId?.emailId ? data?.SelectEmployeeEmailId?.emailId : undefined,
           gender: data?.SelectEmployeeGender?.gender.code,

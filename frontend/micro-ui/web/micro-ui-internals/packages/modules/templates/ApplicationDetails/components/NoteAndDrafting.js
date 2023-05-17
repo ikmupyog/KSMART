@@ -595,8 +595,13 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                       {/* <li>Status: {item.action}</li>
                       <li>Assignes: {item?.assignes?.[0]?.name}</li>
                       <li>Created: {item?.auditDetails?.lastModifiedTime}</li> */}
-                      <li>Notes: {item?.comment}</li>
-                      <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
+                     {item?.comment && (
+                      <React.Fragment>
+                        <li>Notes: {item?.comment}</li>
+                         <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
+                      </React.Fragment>
+                     )     
+                     }                 
                     </ol>
                   );
                 })}

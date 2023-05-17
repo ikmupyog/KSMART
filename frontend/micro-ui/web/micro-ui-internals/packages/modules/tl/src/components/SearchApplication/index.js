@@ -135,9 +135,17 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
     },
     {
       Header: t("TL_COMMON_TABLE_COL_STATUS"),
-      accessor: (row) => GetCell(t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}` || "NA")),
+      accessor: (row) => GetCell(
+        (row.correctionId !== null && row.correctionAppNumber !== null) ?
+          t(row?.workflowCode && row?.correctionStatus && `WF_${row?.workflowCode?.toUpperCase()}_${row.correctionStatus}`)||"NA"
+        :
+        t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}`)
+        )||"NA",
+        
+        // t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}` || "NA")),
       disableSortBy: true,
     }
+
   ]), [])
 
   return <React.Fragment>

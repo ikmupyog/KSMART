@@ -4,8 +4,9 @@ import * as dss from "./dss";
 import * as locale from "./locale";
 import * as obps from "./obps";
 import * as pt from "./pt";
-import PDFUtil, { downloadReceipt ,downloadPDFFromLink,downloadBill ,getFileUrl} from "./pdf";
+import PDFUtil, { downloadReceipt, downloadPDFFromLink, downloadBill, getFileUrl } from "./pdf";
 import getFileTypeFromFileStoreURL from "./fileType";
+import * as dataFormatter from "./dataFormatter";
 
 const GetParamFromUrl = (key, fallback, search) => {
   if (typeof window !== "undefined") {
@@ -118,7 +119,7 @@ const didEmployeeHasRole = (role) => {
 const pgrAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
-  const pgrRoles = ["PGR_LME", "PGR-ADMIN", "CSR", "CEMP", "FEMP", "DGRO", "ULB Operator", "GRO", "GO", "RO", "GA","WARD_OVERSEER","OVERSEER_HIGHER","AE","WARD_JHI","PGR_JHI","HIHS","PGR_MO","PGR_ACS","PGR_PD","PGR_JD","PGR_CEMP"];
+  const pgrRoles = ["PGR_LME", "PGR-ADMIN", "CSR", "CEMP", "FEMP", "DGRO", "ULB Operator", "GRO", "GO", "RO", "GA", "WARD_OVERSEER", "OVERSEER_HIGHER", "AE", "WARD_JHI", "PGR_JHI", "HIHS", "PGR_MO", "PGR_ACS", "PGR_PD", "PGR_JD", "PGR_CEMP"];
 
   const PGR_ACCESS = userRoles?.filter((role) => pgrRoles.includes(role));
 
@@ -163,7 +164,7 @@ const BPAREGAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
 
-  const BPAREG_ROLES =["BPAREG_APPROVER","BPAREG_DOC_VERIFIER"]
+  const BPAREG_ROLES = ["BPAREG_APPROVER", "BPAREG_DOC_VERIFIER"]
 
   const BPAREG_ACCESS = userRoles?.filter((role) => BPAREG_ROLES.includes(role));
 
@@ -196,7 +197,7 @@ const ptAccess = () => {
 const tlAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
-  const tlRoles = ["TL_CEMP", "TL_APPROVER", "TL_FIELD_INSPECTOR", "TL_DOC_VERIFIER","TL_PDEOPERATOR","TL_PDEAPPROVER"];
+  const tlRoles = ["TL_CEMP", "TL_APPROVER", "TL_FIELD_INSPECTOR", "TL_DOC_VERIFIER", "TL_PDEOPERATOR", "TL_PDEAPPROVER"];
 
   const TL_ACCESS = userRoles?.filter((role) => tlRoles.includes(role));
 
@@ -206,8 +207,8 @@ const crAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
   const crRoles = ["BND_CEMP", "BIRTH_APPLICATION_EDITOR", "BIRTH_APPLICATION_VIEWER", "BIRTH_REPORT_VIEWER",
-  "DEATH_APPLICATION_CREATOR", "DEATH_APPLICATION_EDITOR", "DEATH_APPLICATION_VIEWER","DEATH_REPORT_VIEWER","HOSPITAL_OPERATOR","HOSPITAL_APPROVER","BND_LOCAL_REGISTRAR","BND_DISTRICT_REGISTRAR","JHI", "BND_SUB_REGISTRAR",
-  "OFFICIAL_NOTIFIER" ];
+    "DEATH_APPLICATION_CREATOR", "DEATH_APPLICATION_EDITOR", "DEATH_APPLICATION_VIEWER", "DEATH_REPORT_VIEWER", "HOSPITAL_OPERATOR", "HOSPITAL_APPROVER", "BND_LOCAL_REGISTRAR", "BND_DISTRICT_REGISTRAR", "JHI", "BND_SUB_REGISTRAR",
+    "OFFICIAL_NOTIFIER"];
 
   const CR_ACCESS = userRoles?.filter((role) => crRoles.includes(role));
 
@@ -280,5 +281,6 @@ export default {
   getUnique,
   tlAccess,
   crAccess,
-  dfmAccess
+  dfmAccess,
+  dataFormatter
 };

@@ -18,7 +18,8 @@
         width: 90%;
     }
 }
-.takeActionButtonWrapper{
+
+.takeActionButtonWrapper {
     display: flex;
     justify-content: right;
     width: 100%;
@@ -71,7 +72,8 @@
 
     }
 }
-.drafting{
+
+.drafting {
     display: flex;
     align-items: center;
 }
@@ -100,6 +102,7 @@
 .notes {
     display: flex;
     align-items: center;
+
     @media (max-width: 600px) {
         margin-top: 48px
     }
@@ -126,7 +129,8 @@
     margin-top: 50px;
     margin-bottom: 30px;
 }
-.button-div{
+
+.button-div {
     display: flex;
     justify-content: space-evenly;
 }
@@ -175,7 +179,7 @@
         text-align: center;
         margin-bottom: 30px;
     }
- 
+
 }
 
 .card-document-column {
@@ -232,9 +236,10 @@
     margin-top: 30px;
     display: flex;
     flex-direction: row;
-    
+
 }
-.drafting-row{
+
+.drafting-row {
     display: flex;
     height: 50px;
     flex-direction: row;
@@ -414,14 +419,14 @@
 }
 
 .arising-filewrapper {
-    height: 1560px;
+    height: 870px;
 
     @media (max-width: 1020px) {
-        height: 1612px;
+        height: 796px;
     }
 
     @media (max-width: 600px) {
-        height: 3225px;
+        height: 1183px;
     }
 }
 
@@ -534,16 +539,79 @@
 }
 
 .counter-filewrapper {
-    height: 828px;
+    height: 1470px;
 
     @media (max-width: 1050px) {
-        height: 950px;
+        height: 1402px;
 
     }
 
     @media (max-width: 600px) {
-        height: 1300px;
+        height: 2405px;
 
+    }
+}
+
+.check-field {
+    padding-top: 33px;
+}
+
+.applicant {
+
+    color: #0e4685;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #9acd32;
+    line-height: .1em;
+    margin: 10px 0 20px;
+    font-size: 14px;
+
+    @media (max-width: 1050px) {
+
+
+        color: #0e4685;
+        font-weight: 700;
+        text-transform: uppercase;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #9acd32;
+        line-height: .1em;
+        margin: 110px 0 20px;
+        font-size: 14px;
+
+    }
+
+    @media (max-width: 600px) {
+
+
+        color: #0e4685;
+        font-weight: 700;
+        text-transform: uppercase;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #9acd32;
+        line-height: .1em;
+        margin: 150px 0 20px;
+        font-size: 14px;
+
+    }
+}
+
+.indian {
+    float: right;
+
+    @media (max-width: 600px) {
+        float: none;
+
+    }
+}
+
+.file-radio {
+    @media (max-width: 600px) {
+        width: 14px;
+        height: 14px;
     }
 }
 

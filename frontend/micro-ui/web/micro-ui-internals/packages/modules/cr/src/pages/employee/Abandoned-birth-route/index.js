@@ -62,7 +62,7 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
     history.push(`${match.path}/acknowledgement`);
   };
 
-  const onSuccess = () => {
+  const onSuccess = (data) => {
     // console.log(isEditAbandonedBirth);
    
     if(isEditAbandonedBirth === false){
@@ -91,7 +91,7 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
                 t={t}
                 formData={params}
                 onAdd={handleMultiple}
-                userType="citizen"
+                userType="employee"
               />
             </Route>
 

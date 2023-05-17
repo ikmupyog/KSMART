@@ -97,6 +97,13 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
   const [inputValue, setInputValue] = useState("");
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
+  const [SpouseNameEnError, setSpouseNameEnError] = useState(false);
+  const [SpouseNameMLError, setSpouseNameMLError] = useState(false);
+  const [FatherNameEnError, setFatherNameEnError] = useState(false);
+  const [FatherNameMlError, setFatherNameMlError] = useState(false);
+  const [MotherNameEnError, setMotherNameEnError] = useState(false);
+  const [MotherNameMlError, setMotherNameMlError] = useState(false);
+    const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
 
   const onSkip = () => onSelect();
   // function setFatherUnavailablechecked(e){
@@ -267,22 +274,112 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
     setFamilyEmailId(e.target.value);
   }
 
+  let validFlag = true;
   const goNext = () => {
-    sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
-    sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
-    sessionStorage.setItem("SpouseNameMl", SpouseNameMl ? SpouseNameMl : null);
-    sessionStorage.setItem("SpouseAadhaar", SpouseAadhaar ? SpouseAadhaar : null);
-    sessionStorage.setItem("FatherNameEn", FatherNameEn ? FatherNameEn : null);
-    sessionStorage.setItem("FatherNameMl", FatherNameMl ? FatherNameMl : null);
-    sessionStorage.setItem("FatherAadharNo", FatherAadharNo ? FatherAadharNo : null);
-    sessionStorage.setItem("MotherNameEn", MotherNameEn ? MotherNameEn : null);
-    sessionStorage.setItem("MotherNameMl", MotherNameMl ? MotherNameMl : null);
-    sessionStorage.setItem("MotherAadharNo", MotherAadharNo ? MotherAadharNo : null);
-    sessionStorage.setItem("FatherUnavailable", FatherUnavailable);
-    sessionStorage.setItem("MotherUnavailable", MotherUnavailable);
-    sessionStorage.setItem("SpouseUnavailable", SpouseUnavailable);
-    sessionStorage.setItem("FamilyMobileNo", FamilyMobileNo);
-    sessionStorage.setItem("FamilyEmailId", FamilyEmailId);
+  
+    // if (SpouseNameEN.trim() == null || SpouseNameEN.trim() == '' || SpouseNameEN.trim() == undefined) {
+    //   validFlag = false;
+    //   setSpouseNameEN("");
+    //   setSpouseNameEnError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setSpouseNameEnError(false);
+    // }
+    // if (SpouseNameMl.trim() == null || SpouseNameMl.trim() == '' || SpouseNameMl.trim() == undefined) {
+    //   validFlag = false;
+    //   setSpouseNameMl("");
+    //   setSpouseNameMLError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setSpouseNameMLError(false);
+    // }
+
+    // if (FatherNameEn.trim() == null || FatherNameEn.trim() == '' || FatherNameEn.trim() == undefined) {
+    //   validFlag = false;
+    //   setFatherNameEn("");
+    //   setFatherNameEnError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setFatherNameEnError(false);
+    // }
+    // if (FatherNameMl.trim() == null || FatherNameMl.trim() == '' || FatherNameMl.trim() == undefined) {
+    //   validFlag = false;
+    //   setFatherNameMl("");
+    //   setFatherNameMlError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setFatherNameMlError(false);
+    // }
+    // if (MotherNameEn.trim() == null || MotherNameEn.trim() == '' || MotherNameEn.trim() == undefined) {
+    //   validFlag = false;
+    //   setMotherNameEn("");
+    //   setMotherNameEnError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setMotherNameEnError(false);
+    // }
+    // if (MotherNameMl.trim() == null || MotherNameMl.trim() == '' || MotherNameMl.trim() == undefined) {
+    //   validFlag = false;
+    //   setMotherNameMl("");
+    //   setMotherNameMlError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setMotherNameMlError(false);
+    // }
+
+    // if ((MotherAadharNo.trim() == null || MotherAadharNo.trim() == '') && (FatherAadharNo.trim() != null || FatherAadharNo.trim() == '') && (SpouseAadhaar.trim() != null || SpouseAadhaar.trim() == '')) {
+    //   setMotherAadharNo('');
+    //   setFatherAadharNo('');
+    //   setSpouseAadhaar('');
+    // } else {
+    //   if (MotherAadharNo.trim() != null && FatherAadharNo.trim() != null && SpouseAadhaar.trim() != null) {
+    //     if (MotherAadharNo === FatherAadharNo) {
+    //       validFlag = false;
+    //       setAdhaarDuplicationError(true);
+    //       setToast(true);
+    //       setTimeout(() => {
+    //         setToast(false);
+    //       }, 2000);
+    //     } 
+    //     if (MotherAadharNo === SpouseAadhaar) {
+    //       validFlag = false;
+    //       setAdhaarDuplicationError(true);
+    //       setToast(true);
+    //       setTimeout(() => {
+    //         setToast(false);
+    //       }, 2000);
+    //     }  if (FatherAadharNo === SpouseAadhaar) {
+    //       validFlag = false;
+    //       setAdhaarDuplicationError(true);
+    //       setToast(true);
+    //       setTimeout(() => {
+    //         setToast(false);
+    //       }, 2000);
+    //     }         
+    //     else {
+    //       setAdhaarDuplicationError(false);
+    //     }
+  
+    //   }
+    // }
 
     onSelect(config.key, {
       SpouseType,
@@ -360,7 +457,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
               <div className="col-md-12">
                 <div className="col-md-3">
                    <CardLabel>
-                    {`${t("CR_SPOUSE_TYPE_EN")}`}
+                    {`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <Dropdown
                     t={t}
@@ -374,7 +471,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                 </div>
                 <div className="col-md-3">
                   <CardLabel>
-                    {`${t("CR_NAME")}`}
+                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <TextInput
                     t={t}
@@ -385,12 +482,12 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                     value={SpouseNameEN}
                     onChange={setSelectSpouseNameEN}
                     placeholder={`${t("CR_NAME")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-3">
                   <CardLabel>
-                    {`${t("CR_NAME_ML")}`}
+                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <TextInput
                     t={t}
@@ -403,7 +500,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
+                      isRequired: true,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
@@ -453,7 +550,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
               <div className="col-md-12">
                 <div className="col-md-4">
                  <CardLabel>
-                    {`${t("CR_NAME")}`}
+                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <TextInput
                     t={t}
@@ -464,12 +561,12 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                     value={FatherNameEn}
                     onChange={setSelectFatherNameEn}
                     placeholder={`${t("CR_NAME")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
                   <CardLabel>
-                    {`${t("CR_NAME_ML")}`} 
+                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <TextInput
                     t={t}
@@ -482,7 +579,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
+                      isRequired: true,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
@@ -533,7 +630,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
               <div className="col-md-12">
                 <div className="col-md-4">
                    <CardLabel>
-                    {`${t("CR_NAME")}`}
+                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <TextInput
                     t={t}
@@ -544,13 +641,13 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                     value={MotherNameEn}
                     onChange={setSelectMotherNameEn}
                     placeholder={`${t("CR_NAME")}`}
-                    {...(validation = { pattern:  "^[a-zA-Z-.`' ]*$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern:  "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
                 <div className="col-md-4">
                    <CardLabel>
                     {`${t("CR_NAME_ML")}`}
-                
+                    <span className="mandatorycss">*</span>
                   </CardLabel> 
                   <TextInput
                     t={t}
@@ -563,7 +660,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeat
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
+                      isRequired: true,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}

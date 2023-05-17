@@ -66,6 +66,14 @@ const marriageFieldLabels = {
   "BrideAddressDetails.permntOutsideIndiaLinetwoMl": "CR_ADDRES_LINE_TWO_ML",
 };
 
+const getCorrectionFieldValue = (newValue, isDate,t) =>{
+  let correctionNewValue = newValue ? newValue : t("CR_NOT_RECORDED");
+  if(isDate){
+    correctionNewValue = newValue ? Digit.DateUtils.ConvertTimestampToDate(parseInt(newValue, 10), "dd/MM/yyyy") : t("CR_NOT_RECORDED");
+  }
+  return correctionNewValue;
+}
+
 const getCorrectionDetails = (application, t) => {
   const correctionField = application?.CorrectionField;
 
@@ -84,20 +92,30 @@ const getCorrectionDetails = (application, t) => {
     
     const correctionData = correctionItem.correctionFieldValue?.map((correction) => {
       const isDate = checkIsDate(correctionItem?.correctionFieldName, correction);
+      const correctionFieldValue = getCorrectionFieldValue(correction?.newValue, isDate,t);
+      const marriageLabels = marriageFieldLabels[correction?.column]?.split('_');
+      const isMalField = ["MAL","ML"].includes(marriageLabels[marriageLabels?.length - 1]);
+      if(!isMalField){
       return (
         // { title: t(correction?.column), value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.oldValue,10), "dd/MM/yyyy") : correction?.oldValue},
         {
           title: t(marriageFieldLabels[correction?.column]),
-          value: isDate ? Digit.DateUtils.ConvertTimestampToDate(parseInt(correction?.newValue, 10), "dd/MM/yyyy") : correction?.newValue,
+          value: correctionFieldValue,
         }
       );
+      } else {
+        return "NA";
+      }
     });
-    return { title: t(correctionItem?.correctionFieldName), values: correctionData };
+    const formattedCorrectionData = correctionData.filter((item) => item !== 'NA')
+    return { title: t(`CR_${correctionItem?.correctionFieldName}`), values: formattedCorrectionData };
   });
   return returnDetails;
 };
 
 const getCRMarriageCorrectionAcknowledgementData = async (application, tenantInfo, t) => {
+  const resp = await getCorrectionDetails(application, t);
+  console.log("response --->", resp);
   return {
     t: t,
     tenantId: tenantInfo?.code,
@@ -112,7 +130,7 @@ const getCRMarriageCorrectionAcknowledgementData = async (application, tenantInf
           { title: t("Application No"), value: application?.applicationNumber },
           {
             title: t("Application Date"),
-            value: Digit.DateUtils.ConvertTimestampToDate(application?.dateOfReport, "dd/MM/yyyy"),
+            value: Digit.DateUtils.ConvertTimestampToDate(application?.applicationDate, "dd/MM/yyyy"),
           },
         ],
       },

@@ -258,8 +258,11 @@ const EmployeeApp = ({ path, url, userType }) => {
   const SubFunctionAdding = Digit?.ComponentRegistryService?.getComponent('SubFunctionAdding')
   const ServiceAdding = Digit?.ComponentRegistryService?.getComponent('ServiceAdding')
   const ArisingFileAcknowledgement = Digit?.ComponentRegistryService?.getComponent('ArisingFileAcknowledgement')
-  const ArisingFileSummery = Digit?.ComponentRegistryService?.getComponent('ArisingFileSummery')
+  const ArisingFileSummary = Digit?.ComponentRegistryService?.getComponent('ArisingFileSummary')
   const CounterModule = Digit?.ComponentRegistryService?.getComponent('CounterModule')
+  const CounterModuleSummary = Digit?.ComponentRegistryService?.getComponent('CounterModuleSummary')
+  const CounterModuleAcknowledgement = Digit?.ComponentRegistryService?.getComponent('CounterModuleAcknowledgement')
+  // const ArisingFiled = Digit?.ComponentRegistryService?.getComponent('ArisingFiled')
 
   return (
     <Switch>
@@ -279,15 +282,19 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/templateSec`} component={() => <TemplateSec parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file`} component={() => <ArisingFile parentRoute={path} />} />
           {/* <PrivateRoute path={`${path}/module-adding`} component={() => <ModuleAdding parentRoute={path} />} /> */}
+          {/* <PrivateRoute path={`${path}/module-adding`} component={() => <SearchModule parentRoute={path} />} /> */}
           <PrivateRoute path={`${path}/module-adding`} component={() => <ModuleAdding parentRoute={path} />} />
 
           <PrivateRoute path={`${path}/major-function-adding`} component={() => <MajorFunctionAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/sub-function-adding`} component={() => <SubFunctionAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/service-adding`} component={() => <ServiceAdding parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file-acknowledgement`} component={() => <ArisingFileAcknowledgement parentRoute={path} />} />
-          <PrivateRoute path={`${path}/arising-file-summery`} component={() => <ArisingFileSummery parentRoute={path} />} />
+          <PrivateRoute path={`${path}/arising-file-summary`} component={() => <ArisingFileSummary parentRoute={path} />} />
           <PrivateRoute path={`${path}/counter-module`} component={() => <CounterModule parentRoute={path} />} />
+          <PrivateRoute path={`${path}/counter-module-summary`} component={() => <CounterModuleSummary parentRoute={path} />} />
+          <PrivateRoute path={`${path}/counter-module-acknowledgement`} component={() => <CounterModuleAcknowledgement parentRoute={path} />} />
 
+          {/* <PrivateRoute path={`${path}/arising`} component={() => <ArisingFiled parentRoute={path} />} /> */}
         </div>
       </React.Fragment>
     </Switch>

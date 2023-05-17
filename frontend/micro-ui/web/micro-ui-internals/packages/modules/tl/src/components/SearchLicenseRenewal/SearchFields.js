@@ -90,9 +90,11 @@ LBTypes &&
     });
 
   cmbWardNo.map((wardmst) => {
-    wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-    wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-    cmbWardNoFinal.push(wardmst);
+    if(districtId && lbTypeId && lbId && zonalId) {
+      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+      cmbWardNoFinal.push(wardmst);
+    }
   });
 
 
@@ -121,6 +123,9 @@ LBTypes &&
   if(districtId && lbTypeId && lbId && zonalId){
     let cmbWardNotemp = cmbWardNoFinal.filter(obj => obj.zonecode === zonalId.code);
     cmbWardNoFinal = cmbWardNotemp;
+  }
+  else{
+    cmbWardNoFinal = [];
   }
 
 //   if(districtId===undefined && tempdistrictid?.districtid){
@@ -253,7 +258,7 @@ LBTypes &&
           sortBy: "wardId",
           sortOrder: "DESC"
         });
-        previousPage();
+        //previousPage();
       }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
     </SearchField>
   </>

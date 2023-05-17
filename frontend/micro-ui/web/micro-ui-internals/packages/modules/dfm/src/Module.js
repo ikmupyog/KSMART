@@ -30,14 +30,17 @@ import LegacyFile from "./components/LegacyFile";
 import DraftTemplate from "./components/DraftTemplate";
 import Templates from "./components/Templates";
 import TemplateSec from "./components/TemplateSec";
-import ArisingFile from "./components/ArisingFile";
+import ArisingFile from "./components/arisingFiles/ArisingFile";
 import ModuleAdding from "./components/ModuleAdding";
 import MajorFunctionAdding from "./components/MajorFunctionAdding";
 import SubFunctionAdding from "./components/SubFunctionAdding";
 import ServiceAdding from "./components/ServiceAdding";
-import ArisingFileAcknowledgement from "./components/ArisingFileAcknowledgement";
-import ArisingFileSummery from "./components/ArisingFileSummery";
-import CounterModule from "./components/CounterModule"
+import ArisingFileAcknowledgement from "./components/arisingFiles/ArisingFileAcknowledgement";
+import ArisingFileSummary from "./components/arisingFiles/ArisingFileSummary";
+import CounterModule from "./components/counterModule/CounterModule"
+import CounterModuleSummary from "./components/counterModule/CounterModuleSummary"
+import CounterModuleAcknowledgement from "./components/counterModule/CounterModuleAcknowledgement"
+// import ArisingFiled from "./components/arisingFiles/ArisingFiled";
 
 import SearchModuleApplication from "./components/SearchModuleApplication";
 import SubFunctionApplication from "./components/SubFunctionApplication";
@@ -115,11 +118,15 @@ const componentsToRegister = {
   SubFunctionAdding,
   ServiceAdding,
   ArisingFileAcknowledgement,
-  ArisingFileSummery,
+  ArisingFileSummary,
   CounterModule,
   SearchModuleApplication,
+  ArisingFileSummary,
+  CounterModuleSummary,
+  CounterModuleAcknowledgement,
+  // ArisingFiled
   SubFunctionApplication,
-  ArisingFileSummery
+  //ArisingFileSummery
 };
 
 export const initDFMComponents = () => {

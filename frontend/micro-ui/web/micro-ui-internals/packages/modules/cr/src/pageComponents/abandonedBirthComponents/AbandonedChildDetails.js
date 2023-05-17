@@ -9,8 +9,8 @@ import AbandonedBirthPlaceHome from "../../pageComponents/abandonedBirthComponen
 import AbandonedBirthPlaceVehicle from "../../pageComponents/abandonedBirthComponents/AbandonedBirthPlaceVehicle";
 import AbandonedBirthPlacePublicPlace from "../../pageComponents/abandonedBirthComponents/AbandonedBirthPlacePublicPlace";
 const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth  = false  }) => {
-
-  // const [isEditAbandonedBirthPageComponents , setisEditAbandonedBirthPageComponents] = useState(false);
+  sessionStorage.removeItem("applicationNumber");
+  const [isEditAbandonedBirthPageComponents , setisEditAbandonedBirthPageComponents] = useState(false);
   // const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
 
   // const [workFlowCode, setWorkFlowCode] = useState();
@@ -35,6 +35,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -191,9 +192,11 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   const [birthWeight, setBirthWeight] = useState(formData?.AbandonedChildDetails?.birthWeight ? formData?.AbandonedChildDetails?.birthWeight : null);
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
 
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.AbandonedChildDetails?.childDOB ? false : false);
+  const [DateTimeError, setDateTimeError] = useState(false);
   const [HospitalError, setHospitalError] = useState(formData?.AbandonedChildDetails?.hospitalName ? false : false);
   const [InstitutionError, setInstitutionError] = useState(formData?.AbandonedChildDetails?.institution ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.AbandonedChildDetails?.institutionId ? false : false);
@@ -212,6 +215,9 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.AbandonedChildDetails?.publicPlaceType ? false : false);
   const [localNameEnError, setlocalNameEnError] = useState(formData?.AbandonedChildDetails?.localityNameEn ? false : false);
   const [localNameMlError, setlocalNameMlError] = useState(formData?.AbandonedChildDetails?.localityNameMl ? false : false);
+  const [DateTimeHourError, setDateTimeHourError] = useState(false);
+  const [DateTimeMinuteError, setDateTimeMinuteError] = useState(false);
+  const [DateTimeAMPMError, setDateTimeAMPMError] = useState(false);
   const [access, setAccess] = React.useState(true);
   const [isInitialRender, setIsInitialRender] = useState(true);
   // const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
@@ -301,6 +307,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
     selectGender(value);
   }
   function setselectChildDOB(value) {
+    setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -310,10 +317,13 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      // Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
       // if (birthPlace) {
       //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
       //   console.log("currentWorgFlowDOB" + currentWorgFlow);
@@ -373,157 +383,165 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   function setSelectMedicalAttensionSub(value) {
     setMedicalAttensionSub(value);
   }
+  useEffect(() => {
+    // console.log("time while onchange", birthDateTime);
+  }, [birthDateTime])
+  
   const handleTimeChange = (value, cb) => {
+    if (value?.target?.name === "hour12") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, hh: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "minute") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, mm: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "amPm") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, amPm: value?.target?.value ? value?.target?.value : null })
+    }
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
+      // console.log(value);
+      let time = value;
+      let timeParts = time.split(":");
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
+      // setbirthDateTime(value);
     }
   };
 
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
   }
-  function setselectBirthPlace(value) {
-    selectBirthPlace(value);
-    setValue(value.code);
+  
     // let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
     // if (currentWorgFlow.length > 0) {
     //   setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
     // }
-    // if (value.code === "HOSPITAL") {
-    //   setWardNo(null);
-    //   setAdrsPostOffice(null);
-    //   setAdrsPincode(null);
-    //   setAdrsHouseNameEn(null);
-    //   setAdrsHouseNameMl(null);
-    //   setAdrsLocalityNameEn(null);
-    //   setAdrsLocalityNameMl(null);
-    //   setAdrsStreetNameEn(null);
-    //   setAdrsStreetNameMl(null);
-    //   setPostOfficevalues(null);
-    //   setInstitution(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionId(null);
-    //   setpublicPlaceType(null);
-    //   setlocalityNameEn(null);
-    //   setlocalityNameMl(null);
-    //   setstreetNameEn(null);
-    //   setstreetNameMl(null);
-    //   setpublicPlaceDecpEn(null);
-    //   setWardNo(null);
-    //   setvehicleToEn(null);
-    //   setadmittedHospitalEn(null);
-    //   setvehicleType(null);
-    //   setvehicleRegistrationNo(null);
-    //   setvehicleFromEn(null);
-    //   setvehicleFromMl(null);
-    //   setvehicleHaltPlace(null);
-    //   setvehicleToMl(null);
-    //   setvehicleDesDetailsEn(null);
-    //   setSelectedadmittedHospitalEn(null);
-    // } else if (value.code === "INSTITUTION") {
-    //   selectHospitalName(null);
-    //   selectHospitalNameMl(null),
-    //   setWardNo(null);
-    //   setAdrsPostOffice(null);
-    //   setAdrsPincode(null);
-    //   setAdrsHouseNameEn(null);
-    //   setAdrsHouseNameMl(null);
-    //   setAdrsLocalityNameEn(null);
-    //   setAdrsLocalityNameMl(null);
-    //   setAdrsStreetNameEn(null);
-    //   setAdrsStreetNameMl(null);
-    //   setPostOfficevalues(null);
-    //   setpublicPlaceType(null);
-    //   setlocalityNameEn(null);
-    //   setlocalityNameMl(null);
-    //   setstreetNameEn(null);
-    //   setstreetNameMl(null);
-    //   setpublicPlaceDecpEn(null);
-    //   setWardNo(null);
-    //   setvehicleToEn(null);
-    //   setadmittedHospitalEn(null);
-    //   setvehicleType(null);
-    //   setvehicleRegistrationNo(null);
-    //   setvehicleFromEn(null);
-    //   setvehicleFromMl(null);
-    //   setvehicleHaltPlace(null);
-    //   setvehicleToMl(null);
-    //   setvehicleDesDetailsEn(null);
-    //   setSelectedadmittedHospitalEn(null);
-    // } else if (value.code === "HOME") {
-    //   selectHospitalName(null);
-    //   selectHospitalNameMl(null),
-    //   setpublicPlaceType(null);
-    //   setlocalityNameEn(null);
-    //   setlocalityNameMl(null);
-    //   setstreetNameEn(null);
-    //   setstreetNameMl(null);
-    //   setpublicPlaceDecpEn(null);
-    //   setWardNo(null);
-    //   setvehicleToEn(null);
-    //   setadmittedHospitalEn(null);
-    //   setvehicleType(null);
-    //   setvehicleRegistrationNo(null);
-    //   setvehicleFromEn(null);
-    //   setvehicleFromMl(null);
-    //   setvehicleHaltPlace(null);
-    //   setvehicleToMl(null);
-    //   setvehicleDesDetailsEn(null);
-    //   setSelectedadmittedHospitalEn(null);
-    // } else if (value.code === "VEHICLE") {
-    //   selectHospitalName(null);
-    //   selectHospitalNameMl(null),
-    //   setWardNo(null);
-    //   setAdrsPostOffice(null);
-    //   setAdrsPincode(null);
-    //   setAdrsHouseNameEn(null);
-    //   setAdrsHouseNameMl(null);
-    //   setAdrsLocalityNameEn(null);
-    //   setAdrsLocalityNameMl(null);
-    //   setAdrsStreetNameEn(null);
-    //   setAdrsStreetNameMl(null);
-    //   setPostOfficevalues(null);
-    //   setInstitution(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionId(null);
-    //   setpublicPlaceType(null);
-    //   setlocalityNameEn(null);
-    //   setlocalityNameMl(null);
-    //   setstreetNameEn(null);
-    //   setstreetNameMl(null);
-    //   setpublicPlaceDecpEn(null);
-    // } else if (value.code === "PUBLIC_PLACES") {
-    //   selectHospitalName(null);
-    //   selectHospitalNameMl(null),
-    //   setWardNo(null);
-    //   setAdrsPostOffice(null);
-    //   setAdrsPincode(null);
-    //   setAdrsHouseNameEn(null);
-    //   setAdrsHouseNameMl(null);
-    //   setAdrsLocalityNameEn(null);
-    //   setAdrsLocalityNameMl(null);
-    //   setAdrsStreetNameEn(null);
-    //   setAdrsStreetNameMl(null);
-    //   setPostOfficevalues(null);
-    //   setInstitution(null);
-    //   setInstitutionIdMl(null);
-    //   setInstitutionId(null);
-    //   setvehicleToEn(null);
-    //   setadmittedHospitalEn(null);
-    //   setvehicleType(null);
-    //   setvehicleRegistrationNo(null);
-    //   setvehicleFromEn(null);
-    //   setvehicleFromMl(null);
-    //   setvehicleHaltPlace(null);
-    //   setvehicleToMl(null);
-    //   setvehicleDesDetailsEn(null);
-    //   setSelectedadmittedHospitalEn(null);
-    // }
+    function clearBirthPalce(value) {
+      if (value.code === "HOSPITAL") {
+        setInstitution("");
+        setInstitutionId("");
+        setInstitutionIdMl("");
+        setAdrsPostOffice("");
+        setAdrsPincode(null);
+        setAdrsHouseNameEn("");
+        setAdrsHouseNameMl("");
+        setAdrsLocalityNameEn("");
+        setAdrsLocalityNameMl("");
+        setAdrsStreetNameEn("");
+        setAdrsStreetNameMl("");
+        setWardNo("");
+        setvehicleType("");
+        setvehicleRegistrationNo("");
+        setvehicleFromEn("");
+        setvehicleToEn("");
+        setvehicleFromMl("");
+        setvehicleHaltPlace("");
+        setvehicleToMl("");
+        setvehicleDesDetailsEn("");
+        setSelectedadmittedHospitalEn("");
+        setpublicPlaceType("");
+        setlocalityNameEn("");
+        setlocalityNameMl("");
+        setstreetNameEn("");
+        setstreetNameMl("");
+        setpublicPlaceDecpEn("");
+      } else if (value.code === "INSTITUTION") {
+        selectHospitalName("");
+        selectHospitalNameMl("");
+        setAdrsPostOffice("");
+        setAdrsPincode(null);
+        setAdrsHouseNameEn("");
+        setAdrsHouseNameMl("");
+        setAdrsLocalityNameEn("");
+        setAdrsLocalityNameMl("");
+        setAdrsStreetNameEn("");
+        setAdrsStreetNameMl("");
+        setWardNo("");
+        setvehicleType("");
+        setvehicleRegistrationNo("");
+        setvehicleFromEn("");
+        setvehicleToEn("");
+        setvehicleFromMl("");
+        setvehicleHaltPlace("");
+        setvehicleToMl("");
+        setvehicleDesDetailsEn("");
+        setSelectedadmittedHospitalEn("");
+        setpublicPlaceType("");
+        setlocalityNameEn("");
+        setlocalityNameMl("");
+        setstreetNameEn("");
+        setstreetNameMl("");
+        setpublicPlaceDecpEn("");
+      } else if (value.code === "HOME") {
+        selectHospitalName("");
+        selectHospitalNameMl("");
+        setInstitution("");
+        setInstitutionId("");
+        setInstitutionIdMl("");
+        setvehicleType("");
+        setvehicleRegistrationNo("");
+        setvehicleFromEn("");
+        setvehicleToEn("");
+        setvehicleFromMl("");
+        setvehicleHaltPlace("");
+        setvehicleToMl("");
+        setvehicleDesDetailsEn("");
+        setSelectedadmittedHospitalEn("");
+        setpublicPlaceType("");
+        setlocalityNameEn("");
+        setlocalityNameMl("");
+        setstreetNameEn("");
+        setstreetNameMl("");
+        setpublicPlaceDecpEn("");
+      } else if (value.code === "VEHICLE") {
+        selectHospitalName("");
+        selectHospitalNameMl("");
+        setInstitution("");
+        setInstitutionId("");
+        setInstitutionIdMl("");
+        setAdrsPostOffice("");
+        setAdrsPincode(null);
+        setAdrsHouseNameEn("");
+        setAdrsHouseNameMl("");
+        setAdrsLocalityNameEn("");
+        setAdrsLocalityNameMl("");
+        setAdrsStreetNameEn("");
+        setAdrsStreetNameMl("");
+        setpublicPlaceType("");
+        setlocalityNameEn("");
+        setlocalityNameMl("");
+        setstreetNameEn("");
+        setstreetNameMl("");
+        setpublicPlaceDecpEn("");
+      } else if (value.code === "PUBLIC_PLACES") {
+        selectHospitalName("");
+        selectHospitalNameMl("");
+        setInstitution("");
+        setInstitutionId("");
+        setInstitutionIdMl("");
+        setAdrsPostOffice("");
+        setAdrsPincode(null);
+        setAdrsHouseNameEn("");
+        setAdrsHouseNameMl("");
+        setAdrsLocalityNameEn("");
+        setAdrsLocalityNameMl("");
+        setAdrsStreetNameEn("");
+        setAdrsStreetNameMl("");
+        setvehicleType("");
+        setvehicleRegistrationNo("");
+        setvehicleFromEn("");
+        setvehicleToEn("");
+        setvehicleFromMl("");
+        setvehicleHaltPlace("");
+        setvehicleToMl("");
+        setvehicleDesDetailsEn("");
+        setSelectedadmittedHospitalEn("");
+      }
+  }
+  function setselectBirthPlace(value) {
+    selectBirthPlace(value);
+    setValue(value.code);
+    clearBirthPalce(value);
   }
   function setSelectBirthWeight(e) {
     // if (e.target.value.length === 5) {
@@ -541,6 +559,101 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   }
   let validFlag = true;
   const goNext = () => {
+    if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      setDateTimeAMPMError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeHourError(false);
+      if (childDOB != null) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const childDateofBirth = new Date(childDOB);
+        childDateofBirth.setHours(0, 0, 0, 0);
+        if (childDateofBirth.getTime() < today.getTime()) {
+          setDateTimeError(false);
+        } else if (childDateofBirth.getTime() === today.getTime()) {
+          let todayDate = new Date();
+          let currenthours = todayDate.getHours();
+          let currentMints = todayDate.getHours();
+          currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+          currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+          let currentDatetime = currenthours + ':' + currentMints;
+          if (birthDateTime > currentDatetime) {
+            validFlag = false;
+            setbirthDateTime("");
+            setCheckbirthDateTime({ hh: "", mm: "", amPm: "" });
+            setDateTimeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setDateTimeError(false);
+            // alert("Right Time");
+          }
+        }
+      }
+
+    }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
@@ -858,7 +971,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
       // sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
       // sessionStorage.setItem("addressOfMother", addressOfMother ? addressOfMother : null);
       
-      // let IsEditChangeScreen = (isEditAbandonedBirth ? isEditAbandonedBirth : false);
+      let IsEditChangeScreen = (isEditAbandonedBirth ? isEditAbandonedBirth : false);
 
       onSelect(config.key, {
          stateId,
@@ -916,40 +1029,40 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
         addressOfMother,
         isMotherInfo,
         DifferenceInTime,
-          // IsEditChangeScreen
+        IsEditChangeScreen
       });
     }
   };
-  // if (isEditAbandonedBirth && isEditAbandonedBirthPageComponents  === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined)) {
+  if (isEditAbandonedBirth && isEditAbandonedBirthPageComponents  === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined)) {
 
-  //   if (formData?.AbandonedChildDetails?.gender != null) {
-  //     if (menu.length > 0 && (gender === undefined || gender === "")) {
-  //       selectGender(menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]);
-  //     }
-  //   }
-  //   if (formData?.AbandonedChildDetails?.birthPlace != null) {
-  //     if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-  //       selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]);
-  //       setValue(formData?.AbandonedChildDetails?.birthPlace);
-  //     }
-  //   }
-  //   if (formData?.AbandonedChildDetails?.medicalAttensionSub != null) {
-  //     if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-  //       setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]);
-  //     }
-  //   }
-  //   // if (formData?.AbandonedChildDetails?.pregnancyDuration != null) {
-  //   //   console.log("pregnancyDuration" + pregnancyDuration);
-  //   //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-  //   //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.AbandonedChildDetails?.pregnancyDuration)[0]);
-  //   //   }
-  //   // }
-  //   if (formData?.AbandonedChildDetails?.deliveryMethods != null) {
-  //     if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-  //       setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]);
-  //     }
-  //   } 
-  // }
+    if (formData?.AbandonedChildDetails?.gender != null) {
+      if (menu.length > 0 && (gender === undefined || gender === "")) {
+        selectGender(menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]);
+      }
+    }
+    if (formData?.AbandonedChildDetails?.birthPlace != null) {
+      if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
+        selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]);
+        setValue(formData?.AbandonedChildDetails?.birthPlace);
+      }
+    }
+    if (formData?.AbandonedChildDetails?.medicalAttensionSub != null) {
+      if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+        setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]);
+      }
+    }
+    // if (formData?.AbandonedChildDetails?.pregnancyDuration != null) {
+    //   console.log("pregnancyDuration" + pregnancyDuration);
+    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.AbandonedChildDetails?.pregnancyDuration)[0]);
+    //   }
+    // }
+    if (formData?.AbandonedChildDetails?.deliveryMethods != null) {
+      if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+        setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]);
+      }
+    } 
+  }
     
   if (
     // isWorkFlowDetailsLoading || 
@@ -991,8 +1104,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   max={convertEpochToDate(new Date())}
                   //min={convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
-                  // disable={isDisableEdit}
-                  disable={isEdit}
+                  disable={isDisableEdit}
+                  // disable={isEdit}
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -1003,8 +1116,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={val => handleTimeChange(val, setbirthDateTime)}
                   value={birthDateTime}
-                  // disable={isDisableEdit}
-                  disable={isEdit}
+                  disable={isDisableEdit}
+                  // disable={isEdit}
                 />
               </div>
               <div className="col-md-3">
@@ -1016,8 +1129,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   option={menu}
                   selected={gender}
                   select={setselectGender}
-                   // disable={isDisableEdit}
-                   disable={isEdit}
+                  disable={isDisableEdit}
+                  //  disable={isEdit}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1044,8 +1157,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
-                 // disable={isDisableEdit}
-                 disable={isEdit}
+                  disable={isDisableEdit}
+                //  disable={isEdit}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -1059,8 +1172,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 hospitalName={hospitalName}
                 hospitalNameMl={hospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
-                // disable={isDisableEdit}
-                disable={isEdit}
+                disable={isDisableEdit}
+                // disable={isEdit}
                 isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
@@ -1079,7 +1192,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 isInitialRenderInstitutionList={isInitialRenderInstitutionList}
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}
@@ -1107,7 +1220,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}
@@ -1137,7 +1250,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 wardNo={wardNo}
                 setWardNo={setWardNo}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}
@@ -1159,7 +1272,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 setpublicPlaceDecpEn={setpublicPlaceDecpEn}
                 setWardNo={setWardNo}
                 formData={formData}
-                // isEditAbandonedBirth={isEditAbandonedBirth}
+                isEditAbandonedBirth={isEditAbandonedBirth}
               />
             </div>
           )}   
@@ -1192,8 +1305,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                       name="motherAadhar"
                       value={motherAadhar}
                       onChange={setSelectMotherAadhar}
-                       // disable={isDisableEdit}
-                      disable={isEdit}
+                      disable={isDisableEdit}
+                      // disable={isEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
                       {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
@@ -1212,8 +1325,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                       name="motherFirstNameEn"
                       value={motherFirstNameEn}
                       onChange={setSelectMotherFirstNameEn}
-                       // disable={isDisableEdit}
-                       disable={isEdit}
+                      disable={isDisableEdit}
+                      //  disable={isEdit}
                        placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                       {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
                     />
@@ -1233,8 +1346,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                       value={motherFirstNameMl}
                       onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectMotherFirstNameMl}
-                       // disable={isDisableEdit}
-                       disable={isEdit}
+                      disable={isDisableEdit}
+                      //  disable={isEdit}
                        placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1254,8 +1367,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                 name="addressOfMother"
                 value={addressOfMother}
                 onChange={setSelectmotherAddress}
-                // disable={isDisableEdit}
-                disable={isEdit}
+                disable={isDisableEdit}
+                // disable={isEdit}
                       placeholder={`${t("CR_MOTHER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_ADDRESS") })}
               />
@@ -1347,6 +1460,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   name="birthWeight"
                   value={birthWeight}
                   onChange={setSelectBirthWeight}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BIRTH_WEIGHT")}`}
                   {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
                 />
@@ -1356,7 +1470,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
           {toast && (
             <Toast
               error={
-                DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+                DOBError|| DateTimeError || DateTimeHourError || DateTimeMinuteError || DateTimeAMPMError || HospitalError || InstitutionError || InstitutionNameError ||
                 WardError ||
                 AdsHomePincodeError ||
                 AdsHomePostOfficeError ||
@@ -1377,6 +1491,10 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
               }
               label={
                   DOBError || 
+                   DateTimeError || 
+                   DateTimeHourError || 
+                   DateTimeMinuteError || 
+                   DateTimeAMPMError ||
                   HospitalError || 
                   InstitutionError || 
                   InstitutionNameError ||
@@ -1399,6 +1517,14 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                
                   ?
                   HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                  : DateTimeError
+                      ? t(`CS_COMMON_DATE_TIME_ERROR`)
+                      : DateTimeHourError
+                        ? t(`CS_COMMON_DATE_HOUR_ERROR`)
+                        : DateTimeMinuteError
+                          ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
+                          : DateTimeAMPMError
+                            ? t(`CS_COMMON_DATE_AMPM_ERROR`)      
                         : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
                           : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
                             : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)

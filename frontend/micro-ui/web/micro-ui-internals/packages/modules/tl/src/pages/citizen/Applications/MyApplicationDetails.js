@@ -13,6 +13,13 @@ const MyApplicationDetails = ({path}) => {
     const Search = Digit.ComponentRegistryService.getComponent("SearchCitizenApplication")
 
     function onSubmit (_data) {
+        let applicationType = "";
+        if((_data?.applicationType === undefined) && (_data?.applicationNumber !== "")){
+            console.log("_data?.applicationNumber " + _data?.applicationNumber);
+            let _key = _data.applicationNumber.split("-")[4];
+            _key === "BFIFLC" ? applicationType = "CORRECTION" : applicationType = "" ;
+        }
+
         var fromDate = new Date(_data?.fromDate)
         fromDate?.setSeconds(fromDate?.getSeconds() - 19800 )
         var toDate = new Date(_data?.toDate)
@@ -20,7 +27,8 @@ const MyApplicationDetails = ({path}) => {
         const data = {
             ..._data,
             ...(_data.toDate ? {toDate: toDate?.getTime()} : {}),
-            ...(_data.fromDate ? {fromDate: fromDate?.getTime()} : {})
+            ...(_data.fromDate ? {fromDate: fromDate?.getTime()} : {}),
+            ...(applicationType !== "" ? {applicationType: applicationType} : {})
         }
 
         setPayload(Object.keys(data).filter( k => data[k] ).reduce( (acc, key) => ({...acc,  [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {} ))

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
+import { sortDropdownNames } from "../../utils";
 
 const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
@@ -97,7 +98,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={cmbInstitutionType}
+                option={sortDropdownNames(cmbInstitutionType ? cmbInstitutionType : [],"name",t)}
                 selected={institution}
                 select={setselectInstitution}
                 disable={isDisableEdit}
@@ -109,7 +110,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="institutionName"
-                option={InstitutionFilterList}
+                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [],"institutionName",t)}
                 selected={institutionId}
                 select={setselectInstitutionId}
                 disable={isDisableEdit}
@@ -121,7 +122,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="institutionNamelocal"
-                option={InstitutionFilterList}
+                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [],"institutionNamelocal",t)}
                 selected={institutionIdMl}
                 select={setselectInstitutionIdMl}
                 placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}

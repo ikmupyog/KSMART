@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import {
   BackButton,
   TextInput,
@@ -26,7 +27,15 @@ const BirthInclusion = () => {
   const [apiConfig, setApiConfig] = useState({ enabled: false });
   const [payload, setPayload] = useState({});
 
+  const [toast, setToast] = useState({ show: false, message: "" });
+
   function onSubmit(_data) {
+    console.log("error data", _data);
+    if (!_data.gender && !_data.id) {    
+      setToast({ show: true, message: t("CR_INVALID_GENDER") });
+      return false;
+    }
+    setToast({ show: false, message: "" });
     var fromDate = new Date(_data?.fromDate);
     fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
     var toDate = new Date(_data?.toDate);
@@ -48,13 +57,15 @@ const BirthInclusion = () => {
   // const tenantId = Digit.ULBService.getCurrentTenantId();
 
   const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
+    enabled: !!(payload && Object.keys(payload).length > 0) && !toast.show,
   };
 
-  const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchBirth({
-    filters: payload,
+  const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess, status } = Digit.Hooks.cr.useRegistrySearchBirth({
+    filters: { ...payload, birthDate: payload.birthDate && moment(payload.birthDate, "YYYY-MM-DD").valueOf() },
     config,
   });
+
+
 
   const gotoEditInclusion = async (data) => {
     history.push({
@@ -74,10 +85,13 @@ const BirthInclusion = () => {
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
         // filestoreId={storeId}
-        // isSuccess={isSuccess}
+        isSuccess={isSuccess}
         isLoading={isLoading}
         count={count}
         onInclusionClick={gotoEditInclusion}
+        toast={toast}
+        setToast={setToast}
+        status={status}
       />
       {/* </Route> */}
       {/* <Route path={`${path}/acknowledgement`}>

@@ -64,6 +64,66 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getCRInitiatorDetailsList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "Initiator",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRRelationDetailsList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "Relation",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRCareTakerDesignationList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "CareTakerDesignation",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRIPPODetailsList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "IPOPList",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getMarriagePlaceIdMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -133,6 +193,36 @@ const getWorkFlowBirthMasterList = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "WorkFlowBirth",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getWorkFlowMarriageMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowMarriage",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getWorkFlowBornOutsideMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowBornOutside",
           },
         ],
       },
@@ -2486,6 +2576,18 @@ export const MdmsService = {
     console.log("reached common", tenantId, moduleCode, type);
     return MdmsService.getDataByCriteria(tenantId, getCommonDbmsServiceCriteria(tenantId, moduleCode, type), moduleCode);
   },
+  getCRInitiatorDetails: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRInitiatorDetailsList(tenantId, moduleCode), moduleCode);
+  },
+  getCRRelationDetails: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRRelationDetailsList(tenantId, moduleCode), moduleCode);
+  },
+  getCRCareTakerDesignation: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRCareTakerDesignationList(tenantId, moduleCode), moduleCode);
+  },
+  getCRIPPODetails: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRIPPODetailsList(tenantId, moduleCode), moduleCode);
+  },
   getMarriagePlaceId: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getMarriagePlaceIdMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2500,6 +2602,12 @@ export const MdmsService = {
   },
   getWorkFlowBirthMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowBirthMasterList(tenantId, moduleCode), moduleCode);
+  },
+  getWorkFlowMarriageMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowMarriageMasterList(tenantId, moduleCode), moduleCode);
+  },
+  getWorkFlowBornOutsideMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowBornOutsideMasterList(tenantId, moduleCode), moduleCode);
   },
   getWorkFlowDeathMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowDeathMasterList(tenantId, moduleCode), moduleCode);

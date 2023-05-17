@@ -11,7 +11,6 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [isDeclarationInfo, setIsDeclarationInfo] = useState(formData?.InformarHosInstDetails?.isDeclarationInfo ? formData?.InformarHosInstDetails?.isDeclarationInfo : false);
   const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.InformarHosInstDetails?.infomantFirstNameEn ? formData?.InformarHosInstDetails?.infomantFirstNameEn : "");
   const [infomantAadhar, setinfomantAadhar] = useState(formData?.InformarHosInstDetails?.infomantAadhar ? formData?.InformarHosInstDetails?.infomantAadhar : "");
 
@@ -32,17 +31,6 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
 
 
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.InformarHosInstDetails?.isDeclarationInfo != null) {
-        setIsInitialRender(false);
-        setIsDeclarationInfo(formData?.InformarHosInstDetails?.isDeclarationInfo);
-      }
-    }
-
-
-  }, [isInitialRender]);
-
   function setSelectinfomantFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinfomantFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -54,26 +42,20 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectinformerAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
       setinformerAddress(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinfomantAadhar(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        return false;
-      } else if (e.target.value.length < 12) {
-        setinfomantAadhar(e.target.value);
-        return false;
-      } else {
-        setinfomantAadhar(e.target.value);
-      }
-    } else {
-      setinfomantAadhar(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setinfomantAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   function setSelectinfomantMobile(e) {
+    if (e.target.value.trim().length >= 0) {
+      setinfomantMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }
     if (e.target.value.length != 0) {
       if (e.target.value.length > 10) {
         return false;
@@ -89,20 +71,6 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
   }
 
 
-  function setDeclarationInfo(e) {
-    if (e.target.checked == true) {
-      setIsDeclarationInfo(e.target.checked);
-
-
-      //   setFatherFirstNameMl("");
-
-      //   setFatherNationality(null);
-
-
-    } else {
-      setIsDeclarationInfo(e.target.checked);
-    }
-  }
 
 
   let validFlag = true;
@@ -151,56 +119,46 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
     if (validFlag == true) {
 
-
-      sessionStorage.setItem("infomantFirstNameEn", infomantFirstNameEn ? infomantFirstNameEn : null);
-      sessionStorage.setItem("infomantAadhar", infomantAadhar ? infomantAadhar : null);
-
-      sessionStorage.setItem("infomantMobile", infomantMobile ? infomantMobile : null);
-      sessionStorage.setItem("informerDesi", informerDesi ? informerDesi : null);
-      sessionStorage.setItem("informerAddress", informerAddress ? informerAddress : null);
-      sessionStorage.setItem("isDeclarationInfo", isDeclarationInfo ? isDeclarationInfo : null);
-
       onSelect(config.key, {
-        infomantFirstNameEn, infomantAadhar, infomantMobile, informerDesi, informerAddress, isDeclarationInfo
+        infomantFirstNameEn, infomantAadhar, infomantMobile, informerDesi, informerAddress
       });
     }
   };
   return (
     <React.Fragment>
-      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-            {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-            <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isDeclarationInfo}>
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!infomantAadhar || !infomantFirstNameEn || !informerDesi || !infomantMobile 
+      } >
         <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
-          </div>
-        </div>
-
-
-        <div className="row">
-          <div className="col-md-12">
-            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={isDeclarationInfo} checked={isDeclarationInfo} />
+          <div className="col-md-12" >
+            <h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12" >
-            <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantAadhar" value={infomantAadhar} onChange={setSelectinfomantAadhar} disable={isEdit}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
+            <div className="col-md-2" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} type={"text"}
+                optionKey="i18nKey"
+                name="infomantAadhar"
+                value={infomantAadhar}
+                onChange={setSelectinfomantAadhar}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_AADHAAR") })} />
             </div>
-
-
-
             <div className="col-md-4" ><CardLabel>{`${t("CR_INFORMANT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={true} type={"text"} optionKey="i18nKey" name="infomantFirstNameEn"
-                value={infomantFirstNameEn} onChange={setSelectinfomantFirstNameEn} disable={isEdit} placeholder={`${t("CR_INFORMANT_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })} />
+              <TextInput t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="infomantFirstNameEn"
+                value={infomantFirstNameEn}
+                onChange={setSelectinfomantFirstNameEn}
+                placeholder={`${t("CR_INFORMANT_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INFORMANT_NAME") })} />
             </div>
-            <div className="col-md-4" >
+            <div className="col-md-3" >
               <CardLabel>{`${t("CR_INFORMER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="informerDesi"
@@ -208,38 +166,35 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
                 onChange={setSelectinformerDesi}
                 disable={isEdit}
                 placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INFORMER_DESIGNATION") })}
               />
             </div>
-
-
+            <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t}
+                type={"number"}
+                optionKey="i18nKey"
+                name="infomantMobile"
+                value={infomantMobile}
+                onChange={setSelectinfomantMobile}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_MOBILE_NO") })} />
+            </div>
           </div>
+
         </div>
         <div className="row">
           <div className="col-md-12" >
-            {/* <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantMobile" value={infomantMobile} onChange={setSelectinfomantMobile} disable={isEdit} 
-                            placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
-                        </div> */}
-
-
-            <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantMobile" value={infomantMobile} onChange={setSelectinfomantMobile} disable={isEdit}
-                placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })} />
-            </div>
             <div className="col-md-6" >
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="informerAddress"
                 value={informerAddress}
                 onChange={setSelectinformerAddress}
-                disable={isEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-0-9, ]*$", isRequired: false, type: "text", title: t("CR_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
@@ -253,27 +208,21 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
               infomantAadharError ||
               infomantMobileError ||
               informerDesiError
-
-
             }
             label={
               infomantFirstNmeEnError ||
                 infomantAadharError ||
                 infomantMobileError ||
                 informerDesiError
-
                 ?
                 infomantFirstNmeEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                   : infomantAadharError
                     ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-
                     : infomantMobileError
                       ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
                       : informerDesiError
                         ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-
-
                         :
                         setToast(false)
                 : setToast(false)

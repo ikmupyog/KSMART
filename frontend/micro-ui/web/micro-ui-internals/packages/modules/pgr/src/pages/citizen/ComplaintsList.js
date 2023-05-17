@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
-
 import { Card, Header, Loader } from "@egovernments/digit-ui-react-components";
 import { LOCALE } from "../../constants/Localization";
 import Complaint from "../../components/Complaint";
@@ -12,11 +11,26 @@ export const ComplaintsList = (props) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   const { path, url } = useRouteMatch();
-  let { isLoading, error, data, revalidate } = Digit.Hooks.pgr.useComplaintsListByMobile(tenantId, mobileNumber);
+  const [pageOffset, setPageOffset] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+
+  let { isLoading, error, data, revalidate } = Digit.Hooks.pgr.useComplaintsListByMobile(tenantId, { mobileNumber: mobileNumber, offset: pageOffset, limit: pageSize });
 
   useEffect(() => {
     revalidate();
   }, []);
+
+  const fetchNextPage = () => {
+    setPageOffset((prevState) => prevState + pageSize);
+  };
+
+  const fetchPrevPage = () => {
+    setPageOffset((prevState) => prevState - pageSize);
+  };
+
+  const handlePageSizeChange = (e) => {
+    setPageSize(Number(e.target.value));
+  };
 
   if (isLoading) {
     return (
@@ -55,16 +69,25 @@ export const ComplaintsList = (props) => {
       </Card>
     );
   } else {
-    complaintsList = complaints.map(({ service }, index) => <Complaint key={index} data={service} path={path} />);
+    const serviceData = complaints.map(item => item.service)
+    complaintsList = <Complaint
+      data={serviceData}
+      path={path}
+      onPageSizeChange={handlePageSizeChange}
+      onNextPage={fetchNextPage}
+      onPrevPage={fetchPrevPage}
+      currentPage={Math.floor(pageOffset / pageSize)}
+      pageSizeLimit={pageSize}
+    />;
   }
 
   return (
     <div className="row">
-      <div className="col-md-12">
+      <div className="col-md-12" style={{ margin: "10px", textAlign: "center" }}>
         <Header>{t(LOCALE.MY_COMPLAINTS)}</Header>
-        <div className="col-md-12">
-          {complaintsList}
-        </div>
+      </div>
+      <div className="col-md-12">
+        {complaintsList}
       </div>
     </div>
   );

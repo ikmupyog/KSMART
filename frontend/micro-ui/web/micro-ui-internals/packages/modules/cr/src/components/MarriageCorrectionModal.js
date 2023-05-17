@@ -20,8 +20,9 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   const [conditionalProperty, setConditionalProperty] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
   const [fileDocError, setFileDocError] = useState("");
+  const [errorDocIds, setErrorDocIds] = useState([]);
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   const handleUploadDoc = (file, docType) => {
     let tempObj = { [docType]: [...file] };
@@ -40,6 +41,50 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
       setUploadedFiles([...filteredData]);
     }
   }, [selectedDocuments]);
+  const setFileUploadFieldError = (errorObj) => {
+    const errorIndex = error.findIndex((err) => err.fieldId === docuploadedId);
+
+    if (errorIndex === -1) {
+      setError([...error, errorObj]);
+      const docIds = [...errorDocIds, errorObj.fieldId]?.filter((item) => item !== "");
+      setErrorDocIds(docIds);
+    } else {
+      let tempError = [...error];
+      let tempDocIds = tempError.splice(errorIndex, 1, errorObj.fieldId).filter((item) => item !== "");
+      setErrorDocIds(tempDocIds);
+      setError(tempError.splice(errorIndex, 1, errorObj));
+    }
+  };
+
+  const getUploadFileMessage = () => {
+    let uploadFileMessage = "";
+    if (uploadedFile) {
+      uploadFileMessage = `${t(`TL_ACTION_FILEUPLOADED`)}`;
+    } else {
+      uploadFileMessage = `${t(`TL_ACTION_NO_FILEUPLOADED`)}`;
+    }
+    return uploadFileMessage;
+  };
+
+  
+  const getUploadedFileName = (fileItem) => {
+    let fileName = "";
+    const fileNameIndex = uploadedFiles?.findIndex((e) => fileItem.DocumentId?.toString() === e.documentId);
+    if (fileNameIndex > -1) {
+      fileName = uploadedFiles[fileNameIndex]?.documentName;
+    }
+    return { name: fileName };
+  };
+
+
+  const hasUploadError = (item) => {
+    const hasError = errorDocIds.includes(item.DocumentId?.toString());
+    if (hasError) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   useEffect(() => {
     setSelectedDocuments(selectedConfig?.documentData);
@@ -64,34 +109,31 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     if (isLoading && details.DocumentId.toString() === docuploadedId) {
       return (
         <div style={{ margin: 0 }}>
-          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+          <h1 style={{ fontWeight: "bold", color: "#86a4ad" }}>Uploading...</h1>
         </div>
       );
     }
   };
 
   const getFileUploadFieldError = (item) => {
-    console.log("looped---item", error);
     let errorMessage = "";
     const fieldErrorIndex = error?.findIndex((e) => item.DocumentId?.toString() === e.fieldId);
     if (fieldErrorIndex > -1) {
       errorMessage = error[fieldErrorIndex]?.message;
     }
-    console.log("errorMessage==", fieldErrorIndex, errorMessage);
     return errorMessage;
   };
 
-  const setFileUploadFieldError = (errorObj) => {
-    console.log("error", error);
-    const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
+  // const setFileUploadFieldError = (errorObj) => {
+  //   const errorIndex = error?.findIndex((err) => err.fieldId === docuploadedId);
 
-    if (errorIndex === -1) {
-      setError([...error, errorObj]);
-    } else {
-      let tempError = error ? [...error] : [];
-      setError(tempError.splice(errorIndex, 1, errorObj));
-    }
-  };
+  //   if (errorIndex === -1) {
+  //     setError([...error, errorObj]);
+  //   } else {
+  //     let tempError = error ? [...error] : [];
+  //     setError(tempError.splice(errorIndex, 1, errorObj));
+  //   }
+  // };
 
   function selectfile(e) {
     let result = selectedDocuments?.[0]?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
@@ -104,18 +146,20 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      setError(null);
+     
       if (file && file?.type) {
         setIsLoading(true);
+        // setError(null);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
           setIsLoading(false);
           let tempObj = { message: t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"), fieldId: docuploadedId };
           setFileUploadFieldError(tempObj);
+          
         } else if (file.size >= 2000000) {
           setIsLoading(false);
           let tempObj = { message: t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"), fieldId: docuploadedId };
           setFileUploadFieldError(tempObj);
+          
         } else {
           let tempObj = { message: "", fieldId: "" };
           setFileUploadFieldError(tempObj);
@@ -128,33 +172,42 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
               documentType: docuploadedType,
               fileStoreId: response?.data?.files[0]?.fileStoreId,
               documentName: file.name,
-
               type: file.type,
               size: file.size,
             };
-            if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
-              uploadedFiles.push(temp);
-            }
-            setUploadedFile(response?.data?.files[0]?.fileStoreId);
-            setIsLoading(false);
-            // formDetails.isUploaded = true;
-            // formDetails.uploadedDoc = response?.data?.files[0]?.fileStoreId
-          } else {
-            setError(t("PT_FILE_UPLOAD_ERROR"));
-            setIsLoading(false);
-          }
-          // } catch (err) {}
-        }
-      }
-    })();
-  }, [file, uploadedFiles]);
+
+  if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
+    uploadedFiles.push(temp);
+  }
+  setUploadedFile(response?.data?.files[0]?.fileStoreId);
+  setIsLoading(false);
+} else {
+  setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
+  setIsLoading(false);
+}
+// } catch (err) {}
+}
+}
+})();
+}, [file, uploadedFiles]);
 
   const getFilteredInclusionDocs = (selectedObj) => {
     let filteredDocs = [];
     filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == selectedObj.condition);
-    console.log("selectedObj==", selectedConfig.documentData, selectedObj, filteredDocs);
     return filteredDocs;
   };
+
+  const getDocumentName = (doc) => {
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.split(",");
+    const documents = documentNameArray.map((name) => {
+      return t(name);
+    });
+
+    const documentName = documents.join(` ${t("CR_OR")} `);
+
+    return documentName;
+  };
+
 
   function selectConditionalProperty(value) {
     setConditionalProperty(value);
@@ -178,7 +231,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   const renderConditionalComponent = () => {
     let selectedMenu = [];
     let menu = [];
-    console.log("reached modal==", selectedConfig);
     switch (selectedConfig.docFlag) {
       case "GROOM_NAME":
         selectedMenu = [
@@ -227,7 +279,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
               <div>
                 {!selectedDocs.includes(item.DocumentId?.toString()) && (
                   <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                    <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
+                    <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
                     <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
                       <UploadFile
                         key={item.DocumentId}
@@ -240,7 +292,10 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
                           onDeleteown(item.DocumentId);
                           setUploadedFile(null);
                         }}
-                        message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        file={getUploadedFileName(item)}
+                        message={getUploadFileMessage()}
+                        error={hasUploadError(item)}
+                        // message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                         iserror={getFileUploadFieldError(item)}
                       />
                       {renderLoader(item)}
@@ -254,7 +309,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
 
         <EditButton
           selected={true}
-          label={"Save"}
+          label={t("CR_SAVE")}
           onClick={() => {
             // resetFields();
             // onSubmit({fileData:uploadedFiles,documentCondition: selectedDocuments?.[0]?.conditionCode});
@@ -272,7 +327,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
         />
         <EditButton
           selected={false}
-          label={"Cancel"}
+          label={t("CR_CANCEL")}
           onClick={() => {
             hideModal();
           }}

@@ -11,6 +11,5 @@ const useMarriageSearch = ({tenantId, filters, config={}}) => useQuery(
         ...config
     }
  )
-
-
 export default useMarriageSearch
+

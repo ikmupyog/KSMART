@@ -51,7 +51,7 @@ export const CRAbandonedDeathsearch = {
   applicationDetails: async (t, tenantId, DeathACKNo, userType) => {
     const filter = { DeathACKNo };
     const response = await CRAbandonedDeathsearch.application(tenantId, filter);
-    console.log("response",response);
+    console.log("response",response.DeathAbandonedDocuments.map((doc) => doc?.FileStoreId));
   
     let numOfApplications = [];
     if (response?.DeathACKNo) {

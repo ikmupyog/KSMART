@@ -6,24 +6,26 @@ import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 import { convertToNACRegistration } from "../../../utils";
 
-const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
+const CreateBirthNACRegistration = ({ data, parentUrl, isEditBirth }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_BIRTH_NAC_EDIT_FLAG")? true : false);
-  const [params, setParams, clearParams] = isEditBirthNAC ? Digit.Hooks.useSessionStorage("CR_EDIT_NAC_BIRTH", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_NAC_BIRTH_REG", {});
+  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_BIRTH_NAC_EDIT_FLAG") ? true : false);
+  const [params, setParams, clearParams] = isEditBirthNAC
+    ? Digit.Hooks.useSessionStorage("CR_EDIT_NAC_BIRTH", {})
+    : Digit.Hooks.useSessionStorage("CR_CREATE_NAC_BIRTH_REG", {});
 
   const stateId = Digit.ULBService.getStateId();
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  const newNacBirthConfig = newConfig.find((item)=> item.head === "Birth-NAC Routing")
- 
-    config = config.concat(newNacBirthConfig.body.filter((a) => !a.hideInCitizen));
-    
+  const newNacBirthConfig = newConfig.find((item) => item.head === "Birth-NAC Routing");
+
+  config = config.concat(newNacBirthConfig.body.filter((a) => !a.hideInCitizen));
+
   config.indexRoute = "nac-download-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
@@ -39,7 +41,7 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      return redirectWithHistory(`${match.path}/nac-birth-summary`);
+      return redirectWithHistory(`${match.path}/check`);
     }
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
@@ -49,8 +51,7 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
-    }
-    else {
+    } else {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
@@ -59,17 +60,16 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
   };
 
   const onSuccess = () => {
-    if(isEditBirthNAC === false){
+    if (isEditBirthNAC === false) {
       clearParams();
-    }   
+    }
     queryClient.invalidateQueries("CR_CREATE_NAC_BIRTH_REG");
   };
-  const handleSkip = () => { };
-  const handleMultiple = () => { };
+  const handleSkip = () => {};
+  const handleMultiple = () => {};
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthNACCheckPage");
   const BirthNACAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthNACAcknowledgement");
   return (
-
     <React.Fragment>
       <Switch>
         {config.map((routeObj, index) => {
@@ -77,7 +77,6 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
           const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
           return (
             <Route path={`${match.path}/${routeObj.route}`} key={index}>
-              
               <Component
                 config={{ texts, inputs, key, isSkipEnabled }}
                 onSelect={handleSelect}
@@ -88,10 +87,9 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
                 userType="citizen"
               />
             </Route>
-
           );
         })}
-        <Route path={`${match.path}/nac-birth-summary`}>
+        <Route path={`${match.path}/check`}>
           <CheckPage onSubmit={createProperty} value={params} />
         </Route>
         <Route path={`${match.path}/acknowledgement`}>

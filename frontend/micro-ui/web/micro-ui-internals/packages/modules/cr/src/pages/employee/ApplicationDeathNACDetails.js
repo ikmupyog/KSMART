@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import CRApplicationDetails from "../../../../templates/CR/CommonTemplate";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
-import { Header,CardHeader } from "@egovernments/digit-ui-react-components";
+import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
+import set from "lodash/set";
 import orderBy from "lodash/orderBy";
 
 const ApplicationDeathNACDetails = () => {
@@ -20,9 +21,23 @@ const ApplicationDeathNACDetails = () => {
   sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDEATHNACDetail(t, tenantId, DeathACKNo);
+  const [selectedRadioValue, setSelectedRadioValue] = useState(applicationDetails?.InformationDeath?.isDeathNAC ? { i18nKey: "CR_IS_NAC", code: "NAC" } : applicationDetails?.InformationDeath?.isDeathNIA ? { i18nKey: "CR_IS_NIA", code: "NIA" } : {});
+
+  function selectRadioButtons(value){
+    setSelectedRadioValue(value);
+  }
 
   const stateId = Digit.ULBService.getStateId();
-
+  const newData = applicationDetails;
+  useEffect(() => {
+    if(selectedRadioValue?.code == "NAC") {
+      set(newData, "applicationData.InformationDeath.isDeathNAC", true);
+      set(newData, "applicationData.InformationDeath.isDeathNIA", false);
+    }else if(selectedRadioValue?.code == "NIA") {
+      set(newData, "applicationData.InformationDeath.isDeathNAC", false);
+      set(newData, "applicationData.InformationDeath.isDeathNIA", true);
+    }
+  },[selectedRadioValue]);
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
@@ -38,7 +53,7 @@ const ApplicationDeathNACDetails = () => {
     id: applicationDetails?.applicationData?.InformationDeath.DeathACKNo,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
-    config:{},
+    config: {},
   });
 
   const closeToast = () => {
@@ -47,9 +62,9 @@ const ApplicationDeathNACDetails = () => {
 
   useEffect(() => {
     if (applicationDetails?.numOfApplications?.length > 0) {
-       let financialYear = cloneDeep(applicationDetails?.applicationData?.financialYear);
+      let financialYear = cloneDeep(applicationDetails?.applicationData?.financialYear);
       const financialYearDate = financialYear?.split('-')[1];
-      const finalFinancialYear = `20${Number(financialYearDate)}-${Number(financialYearDate)+1}`
+      const finalFinancialYear = `20${Number(financialYearDate)}-${Number(financialYearDate) + 1}`
       const isAllowedToNextYear = applicationDetails?.numOfApplications?.filter(data => (data.financialYear == finalFinancialYear && data?.status !== "REJECTED"));
       if (isAllowedToNextYear?.length > 0) setAllowedToNextYear(false);
       if (!isAllowedToNextYear || isAllowedToNextYear?.length == 0) setAllowedToNextYear(true);
@@ -62,7 +77,6 @@ const ApplicationDeathNACDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
-  console.log(workflowDetails);
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter(
@@ -73,12 +87,12 @@ const ApplicationDeathNACDetails = () => {
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
       // console.log(data.action);
-      if(data.action == "EDIT") {
+      if (data.action == "EDIT") {
         data.redirectionUrl = {
           pathname: `/digit-ui/employee/cr/death-flow/information-death`,
           state: applicationDetails
         },
-        data.tenantId = stateId
+          data.tenantId = stateId
       }
     })
   }
@@ -86,19 +100,20 @@ const ApplicationDeathNACDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+    if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN") return true;
+  });
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
   const currentDate = Date.now();
   const duration = validTo - currentDate;
-  if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending==="true"))) {
-    if(workflowDetails?.data && allowedToNextYear) {
-      if(!workflowDetails?.data?.actionState) {
+  if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending === "true"))) {
+    if (workflowDetails?.data && allowedToNextYear) {
+      if (!workflowDetails?.data?.actionState) {
         workflowDetails.data.actionState = {};
         workflowDetails.data.actionState.nextActions = [];
       }
       const flagData = workflowDetails?.data?.actionState?.nextActions?.filter(data => data.action == "RENEWAL_SUBMIT_BUTTON");
-      if(flagData && flagData.length === 0) {
+      if (flagData && flagData.length === 0) {
         workflowDetails?.data?.actionState?.nextActions?.push({
           action: "RENEWAL_SUBMIT_BUTTON",
           redirectionUrl: {
@@ -131,28 +146,28 @@ const ApplicationDeathNACDetails = () => {
   }
 
   if (rolearray && applicationDetails?.applicationData?.status === "PENDINGPAYMENT") {
-      workflowDetails?.data?.nextActions?.map(data => {
-        if (data.action === "PAY") {
-          workflowDetails = {
-            ...workflowDetails,
-            data: {
-              ...workflowDetails?.data,
-              actionState: {
-                nextActions: [
-                  {
-                    action: data.action,
-                    redirectionUrll: {
-                      pathname: `TL/${applicationDetails?.applicationData?.DeathACKNo}/${tenantId}`,
-                      state: tenantId
-                    },
-                    tenantId: tenantId,
-                  }
-                ],
-              },
+    workflowDetails?.data?.nextActions?.map(data => {
+      if (data.action === "PAY") {
+        workflowDetails = {
+          ...workflowDetails,
+          data: {
+            ...workflowDetails?.data,
+            actionState: {
+              nextActions: [
+                {
+                  action: data.action,
+                  redirectionUrll: {
+                    pathname: `TL/${applicationDetails?.applicationData?.DeathACKNo}/${tenantId}`,
+                    state: tenantId
+                  },
+                  tenantId: tenantId,
+                }
+              ],
             },
-          };
-        }
-      })
+          },
+        };
+      }
+    })
   };
 
   const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
@@ -189,6 +204,7 @@ const ApplicationDeathNACDetails = () => {
         setShowToast={setShowToast}
         closeToast={closeToast}
         timelineStatusPrefix={"WF_21DAYS_"}
+        selectDeathtype={selectRadioButtons}
       />
     </div>
   );

@@ -54,14 +54,14 @@ function BirthInclusionSummary({
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
     });
    
     const formattedImageThumbs =
       newThumbnails?.length > 0 &&
       newThumbnails.map((item, index) => {
         const tempObj = {
-          image: item.small,
+          image: item.large,
           caption: `Caption ${index}`,
         };
         return tempObj;
@@ -150,10 +150,10 @@ function BirthInclusionSummary({
     let fieldValue = "";
     switch (type) {
       case "text":
-        fieldValue = data;
+        fieldValue = data ? data : t("CR_NOT_RECORDED");
         break;
       case "date":
-        fieldValue = moment(data).format("DD/MM/YYYY");
+        fieldValue = data ? moment(data).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
         break;
     }
     return fieldValue;
@@ -164,7 +164,7 @@ function BirthInclusionSummary({
     fetchImage(documentIds);
   };
 
-  const renderCardDetail = (value, fieldName, documentData) => {
+  const renderCardDetail = (index, value, fieldName, documentData) => {
     const type = fieldName === "CHILD_DOB" ? "date" : "text";
     return (
       <div className="row">
@@ -177,13 +177,15 @@ function BirthInclusionSummary({
               <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
             </h4>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <h4>
               <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
             </h4>
           </div>
           <div className="col-md-1">
-            <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+          {index === 0 &&
+            <LinkButton label={t("CR_VIEW")} style={{ fontWeight: "bold", color: "#86a4ad", cursor:"pointer" }} onClick={() => setDocumentsView(documentData)} />
+          }
           </div>
         </div>
       </div>
@@ -191,13 +193,13 @@ function BirthInclusionSummary({
   };
 
   const renderSummaryCard = (detail, index) => {
-    //  switch()
+  
     return (
       <React.Fragment key={index}>
         <div style={getMainDivStyles()}>
           <Accordion
             expanded={index === 0 ? true : false}
-            title={t(detail?.correctionFieldName)}
+            title={t(`CR_${detail?.correctionFieldName}`)}
             style={{ margin: "10px" }}
             content={
               <StatusTable style={getTableStyles()}>
@@ -217,7 +219,7 @@ function BirthInclusionSummary({
                     </div>
                   </div>
                 </div>
-                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(value, detail.correctionFieldName, detail.CorrectionDocument))}
+                {detail?.correctionFieldValue?.map((value, index) => renderCardDetail(index, value, detail.correctionFieldName, detail.CorrectionDocument))}
               </StatusTable>
             }
           />
@@ -240,7 +242,7 @@ function BirthInclusionSummary({
         </div>
         <div className={"cr-timeline-wrapper"}>
           {imagesThumbs?.length > 0 && (
-            <Carousel {...{ carouselItems: imagesThumbs }} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+            <Carousel {...{ carouselItems: imagesThumbs }} imageHeight={300} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
           )}
 
           {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (

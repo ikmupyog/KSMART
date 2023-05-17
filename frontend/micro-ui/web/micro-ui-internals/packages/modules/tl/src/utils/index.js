@@ -281,9 +281,25 @@ export const getaccessories = (data) => {
 export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   // data?.TradeDetails?.tradeLicenseDetail?.address?.tenantId = Digit.ULBService.getCitizenCurrentTenant();
-  let address = data?.TradeDetails?.tradeLicenseDetail?.address;
-  address.postOffice = data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name;
-  address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  // let address = data?.TradeDetails?.tradeLicenseDetail?.address;
+  let address = {"doorNo": data?.TradeDetails?.tradeLicenseDetail?.address?.doorNo,
+    "localityName": data?.TradeDetails?.tradeLicenseDetail?.address?.localityName,
+    "street": data?.TradeDetails?.tradeLicenseDetail?.address?.street,
+    "landmark": data?.TradeDetails?.tradeLicenseDetail?.address?.landmark,
+    "buildingName": data?.TradeDetails?.tradeLicenseDetail?.address?.buildingName,
+    "zonalId": data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.zonecode,
+    "wardId": data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.code,
+    "wardNo": data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.wardno,
+    "postOffice": data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name,
+    "pincode": data?.TradeDetails?.tradeLicenseDetail?.address?.pincode,
+    "contactNo": data?.TradeDetails?.tradeLicenseDetail?.address?.contactNo,
+    "email": data?.TradeDetails?.tradeLicenseDetail?.address?.email,
+    "waterbody": data?.TradeDetails?.tradeLicenseDetail?.address?.waterbody,
+    "serviceArea": data?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea,
+    "tenantId": Digit.ULBService.getCitizenCurrentTenant()
+  };
+  // address.postOffice = data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name;
+  // address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
   let structurePlace = data?.TradeDetails?.tradeLicenseDetail?.structurePlace;
   structurePlace?.map((structplace) => {
     structplace.isResurveyed = structplace?.isResurveyed?.code === "YES" ? true : false;
@@ -300,7 +316,7 @@ export const convertToTrade = (data = {}) => {
         action: "INITIATE",
         applicationType: "NEW",
         commencementDate: Date.parse(data?.TradeDetails?.commencementDate),
-        financialYear: Financialyear ? Financialyear : "2022-23",
+        financialYear: Financialyear ? Financialyear : "2023-24",
         licenseType: "PERMANENT",
         tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         tradeLicenseDetail: {
@@ -314,7 +330,7 @@ export const convertToTrade = (data = {}) => {
           licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType?.code,
           noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
           ownershipCategory: data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code,
-          address: data?.TradeDetails?.tradeLicenseDetail?.address,
+          address: address,//data?.TradeDetails?.tradeLicenseDetail?.address
           applicationDocuments: null,
           owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
           institution: data?.TradeDetails?.tradeLicenseDetail?.institution,
@@ -541,7 +557,7 @@ export const convertToEditTrade = (data = {}) => {
         action: "INITIATE",
         applicationType: "RENEWAL",
         commencementDate: Date.parse(data?.commencementDate),
-        financialYear: Financialyear ? Financialyear : "2022-23",
+        financialYear: Financialyear ? Financialyear : "2023-24",
         licenseType: "PERMANENT",
         tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         tradeLicenseDetail: {
@@ -707,7 +723,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   let unitFlag = false;
   let addressFlag = false;
   let isEdit = false;
-
   if(data?.tradeLicenseDetail?.address?.wardId !== dataCorr?.tradeLicenseDetail?.address?.wardId){
     wardNoCorr = dataCorr?.tradeLicenseDetail?.address?.wardNo;
     wardIdCorr = dataCorr?.tradeLicenseDetail?.address?.wardId;
@@ -751,7 +766,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   })
   let Subtype = dataCorr?.tradeLicenseDetail?.tradeUnits.length > 0 ? 
   Array.from(new Set(dataCorr?.tradeLicenseDetail?.tradeUnits.map(type => type.businessSubtype))) : [];
-
   if(Subtype.length > 0) {
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
       if(Subtype.filter(subUnit => subUnit.includes(unitOld.businessSubtype)).length === 0 ){
@@ -819,7 +833,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       ownerFlag = true;
     }
   });
-
   // let ownerid = dataCorr?.tradeLicenseDetail?.owners.length > 0 ? 
   // Array.from(new Set(dataCorr?.tradeLicenseDetail?.owners.map(type => type?.uuid))) : [];
   
@@ -847,13 +860,13 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   if(ownerFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.owners;
   }
-  let structurePlaceID = [];
+  let structurePlaceID;
   dataCorr?.tradeLicenseDetail?.structurePlace.length > 0 ? 
-  structurePlaceID.push(Array.from(new Set(dataCorr?.tradeLicenseDetail?.structurePlace.map(sPlace => sPlace?.id)))) : [];
-  
+  structurePlaceID = (Array.from(new Set(dataCorr?.tradeLicenseDetail?.structurePlace.map(sPlace => sPlace?.id)))) : [];
+
   dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
     data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
-      if(structurePlaceID.filter(placeID => placeID.includes(placeOld.id)).length > 0){
+      if(placeNew.id !== null && placeNew.id === placeOld.id){
         if ((placeOld.doorNo !== placeNew.doorNo)||(placeOld.doorNoSub !== placeNew.doorNoSub)||(placeOld.blockNo !== placeNew.blockNo)
         ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
         ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
@@ -873,7 +886,6 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
             isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
             stallNo : placeNew?.stallNo && placeNew?.stallNo !== "" ? placeNew?.stallNo?.trim() : null,
           });
-
           isEdit = true;
           structureplaceFlag = true;
         }
@@ -903,7 +915,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
 
   if(structurePlaceID.length > 0) {
     data?.tradeLicenseDetail?.structurePlace.map((place) => {
-      if(structurePlaceID.filter(id => id.includes(place.id)).length === 0 ){
+    if(!(structurePlaceID.find(placeID => placeID === place.id))){ 
         structurePlaceCorr.push({id : place.id?.trim(), active : false});
         isEdit = true;
         structureplaceFlag = true;

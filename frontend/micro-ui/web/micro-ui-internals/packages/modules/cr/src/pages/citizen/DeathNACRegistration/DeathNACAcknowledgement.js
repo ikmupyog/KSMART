@@ -119,13 +119,16 @@ const DeathNACAcknowledgement = ({ data, onSuccess, userType, }) => {
           {mutation?.data?.deathNACDtls[0]?.applicationStatus === "PENDINGPAYMENT" && (
           <Link
             to={{
-              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.deathNACDtls[0].businessservice}/${mutation.data.deathNACDtls[0].InformationDeath.DeathACKNo}`,
+              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.deathNACDtls[0].businessService}/${mutation.data.deathNACDtls[0].InformationDeath.DeathACKNo}`,
               state: { tenantId: mutation.data.deathNACDtls[0].InformationDeath.TenantId },
             }}
           >
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
           </Link>
         )}
+        <Link to={`/digit-ui/citizen`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
 
         </Card>
       );

@@ -16,8 +16,10 @@ const Inbox = () => {
 
   useEffect(() => {
     (async () => {
-      const applicationStatus = searchParams?.filters?.pgrfilters?.applicationStatus?.map(e => e.code).join(",")
-      let response = await Digit.PGRService.count(tenantId, applicationStatus?.length > 0 ? { applicationStatus } : {});
+      const status = searchParams?.filters?.pgrfilters?.applicationStatus?.map(e => e.code).join(",")
+      const applicationStatus = status?.length > 0 ? status : ""
+      const userIds = searchParams?.filters?.pgrQuery?.userIds || ""
+      let response = await Digit.PGRService.count(tenantId, { applicationStatus, userIds });
       if (response?.count) {
         setTotalRecords(response.count);
       }

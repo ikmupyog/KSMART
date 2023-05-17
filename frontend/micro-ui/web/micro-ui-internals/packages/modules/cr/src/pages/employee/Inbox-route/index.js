@@ -3,8 +3,9 @@ import { Route, Switch, useRouteMatch, useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import InboxFlow from "./inboxFlow";
-import BirthInbox from './birthInbox'
-import DeathInbox from './deathInbox'
+import BirthInbox from './birthInbox';
+import DeathInbox from './deathInbox';
+import MarriageInbox from './marriageinbox';
 
 const InboxRoute = ({ parentUrl }) => {
   const { path } = useRouteMatch();
@@ -34,6 +35,7 @@ const InboxRoute = ({ parentUrl }) => {
         </Route>
       <PrivateRoute path={`${path}/birthinbox`} component={(props) => <BirthInbox {...props} parentRoute={path} />} />
       <PrivateRoute path={`${path}/deathinbox`} component={(props) => <DeathInbox {...props} parentRoute={path} />} />
+      <PrivateRoute path={`${path}/marriageinbox`} component={(props) => <MarriageInbox {...props} parentRoute={path} />} />
 
 
       </Switch>

@@ -335,7 +335,7 @@ export const convertToEditBornOutsideBirthRegistration = (data = {}) => {
           presentOutSideIndiaadrsCityTown: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown,
           presentOutSideIndiaPostCode: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode,
           isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
-          permtaddressCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
+          presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
             ? data?.BornOutsideAddressBirthDetails?.permtaddressCountry.code
             : null,
           permtaddressStateName: data?.BornOutsideAddressBirthDetails?.permtaddressStateName
@@ -442,7 +442,7 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
-          motherPassportNo: data?.BornOutsideParentsDetails?.motherPassportNo,
+          motherPassport: data?.BornOutsideParentsDetails?.motherPassportNo,
           motherMarriageAge: data?.BornOutsideParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.BornOutsideParentsDetails?.motherMarriageBirth,
           motherEducation: data?.BornOutsideParentsDetails?.motherEducation ? data?.BornOutsideParentsDetails?.motherEducation.code : null,
@@ -453,7 +453,7 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
           fatherFirstNameEn: data?.BornOutsideParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.BornOutsideParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.BornOutsideParentsDetails?.fatherNationality ? data?.BornOutsideParentsDetails?.fatherNationality.code : null,
-          fatherPassportNo: data?.BornOutsideParentsDetails?.fatherPassportNo,
+          fatherPassport: data?.BornOutsideParentsDetails?.fatherPassportNo,
           fatherEducation: data?.BornOutsideParentsDetails?.fatherEducation ? data?.BornOutsideParentsDetails?.fatherEducation.code : null,
           fatherProfession: data?.BornOutsideParentsDetails?.fatherProfession ? data?.BornOutsideParentsDetails?.fatherProfession.code : null,
           Religion: data?.BornOutsideParentsDetails?.Religion ? data?.BornOutsideParentsDetails?.Religion.code : null,

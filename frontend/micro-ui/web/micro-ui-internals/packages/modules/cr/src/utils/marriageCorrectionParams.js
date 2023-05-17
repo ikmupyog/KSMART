@@ -56,7 +56,7 @@ const formFielColumns = {
     houseNameMl: "GroomAddressDetails.permntInKeralaAdrHouseNameMl",
     localityNameEn: "GroomAddressDetails.permntInKeralaAdrLocalityNameEn",
     localityNameMl: "GroomAddressDetails.permntInKeralaAdrLocalityNameMl",
-    streetNameEn: "GroomAddressDetails.permntInKeralaAdrLocalityNameEn",
+    streetNameEn: "GroomAddressDetails.permntInKeralaAdrStreetNameEn",
     streetNameMl: "GroomAddressDetails.permntInKeralaAdrStreetNameMl",
     },
     outsideKerala:{
@@ -80,7 +80,7 @@ const formFielColumns = {
       houseNameMl: "BrideAddressDetails.permntInKeralaAdrHouseNameMl",
       localityNameEn: "BrideAddressDetails.permntInKeralaAdrLocalityNameEn",
       localityNameMl: "BrideAddressDetails.permntInKeralaAdrLocalityNameMl",
-      streetNameEn: "BrideAddressDetails.permntInKeralaAdrLocalityNameEn",
+      streetNameEn: "BrideAddressDetails.permntInKeralaAdrStreetNameEn",
       streetNameMl: "BrideAddressDetails.permntInKeralaAdrStreetNameMl",
       },
       outsideKerala:{
@@ -214,7 +214,7 @@ const formFielColumns = {
           tenantid: userData?.marriageTenantid,
           applicationType: "corr",
           moduleCode: "CRMRCR",
-          businessservice: "marriage-services",
+          businessservice: "CR",
           workflowcode: "MARRIAGECORRECTION",
           isWorkflow: true,
           action: "INITIATE",

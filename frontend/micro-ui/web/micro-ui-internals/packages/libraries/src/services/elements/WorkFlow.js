@@ -114,13 +114,13 @@ export const WorkflowService = {
     });
   },
 
-  getDetailsById: async ({ tenantId, id, moduleCode, role, getTripData }) => {    
-    const workflow = await Digit.WorkflowService.getByBusinessId(tenantId, id);    
+  getDetailsById: async ({ tenantId, id, moduleCode, role, getTripData }) => {
+    const workflow = await Digit.WorkflowService.getByBusinessId(tenantId, id);
     const applicationProcessInstance = cloneDeep(workflow?.ProcessInstances);
     const getLocationDetails = window.location.href.includes("/obps/") || window.location.href.includes("noc/inbox");
     const moduleCodeData = getLocationDetails ? applicationProcessInstance?.[0]?.businessService : moduleCode;
-    const businessServiceResponse = (await Digit.WorkflowService.init(tenantId, moduleCodeData))?.BusinessServices[0]?.states;  
-    console.log("workflow.ProcessInstances",workflow);
+    const businessServiceResponse = (await Digit.WorkflowService.init(tenantId, moduleCodeData))?.BusinessServices[0]?.states;
+    // console.log("workflow.ProcessInstances",workflow);
     if (workflow && workflow.ProcessInstances) {
       const processInstances = workflow.ProcessInstances;
       const nextStates = processInstances[0]?.nextActions.map((action) => ({ action: action?.action, nextState: processInstances[0]?.state.uuid }));
@@ -139,20 +139,20 @@ export const WorkflowService = {
           moduleCode === "PGR_HEALTH" ||
           moduleCode === "PGR_ENGG" ||
           moduleCode === "OBPS"
-        ){
+        ) {
           null;
         }
         else nextActions.push({ action: "EDIT", state: currentState });
       }
 
       const getStateForUUID = (uuid) => businessServiceResponse?.find((state) => state.uuid === uuid);
-      
+
       const actionState = businessServiceResponse
         ?.filter((state) => state.uuid === processInstances[0]?.state.uuid)
-        .map((state) => {          
-          let _nextActions = state.actions?.map?.((ac) => {           
+        .map((state) => {
+          let _nextActions = state.actions?.map?.((ac) => {
             let actionResultantState = getStateForUUID(ac.nextState);
-            let assignees = actionResultantState?.actions?.reduce?.((acc, act) => {              
+            let assignees = actionResultantState?.actions?.reduce?.((acc, act) => {
               return [...acc, ...act.roles];
             }, []);
             return { ...actionResultantState, assigneeRoles: assignees, action: ac.action, roles: ac.roles };
@@ -188,8 +188,8 @@ export const WorkflowService = {
             assignes: instance.assignes,
             caption: instance.assignes ? instance.assignes.map((assignee) => ({ name: assignee.name, mobileNumber: assignee.mobileNumber })) : null,
             auditDetails: {
-              created: Digit.DateUtils.ConvertTimestampToDate(instance.auditDetails.createdTime,"dd-MMM-yyyy hh:mm a"),
-              lastModified: Digit.DateUtils.ConvertTimestampToDate(instance.auditDetails.lastModifiedTime,"dd-MMM-yyyy hh:mm a"),
+              created: Digit.DateUtils.ConvertTimestampToDate(instance.auditDetails.createdTime, "dd-MMM-yyyy hh:mm a"),
+              lastModified: Digit.DateUtils.ConvertTimestampToDate(instance.auditDetails.lastModifiedTime, "dd-MMM-yyyy hh:mm a"),
             },
             timeLineActions: instance.nextActions
               ? instance.nextActions.filter((action) => action.roles.includes(role)).map((action) => action?.action)
@@ -197,7 +197,7 @@ export const WorkflowService = {
           };
           return checkPoint;
         });
-  
+
         if (getTripData) {
           try {
             const filters = {
@@ -215,9 +215,9 @@ export const WorkflowService = {
               let disposedAction = [];
               for (const data of tripSearchResp.vehicleTrip) {
                 const resp = await Digit.WorkflowService.getByBusinessId(tenantId, data.applicationNo);
-                console.log("resp in work flow==",resp);
+                console.log("resp in work flow==", resp);
                 resp?.ProcessInstances?.map((instance, ind) => {
-                  console.log("instances==",instance);
+                  console.log("instances==", instance);
                   if (instance.state.applicationStatus === "WAITING_FOR_DISPOSAL") {
                     waitingForDisposedCount++;
                     cretaedTime = Digit.DateUtils.ConvertEpochToDate(instance.auditDetails.createdTime);
@@ -277,7 +277,7 @@ export const WorkflowService = {
 
               let tripTimeline = [];
               const disposalInProgressPosition = timeline.findIndex((data) => data.status === "DISPOSAL_IN_PROGRESS");
-              console.log("disposalInProgressPosition",disposalInProgressPosition);
+              console.log("disposalInProgressPosition", disposalInProgressPosition);
               if (disposalInProgressPosition !== -1) {
                 timeline[disposalInProgressPosition].numberOfTrips = numberOfTrips;
                 timeline.splice(disposalInProgressPosition + 1, 0, ...waitingForDisposedAction);
@@ -292,7 +292,7 @@ export const WorkflowService = {
                 timeline = tripTimeline.concat(timeline);
               }
             }
-          } catch (err) {}
+          } catch (err) { }
         }
 
         // HANDLING ACTION FOR NEW VEHICLE LOG FROM UI SIDE

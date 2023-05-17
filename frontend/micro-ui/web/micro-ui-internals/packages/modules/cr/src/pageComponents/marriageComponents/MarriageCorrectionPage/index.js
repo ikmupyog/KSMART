@@ -89,7 +89,7 @@ const MarriageCorrectionPage = () => {
     placeNameMutation.mutate({ moduleCode: "egov-location", type: "MarriagePlace" }, { onSuccess: onMarriagePlaceNameSuccess });
   }, []);
 
-  if (cmbWardNoFinal?.length > 0 && cmbPlace?.length > 0 && cmbPlaceName?.length && marriageCorrectionDocs?.length > 0) {
+  if (marriageCorrectionDocs?.length > 0) {
     return (
       <MarriageCorrectionEditPage
         cmbPlace={cmbPlace}

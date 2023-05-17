@@ -830,29 +830,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                     value={noteText}
                                 />
 
-                                {/* <div class="link-file">
 
-                                    <LinkButton
-                                        label={t("+ADD_REFERENCE_HERE")}
-                                        className="file-link-button"
-                                    />
-                                </div>
-                                <div class="link-file">
-                                    <LinkButton
-                                        label={t("ADD")}
-                                        className="file-link-button"
-
-
-                                    />
-                                </div>
-                                <div class="link-file-sec" >
-                                    <LinkButton
-                                        label={t("REMOVE")}
-                                        className="file-link-button"
-
-
-                                    />
-                                </div> */}
 
                             </div>
                             <div className="col-md-6 search-file"  >
@@ -910,19 +888,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                             </div>
                         </div>
                     </div>
-                    {/* <div class="textarea-draft">
 
-                            <TextArea
-                                t={t}
-                                type={"text"}
-                                optionKey="i18nKey"
-                                name="NoteText"
-                                placeholder={t("shows_subject_from_application_with_edit_bitton")}
-                                onChange={setNoteTextField}
-                                value={noteText}
-                            />
-
-                        </div> */}
                     {/* /////////////////////////save textarea//////////// */}
                     <div class="custom-draft-button">
 
@@ -932,32 +898,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                         ></CustomButton>
                     </div>
-                    {/* /////////////////////////save textarea//////////// */}
 
-                    {/* <div className="row">
-                        <div className="col-md-12" >
-                            <div className="col-md-2" >
-                                <CardLabel>{`${t("SUPPORTING_DOCUMENTS")}`}</CardLabel>
-                            </div>
-                            <div className="col-md-4">
-                                <UploadFile
-                                    id={"tl-doc"}
-                                    extraStyleName={"propertyCreate"}
-                                    accept=".jpg,.png,.pdf"
-
-                                />
-                            </div>
-                        </div>
-
-
-                    </div> */}
-                    {/* <CardLabel>{`${t("ATTACH_SUPPORTING_DOCUMENTS")}`}</CardLabel>
-                    <UploadFile
-                        id={"tl-doc"}
-                        extraStyleName={"propertyCreate"}
-                        accept=".jpg,.png,.pdf"
-
-                    /> */}
 
 
                 </div>

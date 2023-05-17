@@ -104,6 +104,37 @@ export const CRService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+    CRBirthCorrectionSearch: ({ tenantId, filters }) =>{
+      console.log("url==",Urls.crcorrection.birth_correction_search,{ tenantId, ...filters });
+    return Request({
+      url: Urls.crcorrection.birth_correction_search, 
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    })},
+    CRDeathCorrectionSearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crcorrection.birth_correction_search, 
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
+    CRMarriageCorrectionSearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crcorrection.marriage_correction_search, 
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
+
+
+
   update: (details, tenantId) =>
     Request({
       url: Urls.cr.update,

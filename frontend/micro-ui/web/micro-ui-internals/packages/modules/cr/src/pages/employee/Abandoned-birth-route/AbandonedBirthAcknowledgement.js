@@ -2,16 +2,20 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToAbandonedBirthRegistration } from "../../../utils/abandonedbirthindex";
+import { convertToAbandonedBirthRegistration, convertToEditAbandonedBirthRegistration } from "../../../utils/abandonedbirthindex";
 import getPDFData from "../../../utils/getCRAbandonedBirthAcknowledgementData";
 import { useHistory } from "react-router-dom";
 
 
 const GetActionMessage = (props) => {
+  const [isEditAbandonedBirth,  setIsEditAbandonedBirth] = useState(sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG") ? true : false);
   const { t } = useTranslation();
-  if (props.isSuccess) {
+  if (props.isSuccess && isEditAbandonedBirth === false) {
     return t("CR_CREATE_SUCCESS_MSG");
-  } else if (props.isLoading) {
+  }  if (props.isSuccess && isEditAbandonedBirth === true) {
+    return t("CR_UPDATE_SUCCESS_MSG");
+  } 
+  else if (props.isLoading) {
     return t("CR_CREATE_APPLICATION_PENDING");
     // return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
@@ -24,7 +28,17 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  // console.log(JSON.stringify(props));
+  const [isEditAbandonedBirth,  setIsEditAbandonedBirth] = useState(sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG") ? true : false);
+  if (props.isSuccess && sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG")) {
+    // console.log(JSON.stringify(props));
+    sessionStorage.setItem("applicationNumber", props.data?.AbandonedChildDetails[0]?.applicationNumber);
+    // console.log(sessionStorage.getItem("applicationNumber"));
+    // if (sessionStorage.getItem("applicationNumber") != null && props.isSuccess) {
+      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+    // } else {
+  //     sessionStorage.removeItem("applicationNumber");
+  //   }
+  // } else {
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -34,6 +48,17 @@ const BannerPicker = (props) => {
     />
 
   );
+
+  } else {
+    return (
+      <Banner
+        message={GetActionMessage(props)}
+        applicationNumber={props.data?.AbandonedDetails[0]?.applicationNumber}
+        info={props.isSuccess ? props.applicationNumber : ""}
+        successful={props.isSuccess}
+      />
+    );
+  }
 };
 // console.log(props.data?.AbandonedChildDetails?.ParentsDetails?.applicationNumber);
 
@@ -53,16 +78,16 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
  
   const mutation = Digit.Hooks.cr.useCivilRegistrationAbandonedBirthAPI( tenantId ,isEditAbandonedBirth ? false : true);
 
-console.log(mutation);
+// console.log(mutation);
 
   useEffect(() => {    
-    if (isInitialRender && applicationNumber === null) {
-      try {
-        setIsInitialRender(false);
+    if (isInitialRender) {
+      try {     
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
-        if (!resubmit) {  
-          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data) : [];    
+        if (!isEditAbandonedBirth && applicationNumber === null) {  
+          setIsInitialRender(false);
+          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data) : convertToEditAbandonedBirthRegistration(data);    
           // let formdata = convertToAbandonedBirthRegistration(data);
             mutation.mutate(formdata, {
             onSuccess,
@@ -70,8 +95,13 @@ console.log(mutation);
          
        
         } else {
+          let formdata = isEditBirth ? convertToAbandonedBirthRegistration(data) : [];
+          mutation.mutate(formdata, {
+            onSuccess,
     
-        }
+        })
+        setIsInitialRender(false);
+      }
       } catch (err) {
       }
     }
@@ -115,7 +145,8 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
   return (
      <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
-        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
+        {/* {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>} */}
+        {<CardText>{t("COMMON_REASON")} : {mutation?.error?.response?.data?.Errors[0]?.message}</CardText>}  
         <Link to={`/digit-ui/employee`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
@@ -143,7 +174,7 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
           />
      
      {mutation?.data?.AbandonedDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-            pathname: `/digit-ui/employee/payment/collect/${mutation.data.AbandonedDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
+            pathname: `/digit-ui/employee/payment/collect/${mutation.data.AbandonedDetails[0].businessservice}/${mutation.data.AbandonedDetails[0].applicationNumber}`,
             state: { tenantId: mutation.data.AbandonedDetails[0].tenantid },
           }}>
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />

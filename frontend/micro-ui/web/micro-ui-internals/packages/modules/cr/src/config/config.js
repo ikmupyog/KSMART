@@ -224,7 +224,7 @@ export const newConfig = [
       },
       {
         route: "nac-death-address-details",
-        component: "AddressBasePage",
+        component: "DeathNACAddressPage",
         texts: {
           headerCaption: "",
           header: "",
@@ -318,7 +318,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AdoptionAddressBasePage",
+        key: "AddressBirthDetails",
         nextStep: "adoption-document-details",
         type: "component",
         hideInEmployee: false,

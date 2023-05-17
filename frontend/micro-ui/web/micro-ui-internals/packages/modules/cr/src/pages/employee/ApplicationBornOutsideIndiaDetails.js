@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+// import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
+import CRApplicationDetails from "../../../../templates/CR/CommonTemplate";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
@@ -181,7 +182,7 @@ const ApplicationBornOutsideIndiaDetails = () => {
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
-      <ApplicationDetailsTemplate
+      <CRApplicationDetails
         header={"CR_BORNOUTSIDE_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}

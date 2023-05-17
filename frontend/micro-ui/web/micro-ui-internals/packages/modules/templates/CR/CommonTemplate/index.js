@@ -4,7 +4,6 @@ import { useQueryClient } from "react-query";
 
 import { Loader } from "@egovernments/digit-ui-react-components";
 
-
 import { useHistory, useParams } from "react-router-dom";
 import ApplicationContent from "./ApplicationContent";
 import ActionModal from "../../ApplicationDetails/Modal";
@@ -25,8 +24,28 @@ const CRApplicationDetails = (props) => {
   const [isWarningPop, setWarningPopUp] = useState(false);
 
   const {
-    applicationDetails, showToast, setShowToast, isLoading, isDataLoading, applicationData, mutate, nocMutation, workflowDetails, businessService, closeToast, moduleCode,
-    timelineStatusPrefix, forcedActionPrefix, statusAttribute, ActionBarStyle, MenuStyle, paymentsList, showTimeLine = true, wardcodes
+    applicationDetails,
+    showToast,
+    setShowToast,
+    isLoading,
+    isDataLoading,
+    applicationData,
+    mutate,
+    nocMutation,
+    workflowDetails,
+    businessService,
+    closeToast,
+    moduleCode,
+    timelineStatusPrefix,
+    forcedActionPrefix,
+    statusAttribute,
+    ActionBarStyle,
+    MenuStyle,
+    paymentsList,
+    showTimeLine = true,
+    wardcodes,
+    selectDeathtype,
+    selectBirthtype,
   } = props;
 
   useEffect(() => {
@@ -77,9 +96,10 @@ const CRApplicationDetails = (props) => {
       try {
         setIsEnableLoader(true);
         const values = await Promise.all(nocPrmomises);
-        values && values.map((ob) => {
-          Digit.SessionStorage.del(ob?.Noc?.[0]?.nocType);
-        });
+        values &&
+          values.map((ob) => {
+            Digit.SessionStorage.del(ob?.Noc?.[0]?.nocType);
+          });
       } catch (err) {
         setIsEnableLoader(false);
         let errorValue = err?.response?.data?.Errors?.[0]?.code
@@ -128,7 +148,6 @@ const CRApplicationDetails = (props) => {
   }
 
   return (
-
     <React.Fragment>
       {!isLoading ? (
         <React.Fragment>
@@ -142,6 +161,8 @@ const CRApplicationDetails = (props) => {
             statusAttribute={statusAttribute}
             paymentsList={paymentsList}
             showTimeLine={showTimeLine}
+            selectDeathtype={selectDeathtype}
+            selectBirthtype={selectBirthtype}
           />
           {showModal ? (
             <ActionModal
@@ -171,7 +192,7 @@ const CRApplicationDetails = (props) => {
             />
           ) : null}
           <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
-          <ApplicationDetailsActionBar
+          {window.location.href.includes("/employee/") && <ApplicationDetailsActionBar
             workflowDetails={workflowDetails}
             displayMenu={displayMenu}
             onActionSelect={onActionSelect}
@@ -180,7 +201,7 @@ const CRApplicationDetails = (props) => {
             forcedActionPrefix={forcedActionPrefix}
             ActionBarStyle={ActionBarStyle}
             MenuStyle={MenuStyle}
-          />
+          />}
         </React.Fragment>
       ) : (
         <Loader />

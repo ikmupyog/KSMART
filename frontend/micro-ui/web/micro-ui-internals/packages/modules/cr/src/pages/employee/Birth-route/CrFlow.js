@@ -16,7 +16,8 @@ const CrFlow = ({ path }) => {
   sessionStorage.removeItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG");
   sessionStorage.removeItem("CR_NACBIRTH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_EDIT_BORNOUTSIDEBIRTH_REG");
-
+  sessionStorage.removeItem("CR_ABANDONEDBIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_EDIT_ABANDONEDBIRTH_REG");
   let links = [
     
     // HOSPITAL_OPERATOR START----------------------------------//

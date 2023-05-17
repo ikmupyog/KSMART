@@ -71,18 +71,16 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
     DeathNACInitiator,
 
   } = value;
-  console.log(value, "value");
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
       }`;
   }
-  console.log(DeathNACDetails,"DeathNACDetails");
-  console.log(DeathNACParentsDetails,"DeathNACParentsDetails");
-  console.log(DeathNACAddressPage,"DeathNACAddressPage");
-  console.log(DeathNACInitiator,"DeathNACInitiator");
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/nac-death-summary", "");
+
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
   //   routeLink = `${getPath(match.path, match.params)}`;
@@ -161,6 +159,9 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       : {t(convertEpochToDate(DeathNACDetails.DateOfDeath) ? convertEpochToDate(DeathNACDetails.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
                     </CardText>
                   </div>
+                  <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div>
                 </div>
               </div>
             </StatusTable>
@@ -171,62 +172,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           title="Death Place Details"
           content={
             <StatusTable>
-                 {/* {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>Hospital Details</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              )}
-                {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>INSTITUTION Details</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              )}
-                {DeathNACDetails.DeathPlace.code === "HOME" && (
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>HOME Details</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              )}
-                {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>VEHICLE Details</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              )}
-                {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>PUBLIC_PLACES Details</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              )} */}
-
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-6">
@@ -236,7 +181,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                   {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
                     <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    : {t(DeathNACDetails.hospitalNameEn.hospitalName)}
+                    : {t(DeathNACDetails.DeathPlace.name)}
                     </CardText>
                   )}
                   {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
@@ -275,6 +220,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         " / " + (DeathNACDetails.HospitalNameMl.addressLocal)}
                       </CardText>
                     </div>
+                    
                   </div>
                 </div>
               )}
@@ -315,6 +261,9 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         {t(DeathNACDetails.DeathPlaceInstId.place) + "/"  + " " + (DeathNACDetails.DeathPlaceInstId.placeLocal)}
                       </CardText>
                     </div>
+                    {/* <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div> */}
                     </div>
                 </div>
                 </div>
@@ -323,33 +272,58 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 {DeathNACDetails.DeathPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-6">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Ward</CardLabel>
+                  <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>House Name</CardLabel>
                     </div>
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) + 
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeLocalityEn) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeStreetNameEn) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.name) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.pincode) +
-                          "/" +
-                          (DeathNACDetails.DeathPlaceHomeHoueNameMl) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeLocalityMl) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomeStreetNameMl) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.name) +
-                          "," +
-                          (DeathNACDetails.DeathPlaceHomePostofficeId.pincode)}
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn)}
                       </CardText>
                     </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Locality Name</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeLocalityEn) + 
+                        "/" +
+                        (DeathNACDetails.DeathPlaceHomeLocalityMl) }
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Street</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeStreetNameEn) + 
+                        "/" +
+                        (DeathNACDetails.DeathPlaceHomeStreetNameMl) }
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Post Office</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.name) }
+                      </CardText>
+                    </div>
+                    <div className="col-md-6">
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>PIN</CardLabel>
+                    </div>
+                    <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                      :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.pincode) }
+                      </CardText>
+                    </div>
+                    {/* <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div> */}
                   </div>
                 </div>
               )}
@@ -361,7 +335,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        : {t(DeathNACDetails.VehicleNumber)}
+                        : {t(DeathNACDetails.vehicleType.name) +" " + "/" + " " + (DeathNACDetails.vehicleType.namelocal) }
 
                       </CardText>
                     </div>
@@ -375,7 +349,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleFromplaceEn</CardLabel>
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleFromplace</CardLabel>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
@@ -383,7 +357,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleToPlaceEn</CardLabel>
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleToPlace</CardLabel>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
@@ -391,7 +365,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleFirstHaltEn</CardLabel>
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleFirstHalt</CardLabel>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
@@ -400,21 +374,24 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                     </div>
                     <div className="col-md-3">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleHospitalEn</CardLabel>
+                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleHospital</CardLabel>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
                       : {t(DeathNACDetails.VehicleHospitalEn.address) +" " + "/" + " " + (DeathNACDetails.VehicleHospitalEn.addressLocal)}
                       </CardText>
                     </div>
-                    <div className="col-md-3">
+                    {/* <div className="col-md-3">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Other Details</CardLabel>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
                       : {t(DeathNACDetails.VehicleHospitalEn.address) +" " + "/" + " " + (DeathNACDetails.VehicleHospitalEn.addressLocal)}
                       </CardText>
-                    </div>
+                    </div> */}
+                    {/* <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div> */}
                   </div>
                   
                 </div>
@@ -457,9 +434,18 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </CardText>
                       
                     </div>
+                    {/* <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div> */}
                   </div>
                 </div>
               )}
+              <div className="row">
+              <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div>
+              </div>
+              
             </StatusTable>
           }
         />
@@ -468,6 +454,56 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           title="Deceased Family Details"
           content={
             <StatusTable>
+              {
+                DeathNACParentsDetails?.SpouseUnavailable === false && (
+                  <div>
+                    <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>Spouse Details</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-6">
+                    <CardLabel style={{ lineHeight: "auto" }}>Name
+                    </CardLabel>
+                  </div>
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                      :{" "}
+                      {t(DeathNACParentsDetails.SpouseNameMl ? DeathNACParentsDetails?.SpouseNameMl : "CR_NOT_RECORDED") +
+                        "/" +
+                        " " +
+                        (DeathNACParentsDetails.SpouseNameEN ? DeathNACParentsDetails?.SpouseNameEN : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                  <div className="col-md-6">
+                    <CardLabel style={{ lineHeight: "auto"}}>Relation
+                    </CardLabel>
+                  </div>
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                      : {t(DeathNACParentsDetails.SpouseType.name ? DeathNACParentsDetails?.SpouseType?.name : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                  <div className="col-md-6">
+                    <CardLabel style={{ lineHeight: "auto"}}>Aadhar
+                    </CardLabel>
+                  </div>
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                      : {t(DeathNACParentsDetails.SpouseAadhaar ? DeathNACParentsDetails?.SpouseAadhaar : "CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+                  </div>
+                )
+              }
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-12">
@@ -538,56 +574,13 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
-              {
-                DeathNACParentsDetails?.SpouseUnavailable === false && (
-                  <div>
-                    <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>Spouse Details</span>{" "}
-                    </h1>
-                  </div>
-                </div>
-              </div>
               <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto" }}>Name
-                    </CardLabel>
+              <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-family-details`} />}
                   </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                      :{" "}
-                      {t(DeathNACParentsDetails.SpouseNameMl ? DeathNACParentsDetails?.SpouseNameMl : "CR_NOT_RECORDED") +
-                        "/" +
-                        " " +
-                        (DeathNACParentsDetails.SpouseNameEN ? DeathNACParentsDetails?.SpouseNameEN : "CR_NOT_RECORDED")}
-                    </CardText>
-                  </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Relation
-                    </CardLabel>
-                  </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                      : {t(DeathNACParentsDetails.SpouseType.name ? DeathNACParentsDetails?.SpouseType?.name : "CR_NOT_RECORDED")}
-                    </CardText>
-                  </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Aadhar
-                    </CardLabel>
-                  </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                      : {t(DeathNACParentsDetails.SpouseAadhaar ? DeathNACParentsDetails?.SpouseAadhaar : "CR_NOT_RECORDED")}
-                    </CardText>
-                  </div>
-                </div>
               </div>
-                  </div>
-                )
-              }
+              
+              
             </StatusTable>
           }
         />
@@ -981,7 +974,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Permanent Address")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1353,6 +1346,11 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
+              <div className="row">
+              <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
+                  </div>
+              </div>
             </StatusTable>
           }
         />
@@ -1404,6 +1402,9 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
                     {DeathNACInitiator.RelationwithDeceased}
                     </CardText>
+                  </div>
+                  <div className="col-md-6">
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-informant-details`} />}
                   </div>
                 </div>
               </div>

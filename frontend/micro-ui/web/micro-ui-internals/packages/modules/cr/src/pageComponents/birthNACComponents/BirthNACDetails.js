@@ -209,6 +209,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     formData?.BirthNACDetails?.nacorderofChildren ? formData?.BirthNACDetails?.nacorderofChildren : null
   );
   const [toast, setToast] = useState(false);
+  const [DateTimeError, setDateTimeError] = useState(false);
+  const [DateTimeHourError, setDateTimeHourError] = useState(false);
+  const [DateTimeMinuteError, setDateTimeMinuteError] = useState(false);
+  const [DateTimeAMPMError, setDateTimeAMPMError] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.BirthNACDetails?.childDOB ? false : true);
   const [HospitalError, setHospitalError] = useState(formData?.BirthNACDetails?.hospitalName ? false : true);
   const [InstitutionError, setInstitutionError] = useState(formData?.BirthNACDetails?.institution ? false : true);
@@ -233,6 +237,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [localNameEnError, setlocalNameEnError] = useState(formData?.BirthNACDetails?.localityNameEn ? false : true);
   const [localNameMlError, setlocalNameMlError] = useState(formData?.BirthNACDetails?.localityNameMl ? false : true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
 
   const [access, setAccess] = React.useState(true);
 
@@ -241,12 +246,23 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   function setselectGender(value) {
     selectGender(value);
   }
+  useEffect(() => {
+    //console.log("time while onchange", birthDateTime);
+  }, [birthDateTime]);
 
   const handleTimeChange = (value, cb) => {
+    if (value?.target?.name === "hour12") {
+      setCheckbirthDateTime({ ...setCheckbirthDateTime, hh: value?.target?.value ? value?.target?.value : null });
+    } else if (value?.target?.name === "minute") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, mm: value?.target?.value ? value?.target?.value : null });
+    } else if (value?.target?.name === "amPm") {
+      setCheckbirthDateTime({ ...checkbirthDateTime, amPm: value?.target?.value ? value?.target?.value : null });
+    }
     if (typeof value === "string") {
       cb(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -379,6 +395,128 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
       }
     }
   }, [isInitialRenderPlace]);
+  function clearBirthPalce(value) {
+    if (value.code === "HOSPITAL") {
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "INSTITUTION") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "HOME") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "VEHICLE") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "PUBLIC_PLACES") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+    }
+  }
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
@@ -388,11 +526,108 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     );
     if (currentWorgFlow.length > 0) {
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //setIsPayment(currentWorgFlow[0].payment);
+      //setAmount(currentWorgFlow[0].amount);
     }
+    clearBirthPalce(value);
   }
 
   let validFlag = true;
   const goNext = () => {
+    if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      setbirthDateTime("");
+      setDateTimeHourError(false);
+      setDateTimeMinuteError(true);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm === null && checkbirthDateTime.amPm != null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh === null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm === null) {
+      validFlag = false;
+      //setbirthDateTime("");
+      setDateTimeHourError(true);
+      setDateTimeMinuteError(false);
+      setDateTimeAMPMError(false);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if (checkbirthDateTime.hh != null && checkbirthDateTime.mm != null && checkbirthDateTime.amPm != null) {
+      setDateTimeAMPMError(false);
+      setDateTimeMinuteError(false);
+      setDateTimeHourError(false);
+      if (childDOB != null) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const childDateofBirth = new Date(childDOB);
+        childDateofBirth.setHours(0, 0, 0, 0);
+        if (childDateofBirth.getTime() < today.getTime()) {
+          setDateTimeError(false);
+        } else if (childDateofBirth.getTime() === today.getTime()) {
+          let todayDate = new Date();
+          let currenthours = todayDate.getHours();
+          let currentMints = todayDate.getHours();
+          currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+          currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+          let currentDatetime = currenthours + ":" + currentMints;
+          if (birthDateTime > currentDatetime) {
+            validFlag = false;
+            setbirthDateTime("");
+            setCheckbirthDateTime({ hh: "", mm: "", amPm: "" });
+            setDateTimeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setDateTimeError(false);
+            // alert("Right Time");
+          }
+        }
+      }
+    }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
@@ -481,7 +716,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           }
         }
       }
-      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn.trim() === "" || adrsLocalityNameEn.trim() === undefined) {
         validFlag = false;
         setAdsHomeLocalityNameEnError(true);
         setToast(true);
@@ -601,7 +836,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
         wardNumber = wardNo.wardno;
         setAdsWardError(false);
       }
-      if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
+      if (localityNameEn == null || localityNameEn.trim() == "" || localityNameEn.trim() == undefined) {
         validFlag = false;
         setlocalNameEnError(true);
         setToast(true);
@@ -725,7 +960,34 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           config={config}
           onSelect={goNext}
           onSkip={onSkip}
-          isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace || !nacorderofChildren}
+          isDisabled={
+            !childFirstNameEn ||
+            !childFirstNameMl ||
+            !childDOB ||
+            !gender ||
+            !birthPlace ||
+            !nacorderofChildren ||
+            (value === "HOSPITAL" ? !hospitalName || !hospitalNameMl : false) ||
+            (value === "INSTITUTION" ? !institution || !institutionId || !institutionIdMl : false) ||
+            (value === "HOME"
+              ? !wardNo ||
+                !adrsPostOffice ||
+                adrsPincode === "" ||
+                adrsLocalityNameEn === "" ||
+                adrsHouseNameEn === "" ||
+                adrsLocalityNameMl === "" ||
+                adrsHouseNameMl === ""
+              : false) ||
+            (value === "PUBLIC_PLACES" ? !publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "" : false) ||
+            (value === "VEHICLE"
+              ? !vehicleType ||
+                vehicleRegistrationNo === "" ||
+                vehicleHaltPlace === "" ||
+                !setadmittedHospitalEn ||
+                !wardNo ||
+                vehicleDesDetailsEn === ""
+              : false)
+          }
         >
           <div className="row">
             <div className="col-md-12">
@@ -888,7 +1150,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_DATE_OF_BIRTH_TIME")}
                   <span className="mandatorycss">*</span>
@@ -912,7 +1174,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                   disable={isDisableEdit}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_GENDER")}`}
                   <span className="mandatorycss">*</span>
@@ -966,7 +1228,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_PLACE_OF_BIRTH")}
                   <span className="mandatorycss">*</span>
@@ -1098,6 +1360,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
             <Toast
               error={
                 DOBError ||
+                DateTimeError ||
+                DateTimeHourError ||
+                DateTimeMinuteError ||
+                DateTimeAMPMError ||
                 HospitalError ||
                 InstitutionError ||
                 InstitutionNameError ||
@@ -1119,6 +1385,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
               }
               label={
                 DOBError ||
+                DateTimeError ||
+                DateTimeHourError ||
+                DateTimeMinuteError ||
+                DateTimeAMPMError ||
                 HospitalError ||
                 InstitutionError ||
                 InstitutionNameError ||
@@ -1137,7 +1407,15 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                 placeTypepEnError ||
                 localNameEnError ||
                 localNameMlError
-                  ? HospitalError
+                  ? DateTimeError
+                    ? t(`CS_COMMON_DATE_TIME_ERROR`)
+                    : DateTimeHourError
+                    ? t(`CS_COMMON_DATE_HOUR_ERROR`)
+                    : DateTimeMinuteError
+                    ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
+                    : DateTimeAMPMError
+                    ? t(`CS_COMMON_DATE_AMPM_ERROR`)
+                    : HospitalError
                     ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
                     : InstitutionError
                     ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)

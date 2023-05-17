@@ -111,6 +111,7 @@ const Details = () => {
             <CardSubHeader className="card-section-header">{t("HR_PERSONAL_DETAILS_FORM_HEADER")} </CardSubHeader>
             <StatusTable>
               <Row label={t("HR_NAME_LABEL")} text={data?.Employees?.[0]?.user?.name || "NA"} textStyle={{ whiteSpace: "pre" }} />
+              <Row label={t("HR_Aadhar_LABEL")} text={data?.Employees?.[0]?.user?.aadhaarNumber || "NA"} textStyle={{ whiteSpace: "pre" }} />
               <Row label={t("HR_MOB_NO_LABEL")} text={data?.Employees?.[0]?.user?.mobileNumber || "NA"} textStyle={{ whiteSpace: "pre" }} />
               <Row label={t("HR_GENDER_LABEL")} text={t(data?.Employees?.[0]?.user?.gender) || "NA"} />
               <Row label={t("HR_EMAIL_LABEL")} text={data?.Employees?.[0]?.user?.emailId || "NA"} />
@@ -118,7 +119,7 @@ const Details = () => {
             </StatusTable>
             <CardSubHeader className="card-section-header">{t("HR_NEW_EMPLOYEE_FORM_HEADER")}</CardSubHeader>
             <StatusTable>
-              <Row label={t("HR_EMPLOYMENT_TYPE_LABEL")} text={t(data?.Employees?.[0]?.employeeType ? `EGOV_HRMS_EMPLOYEETYPE_${data?.Employees?.[0]?.employeeType}` : "NA")} textStyle={{ whiteSpace: "pre" }} />
+              <Row label={t("HR_ORGANIZATION_TYPE")} text={t(data?.Employees?.[0]?.employeeType ? `EGOV_HRMS_EMPLOYEETYPE_${data?.Employees?.[0]?.employeeType}` : "NA")} textStyle={{ whiteSpace: "pre" }} />
               <Row
                 label={t("HR_APPOINTMENT_DATE_LABEL")}
                 text={convertEpochFormateToDate(data?.Employees?.[0]?.dateOfAppointment) || "NA"}

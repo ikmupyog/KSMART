@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card, CardLabel, CardLabelDesc, CardSubHeader, DisplayPhotos, MediaRow, Row, StatusTable, PopUp, HeaderBar, ImageViewer,
-  TextArea, UploadFile, Toast, ActionBar, Menu, SubmitBar, Dropdown, Loader, Modal, SectionalDropdown
+  TextArea, UploadFile, Toast, ActionBar, Menu, SubmitBar, Dropdown, Loader, Modal, SectionalDropdown, Accordion
 } from "@egovernments/digit-ui-react-components";
 
 import { Close } from "../../Icons";
@@ -20,7 +20,6 @@ const MapView = (props) => {
 };
 const cardStyle = {
   display: "flex",
-  gap: "40px",
 };
 const complntSummary = {
   width: "100%",
@@ -109,7 +108,7 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     (async () => {
       setError(null);
       if (file) {
-        if (file.size >= 5242880) {
+        if (file.size >= 2242880) {
           setError(t("CS_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
@@ -162,6 +161,20 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
     setSelectedReopenReason(reason);
   }
 
+  const handleSubmit = (selectedEmployee, comments, uploadedFile) => {
+    if (selectedAction !== "REJECT" || selectedAction !== "RESOLVE" || selectedAction !== "REOPEN" || selectedAction == "RETURN") {
+      if (selectedEmployee) {
+        if (comments) {
+          onAssign(selectedEmployee, comments, uploadedFile)
+        } else {
+          setError(t("PGR_COMMENT_REQUIRED"));
+        }
+      } else {
+        setError(t("PGR_EMPLOYEE_REQUIRED"));
+      }
+    }
+  }
+
   return (
     <Modal
       headerBarMain={
@@ -175,7 +188,9 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
                   ? t("CS_ACTION_REJECT")
                   : selectedAction === "REOPEN"
                     ? t("CS_COMMON_REOPEN")
-                    : t("CS_COMMON_RESOLVE")
+                    : selectedAction === "RETURN"
+                      ? t("CS_COMMON_RETURN")
+                      : t("CS_COMMON_RESOLVE")
           }
         />
       }
@@ -191,16 +206,18 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
               ? t("CS_COMMON_REJECT")
               : selectedAction === "REOPEN"
                 ? t("CS_COMMON_REOPEN")
-                : t("CS_COMMON_RESOLVE")
+                : selectedAction === "RETURN"
+                  ? t("CS_COMMON_RETURN")
+                  : t("CS_COMMON_RESOLVE")
       }
       actionSaveOnSubmit={() => {
-        onAssign(selectedEmployee, comments, uploadedFile);
+        handleSubmit(selectedEmployee, comments, uploadedFile);
       }}
       error={error}
       setError={setError}
     >
       <Card>
-        {selectedAction === "REJECT" || selectedAction === "RESOLVE" || selectedAction === "REOPEN" ? null : (
+        {selectedAction === "REJECT" || selectedAction === "RESOLVE" || selectedAction === "REOPEN" || selectedAction === "RETURN" ? null : (
           <React.Fragment>
             <CardLabel>{t("CS_COMMON_EMPLOYEE_NAME")}</CardLabel>
             {employeeData && <SectionalDropdown selected={selectedEmployee} menuData={employeeData} displayKey="name" select={onSelectEmployee} />}
@@ -235,6 +252,8 @@ export const ComplaintDetails = (props) => {
   const { t } = useTranslation();
   const [fullscreen, setFullscreen] = useState(false);
   const [imageZoom, setImageZoom] = useState(null);
+  const [imagesThumbs, setImagesThumbs] = useState(null);
+  const [initialRender, setInitialRender] = useState(true);
 
   const [toast, setToast] = useState(false);
   const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -244,7 +263,6 @@ export const ComplaintDetails = (props) => {
   const workflowDetails = Digit.Hooks.useWorkflowDetails({ tenantId, id, moduleCode: businessService, role: "EMPLOYEE" });
   const [imagesToShowBelowComplaintDetails, setImagesToShowBelowComplaintDetails] = useState([]);
 
-
   // RAIN-5692 PGR : GRO is assigning complaint, Selecting employee and assign. Its not getting assigned.
   // Fix for next action  assignee dropdown issue
   if (workflowDetails && workflowDetails?.data) {
@@ -252,21 +270,38 @@ export const ComplaintDetails = (props) => {
     workflowDetails.data.actionState = { ...workflowDetails.data };
   }
 
+  const fetchImage = async (uploadedImages) => {
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url)
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    setImagesThumbs(newThumbnails);
+    setInitialRender(false)
+  }
+
   useEffect(() => {
-    if (workflowDetails) {
-      const { data: { timeline: complaintTimelineData } = {} } = workflowDetails;
+    if (initialRender && workflowDetails) {
+      const { data: { timeline: complaintTimelineData = [] } = {} } = workflowDetails;
       if (complaintTimelineData) {
-        const actionByCitizenOnComplaintCreation = complaintTimelineData?.find((e) => e?.performedAction === "APPLY");
-        const { thumbnailsToShow } = actionByCitizenOnComplaintCreation;
-        thumbnailsToShow ? setImagesToShowBelowComplaintDetails(thumbnailsToShow) : null;
+        const actionByCitizenOnComplaintCreation = complaintTimelineData?.find((e) => e?.performedAction === "APPLY") || { wfDocuments: [] };
+        // const { thumbnailsToShow } = actionByCitizenOnComplaintCreation;
+        // thumbnailsToShow ? setImagesToShowBelowComplaintDetails(thumbnailsToShow) : null;
+        const { wfDocuments } = actionByCitizenOnComplaintCreation;
+        if (wfDocuments && wfDocuments.length > 0) {
+          const imageUrls = wfDocuments.map(item => item.fileStoreId)
+          fetchImage(imageUrls)
+        }
       }
     }
   }, [workflowDetails]);
+
   useEffect(() => {
     if (workflowDetails?.data?.applicationBusinessService) {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
+
   const [displayMenu, setDisplayMenu] = useState(false);
   const [popup, setPopup] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
@@ -331,10 +366,10 @@ export const ComplaintDetails = (props) => {
   function onActionSelect(action) {
     setSelectedAction(action);
     switch (action) {
-      // case "RETURN":
-      //   setPopup(true);
-      //   setDisplayMenu(false);
-      //   break;
+      case "RETURN":
+        setPopup(true);
+        setDisplayMenu(false);
+        break;
       case "RECOMMEND":
         setPopup(true);
         setDisplayMenu(false);
@@ -370,7 +405,13 @@ export const ComplaintDetails = (props) => {
 
   async function onAssign(selectedEmployee, comments, uploadedFile) {
     setPopup(false);
-    const response = await Digit.Complaint.assign(complaintDetails, selectedAction, selectedEmployee, comments, uploadedFile, tenantId);
+    let newDetails = Object.keys(complaintDetails).filter(key =>
+      key !== 'rowDetails').reduce((obj, key) => {
+        obj[key] = complaintDetails[key];
+        return obj;
+      }, {}
+      );
+    const response = await Digit.Complaint.assign(newDetails, selectedAction, selectedEmployee, comments, uploadedFile, tenantId);
 
     setAssignResponse(response);
     setToast(true);
@@ -471,49 +512,94 @@ export const ComplaintDetails = (props) => {
   return (
     <React.Fragment>
       <div style={cardStyle}>
-        <Card style={{ width: "69%" }}>
+        <div style={{ position: "relative" }} className={"wrapper-app"}>
           <div style={complntSummary}>
-            <CardSubHeader>{t(`CS_HEADER_COMPLAINT_SUMMARY`)}</CardSubHeader>
-            <CardLabel>{t(`CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS`)}</CardLabel>
+            {/* <CardSubHeader>{t(`CS_HEADER_COMPLAINT_SUMMARY`)}</CardSubHeader> */}
+            <Accordion expanded={true} title={`${t('CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS')}`}
+              content={<StatusTable style={{ position: "relative", marginTop: "19px" }}>
+                <div className="row">
+                  <div className="col-md-12">
+                    {
+                      Object.entries(complaintDetails?.rowDetails?.basicDetails).map(([key, val], i) =>
+                        <div className={"col-md-12"} style={{ marginBottom: "20px" }} key={key}>
+                          <p style={{ overflowWrap: "break-word" }}><strong>{t(key)} : </strong> {t(val) || 'N/A'}</p>
+                        </div>
+                      )
+                    }
+                  </div>
+                </div>
+              </StatusTable>} />
+            <Accordion title={`${t('CS_ADDCOMPLAINT_COMPLAINT_DETAILS')}`}
+              content={<StatusTable style={{ position: "relative", marginTop: "19px" }}>
+                <div className="row">
+                  <div className="col-md-12">
+                    {
+                      Object.entries(complaintDetails?.rowDetails?.additionalDetails).map(([key, val]) => {
+                        if (val && typeof val === 'object') {
+                          return (
+                            <div className="col-md-12" style={{ marginBottom: "20px" }} key={key}>
+                              <div><strong>{t(key)} : </strong>
+                                <div style={{ marginLeft: "5%" }}> {val.map((line, i) =>
+                                  <p key={i} style={{ overflowWrap: "break-word" }}>{t(line)}</p>)}</div>
+                              </div>
+                            </div>)
+                        } else {
+                          return <div className="col-md-6" style={{ marginBottom: "20px" }} key={key}>
+                            <p style={{ overflowWrap: "break-word" }}><strong>{t(key)} : </strong> {t(val) || 'N/A'}</p>
+                          </div>
+                        }
+                      })
+                    }
+                  </div>
+                </div>
+              </StatusTable>} />
             {isLoading ? (
               <Loader />
             ) : (
-              <StatusTable>
-                {complaintDetails &&
-                  Object.keys(complaintDetails?.details).map((k, i, arr) => (
-                    <Row
-                      key={k}
-                      label={t(k)}
-                      text={
-                        Array.isArray(complaintDetails?.details[k])
-                          ? complaintDetails?.details[k].map((val) => (typeof val === "object" ? t(val?.code) : t(val)))
-                          : t(complaintDetails?.details[k]) || "N/A"
-                      }
-                      last={arr.length - 1 === i}
-                    />
-                  ))}
-
-                {1 === 1 ? null : (
-                  <MediaRow label="CS_COMPLAINT_DETAILS_GEOLOCATION">
-                    <MapView onClick={zoomView} />
-                  </MediaRow>
-                )}
-              </StatusTable>
+              1 === 1 ? null : (
+                <Accordion title={`${t('CS_COMPLAINT_DETAILS_GEOLOCATION')}`}
+                  content={<StatusTable>
+                    <MediaRow label="CS_COMPLAINT_DETAILS_GEOLOCATION">
+                      <MapView onClick={zoomView} />
+                    </MediaRow>
+                  </StatusTable>} />
+              )
             )}
-            {imagesToShowBelowComplaintDetails?.thumbs ? (
-              <DisplayPhotos srcs={imagesToShowBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
-            ) : null}
+            {imagesThumbs && imagesThumbs.length > 0 ?
+              <Accordion title={`${t('CS_ADDCOMPLAINT_DOCUMENTS')}`}
+                content={<StatusTable>
+                  {/* {imagesToShowBelowComplaintDetails?.thumbs ? (
+                  <DisplayPhotos srcs={imagesToShowBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
+                ) : <p>N/A</p>} */}
+
+                  <div className="row">
+                    <div className="col-md-12" style={{ display: "flex", marginLeft: "15px" }}>
+                      {imagesThumbs.map((thumbnail, index) => {
+                        return (
+                          <div key={index}>
+                            {thumbnail.type == "pdf" ?
+                              <React.Fragment>
+                                <object style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} data={thumbnail.pdfUrl}
+                                  alt={`upload-thumbnails-${index}`} />
+                              </React.Fragment> :
+                              <img style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} src={thumbnail.small}
+                                alt={`upload-thumbnails-${index}`} onClick={() => setImageZoom(thumbnail.large)} />}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </StatusTable>} />
+              : null}
           </div>
-        </Card>
-        <Card style={{ width: "30%" }}>
-          {/* <div style={borderStyle}></div> */}
-          {/* <BreakLine /> */}
+        </div>
+        <div className={"timeline-wrapper"}>
           <div style={timelineWidth}>
             {complaintDetails?.service && (
               <WorkflowComponent complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
             )}
           </div>
-        </Card>
+        </div>
       </div>
 
       {fullscreen ? (

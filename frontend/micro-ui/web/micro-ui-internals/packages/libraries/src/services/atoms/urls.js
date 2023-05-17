@@ -121,6 +121,11 @@ const Urls = {
     correct_update: "/birth-services/cr/createbirthcorrection",
     registry_search_Adoption: "/birth-services/cr/registry/_searchAdoption",
   },
+  crcorrection: {
+    marriage_correction_search: "/marriage-services/v1/marriagedetails/_searchmarriage",
+    birth_correction_search: "/birth-services/cr/searchbirthcorrection",
+    death_correction_search: "/birth-services/cr/searchbirthcorrection"
+  },
   crcommonpayment: {
     update: "/birth-services/cr/common/updatepaywf",
     update_status: "/egov-workflow-v2/egov-wf/process/_transition"

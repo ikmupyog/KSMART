@@ -7,7 +7,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
@@ -38,8 +38,10 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   // const cityDetails = Digit.ULBService.getCurrentUlb();
   let acceptFormat = ".pdf"
 
-
-
+  const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile);
+  const [uploadedFile1, setUploadedFile1] = useState(formData?.AbandonedBirthInformarDetails?.uploadedFile1);
+  const [file, setFile] = useState(formData?.InitiatorAbandoned?.uploadedFile);
+  const [file1, setFile1] = useState(formData?.InitiatorAbandoned?.uploadedFile1);
   
 
   // let acceptFormat = ".jpg,.png,.pdf,.jpeg"

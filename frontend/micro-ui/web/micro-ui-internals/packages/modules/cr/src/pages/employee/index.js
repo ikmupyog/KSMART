@@ -6,6 +6,7 @@ import Inbox from "./Inbox";
 // import NewApplication from "./NewApplication";
 import Search from "./Search";
 // import Response from "../Response";
+import CorrectionApplicationDetails from "./Corrections";
 import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from "./ApplicationAdoptionDetails";
 import ApplicationAbandonedDeathDetails from "./ApplicationAbandonedDeathDetails";
@@ -142,7 +143,7 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails,
     },
     {
-      path: "/digit-ui/employee/cr/death-flow/abandoned-death-information",
+      path: "/digit-ui/employee/cr/death-flow/Abandoned-death/abandoned-death-information",
       content: t("Abandoned Death"),
       show:  breadCrumbUrls.includes("death-flow/Abandoned-death/abandoned-death-information")||isAbandonedDeathDetails,
     },
@@ -264,6 +265,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const CreateBornOutsideEmp = Digit?.ComponentRegistryService?.getComponent("CreateBornOutsideEmp");
   const CreateNACBirth = Digit?.ComponentRegistryService?.getComponent("CreateNACBirth");
   const CreateAdoption = Digit?.ComponentRegistryService?.getComponent("CRCreateAdoptions");
+  const CreateMarriageRegistrationEmp = Digit?.ComponentRegistryService?.getComponent("CreateMarriageRegistrationEmp");
 
   const CreateDeathEmp = Digit?.ComponentRegistryService?.getComponent("CreateDeathEmp");
   const Response = Digit?.ComponentRegistryService?.getComponent("CRResponse");
@@ -289,11 +291,13 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/create-bornoutsidebirth`} component={CreateBornOutsideEmp} />
           <PrivateRoute path={`${path}/create-nacbirthsearch`} component={CreateNACBirth} />
           <PrivateRoute path={`${path}/create-adoption`} component={CreateAdoption} />
+          <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistrationEmp} />
 
           <PrivateRoute path={`${path}/create-death`} component={CreateDeathEmp} />
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
 
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/correction-details/:id/:type`} component={() => <CorrectionApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
           <PrivateRoute
             path={`${path}/application-bornOutsideIndia/:id`}

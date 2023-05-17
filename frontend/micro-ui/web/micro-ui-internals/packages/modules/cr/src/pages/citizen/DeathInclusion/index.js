@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import {
   BackButton,
   TextInput,
@@ -25,8 +26,15 @@ const DeathInclusion = () => {
   const { path } = useRouteMatch()
   const history = useHistory();
   const [payload, setPayload] = useState({});
+  const [toast, setToast] = useState({ show: false, message: "" });
 
   function onSubmit(_data) {
+    console.log("error data", _data);
+    if (!_data.DeceasedGender && !_data.DeathACKNo) {    
+      setToast({ show: true, message: t("CR_INVALID_GENDER") });
+      return false;
+    }
+    setToast({ show: false, message: "" });
     var fromDate = new Date(_data?.fromDate);
     fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
     var toDate = new Date(_data?.toDate);
@@ -45,7 +53,6 @@ const DeathInclusion = () => {
   }
 
   const gotoEditCorrection = async (data) => {
-    console.log("passed data",data);
     history.push({
       pathname: `/digit-ui/citizen/cr/death-correction-edit`,
       state: { correctionData:data }
@@ -53,14 +60,14 @@ const DeathInclusion = () => {
   };
  
   const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
+    enabled: !!(payload && Object.keys(payload).length > 0) && !toast.show,
   };
 
   const {
     data: { deathCertificateDtls: searchResult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: payload, config }); 
+  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: {...payload,DateOfDeath: payload.DateOfDeath && moment(payload.DateOfDeath, 'YYYY-MM-DD').valueOf()}, config }); 
   useEffect(()=>{
     console.log("searchResult==",searchResult,path);
   },[searchResult,isLoading])
@@ -80,10 +87,13 @@ const DeathInclusion = () => {
         t={t}
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : []) : ""}
+        isSuccess={isSuccess}
         // filestoreId={storeId}
         // isSuccess={isSuccess}
         // isLoading={isLoading}
         count={count}
+        toast={toast}
+        setToast={setToast}
         onCorrectionClick={gotoEditCorrection}
       />
   </React.Fragment>

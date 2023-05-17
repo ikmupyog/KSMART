@@ -27,7 +27,6 @@ export const getFilteredMarriagePlaceNameData = (selectedData, inclusionData, cm
   };
   
   const computeCurrentValue = (marriagePlaceName, placeArray) => {
-    console.log("cur", marriagePlaceName, placeArray);
     const currentValue = placeArray.find((item) => item.code === marriagePlaceName);
     return currentValue;
   };

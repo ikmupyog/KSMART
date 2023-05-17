@@ -1559,8 +1559,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
             || (value === "HOME" ? (!DeathPlaceHomeWardId || !DeathPlaceHomePostofficeId || DeathPlaceHomePincode === "" || DeathPlaceHomeLocalityEn == ""
               || DeathPlaceHomeHoueNameEn == "" || DeathPlaceHomeLocalityMl == "" || DeathPlaceHomehoueNameMl == "") : false)
             || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !DeathPlaceWardId || DeathPlaceLocalityEn === "") : false)
-            || (value === "VEHICLE" ? (!vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === ""
-              || !DeathPlaceWardId || GeneralRemarks === "") : false) ||
+            // || (value === "VEHICLE" ? (!vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === ""
+            //   || !DeathPlaceWardId || GeneralRemarks === "") : false) 
+              ||
             (value === "OUTSIDE_JURISDICTION" ? (!DeathPlaceDistrict || DeathPlaceCity == "" || PlaceOfBurialEn == "" || PlaceOfBurialMl == "" || !DeathPlaceWardId) : false)
             || DeceasedFirstNameEn == "" || DeceasedFirstNameMl == "" || !AgeUnit || !Age || !DeceasedGender || !Nationality || !Religion || (UploadNACHIde === true ? (NACFile == null || proceedNoRDO === "" || regNoNAC === "") : false)
           }>

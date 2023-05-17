@@ -45,6 +45,12 @@ const DesktopInbox = ({
         },
       },
       {
+        Header: t("CS_ADDCOMPLAINT_COMPLAINT_TYPE"),
+        Cell: ({ row }) => {
+          return GetCell(t(`${row.original["complaintSubType"]}`));
+        },
+      },
+      {
         Header: t("WF_INBOX_HEADER_LOCALITY"),
         Cell: ({ row }) => {
           return GetCell(t(Digit.Utils.locale.getLocalityCode(row.original["locality"], row.original["tenantId"])));
@@ -96,9 +102,13 @@ const DesktopInbox = ({
         getCellProps={(cellInfo) => {
           return {
             style: {
-              minWidth: cellInfo.column.Header === t("CS_COMMON_COMPLAINT_NO") ? "240px" : "",
+              minWidth: cellInfo.column.Header === t("CS_COMMON_COMPLAINT_NO") ? "220px"
+                : cellInfo.column.Header === t("WF_INBOX_HEADER_LOCALITY") ? "140px" : "",
+              maxWidth: cellInfo.column.Header === t("CS_COMMON_COMPLAINT_NO") ? "220px"
+                : cellInfo.column.Header === t("WF_INBOX_HEADER_LOCALITY") ? "140px" : "",
               padding: "20px 18px",
               fontSize: "16px",
+              overflowWrap: "break-word"
             },
           };
         }}

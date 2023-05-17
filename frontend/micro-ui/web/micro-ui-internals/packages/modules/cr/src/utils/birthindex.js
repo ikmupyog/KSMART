@@ -273,7 +273,7 @@ export const convertToBirthRegistration = (data = {}) => {
     ChildDetails: [
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.ChildDetails?.birthDateTime),
+        birthDateTime: data?.ChildDetails?.birthDateTime,
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
@@ -328,9 +328,9 @@ export const convertToBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRNR",
         businessservice: "CR",
-        workflowcode: data?.ChildDetails?.workFlowCode,        
-        isPayment:data?.ChildDetails?.isPayment,
-        Amount:data?.ChildDetails?.Amount,
+        workflowcode: data?.ChildDetails?.workFlowCode,
+        isPayment: data?.ChildDetails?.isPayment,
+        Amount: data?.ChildDetails?.Amount,
         applicationStatus: data?.ChildDetails?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn,
@@ -396,7 +396,7 @@ export const convertToBirthRegistration = (data = {}) => {
             : null,
           presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
           presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode
             : null,
           presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
           presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
@@ -436,7 +436,7 @@ export const convertToBirthRegistration = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
             ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
@@ -481,14 +481,20 @@ export const convertToBirthRegistration = (data = {}) => {
           isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo,
         },
         InitiatorinfoDetails: {
+          initiator: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : null,
           relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : null,
+          initiatorInstitutionName: data?.InitiatorinfoDetails?.initiatorInstitutionName,
           initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn,
           initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar,
           initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,
-          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi.code : null,
           initiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress,
           isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
           isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
+          isGuardian: data?.InitiatorinfoDetails?.isGuardian,
+          ipopList: data?.InitiatorinfoDetails?.ipopList ? data?.InitiatorinfoDetails?.ipopList.code : null,
+          ipopNumber: data?.InitiatorinfoDetails?.ipopNumber ? data?.InitiatorinfoDetails?.ipopNumber : null,
+          obstetricsNumber: data?.InitiatorinfoDetails?.obstetricsNumber ? data?.InitiatorinfoDetails?.obstetricsNumber : null,
         },
         Demands: [
           {
@@ -514,7 +520,7 @@ export const convertToBirthRegistration = (data = {}) => {
         BirthNACDocuments: [
           {
             DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
-            filestoreId: data?.ChildDetails?.uploadedFile,            
+            filestoreId: data?.ChildDetails?.uploadedFile,
             proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
             regNoNAC: data?.ChildDetails?.regNoNAC,
           }
@@ -531,7 +537,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
     ChildDetails: [
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
-        birthDateTime: parseInt(data?.ChildDetails?.birthDateTime),
+        birthDateTime: data?.ChildDetails?.birthDateTime,
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
@@ -593,177 +599,164 @@ export const convertToEditBirthRegistration = (data = {}) => {
         applicationNumber: data?.ChildDetails?.applicationNumber,
         assignee: [data?.ChildDetails?.uuid],
         ParentsDetails: {
-          motherFirstNameEn: data?.ChildDetails?.ParentsDetails?.motherFirstNameEn,
-          motherFirstNameMl: data?.ChildDetails?.ParentsDetails?.motherFirstNameMl,
-          motherAadhar: data?.ChildDetails?.ParentsDetails?.motherAadhar,
-          motherMarriageAge: data?.ChildDetails?.ParentsDetails?.motherMarriageAge,
-          motherMarriageBirth: data?.ChildDetails?.ParentsDetails?.motherMarriageBirth,
-          motherMaritalStatus: data?.ChildDetails?.ParentsDetails?.motherMaritalStatus
-            ? data?.ChildDetails?.ParentsDetails?.motherMaritalStatus
-            : null,
-          motherEducation: data?.ChildDetails?.ParentsDetails?.motherEducation ? data?.ChildDetails?.ParentsDetails?.motherEducation : null,
-          motherProfession: data?.ChildDetails?.ParentsDetails?.motherProfession ? data?.ChildDetails?.ParentsDetails?.motherProfession : null,
-          motherNationality: data?.ChildDetails?.ParentsDetails?.motherNationality ? data?.ChildDetails?.ParentsDetails?.motherNationality : null,
-          orderofChildren: data?.ChildDetails?.ParentsDetails?.orderofChildren,
-          fatherAadhar: data?.ChildDetails?.ParentsDetails?.fatherAadhar,
-          ismotherInfo: data?.ChildDetails?.ParentsDetails.ismotherInfo,
-          isfatherInfo: data?.ChildDetails?.ParentsDetails.isfatherInfo,
-          fatherFirstNameEn: data?.ChildDetails?.ParentsDetails?.fatherFirstNameEn,
-          fatherFirstNameMl: data?.ChildDetails?.ParentsDetails?.fatherFirstNameMl,
-          fatherNationality: data?.ChildDetails?.ParentsDetails?.fatherNationality ? data?.ChildDetails?.ParentsDetails?.fatherNationality : null,
-          fatherEducation: data?.ChildDetails?.ParentsDetails?.fatherEducation ? data?.ChildDetails?.ParentsDetails?.fatherEducation : null,
-          fatherProfession: data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ChildDetails?.ParentsDetails?.fatherProfession : null,
-          Religion: data?.ChildDetails?.ParentsDetails?.Religion ? data?.ChildDetails?.ParentsDetails?.Religion : null,
-          fatherMobile: data?.ChildDetails?.ParentsDetails?.fatherMobile,
-          fatherEmail: data?.ChildDetails?.ParentsDetails?.fatherEmail,
+          motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn ? data?.ParentsDetails?.motherFirstNameEn : data?.ChildDetails?.ParentsDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl ? data?.ParentsDetails?.motherFirstNameMl : data?.ChildDetails?.ParentsDetails?.motherFirstNameMl,
+          motherAadhar: data?.ParentsDetails?.motherAadhar ? data?.ChildDetails?.ParentsDetails?.motherAadhar : data?.ChildDetails?.ParentsDetails?.motherAadhar,
+          motherMarriageAge: data?.ParentsDetails?.motherMarriageAge ? data?.ParentsDetails?.motherMarriageAge : data?.ChildDetails?.ParentsDetails?.motherMarriageAge,
+          motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth ? data?.ParentsDetails?.motherMarriageBirth : data?.ChildDetails?.ParentsDetails?.motherMarriageBirth,
+          motherMaritalStatus: data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code :
+            data?.ChildDetails?.ParentsDetails?.motherMaritalStatus ? data?.ChildDetails?.ParentsDetails?.motherMaritalStatus : null,
+          motherEducation: data?.ParentsDetails?.motherEducation ? data?.ParentsDetails?.motherEducation.code : data?.ChildDetails?.ParentsDetails?.motherEducation ? data?.ChildDetails?.ParentsDetails?.motherEducation : null,
+          motherProfession: data?.ParentsDetails?.motherProfession ? data?.ParentsDetails?.motherProfession.code : data?.ChildDetails?.ParentsDetails?.motherProfession ? data?.ChildDetails?.ParentsDetails?.motherProfession : null,
+          motherNationality: data?.ParentsDetails?.motherNationality ? data?.ParentsDetails?.motherNationality.code : data?.ChildDetails?.ParentsDetails?.motherNationality ? data?.ChildDetails?.ParentsDetails?.motherNationality : null,
+          orderofChildren: data?.ParentsDetails?.orderofChildren ? data?.ParentsDetails?.orderofChildren : data?.ChildDetails?.ParentsDetails?.orderofChildren,
+          fatherAadhar: data?.ParentsDetails?.fatherAadhar ? data?.ParentsDetails?.fatherAadhar : data?.ChildDetails?.ParentsDetails?.fatherAadhar,
+          ismotherInfo: data?.ParentsDetails.ismotherInfo ? data?.ParentsDetails.ismotherInfo : data?.ChildDetails?.ParentsDetails.ismotherInfo,
+          isfatherInfo: data?.ParentsDetails.isfatherInfo ? data?.ParentsDetails.isfatherInfo : data?.ChildDetails?.ParentsDetails.isfatherInfo,
+          fatherFirstNameEn: data?.ParentsDetails?.fatherFirstNameEn ? data?.ParentsDetails?.fatherFirstNameEn : data?.ChildDetails?.ParentsDetails?.fatherFirstNameEn,
+          fatherFirstNameMl: data?.ParentsDetails?.fatherFirstNameMl ? data?.ParentsDetails?.fatherFirstNameMl : data?.ChildDetails?.ParentsDetails?.fatherFirstNameMl,
+          fatherNationality: data?.ParentsDetails?.fatherNationality ? data?.ParentsDetails?.fatherNationality.code : data?.ChildDetails?.ParentsDetails?.fatherNationality ? data?.ChildDetails?.ParentsDetails?.fatherNationality : null,
+          fatherEducation: data?.ParentsDetails?.fatherEducation ? data?.ParentsDetails?.fatherEducation.code : data?.ChildDetails?.ParentsDetails?.fatherEducation ? data?.ChildDetails?.ParentsDetails?.fatherEducation : null,
+          fatherProfession: data?.ParentsDetails?.fatherProfession ? data?.ParentsDetails?.fatherProfession.code : data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ChildDetails?.ParentsDetails?.fatherProfession : null,
+          Religion: data?.ParentsDetails?.Religion ? data?.ParentsDetails?.Religion.code : data?.ChildDetails?.ParentsDetails?.Religion ? data?.ChildDetails?.ParentsDetails?.Religion : null,
+          fatherMobile: data?.ParentsDetails?.fatherMobile ? data?.ParentsDetails?.fatherMobile : data?.ChildDetails?.ParentsDetails?.fatherMobile,
+          fatherEmail: data?.ParentsDetails?.fatherEmail ? data?.ParentsDetails?.fatherEmail : data?.ChildDetails?.ParentsDetails?.fatherEmail,
         },
         AddressBirthDetails: {
-          presentaddressCountry: data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry
-            ? data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry
-            : null,
-          presentaddressStateName: data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName
-            ? data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName
-            : null,
-          presentInsideKeralaLBName: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName
-            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
-            : null,
-          presentInsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
-            : null,
-          presentInsideKeralaTaluk: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk
-            : null,
-          presentInsideKeralaVillage: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage
-            : null,
-          presentInsideKeralaLocalityNameEn: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
-          presentInsideKeralaStreetNameEn: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
-          presentInsideKeralaHouseNameEn: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn,
-          presentInsideKeralaLocalityNameMl: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl,
-          presentInsideKeralaStreetNameMl: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
-          presentInsideKeralaHouseNameMl: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
-          presentInsideKeralaPincode: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode
-            : null,
-          presentInsideKeralaPostOffice: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
-            : null,
-          presentWardNo: data?.ChildDetails?.AddressBirthDetails?.presentWardNo ? data?.ChildDetails?.AddressBirthDetails?.presentWardNo : null,
-          presentOutsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
-            : null,
-          presentOutsideKeralaTaluk: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk
-            : null,
-          presentOutsideKeralaVillage: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage
-            : null,
-          presentOutsideKeralaCityVilgeEn: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
-          presentOutsideKeralaPincode: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode
-            : null,
-          presentOutsideKeralaPostOfficeEn: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
-          presentOutsideKeralaPostOfficeMl: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
-          presentOutsideKeralaLocalityNameEn: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
-          presentOutsideKeralaStreetNameEn: data?.ChildDetails?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
-          presentOutsideKeralaHouseNameEn: data?.ChildDetails?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
-          presentOutsideKeralaLocalityNameMl: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
-          presentOutsideKeralaStreetNameMl: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,
-          presentOutsideKeralaHouseNameMl: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl,
-          presentOutSideIndiaAdressEn: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressEn,
-          presentOutSideIndiaAdressMl: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMl,
-          presentOutSideIndiaAdressEnB: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
-          presentOutSideIndiaAdressMlB: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
-          presentOutSideIndiaProvinceEn: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
-          presentOutSideCountry: data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry
-            : null,
-          presentOutSideIndiaadrsVillage: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-            : null,
-          presentOutSideIndiaadrsCityTown: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
-          isPrsentAddress: data?.ChildDetails?.AddressBirthDetails?.isPrsentAddress,
-          permtaddressCountry: data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry
-            ? data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry
-            : null,
-          permtaddressStateName: data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName
-            ? data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName
-            : null,
-          permntInKeralaAdrLBName: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName
-            : null,
-          permntInKeralaAdrDistrict: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict
-            : null,
-          permntInKeralaAdrTaluk: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk
-            : null,
-          permntInKeralaAdrVillage: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage
-            : null,
-          permntInKeralaAdrLocalityNameEn: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
-          permntInKeralaAdrStreetNameEn: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
-          permntInKeralaAdrHouseNameEn: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn,
-          permntInKeralaAdrLocalityNameMl: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
-          permntInKeralaAdrStreetNameMl: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
-          permntInKeralaAdrHouseNameMl: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
-          permntInKeralaAdrPincode: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode
-            : null,
-          permntInKeralaAdrPostOffice: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
-            : null,
-          permntInKeralaWardNo: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo
-            : null,
-          permntOutsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict
-            : null,
-          permntOutsideKeralaTaluk: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            : null,
-          permntOutsideKeralaVillage: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage
-            : null,
-          permntOutsideKeralaCityVilgeEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
-          permntOutsideKeralaPincode: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode,
-          permntOutsideKeralaLocalityNameEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn,
-          permntOutsideKeralaStreetNameEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn,
-          permntOutsideKeralaHouseNameEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn,
-          permntOutsideKeralaLocalityNameMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl,
-          permntOutsideKeralaStreetNameMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl,
-          permntOutsideKeralaHouseNameMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl,
-          permntOutsideKeralaPostOfficeEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn,
-          permntOutsideKeralaPostOfficeMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl,
-          permntOutsideIndiaLineoneEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLineoneEn,
-          permntOutsideIndiaLineoneMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLineoneMl,
-          permntOutsideIndiaLinetwoEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
-          permntOutsideIndiaLinetwoMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
-          permntOutsideIndiaprovinceEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
-          permntOutsideIndiaVillage: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage
-            : null,
-          permntOutsideIndiaCityTown: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?.ChildDetails?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
+          presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry : null,
+          presentaddressStateName: data?.AddressBirthDetails?.presentaddressStateName ? data?.AddressBirthDetails?.presentaddressStateName.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName : null,
+          presentInsideKeralaLBName: data?.AddressBirthDetails?.presentInsideKeralaLBName ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName : null,
+          presentInsideKeralaDistrict: data?.AddressBirthDetails?.presentInsideKeralaDistrict ? data?.AddressBirthDetails?.presentInsideKeralaDistrict.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict : null,
+          presentInsideKeralaTaluk: data?.AddressBirthDetails?.presentInsideKeralaTaluk ? data?.AddressBirthDetails?.presentInsideKeralaTaluk.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk : null,
+          presentInsideKeralaVillage: data?.AddressBirthDetails?.presentInsideKeralaVillage ? data?.AddressBirthDetails?.presentInsideKeralaVillage.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage : null,
+          presentInsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? data?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
+          presentInsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? data?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
+          presentInsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? data?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn,
+          presentInsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? data?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl,
+          presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
+          presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
+          presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode ? data?.AddressBirthDetails?.presentInsideKeralaPincode :
+            data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode : null,
+          presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice : null,
+          presentWardNo: data?.AddressBirthDetails?.presentWardNo ? data?.AddressBirthDetails?.presentWardNo.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentWardNo ? data?.ChildDetails?.AddressBirthDetails?.presentWardNo : null,
+          presentOutsideKeralaDistrict: data?.AddressBirthDetails?.presentOutsideKeralaDistrict ? data?.AddressBirthDetails?.presentOutsideKeralaDistrict.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict : null,
+          presentOutsideKeralaTaluk: data?.AddressBirthDetails?.presentOutsideKeralaTaluk ? data?.AddressBirthDetails?.presentOutsideKeralaTaluk :
+            data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk : null,
+          presentOutsideKeralaVillage: data?.AddressBirthDetails?.presentOutsideKeralaVillage ? data?.AddressBirthDetails?.presentOutsideKeralaVillage.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage : null,
+          presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn ? data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
+          presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode ? data?.AddressBirthDetails?.presentOutsideKeralaPincode :
+            data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode : null,
+          presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn ? data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
+          presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl ? data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
+          presentOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn ? data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
+          presentOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn ? data?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
+          presentOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn ? data?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
+          presentOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl ? data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
+          presentOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl ? data?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,
+          presentOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl ? data?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl : data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl,
+          presentOutSideIndiaAdressEn: data?.AddressBirthDetails?.presentOutSideIndiaAdressEn ? data?.AddressBirthDetails?.presentOutSideIndiaAdressEn : data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressEn,
+          presentOutSideIndiaAdressMl: data?.AddressBirthDetails?.presentOutSideIndiaAdressMl ? data?.AddressBirthDetails?.presentOutSideIndiaAdressMl : data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMl,
+          presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB ? data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB : data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
+          presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB ? data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB : data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
+          presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry ? data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry : null,
+          presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code :
+            data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage : null,
+          presentOutSideIndiaadrsCityTown: data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown : data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
+          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress ? data?.AddressBirthDetails?.isPrsentAddress : data?.ChildDetails?.AddressBirthDetails?.isPrsentAddress,
+          permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry.code :
+            data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry : null,
+          permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName.code :
+            data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName : null,
+          permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName ? data?.AddressBirthDetails?.permntInKeralaAdrLBName.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName : null,
+          permntInKeralaAdrDistrict: data?.AddressBirthDetails?.permntInKeralaAdrDistrict ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict : null,
+          permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk : null,
+          permntInKeralaAdrVillage: data?.AddressBirthDetails?.permntInKeralaAdrVillage ? data?.AddressBirthDetails?.permntInKeralaAdrVillage.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage : null,
+          permntInKeralaAdrLocalityNameEn: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn ? data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn : data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
+          permntInKeralaAdrStreetNameEn: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn ? data?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn : data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
+          permntInKeralaAdrHouseNameEn: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn ? data?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn : data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn,
+          permntInKeralaAdrLocalityNameMl: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl ? data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl : data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
+          permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl ? data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl : data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
+          permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl ? data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl : data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
+          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode ? data?.AddressBirthDetails?.permntInKeralaAdrPincode :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode : null,
+          permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice : null,
+          permntInKeralaWardNo: data?.AddressBirthDetails?.permntInKeralaWardNo ? data?.AddressBirthDetails?.permntInKeralaWardNo.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo : null,
+          permntOutsideKeralaDistrict: data?.AddressBirthDetails?.permntOutsideKeralaDistrict ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict : null,
+          permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk : null,
+          permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage : null,
+          permntOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn ? data?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
+          permntOutsideKeralaPincode: data?.AddressBirthDetails?.permntOutsideKeralaPincode ? data?.AddressBirthDetails?.permntOutsideKeralaPincode : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode,
+          permntOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn ? data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn,
+          permntOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn ? data?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn,
+          permntOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn ? data?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn,
+          permntOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl ? data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl,
+          permntOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl ? data?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl,
+          permntOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl ? data?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl,
+          permntOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn ? data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn,
+          permntOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl ? data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl : data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl,
+          permntOutsideIndiaLineoneEn: data?.AddressBirthDetails?.permntOutsideIndiaLineoneEn ? data?.AddressBirthDetails?.permntOutsideIndiaLineoneEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLineoneEn,
+          permntOutsideIndiaLineoneMl: data?.AddressBirthDetails?.permntOutsideIndiaLineoneMl ? data?.AddressBirthDetails?.permntOutsideIndiaLineoneMl : data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLineoneMl,
+          permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn ? data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
+          permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl ? data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl : data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
+          permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn ? data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn : data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code :
+            data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage : null,
+          permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown ? data?.AddressBirthDetails?.permntOutsideIndiaCityTown : data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaCityTown,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode ? data?.AddressBirthDetails?.permanentOutsideIndiaPostCode : data?.ChildDetails?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
         InformarHosInstDetails: {
-          infomantFirstNameEn: data?.ChildDetails?.InformarHosInstDetails?.infomantFirstNameEn,
-          infomantAadhar: data?.ChildDetails?.InformarHosInstDetails?.infomantAadhar,
-          infomantMobile: data?.ChildDetails?.InformarHosInstDetails?.infomantMobile,
-          informerAddress: data?.ChildDetails?.InformarHosInstDetails?.informerAddress,
-          informerDesi: data?.ChildDetails?.InformarHosInstDetails?.informerDesi,
-          isDeclarationInfo: data?.ChildDetails?.InformarHosInstDetails?.isDeclarationInfo,
+          infomantFirstNameEn: data?.InformarHosInstDetails?.infomantFirstNameEn ? data?.InformarHosInstDetails?.infomantFirstNameEn : data?.ChildDetails?.InformarHosInstDetails?.infomantFirstNameEn,
+          infomantAadhar: data?.InformarHosInstDetails?.infomantAadhar ? data?.InformarHosInstDetails?.infomantAadhar : data?.ChildDetails?.InformarHosInstDetails?.infomantAadhar,
+          infomantMobile: data?.InformarHosInstDetails?.infomantMobile ? data?.InformarHosInstDetails?.infomantMobile : data?.ChildDetails?.InformarHosInstDetails?.infomantMobile,
+          informerAddress: data?.InformarHosInstDetails?.informerAddress ? data?.InformarHosInstDetails?.informerAddress : data?.ChildDetails?.InformarHosInstDetails?.informerAddress,
+          informerDesi: data?.InformarHosInstDetails?.informerDesi ? data?.InformarHosInstDetails?.informerDesi : data?.ChildDetails?.InformarHosInstDetails?.informerDesi,
+          isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo ? data?.InformarHosInstDetails?.isDeclarationInfo : data?.ChildDetails?.InformarHosInstDetails?.isDeclarationInfo,
         },
         InitiatorinfoDetails: {
-          relation: data?.ChildDetails?.InitiatorinfoDetails?.relation,
-          initiatorNameEn: data?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn,
-          initiatorAadhar: data?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar,
-          initiatorMobile: data?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile,
-          initiatorDesi: data?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi,
-          initiatorAddress: data?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress,
-          isInitiatorDeclaration: data?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration,
-          isCaretaker: data?.ChildDetails?.InitiatorinfoDetails?.isCaretaker,
+          initiator: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : data?.ChildDetails?.InitiatorinfoDetails?.initiator,
+          relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : data?.ChildDetails?.InitiatorinfoDetails?.relation,
+          initiatorInstitutionName: data?.InitiatorinfoDetails?.initiatorInstitutionName ? data?.InitiatorinfoDetails?.initiatorInstitutionName : data?.ChildDetails?.InitiatorinfoDetails?.initiatorInstitutionName,
+          initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn ? data?.InitiatorinfoDetails?.initiatorNameEn : data?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn,
+          initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar ? data?.InitiatorinfoDetails?.initiatorAadhar : data?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar,
+          initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile ? data?.InitiatorinfoDetails?.initiatorMobile : data?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi.code : data?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi,
+          initiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress ? data?.InitiatorinfoDetails?.initiatorAddress : data?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress,
+          isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration ? data?.InitiatorinfoDetails?.isInitiatorDeclaration : data?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration,
+          isCaretaker: data?.InitiatorinfoDetails?.isCaretaker ? data?.InitiatorinfoDetails?.isCaretaker : data?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? data?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false,
+          isGuardian: data?.InitiatorinfoDetails?.isGuardian ? data?.InitiatorinfoDetails?.isGuardian : data?.ChildDetails?.InitiatorinfoDetails?.isGuardian ? data?.ChildDetails?.InitiatorinfoDetails?.isGuardian : false,
+          ipopList: data?.InitiatorinfoDetails?.ipopList ? data?.InitiatorinfoDetails?.ipopList.code : data?.ChildDetails?.InitiatorinfoDetails?.ipopList,
+          ipopNumber: data?.InitiatorinfoDetails?.ipopNumber ? data?.InitiatorinfoDetails?.ipopNumber : data?.ChildDetails?.InitiatorinfoDetails?.ipopNumber,
+          obstetricsNumber: data?.InitiatorinfoDetails?.obstetricsNumber ? data?.InitiatorinfoDetails?.obstetricsNumber : data?.ChildDetails?.InitiatorinfoDetails?.obstetricsNumber,
         },
+        BirthNACDocuments: [
+          {
+            DocumentType: "CR_PROCE_CERTIFICATE_UPLOAD",
+            filestoreId: data?.ChildDetails?.uploadedFile,
+            proceedNoRDO: data?.ChildDetails?.proceedNoRDO,
+            regNoNAC: data?.ChildDetails?.regNoNAC,
+          }
+        ],
       },
     ],
   };

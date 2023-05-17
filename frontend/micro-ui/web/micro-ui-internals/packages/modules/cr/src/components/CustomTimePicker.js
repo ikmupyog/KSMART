@@ -3,7 +3,8 @@ import TimePicker from "react-time-picker";
 import { TextInput } from "@egovernments/digit-ui-react-components";
 
 const CustomTimePicker = ({ name, value, onChange }) => {
-  return <TimePicker name={name} onChange={onChange} value={value} locale="en-US" disableClock={true} clearIcon={null} format="hh:mm a" />;
+  return <TimePicker name={name} onChange={onChange} value={value} locale="en-US" disableClock={true} clearIcon={null} format="hh:mm a" hourPlaceholder="HH"
+  minutePlaceholder="MM" />;
 };
 
 export default CustomTimePicker;

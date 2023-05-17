@@ -103,7 +103,6 @@ export const Request = async ({
   } else if (setTimeParam) {
     params._ = Date.now();
   }
-
   let _url = url
     .split("/")
     .map((path) => {

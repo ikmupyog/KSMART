@@ -24,7 +24,6 @@ export const getFilteredGroomAgeData = (selectedData, inclusionData) => {
   };
   
   const computeCurrentValue = (groomDetails) => {
-    console.log("moment(groomDetails?.groomDOB)",moment(groomDetails?.groomDOB).format("DD/MM/YYYY"));
     const groomDOBAge = {
       dob: groomDetails && moment(groomDetails?.groomDOB).format("DD/MM/YYYY"),
       age: groomDetails?.groomAge,
