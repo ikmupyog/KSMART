@@ -143,6 +143,9 @@ public class ArisingFile {
     @JsonProperty("employeeDesignation")
     private String employeeDesignation;
 
+    @JsonProperty("fileType")
+    private String fileType;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
@@ -150,5 +153,7 @@ public class ArisingFile {
     @NotNull(message = "Arising file applicant detail is required")
     @JsonProperty("arisingFileApplicant")
     private ArisingFileApplicant arisingFileApplicant;
+
+
 
 }

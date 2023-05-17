@@ -615,8 +615,8 @@ serviceMaps:
         INSERT INTO public.eg_fm_arisingfile(id, tenantid, filecode, filearisingmode, filearisingdate, 
         financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, 
         createdtime, lastmodifiedby, lastmodifiedtime, serviceid, subject, 
-        applicationdetails, pennumber, employeename, employeedesignation)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        applicationdetails, pennumber, employeename, employeedesignation, filetype)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         
       basePath: ArisingFile
       jsonMaps:
@@ -662,12 +662,14 @@ serviceMaps:
 
       - jsonPath: $.ArisingFile.employeeDesignation
 
+      - jsonPath: $.ArisingFile.fileType
+
     - query: >
         INSERT INTO public.eg_fm_arisingfileapplicantdetails(id, tenantid, arisingfileid, filecode, applicanttype, firstname, 
         middlename, lastname, mobileno, whatsappno, emailid, wardno, doorno, doorsubno, streetname, localplace, mainplace, 
         city, pincode, documenttypeid, documentno, documentfilestoreid, institutionname, officername, designation, 
-        createdby, createdtime, lastmodifiedby, lastmodifiedtime, housename)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;
+        createdby, createdtime, lastmodifiedby, lastmodifiedtime, housename, country, state, district, postoffice)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;
          
       basePath: ArisingFile.arisingFileApplicant
       jsonMaps:
@@ -729,7 +731,15 @@ serviceMaps:
 
       - jsonPath: $.ArisingFile.arisingFileApplicant.auditDetails.lastModifiedTime 
       
-      - jsonPath: $.ArisingFile.arisingFileApplicant.houseName          
+      - jsonPath: $.ArisingFile.arisingFileApplicant.houseName
+
+      - jsonPath: $.ArisingFile.arisingFileApplicant.country
+
+      - jsonPath: $.ArisingFile.arisingFileApplicant.state
+
+      - jsonPath: $.ArisingFile.arisingFileApplicant.district
+
+      - jsonPath: $.ArisingFile.arisingFileApplicant.postOffice
 
   - version: 1.0
     description: Update arising file  details in egov_filemgmnt database, eg_fm_arisingfile table

@@ -168,6 +168,26 @@ public class ArisingFileApplicant {
     @JsonProperty("designation")
     private String designation;
 
+    @Schema(type = "string", description = "Name of Country")
+    @Size(max = 64, message = "Country name length cannot exceed 64 characters")
+    @JsonProperty("country")
+    private String country;
+
+    @Schema(type = "string", description = "Name of state")
+    @Size(max = 64, message = "state name length cannot exceed 64 characters")
+    @JsonProperty("state")
+    private String state;
+
+    @Schema(type = "string", description = "Name of District")
+    @Size(max = 64, message = "District name length cannot exceed 64 characters")
+    @JsonProperty("district")
+    private String district;
+
+    @Schema(type = "string", description = "Name of Postoffice")
+    @Size(max = 64, message = "Postoffice name length cannot exceed 64 characters")
+    @JsonProperty("postOffice")
+    private String postOffice;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 }
