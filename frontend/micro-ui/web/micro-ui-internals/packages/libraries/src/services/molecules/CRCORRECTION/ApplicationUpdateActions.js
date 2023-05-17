@@ -10,3 +10,15 @@ const ApplicationUpdateActions = async (applicationData, tenantId) => {
 };
 
 export default ApplicationUpdateActions;
+
+export const BirthApplicationUpdateActions = async (applicationData, tenantId) => {
+  console.log("reached in services==",applicationData, tenantId);
+  try {
+    const response = await CRService.birthCorrectionUpdate(applicationData, tenantId);
+    return response;
+  } catch (error) {
+    throw new Error(error?.response?.data?.Errors[0].message);
+  }
+};
+
+

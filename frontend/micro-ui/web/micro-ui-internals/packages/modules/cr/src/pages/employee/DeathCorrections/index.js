@@ -38,18 +38,27 @@ const CorrectionApplicationDetails = (props) => {
   
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber, "death");
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
 
+  // const {
+  //   isLoading: updatingApplication,
+  //   isError: updateApplicationError,
+  //   data: updateResponse,
+  //   error: updateError,
+  //   mutate,
+  // } = Digit.Hooks.cr.useApplicationActions(tenantId);
+
+  
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.updateDeathCorrectionAction({ params: { tenantId } });
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -62,12 +71,12 @@ const CorrectionApplicationDetails = (props) => {
     config: {enabled:enableApi},
   });
 
-  useEffect(()=>{
-    if(applicationDetails?.applicationData?.applicationNumber?.length >0){
-      setEnableApi(true)
-    }
-    console.log("applicationDetails==",applicationDetails);
-  },[applicationDetails])
+  // useEffect(()=>{
+  //   if(applicationDetails?.applicationData?.applicationNumber?.length >0){
+  //     setEnableApi(true)
+  //   }
+  //   console.log("applicationDetails==",applicationDetails);
+  // },[applicationDetails])
 
   useEffect(()=>{
     console.log("workflowDetails==",workflowDetails);

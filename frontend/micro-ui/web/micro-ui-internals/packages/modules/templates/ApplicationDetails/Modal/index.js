@@ -19,7 +19,7 @@ import NOCActionModal from "./NOCActionModal";
 import BirthCorrectionModal from "./BirthCorrectionModal";
 
 const ActionModal = (props) => {
-  // console.log("businessService" + props?.businessService);
+  console.log("businessService" + props?.businessService);
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }

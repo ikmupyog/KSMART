@@ -93,24 +93,22 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
 
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
-    applicationData = {
-      ...applicationData,
-      action: action?.action,
-      comment: data?.comments,
-      assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
-      // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
-      wfDocuments: uploadedFile
-        ? [
-            {
-              documentType: action?.action + " DOC",
-              fileName: file?.name,
-              fileStoreId: uploadedFile,
-            },
-          ]
-        : null,
+    console.log("APPLICATION--DATA",applicationData);
+    let applicationParams = {
+      id: applicationData?.id,
+      tenantid: applicationData?.tenantid,
+      applicationtype: applicationData?.applicationtype,
+      businessservice: applicationData?.businessservice,
+      workflowcode: applicationData?.workflowcode,
+      action: "",
+      applicationNumber: applicationData?.applicationNumber,
+      registrationNo: applicationData?.registrationNo,
+      registerid: applicationData?.registerid,
+      registrationDate: applicationData?.registrationDate,
+      applicationStatus: applicationData?.applicationStatus,
     };
     submitAction({
-      BornOutsideChildDetails: [applicationData],
+      CorrectionDetails: [{...applicationParams}],
     });
   }
 

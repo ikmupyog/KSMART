@@ -263,7 +263,7 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
-import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails } from "./cr/death";
+import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails, updateDeathCorrectionAction} from "./cr/death";
 import { getBirthFileSourceDetails, getNacBirthFileSourceDetails, updateBirthCorrectionAction } from "./cr/birth";
 import { setPaymentStatus } from "./cr/payment";
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
@@ -387,6 +387,7 @@ const cr = {
   getBirthFileSourceDetails,
   getNacBirthFileSourceDetails,
   updateBirthCorrectionAction,
+  updateDeathCorrectionAction,
   getNacDeathFileSourceDetails,
   useBirthCorrectionAction,
   useDeathCorrectionAction,

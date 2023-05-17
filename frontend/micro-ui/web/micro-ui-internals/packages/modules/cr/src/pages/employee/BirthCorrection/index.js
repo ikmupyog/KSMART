@@ -114,6 +114,7 @@ const CorrectionApplicationDetails = (props) => {
 
   useEffect(() => {
     if (workflowDetails?.data?.applicationBusinessService) {
+      console.log("WRK FLO DETAILS",workflowDetails?.data);
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
@@ -154,6 +155,7 @@ const CorrectionApplicationDetails = (props) => {
   };
 
   const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    console.log("data==submit",data);
     setIsEnableLoader(true);
     if (typeof data?.customFunctionToExecute === "function") {
       data?.customFunctionToExecute({ ...data });
@@ -182,7 +184,7 @@ const CorrectionApplicationDetails = (props) => {
     }
     if (mutate) {
       setIsEnableLoader(true);
-      mutate({ filters: data }, {
+      mutate({ filters: JSON.parse(JSON.stringify(data)) }, {
         onError: (error, variables) => {
           setIsEnableLoader(false);
           setShowToast({ key: "error", error });
