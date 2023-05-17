@@ -20,7 +20,6 @@ const Search = ({path}) => {
         let applicationType = "";
 
         if((_data?.applicationType === undefined) && (_data?.applicationNumber !== "")){
-            console.log("_data?.applicationNumber " + _data?.applicationNumber);
             let _key = _data.applicationNumber.split("-")[4];
             _key === "BFIFLC" ? applicationType = "CORRECTION" : applicationType = "" ;
         }
