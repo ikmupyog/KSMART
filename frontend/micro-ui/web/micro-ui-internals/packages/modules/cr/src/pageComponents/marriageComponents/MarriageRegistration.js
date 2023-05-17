@@ -200,8 +200,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       cmbMarriagePlaceIds.push(ob);
     });
 
-  console.log({ cmbMarriagePlaceIds });
-
   const stateDist = cmbDistrict?.filter((dist) => dist.statecode == Digit.ULBService.getStateId());
 
   const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
@@ -283,11 +281,11 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [Amount, setAmount] = useState(formData?.MarriageDetails?.Amount);
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.MarriageDetails?.DifferenceInTime);
 
+  const filteredSubRegistrarOfficeList = cmbSubRegistarOffice?.filter((sOffice) => sOffice.districtCode === marriageDistrictid?.code);
+
   const handleOptionChaenge = (event) => {
     setSelectedOption(event.target.value);
   };
-
-  const filteredSubRegistrarOfficeList = cmbSubRegistarOffice?.filter((sOffice) => sOffice.districtCode === marriageDistrictid?.code);
 
   const [toast, setToast] = useState(false);
   const [DOMError, setDOMError] = useState(false);
@@ -334,7 +332,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   // });
 
   function setSelectmarriageDOM(value) {
-    console.log({value})
     setDifferenceInTime(null);
     setmarriageDOM(value);
     const today = new Date();
@@ -474,14 +471,15 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //   }
   // }
   function setMarriagePlace(place) {
-    if (place.code === "RELIGIOUS_INSTITUTION") {
+    if (place?.code === "RELIGIOUS_INSTITUTION") {
       return cmbPlaceNameReligious;
-    } else if (place.code === "MANDAPAM_HALL_AND_OTHER") {
+    } else if (place?.code === "MANDAPAM_HALL_AND_OTHER") {
       return cmbPlaceNameMandapam;
-    } else if (place.code === "SUB_REGISTRAR_OFFICE") {
+    } else if (place?.code === "SUB_REGISTRAR_OFFICE") {
       return filteredSubRegistrarOfficeList;
     }
   }
+
 
   useEffect(() => {
     if (!isEditMarriage) {
@@ -538,7 +536,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         setMarriageWardCode(currentWard[0]);
         const currentPlaceType = cmbPlaceType?.filter((type) => type.code === formData?.marriagePlacetype);
         setMarriagePlacetype(currentPlaceType[0]);
-        const currentPlaceName = setMarriagePlace(currentPlaceType[0])?.filter((name) => name.code === formData?.placeid);
+        const marriagePlace = setMarriagePlace(currentPlaceType[0]);
+        const currentPlaceName = marriagePlace?.filter((name) => name?.code === formData?.placeid);
         setplaceidEn(currentPlaceName[0]);
         setplaceidMl(currentPlaceName[0]);
         const currentMarriageType = cmbTypeOfMarriage?.filter((type) => type.code === formData?.marriageType);
@@ -555,6 +554,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     cmbPlaceType.length,
     cmbMarriagePlaceIds.length,
     cmbSubRegistarOffice.length,
+    filteredSubRegistrarOfficeList.length,
     cmbTypeOfMarriage.length,
   ]);
 
@@ -565,6 +565,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         return workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime;
       });
       if (currentWorkFlow.length > 0) {
+        console.log({ currentWorkFlow });
         setWorkFlowCode(currentWorkFlow[0].WorkflowCode);
         setIsPayment(currentWorkFlow[0].payment);
         setAmount(currentWorkFlow[0].amount);
@@ -1238,7 +1239,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         <Dropdown
                           t={t}
                           type={"text"}
-                          optionKey={marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? "locationOfOffice" : "nameLocal"}
+                          optionKey={marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? "officeLocal" : "nameLocal"}
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidMl}
                           // select={setSelectPlaceidMl}

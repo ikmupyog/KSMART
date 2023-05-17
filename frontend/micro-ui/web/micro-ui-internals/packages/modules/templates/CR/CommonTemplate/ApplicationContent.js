@@ -53,15 +53,15 @@ function ApplicationContent({
     applicationDetails?.InformationDeath?.isDeathNAC
       ? { i18nKey: "CR_IS_NAC", code: "NAC" }
       : applicationDetails?.InformationDeath?.isDeathNIA
-      ? { i18nKey: "CR_IS_NIA", code: "NIA" }
-      : {}
+        ? { i18nKey: "CR_IS_NIA", code: "NIA" }
+        : {}
   );
   const [selectedNACValueRadio, setSelectedNACValue] = useState(
     applicationDetails?.isBirthNAC
       ? { i18nKey: "CR_IS_NAC", code: "NAC" }
       : applicationDetails?.isBirthNIA
-      ? { i18nKey: "CR_IS_NIA", code: "NIA" }
-      : {}
+        ? { i18nKey: "CR_IS_NIA", code: "NIA" }
+        : {}
   );
 
   const radiomenu = [
@@ -89,7 +89,7 @@ function ApplicationContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
-      console.log({checkpoint})
+      console.log({ checkpoint })
       const caption = {
         date: checkpoint?.auditDetails?.lastModified,
         name: checkpoint?.assigner?.name,
@@ -159,7 +159,7 @@ function ApplicationContent({
   const [documents, setDocuments] = useState(null);
 
   useEffect(() => {
-    if (applicationDetails?.documents && applicationDetails?.documents?.values.length > 0) {
+    if (applicationDetails?.documents && applicationDetails?.documents?.values?.length > 0) {
       fetchImage(applicationDetails?.documents?.values);
     }
   }, [applicationDetails]);
@@ -396,8 +396,7 @@ function ApplicationContent({
                                 isCompleted={index === 0}
                                 info={checkpoint.comment}
                                 label={t(
-                                  `${timelineStatusPrefix}${
-                                    checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
+                                  `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
                                 customChild={getTimelineCaptions(checkpoint)}

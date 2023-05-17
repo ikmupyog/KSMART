@@ -6,7 +6,29 @@ import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import { trimURL } from "../../utils";
 
-const MarriageDocuments = ({ formData, config, onSelect }) => {
+const DOCUMENT_TYPES = {
+  AADHAAR: "Aadhar",
+  PASSPORT: "Passport",
+  SSN: "SSN",
+  DRIVING_LICENSE: "DrivingLicense",
+  SCHOOL_CERTIFICATE: "SchoolCertificate",
+  BIRTH_CERTIFICATE: "BirthCertificate",
+  INSTITUITION_CERTIFICATE: "InstitutionCertificate",
+  MARRIAGE_OFFICER_CERTIFICATE: "MarriageOfficerCertificate",
+  OTHER_MARRIAGE_CERTIFICATE: "OtherMarriageCertificate",
+  DIVORCE_ANNULLED_CERTIFICATE: "DivorceAnnulledDecreeCertificate",
+  EXPIRATION_CERTIFICATE: "ExpirationCertificate",
+};
+
+const DOCUMENT_OWNER = {
+  BRIDE: "B",
+  GROOM: "G",
+  WITNESS1: "W1",
+  WITNESS2: "W2",
+  COMMON: "C",
+};
+
+const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
   console.log("MD", formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -44,8 +66,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
   const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
   // const isExpiredWife = true;
   const uniqueId = formData?.WitnessDetails?.uniqueId;
-
-  console.log(groomResidentShip);
 
   const crAgeDocuments = [
     {
@@ -515,7 +535,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     const brideDrivingLicenseFile = e.target.files[0];
     setBrideDrivingLicenseDocument(brideDrivingLicenseFile);
     setBrideDrivingLicenseDocumentName(brideDrivingLicenseFile.name);
-    setBrideDrivingLicenseDocumentType("SSN");
+    setBrideDrivingLicenseDocumentType("Driving License");
     setBrideDrivingLicenseDocumentOwner("B");
   }
 
@@ -612,7 +632,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     setWitness1AadharDocument(witness1AadharFile);
     setWitness1AadharDocumentName(witness1AadharFile.name);
     setWitness1AadharDocumentType("Aadhar");
-    setWitness1AadharDocumentOwner("W");
+    setWitness1AadharDocumentOwner("W1");
   }
 
   function selectWitness2Aadhar(e) {
@@ -621,8 +641,10 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     setWitness2AadharDocument(witness2AadharFile);
     setWitness2AadharDocumentName(witness2AadharFile.name);
     setWitness2AadharDocumentType("Aadhar");
-    setWitness2AadharDocumentOwner("W");
+    setWitness2AadharDocumentOwner("W2");
   }
+
+  console.log({ instituitionCertificate });
 
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
@@ -644,6 +666,60 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     });
     return response;
   };
+
+  const STATE_SELECTOR = {
+    [DOCUMENT_OWNER.BRIDE]: {
+      [DOCUMENT_TYPES.AADHAAR]: setBrideAadhar,
+      [DOCUMENT_TYPES.PASSPORT]: setBridePassport,
+      [DOCUMENT_TYPES.SSN]: setBrideSSN,
+      [DOCUMENT_TYPES.DRIVING_LICENSE]: setBrideDrivingLicense,
+      [DOCUMENT_TYPES.SCHOOL_CERTIFICATE]: setBrideSchoolCertificate,
+      [DOCUMENT_TYPES.BIRTH_CERTIFICATE]: setBrideBirthCertificate,
+      [DOCUMENT_TYPES.DIVORCE_ANNULLED_CERTIFICATE]: setBrideDivorceAnnulledDecreeCertificate,
+      [DOCUMENT_TYPES.EXPIRATION_CERTIFICATE]: setBrideExpirationCertificate,
+    },
+    [DOCUMENT_OWNER.GROOM]: {
+      [DOCUMENT_TYPES.AADHAAR]: setGroomAadhar,
+      [DOCUMENT_TYPES.PASSPORT]: setGroomPassport,
+      [DOCUMENT_TYPES.SSN]: setGroomSSN,
+      [DOCUMENT_TYPES.DRIVING_LICENSE]: setGroomDrivingLicense,
+      [DOCUMENT_TYPES.SCHOOL_CERTIFICATE]: setGroomSchoolCertificate,
+      [DOCUMENT_TYPES.BIRTH_CERTIFICATE]: setGroomBirthCertificate,
+      [DOCUMENT_TYPES.DIVORCE_ANNULLED_CERTIFICATE]: setGroomDivorceAnnulledDecreeCertificate,
+      [DOCUMENT_TYPES.EXPIRATION_CERTIFICATE]: setGroomExpirationCertificate,
+    },
+    [DOCUMENT_OWNER.WITNESS1]: {
+      [DOCUMENT_TYPES.AADHAAR]: setWitness1Aadhar,
+    },
+    [DOCUMENT_OWNER.WITNESS2]: {
+      [DOCUMENT_TYPES.AADHAAR]: setWitness2Aadhar,
+    },
+    [DOCUMENT_OWNER.COMMON]: {
+      [DOCUMENT_TYPES.INSTITUITION_CERTIFICATE]: setInstituitionCertificate,
+      [DOCUMENT_TYPES.MARRIAGE_OFFICER_CERTIFICATE]: setMarriageOfficerCertificate,
+      [DOCUMENT_TYPES.OTHER_MARRIAGE_CERTIFICATE]: setOtherMarriageCertificate,
+    },
+  };
+
+  const setCommonStateSelector = ({ fileStoreId = "", documentType = "", documentOwner = "" }) => {
+    let setStateSelector = _.get(STATE_SELECTOR, `${documentOwner}.${documentType}`, () => {});
+    fetchFile(fileStoreId).then((fileDetails) => {
+      console.log({ fileDetails });
+      setStateSelector(fileDetails);
+    });
+  };
+
+  const setFormattedDocumentData = (documents = []) => {
+    _.forEach(documents, (document) => {
+      setCommonStateSelector(document);
+    });
+  };
+
+  useEffect(() => {
+    if (isEditMarriage) {
+      setFormattedDocumentData(formData?.MarriageDocuments);
+    }
+  }, []);
 
   const getFormattedData = ({ documentName, documentType, documentOwner, fileStoreId, tenantId, ...rest }) => {
     let response = {
@@ -1124,6 +1200,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
               tenantId
             );
             if (response?.data?.files?.length > 0) {
+              // setCommonStateSelector({documentOwner:DOCUMENT_OWNER.BRIDE,documentType:DOCUMENT_TYPES.AADHAAR,fileStoreId:response?.data?.files[0]?.fileStoreId})
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideExpirationCertificate(fileDetails);
             } else {
@@ -1183,7 +1260,6 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
       }
     })();
   }, [witness2AadharDocument]);
-
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
@@ -1250,6 +1326,10 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
       witness2AadharDocumentType,
       witness2AadharDocumentOwner,
       DocumentDetails: getFormatWrapper(tenantId, [
+        {
+          groomAgeDocument,
+          brideAgeDocument,
+        },
         {
           documentName: groomAadharDocumentName,
           documentType: groomAadharDocumentType,
@@ -1490,7 +1570,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
             marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
             marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") &&
             !instituitionCertificate) ||
-          (marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && !marriageOfficerCertificateDocument) ||
+          (marriageType?.code === "MARRIAGE_TYPE_SPECIAL_ACT" && !marriageOfficerCertificateDocument) ||
           ((groomMaritalstatusID?.code === "MARRIED" || groomMaritalstatusID?.code === "ANNULLED") && !groomDivorceAnnulledDecreeCertificate) ||
           ((brideMaritalstatusID?.code === "MARRIED" || brideMaritalstatusID?.code === "ANNULLED") && !brideDivorceAnnulledDecreeCertificate) ||
           (isExpiredHusband && !groomExpirationCertificate) ||
@@ -2449,7 +2529,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                     marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
                     marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
                     marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM" ||
-                    marriageType === "MARRIAGE_TYPE_SPECIAL_ACT") && (
+                    marriageType?.code === "MARRIAGE_TYPE_SPECIAL_ACT") && (
                     <React.Fragment>
                       <div className="row">
                         <div className="col-md-12">
@@ -2517,7 +2597,7 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                             </a>
                           </div>
                         )}
-                        {marriageType === "MARRIAGE_TYPE_SPECIAL_ACT" && (
+                        {marriageType?.code === "MARRIAGE_TYPE_SPECIAL_ACT" && (
                           <div className="col-md-8">
                             <CardLabel>
                               {`${t(`CR_UPLOAD_MARRIAGE_CERTIFICATE_BY_MARRIAGE_OFFICER`)}`}

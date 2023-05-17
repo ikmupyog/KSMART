@@ -725,7 +725,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.code : "CR_NOT_RECORDED"}
+                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.i18nKey : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
@@ -1848,14 +1848,14 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.code : "CR_NOT_RECORDED"}
+                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.i18nKey : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
                     )}
 
                     {BrideDetails?.brideMaritalstatusID?.code === "MARRIED" && BrideDetails.brideIsSpouseLiving?.code && (
-                      <React.Fragement>
+                      <React.Fragment>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                             {`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`} :
@@ -1866,7 +1866,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                             {BrideDetails?.brideNoOfSpouse ? BrideDetails?.brideNoOfSpouse : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
-                      </React.Fragement>
+                      </React.Fragment>
                     )}
                   </div>
                 </div>
@@ -1984,6 +1984,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
             </StatusTable>
           }
         />
+        {/* Groom groom GROOM */}
         <Accordion
           expanded={false}
           title={t("MARRIAGE_BRIDE_ADDRESS")}

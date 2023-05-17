@@ -96,7 +96,7 @@ export const CRNACDeathsearch = {
         },
         {
           title: "CS_COMMON_AADHAAR",
-          value: response?.InformationDeath?.DeceasedAadharNumber  || NA,
+          value: response?.InformationDeath?.DeceasedAadharNumber || NA,
         },
         // ...(InformationDeath.DeathPlace.code === "HOSPITAL" && {
 
@@ -107,9 +107,9 @@ export const CRNACDeathsearch = {
       title: "Death Place Details",
       asSectionHeader: true,
       values: [
-        { title: "PLACE OF DEATH", value: response?.InformationDeath?.DeathPlace  || NA },
-        { title: "CR_HOSPITAL_EN", value: response?.InformationDeath?.DeathPlaceHospitalNameEn  || NA },
-        { title: "CR_HOSPITAL_ML", value: response?.InformationDeath?.DeathPlaceHospitalNameMl  || NA },
+        { title: "PLACE OF DEATH", value: response?.InformationDeath?.DeathPlace || NA },
+        { title: "CR_HOSPITAL_EN", value: response?.InformationDeath?.DeathPlaceHospitalNameEn || NA },
+        { title: "CR_HOSPITAL_ML", value: response?.InformationDeath?.DeathPlaceHospitalNameMl || NA },
       ],
     };
     const DeathPlaceINSTITUTIONDetails = {
@@ -180,24 +180,24 @@ export const CRNACDeathsearch = {
         },
         {
           title: "CS_COMMON_AADHAAR",
-          value: response?.InformationDeath?.SpouseAadhaar  || NA,
+          value: response?.InformationDeath?.SpouseAadhaar || NA,
         },
-      {
-        title: "PDF_BIRTH_NAME_OF_FATHER",
-        value: response?.InformationDeath?.FatherNameEn + " / " + response?.InformationDeath?.FatherNameMl || NA,
-      },
-      {
-        title: "CS_COMMON_AADHAAR",
-        value: response?.InformationDeath?.FatherAadharNo  || NA,
-      },
-      {
-        title: "PDF_BIRTH_NAME_OF_MOTHER",
-        value: response?.InformationDeath?.MotherNameEn + " / " + response?.InformationDeath?.MotherNameMl || NA,
-      },
-      {
-        title: "CS_COMMON_AADHAAR",
-        value: response?.InformationDeath?.MotherAadharNo  || NA,
-      },
+        {
+          title: "PDF_BIRTH_NAME_OF_FATHER",
+          value: response?.InformationDeath?.FatherNameEn + " / " + response?.InformationDeath?.FatherNameMl || NA,
+        },
+        {
+          title: "CS_COMMON_AADHAAR",
+          value: response?.InformationDeath?.FatherAadharNo || NA,
+        },
+        {
+          title: "PDF_BIRTH_NAME_OF_MOTHER",
+          value: response?.InformationDeath?.MotherNameEn + " / " + response?.InformationDeath?.MotherNameMl || NA,
+        },
+        {
+          title: "CS_COMMON_AADHAAR",
+          value: response?.InformationDeath?.MotherAadharNo || NA,
+        },
       ],
     };
     const PresentAddressInsidekeralaDetail = {
@@ -336,7 +336,7 @@ export const CRNACDeathsearch = {
       title: "Decent Address",
       asSectionHeader: true,
       values: [
-        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountryNameEn || NA },
+        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails?.presentaddressCountryNameEn || NA },
         { title: "CS_COMMON_STATE", value: response?.AddressBirthDetails?.presentaddressStateNameEn || NA },
         { title: "CS_COMMON_DISTRICT", value: response?.AddressBirthDetails?.presentOutsideKeralaDistrict || NA },
         { title: "CR_TALUK_TEHSIL", value: response?.AddressBirthDetails?.presentOutsideKeralaTaluk || NA },
@@ -344,7 +344,7 @@ export const CRNACDeathsearch = {
         { title: "CR_CITY_VILLAGE_NAME_EN", value: response?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn || NA },
         { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn || NA },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails?.presentOutsideKeralaPincode || NA },
-        { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails.presentOutsideKeralaLocalityNameEn || NA },
+        { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn || NA },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl || NA },
         { title: "CR_STREET_NAME_EN", value: response?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn || NA },
         { title: "CR_STREET_NAME_ML", value: response?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl || NA },
@@ -355,13 +355,13 @@ export const CRNACDeathsearch = {
     const PermanentAddressOutsideIndiaInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
-        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails.presentaddressCountry || NA },
+        { title: "CS_COMMON_COUNTRY", value: response?.AddressBirthDetails?.presentaddressCountry || NA },
         { title: "CR_STATE_REGION_PROVINCE_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaProvinceEn || NA },
         { title: "CR_STATE_REGION_PROVINCE_ML", value: response?.AddressBirthDetails?.presentOutSideIndiaProvinceMl || NA },
         { title: "CR_TOWN_VILLAGE_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaadrsVillage || NA },
         { title: "CR_CITY_TOWN_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown || NA },
         { title: "CR_ZIP_CODE", value: response?.AddressBirthDetails?.presentOutSideIndiaPostCode || NA },
-        { title: "CR_ADDRES_LINE_ONE_EN", value: response?.AddressBirthDetails.presentOutSideIndiaAdressEn || NA },
+        { title: "CR_ADDRES_LINE_ONE_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressEn || NA },
         { title: "CR_ADDRES_LINE_ONE_ML", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressMl || NA },
         { title: "CR_ADDRES_LINE_TWO_EN", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressEnB || NA },
         { title: "CR_ADDRES_LINE_TWO_ML", value: response?.AddressBirthDetails?.presentOutSideIndiaAdressMlB || NA },
@@ -378,43 +378,43 @@ export const CRNACDeathsearch = {
         },
 
         { title: "CR_APPLICANT_AADHAR", value: response?.DeathApplicantDtls?.ApplicantAadhaarNo || NA },
-        { title: "CR_APPLICANT_MOBILE", value: response?.DeathApplicantDtls?.ApplicantMobileNo || NA},
-        { title: "CR_RELATION_WITH_DECEASED", value: response?.DeathApplicantDtls?.ApplicantRelation || NA,},
-        { title: "CR_APPLICANT_ADDRESS", value: response?.DeathApplicantDtls?.ApplicantAddress  || NA,},
+        { title: "CR_APPLICANT_MOBILE", value: response?.DeathApplicantDtls?.ApplicantMobileNo || NA },
+        { title: "CR_RELATION_WITH_DECEASED", value: response?.DeathApplicantDtls?.ApplicantRelation || NA, },
+        { title: "CR_APPLICANT_ADDRESS", value: response?.DeathApplicantDtls?.ApplicantAddress || NA, },
       ],
     };
     const Docdetails = {
       title: "Document SUMMARY DETAILS",
       documents: true,
-      tenentId:Digit.ULBService.getStateId(),
-      values:response.DeathNACDocuments.map((doc) => doc?.FileStoreId)
+      tenentId: Digit.ULBService.getStateId(),
+      values: response?.DeathNACDocuments?.map((doc) => doc?.FileStoreId)
     }
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
-    if(response?.InformationDeath?.DeathPlace === "HOSPITAL"){
+    if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
       response && employeeResponse.push(DeathHospitalDetail);
     }
-    else if(response?.InformationDeath?.DeathPlace === "INSTITUTION"){
+    else if (response?.InformationDeath?.DeathPlace === "INSTITUTION") {
       response && employeeResponse.push(DeathPlaceINSTITUTIONDetails);
     }
-    else if(response?.InformationDeath?.DeathPlace === "HOME"){
+    else if (response?.InformationDeath?.DeathPlace === "HOME") {
       response && employeeResponse.push(DeathPlaceHOMEDetails);
     }
-    else if(response?.InformationDeath?.DeathPlace === "VEHICLE"){
+    else if (response?.InformationDeath?.DeathPlace === "VEHICLE") {
       response && employeeResponse.push(DeathPlaceVEHICLEDetails);
     }
-    else if(response?.InformationDeath?.DeathPlace === "PUBLIC_PLACES"){
+    else if (response?.InformationDeath?.DeathPlace === "PUBLIC_PLACES") {
       response && employeeResponse.push(DeathPlacePUBLICPLACESDetails);
     }
     response && employeeResponse.push(DeathParentDetail);
-    if(response?.AddressBirthDetails?.permtaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.permtaddressStateName === "kl"){
+    if (response?.AddressBirthDetails?.permtaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.permtaddressStateName === "kl") {
       response && employeeResponse.push(PresentAddressInsidekeralaDetail);
       response && employeeResponse.push(PermanentAddressInsidekeralaDetail);
     }
-    else if(response?.AddressBirthDetails?.permtaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.permtaddressStateName !== "kl"){
+    else if (response?.AddressBirthDetails?.permtaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.permtaddressStateName !== "kl") {
       response && employeeResponse.push(PermanentAddressOutsidekeralaDetail);
     }
-    else if(response?.AddressBirthDetails?.permtaddressCountry !== "COUNTRY_INDIA"){
+    else if (response?.AddressBirthDetails?.permtaddressCountry !== "COUNTRY_INDIA") {
       response && employeeResponse.push(PermanentAddressOutsideIndiaInfo);
     }
     response && employeeResponse.push(ApplicantDetail);
@@ -424,7 +424,7 @@ export const CRNACDeathsearch = {
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
-      documents:Docdetails,
+      documents: Docdetails,
       // additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,
