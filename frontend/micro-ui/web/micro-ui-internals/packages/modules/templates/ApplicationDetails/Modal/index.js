@@ -20,7 +20,7 @@ import BirthCorrectionModal from "./BirthCorrectionModal";
 import MarriageCorrectionModal from "./MarriageCorrectionModal";
 
 const ActionModal = (props) => {
-  // console.log("businessService" + props?.businessService);
+  console.log("businessService" + props?.businessService);
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }

@@ -117,7 +117,7 @@ export const CRNACDeathsearch = {
       asSectionHeader: true,
       values: [
         { title: "PLACE OF DEATH", value: response?.InformationDeath?.DeathPlace || NA },
-        { title: "CR_INSTITUTION_TYPE", value: response?.InformationDeath?.institution + " / " + response?.InformationDeath?.institution || NA },
+        // { title: "CR_INSTITUTION_TYPE", value: response?.InformationDeath?.institution + " / " + response?.InformationDeath?.institution || NA },
         { title: "CR_INSTITUTION_NAME_EN", value: response?.InformationDeath?.DeathPlaceInstitutionNameEn ? response?.InformationDeath?.DeathPlaceInstitutionNameEn : NA },
         { title: "CR_INSTITUTION_NAME_ML", value: response?.InformationDeath?.DeathPlaceInstitutionNameMl ? response?.InformationDeath?.DeathPlaceInstitutionNameMl : NA },
       ],

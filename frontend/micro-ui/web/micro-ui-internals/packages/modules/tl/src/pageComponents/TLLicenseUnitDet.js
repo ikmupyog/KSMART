@@ -39,7 +39,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     queryClient.removeQueries("TL_ZONAL_OFFICE");
     setTenantboundary(false);
   }
-
   const menusector = [
     { name: "TL_MANUFACTURE_SECTOR", code: "MANUFACTURING" },
     { name: "TL_SERVICE_SECTOR", code: "SERVICE" },
@@ -75,7 +74,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [BusinessCategoryMenu, setBusinessCategoryMenu] = useState([]);
   let BusinessCategoryMenutemp = []
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
-
   // Data &&
   // Data.TradeLicense &&
   // Data.TradeLicense.TradeType.map((ob) => {
@@ -221,7 +219,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     });
 
 
-
   cmbWardNo.map((wardmst) => {
     if(zonalOffice){
       wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
@@ -239,7 +236,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
     return 0;
   });
-
   function handleAdd() {
     const values = [...fields];
     values.push({ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null });
@@ -255,7 +251,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setFeilds(values);
     }
   }
-
   // let TradeTypeMenu = [];
 
   // Data &&
@@ -327,7 +322,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       });
     return BusinessSubTypeMenu;
   }
-
   const selectDistrict = ((value) => {
     setDistrictList(value);
     setIsInitialRender(true);
@@ -451,7 +445,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const changesetEmail = (e => {
     setEmail(e.target.value);
   });
-
   const selectStructureType = (value => {
     setStructureType(value);
     let tempval = [];
@@ -478,7 +471,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     SelectStructurePlaceSubtype(null);
     setFilteredPlaceSubtype(null);
   });
-
   const SelectStructurePlaceSubtype = (value => {
     setStructurePlaceSubtype(value);
   });
@@ -599,9 +591,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   let config1 = { enabled: !!(payloadDoor && Object.keys(payloadDoor).length > 0) }
   let searchReult = "";
 
-
   const mutationDoor = Digit.Hooks.tl.useSearch({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, config1 });
-
   useEffect(() => {
     if ((payloadDoor.length === undefined) && (structureType.code === "BUILDING")) {
       if (mutationDoor !== undefined) {
@@ -698,7 +688,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       },
     ];
   };
-
   const [formStateDoor, dispatchDoor] = isEdit || editview ? useReducer(reducerDoor, storedDoorData, initFnEdit) : useReducer(reducerDoor, storedDoorData, initFn);
   const handleTextInputField1 = useCallback((index, e, key, length = 100) => {
     if (e.length <= length) {
@@ -709,7 +698,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     else
       return;
   }, [dispatchDoor]);
-
   useEffect(() => {
     if (isInitialRender) {
       if (structureType) {
@@ -723,7 +711,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       }
     }
   }, [isInitialRender, value2, value3, filteredPlaceSubtype]);
-
   useEffect(() => {
     if (isInitialRender) {
       if ((capitalInvestment) && (businessSector)) {
@@ -737,7 +724,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       }
     }
   }, [isInitialRender, enterpriseType]);
-
   useEffect(() => {
     if (isInitialRender) {
       cmbLB = [];
@@ -769,7 +755,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       }
     }
   }, [isInitialRender, FilterLocalbody, FilterPostoffice, ownershipCategoryMenu]);
-
   useEffect(() => {
     if ((isInitialRender)) {
       if (Localbody) {
@@ -821,10 +806,10 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     setLocalbody(formDataPage?.localbody ? formDataPage?.localbody : "");
   }
   if (formDataPage?.tradeLicenseDetail?.address?.zonalId && (zonalOffice === undefined ||zonalOffice==="") && Zonal.length > 0) {
-    setZonalOffice(Zonal.filter(zone => zone?.code === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
+    setZonalOffice(Zonal.filter(zone => zone?.code === formDataPage?.tradeLicenseDetail?.address?.zonalId?.code)[0]);
   }
   if (formDataPage?.tradeLicenseDetail?.address?.wardId && (WardNo === undefined || WardNo==="") && cmbWardNoFinal.length > 0) {
-    setWardNo(cmbWardNoFinal.filter(ward => ward?.code === formDataPage?.tradeLicenseDetail?.address?.wardId)[0]);
+    setWardNo(cmbWardNoFinal.filter(ward => ward?.code === formDataPage?.tradeLicenseDetail?.address?.wardId?.code)[0]);
   }
   if (formDataPage?.tradeLicenseDetail?.businessSector && businessSector === undefined && menusector.length > 0) {
     setBusinessSector(formDataPage?.tradeLicenseDetail?.businessSector);
@@ -858,8 +843,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     setFlgCheck(true);
     setFlgCheckDoor(false);
   }
-
-
 
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
@@ -1034,7 +1017,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     return Promise.resolve(validation);
 
   }
-
 
   const goNext = async () => {
 
