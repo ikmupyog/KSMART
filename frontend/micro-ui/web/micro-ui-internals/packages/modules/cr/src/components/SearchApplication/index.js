@@ -29,6 +29,7 @@ const mystyle = {
   { label: "Birth - Born Outside India", value: "bornoutsidebirthsearch" },
   { label: "Abandoned Birth", value: "abandonedbirthsearch" },
   { label: "NAC Birth", value: "nacbirthsearch" },
+  { label: "Correction", value: "birthcorrection" },
 ]
 let  validation =''
 

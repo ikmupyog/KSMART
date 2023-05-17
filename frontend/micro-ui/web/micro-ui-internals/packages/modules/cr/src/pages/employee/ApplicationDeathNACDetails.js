@@ -11,7 +11,10 @@ import orderBy from "lodash/orderBy";
 
 const ApplicationDeathNACDetails = () => {
   const { t } = useTranslation();
-  const tenantId = Digit.ULBService.getCurrentTenantId();
+  let tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { id: DeathACKNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
@@ -23,21 +26,21 @@ const ApplicationDeathNACDetails = () => {
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDEATHNACDetail(t, tenantId, DeathACKNo);
   const [selectedRadioValue, setSelectedRadioValue] = useState(applicationDetails?.InformationDeath?.isDeathNAC ? { i18nKey: "CR_IS_NAC", code: "NAC" } : applicationDetails?.InformationDeath?.isDeathNIA ? { i18nKey: "CR_IS_NIA", code: "NIA" } : {});
 
-  function selectRadioButtons(value){
+  function selectRadioButtons(value) {
     setSelectedRadioValue(value);
   }
 
   const stateId = Digit.ULBService.getStateId();
   const newData = applicationDetails;
   useEffect(() => {
-    if(selectedRadioValue?.code == "NAC") {
+    if (selectedRadioValue?.code == "NAC") {
       set(newData, "applicationData.InformationDeath.isDeathNAC", true);
       set(newData, "applicationData.InformationDeath.isDeathNIA", false);
-    }else if(selectedRadioValue?.code == "NIA") {
+    } else if (selectedRadioValue?.code == "NIA") {
       set(newData, "applicationData.InformationDeath.isDeathNAC", false);
       set(newData, "applicationData.InformationDeath.isDeathNIA", true);
     }
-  },[selectedRadioValue]);
+  }, [selectedRadioValue]);
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
@@ -50,7 +53,7 @@ const ApplicationDeathNACDetails = () => {
   console.log(applicationDetails);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.InformationDeath.DeathACKNo,
+    id: applicationDetails?.applicationData?.InformationDeath?.DeathACKNo || DeathACKNo,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config: {},
@@ -147,7 +150,7 @@ const ApplicationDeathNACDetails = () => {
 
   if (rolearray && applicationDetails?.applicationData?.status === "PENDINGPAYMENT") {
     workflowDetails?.data?.nextActions?.map(data => {
-      if (data.action === "PAY") {
+      if (data?.action === "PAY") {
         workflowDetails = {
           ...workflowDetails,
           data: {

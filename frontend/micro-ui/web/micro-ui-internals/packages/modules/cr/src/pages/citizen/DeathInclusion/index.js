@@ -67,7 +67,7 @@ const DeathInclusion = () => {
     data: { deathCertificateDtls: searchResult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: {...payload,DateOfDeath: payload.DateOfDeath && moment(payload.DateOfDeath, 'YYYY-MM-DD').valueOf()}, config }); 
+  } = Digit.Hooks.cr.useRegistrySearchDeath({filters: {...payload,DateOfDeath: payload.DateOfDeath && moment(payload.DateOfDeath).valueOf()}, config }); 
   useEffect(()=>{
     console.log("searchResult==",searchResult,path);
   },[searchResult,isLoading])

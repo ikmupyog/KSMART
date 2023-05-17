@@ -19,25 +19,25 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/BOBRTimeline";
 
-// const ActionButton = ({ jumpTo }) => {
-//   const { t } = useTranslation();
-//   const history = useHistory();
-//   function routeTo() {
-//     sessionStorage.setItem("isDirectRenewal", false);
-//     history.push(jumpTo);
-//   }
+const ActionButton = ({ jumpTo }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  function routeTo() {
+    sessionStorage.setItem("isDirectRenewal", false);
+    history.push(jumpTo);
+  }
 
 
 
-//   return (
-//     <LinkButton
-//       label={t("CS_COMMON_CHANGE")}
-//       className="check-page-link-button"
-//       style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
-//       onClick={routeTo}
-//     />
-//   );
-// };
+  return (
+    <LinkButton
+      label={t("CS_COMMON_CHANGE")}
+      className="check-page-link-button"
+      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      onClick={routeTo}
+    />
+  );
+};
 
 const getPath = (path, params) => {
   params &&
@@ -75,6 +75,8 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
+  routeLink = `${getPath(match.path, match.params)}`;
+  routeLink = routeLink.replace("/born-outside-check", "");
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
   //   routeLink = `${getPath(match.path, match.params)}`;
@@ -301,6 +303,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.postCode}</CardText>
+                  {<ActionButton jumpTo={`${routeLink}/born-outside-child-details`} />}
                 </div>
               </div>
             </div>
@@ -448,7 +451,8 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_EMAIL")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherEmail}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherEmail} </CardText>
+                      {<ActionButton jumpTo={`${routeLink}/born-outside-parents-details`} />}
                     </div>
                   </div>
                 </div>
@@ -655,6 +659,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl}</CardText>
+                      {<ActionButton jumpTo={`${routeLink}/born-outside-address`} />}
                     </div>
                   </div>
                 </div>
@@ -749,7 +754,9 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                   </div>
                   <div className="col-md-4">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAddress}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAddress}
+                  </CardText>
+                  {<ActionButton jumpTo={`${routeLink}/born-outside-static-infn`} />}
                 </div>
                     </div>
                   </div>

@@ -261,19 +261,7 @@ const CreateEmployee = ({userType}) => {
       return ele.jurisdictionChilds?.map((item) => {
         item["wardCode"] = item.code;
         item["wardLabel"] = item.name;
-          delete item.localnamecmb;
-          delete item.namecmb;
-          delete item.boundaryNum;
-          delete item.children;
-          delete item.id;
-          delete item.label;
-          delete item.latitude;
-          delete item.localname;          
-          delete item.longitude;
-          delete item.name;          
-          delete item.wardno;
-          delete item.zonecode;
-          delete item.code;
+         
         return item;
       });
     });

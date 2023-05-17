@@ -19,7 +19,8 @@ import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents
 import DeathCorrectionSummary from "../../pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
 import DeathNacCertificateSearch from "./DeathNacCertificate";
 import ApplicationMarriageDetails from "../employee/ApplicationMarriageDetails";
-
+import ApplicationDeathNACDetails from "../employee/ApplicationDeathNACDetails";
+import EmployeeApplicationDeathDetails from "../employee/ApplicationDeathDetails";
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
   const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
@@ -112,6 +113,8 @@ const App = () => {
           <PrivateRoute parentRoute={path} path={`${path}/death-correction-edit`} component={CRDeathCorrectionEditPage} />
           <PrivateRoute parentRoute={path} path={`${path}/nac-death-certificate`} component={() => <DeathNacCertificateSearch parentUrl={path} />} />
           <PrivateRoute path={`${path}/my-application-marriage/:id`} component={() => <ApplicationMarriageDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/my-application-death-nac/:id`} component={() => <ApplicationDeathNACDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/my-application-death/:id`} component={() => <EmployeeApplicationDeathDetails parentRoute={path} />} />
         </AppContainer>
       </Switch>
     </span>
