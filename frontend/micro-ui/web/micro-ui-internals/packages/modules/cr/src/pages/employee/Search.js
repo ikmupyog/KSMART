@@ -73,8 +73,7 @@ const Search = ({ path }) => {
         return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationDeathType={setApplicationDeathType} applicationDeathType={applicationDeathType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }
     else if (window.location.href.includes("/deathsearch") == true && applicationDeathType?.value == "deathcorrection") {
-        const { data: { deathCorrectionDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchAbandonedDeath({ tenantId, filters: payload, config })
-
+        const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({ tenantId, filters: payload, config })
         return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationDeathType={setApplicationDeathType} applicationDeathType={applicationDeathType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }
     else if (window.location.href.includes("/birthsearch") == true) {
