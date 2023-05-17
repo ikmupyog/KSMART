@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.egov.filemgmnt.repository.querybuilder.MasterDataQueryBuilder;
-import org.egov.filemgmnt.repository.rowmapper.MajorFunctionRawMapper;
+import org.egov.filemgmnt.repository.rowmapper.MajorFunctionRowMapper;
 import org.egov.filemgmnt.repository.rowmapper.ModuleRowMapper;
 import org.egov.filemgmnt.repository.rowmapper.ServiceMasterRowMapper;
 import org.egov.filemgmnt.repository.rowmapper.SubFunctionRowMapper;
@@ -28,12 +28,12 @@ public class MasterDataRepository {
 
     private final MasterDataQueryBuilder queryBuilder;
     private final ModuleRowMapper moduleRowMapper;
-    private final MajorFunctionRawMapper mfRowMapper;
+    private final MajorFunctionRowMapper mfRowMapper;
     private final SubFunctionRowMapper sfRowMapper;
     private final ServiceMasterRowMapper serviceRowMapper;
 
     MasterDataRepository(final MasterDataQueryBuilder queryBuilder, final ModuleRowMapper moduleRowMapper,
-                         final MajorFunctionRawMapper mfRawMapper, final SubFunctionRowMapper sfRowMapper,
+                         final MajorFunctionRowMapper mfRawMapper, final SubFunctionRowMapper sfRowMapper,
                          final ServiceMasterRowMapper serviceRowMapper) {
         this.queryBuilder = queryBuilder;
         this.moduleRowMapper = moduleRowMapper;
