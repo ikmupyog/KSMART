@@ -100,8 +100,10 @@ public class MarriageCorrectionService {
 
         WorkFlowCheck wfc = new WorkFlowCheck();
         marriageCorrectionApplnValidator.validateCorrectionCreate(request);
+        wfc.setWorkflowCode(request.getMarriageCorrectionDetails().get(0).getWorkflowcode());
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageCorrectionDetails().get(0).getTenantid());
         marriageCorrectionMDMSValidator.validateMarriageCorrectionMDMSData(request,mdmsData);
+        marriageCorrectionMDMSValidator.setMarriageCorrectionAmountFromMDMS(mdmsData,wfc);
 
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
