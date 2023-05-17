@@ -18,7 +18,7 @@ const ArisingFileSummery = ({ config, onSelect, value }) => {
     const [imagesThumbs, setImagesThumbs] = useState(null);
     const [imageZoom, setImageZoom] = useState(null);
     const [showDeclaration, setShowDeclaration] = useState();
-    let service = sessionStorage.getItem("services");
+    // let service = sessionStorage.getItem("services");
     let title = sessionStorage.getItem("title");
     let description = sessionStorage.getItem("description");
     let uploadedFile = sessionStorage.getItem("uploadedFile");
@@ -155,6 +155,12 @@ const ArisingFileSummery = ({ config, onSelect, value }) => {
     }
     useEffect(() => {
         if (mutation.isSuccess == true || mutation.isError == true) {
+            sessionStorage.removeItem("title");
+            sessionStorage.removeItem("description");
+            sessionStorage.removeItem("uploadedFile");
+            sessionStorage.removeItem("MinorFunctionDet");
+            sessionStorage.removeItem("MajorFunctionDet");
+            sessionStorage.removeItem("SubFunctionDet");
             history.push(
                 'arising-file-acknowledgement',
                 { fileData: mutation?.data, fileStatus: mutation?.status })

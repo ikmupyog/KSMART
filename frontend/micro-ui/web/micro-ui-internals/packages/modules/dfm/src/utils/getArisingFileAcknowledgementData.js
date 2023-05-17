@@ -8,7 +8,7 @@ const getAddressDetails = (application, t) => {
     return {
         title: "",
         values: [
-            { title: t("SEARCH_SELECT_SERVICE"), value: application?.serviceId || t("NOT_RECORDED") },
+            { title: t("SERVICE"), value: application?.serviceId || t("NOT_RECORDED") },
             { title: t("TITLE"), value: application?.title || t("NOT_RECORDED") },
             { title: t("DESCRIPTION"), value: application?.description || t("NOT_RECORDED") },
 

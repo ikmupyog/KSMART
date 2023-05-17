@@ -211,7 +211,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) =>
 
             sessionStorage.setItem("title", title ? title : "");
             sessionStorage.setItem("description", description ? description : "");
-            sessionStorage.setItem("services", serviceName ? serviceName : "");
+            // sessionStorage.setItem("services", serviceName ? serviceName : "");
             sessionStorage.setItem("MinorFunctionDet", MinorFunctionDet ? JSON.stringify(MinorFunctionDet) : "");
             sessionStorage.setItem("SubFunctionDet", SubFunctionDet ? JSON.stringify(SubFunctionDet) : "");
             sessionStorage.setItem("MajorFunctionDet", MajorFunctionDet ? JSON.stringify(MajorFunctionDet) : "");
