@@ -43,13 +43,22 @@ const CorrectionApplicationDetails = (props) => {
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
 
+  // const {
+  //   isLoading: updatingApplication,
+  //   isError: updateApplicationError,
+  //   data: updateResponse,
+  //   error: updateError,
+  //   mutate,
+  // } = Digit.Hooks.cr.useApplicationActions(tenantId);
+
+  
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.updateDeathCorrectionAction({ params: { tenantId } });
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);

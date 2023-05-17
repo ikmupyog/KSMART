@@ -25,7 +25,7 @@ const selectedDeathSearch = [
   { label: "Death", value: "death" },
   { label: "Death NAC", value: "deathnac" },
   { label: "Abandoned Death", value: "abandoneddeathsearch" },
-  { label: "Correction", value: "correction" },
+  { label: "Correction", value: "deathcorrection" },
 ]
 let validation = ''
 

@@ -644,6 +644,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
     setWitness2AadharDocumentOwner("W2");
   }
 
+  console.log({ instituitionCertificate });
+
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
@@ -693,6 +695,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       [DOCUMENT_TYPES.AADHAAR]: setWitness2Aadhar,
     },
     [DOCUMENT_OWNER.COMMON]: {
+      [DOCUMENT_TYPES.INSTITUITION_CERTIFICATE]: setInstituitionCertificate,
       [DOCUMENT_TYPES.MARRIAGE_OFFICER_CERTIFICATE]: setMarriageOfficerCertificate,
       [DOCUMENT_TYPES.OTHER_MARRIAGE_CERTIFICATE]: setOtherMarriageCertificate,
     },
@@ -1257,16 +1260,6 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       }
     })();
   }, [witness2AadharDocument]);
-
-  useEffect(() => {
-    const groomAgeDocument = formData?.MarriageDocuments?.filter(
-      (doc) =>
-        (doc.documentOwner === "G" &&
-        (doc.documentType === "DrivingLicense" || doc.documentType === "SchoolCertificate" || doc.documentType === "BirthCertificate"))
-    );
-    console.log({groomAgeDocument})
-  }, []);
-
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
@@ -1333,6 +1326,10 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       witness2AadharDocumentType,
       witness2AadharDocumentOwner,
       DocumentDetails: getFormatWrapper(tenantId, [
+        {
+          groomAgeDocument,
+          brideAgeDocument,
+        },
         {
           documentName: groomAadharDocumentName,
           documentType: groomAadharDocumentType,
