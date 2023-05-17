@@ -60,7 +60,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   };
   const autoNoteListChange =(e)=>{
     setSelectedAutoNote(e)
-    setNoteText(e.name)
+    setNoteText(noteText +"  "+ e.name)
 
   }
 
@@ -571,7 +571,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
           </div>
           {displayNotePopup &&(
              <Modal
-             headerBarMain={<Heading t={t} heading={"CR_SEARCH_BR_APPLICATIONS"} />}
+             headerBarMain={<Heading t={t} heading={"Auto Notes"} />}
              headerBarEnd={<CloseBtn onClick={closePopup} />}
              popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto" }}
              formId="modal-action"
@@ -589,15 +589,16 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                   paddingLeft: "20px",
                 }}
               >
-                {workflowDetails?.data?.processInstances?.map((item) => {
+                {workflowDetails?.data?.processInstances?.map((item,index) => {
                   return (
                     <ol>
+                       {/* <li>Notes </li> */}
                       {/* <li>Status: {item.action}</li>
                       <li>Assignes: {item?.assignes?.[0]?.name}</li>
                       <li>Created: {item?.auditDetails?.lastModifiedTime}</li> */}
                      {item?.comment && (
                       <React.Fragment>
-                        <li>Notes: {item?.comment}</li>
+                        <li>{index+1}. {item?.comment}</li>
                          <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
                       </React.Fragment>
                      )     
