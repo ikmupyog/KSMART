@@ -29,4 +29,7 @@ public class ServiceSearchCriteria {
 
     @JsonProperty("status")
     private String status;
+
+    @JsonProperty("subFunctionId")
+    private String subFunctionId;
 }

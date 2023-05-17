@@ -28,4 +28,7 @@ public class SubFunctionSearchCriteria {
 
     @JsonProperty("status")
     private String status;
+
+    @JsonProperty("majorFunctionId")
+    private String majorFunctionId;
 }
