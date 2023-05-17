@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.egov.filemgmnt.web.models.masterdata.MajorFunctionDetails;
+import org.egov.filemgmnt.web.models.masterdata.ModuleDetails;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,8 @@ public class MajorFunctionRawMapper implements ResultSetExtractor<List<MajorFunc
                                            .status(rs.getString(MAJORFUNCTON_PREFIX + "status"))
                                            .auditDetails(getAuditDetails(rs, MAJORFUNCTON_PREFIX))
                                            .build());
+
+
         }
         return result;
     }

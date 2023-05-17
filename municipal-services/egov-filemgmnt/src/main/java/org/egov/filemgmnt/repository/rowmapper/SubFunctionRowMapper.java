@@ -28,6 +28,7 @@ public class SubFunctionRowMapper implements ResultSetExtractor<List<SubFunction
                                          .id(rs.getString(SUBFUNCTON_PREFIX + "id"))
                                          .tenantId(rs.getString(SUBFUNCTON_PREFIX + "tenantid"))
                                          .subFunctionCode(rs.getString("sfcode"))
+                                         .majorFunctionId(rs.getString("mfid"))
                                          .subFunctionNameEnglish(rs.getString("sfnameeng"))
                                          .subFunctionNameMalayalam(rs.getString("sfnamemal"))
                                          .status(rs.getString(SUBFUNCTON_PREFIX + "status"))

@@ -39,7 +39,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
 
              // Service
              .append("  , sv.id AS service_id, sv.tenantid AS service_tenantid, sv.servicecode, sv.sfid, sv.servicenameeng, sv.servicenamemal, sv.status AS service_status")
-             .append("  , sv.createdby AS service_createdby, sv.createdtime AS servicem_createdtime")
+             .append("  , sv.createdby AS service_createdby, sv.createdtime AS service_createdtime")
              .append("  , sv.lastmodifiedby AS service_lastmodifiedby, sv.lastmodifiedtime AS service_lastmodifiedtime")
 
              .append(" FROM eg_fm_modulemaster md")
@@ -81,12 +81,8 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY.toString());
         addFilter("sf.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("sf.sfcode", criteria.getSubFunctionCode(), query, preparedStmtValues);
-
         addFilter("sf.status", criteria.getStatus(), query, preparedStmtValues);
-
         addFilter("sf.mfid", criteria.getMajorFunctionId(), query, preparedStmtValues);
-        addFilter("sf.status", criteria.getStatus(), query, preparedStmtValues);
-
         return query.toString();
     }
 
@@ -97,9 +93,6 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY.toString());
         addFilter("sv.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("sv.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
-
-        addFilter("sv.status", criteria.getStatus(), query, preparedStmtValues);
-
         addFilter("sv.status", criteria.getStatus(), query, preparedStmtValues);
         addFilter("sv.sfid", criteria.getSubFunctionId(), query, preparedStmtValues);
 

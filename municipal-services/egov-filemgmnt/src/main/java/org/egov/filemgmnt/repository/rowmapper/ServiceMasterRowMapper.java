@@ -28,6 +28,7 @@ public class ServiceMasterRowMapper implements ResultSetExtractor<List<ServiceDe
                                      .id(rs.getString(SERVICE_PREFIX + "id"))
                                      .tenantId(rs.getString(SERVICE_PREFIX + "tenantid"))
                                      .serviceCode(rs.getString("servicecode"))
+                                     .subFunctionId(rs.getString("sfid"))
                                      .serviceNameEnglish(rs.getString("servicenameeng"))
                                      .serviceNameMalayalam(rs.getString("servicenamemal"))
                                      .status(rs.getString(SERVICE_PREFIX + "status"))
