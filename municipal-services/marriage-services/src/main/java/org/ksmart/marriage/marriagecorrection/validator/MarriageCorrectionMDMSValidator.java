@@ -4,15 +4,13 @@ import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.WorkFlowCheck;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -208,5 +206,20 @@ public class MarriageCorrectionMDMSValidator {
         }
         if (!errorMap.isEmpty())
             throw new CustomException(errorMap);
+    }
+
+
+    public WorkFlowCheck setMarriageCorrectionAmountFromMDMS(Object mdmsData, WorkFlowCheck wfc) {
+
+        List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_NEW_WF_JSONPATH + "[*]");
+        if(wfLists!=null){
+            wfLists.stream().filter(wf->wf.get("WorkflowCode").equals(wfc.getWorkflowCode())).forEach(workFlow->{
+                wfc.setApplicationType(workFlow.get("ApplicationType").toString());
+                wfc.setPayment(Boolean.getBoolean(workFlow.get("payment").toString()));
+                wfc.setAmount(Integer.parseInt(workFlow.get("amount").toString()));
+                wfc.setActive(Boolean.getBoolean(workFlow.get("active").toString()));
+            });
+        }
+        return wfc;
     }
 }
