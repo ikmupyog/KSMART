@@ -55,7 +55,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
 
         addFilter("md.modulecode", criteria.getModuleCode(), query, preparedStmtValues);
         addFilter("md.tenantid", criteria.getTenantId(), query, preparedStmtValues);
-        addFilter("md.status", criteria.getStatus(), query, preparedStmtValues );
+        addFilter("md.status", criteria.getStatus(), query, preparedStmtValues);
         return query.toString();
     }
 
@@ -67,7 +67,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
 
         addFilter("mf.mfcode", criteria.getMajorFunctionCode(), query, preparedStmtValues);
         addFilter("mf.moduleid", criteria.getModuleId(), query, preparedStmtValues);
-        addFilter("mf.status", criteria.getStatus(), query, preparedStmtValues );
+        addFilter("mf.status", criteria.getStatus(), query, preparedStmtValues);
         return query.toString();
     }
 
@@ -78,7 +78,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("sf.sfcode", criteria.getSubFunctionCode(), query, preparedStmtValues);
-        addFilter("sf.status", criteria.getStatus(), query, preparedStmtValues );
+        addFilter("sf.status", criteria.getStatus(), query, preparedStmtValues);
         return query.toString();
     }
 
@@ -89,7 +89,7 @@ public class MasterDataQueryBuilder extends BaseQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY.toString());
 
         addFilter("sv.servicecode", criteria.getServiceCode(), query, preparedStmtValues);
-        addFilter("sv.status", criteria.getStatus(), query, preparedStmtValues );
+        addFilter("sv.status", criteria.getStatus(), query, preparedStmtValues);
 
         return query.toString();
     }
