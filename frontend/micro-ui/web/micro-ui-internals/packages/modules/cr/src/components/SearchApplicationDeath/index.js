@@ -89,6 +89,8 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
   if (isMobile) {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
   }
+
+
   const handleLinkClick = (finaldata) => {
     console.log({ finaldata });
     Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
@@ -113,8 +115,12 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
               <span className="link">
                 <Link
                   onClick={handleLinkClick(row.original)}
-                  to={row.original.InformationDeath["DeathACKNo"].includes("CRDRNR") ?
+                  to={
+                    row.original.InformationDeath["DeathACKNo"].includes("CRDRNR") ?
                     `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                    :
+                  row.original.InformationDeath["DeathACKNo"].includes("CRDRCN") ?
+                    `/digit-ui/employee/cr/death-correction-details/${row.original.InformationDeath["DeathACKNo"]}`
                     :
                     row.original.InformationDeath["DeathACKNo"].includes("CRDRNA") ?
                       `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` 
@@ -238,6 +244,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     ],
     []
   );
+  
   return (
     <React.Fragment>
       <div style={mystyle}>

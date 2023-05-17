@@ -300,7 +300,7 @@ const EmployeeApp = ({ path, url, userType }) => {
 
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/birth-correction-details/:id/:type`} component={() => <BirthCorrectionApplicationDetails parentRoute={path} />} />
-          <PrivateRoute path={`${path}/death-correction-details/:id/:type`} component={() => <DeathCorrectionApplicationDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/death-correction-details/:id`} component={() => <DeathCorrectionApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/marriage-correction-details/:id/:type`} component={() => <MarriageCorrectionApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
           <PrivateRoute
