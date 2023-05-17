@@ -1260,18 +1260,6 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       }
     })();
   }, [witness2AadharDocument]);
-
-  useEffect(() => {
-    if (isEditMarriage) {
-      const groomAgeDocument = formData?.MarriageDocuments?.filter(
-        (doc) =>
-          doc.documentOwner === "G" &&
-          (doc.documentType === "DrivingLicense" || doc.documentType === "SchoolCertificate" || doc.documentType === "BirthCertificate")
-      );
-      console.log({ groomAgeDocument });
-    }
-  }, []);
-
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
