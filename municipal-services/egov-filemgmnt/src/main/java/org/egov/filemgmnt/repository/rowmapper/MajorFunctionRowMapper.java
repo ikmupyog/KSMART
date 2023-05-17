@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.egov.filemgmnt.web.models.masterdata.MajorFunctionDetails;
-import org.egov.filemgmnt.web.models.masterdata.ModuleDetails;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MajorFunctionRawMapper implements ResultSetExtractor<List<MajorFunctionDetails>>, BaseRowMapper {
+public class MajorFunctionRowMapper implements ResultSetExtractor<List<MajorFunctionDetails>>, BaseRowMapper {
 
     private static final String MAJORFUNCTON_PREFIX = "majorfunction_";
 
