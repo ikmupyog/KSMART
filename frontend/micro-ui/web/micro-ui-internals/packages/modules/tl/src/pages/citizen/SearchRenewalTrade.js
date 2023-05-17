@@ -46,7 +46,7 @@ const SearchRenewalTrade = ({searchdata,isProcessreq}) => {
                 _data.sortOrder = "DESC"
         }
         queryClient.removeQueries("TL_SEARCH");
-        const data = isProcessreq === "correction" || isProcessreq === "cancellation"  ?  {..._data }//,"applicationType":"CORRECTION"
+        const data = isProcessreq === "CORRECTION" || isProcessreq === "CANCELLATION"  ?  {..._data,"applicationType":isProcessreq }
         :
         {
             ..._data  ,"applicationType":"RENEWAL"

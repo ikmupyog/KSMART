@@ -114,7 +114,6 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
       return;
   }, [dispatchapplicant]);
 
-  console.log(Digit.SessionStorage.get("owneredit"))
 
   useEffect(()=>{
     if(Digit.SessionStorage.get("owneredit")){
@@ -175,7 +174,7 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
                 <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantName" value={field.name} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z ]/ig, ''), "name", 100)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
               </div>
               <div className="col-md-3">
-                <CardLabel>{`${t("TL_LICENSEE_NAME")}`}(Local) <span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("TL_LICENSEE_NAME")}`}(Malayalam) <span className="mandatorycss">*</span></CardLabel>
                 <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantNameLocal" value={field.applicantNameLocal} onChange={e => handleAppInputField(index, e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/g, ''), "applicantNameLocal", 200)} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("TL_LICENSEE_NAME") })} />
               </div>
               <div className="col-md-3">

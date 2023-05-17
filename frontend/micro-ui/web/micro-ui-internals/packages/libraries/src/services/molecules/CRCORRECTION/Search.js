@@ -74,7 +74,7 @@ export const CRCorrectionSearch = {
   },
   birthApplication: async (tenantId, filters = {}) => {
     console.log("birth resp==",filters);
-    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters:{...filters,applicationNumber: "KL-KOCHI-C-000230-CRBRCN-2023-APPL"} });
+    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters});
    
     return response?.CorrectionApplication?.[0];
   },
@@ -85,7 +85,7 @@ export const CRCorrectionSearch = {
   },
   marriageApplication: async (tenantId, filters = {}) => {
     console.log("marriage resp==",filters);
-    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters:{...filters,applicationNo:"KL-KOCHI-CRMRCR-ACK-000046-2023"} });
+    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters});
     
     return response?.MarriageDetails[0];
   },
