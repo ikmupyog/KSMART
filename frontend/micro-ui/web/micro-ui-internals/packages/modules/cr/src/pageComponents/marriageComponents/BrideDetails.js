@@ -20,7 +20,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import moment from "moment";
 import { sortDropdownNames } from "../../utils";
 
-const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage }) => {
+const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};

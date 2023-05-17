@@ -13,7 +13,7 @@ const DOCUMENT_TYPES = {
   DRIVING_LICENSE: "DrivingLicense",
   SCHOOL_CERTIFICATE: "SchoolCertificate",
   BIRTH_CERTIFICATE: "BirthCertificate",
-  INSTITUITION_CERTIFICATE: "InstitutionCertificate",
+  INSTITUITION_CERTIFICATE: "InstituitionCertificate",
   MARRIAGE_OFFICER_CERTIFICATE: "MarriageOfficerCertificate",
   OTHER_MARRIAGE_CERTIFICATE: "OtherMarriageCertificate",
   DIVORCE_ANNULLED_CERTIFICATE: "DivorceAnnulledDecreeCertificate",
@@ -28,7 +28,7 @@ const DOCUMENT_OWNER = {
   COMMON: "C",
 };
 
-const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
+const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false }) => {
   console.log("MD", formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -66,6 +66,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
   const isExpiredWife = formData?.WitnessDetails?.isExpiredWife;
   // const isExpiredWife = true;
   const uniqueId = formData?.WitnessDetails?.uniqueId;
+  // const isBackward = false;
+  const isBackward = formData?.WitnessDetails?.isBackward;
 
   const crAgeDocuments = [
     {
@@ -232,6 +234,16 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
   );
   const [otherMarriageCertificateDocumentOwner, setOtherMarriageCertificateDocumentOwner] = useState(
     formData?.MarriageDocuments?.otherMarriageCertificateDocumentOwner ? formData?.MarriageDocuments?.otherMarriageCertificateDocumentOwner : null
+  );
+
+  const [backwardCertificateDocumentName, setBackwardCertificateDocumentName] = useState(
+    formData?.MarriageDocuments?.backwardCertificateDocumentName ? formData?.MarriageDocuments?.backwardCertificateDocumentName : null
+  );
+  const [backwardCertificateDocumentType, setBackwardCertificateDocumentType] = useState(
+    formData?.MarriageDocuments?.backwardCertificateDocumentType ? formData?.MarriageDocuments?.backwardCertificateDocumentType : null
+  );
+  const [backwardCertificateDocumentOwner, setBackwardCertificateDocumentOwner] = useState(
+    formData?.MarriageDocuments?.backwardCertificateDocumentOwner ? formData?.MarriageDocuments?.backwardCertificateDocumentOwner : null
   );
 
   const [groomDivorceAnnulledDecreeCertificateDocumentName, setGroomDivorceAnnulledDecreeCertificateDocumentName] = useState(
@@ -415,6 +427,15 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       : null
   );
 
+  const [backwardCertificate, setBackwardCertificate] = useState(
+    formData?.MarriageDocuments?.OtherDetails?.backwardCertificate ? formData?.MarriageDocuments?.OtherDetails?.backwardCertificate : null
+  );
+  const [backwardCertificateDocument, setBackwardCertificateDocument] = useState(
+    formData?.MarriageDocuments?.OtherDetails?.backwardCertificateDocument
+      ? formData?.MarriageDocuments?.OtherDetails?.backwardCertificateDocument
+      : null
+  );
+
   const [groomDivorceAnnulledDecreeCertificate, setGroomDivorceAnnulledDecreeCertificate] = useState(
     formData?.MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate
       ? formData?.MarriageDocuments?.OtherDetails?.groomDivorceAnnulledDecreeCertificate
@@ -595,6 +616,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
     setOtherMarriageCertificateDocumentOwner("C");
   }
 
+  function selectBackwardCertificate(e) {
+    const backwardCertificateFile = e.target.files[0];
+    setBackwardCertificateDocument(backwardCertificateFile);
+    setBackwardCertificateDocumentName(backwardCertificateFile.name);
+    setBackwardCertificateDocumentType("BackwardCertificate");
+    setBackwardCertificateDocumentOwner("C");
+  }
+
   function selectGroomDivorceAnnulledDecreeCertificate(e) {
     const groomDivorceAnnulledDecreeCertificateFile = e.target.files[0];
     setGroomDivorceAnnulledDecreeCertificateDocument(groomDivorceAnnulledDecreeCertificateFile);
@@ -703,15 +732,16 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
 
   const setCommonStateSelector = ({ fileStoreId = "", documentType = "", documentOwner = "" }) => {
     let setStateSelector = _.get(STATE_SELECTOR, `${documentOwner}.${documentType}`, () => {});
-    fetchFile(fileStoreId).then((fileDetails) => {
-      console.log({ fileDetails });
+    fetchFile(fileStoreId || "").then((fileDetails) => {
       setStateSelector(fileDetails);
     });
   };
 
   const setFormattedDocumentData = (documents = []) => {
     _.forEach(documents, (document) => {
-      setCommonStateSelector(document);
+      if (!_.isEmpty(document)) {
+        setCommonStateSelector(document);
+      }
     });
   };
 
@@ -1116,6 +1146,31 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
   useEffect(() => {
     (async () => {
       setError(null);
+      if (backwardCertificateDocument) {
+        if (backwardCertificateDocument.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage(
+              `crmarriage/${uniqueId}/common/backwardcertificate/${currentYear}`,
+              backwardCertificateDocument,
+              tenantId
+            );
+            if (response?.data?.files?.length > 0) {
+              const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              setBackwardCertificate(fileDetails);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [backwardCertificateDocument]);
+
+  useEffect(() => {
+    (async () => {
+      setError(null);
       if (groomDivorceAnnulledDecreeCertificateDocument) {
         if (groomDivorceAnnulledDecreeCertificateDocument.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
@@ -1260,6 +1315,26 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       }
     })();
   }, [witness2AadharDocument]);
+  useEffect(() => {
+    if (isEditMarriage) {
+      console.log(formData?.MarriageDocuments, "pling");
+      const currGroomAgeDocument = formData?.MarriageDocuments?.filter(
+        (doc) =>
+          doc.documentOwner === "G" &&
+          (doc.documentType === "DrivingLicense" || doc.documentType === "SchoolCertificate" || doc.documentType === "BirthCertificate")
+      );
+      const currentGroomAgeDocument = crAgeDocuments?.filter((ageDoc) => ageDoc?.name?.split(" ").join("") === currGroomAgeDocument[0]?.documentType);
+      setGroomAgeDocument(currentGroomAgeDocument[0]);
+      const currBrideAgeDocument = formData?.MarriageDocuments?.filter(
+        (doc) =>
+          doc.documentOwner === "B" &&
+          (doc.documentType === "DrivingLicense" || doc.documentType === "SchoolCertificate" || doc.documentType === "BirthCertificate")
+      );
+      console.log({ currBrideAgeDocument });
+      const currentBrideAgeDocument = crAgeDocuments?.filter((ageDoc) => ageDoc?.name?.split(" ").join("") === currBrideAgeDocument[0]?.documentType);
+      setBrideAgeDocument(currentBrideAgeDocument[0]);
+    }
+  }, [formData?.MarriageDocuments?.length]);
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
@@ -1307,6 +1382,9 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       otherMarriageCertificateDocumentName,
       otherMarriageCertificateDocumentType,
       otherMarriageCertificateDocumentOwner,
+      backwardCertificateDocumentName,
+      backwardCertificateDocumentType,
+      backwardCertificateDocumentOwner,
       groomDivorceAnnulledDecreeCertificateDocumentName,
       groomDivorceAnnulledDecreeCertificateDocumentType,
       groomDivorceAnnulledDecreeCertificateDocumentOwner,
@@ -1326,10 +1404,6 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
       witness2AadharDocumentType,
       witness2AadharDocumentOwner,
       DocumentDetails: getFormatWrapper(tenantId, [
-        {
-          groomAgeDocument,
-          brideAgeDocument,
-        },
         {
           documentName: groomAadharDocumentName,
           documentType: groomAadharDocumentType,
@@ -1453,6 +1527,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
         },
 
         {
+          documentName: backwardCertificateDocumentName,
+          documentType: backwardCertificateDocumentType,
+          documentOwner: backwardCertificateDocumentOwner,
+          fileStoreId: _.head(backwardCertificate)?.key,
+          fileURL: _.head(backwardCertificate)?.type === "pdf" ? _.head(backwardCertificate)?.pdfUrl : _.head(backwardCertificate)?.large,
+        },
+
+        {
           documentName: groomDivorceAnnulledDecreeCertificateDocumentName,
           documentType: groomDivorceAnnulledDecreeCertificateDocumentType,
           documentOwner: groomDivorceAnnulledDecreeCertificateDocumentOwner,
@@ -1530,6 +1612,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
         instituitionCertificate,
         marriageOfficerCertificate,
         otherMarriageCertificate,
+        backwardCertificate,
         groomDivorceAnnulledDecreeCertificate,
         brideDivorceAnnulledDecreeCertificate,
         groomExpirationCertificate,
@@ -2672,7 +2755,6 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
                         onDelete={() => {
                           setOtherMarriageCertificate(null);
                         }}
-                        // file={otherMarriageCertificateDocument}
                         message={otherMarriageCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                       />
                     </div>
@@ -2710,6 +2792,66 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage }) => {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                {isBackward && (
+                  <div className="col-md-6">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <h1 className="headingh1">
+                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_BELONG_TO_BACKWARD_COMMUNITY")}`}</span>{" "}
+                        </h1>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-8">
+                        <CardLabel>{`${t(`CR_UPLOAD_DOCUMENTS_TO_PROVE_BACKWARD_COMMUNITY`)}`}</CardLabel>
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectBackwardCertificate}
+                          onDelete={() => {
+                            setBackwardCertificate(null);
+                          }}
+                          message={backwardCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                      {backwardCertificate && (
+                        <div className="col-md-4">
+                          {_.head(backwardCertificate)?.type === "pdf" ? (
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(backwardCertificate)?.pdfUrl}
+                              alt="Other Certificate Pdf"
+                            />
+                          ) : (
+                            <img
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              src={_.head(backwardCertificate)?.small}
+                              alt="Other Certificate Image"
+                            />
+                          )}
+                          <a
+                            style={{ color: "blue" }}
+                            target="_blank"
+                            href={
+                              _.head(backwardCertificate)?.type === "pdf" ? _.head(backwardCertificate)?.pdfUrl : _.head(backwardCertificate)?.large
+                            }
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="row">

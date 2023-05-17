@@ -745,6 +745,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
         brideFilestoreId,
         groomFilestoreId,
         uniqueId,
+        isBackward,
       });
     }
   };
