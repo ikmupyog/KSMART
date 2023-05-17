@@ -99,51 +99,73 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
 
     });
     
+    if(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits !== null){
+      if(BusinessCategoryMenu.length > 0){
+        const businessType = Array.from(
+          new Set(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.map(type => type.businessType))
+        );      
 
-    if(BusinessCategoryMenu.length > 0){
-      const businessType = Array.from(
-        new Set(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(type => type.businessType))
-      );      
+      if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
+          let category = null;
+          category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
 
-     if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
-        let category = null;
-        category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
+          if(businessType){
+            businessType.map((bType) => {
+              let bussubtyp = null;
+              let bustype = null;
+              let res = [];
+              let att = [];
 
-        if(businessType){
-          businessType.map((bType) => {
-            let bussubtyp = null;
-            let bustype = null;
-            let res = [];
-            let att = [];
+              formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.map((unit) => {
+                if(bType === unit?.businessType){
+                  bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(businessType))[0];
+                  bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
+                }
+                if(bussubtyp===undefined && bussubtyp==="" && bussubtyp === null){
+                  bussubtyp=null;//{"i18nKey":"","code":""}
+                }
+                setFeilds([
+                  {
+                    id: unit.id,
+                    businessCategory: category?.code ? category.code : null,
+                    businessType: bustype?.code ? bustype.code : null,
+                    businessSubtype: bussubtyp?.code ? bussubtyp.code : null,active: true, unit: null, uom: null
+                  }
+                ]);
+                bussubtyp !== undefined ? res.push(bussubtyp) : null;
+              })
 
-            formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map((unit) => {
-              if(bType === unit?.businessType){
-                bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(businessType))[0];
-                bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
-              }
-              if(bussubtyp===undefined && bussubtyp==="" && bussubtyp === null){
-                bussubtyp=null;//{"i18nKey":"","code":""}
-              }
-              setFeilds([
+              setFillFields([
                 {
-                  id: unit.id,
-                  businessCategory: category?.code ? category.code : null,
-                  businessType: bustype?.code ? bustype.code : null,
-                  businessSubtype: bussubtyp?.code ? bussubtyp.code : null,active: true, unit: null, uom: null
+                  businessCategory: category,
+                  businessType: bustype,
+                  businessSubtype: res, unit: null, uom: null
                 }
               ]);
-              bussubtyp !== undefined ? res.push(bussubtyp) : null;
             })
-
-            setFillFields([
-              {
-                businessCategory: category,
-                businessType: bustype,
-                businessSubtype: res, unit: null, uom: null
-              }
-            ]);
-          })
+          }
         }
+      }
+    }
+    else{
+      if((isInitialRender)&&(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits === null))
+      {
+        setFeilds([
+          {
+            id: null,
+            businessCategory: null,
+            businessType: null,
+            businessSubtype: null,active: true, unit: null, uom: null
+          }
+        ]);
+        setFillFields([
+          {
+            businessCategory: null,
+            businessType: null,
+            businessSubtype: [], unit: null, uom: null
+          }
+        ]);
+        setIsInitialRender(false);
       }
     }
     

@@ -156,7 +156,6 @@ const getCRBirthNACAcknowledgementData = async (application, tenantInfo, t) => {
       getNACChildDetails(application, t),
       getParentsDetails(application, t),
       getAddressDetails(application, t),
-      getApplicantDetails(application, t),
     ],
   };
 };

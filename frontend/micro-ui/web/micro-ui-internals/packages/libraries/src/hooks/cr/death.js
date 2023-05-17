@@ -15,3 +15,8 @@ export const getDeathFileSourceDetails = (tenantId) => {
 export const getNacDeathFileSourceDetails = ({ params = {}, additionalProps = {} }) => {
     return useCommonMutateHook({ params, additionalProps: { ...additionalProps, url: Urls.crnacdeath.registry_download } });
 };
+
+export const updateDeathCorrectionAction = ({ params = {}, additionalProps = {} }) => {
+    return useCommonMutateHook({ params, additionalProps: { ...additionalProps, url: Urls.deathdetailsupdatedeathcorrection } });
+};
+

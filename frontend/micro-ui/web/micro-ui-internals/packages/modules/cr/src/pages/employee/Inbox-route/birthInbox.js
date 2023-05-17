@@ -40,19 +40,21 @@ const BirthInbox = () => {
   };
 
   const handleFilterChange = (filterParam) => {
+    console.log("filter params==",filterParam);
     setSearchParams({ ...searchParams, filters: filterParam });
   };
 
   const onSearch = (params = "") => {
     setSearchParams({ ...searchParams, search: params });
+    refetch();
   };
 
   let complaints = []
   let isMobile = Digit.Utils.browser.isMobile();
   // console.log("233", searchParams)
 
-  // const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
-  let { data: searchResult, isLoading, isSuccess } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
+  const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
+  // let { data: searchResult, isLoading, isSuccess,refetch } = Digit.Hooks.cr.useInbox({ tenantId,filters:{ ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} });
   // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
   // useEffect(()=>{
   //   console.log("complaintsz", complaintsz)
@@ -75,7 +77,8 @@ const BirthInbox = () => {
         <div>
           <Header>{t("ES_COMMON_INBOX")}</Header>
           <DesktopInbox
-            data={searchResult?.table}
+            // data={searchResult?.table}
+            data={searchResult}
             isLoading={Loading}
             onFilterChange={handleFilterChange}
             onSearch={onSearch}

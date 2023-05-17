@@ -117,20 +117,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 6) {
-    //     return false;
-    //   } else if (e.target.value.length < 6) {
-    //     setPostCode(e.target.value);
-    //     return false;
-    //   } else {
-    //     setPostCode(e.target.value);
-       
-    //   }
-    // }
-    if (e.target.value.trim().length >= 0) {
-      setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
-    }
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : e.target.value.replace(/[^a-zA-Z0-9]/ig, '').substring(0, 6));
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
@@ -241,13 +228,12 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
                 name="presentOutSideIndiaPostCode"
                 value={presentOutSideIndiaPostCode}
                 onChange={setSelectPostCode}
+                style={{ textTransform: "uppercase" }}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
                   pattern: "^[a-zA-Z-.0-9`' ]*$",
                   isRequired: true,
                   type: "text",
-                  max: 6,
-                  min: 6,
                   title: t("CR_INVALID_ZIP_CODE"),
                 })}
               />

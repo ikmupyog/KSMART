@@ -143,7 +143,7 @@ import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
 import useApplicationMarriageActions from "./cr/useApplicationMarriageActions";
 import useCRCommonPaymentUpdate from "./cr/useCRCommonPaymentUpdate";
-import useCorrectionApplicationDetail from "./cr/useCorrectionApplicationDetail";
+import useCorrectionApplicationDetail,{useBirthCorrectionApplicationDetail} from "./cr/useCorrectionApplicationDetail";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -277,8 +277,8 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
-import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails } from "./cr/death";
-import { getBirthFileSourceDetails, getNacBirthFileSourceDetails } from "./cr/birth";
+import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails, updateDeathCorrectionAction} from "./cr/death";
+import { getBirthFileSourceDetails, getNacBirthFileSourceDetails, updateBirthCorrectionAction } from "./cr/birth";
 import { setPaymentStatus } from "./cr/payment";
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
 
@@ -397,8 +397,11 @@ const tl = {
 };
 const cr = {
   useCorrectionApplicationDetail,
+  useBirthCorrectionApplicationDetail,
   getBirthFileSourceDetails,
   getNacBirthFileSourceDetails,
+  updateBirthCorrectionAction,
+  updateDeathCorrectionAction,
   getNacDeathFileSourceDetails,
   useBirthCorrectionAction,
   useDeathCorrectionAction,
