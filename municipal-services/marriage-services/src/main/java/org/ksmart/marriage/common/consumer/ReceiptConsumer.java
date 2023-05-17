@@ -63,7 +63,6 @@ public class ReceiptConsumer {
 
     @KafkaListener(topics = {"${kafka.topics.receipt.create}"})
     public void listenPayments(final HashMap<String, Object> record) {
-        System.out.println("Inside kafka payment listner ...................>");
         paymentUpdateService.process(record);
 //        paymentNotificationService.process(record);
     }

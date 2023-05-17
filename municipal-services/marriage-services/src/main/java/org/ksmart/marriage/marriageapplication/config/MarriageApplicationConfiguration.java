@@ -135,4 +135,8 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.demand.taxheadmastercode}")
     private String taxHeadMasterCode;
 
+    //Payment 
+    @Value("${persister.update.marriage.payment.topic}")
+    private String updateMarriagePaymentTopic;
+
 }

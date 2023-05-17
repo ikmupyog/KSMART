@@ -53,10 +53,10 @@ public class DemandService {
 
     public List<Demand> saveDemandDetails(List<Demand> demands, RequestInfo requestInfo, WorkFlowCheck wfc) {
         demands.forEach(demand -> setDemandParamsLateFee(demand, requestInfo, wfc));
-        System.out.println("hientersavedemand");
         return  enrichmentService.saveDemand(requestInfo,demands);
     }
     public void setDemandParamsLateFee(Demand demand, RequestInfo requestInfo, WorkFlowCheck wfc) {
+
         demand.setConsumerType("FEE");
         demand.setBusinessService("CR");
         ArrayList<DemandDetail> demandDetails = new ArrayList<>();
@@ -76,8 +76,7 @@ public class DemandService {
     private ModuleDetail getGLCodeRequest() {
         List<MasterDetail> masterDetails = new ArrayList<>();
         masterDetails.add(MasterDetail.builder().name(TAX_MASTER).build());
-        return ModuleDetail.builder().masterDetails(masterDetails)
-                .moduleName(MarriageConstants.BILLING_SERVICE).build();
+        return ModuleDetail.builder().masterDetails(masterDetails).moduleName(MarriageConstants.BILLING_SERVICE).build();
     }
 
     public void setGLCode(DemandDetail demandDetail, RequestInfo requestInfo) {

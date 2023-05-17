@@ -209,7 +209,6 @@ public class MarriageApplicationDetails {
 
     private String assignuser;
 
-
     @Size(max = 128)
     // @Html
     private String comment;
@@ -222,7 +221,6 @@ public class MarriageApplicationDetails {
     @Valid
     private List<MarriageDocument> MarriageDocuments ;
 
-    
     @JsonProperty("Demands")
     private List<Demand> demands;
 
@@ -230,48 +228,53 @@ public class MarriageApplicationDetails {
     private boolean wfdelayedWithinFiveYear ;
     private boolean wfdelayedAfterFiveYear ;
 
-//Jasmine 03.05.2023
+    //Jasmine 03.05.2023
 
-@JsonProperty("marriageDistrictEn")
-private String marriageDistrictEn;
+    @JsonProperty("marriageDistrictEn")
+    private String marriageDistrictEn;
 
-@JsonProperty("marriageDistrictMl")
-private String marriageDistrictMl;
+    @JsonProperty("marriageDistrictMl")
+    private String marriageDistrictMl;
 
-@JsonProperty("marriageLBtypeEn")
-private String marriageLBtypeEn;
+    @JsonProperty("marriageLBtypeEn")
+    private String marriageLBtypeEn;
 
-@JsonProperty("marriageLBtypeMl")
-private String marriageLBtypeMl;
+    @JsonProperty("marriageLBtypeMl")
+    private String marriageLBtypeMl;
 
-@JsonProperty("marriageVillageNameEn")
-private String marriageVillageNameEn;
+    @JsonProperty("marriageVillageNameEn")
+    private String marriageVillageNameEn;
 
-@JsonProperty("marriageVillageNameMl")
-private String marriageVillageNameMl;
+    @JsonProperty("marriageVillageNameMl")
+    private String marriageVillageNameMl;
 
-@JsonProperty("marriageTalukNameEn")
-private String marriageTalukNameEn;
+    @JsonProperty("marriageTalukNameEn")
+    private String marriageTalukNameEn;
 
-@JsonProperty("marriageTalukNameMl")
-private String marriageTalukNameMl;
+    @JsonProperty("marriageTalukNameMl")
+    private String marriageTalukNameMl;
 
-@JsonProperty("marriagePlaceTypenameEn")
-private String marriagePlaceTypenameEn;
+    @JsonProperty("marriagePlaceTypenameEn")
+    private String marriagePlaceTypenameEn;
 
-@JsonProperty("marriagePlaceTypenameMl")
-private String marriagePlaceTypenameMl;
+    @JsonProperty("marriagePlaceTypenameMl")
+    private String marriagePlaceTypenameMl;
 
     @JsonProperty("marriageWardCodeEn")
     private String marriageWardCodeEn;
+
     @JsonProperty("marriageWardCodeMl")
     private String marriageWardCodeMl;
+
     @JsonProperty("marriagePlaceIdEn")
     private String marriagePlaceIdEn;
+
     @JsonProperty("marriagePlaceIdMl")
     private String marriagePlaceIdMl;
+
     @JsonProperty("marriagePlaceIdSubRegiEn")
     private String marriagePlaceIdSubRegiEn;
+
     @JsonProperty("marriagePlaceIdSubRegiMl")
     private String marriagePlaceIdSubRegiMl;
 

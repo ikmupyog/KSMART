@@ -67,7 +67,7 @@ public class MarriageApplicationValidator {
                 }
                 if (dateOfMarriage == null) {
                     throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
-                            "Date of birth is required for create request.");
+                            "Date of marriage is required for create request.");
                 } else {
                         Boolean isBackward = request.getMarriageDetails().get(0).getWitnessDetails().getIsBackward();
                     validateDoM(dateOfMarriage, wfCode,applicationType,mdmsdata, wfc,isBackward);
@@ -106,13 +106,11 @@ public class MarriageApplicationValidator {
             private void validateDoM(Long dateOfMarriage, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc ,Boolean isBackward) {
                 Calendar calendar = Calendar.getInstance();
                 Long currentDate = calendar.getTimeInMillis();
-           // System.out.println("wfCode"+wfCode);
                 if (dateOfMarriage > currentDate) {
                     throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
-                            "Date of death should be less than or same as  current date.");
+                            "Date of marriage should be less than or same as  current date.");
                 } else {
                     wfc = checkValidation(mdmsData, dateOfMarriage, wfc ,isBackward);
-           //System.out.println("wfc"+wfc.getWorkflowCode());
                     if(!wfc.getWorkflowCode().equals(wfCode)) {
                         throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                                 "Workflow code from the application request is wrong.");
@@ -125,7 +123,6 @@ public class MarriageApplicationValidator {
             }
  // Validate Marriage date MDMS data
         public WorkFlowCheck checkValidation(Object mdmsData, Long dateOfMarriage, WorkFlowCheck wfc ,Boolean isBackward) {
-        // WorkFlowCheck wfc = new WorkFlowCheck();
                         Calendar calendar = Calendar.getInstance();
                         Long currentDate = calendar.getTimeInMillis();
   
@@ -148,7 +145,6 @@ public class MarriageApplicationValidator {
                                                 wfc.setAmount(Integer.parseInt(wfLists.get(n).get("amount").toString()));
                                         }
                                         wfc.setActive(Boolean.getBoolean(wfLists.get(n).get("active").toString()));
-                                        //  System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
                                 }
                         }
                         }
@@ -198,7 +194,6 @@ public class MarriageApplicationValidator {
                                                                         marriagedtls.getLbtype() + " is invalid");
                                                 }
 
-                                              //  System.out.println("marriageward" + marriagedtls.getWardCode());
                                                 if (StringUtils.isEmpty(marriagedtls.getWardCode())) {
                                                         throw new CustomException(" WARD INVALID ", "The  Ward " +
                                                                         marriagedtls.getWardCode() + " is invalid");

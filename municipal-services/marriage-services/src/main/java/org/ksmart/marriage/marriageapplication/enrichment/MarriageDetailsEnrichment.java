@@ -91,11 +91,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 if(StringUtils.isNotBlank(marriage.getWitnessDetails().getGroomUrl())){
                     marriage.getWitnessDetails().setGroomUrl(marriage.getWitnessDetails().getGroomUrl().trim().replaceAll(config.getImageURLStartPath(),""));
                 }
-
-
             }
 
-           
             setApplicationNumbers(request);
             setBrideAddressNull(request);
             setGroomAddressNull(request);
@@ -104,8 +101,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             setGroomPermanentAddress(request);
             setGroomPresentAddress(request);
 
-
-//Jasmine 07.04.2023
             GroomDetails groomDetails =marriage.getGroomDetails();
             GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
             groomDetails.setAadharno(groomDetailsEnc.getAadharno());
@@ -181,9 +176,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 String applicationType =  marriage.getApplicationtype();
                 criteria.setApplicationNo(applicationNumber);
                 criteria.setApplicationType(applicationType);
-               // String registrationNumber = marriage.getRegistrationNo();
-                //Jasmine 07.04.2023
-                //Updated on 17.04.2023
                 List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
                 if (marriagedocument!=null){
                         marriagedocument.forEach(document -> {
@@ -509,8 +501,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                 }
                             }
                             else {
-                           // System.out.println("outsideIndia-"+marriage.getBrideAddressDetails().getPresentaddressCountry());
-                           // System.out.println("outsideIndia-Province En"+marriage.getBrideAddressDetails().getPresentOutSideIndiaProvinceEn());
 
                             marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
 
@@ -746,7 +736,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceEn(null);
                     marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceMl(null);
 
-
                     marriage.getBrideAddressDetails().setVillageNamePermanent(null);
                     marriage.getBrideAddressDetails().setTownOrVillagePermanent(null);
 
@@ -779,7 +768,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                     marriage.getGroomAddressDetails().setPresentAddrVillageId(null);
 
-
                     marriage.getGroomAddressDetails().setCountryIdPresent(null);
                     marriage.getGroomAddressDetails().setStateIdPresent(null);
                     marriage.getGroomAddressDetails().setDistrictIdPresent(null);
@@ -798,13 +786,10 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     marriage.getGroomAddressDetails().setPresentOthrTalukName(null);
                     marriage.getGroomAddressDetails().setPresentOthPostOfficeEn(null);
 
-
                     marriage.getGroomAddressDetails().setTownOrVillagePresent(null);
                     marriage.getGroomAddressDetails().setVillageNamePresent(null);
 
-
                     marriage.getGroomAddressDetails().setCountryIdPresent(null);
-
                     marriage.getGroomAddressDetails().setOutSideIndiaPostCodePresent(null);
 
                     marriage.getGroomAddressDetails().setPresentOthrIndiaAdressEn(null);
@@ -840,9 +825,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     marriage.getGroomAddressDetails().setPoNoPermanent(null);
 
                     marriage.getGroomAddressDetails().setCountryIdPermanent(null);
-
                     marriage.getGroomAddressDetails().setStateIdPermanent(null);
-
                     marriage.getGroomAddressDetails().setDistrictIdPermanent(null);
 
                     marriage.getGroomAddressDetails().setLocalityEnPermanent(null);
@@ -854,10 +837,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     marriage.getGroomAddressDetails().setHouseNameNoEnPermanent(null);
                     marriage.getGroomAddressDetails().setHouseNameNoMlPermanent(null);
 
-
                     marriage.getGroomAddressDetails().setPermntOthrTalukName(null);
                     marriage.getGroomAddressDetails().setPermntOthPostOfficeEn(null);
-
 
                     marriage.getGroomAddressDetails().setPinNoPermanent(null);
 
@@ -865,7 +846,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     marriage.getGroomAddressDetails().setVillageNamePermanent(null);
 
                     marriage.getGroomAddressDetails().setCountryIdPermanent(null);
-
 
                     marriage.getGroomAddressDetails().setVillageNamePermanent(null);
                     marriage.getGroomAddressDetails().setTownOrVillagePermanent(null);
@@ -883,67 +863,16 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 } ) ;
     }
 
-        //  private void setRegistrationNumber(MarriageDetailsRequest request) {
-
-    //      RequestInfo requestInfo = request.getRequestInfo();
-    //      List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
-    //      String tenantId = marriageDetails.get(0)
-    //              .getTenantid();
-
-    //      List<String> filecodes = getIds(requestInfo,
-    //              tenantId,
-    //              config.getGetMarriageRegisNumberName(),
-    //              request.getMarriageDetails().get(0).getApplicationtype(),
-    //              "REG",
-    //              marriageDetails.size());
-    //      validateFileCodes(filecodes, marriageDetails.size());
-    //      Long currentTime = Long.valueOf(System.currentTimeMillis());
-    //      ListIterator<String> itr = filecodes.listIterator();
-    //      request.getMarriageDetails()
-    //              .forEach(marriage -> {
-    //                 // if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
-    //                      marriage.setRegistrationno(itr.next());
-    //                      marriage.setRegistrationDate(currentTime);
-    //                 // }
-    //              });
-    //  }
-
-
-//     private void setFileNumbers(MarriageDetailsRequest request) {
-
-//         RequestInfo requestInfo = request.getRequestInfo();
-//         List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
-//         String tenantId = marriageDetails.get(0)
-//                 .getTenantid();
-//         System.out.println(("request"+request));
-
-//         List<String> filecodes = getIds(requestInfo,
-//                 tenantId,
-//                 config.getMarriageFileNumberName(),
-//                 request.getMarriageDetails().get(0).getApplicationtype(),
-//                 "FILE",
-//                 marriageDetails.size());
-//         validateFileCodes(filecodes, marriageDetails.size());
-//         Long currentTime = Long.valueOf(System.currentTimeMillis());
-//         ListIterator<String> itr = filecodes.listIterator();
-//         request.getMarriageDetails()
-//                 .forEach(marriage -> {
-// //                    marriage.setFileno(itr.next());
-// //                    marriage.setFile_date(currentTime);
-//                 });
-//     }
-
     private void setApplicationNumbers(MarriageDetailsRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
         List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
-        String tenantId = marriageDetails.get(0)
-                .getTenantid();
+        String tenantId = marriageDetails.get(0).getTenantid();
         List<String> filecodes = getIds(requestInfo,
-                tenantId,
-                config.getMarriageApplNumberIdName(),
-                request.getMarriageDetails().get(0).getModuleCode(),
-                "ACK",
-                marriageDetails.size());
+                                tenantId,
+                                config.getMarriageApplNumberIdName(),
+                                request.getMarriageDetails().get(0).getModuleCode(),
+                                "ACK",
+                                marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());
 
         ListIterator<String> itr = filecodes.listIterator();
@@ -968,8 +897,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         DemandRequest request = new DemandRequest(requestInfo,demands);
         Object result = serviceRequestRepository.fetchResult(url,request);
         
-       // System.out.println("demands"+demands);
-       // System.out.println("demandresult"+result);
         DemandResponse response = null;
         try{
             response = mapper.convertValue(result,DemandResponse.class);
@@ -979,16 +906,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         }
         return response.getDemands();
     }
-//        private void setApplicationNumbers(MarriageDetailsRequest request) {
-//            Long currentTime = Long.valueOf(System.currentTimeMillis());
-//            String id = idGenerator.setIDGeneratorStill(request, MarriageConstants.FUN_MODULE_NEW,MarriageConstants.APP_NUMBER_CAPTION);
-//            request.getMarriageDetails()
-//                    .forEach(marriage -> {
-//                        marriage.setApplicationnumber(id);
-//                        marriage.
-//                    setDateofreporting(currentTime);
-//                    });
-//        }
+
     private List<String> getIds(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String fnType, int count) {
         return idGenRepository.getIdList(requestInfo, tenantId, idName, moduleCode, fnType, count);
     }

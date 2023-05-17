@@ -42,8 +42,6 @@ public class MarriageApplicationRepository {
     private final MarriageApplicationRowMapper marriageApplicationRowMapper;
     private final JdbcTemplate jdbcTemplate;
     private final MarriageDocumentRowMapper marriagedocumentRowMapper;
-   // private final MarriagePaymentRowMapper marriagePaymentRowMapper;
-
 
     @Autowired
     EncryptionDecryptionUtil encryptionDecryptionUtil;
@@ -66,18 +64,7 @@ public class MarriageApplicationRepository {
         this.marriagedocumentRowMapper = marriagedocumentRowMapper;
        // this.marriagePaymentRowMapper = marriagePaymentRowMapper;
     }
-    //Jasmine 07.05.2023
-    // public List<MarriageApplicationDetails> searchMarriagePaymentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
-    //     List<Object> preparedStmtValues = new ArrayList<>();
-    //     String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-    //     if (preparedStmtValues.size() == 0) {
-    //         throw new CustomException(ErrorCodes.NOT_FOUND.getCode(), "No result found.");
-    //     } 
-    //     else {
-    //         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagePaymentRowMapper);
-    //         return result;
-    //     }
-    // }
+
     public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
