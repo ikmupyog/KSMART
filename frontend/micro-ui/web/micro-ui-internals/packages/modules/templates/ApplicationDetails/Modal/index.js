@@ -44,7 +44,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("ADOPTIONHOME")) {
     return <AdoptionActionModal {...props} />;
   }
-  if (props?.businessService.includes("WFBORNOUTSIDE60")) {
+  if (props?.businessService.includes("BORNOUTSIDENORMAL")) {
     return <BornOutsideActionModal {...props} />;
   }
   if (props?.businessService.includes("ABANDONEDBIRTH")) {
