@@ -270,5 +270,10 @@ private String marriagePlaceTypenameMl;
     private String marriagePlaceIdEn;
     @JsonProperty("marriagePlaceIdMl")
     private String marriagePlaceIdMl;
+    @JsonProperty("marriagePlaceIdSubRegiEn")
+    private String marriagePlaceIdSubRegiEn;
+    @JsonProperty("marriagePlaceIdSubRegiMl")
+    private String marriagePlaceIdSubRegiMl;
+
 }
 

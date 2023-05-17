@@ -1127,7 +1127,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             registryDetails.getBrideAddressDetails().setStreetNameEnPermanent(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrStreetNameEn());
                             registryDetails.getBrideAddressDetails().setLocalityEnPermanent(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameEn());
                             registryDetails.getBrideAddressDetails().setPinNoPermanent(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrPincode());
-                            registryDetails.getBrideAddressDetails().setPoNoPermanent(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
+//                            registryDetails.getBrideAddressDetails().setPoNoPermanent(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
 
 
                             appendIfNotBlank(registryDetails.getBrideAddressDetails().getHouseNameNoEnPermanent(), brideAddressBuilder, true);
