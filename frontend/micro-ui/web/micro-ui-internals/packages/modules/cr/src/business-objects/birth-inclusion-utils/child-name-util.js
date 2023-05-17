@@ -22,10 +22,10 @@ export const getFilteredChildNameData = (selectedData, inclusionData) => {
 const computeInitialValue = (data) => {
   const initialValue = {
     firstNameEn: data?.firstname_en,
-    middleNameEn: data?.middlename_en,
-    lastNameEn: data?.lastname_en,
     firstNameMl: data?.firstname_ml,
+    middleNameEn: data?.middlename_en,
     middleNameMl: data?.middlename_ml,
+    lastNameEn: data?.lastname_en,
     lastNameMl: data?.lastname_ml,
   };
   return initialValue;
@@ -34,10 +34,10 @@ const computeInitialValue = (data) => {
 const computeCurrentValue = (data) => {
   const currentValue = {
     firstNameEn: data?.firstname_en,
-    middleNameEn: data?.middlename_en,
-    lastNameEn: data?.lastname_en,
     firstNameMl: data?.firstname_ml,
+    middleNameEn: data?.middlename_en,
     middleNameMl: data?.middlename_ml,
+    lastNameEn: data?.lastname_en,
     lastNameMl: data?.lastname_ml,
   };
   return currentValue;

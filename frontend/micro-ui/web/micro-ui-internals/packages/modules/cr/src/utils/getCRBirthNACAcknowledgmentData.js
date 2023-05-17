@@ -4,20 +4,19 @@ const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
 const getNACChildDetails = (application, t) => {
-  console.log(application, "application");
   application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   return {
-    title: t("CR_BIRTH_CHILD_DETAILS"),
+    title: t("Child Details"),
     values: [
       {
         title: "Date of Birth",
         value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CR_NOT_RECORDED"),
       },
       { title: "Gender", value: application?.gender ? application?.gender : t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_CHILD_AADHAAR", value: application?.childAadharNo ? application?.childAadharNo : t("CR_NOT_RECORDED") },
-      { title: "ORDER_OF_BIRTH", value: application?.nacorderofChildren ? application?.nacorderofChildren : t("CR_NOT_RECORDED") },
+      { title: "Child Aadhar", value: application?.childAadharNo ? application?.childAadharNo : t("CR_NOT_RECORDED") },
+      { title: "Order of Birth", value: application?.nacorderofChildren ? application?.nacorderofChildren : t("CR_NOT_RECORDED") },
       {
-        title: "CR_FIRST_NAME_EN",
+        title: "Child Name",
         value:
           application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
             ? application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
@@ -28,25 +27,90 @@ const getNACChildDetails = (application, t) => {
     ],
   };
 };
+// const birthPlaceHospDetails = {
+//   title: "CR_BIRTH_PLACE_DETAILS",
+//   asSectionHeader: true,
+//   values: [
+//     { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : t("CR_NOT_RECORDED") },
+//     { title: "CR_HOSPITAL_EN", value: response?.hospitalName || t("CR_NOT_RECORDED") },
+//     { title: "CR_HOSPITAL_ML", value: response?.hospitalNameMl || t("CR_NOT_RECORDED") },
+//   ],
+// };
+// const birthPlaceINSTITUTIONDetails = {
+//   title: "CR_BIRTH_PLACE_DETAILS",
+//   asSectionHeader: true,
+//   values: [
+//     { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : t("CR_NOT_RECORDED") },
+//     { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : t("CR_NOT_RECORDED") },
+//     { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : t("CR_NOT_RECORDED") },
+//   ],
+// };
+// const birthPlaceHOMEDetails = {
+//   title: "CR_BIRTH_PLACE_DETAILS",
+//   asSectionHeader: true,
+//   values: [
+//     { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : t("CR_NOT_RECORDED") },
+//     { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || t("CR_NOT_RECORDED") },
+//     { title: "CS_COMMON_POST_OFFICE", value: response?.adrsPostOffice || t("CR_NOT_RECORDED") },
+//     { title: "CS_COMMON_PIN_CODE", value: response?.adrsPincode || t("CR_NOT_RECORDED") },
+//     { title: "CR_LOCALITY_EN", value: response?.adrsLocalityNameEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_LOCALITY_ML", value: response?.adrsLocalityNameMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_STREET_NAME_EN", value: response?.adrsStreetNameEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_STREET_NAME_ML", value: response?.adrsStreetNameMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_HOUSE_NAME_EN", value: response?.adrsHouseNameEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_HOUSE_NAME_ML", value: response?.adrsHouseNameMl || t("CR_NOT_RECORDED") },
+//   ],
+// };
+// const birthPlaceVEHICLEDetails = {
+//   title: "CR_BIRTH_PLACE_DETAILS",
+//   asSectionHeader: true,
+//   values: [
+//     { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.vehicleHaltPlace || t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_FROM_EN", value: response?.vehicleFromEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_TO_EN", value: response?.vehicleToEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_FROM_ML", value: response?.vehicleFromMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_VEHICLE_TO_ML", value: response?.vehicleToMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_ADMITTED_HOSPITAL_EN", value: response?.hospitalName || t("CR_NOT_RECORDED") },
+//     { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || t("CR_NOT_RECORDED") },
+//   ],
+// };
+// const birthPlacePUBLICPLACESDetails = {
+//   title: "CR_BIRTH_PLACE_DETAILS",
+//   asSectionHeader: true,
+//   values: [
+//     { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : t("CR_NOT_RECORDED") },
+//     { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceTypeEn + " / " + response?.publicPlaceTypeMl || t("CR_NOT_RECORDED") },
+//     { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_LOCALITY_EN", value: response?.localityNameEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_LOCALITY_ML", value: response?.localityNameMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_STREET_NAME_EN", value: response?.streetNameEn || t("CR_NOT_RECORDED") },
+//     { title: "CR_STREET_NAME_ML", value: response?.streetNameMl || t("CR_NOT_RECORDED") },
+//     { title: "CR_DESCRIPTION", value: response?.publicPlaceDecpEn || t("CR_NOT_RECORDED") },
+//   ],
+// };
 const getParentsDetails = (application, t) => {
   application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   return {
-    title: "CR_PARENTS_DETAILS",
+    title: "Parents Details",
     values: [
       {
-        title: "CS_COMMON_AADHAAR",
+        title: "Mother's Aadhar",
         value: application?.ParentsDetails?.motherAadhar ? application?.ParentsDetails?.motherAadhar : t("CR_NOT_RECORDED"),
       },
       {
-        title: "CR_MOTHER_NAME_EN",
+        title: "Mother's Name",
         value: application?.ParentsDetails?.motherFirstNameEn ? application?.ParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED"),
       },
       {
-        title: "CS_COMMON_AADHAAR",
+        title: "Father's Aadhar",
         value: application?.ParentsDetails?.fatherAadhar ? application?.ParentsDetails?.fatherAadhar : t("CR_NOT_RECORDED"),
       },
       {
-        title: "CR_FATHER_NAME_EN",
+        title: "Father's Name",
         value: application?.ParentsDetails?.fatherFirstNameEn ? application?.ParentsDetails?.fatherFirstNameEn : t("CR_NOT_RECORDED"),
       },
     ],
@@ -54,49 +118,22 @@ const getParentsDetails = (application, t) => {
 };
 const getAddressDetails = (application, t) => {
   return {
-    title: "BIRTH_TIME_LINE_ADDRESS",
+    title: "Address",
     values: [
-      { title: "CS_COMMON_DISTRICT", value: application?.AddressBirthDetails?.presentInsideKeralaDistrict.name || t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_TALUK", value: application?.AddressBirthDetails?.presentInsideKeralaTaluk.name || t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_VILLAGE", value: application?.AddressBirthDetails?.presentInsideKeralaVillage.name || t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_LB_NAME", value: application?.AddressBirthDetails?.presentInsideKeralaLBName.name || t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_WARD", value: application?.AddressBirthDetails?.presentWardNo.namecmb || t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_POST_OFFICE", value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice.name || t("CR_NOT_RECORDED") },
-      { title: "CS_COMMON_PIN_CODE", value: application?.AddressBirthDetails?.presentInsideKeralaPincode || t("CR_NOT_RECORDED") },
+      { title: "District", value: application?.AddressBirthDetails?.presentInsideKeralaDistrict.name || t("CR_NOT_RECORDED") },
+      { title: "Taluk", value: application?.AddressBirthDetails?.presentInsideKeralaTaluk.name || t("CR_NOT_RECORDED") },
+      { title: "Village", value: application?.AddressBirthDetails?.presentInsideKeralaVillage.name || t("CR_NOT_RECORDED") },
+      { title: "Local Body", value: application?.AddressBirthDetails?.presentInsideKeralaLBName.name || t("CR_NOT_RECORDED") },
+      { title: "Ward", value: application?.AddressBirthDetails?.presentWardNo.namecmb || t("CR_NOT_RECORDED") },
+      { title: "Post Office", value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice.name || t("CR_NOT_RECORDED") },
+      { title: "Pin Code", value: application?.AddressBirthDetails?.presentInsideKeralaPincode || t("CR_NOT_RECORDED") },
       { title: "Locality", value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CR_NOT_RECORDED") },
-      { title: "CR_STREET_NAME_EN", value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || t("CR_NOT_RECORDED") },
+      { title: "Street Name", value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || t("CR_NOT_RECORDED") },
       { title: "House Name", value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CR_NOT_RECORDED") },
     ],
   };
 };
-const getApplicantDetails = (application, t) => {
-  application.owners = application?.nacDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
-  return {
-    title: "CR_INITIATOR_DETAILS",
-    values: [
-      {
-        title: "CS_COMMON_AADHAAR",
-        value: application?.ApplicantDetails?.initiatorAadhar ? application?.ApplicantDetails?.initiatorAadhar : t("CR_NOT_RECORDED"),
-      },
-      {
-        title: "CR_INITIATOR_NAME",
-        value: application?.ApplicantDetails?.initiatorNameEn ? application?.ApplicantDetails?.initiatorNameEn : t("CR_NOT_RECORDED"),
-      },
-      {
-        title: "CR_IS_CAREOF",
-        value: application?.ApplicantDetails?.careofapplicant ? application?.ApplicantDetails?.careofapplicant : t("CR_NOT_RECORDED"),
-      },
-      {
-        title: "CR_MOBILE_NO",
-        value: application?.ApplicantDetails?.initiatorMobile ? application?.ApplicantDetails?.initiatorMobile : t("CR_NOT_RECORDED"),
-      },
-      {
-        title: "CR_INFORMER_ADDRESS",
-        value: application?.ApplicantDetails?.initiatorAddress ? application?.ApplicantDetails?.initiatorAddress : t("CR_NOT_RECORDED"),
-      },
-    ],
-  };
-};
+
 const getCRBirthNACAcknowledgementData = async (application, tenantInfo, t) => {
   return {
     t: t,
@@ -119,7 +156,6 @@ const getCRBirthNACAcknowledgementData = async (application, tenantInfo, t) => {
       getNACChildDetails(application, t),
       getParentsDetails(application, t),
       getAddressDetails(application, t),
-      getApplicantDetails(application, t),
     ],
   };
 };

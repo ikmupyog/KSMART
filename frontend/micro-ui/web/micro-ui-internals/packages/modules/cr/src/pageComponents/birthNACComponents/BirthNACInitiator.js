@@ -64,7 +64,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [motherIdFile, setMotherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile3);
   const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
   const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
-  const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
 
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
@@ -75,6 +74,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [initiatorAddressError, setinitiatorAddressError] = useState(formData?.BirthNACInitiator?.initiatorAddress ? false : false);
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
+
   const storedAppData = null;
   const storedOwnerData = null;
   let menu = [];
@@ -250,7 +251,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }
   function setSelectinitiatorAadhar(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-    if (newValue === formData?.BirthNACParentsDetails?.motherAadhar || newValue === formData?.BirthNACParentsDetails?.fatherAadhar) {
+    if (newValue === formData?.BirthNACParentsDetails.motherAadhar && newValue === formData?.BirthNACParentsDetails.fatherAadhar) {
       setinitiatorAadhar("");
       setAadharError(true);
       setToast(true);
@@ -996,8 +997,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 initiatorMobileError ||
                 initiatorAddressError ||
                 DobMissmatchError ||
-                OrderofBirthMissmatchError ||
-                AadharError
+                OrderofBirthMissmatchError
               }
               label={
                 infomantFirstNmeEnError ||
@@ -1005,8 +1005,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 initiatorMobileError ||
                 initiatorAddressError ||
                 DobMissmatchError ||
-                OrderofBirthMissmatchError ||
-                AadharError
+                OrderofBirthMissmatchError
                   ? infomantFirstNmeEnError
                     ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                     : initiatorAadharError
@@ -1020,7 +1019,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     : OrderofBirthMissmatchError
                     ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
                     : AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    ? t(`CS_COMMON_DUPLICATE_AADHAR_NO`)
                     : setToast(false)
                   : setToast(false)
               }

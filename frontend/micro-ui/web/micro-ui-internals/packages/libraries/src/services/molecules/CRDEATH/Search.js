@@ -311,6 +311,7 @@ export const CRDeathsearch = {
           value: response?.FamilyInformationDeath?.SpouseNameEn + " / " + response?.FamilyInformationDeath?.SpouseNameML || "NA ",
         },
         { title: "CR_AADHAR", value: response?.FamilyInformationDeath?.SpouseAadhaar || "NA" },
+        { title: "CR_SPOUSE_AGE", value: response?.FamilyInformationDeath?.spouseAge || "NA" },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
           value: response?.FamilyInformationDeath?.FatherNameEn + " / " + response?.FamilyInformationDeath?.FatherNameMl || "NA",

@@ -54,8 +54,19 @@ const DeathCorrectionAcknowledgement = () => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
+
+  const gotoHome = () => {
+    history.go(-3);
+  }
+
   
-  
+  useEffect(() => {
+    window.addEventListener("popstate", gotoHome);
+    return () => {
+      window.removeEventListener("popstate", gotoHome);
+    };
+  }, []);
+ 
     if (mutationData?.isSuccess) {
       return (
         <Card>
@@ -76,6 +87,18 @@ const DeathCorrectionAcknowledgement = () => {
             //style={{ width: "100px" }}
             onClick={handleDownloadPdf}
           />
+
+{mutationData?.data?.deathCorrection[0]?.applicationStatus === "PENDINGPAYMENT" && (
+          <Link
+            to={{
+              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.deathCorrection[0].businessservice}/${mutationData.data.deathCorrection[0].applicationNumber}`,
+              state: { tenantId: mutationData.data.deathCorrection[0].tenantid },
+            }}
+          >
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>
+        )}
+
 
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />

@@ -16,6 +16,7 @@ import DFMActionModal from "./DFMActionModal";
 import BPAREGActionModal from "./BPAREGActionModal";
 import BPAActionModal from "./BPAActionModal";
 import NOCActionModal from "./NOCActionModal";
+import BirthCorrectionModal from "./BirthCorrectionModal";
 
 const ActionModal = (props) => {
   // console.log("businessService" + props?.businessService);
@@ -37,10 +38,13 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("STILLBIRTHHOSP") || props?.businessService.includes("STILLBIRTHHOME")) {
     return <StillBirthActionModal {...props} />;
   }
+  if (props?.businessService.includes("CORRECTIONBIRTH")) {
+    return <BirthCorrectionModal {...props} />;
+  }
   if (props?.businessService.includes("ADOPTIONHOME")) {
     return <AdoptionActionModal {...props} />;
   }
-  if (props?.businessService.includes("WFBORNOUTSIDE60")) {
+  if (props?.businessService.includes("BORNOUTSIDENORMAL")) {
     return <BornOutsideActionModal {...props} />;
   }
   if (props?.businessService.includes("ABANDONEDBIRTH")) {
@@ -65,14 +69,14 @@ const ActionModal = (props) => {
     return <BirthNACActionModal {...props} />;
   }
   if (
-    props?.businessService.includes("MARRIAGE45DAYS") ||
-    props?.businessService.includes("MARRIAGE5YRS") ||
-    props?.businessService.includes("45MARRIAGE") ||
-    props?.businessService.includes("MARRIAGEABOVE5YRS")
+    props?.businessService.includes("MARRIAGE45DYS") ||
+    props?.businessService.includes("MARRIAGE5YEARS") ||
+    props?.businessService.includes("MARRIAGEABOVE5YEARS") ||
+    props?.businessService.includes("MARRIAGECORRECTION")
   ) {
     return <MarriageActionModal {...props} />;
   }
-  if (props?.businessService.includes("NACDEATH")) {
+  if (props?.businessService.includes("DEATHNAC")) {
     return <DeathNACActionModal {...props} />;
   }
   if (props?.businessService.includes("NewDFM")) {

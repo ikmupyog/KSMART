@@ -302,7 +302,7 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CR_STREET_NAME_EN")} / ${t("CR_STREET_NAME_ML")}`,
-          value: `${response?.GroomAddressDetails?.presentInsideKeralaStreetNameEn} / ${response?.GroomAddressDetails?.presentInsideKeralaStreetNameMl}`,
+          value: `${response?.GroomAddressDetails?.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"} / ${response?.GroomAddressDetails?.presentInsideKeralaStreetNameMl || "CR_NOT_RECORDED"}`,
         },
         {
           title: `${t("CR_HOUSE_NAME_EN")} / ${t("CR_HOUSE_NAME_ML")}`,
@@ -687,7 +687,7 @@ export const CRSearchMarriage = {
         },
         {
           title: `${t("CR_STREET_NAME_EN")} / ${t("CR_STREET_NAME_ML")}`,
-          value: `${response?.BrideAddressDetails?.presentInsideKeralaStreetNameEn} / ${response?.BrideAddressDetails?.presentInsideKeralaStreetNameMl}`,
+          value: `${response?.BrideAddressDetails?.presentInsideKeralaStreetNameE0n || "CR_NOT_RECORDED"} / ${response?.BrideAddressDetails?.presentInsideKeralaStreetNameMl || "CR_NOT_RECORDED"}`,
         },
         {
           title: `${t("CR_HOUSE_NAME_EN")} / ${t("CR_HOUSE_NAME_ML")}`,
@@ -977,7 +977,7 @@ export const CRSearchMarriage = {
       title: "CR_MARRIAGE_DOCUMENTS",
       tenentId: tenantId,
       documents: true,
-      values: response?.MarriageDocuments.map((doc) => doc?.fileStoreId),
+      values: [...response?.MarriageDocuments.map((doc) => doc?.fileStoreId), response?.WitnessDetails?.groomFilestoreId,response?.WitnessDetails?.brideFilestoreId],
     };
 
     //Groom groom GROOM

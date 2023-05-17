@@ -36,6 +36,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
+  // console.log(locale);
   let validation = {};
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -302,7 +304,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
     // { enabled: !action?.isTerminateState }
   );
-
   // const operatorward = [];
   // const appward = [];
   // operatorwardtemp?.map((ob) => {
@@ -646,10 +647,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-      console.log(value);
-      let time = value;
-      let timeParts = time.split(":");
-      console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
+      // console.log(value);
+      // let time = value;
+      // let timeParts = time.split(":");
+      // console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
       // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
       // // Usage
       // const milliSecTime = milliseconds(24, 36,0);
@@ -1264,7 +1265,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck != ".") {
-        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 9) {
           validFlag = false;
           setBirthWeightError(true);
           setToast(true);
@@ -1442,7 +1443,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
         vehicleType,
         vehicleHaltPlace: vehicleHaltPlace.trim(),
-        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleRegistrationNo: (vehicleRegistrationNo.toUpperCase()).trim(),
         vehicleFromEn: vehicleFromEn.trim(),
         vehicleToEn: vehicleToEn.trim(),
         vehicleFromMl: vehicleFromMl.trim(),
@@ -1456,7 +1457,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
         uuid, DifferenceInTime, isWorkflow, isPayment, Amount, NACFile, uploadedFile, UploadNACHIde,
-        proceedNoRDO, regNoNAC, docPreview
+        proceedNoRDO: (proceedNoRDO.toUpperCase()).trim(),
+        regNoNAC: (regNoNAC.toUpperCase()).trim(), docPreview
       });
     }
   };
@@ -1608,6 +1610,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
+                      style={{ textTransform: "uppercase" }}
                       placeholder={`${t("CR_RDO_PROCEED_NO")}`}
                       {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
                     />
@@ -1623,6 +1626,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       value={regNoNAC}
                       onChange={setSelectregNoNAC}
                       disable={isDisableEdit}
+                      style={{ textTransform: "uppercase" }}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
                       placeholder={`${t("CR_NAC_REG_NO")}`}
@@ -2000,7 +2004,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={ locale === "en_IN" ?  "name" : "namelocal"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [], "name", t)}
                   selected={medicalAttensionSub}
@@ -2046,7 +2050,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={ locale === "en_IN" ?  "name" : "namelocal"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [], "name", t)}
                   selected={deliveryMethods}

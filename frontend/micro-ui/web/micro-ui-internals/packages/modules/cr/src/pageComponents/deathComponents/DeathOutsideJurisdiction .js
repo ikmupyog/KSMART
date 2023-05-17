@@ -32,6 +32,7 @@ const DeathOutsideJurisdiction = ({
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const [FilterDIstrict, setFilterDIstrict] = useState();
   const [isDisableStatus, setDisableStatus] = useState(true);
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
@@ -101,6 +102,8 @@ const DeathOutsideJurisdiction = ({
   }
   function setSelectDeathPlaceState(value) {
     SelectDeathPlaceState(value);
+    setFilterDIstrict(null);
+    setFilterDIstrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value.code));
   }
   function setSelectDeathPlaceDistrict(value) {
     SelectDeathPlaceDistrict(value);
@@ -274,7 +277,7 @@ const DeathOutsideJurisdiction = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbDistrict}
+                option={FilterDIstrict}
                 selected={DeathPlaceDistrict}
                 select={setSelectDeathPlaceDistrict}
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}

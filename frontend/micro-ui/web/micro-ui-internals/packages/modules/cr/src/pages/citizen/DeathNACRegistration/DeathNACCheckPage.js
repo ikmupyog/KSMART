@@ -11,7 +11,7 @@ import {
   BackButton,
   Accordion,
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -71,6 +71,15 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
     DeathNACInitiator,
 
   } = value;
+  const uploadedImages = [
+    DeathNACInitiator.uploadedFile,
+    DeathNACInitiator.uploadedFile1,
+    DeathNACInitiator.uploadedFile2,
+    DeathNACInitiator.uploadedFile3,
+    DeathNACInitiator.uploadedFile4,
+    DeathNACInitiator.uploadedFile5,
+    DeathNACInitiator.uploadedFile6,
+  ]
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
@@ -86,6 +95,23 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
+  useEffect(() => {
+    if (uploadedImages?.length > 0) {
+      fetchImage();
+    }
+  }, []);
+  const [imagesThumbs, setImagesThumbs] = useState(null);
+  const [imageZoom, setImageZoom] = useState(null);
+
+  const fetchImage = async () => {
+    setImagesThumbs(null);
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    setImagesThumbs(newThumbnails);
+  };
 
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
@@ -201,7 +227,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   )}
                   {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
                     <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    :{" "} {t(DeathNACDetails.publicPlaceType.name ? DeathNACDetails.publicPlaceType.namelocal : "CR_NOT_RECORDED")} 
+                    :{" "} {t(DeathNACDetails.publicPlaceType.name ? DeathNACDetails.publicPlaceType.name : "CR_NOT_RECORDED")} 
                     </CardText>
                   )}
                   </div>
@@ -278,7 +304,9 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black"}}>
                       :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn)}
+                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) + 
+                        "/" +
+                        (DeathNACDetails.DeathPlaceHomehoueNameMl) }
                       </CardText>
                     </div>
                     <div className="col-md-6">
@@ -1411,6 +1439,67 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
+        <Accordion
+          expanded={false}
+          title={t("CR_DOCUMENTS")}
+          content={
+            <StatusTable>
+              {uploadedImages.length > 0 && (
+                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                  <div className="col-md-12">
+                    <div className="col-md-12">
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {uploadedImages.length > 0 && (
+                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                  <div
+                    className="col-md-12"
+                    style={{
+                      display: "flex",
+                      marginLeft: "15px",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {imagesThumbs &&
+                      imagesThumbs.map((thumbnail, index) => {
+                        return (
+                          <div key={index}>
+                            {thumbnail.type == "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                  height={120}
+                                  data={thumbnail.pdfUrl}
+                                  alt={`upload-thumbnails-${index}`}
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                height={120}
+                                src={thumbnail.small}
+                                alt={`upload-thumbnails-${index}`}
+                                onClick={() => setImageZoom(thumbnail.large)}
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+            </StatusTable>
+          }
+        />
+        {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
     </React.Fragment>

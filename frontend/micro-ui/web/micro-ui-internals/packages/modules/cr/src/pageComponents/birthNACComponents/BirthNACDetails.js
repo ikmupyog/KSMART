@@ -716,7 +716,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           }
         }
       }
-      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn.trim() === "" || adrsLocalityNameEn.trim() === undefined) {
         validFlag = false;
         setAdsHomeLocalityNameEnError(true);
         setToast(true);
@@ -1150,7 +1150,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_DATE_OF_BIRTH_TIME")}
                   <span className="mandatorycss">*</span>
@@ -1174,7 +1174,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                   disable={isDisableEdit}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_GENDER")}`}
                   <span className="mandatorycss">*</span>
@@ -1228,7 +1228,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_PLACE_OF_BIRTH")}
                   <span className="mandatorycss">*</span>

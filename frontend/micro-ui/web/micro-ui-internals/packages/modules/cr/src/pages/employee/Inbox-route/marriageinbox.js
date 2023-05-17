@@ -44,37 +44,37 @@ const MarriageInbox = () => {
     setSearchParams({ ...searchParams, filters: filterParam });
   };
 
-  // const onSuccess = (successData) =>{
-  //   console.log("successs====data",successData);
-  //   setSearchResult(successData?.MarriageDetails);
-  // }
+  const onSuccess = (successData) =>{
+    console.log("successs====data",successData);
+    setSearchResult(successData?.MarriageDetails);
+  }
 
   const onSearch = (params = "") => {
-    console.log("params for seRCH",params);
-    setSearchParams({ ...searchParams,search: {applicationNo: params.applicationNumber}});
-    // mutation.mutate({},{onSuccess});
-    refetch();
+    console.log("params for seRCH", params);
+    setSearchParams({ ...searchParams, search: { applicationNo: params.applicationNumber } });
+    mutation.mutate({},{onSuccess});
+    // refetch();
   };
 
   let complaints = []
   let isMobile = Digit.Utils.browser.isMobile();
   // console.log("233", searchParams)
 
-  // const mutation = Digit.Hooks.cr.useMarriageApplicationSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} })
-//   sortBy: 'dateOfBirth', sortOrder: 'DESC' 
+  const mutation = Digit.Hooks.cr.useMarriageApplicationSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} })
+  //   sortBy: 'dateOfBirth', sortOrder: 'DESC' 
   // let { data: complaintsz } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize });
   // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
   // console.log("complaintsz", complaintsz)
 
-  let { data: searchResults, isLoading, isSuccess,refetch } = Digit.Hooks.cr.useInbox({ tenantId, ...searchParams?.search, ...searchParams?.filters,businessServiceCode:["MARRIAGECORRECTION"], offset: pageOffset, limit: pageSize });
+  // let { data: searchResults, isLoading, isSuccess, refetch } = Digit.Hooks.cr.useInbox({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize } });
 
-  // let Loading = mutation?.isLoading;
-  let Loading = isLoading;
+  let Loading = mutation?.isLoading;
+  // let Loading = isLoading;
 
 
-  // useEffect(()=>{
-  //   mutation.mutate({},{onSuccess});
-  // },[])
+  useEffect(()=>{
+    mutation.mutate({},{onSuccess});
+  },[])
 
   if (complaints?.length !== null) {
     if (isMobile) {
@@ -86,7 +86,7 @@ const MarriageInbox = () => {
         <div>
           <Header>{t("ES_COMMON_INBOX")}</Header>
           <DesktopInbox
-            data={searchResults}
+            data={searchResult}
             isLoading={Loading}
             onFilterChange={handleFilterChange}
             onSearch={onSearch}

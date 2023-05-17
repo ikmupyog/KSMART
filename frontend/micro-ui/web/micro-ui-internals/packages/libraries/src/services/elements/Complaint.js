@@ -15,7 +15,8 @@ export const Complaint = {
     mobileNumber,
     name,
     deptCode,
-    address
+    address,
+    assignes
   }) => {
 
     const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -53,6 +54,7 @@ export const Complaint = {
       workflow: {
         action: "APPLY",
         verificationDocuments: uploadedImages,
+        assignes: assignes
       },
     };
 

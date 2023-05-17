@@ -18,7 +18,9 @@ import CrCitizenFlowApp from "./BirthRegistration";
 import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import DeathCorrectionSummary from "../../pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionSummary";
 import DeathNacCertificateSearch from "./DeathNacCertificate";
-
+import ApplicationMarriageDetails from "../employee/ApplicationMarriageDetails";
+import ApplicationDeathNACDetails from "../employee/ApplicationDeathNACDetails";
+import EmployeeApplicationDeathDetails from "../employee/ApplicationDeathDetails";
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
   const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
@@ -44,7 +46,7 @@ const App = () => {
 
   const CRMarriageCorrection = Digit?.ComponentRegistryService?.getComponent("CRMarriageCorrection");
   // const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
- 
+
   const MarriageCorrectionSummary = Digit?.ComponentRegistryService?.getComponent("MarriageCorrectionSummary");
   const CRMarriageCorrectionLoadPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionLoadPage');
   const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
@@ -55,7 +57,7 @@ const App = () => {
   const BirthInclusionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('BirthInclusionAcknowledgement');
   const BirthInclusionSummary = Digit?.ComponentRegistryService?.getComponent('BirthInclusionSummary');
   const MarriageCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent("MarriageCorrectionAcknowledgement");
-  
+
 
   React.useEffect(() => {
     setFlag(false);
@@ -78,9 +80,9 @@ const App = () => {
     <span className={"cr-citizen"}>
       <Switch>
         <AppContainer>
-        <PrivateRoute path={`${path}/marriage-correction-summary`} component={MarriageCorrectionSummary} />
-        <PrivateRoute path={`${path}/birth-inclusion-summary`} component={BirthInclusionSummary} />
-        <PrivateRoute path={`${path}/death-correction-summary`} component={DeathCorrectionSummary} />
+          <PrivateRoute path={`${path}/marriage-correction-summary`} component={MarriageCorrectionSummary} />
+          <PrivateRoute path={`${path}/birth-inclusion-summary`} component={BirthInclusionSummary} />
+          <PrivateRoute path={`${path}/death-correction-summary`} component={DeathCorrectionSummary} />
           <PrivateRoute path={`${path}/marriage-correction-acknowledgement`} component={MarriageCorrectionAcknowledgement} />
           <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
           <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
@@ -110,6 +112,9 @@ const App = () => {
           <PrivateRoute parentRoute={path} path={`${path}/nac-birth-certificate`} component={() => <BirthNacCertificateSearch parentUrl={path} />} />
           <PrivateRoute parentRoute={path} path={`${path}/death-correction-edit`} component={CRDeathCorrectionEditPage} />
           <PrivateRoute parentRoute={path} path={`${path}/nac-death-certificate`} component={() => <DeathNacCertificateSearch parentUrl={path} />} />
+          <PrivateRoute path={`${path}/my-application-marriage/:id`} component={() => <ApplicationMarriageDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/my-application-death-nac/:id`} component={() => <ApplicationDeathNACDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/my-application-death/:id`} component={() => <EmployeeApplicationDeathDetails parentRoute={path} />} />
         </AppContainer>
       </Switch>
     </span>
