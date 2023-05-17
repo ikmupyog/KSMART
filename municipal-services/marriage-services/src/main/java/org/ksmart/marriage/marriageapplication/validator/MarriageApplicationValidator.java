@@ -69,7 +69,8 @@ public class MarriageApplicationValidator {
                     throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                             "Date of birth is required for create request.");
                 } else {
-                    validateDoM(dateOfMarriage, wfCode,applicationType,mdmsdata, wfc);
+                        Boolean isBackward = request.getMarriageDetails().get(0).getWitnessDetails().getIsBackward();
+                    validateDoM(dateOfMarriage, wfCode,applicationType,mdmsdata, wfc,isBackward);
                 }
                 if (marriageApplication!=null){
                         marriageApplication.forEach(marriagedtls -> {
@@ -102,7 +103,7 @@ public class MarriageApplicationValidator {
                     return (int) Math.round(diffDays);
                 }
         //Jasmine -  Date of Marriage 11.04.2023
-            private void validateDoM(Long dateOfMarriage, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc) {
+            private void validateDoM(Long dateOfMarriage, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc ,Boolean isBackward) {
                 Calendar calendar = Calendar.getInstance();
                 Long currentDate = calendar.getTimeInMillis();
            // System.out.println("wfCode"+wfCode);
@@ -110,7 +111,7 @@ public class MarriageApplicationValidator {
                     throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                             "Date of death should be less than or same as  current date.");
                 } else {
-                    wfc = checkValidation(mdmsData, dateOfMarriage, wfc);
+                    wfc = checkValidation(mdmsData, dateOfMarriage, wfc ,isBackward);
            //System.out.println("wfc"+wfc.getWorkflowCode());
                     if(!wfc.getWorkflowCode().equals(wfCode)) {
                         throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
@@ -123,13 +124,12 @@ public class MarriageApplicationValidator {
                 }
             }
  // Validate Marriage date MDMS data
-        public WorkFlowCheck checkValidation(Object mdmsData, Long dateOfMarriage, WorkFlowCheck wfc) {
+        public WorkFlowCheck checkValidation(Object mdmsData, Long dateOfMarriage, WorkFlowCheck wfc ,Boolean isBackward) {
         // WorkFlowCheck wfc = new WorkFlowCheck();
                         Calendar calendar = Calendar.getInstance();
                         Long currentDate = calendar.getTimeInMillis();
   
                         List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_NEW_WF_JSONPATH + "[*]");
-                      // System.out.println("mdmswfcode"+wfLists);
                         for (int n = 0; n < wfLists.size(); n++) {
                         String startStr = wfLists.get(n).get("startdateperiod").toString();
                         String endStr = wfLists.get(n).get("enddateperiod").toString();
@@ -137,12 +137,16 @@ public class MarriageApplicationValidator {
                          Long end = Long.parseLong(endStr);
                          if (end > 0L) {
                                 Long comp = currentDate - dateOfMarriage;
-                                System.out.println("datedifference"+comp);
+                                 System.out.println("datedifference"+wfLists);
                                 if (comp > start && comp <= end){
                                         wfc.setApplicationType(wfLists.get(n).get("ApplicationType").toString());
                                         wfc.setWorkflowCode(wfLists.get(n).get("WorkflowCode").toString());
                                         wfc.setPayment(Boolean.getBoolean(wfLists.get(n).get("payment").toString()));
-                                        wfc.setAmount(Integer.parseInt(wfLists.get(n).get("amount").toString()));
+                                        if (isBackward){
+                                                wfc.setAmount(Integer.parseInt(wfLists.get(n).get("scstamount").toString()));
+                                        }else{
+                                                wfc.setAmount(Integer.parseInt(wfLists.get(n).get("amount").toString()));
+                                        }
                                         wfc.setActive(Boolean.getBoolean(wfLists.get(n).get("active").toString()));
                                         //  System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
                                 }

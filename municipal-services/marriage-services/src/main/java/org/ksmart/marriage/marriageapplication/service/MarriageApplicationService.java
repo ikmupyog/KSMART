@@ -68,7 +68,6 @@ public class MarriageApplicationService {
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
-        System.out.println("Statusb4workflow"+ request.getMarriageDetails().get(0).getStatus());
         if (request.getMarriageDetails().get(0).getIsWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }
@@ -77,7 +76,6 @@ public class MarriageApplicationService {
          //   System.out.println("ConstStatus"+MarriageConstants.STATUS_FOR_PAYMENT);
           //  if(wfc.getPayment()!= null){
                 if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
-                 //   System.out.println("hienterpayment");
                     List<Demand> demands = new ArrayList<>();
                     Demand demand = new Demand();
                     demand.setTenantId(marriage.getTenantid());
@@ -121,16 +119,6 @@ public class MarriageApplicationService {
             workflowIntegrator.callWorkFlow(request);
         }
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
-        // request.getMarriageDetails().forEach(marriage->{
-        //     if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
-        //         List<Demand> demands = new ArrayList<>();
-        //         Demand demand = new Demand();
-        //         demand.setTenantId(marriage.getTenantid());
-        //         demand.setConsumerCode(marriage.getApplicationNumber());
-        //         demands.add(demand);
-        //         marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
-        //     }
-        // }); 
         return request.getMarriageDetails();
 
     }
