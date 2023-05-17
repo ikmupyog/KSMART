@@ -487,16 +487,16 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         setMarriageTenantid(currentLB[0]);
         setfilterLBs(
-          cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0].city.distCodeStr && cmbLB.city.lbtypecode === currentLB[0].city.lbtypecode)
+          cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0]?.city?.distCodeStr && cmbLB?.city?.lbtypecode === currentLB[0]?.city?.lbtypecode)
         );
-        const currentDistrict = stateDist.filter((dist) => dist.code === currentLB[0].city.distCodeStr);
+        const currentDistrict = stateDist.filter((dist) => dist?.code === currentLB[0]?.city?.distCodeStr);
         setMarriageDistrictid(currentDistrict[0]);
         districtid = currentDistrict[0].districtid;
-        cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+        cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk?.distId === districtid);
         setLbsTalukvalue(cmbFilterTaluk);
-        cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+        cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage?.distId === districtid);
         setLbsVillagevalue(cmbFilterVillage);
-        const currentLBType = filteredLBType?.filter((LBType) => LBType.code === currentLB[0].city.lbtypecode);
+        const currentLBType = filteredLBType?.filter((LBType) => LBType?.code === currentLB[0]?.city?.lbtypecode);
         setMarriageLBtype(currentLBType[0]);
       }
     }
@@ -1239,7 +1239,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         <Dropdown
                           t={t}
                           type={"text"}
-                          optionKey={marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? "officeLocal" : "nameLocal"}
+                          optionKey={marriagePlacetype?.code === "SUB_REGISTRAR_OFFICE" ? "officeLocal" : "nameLocal"}
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidMl}
                           // select={setSelectPlaceidMl}
