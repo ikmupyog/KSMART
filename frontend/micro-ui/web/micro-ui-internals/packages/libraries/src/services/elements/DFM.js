@@ -43,16 +43,17 @@ export const DFMService = {
       params: { tenantId, moduleId },
       auth: true,
     }),
-  submodulesearch: (details) =>
+  submodulesearch: ({tenantId,majorFunctionId}) =>
     Request({
       url: Urls.dfm.submodulesearch,
       useCache: false,
       setTimeParam: false,
       userService: true,
       method: "POST",
-      params: details,
+      params: {tenantId,majorFunctionId},
       auth: true,
     }),
+ 
 
   // search_bill: ({ tenantId, filters }) =>
   //   Request({
@@ -159,6 +160,17 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
+    updatesubfunct: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.updatesubfunct,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
   updatemajor: (details, ) =>
     Request({
       url: Urls.dfm.updatemajor,
@@ -168,6 +180,17 @@ export const DFMService = {
       userService: true,
       method: "POST",
       params: {  },
+      auth: true,
+    }),
+    deleteSubFunct: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.deleteSubFunct,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
       auth: true,
     }),
   deleteModule: (details, tenantId) =>

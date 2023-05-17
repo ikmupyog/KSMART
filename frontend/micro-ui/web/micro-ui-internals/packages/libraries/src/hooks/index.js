@@ -32,8 +32,10 @@ import useApplicationModule from "./dfm/useApplicationModule";
 import useCreateModule from "./dfm/useCreateModule";
 import useCreateSubModule from "./dfm/useCreateSubModule";
 import useUpdateModule from "./dfm/useUpdateModule";
+import useUpdateSubFunct from "./dfm/useUpdateSubFunct";
 import useDeleteModule from "./dfm/useDeleteModule";
 import useDeleteMajorFunc from "./dfm/useDeleteMajorFunc";
+import useDeleteSubFunct from "./dfm/useDeleteSubFunct";
 import useUpdateMajorFunc from "./dfm/useUpdateMajorFunc";
 import useSearchmajorFunction from "./dfm/useSearchmajorFunction";
 import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
@@ -466,7 +468,7 @@ const cr = {
   useCRDeathSearchApplication,
   useCRApplicationDetails,
   useCRApplicationDeathDetails,
-  setPaymentStatus
+  setPaymentStatus,
 };
 const dfm = {
   useTenants: useTenantsDFM,
@@ -490,8 +492,10 @@ const dfm = {
   useUpdateModule,
   useDeleteModule,
   useDeleteMajorFunc,
+  useDeleteSubFunct,
   useUpdateMajorFunc,
-  useMajorFunctionAdd
+  useMajorFunctionAdd,
+  useUpdateSubFunct,
 };
 const receipts = {
   useReceiptsMDMS,
