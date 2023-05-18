@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
-import { convertToMarriageRegistration } from "../../../utils/marriageIndex";
+import { convertToEditMarriageRegistration, convertToMarriageRegistration } from "../../../utils/marriageIndex";
 import getPDFData from "../../../utils/getCRMarriageAcknowledgementData";
 import { useHistory } from "react-router-dom";
 
@@ -77,7 +77,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : convertToEditBirthRegistration(data);
+          let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : convertToEditMarriageRegistration(data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           // if (!isEditMarriage) {
           //   mutation.mutate(formdata, {

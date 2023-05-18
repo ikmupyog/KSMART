@@ -25,35 +25,36 @@ const convertEpochToDate = (dateEpoch) => {
   }
 };
 
-
-const formatBirthCorrectionDetails = (correctionData,t) =>{
-  if(correctionData?.length > 0 ){
-     const formattedCorrectionData = correctionData?.map((item)=>{
+const formatCorrectionDetails = (correctionData, t) => {
+  if (correctionData?.length > 0) {
+    const formattedCorrectionData = correctionData?.map((item) => {
       const correctionValues = item.correctionFieldValue;
       const correctionTitle = item.correctionFieldName;
-      const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue,t)
+      const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue, t);
+      const documentIds = getDocumentIds(item.CorrectionDocument);
 
-      return (
-        {
-          title: t(correctionTitle),
-          asSectionHeader: true,
-          fieldValues: correctionFieldValues,
-        }
-      )
-     })
-    
-     return formattedCorrectionData;
-}
-}
+      return {
+        title: t(correctionTitle),
+        asSectionHeader: true,
+        fieldValues: correctionFieldValues,
+        documentIds,
+      };
+    });
+    return formattedCorrectionData;
+  }
+};
 
+const getDocumentIds = (documentData) => {
+  const documentIds = documentData?.map((item) => item.fileStoreId);
+  return documentIds;
+};
 
-const getCorrectionFieldValues = (correctionFieldValues,t) =>{
-  const formattedCorrectionvalues =  correctionFieldValues?.map((item)=>{
-   
-     return ({ title: t(item.column), oldValue: item.oldValue ,newValue: item.newValue  })
-  })
+const getCorrectionFieldValues = (correctionFieldValues, t) => {
+  const formattedCorrectionvalues = correctionFieldValues?.map((item) => {
+    return { title: t(item.column), oldValue: item.oldValue, newValue: item.newValue };
+  });
   return formattedCorrectionvalues;
-}
+};
 
 export const CRCorrectionSearch = {
   all: async (tenantId, filters = {}) => {
@@ -61,8 +62,8 @@ export const CRCorrectionSearch = {
     return response;
   },
   birthApplication: async (tenantId, filters = {}) => {
-    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters});
-   
+    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters });
+
     return response?.CorrectionApplication?.[0];
   },
   deathApplication: async (tenantId, filters = {}) => {
@@ -70,9 +71,9 @@ export const CRCorrectionSearch = {
     return response;
   },
   marriageApplication: async (tenantId, filters = {}) => {
-    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters});
-    
-    return response?.MarriageDetails[0];
+    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters });
+
+    return response?.marriageCorrectionDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
@@ -81,29 +82,27 @@ export const CRCorrectionSearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, correctionType) => {
-    const filter = { applicationNumber };
+    const filter = correctionType === "marriage" ? { applicationNo: applicationNumber } : { applicationNumber };
     let response = [];
-    if(correctionType === "birth"){
-     response = await CRCorrectionSearch.birthApplication(tenantId, filter);
-    } else if(correctionType === "death"){
-      response = await CRCorrectionSearch.deathApplication(tenantId, filter);
-    } else if(correctionType === "marriage") {
+    if (correctionType === "birth") {
       response = await CRCorrectionSearch.birthApplication(tenantId, filter);
+    } else if (correctionType === "death") {
+      response = await CRCorrectionSearch.deathApplication(tenantId, filter);
+    } else if (correctionType === "marriage") {
+      response = await CRCorrectionSearch.marriageApplication(tenantId, filter);
     }
 
-    
     let numOfApplications = [];
-    
-    let employeeResponse = [];
 
-    const birthCorrectionDetails =  await formatBirthCorrectionDetails(response?.CorrectionField,t);
-  
+    let correctionDetails = [];
+    correctionDetails = await formatCorrectionDetails(response?.CorrectionField, t);
+
     return {
       tenantId: response.tenantId,
       // applicationDetails: employeeResponse,
-      applicationDetails: birthCorrectionDetails,
+      applicationDetails: correctionDetails,
       // additionalDetails: response?.additionalDetails,
-      applicationData: response,  
+      applicationData: response,
       numOfApplications: numOfApplications,
     };
   },
