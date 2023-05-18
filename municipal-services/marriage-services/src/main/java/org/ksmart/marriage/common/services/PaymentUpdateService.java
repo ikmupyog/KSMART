@@ -1,5 +1,6 @@
 package org.ksmart.marriage.common.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
@@ -93,6 +94,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 	public void process(HashMap<String, Object> record) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
+			System.out.println(" payment records --------------:"+new Gson().toJson(record));
 			PaymentRequest paymentRequest = mapper.convertValue(record, PaymentRequest.class);
 			RequestInfo requestInfo = paymentRequest.getRequestInfo();
 			List<PaymentDetail> paymentDetails = paymentRequest.getPayment().getPaymentDetails();
@@ -110,9 +112,9 @@ public class PaymentUpdateService implements BaseEnrichment {
 			}
 			MarriageDetailsRequest updateRequest = MarriageDetailsRequest.builder().requestInfo(requestInfo)
 												   .marriageDetails(marriage).build();
-			System.out.println(" payment detail updateRequest before calling workflow --------------:"+updateRequest);
+			System.out.println(" payment detail updateRequest before calling workflow --------------:"+new Gson().toJson(updateRequest));
 			wfIntegrator.callWorkFlow(updateRequest);
-			System.out.println(" payment detail updateRequest after calling workflow ---------------:"+updateRequest);
+			System.out.println(" payment detail updateRequest after calling workflow ---------------:"+new Gson().toJson(updateRequest));
 			User userInfo = requestInfo.getUserInfo();
 			AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 			
