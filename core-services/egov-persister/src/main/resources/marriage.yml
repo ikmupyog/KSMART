@@ -682,7 +682,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileStoreId
 
-            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentlink
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileURL
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageId
 
