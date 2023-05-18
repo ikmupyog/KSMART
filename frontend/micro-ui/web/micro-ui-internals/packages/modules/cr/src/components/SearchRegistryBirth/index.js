@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { SearchForm, Table, Card, Loader } from "@egovernments/digit-ui-react-components";
 import { convertEpochToDateDMY } from "../../utils";
@@ -80,51 +80,34 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
   const columns = useMemo(
     () => [
       {
-        Header: t("CR_RGISTRATION_NUMBER"),
-        accessor: "birthApplicationNo",
-        disableSortBy: true,
-        Cell: ({ row }) => {
-          return (
-            <div>
-              <span className="link">
-                {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
-                    {row.original.deathApplicationNo}
-                  </Link> */}
-                {row.original.registration_no}
-              </span>
-            </div>
-          );
-        },
-      },
-      {
         Header: t("CR_COMMON_CHILD_NAME"),
         disableSortBy: true,
         accessor: (row) => GetCell(row?.fullName ? row?.fullName : "-"),
       },
-      // {
-      //   Header: t("CR_COMMON_COL_APP_DATE"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      // },
       {
         Header: t("CR_COMMON_COL_DOB"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : "-"),
       },
-      // {
-      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-      // },
+            {
+        Header: t("CR_COMMON_GENDER"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.gender || "-"),
+      },
+            {
+        Header: t("CR_COMMON_FATHER_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row?.registerBirthFather?.firstname_en || "-"),
+      },
       {
         Header: t("CR_COMMON_MOTHER_NAME"),
         disableSortBy: true,
         accessor: (row) => GetCell(row?.registerBirthMother?.firstname_en || "-"),
       },
       {
-        Header: t("CR_COMMON_GENDER"),
+        Header: t("CR_REGISTRATION_NUMBER"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.gender || "-"),
+        accessor: (row) => GetCell(row?.registration_no || "-"),
       },
       {
         Header: t("Download Certificate"),
@@ -150,22 +133,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
             </div>
           );
         }
-      },
-      // {
-      //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.tradeName || ""),
-      // },
-      // {
-      //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-      //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
-      //   disableSortBy: true,
-      // },
-      // {
-      //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
-      //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-      //   disableSortBy: true,
-      // }
+      }
     ],
     []
   );
