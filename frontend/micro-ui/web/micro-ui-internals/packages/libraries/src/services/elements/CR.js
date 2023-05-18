@@ -163,6 +163,17 @@ export const CRService = {
       params: {},
       auth: true,
     }),
+    deathCorrectionSearch: (tenantId,details) =>
+    Request({
+      url: Urls.crcorrection.birth_correction_search,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
     birthCorrectionUpdate: (details,tenantId) =>
     Request({
       url: Urls.crcorrection.birth_correction_update,
