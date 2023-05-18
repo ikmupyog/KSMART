@@ -58,7 +58,7 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.updateDeathCorrectionAction({ params: { tenantId } });
+  } = Digit.Hooks.cr.updateDeathCorrectionAction(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);

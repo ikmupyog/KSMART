@@ -116,7 +116,7 @@ export const CRService = {
     })},
     CRDeathCorrectionSearch: ({ tenantId, filters }) =>
     Request({
-      url: Urls.crcorrection.birth_correction_search, 
+      url: Urls.crcorrection.death_correction_search, 
       useCache: false,
       method: "POST",
       auth: true,
@@ -166,6 +166,18 @@ export const CRService = {
     birthCorrectionUpdate: (details,tenantId) =>
     Request({
       url: Urls.crcorrection.birth_correction_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+
+    deathCorrectionUpdate: (details,tenantId) =>
+    Request({
+      url: Urls.crcorrection.death_correction_update,
       data: details,
       useCache: false,
       setTimeParam: false,
