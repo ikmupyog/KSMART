@@ -49,7 +49,7 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.updateMarriageCorrectionAction(tenantId);
 
   const closeModal = () => {
     setSelectedAction(null);
@@ -122,8 +122,8 @@ const CorrectionApplicationDetails = (props) => {
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
-    moduleCode: "MARRIAGECORRECTION",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    moduleCode: "CORRECTIONMARRIAGE",
+    role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "CHIEF_REGISTRAR" || "DISTRICT_REGISTRAR",
     config: {enabled:enableApi},
   });
 
@@ -307,11 +307,11 @@ const CorrectionApplicationDetails = (props) => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="marriage-services"
+        moduleCode="CRMRCR"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WFBIRTH21DAYS"}
+        timelineStatusPrefix={"WFMARRIAGE21DAYS"}
       />
        {showModal ? (
             <ActionModal

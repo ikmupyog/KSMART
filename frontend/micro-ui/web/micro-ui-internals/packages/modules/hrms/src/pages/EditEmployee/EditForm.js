@@ -190,6 +190,14 @@ const EditForm = ({ tenantId, data }) => {
     requestdata.dateOfAppointment = Date.parse(input?.SelectDateofEmployment?.dateOfAppointment);
     requestdata.code = input?.SelectEmployeeId?.code ? input?.SelectEmployeeId?.code : undefined;
     requestdata.jurisdictions = input?.Jurisdictions;
+    requestdata.jurisdictions.jurisdictionChilds = requestdata.jurisdictions.map((item) => {
+      item.jurisdictionChilds.map((data) => {
+        data["wardCode"] = data.code;
+        data["wardLabel"] = data.name;
+        return data;
+      });
+      return item;
+    });
     requestdata.user.emailId = input?.SelectEmployeeEmailId?.emailId ? input?.SelectEmployeeEmailId?.emailId : undefined;
     requestdata.user.gender = input?.SelectEmployeeGender?.gender.code;
     requestdata.user.dob = Date.parse(input?.SelectDateofBirthEmployment?.dob);

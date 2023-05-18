@@ -94,25 +94,28 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     applicationData = {
-      ...applicationData,
-      action: action?.action,
-      comment: data?.comments,
-      assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
-      // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
-      wfDocuments: uploadedFile
-        ? [
-            {
-              documentType: action?.action + " DOC",
-              fileName: file?.name,
-              fileStoreId: uploadedFile,
-            },
-          ]
-        : null,
+      tenantid: "kl.cochin",
+      applicationType: "corr",
+      id: "72e35485-1e71-420a-a541-5e79f995d9e0",
+      moduleCode: "CRMRCR",
+      businessservice: "CR",
+      workflowcode: "CORRECTIONMARRIAGE",
+      isWorkflow:true,
+      action: "PAY",
+      assignee: [
+          "da6e1f71-6196-4f5b-898f-fbd212244c4a"
+      ],
+      registerid: "6db52c40-8462-4334-9844-e38724831800",
+      registrationNo: "KL-KOCHI-C-000238-CRMRNR-2023-REG",
+      registrationDate: null,
+      applicationNumber: "KL-KOCHI-CRBRCN-ACK-000128-2023",
     };
     submitAction({
-      BornOutsideChildDetails: [applicationData],
+      CorrectionDetails: [applicationData],
     });
   }
+
+  
 
   useEffect(() => {
     if (action) {

@@ -67,7 +67,7 @@ const CorrectionApplicationDetails = (props) => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: "CORRECTIONBIRTH",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "CHIEF_REGISTRAR" || "DISTRICT_REGISTRAR",
     config: {enabled:enableApi},
   });
 

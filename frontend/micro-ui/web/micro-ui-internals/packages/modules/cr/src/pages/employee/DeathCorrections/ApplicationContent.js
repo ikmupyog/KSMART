@@ -2,7 +2,7 @@ import {
   BreakLine, CardSectionHeader, CardSubHeader, CheckPoint, ConnectingCheckPoints, Loader, Row, StatusTable,
   LinkButton, Carousel, Accordion
 } from "@egovernments/digit-ui-react-components";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import BPADocuments from "../../../../../templates/ApplicationDetails/components/BPADocuments";
@@ -23,8 +23,9 @@ import moment from "moment";
 
 function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading, applicationData,
   businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
-
+  const tenantId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const [imagesThumbs, setImagesThumbs] = useState([]);
   console.log("applicationDetails in content==", applicationDetails);
   function OpenImage(imageSource, index, thumbnailsToShow) {
       window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
@@ -66,6 +67,38 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
           return t("NA");
       }
   };
+
+  const fetchImage = async (uploadedImages) => {
+      setImagesThumbs(null);
+      const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
+      const newThumbnails = fileStoreIds.map((key) => {
+        const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+        return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
+      });
+      const formattedImageThumbs =
+        newThumbnails?.length > 0 &&
+        newThumbnails.map((item, index) => {
+          const tempObj = {
+            image: item.large,
+            caption: `Caption ${index}`,
+          };
+          return tempObj;
+        });
+        console.log("formattedImageThumbs ===", formattedImageThumbs);
+      setImagesThumbs(formattedImageThumbs);
+    };
+
+  useEffect(() => {
+      if(applicationDetails?.applicationDetails?.[0]?.documentIds?.length > 0) {
+          fetchImage(applicationDetails?.applicationDetails?.[0]?.documentIds);
+      }
+  }, [applicationDetails?.applicationDetails])
+
+  const setDocumentsView = (documentData) => {
+      if(documentData?.length > 0){
+       fetchImage(documentData);
+      } else return;
+     }; 
 
   useEffect(() => {
       console.log("workflowDetails==", workflowDetails?.data);
@@ -219,25 +252,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
       );
   };
 
-  const carouselItems = [
-      {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature2.jpg",
-          caption: ""
-      },
-      {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature4.jpg",
-          caption: "Caption One"
-      },
-      {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature1.jpg",
-          caption: ""
-      },
-      {
-          image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature6.jpg",
-          caption: "Caption Three"
-      }
-  ]
-
   return (
       <>
           <div className="file-main">
@@ -245,10 +259,9 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                   {applicationDetails?.applicationDetails?.length > 0 && applicationDetails?.applicationDetails?.map((detail, index) => renderSummaryCard(detail, index))}
               </div>
               <div className={"cr-timeline-wrapper"}>
-                  <Carousel {...{ carouselItems }}
-                      imageHeight="300px"
-                      containerStyle={{ height: "300px", width: "auto", overflow: "scroll" }}
-                  />
+              {imagesThumbs?.length > 0 && (
+          <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+        )}
 
                   {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
                       <React.Fragment>

@@ -71,7 +71,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     const fetchImage = async (uploadedImages) => {
         setImagesThumbs(null);
         const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
-        console.log("imageThumbs==", uploadedImages, fileStoreIds);
         const newThumbnails = fileStoreIds.map((key) => {
           const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
           return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
@@ -93,10 +92,9 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
         if(applicationDetails?.applicationDetails?.[0]?.documentIds?.length > 0) {
             fetchImage(applicationDetails?.applicationDetails?.[0]?.documentIds);
         }
-    }, [applicationDetails?.applicationDetails])
+    }, [applicationDetails?.applicationDetails]);
 
     
-
       const setDocumentsView = (documentData) => {
        if(documentData?.length > 0){
         fetchImage(documentData);
@@ -311,8 +309,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                                                         <React.Fragment key={index}>
                                                             <CheckPoint keyValue={index} isCompleted={index === 0} info={checkpoint.comment}
                                                                 label={t(
-                                                                    `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
-                                                                    }`
+                                                                    `${timelineStatusPrefix}${checkpoint?.[statusAttribute]}`
                                                                 )}
                                                                 customChild={getTimelineCaptions(checkpoint)}
                                                             />
