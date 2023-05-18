@@ -111,7 +111,6 @@ public class PaymentUpdateService implements BaseEnrichment {
 				//if(marriage.get(0).getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
 					marriage.get(0).setAction(MarriageConstants.ACTION_PAY);
 				//}
-			}
 			MarriageDetailsRequest updateRequest = MarriageDetailsRequest.builder().requestInfo(requestInfo)
 												   .marriageDetails(marriage).build();
 			//System.out.println(" payment detail updateRequest:"+updateRequest);
@@ -126,10 +125,10 @@ public class PaymentUpdateService implements BaseEnrichment {
 			
 				List<CommonPay> commonPays =  new ArrayList<>();
 				CommonPay pay = new CommonPay();		           
-				pay.setAction("INITIATE");
-				pay.setApplicationStatus("INITIATED");
+				pay.setAction(updateRequest.getMarriageDetails().get(0).getAction());
+				pay.setApplicationStatus(updateRequest.getMarriageDetails().get(0).getStatus());
 				pay.setHasPayment(true);
-				pay.setAmount(new BigDecimal(10));
+				pay.setAmount(paymentDetails.get(0).getBill().getBillDetails().get(0).getAmountPaid());
 				pay.setIsPaymentSuccess(true);    
 				pay.setApplicationNumber(paymentDetail.getBill().getConsumerCode());
 				pay.setAuditDetails(auditDetails);
@@ -137,7 +136,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();		
 			  	repository.updatePaymentDetails(paymentReq);
 			}
-			
+		}
 
 		} catch (Exception e) {
 			log.error("KAFKA_PROCESS_ERROR", e);
