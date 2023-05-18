@@ -42,7 +42,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const mobileView = Digit.Utils.browser.isMobile() ? true : false;
   // const state = useSelector((state) => state);
   const [checkDraft, setCheckDraft] = useState(false);
-  const [checkNote, setCheckNote] = useState(true);
+  const [checkNote, setCheckNote] = useState(false);
   const [checkEnquiry, setCheckEnquiry] = useState(false);
   const [showGeoLocation, setShowGeoLocation] = useState(false);
   const [longitude, setLongitude] = useState("");
@@ -474,7 +474,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
             <div>
             <SubmitBar label={t("View Notes")} onSubmit={() => setDisplayNotePopup(!displayNotePopup)} />
             </div>
-          <div className="row ">
+            {checkNote &&(
+               <div className="row ">
             <div className="col-md-12 col-sm-12">
               <div className="col-md-7 search-file">
                 <TextArea
@@ -513,7 +514,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                                     />
                                 </div> */}
               </div>
-              <div className="col-md-5 search-file">
+              <div className="col-md-5 search-file selectNotes">
+                <CardLabel className="card-label-file">{`${t("DFM_SELECT_NOTES")}`}</CardLabel>
                 <Dropdown t={t} option={cmbautoNoteList[0]} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  selected={selectedAutoNote}
                                     select={autoNoteListChange} placeholder={t("SEARCH_SELECT_AUTO_NOTES")} />
 
@@ -534,7 +536,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
               </div>
             </div>
           </div>
-
+            )}
           <div
             className="row"
             // style={{
@@ -571,7 +573,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
           </div>
           {displayNotePopup &&(
              <Modal
-             headerBarMain={<Heading t={t} heading={"Auto Notes"} />}
+             headerBarMain={<Heading t={t} heading={"DFM_NOTES"} />}
              headerBarEnd={<CloseBtn onClick={closePopup} />}
              popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto" }}
              formId="modal-action"
