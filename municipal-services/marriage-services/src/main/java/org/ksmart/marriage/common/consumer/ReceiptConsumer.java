@@ -19,7 +19,7 @@ import org.ksmart.marriage.common.calculation.collections.models.PaymentRequest;
 //import org.ksmart.marriage.common.contract.EgovPdfResp;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.producer.MarriageProducer;
-import org.ksmart.marriage.common.services.PaymentUpdateService;
+import org.ksmart.marriage.marriagecommon.services.PaymentUpdateService;
 //import org.ksmart.birth.config.BirthDeathConfiguration;
 //import org.ksmart.birth.death.certmodel.DeathCertRequest;
 //import org.ksmart.birth.death.certmodel.DeathCertificate;

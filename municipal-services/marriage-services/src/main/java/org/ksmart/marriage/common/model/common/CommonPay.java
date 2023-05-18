@@ -1,35 +1,35 @@
-package org.ksmart.marriage.common.model.common;
+// package org.ksmart.marriage.common.model.common;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+// import com.fasterxml.jackson.annotation.JsonProperty;
+// import lombok.*;
 
-import javax.validation.constraints.Size;
+// import javax.validation.constraints.Size;
 
-import org.ksmart.marriage.common.model.AuditDetails;
+// import org.ksmart.marriage.common.model.AuditDetails;
 
-import java.math.BigDecimal;
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@ToString
-public class CommonPay {
-    @Size(max = 64)
-    @JsonProperty("applicationNumber")
-    private String applicationNumber;
+// import java.math.BigDecimal;
+// @Getter
+// @Setter
+// @AllArgsConstructor
+// @NoArgsConstructor
+// @Builder
+// @ToString
+// public class CommonPay {
+//     @Size(max = 64)
+//     @JsonProperty("applicationNumber")
+//     private String applicationNumber;
 
-    private String action;
+//     private String action;
 
-    private String applicationStatus;
+//     private String applicationStatus;
 
-    private Boolean hasPayment;
+//     private Boolean hasPayment;
 
-    @JsonProperty("isPaymentSuccess")
-    private Boolean isPaymentSuccess;
+//     @JsonProperty("isPaymentSuccess")
+//     private Boolean isPaymentSuccess;
 
-    private BigDecimal amount = BigDecimal.ZERO;
+//     private BigDecimal amount = BigDecimal.ZERO;
     
-    @JsonProperty("auditDetails")
-    private AuditDetails auditDetails;
-}
+//     @JsonProperty("auditDetails")
+//     private AuditDetails auditDetails;
+// }
