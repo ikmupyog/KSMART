@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Collections;
+
+import com.google.gson.Gson;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
@@ -121,8 +123,12 @@ public class WorkflowIntegrator {
            // log.info("workflow integrator request " + workFlowRequest);
 
             try {
+                System.out.println("Workflow request--------");
+                System.out.println(new Gson().toJson(workFlowRequest));
                 response = restTemplate.postForObject(bndConfig.getWfHost().concat(bndConfig.getWfTransitionPath()),
                         workFlowRequest, String.class);
+                System.out.println("Workflow response--------");
+                System.out.println(new Gson().toJson(response));
             } catch (HttpClientErrorException e) {
                 /*
                  * extracting message from client error exception
@@ -143,7 +149,7 @@ public class WorkflowIntegrator {
                         " Exception occured while integrating with workflow : " + e.getMessage());
             }
 
-            log.info("workflow integrator response " + response);
+            log.info("workflow integrator response " + new Gson().toJson(response));
 
             /*
              * on success result from work-flow read the data and set the status back to TL

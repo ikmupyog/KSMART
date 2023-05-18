@@ -110,9 +110,9 @@ public class PaymentUpdateService implements BaseEnrichment {
 			}
 			MarriageDetailsRequest updateRequest = MarriageDetailsRequest.builder().requestInfo(requestInfo)
 												   .marriageDetails(marriage).build();
-			//System.out.println(" payment detail updateRequest:"+updateRequest);
+			System.out.println(" payment detail updateRequest before calling workflow --------------:"+updateRequest);
 			wfIntegrator.callWorkFlow(updateRequest);
-
+			System.out.println(" payment detail updateRequest after calling workflow ---------------:"+updateRequest);
 			User userInfo = requestInfo.getUserInfo();
 			AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 			
