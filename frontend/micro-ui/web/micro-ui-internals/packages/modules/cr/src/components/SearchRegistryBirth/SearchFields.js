@@ -22,6 +22,12 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
     BORN_OUTSIDE_INDIA: { code: 'BORN_OUTSIDE_INDIA', value: 'CRBRBO' }
   };
 
+  const EXCLUSION_TYPES = [
+    BIRTH_TYPE_VALUES.ABANDONED.code,
+    BIRTH_TYPE_VALUES.ADOPTION.code,
+    BIRTH_TYPE_VALUES.CORRECTION.code,
+  ]
+
   const [birthTypeSelected, setBirthTypeSelected] = useState(BIRTH_TYPE_VALUES.NORMAL);
 
   return (
@@ -40,7 +46,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
                 props.onChange(e.value);
               }}
               onBlur={props.onBlur}
-              option={_.toArray(BIRTH_TYPE_VALUES)}
+              option={_.toArray(BIRTH_TYPE_VALUES).filter(item => !EXCLUSION_TYPES.includes(item.code))}
               optionKey="code"
               t={t}
               placeholder={`${t("BIRTH_TYPE")}`}
@@ -105,13 +111,14 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           </SearchField>
           <SearchField>
             <label>
+              {birthTypeSelected.value === BIRTH_TYPE_VALUES.NORMAL.value && <span className="mandatorycss">*</span>}
               {t("NAME_OF_MOTHER")}
             </label>
             <TextInput
               name="nameOfMother"
               inputRef={register({})}
               placeholder={`${t("NAME_OF_MOTHER")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("INVALID_NAME_MOTHER") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: (birthTypeSelected.value === BIRTH_TYPE_VALUES.NORMAL.value), type: "text", title: t("INVALID_NAME_MOTHER") })}
             />
           </SearchField>
 

@@ -1041,7 +1041,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {GroomAddressDetails?.presentOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1176,7 +1176,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {GroomAddressDetails?.presentOutSideIndiaadrsVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1419,7 +1419,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {GroomAddressDetails?.permntOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1554,7 +1554,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {GroomAddressDetails?.permntOutsideIndiaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2165,7 +2165,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {BrideAddressDetails?.presentOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2300,7 +2300,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {BrideAddressDetails?.presentOutSideIndiaadrsVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2543,7 +2543,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {BrideAddressDetails?.permntOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2678,7 +2678,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {BrideAddressDetails?.permntOutsideIndiaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">

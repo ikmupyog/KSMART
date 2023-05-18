@@ -1,6 +1,7 @@
 import { useMutation } from "react-query";
 import { CRDeathService } from "../../services/elements/CRDEATH";
 import Urls from "../../services/atoms/urls";
+import {DeathApplicationUpdateActions} from "../../services/molecules/CRCORRECTION/ApplicationUpdateActions";
 import { useCommonMutateHook } from "./common";
 
 
@@ -16,7 +17,6 @@ export const getNacDeathFileSourceDetails = ({ params = {}, additionalProps = {}
     return useCommonMutateHook({ params, additionalProps: { ...additionalProps, url: Urls.crnacdeath.registry_download } });
 };
 
-export const updateDeathCorrectionAction = ({ params = {}, additionalProps = {} }) => {
-    return useCommonMutateHook({ params, additionalProps: { ...additionalProps, url: Urls.deathdetailsupdatedeathcorrection } });
+export const  updateDeathCorrectionAction = (tenantId) => {
+    return useMutation((applicationData) => DeathApplicationUpdateActions(applicationData, tenantId));
 };
-

@@ -6,8 +6,7 @@ import * as predefinedConfig from "../config";
 
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
-};
-
+}; 
 const Close = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
     <path d="M0 0h24v24H0V0z" fill="none" />
@@ -100,7 +99,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
       applicationtype: applicationData?.applicationtype,
       businessservice: applicationData?.businessservice,
       workflowcode: applicationData?.workflowcode,
-      action: action?.action,
+      action: "",
       applicationNumber: applicationData?.applicationNumber,
       registrationNo: applicationData?.registrationNo,
       registerid: applicationData?.registerid,
