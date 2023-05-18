@@ -19,7 +19,6 @@ public class DetailCorrectionEnrichment {
                         death.getCorrectionField().forEach(
                                 correction -> {
                                     correction.setId(UUID.randomUUID().toString());
-                                    System.out.println(death.getDeathCorrectionBasicInfo().getId());
                                     correction.setDeathId(death.getDeathCorrectionBasicInfo().getId());
                                     correction.setAuditDetails(auditDetails);
                                     if(correction.getSpecificCondition() == null){
@@ -28,15 +27,15 @@ public class DetailCorrectionEnrichment {
                                     correction.getCorrectionFieldValue().forEach(
                                             column -> {
                                                 column.setAuditDetails(auditDetails);
-                                                System.out.println(column.getColumn());
-                                                if(column.getColumn().contains(UpdateRegisterColumn.REG_CHILD_DOB.getUiColoumn())) {
+                                                System.out.println(UpdateRegisterColumn.REG_DECEASED_DOB.getUiColoumn());
+                                                if(column.getColumn().contains(UpdateRegisterColumn.REG_DECEASED_DOB.getUiColoumn())) {
                                                     column.setId(UUID.randomUUID().toString());
                                                     column.setDeathId(correction.getDeathId());
                                                     column.setCorrectionId(correction.getId());
                                                     column.setCorrectionFieldName(correction.getCorrectionFieldName());
                                                     correction.setSpecificCondition(correction.getConditionCode());
-                                                    column.setTableName(UpdateRegisterColumn.REG_CHILD_DOB.getRegTable());
-                                                    column.setColumnName(UpdateRegisterColumn.REG_CHILD_DOB.getRegTableColumn());
+                                                    column.setTableName(UpdateRegisterColumn.REG_DECEASED_DOB.getRegTable());
+                                                    column.setColumnName(UpdateRegisterColumn.REG_DECEASED_DOB.getRegTableColumn());
                                                     death.getDeathCorrectionBasicInfo().setDateOfDeath(Long.parseLong(column.getNewValue()));
                                                     column.setOldValue(registerBirthDetails.get(0).getDeathBasicInfo().getDateOfDeath().toString());
                                                 }

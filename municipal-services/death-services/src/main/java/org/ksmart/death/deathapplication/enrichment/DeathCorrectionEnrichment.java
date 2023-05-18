@@ -66,6 +66,7 @@ public class DeathCorrectionEnrichment implements BaseEnrichment{
                         death.setDeathCorrectionBasicInfo(deathCorrectionBasicInfo);
                     }
                 });
+        System.out.println(registerBirthDetails.size());
         if(registerBirthDetails.size() >0) {
             detailCorrectionEnrichment.correctionField(request, registerBirthDetails, auditDetails);
         }

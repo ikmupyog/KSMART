@@ -35,7 +35,6 @@ public class DeathCorrectionController {
     @PostMapping(value = {"/createdeathcorrection"})
     public ResponseEntity<CorrectionResponse> create(@Valid @RequestBody CorrectionRequest request) {
         List<CorrectionDetails> deathCorrDetails = service.createcorrection(request);
-
         CorrectionResponse response = CorrectionResponse
                 .builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
