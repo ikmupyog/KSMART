@@ -174,6 +174,17 @@ export const CRService = {
       params: {},
       auth: true,
     }),
+    marriageCorrectionSearch: ({tenantId,filter}) =>
+    Request({
+      url: `${Urls.crcorrection.marriage_correction_search}?applicationType=corr`,
+      // data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId, ...filter },
+      auth: true,
+    }),
     marriageCorrectionUpdate: (details,tenantId) =>
     Request({
       url: Urls.crcorrection.marriage_correction_update,

@@ -135,7 +135,7 @@ import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
 import useApplicationMarriageActions from "./cr/useApplicationMarriageActions";
 import useCRCommonPaymentUpdate from "./cr/useCRCommonPaymentUpdate";
-import useCorrectionApplicationDetail,{useBirthCorrectionApplicationDetail} from "./cr/useCorrectionApplicationDetail";
+import useCorrectionApplicationDetail,{useBirthCorrectionApplicationDetail,useMarriageCorrectionApplicationDetail} from "./cr/useCorrectionApplicationDetail";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -382,6 +382,7 @@ const tl = {
   useTradeLicenseCorrectionAPI,
 };
 const cr = {
+  useMarriageCorrectionApplicationDetail,
   useCorrectionApplicationDetail,
   useBirthCorrectionApplicationDetail,
   getBirthFileSourceDetails,
