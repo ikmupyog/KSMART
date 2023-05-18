@@ -42,7 +42,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("CORRECTIONBIRTH")) {
     return <BirthCorrectionModal {...props} />;
   }
-  if (props?.businessService.includes("MARRIAGECORRECTION")) {
+  if (props?.businessService.includes("CORRECTIONMARRIAGE")) {
     return <MarriageCorrectionModal {...props} />;
   }
   if (props?.businessService.includes("ADOPTIONHOME")) {
