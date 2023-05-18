@@ -39,7 +39,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onR
                             props.onChange(e.value);
                         }}
                         onBlur={props.onBlur}
-                        option={_.toArray(DEATH_TYPE_VALUES)}
+                        option={_.toArray(DEATH_TYPE_VALUES).filter((item) => item.code !== DEATH_TYPE_VALUES.ABANDONED.code)}
                         optionKey="code"
                         t={t}
                         placeholder={`${t("DEATH_TYPE")}`}
