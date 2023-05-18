@@ -29,7 +29,8 @@ const DOCUMENT_OWNER = {
 };
 
 const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false }) => {
-  console.log("MD", formData);
+  // console.log("MD", formData);
+  console.log({ isEditMarriage, formData });
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
 
@@ -673,8 +674,6 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
     setWitness2AadharDocumentOwner("W2");
   }
 
-  console.log({ instituitionCertificate });
-
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
@@ -743,6 +742,16 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
         setCommonStateSelector(document);
       }
     });
+  };
+
+  const formatDocuments = (docs) => {
+    if(_.isArray(docs)){
+      console.log(docs, "docs Array")
+      return docs
+    } 
+    const objArray =  _.values(docs)?.filter((doc)=>doc?.id)
+    console.log({objArray})
+    return objArray
   };
 
   useEffect(() => {
@@ -836,7 +845,6 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
     (async () => {
       setError(null);
       if (groomPassportDocument) {
-        console.log("Hi....");
         if (groomPassportDocument.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
@@ -1317,24 +1325,22 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
   }, [witness2AadharDocument]);
   useEffect(() => {
     if (isEditMarriage) {
-      console.log(formData?.MarriageDocuments, "pling");
-      const currGroomAgeDocument = formData?.MarriageDocuments?.filter(
+      const currGroomAgeDocument = formatDocuments(formData?.MarriageDocuments)?.filter(
         (doc) =>
           doc.documentOwner === "G" &&
           (doc.documentType === "DrivingLicense" || doc.documentType === "SchoolCertificate" || doc.documentType === "BirthCertificate")
       );
       const currentGroomAgeDocument = crAgeDocuments?.filter((ageDoc) => ageDoc?.name?.split(" ").join("") === currGroomAgeDocument[0]?.documentType);
       setGroomAgeDocument(currentGroomAgeDocument[0]);
-      const currBrideAgeDocument = formData?.MarriageDocuments?.filter(
+      const currBrideAgeDocument = formatDocuments(formData?.MarriageDocuments)?.filter(
         (doc) =>
           doc.documentOwner === "B" &&
           (doc.documentType === "DrivingLicense" || doc.documentType === "SchoolCertificate" || doc.documentType === "BirthCertificate")
       );
-      console.log({ currBrideAgeDocument });
       const currentBrideAgeDocument = crAgeDocuments?.filter((ageDoc) => ageDoc?.name?.split(" ").join("") === currBrideAgeDocument[0]?.documentType);
       setBrideAgeDocument(currentBrideAgeDocument[0]);
     }
-  }, [formData?.MarriageDocuments?.length]);
+  }, []);
   const goNext = () => {
     onSelect(config.key, {
       groomAadharDocumentName,
