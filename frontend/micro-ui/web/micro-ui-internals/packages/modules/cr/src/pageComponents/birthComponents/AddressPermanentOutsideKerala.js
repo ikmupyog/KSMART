@@ -327,7 +327,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey={locale === "en_IN" ? "name" : "namelocal"}
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [], "code", t)}
               selected={permntOutsideKeralaVillage}
               select={setSelectpermntOutsideKeralaVillage}
