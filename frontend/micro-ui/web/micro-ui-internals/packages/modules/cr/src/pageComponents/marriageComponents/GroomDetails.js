@@ -19,7 +19,6 @@ import { sortDropdownNames } from "../../utils";
 
 const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
-  Menu;
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");

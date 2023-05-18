@@ -538,8 +538,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         setMarriagePlacetype(currentPlaceType[0]);
         const marriagePlace = setMarriagePlace(currentPlaceType[0]);
         const currentPlaceName = marriagePlace?.filter((name) => name?.code === formData?.placeid);
-        setplaceidEn(currentPlaceName[0]);
-        setplaceidMl(currentPlaceName[0]);
+        setplaceidEn(currentPlaceName?.[0]);
+        setplaceidMl(currentPlaceName?.[0]);
         const currentMarriageType = cmbTypeOfMarriage?.filter((type) => type.code === formData?.marriageType);
         setmarriageType(currentMarriageType[0]);
       }
