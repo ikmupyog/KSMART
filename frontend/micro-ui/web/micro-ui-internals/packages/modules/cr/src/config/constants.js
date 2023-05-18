@@ -55,3 +55,5 @@ export const DEATH_CORRECTION_FIELD_NAMES = {
 export const STATE_CODE= {
     KL:"kl"
 }
+
+export const OTP_TIMEOUT = 90;
