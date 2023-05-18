@@ -32,7 +32,7 @@ const convertEpochToDate = (dateEpoch) => {
 //   }`;
 // };
 
-const formatBirthCorrectionDetails = (correctionData,t) =>{
+const formatCorrectionDetails = (correctionData,t) =>{
   console.log("correctioinn data",correctionData);
   if(correctionData?.length > 0 ){
      const formattedCorrectionData = correctionData?.map((item)=>{
@@ -57,6 +57,37 @@ const formatBirthCorrectionDetails = (correctionData,t) =>{
 }
 }
 
+const getDocumentIds = (documentData) => {
+  const documentIds = documentData?.map((item) => item.fileStoreId);
+  return documentIds;
+}
+
+const formatMarriageCorrectionDetails = (correctionData,t) =>{
+  console.log("correctioinn data",correctionData);
+  if(correctionData?.length > 0 ){
+     const formattedCorrectionData = correctionData?.map((item)=>{
+      console.log("looped item",item);  
+      const correctionValues = item.correctionFieldValue;
+      const correctionTitle = item.correctionFieldName;
+      const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue,t)
+      const documentIds = getDocumentIds(item.CorrectionDocument)
+      // correctionValues.map((corr)=>{
+      // console.log("corr-----item",corr);
+     
+      return (
+        {
+          title: t(correctionTitle),
+          asSectionHeader: true,
+          fieldValues: correctionFieldValues,
+          documentIds
+        }
+      )
+    // })
+     })
+     console.log("formattedCorrectionData",formattedCorrectionData);
+     return formattedCorrectionData;
+}
+}
 
 const getCorrectionFieldValues = (correctionFieldValues,t) =>{
   const formattedCorrectionvalues =  correctionFieldValues?.map((item)=>{
@@ -74,7 +105,7 @@ export const CRCorrectionSearch = {
   },
   birthApplication: async (tenantId, filters = {}) => {
     console.log("birth resp==",filters);
-    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters});
+    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters });
    
     return response?.CorrectionApplication?.[0];
   },
@@ -85,9 +116,9 @@ export const CRCorrectionSearch = {
   },
   marriageApplication: async (tenantId, filters = {}) => {
     console.log("marriage resp==",filters);
-    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters});
+    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters });
     
-    return response?.MarriageDetails[0];
+    return response?.marriageCorrectionDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
@@ -96,15 +127,16 @@ export const CRCorrectionSearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, correctionType) => {
-    console.log("applicationNumber",correctionType,correctionType === "birth");
-    const filter = { applicationNumber };
+
+    console.log("applicationNumber",applicationNumber,correctionType);
+    const filter =correctionType === "marriage" ? { applicationNo: applicationNumber } : { applicationNumber };
     let response = [];
     if(correctionType === "birth"){
      response = await CRCorrectionSearch.birthApplication(tenantId, filter);
     } else if(correctionType === "death"){
       response = await CRCorrectionSearch.deathApplication(tenantId, filter);
     } else if(correctionType === "marriage") {
-      response = await CRCorrectionSearch.birthApplication(tenantId, filter);
+      response = await CRCorrectionSearch.marriageApplication(tenantId, filter);
     }
     console.log("resappp===",response);
 
@@ -120,9 +152,14 @@ export const CRCorrectionSearch = {
     let employeeResponse = [];
 
    
-
-    
-    const birthCorrectionDetails =  await formatBirthCorrectionDetails(response?.CorrectionField,t);
+    let birthCorrectionDetails = [];
+    if(correctionType === "marriage") {
+      birthCorrectionDetails =  await formatMarriageCorrectionDetails(response?.CorrectionField,t);
+    } else {
+      birthCorrectionDetails =  await formatCorrectionDetails(response?.CorrectionField,t);
+    }
+  
+   
 
     console.log("birthCorrectionDetails==",birthCorrectionDetails);
   
