@@ -120,12 +120,12 @@ const getAddressDetails = (application, t) => {
   return {
     title: "Address",
     values: [
-      { title: "District", value: application?.AddressBirthDetails?.presentInsideKeralaDistrict.name || t("CR_NOT_RECORDED") },
-      { title: "Taluk", value: application?.AddressBirthDetails?.presentInsideKeralaTaluk.name || t("CR_NOT_RECORDED") },
-      { title: "Village", value: application?.AddressBirthDetails?.presentInsideKeralaVillage.name || t("CR_NOT_RECORDED") },
-      { title: "Local Body", value: application?.AddressBirthDetails?.presentInsideKeralaLBName.name || t("CR_NOT_RECORDED") },
-      { title: "Ward", value: application?.AddressBirthDetails?.presentWardNo.namecmb || t("CR_NOT_RECORDED") },
-      { title: "Post Office", value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice.name || t("CR_NOT_RECORDED") },
+      { title: "District", value: application?.AddressBirthDetails?.presentInsideKeralaDistrictEn || t("CR_NOT_RECORDED") },
+      { title: "Taluk", value: application?.AddressBirthDetails?.presentInsideKeralaTaluk || t("CR_NOT_RECORDED") },
+      { title: "Village", value: application?.AddressBirthDetails?.presentInsideKeralaVillage || t("CR_NOT_RECORDED") },
+      { title: "Local Body", value: application?.AddressBirthDetails?.presentInsideKeralaLBName || t("CR_NOT_RECORDED") },
+      { title: "Ward", value: application?.AddressBirthDetails?.presentWardNo || t("CR_NOT_RECORDED") },
+      { title: "Post Office", value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice || t("CR_NOT_RECORDED") },
       { title: "Pin Code", value: application?.AddressBirthDetails?.presentInsideKeralaPincode || t("CR_NOT_RECORDED") },
       { title: "Locality", value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CR_NOT_RECORDED") },
       { title: "Street Name", value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || t("CR_NOT_RECORDED") },

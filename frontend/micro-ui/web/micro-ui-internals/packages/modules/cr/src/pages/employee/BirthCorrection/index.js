@@ -184,7 +184,7 @@ const CorrectionApplicationDetails = (props) => {
     }
     if (mutate) {
       setIsEnableLoader(true);
-      mutate({ filters: JSON.parse(JSON.stringify(data)) }, {
+      mutate(data, {
         onError: (error, variables) => {
           setIsEnableLoader(false);
           setShowToast({ key: "error", error });

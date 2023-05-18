@@ -25,9 +25,9 @@ const ApplicationNACBirthDetails = () => {
   const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_NACBIRTH_FLAG", false);
   const stateId = Digit.ULBService.getStateId();
   const [selectedRadioValue, setSelectedRadioValue] = useState(
-    applicationDetails?.InformationDeath?.isDeathNAC
+    applicationDetails?.isBirthNAC
       ? { i18nKey: "CR_IS_NAC", code: "NAC" }
-      : applicationDetails?.InformationDeath?.isDeathNIA
+      : applicationDetails?.isBirthNIA
       ? { i18nKey: "CR_IS_NIA", code: "NIA" }
       : {}
   );

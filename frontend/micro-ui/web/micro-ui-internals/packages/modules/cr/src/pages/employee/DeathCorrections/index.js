@@ -58,7 +58,7 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.updateDeathCorrectionAction({ params: { tenantId } });
+  } = Digit.Hooks.cr.updateDeathCorrectionAction(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -243,7 +243,7 @@ const CorrectionApplicationDetails = (props) => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_BIRTH_SUMMARY_DETAILS"}
+        header={"CR_DEATH_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -255,7 +255,7 @@ const CorrectionApplicationDetails = (props) => {
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WFBIRTH21DAYS"}
+        timelineStatusPrefix={"WFDEATH21DAYS"}
       />
        {showModal ? (
             <ActionModal
