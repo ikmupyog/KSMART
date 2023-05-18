@@ -94,7 +94,7 @@ const DesktopInbox = ({
         url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
     }
     if (["CRBRCN", "CRDRCN", "CRMRCR"].some(term => applicationNumber?.includes(term))) {
-      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+      url = `/digit-ui/employee/cr/marriage-correction-details/${applicationNumber}/${SearchInbox}`;
     } else if (["CRBRNR"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-details/${applicationNumber}`;
     } else if (["CRBRSB"].some(term => applicationNumber?.includes(term))) {
@@ -112,7 +112,7 @@ const DesktopInbox = ({
     } else if (["CRDRNC"].some(term => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/application-deathnacdetails/${applicationNumber}`;
     } else {
-      url = `/digit-ui/employee/cr/correction-details/${applicationNumber}/${SearchInbox}`;
+      url = `/digit-ui/employee/cr/birth-correction-details/${applicationNumber}/${SearchInbox}`;
     }
     return url;
   }
@@ -281,7 +281,7 @@ const DesktopInbox = ({
             <span className="link">
               <Link onClick={event => handleLinkClick(row.original)} to={()=>goto(row.original)}>
                 {/* {row.original.applicationNumber} */}
-                {row.original.applicationId}
+                {row.original.applicationNumber}
               </Link>
             </span>
           </div>
@@ -289,15 +289,14 @@ const DesktopInbox = ({
       },
     },
     {
-      Header: t("CR_COMMON_COL_APP_DATE"),
+      Header: t("CR_MOTHER_NAME"),
       disableSortBy: true,
-      accessor: (row) => GetCell(row?.date ? convertEpochToDateDMY(row.date) : ""),
+      accessor: (row) => GetCell(row?.motherName ? row.motherName : ""),
     },
     {
-      Header: t("WF_INBOX_HEADER_LOCALITY"),
-      Cell: ({ row }) => {
-        return GetCell(t((row.original["wardNo"])));
-      },
+      Header: t("CR_CHILD_GENDER"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row.gender ? row.gender : ""),
     },
     {
       Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),

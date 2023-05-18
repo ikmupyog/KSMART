@@ -428,7 +428,7 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
                     : FatherAadharError
                     ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
                     : AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    ? t(`CS_COMMON_DUPLICATE_AADHAR_NO`)
                     : setToast(false)
                   : setToast(false)
               }

@@ -725,7 +725,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.code : "CR_NOT_RECORDED"}
+                            {GroomDetails?.groomIsSpouseLiving ? GroomDetails?.groomIsSpouseLiving?.i18nKey : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
@@ -1041,7 +1041,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {GroomAddressDetails?.presentOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1176,7 +1176,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {GroomAddressDetails?.presentOutSideIndiaadrsVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1419,7 +1419,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {GroomAddressDetails?.permntOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1554,7 +1554,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {GroomAddressDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {GroomAddressDetails?.permntOutsideIndiaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1848,14 +1848,14 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.code : "CR_NOT_RECORDED"}
+                            {BrideDetails?.brideIsSpouseLiving ? BrideDetails?.brideIsSpouseLiving?.i18nKey : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
                       </React.Fragment>
                     )}
 
                     {BrideDetails?.brideMaritalstatusID?.code === "MARRIED" && BrideDetails.brideIsSpouseLiving?.code && (
-                      <React.Fragement>
+                      <React.Fragment>
                         <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                             {`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`} :
@@ -1866,7 +1866,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                             {BrideDetails?.brideNoOfSpouse ? BrideDetails?.brideNoOfSpouse : "CR_NOT_RECORDED"}
                           </CardText>
                         </div>
-                      </React.Fragement>
+                      </React.Fragment>
                     )}
                   </div>
                 </div>
@@ -1984,6 +1984,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
             </StatusTable>
           }
         />
+        {/* Groom groom GROOM */}
         <Accordion
           expanded={false}
           title={t("MARRIAGE_BRIDE_ADDRESS")}
@@ -2164,7 +2165,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {BrideAddressDetails?.presentOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2299,7 +2300,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {BrideAddressDetails?.presentOutSideIndiaadrsVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2542,7 +2543,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {BrideAddressDetails?.permntOutsideKeralaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -2677,7 +2678,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {BrideAddressDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {BrideAddressDetails?.permntOutsideIndiaVillage?.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">

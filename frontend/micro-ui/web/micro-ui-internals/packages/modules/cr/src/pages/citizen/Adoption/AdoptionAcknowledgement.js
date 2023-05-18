@@ -11,10 +11,10 @@ const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
-  } else if (props.isError) {
-    return t("CR_CREATE_APPLICATION_FAILED");
-  } else {
+  } else if (props.isLoading) {
     return t("CR_CREATE_APPLICATION_PENDING");
+  } else if (!props.isSuccess) {
+    return t("CR_CREATE_APPLICATION_FAILED");
   }
 };
 const rowContainerStyle = {

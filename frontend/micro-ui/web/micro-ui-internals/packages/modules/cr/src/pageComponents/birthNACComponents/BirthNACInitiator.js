@@ -64,7 +64,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [motherIdFile, setMotherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile3);
   const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
   const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
-
+  //const [docPreview, setDocPreview] = useState(formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null);
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
   const [OrderofBirthMissmatchError, setOrderofBirthMissmatchError] = useState(false);
@@ -74,6 +74,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [initiatorAddressError, setinitiatorAddressError] = useState(formData?.BirthNACInitiator?.initiatorAddress ? false : false);
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
+
   const storedAppData = null;
   const storedOwnerData = null;
   let menu = [];
@@ -206,7 +208,15 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     },
     [disptachowner]
   );
-
+  // const fetchFile = async (fileId) => {
+  //   const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
+  //   const newThumbnails = fileStoreIds.map((key) => {
+  //     const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+  //     return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+  //   });
+  //   console.log(newThumbnails, "newThumbnails");
+  //   return newThumbnails;
+  // };
   const onSkip = () => onSelect();
   Menu &&
     Menu.map((genderDetails) => {
@@ -240,18 +250,26 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
   function setSelectinitiatorAddress(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
-      setinitiatorAddress(e.target.value.length <= 200 ? e.target.value : e.target.value.substring(0, 200));
+      setinitiatorAddress(e.target.value.length <= 100 ? e.target.value : e.target.value.substring(0, 200));
     }
   }
 
   function setselectCareofApplicant(e) {
-    setcareofapplicant(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setcareofapplicant(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
   }
   function setSelectinitiatorAadhar(e) {
-    if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === formData?.BirthNACParentsDetails.motherAadhar && newValue === formData?.BirthNACParentsDetails.fatherAadhar) {
+      setinitiatorAadhar("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setinitiatorAadhar(newValue);
     }
   }
   function setSelectinitiatorMobile(e) {
@@ -292,6 +310,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             const response = await Digit.UploadServices.Filestorage("citizen-profile", aadressFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              // const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              // setDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -300,6 +320,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
       }
     })();
   }, [aadressFile]);
+
   useEffect(() => {
     (async () => {
       setError(null);
@@ -497,6 +518,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         motherIdFile,
         fatherIdFile,
         medicalFile,
+        //docPreview,
       });
     }
   };
@@ -889,6 +911,20 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                {/* {docPreview && (
+                  <div className="col-md-2">
+                    {_.head(docPreview)?.type === "pdf" ? (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
+                      </React.Fragment>
+                    ) : (
+                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
+                    )}
+                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
+                      Preview
+                    </a>
+                  </div>
+                )} */}
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -1010,6 +1046,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ? t(`BIRTH_NAC_DATE_OF_BIRTH_MISSMATCH`)
                     : OrderofBirthMissmatchError
                     ? t(`BIRTH_NAC_ORDER_OF_BIRTH_MISSMATCH`)
+                    : AadharError
+                    ? t(`CS_COMMON_DUPLICATE_AADHAR_NO`)
                     : setToast(false)
                   : setToast(false)
               }

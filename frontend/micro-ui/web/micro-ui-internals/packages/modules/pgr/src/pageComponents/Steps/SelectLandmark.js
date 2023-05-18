@@ -168,19 +168,19 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
           <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_DISTRICT")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" option={arraySort(cmbDistrict || [], "name", t)} placeholder={`${t("CS_COMMON_DISTRICT")}`}
-                selected={selected.district} select={districtChange}
+              <Dropdown t={t} optionKey={locale == "en_IN" ? "name" : "namelocal"} option={arraySort(cmbDistrict || [], "name", t)}
+                placeholder={`${t("CS_COMMON_DISTRICT")}`} selected={selected.district} select={districtChange}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_LOCAL_BODY")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" option={arraySort(cmbLB || [], "name", t)} placeholder={`${t("CS_COMMON_LOCAL_BODY")}`}
+              <Dropdown t={t} optionKey="i18nKey" option={arraySort(cmbLB || [], "name", t)} placeholder={`${t("CS_COMMON_LOCAL_BODY")}`}
                 selected={selected.lbName} select={(val) => handleChange("LB", val)}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="namecmb" option={cmbWardNoFinal} placeholder={`${t("CS_COMMON_WARD")}`}
+              <Dropdown t={t} optionKey={locale == "en_IN" ? "namecmb" : "localnamecmb"} option={cmbWardNoFinal} placeholder={`${t("CS_COMMON_WARD")}`}
                 selected={selected.ward} select={(val) => handleChange("Ward", val)}
               />
             </div>
@@ -190,13 +190,13 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
           <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_VILLAGE")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" placeholder={`${t("BIRTH_ERROR_VILLAGE_CHOOSE")}`} selected={selected.village}
+              <Dropdown t={t} optionKey={locale == "en_IN" ? "name" : "namelocal"} placeholder={`${t("BIRTH_ERROR_VILLAGE_CHOOSE")}`} selected={selected.village}
                 option={arraySort(cmbVillage || [], "name", t)} select={(val) => handleChange("Village", val)}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_POST_OFFICE")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="name" option={arraySort(cmbPostOffice || [], "name", t)} placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              <Dropdown t={t} optionKey={locale == "en_IN" ? "name" : "namelocal"} option={arraySort(cmbPostOffice || [], "name", t)} placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 selected={selected.postOffice} select={(val) => handleChange("PO", val)}
               />
             </div>

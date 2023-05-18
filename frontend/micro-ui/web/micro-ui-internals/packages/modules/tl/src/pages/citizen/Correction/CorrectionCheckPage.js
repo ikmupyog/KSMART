@@ -12,9 +12,8 @@ import {
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
 
-
 import { stringReplaceAll } from "../../../utils/index";
-import React from "react";
+import React,{ useState }  from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import TLDocument from "../../../pageComponents/TLDocumets";
@@ -74,8 +73,25 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
   const match = useRouteMatch();
   const TradeDetails = value;
   const TradeDetailsNew = valuenew;
+  const stateId = Digit.ULBService.getStateId();
   const { applicant, address, owners, propertyType, subtype, pitType, pitDetail, isEditProperty, cpt } = value;
   const { applicantnew, addressnew, ownersnew, propertyTypenew, subtypenew, pitTypenew, pitDetailnew, isEditPropertynew, cptnew } = valuenew;
+  const { data: localbodies, islocalbodiesLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "tenant", "Localbody");
+ 
+  let DistrictList = "" ;
+  let LBTypeList = "";
+  let Localbody = "";
+
+  localbodies &&
+  localbodies["tenant"] &&
+  localbodies["tenant"].tenants.map((ob) => {
+    if(ob.code === TradeDetailsNew?.TradeDetails?.tenantId){
+      DistrictList = ob.city.distCodeStr;
+      LBTypeList = ob.city.lbtypecode;
+      Localbody = ob.name;
+    }
+  });
+ 
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
@@ -142,15 +158,15 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
             <StatusTable>
                 <Row
                   label={`${t("TL_DISTRICT")}`}
-                  text="DISTRICT"
+                  text={`${t(DistrictList)}`}
                 />
                 <Row
                   label={`${t("TL_LB_NAME_LABEL")}`}
-                  text="LB_NAME"
+                  text={Localbody}
                 />
                 <Row
                   label={`${t("TL_LB_TYPE_LABEL")}`}
-                  text="LB_TYPE"
+                  text={`${t(LBTypeList)}`}
                 />
                 <Row
                   label = {`${t("TL_LICENSEE_TYPE")}`}
@@ -222,15 +238,15 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
             <StatusTable>
                 <Row
                   label={`${t("TL_DISTRICT")}`}
-                  text="DISTRICT"
+                  text={`${t(DistrictList)}`}
                 />
                 <Row
                   label={`${t("TL_LB_NAME_LABEL")}`}
-                  text="LB_NAME"
+                  text={Localbody}
                 />
                 <Row
                   label={`${t("TL_LB_TYPE_LABEL")}`}
-                  text="LB_TYPE"
+                  text={`${t(LBTypeList)}`}
                 />
                 <Row
                   label = {`${t("TL_LICENSEE_TYPE")}`}

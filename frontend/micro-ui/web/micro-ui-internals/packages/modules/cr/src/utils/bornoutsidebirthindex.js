@@ -297,7 +297,7 @@ export const convertToEditBornOutsideBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRBO",
         businessservice: "CR",
-        workflowcode: "WFBORNOUTSIDE60",
+        workflowcode: data?.BornOutsideChildDetails?.workFlowCode,
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
@@ -334,7 +334,7 @@ export const convertToEditBornOutsideBirthRegistration = (data = {}) => {
             : null,
           presentOutSideIndiaadrsCityTown: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown,
           presentOutSideIndiaPostCode: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode,
-          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
+          // isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
           presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
             ? data?.BornOutsideAddressBirthDetails?.permtaddressCountry.code
             : null,
@@ -438,22 +438,22 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRBO",
         businessservice: "CR",
-        workflowcode: "WFBORNOUTSIDE60",
+        workflowcode: data?.BornOutsideChildDetails?.workFlowCode,
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
-          motherPassport: data?.BornOutsideParentsDetails?.motherPassportNo,
+          motherPassportNo: data?.BornOutsideParentsDetails?.motherPassportNo,
           motherMarriageAge: data?.BornOutsideParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.BornOutsideParentsDetails?.motherMarriageBirth,
           motherEducation: data?.BornOutsideParentsDetails?.motherEducation ? data?.BornOutsideParentsDetails?.motherEducation.code : null,
           motherProfession: data?.BornOutsideParentsDetails?.motherProfession ? data?.BornOutsideParentsDetails?.motherProfession.code : null,
           motherNationality: data?.BornOutsideParentsDetails?.motherNationality ? data?.BornOutsideParentsDetails?.motherNationality.code : null,
           ismotherInfo: false,
-          isfatherInfo: true,
+          isfatherInfo: false,
           fatherFirstNameEn: data?.BornOutsideParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.BornOutsideParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.BornOutsideParentsDetails?.fatherNationality ? data?.BornOutsideParentsDetails?.fatherNationality.code : null,
-          fatherPassport: data?.BornOutsideParentsDetails?.fatherPassportNo,
+          fatherPassportNo: data?.BornOutsideParentsDetails?.fatherPassportNo,
           fatherEducation: data?.BornOutsideParentsDetails?.fatherEducation ? data?.BornOutsideParentsDetails?.fatherEducation.code : null,
           fatherProfession: data?.BornOutsideParentsDetails?.fatherProfession ? data?.BornOutsideParentsDetails?.fatherProfession.code : null,
           Religion: data?.BornOutsideParentsDetails?.Religion ? data?.BornOutsideParentsDetails?.Religion.code : null,
@@ -466,7 +466,7 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
           presentOutSideIndiaAdressEnB: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB,
           presentOutSideIndiaAdressMlB: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn,
-          // presentOutSideIndiaProvinceMl: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl,
+          presentOutSideIndiaProvinceMl: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl,
           presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.presentOutSideCountry
             ? data?.BornOutsideAddressBirthDetails?.presentOutSideCountry.code
             : null,

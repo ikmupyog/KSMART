@@ -243,20 +243,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     }
   };
   function setSelectPostCode(e) {
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 6) {
-    //     return false;
-    //   } else if (e.target.value.length < 6) {
-    //     setpostCode(e.target.value);
-    //     return false;
-    //   } else {
-    //     setpostCode(e.target.value);
+      setpostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : e.target.value.replace(/[^a-zA-Z0-9]/ig, '').substring(0, 6));
 
-    //   }
-    // }
-    if (e.target.value.trim().length >= 0) {
-      setpostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
-    }
   }
   function setselectChildDOB(value) {
     setChildDOB(value);
@@ -1064,6 +1052,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   type={"text"}
                   optionKey="i18nKey"
                   name="postCode"
+                  style={{ textTransform: "uppercase" }}
                   value={postCode}
                   onChange={setSelectPostCode}
                   placeholder={`${t("CR_ZIP_CODE")}`}
@@ -1071,8 +1060,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                     pattern: "^[a-zA-Z-.0-9`' ]*$",
                     isRequired: true,
                     type: "text",
-                    max: 6,
-                    min: 6,
                     title: t("CR_INVALID_ZIP_CODE"),
                   })}
                 />
