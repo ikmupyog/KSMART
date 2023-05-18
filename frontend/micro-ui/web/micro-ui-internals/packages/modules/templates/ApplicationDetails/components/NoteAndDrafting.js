@@ -414,51 +414,12 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                         ></CustomButton>
                     </div> */}
 
-          {showGeoLocation && (
-            <div className="row geo-location">
-              <div className="col-md-12  col-sm-12 geo-column">
-                {/* <div className="col-md-2 col-sm-12">
-
-                                <h3 class="geo-tag">{t("GEO_TAG_LOCATION")}</h3>
-                            </div> */}
-                <div className="col-md-12">
-                  <LocationSearchCard
-                    header={t("GEO_TAG_LOCATION")}
-                    cardText={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_TEXT")}
-                    nextText={t("CURRENT_LOCATION")}
-                    //
-                    //   skip={() => onSelect()}
-                    //   onSave={() => onSelect({ pincode })}
-                    onChange={(code, loc) => onLocationChange(code, loc)}
-                  />
-                  {/* <GoogleMap
-                                    onClick={ev => {
-                                        console.log("latitide = ", ev.latLng.lat());
-                                        console.log("longitude = ", ev.latLng.lng());
-                                    }}
-                                    defaultZoom={3}
-                                    defaultCenter={{ lat: -34.397, lng: 150.644 }}
-                                ></GoogleMap> */}
-                  {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3703.5056482171453!2d73.71688411494024!3d21.83802336503438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39601d55e43af21f%3A0xb8e23c01a1f6eb18!2sStatue%20of%20Unity!5e0!3m2!1sen!2sin!4v1641230123226!5m2!1sen!2sin"
-                                    width="380" height="380" allowfullscreen="" loading="lazy"
-                                ></iframe> */}
-                </div>
-                <div className="col-md-4 col-sm-4">
-                  <CardLabel className="card-label-file">{`${t("LONGITUDE")}`}</CardLabel>
-                  <TextInput value={longitude} t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("longitude")} />
-                </div>
-                <div className="col-md-4 col-sm-4">
-                  <CardLabel className="card-label-file">{`${t("LATITUDE")}`}</CardLabel>
-                  <TextInput value={latitude} t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("latitude")} />
-                </div>
-              </div>
-            </div>
-          )}
+         
 
           <div className="row">
             <div className="col-md-12 col-sm-12  col-xs-12">
               <div className="col-md-3  col-sm-3  col-xs-12 notes">
-                <CheckBox t={t} optionKey="name" checked={checkNote} value={checkNote} onChange={(e) => handleNoteChange(e)} disable={checkNote} />
+                <CheckBox t={t} optionKey="name" checked={checkNote} value={checkNote} onChange={(e) => handleNoteChange(e)}  />
                 <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
               </div>
               <div className="col-md-3 col-sm-3  col-xs-12 link-file">
@@ -537,6 +498,46 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
             </div>
           </div>
             )}
+             {showGeoLocation && (
+            <div className="row geo-location">
+              <div className="col-md-12  col-sm-12 geo-column">
+                {/* <div className="col-md-2 col-sm-12">
+
+                                <h3 class="geo-tag">{t("GEO_TAG_LOCATION")}</h3>
+                            </div> */}
+                <div className="col-md-12">
+                  <LocationSearchCard
+                    header={t("GEO_TAG_LOCATION")}
+                    cardText={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_TEXT")}
+                    nextText={t("CURRENT_LOCATION")}
+                    //
+                    //   skip={() => onSelect()}
+                    //   onSave={() => onSelect({ pincode })}
+                    onChange={(code, loc) => onLocationChange(code, loc)}
+                  />
+                  {/* <GoogleMap
+                                    onClick={ev => {
+                                        console.log("latitide = ", ev.latLng.lat());
+                                        console.log("longitude = ", ev.latLng.lng());
+                                    }}
+                                    defaultZoom={3}
+                                    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                                ></GoogleMap> */}
+                  {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3703.5056482171453!2d73.71688411494024!3d21.83802336503438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39601d55e43af21f%3A0xb8e23c01a1f6eb18!2sStatue%20of%20Unity!5e0!3m2!1sen!2sin!4v1641230123226!5m2!1sen!2sin"
+                                    width="380" height="380" allowfullscreen="" loading="lazy"
+                                ></iframe> */}
+                </div>
+                <div className="col-md-4 col-sm-4">
+                  <CardLabel className="card-label-file">{`${t("LONGITUDE")}`}</CardLabel>
+                  <TextInput value={longitude} t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("longitude")} />
+                </div>
+                <div className="col-md-4 col-sm-4">
+                  <CardLabel className="card-label-file">{`${t("LATITUDE")}`}</CardLabel>
+                  <TextInput value={latitude} t={t} type={"text"} optionKey="i18nKey" name="RegistrationNo" placeholder={t("latitude")} />
+                </div>
+              </div>
+            </div>
+          )}
           <div
             className="row"
             // style={{
