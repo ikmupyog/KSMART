@@ -14,11 +14,11 @@ console.log("reched");
 
 export default useCorrectionApplicationDetail;
 
-export const useBirthCorrectionApplicationDetail = ({ tenantId, filter,config={}}) => {
+export const useBirthCorrectionApplicationSearch = ({ tenantId, filter,config={}}) => {
 console.log("api filters==",tenantId, filter);
   const resp =  useQuery(
-    ["BIRTH_CORRECTION_APPLICATION_SEARCH", "CRsearch", filter?.applicationNumber],
-    () => CRService.birthCorrectionSearch(tenantId, filter),
+    ["BIRTH_CORRECTION_APPLICATION_SEARCH", "CRsearch", ...Object.keys(filter)?.map( e => filter?.[e])],
+    () => CRService.birthCorrectionSearch({tenantId,filter}),
     config
   );
   console.log("resp==",resp);

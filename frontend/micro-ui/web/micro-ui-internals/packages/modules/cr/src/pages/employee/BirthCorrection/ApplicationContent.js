@@ -272,8 +272,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                                                         <React.Fragment key={index}>
                                                             <CheckPoint keyValue={index} isCompleted={index === 0} info={checkpoint.comment}
                                                                 label={t(
-                                                                    `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
-                                                                    }`
+                                                                    `${timelineStatusPrefix}${checkpoint?.[statusAttribute]}`
                                                                 )}
                                                                 customChild={getTimelineCaptions(checkpoint)}
                                                             />
