@@ -6,8 +6,7 @@ import * as predefinedConfig from "../config";
 
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
-};
-
+}; 
 const Close = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
     <path d="M0 0h24v24H0V0z" fill="none" />
@@ -93,29 +92,24 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
 
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
-    applicationData = {
-      tenantid: "kl.cochin",
-      applicationType: "corr",
-      id: "72e35485-1e71-420a-a541-5e79f995d9e0",
-      moduleCode: "CRMRCR",
-      businessservice: "CR",
-      workflowcode: "CORRECTIONMARRIAGE",
-      isWorkflow:true,
-      action: "PAY",
-      assignee: [
-          "da6e1f71-6196-4f5b-898f-fbd212244c4a"
-      ],
-      registerid: "6db52c40-8462-4334-9844-e38724831800",
-      registrationNo: "KL-KOCHI-C-000238-CRMRNR-2023-REG",
-      registrationDate: null,
-      applicationNumber: "KL-KOCHI-CRBRCN-ACK-000128-2023",
+    console.log("APPLICATION--DATA",applicationData);
+    let applicationParams = {
+      id: applicationData?.id,
+      tenantid: applicationData?.tenantid,
+      applicationtype: applicationData?.applicationtype,
+      businessservice: applicationData?.businessservice,
+      workflowcode: applicationData?.workflowcode,
+      action: "",
+      applicationNumber: applicationData?.applicationNumber,
+      registrationNo: applicationData?.registrationNo,
+      registerid: applicationData?.registerid,
+      registrationDate: applicationData?.registrationDate,
+      applicationStatus: applicationData?.applicationStatus,
     };
     submitAction({
-      CorrectionDetails: [applicationData],
+      CorrectionDetails: [{...applicationParams}],
     });
   }
-
-  
 
   useEffect(() => {
     if (action) {

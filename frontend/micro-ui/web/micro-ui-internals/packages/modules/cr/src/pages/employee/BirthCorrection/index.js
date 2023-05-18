@@ -50,7 +50,7 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.updateBirthCorrectionAction({ params: { tenantId } });
+  } = Digit.Hooks.cr.updateBirthCorrectionAction(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -59,7 +59,7 @@ const CorrectionApplicationDetails = (props) => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: "CORRECTIONBIRTH",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "CHIEF_REGISTRAR" || "DISTRICT_REGISTRAR",
     config: {enabled:enableApi},
   });
 
@@ -184,7 +184,7 @@ const CorrectionApplicationDetails = (props) => {
     }
     if (mutate) {
       setIsEnableLoader(true);
-      mutate({ filters: JSON.parse(JSON.stringify(data)) }, {
+      mutate(data, {
         onError: (error, variables) => {
           setIsEnableLoader(false);
           setShowToast({ key: "error", error });

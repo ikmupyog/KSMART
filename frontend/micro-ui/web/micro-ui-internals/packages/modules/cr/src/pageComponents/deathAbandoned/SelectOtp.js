@@ -1,10 +1,10 @@
 import React, { useState, Fragment,useEffect } from "react";
-import { ButtonSelector, CardText, FormStep, LinkButton, OTPInput, CardLabelError, Card } from "@egovernments/digit-ui-react-components";
+import {  CardText, FormStep, OTPInput, CardLabelError, Card } from "@egovernments/digit-ui-react-components";
 import useInterval from "../../../../../modules/core/src/hooks/useInterval";
-import Background from "../../../../../modules/core/src/components/Background";
+import { OTP_TIMEOUT } from "../../config/constants";
 
 const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, userType = "citizen" }) => {
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(OTP_TIMEOUT);
 
   useInterval(
     () => {
@@ -15,7 +15,7 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
 
   const handleResendOtp = () => {
     onResend();
-    setTimeLeft(2);
+    setTimeLeft(OTP_TIMEOUT);
   };
 
   if (userType === "employee") {

@@ -89,19 +89,9 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading
         },
       },
       {
-        Header: t("CR_COMMON_COL_APP_DATE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row?.AuditDetails?.createdTime ? convertEpochToDateDMY(row.AuditDetails.createdTime) : ""),
-      },
-      {
         Header: t("CR_COMMON_COL_DOD"),
         disableSortBy: true,
         accessor: (row) => GetCell(row?.InformationDeath?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
-      },
-      {
-        Header: t("TL_APPLICATION_TYPE_LABEL"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
       },
       {
         Header: t("CR_COMMON_DECEASED_NAME"),
@@ -109,9 +99,9 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading
         accessor: (row) => GetCell(row?.InformationDeath?.deceasedFirstNameEn + row?.InformationDeath?.deceasedMiddleNameEn + row?.InformationDeath?.deceasedLastNameEn || "-"),
       },
       {
-        Header: t("CR_COMMON_DEATH_PLACE"),
+        Header: t("Spouse"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.InformationDeath?.deathPlace || "-"),
+        accessor: (row) => GetCell(row?.InformationDeath?.SpouseNameEn || "-"),
       },
       {
         Header: t("Download Certificate"),
