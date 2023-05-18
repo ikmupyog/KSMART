@@ -64,8 +64,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [motherIdFile, setMotherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile3);
   const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
   const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
-  const [docPreview, setDocPreview] = useState(formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null);
-  console.log(docPreview, "docPreview");
+  //const [docPreview, setDocPreview] = useState(formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null);
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
   const [OrderofBirthMissmatchError, setOrderofBirthMissmatchError] = useState(false);
@@ -209,15 +208,15 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     },
     [disptachowner]
   );
-  const fetchFile = async (fileId) => {
-    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
-    const newThumbnails = fileStoreIds.map((key) => {
-      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
-    });
-    console.log({ newThumbnails });
-    return newThumbnails;
-  };
+  // const fetchFile = async (fileId) => {
+  //   const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
+  //   const newThumbnails = fileStoreIds.map((key) => {
+  //     const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+  //     return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+  //   });
+  //   console.log(newThumbnails, "newThumbnails");
+  //   return newThumbnails;
+  // };
   const onSkip = () => onSelect();
   Menu &&
     Menu.map((genderDetails) => {
@@ -307,11 +306,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", aadressFile, Digit.ULBService.getStateId());
-            console.log(response, "response");
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
-              const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setDocPreview(fileDetails);
+              // const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              // setDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -518,7 +516,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         motherIdFile,
         fatherIdFile,
         medicalFile,
-        docPreview,
+        //docPreview,
       });
     }
   };
@@ -911,7 +909,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
-                {docPreview && (
+                {/* {docPreview && (
                   <div className="col-md-2">
                     {_.head(docPreview)?.type === "pdf" ? (
                       <React.Fragment>
@@ -924,7 +922,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                       Preview
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="row">
                 <div className="col-md-6">

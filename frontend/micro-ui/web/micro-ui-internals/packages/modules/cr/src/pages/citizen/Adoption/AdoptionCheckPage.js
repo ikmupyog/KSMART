@@ -929,9 +929,10 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}{" "}
                           {locale === "en_IN"
                             ? AddressBirthDetails?.presentInsideKeralaDistrict?.name
-                            : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}{" "}
+                            : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1035,7 +1036,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaStreetNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1056,6 +1056,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1412,7 +1413,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrLocalityNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1453,6 +1453,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
