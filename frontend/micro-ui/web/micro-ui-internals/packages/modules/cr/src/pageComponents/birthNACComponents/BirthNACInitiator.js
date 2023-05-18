@@ -250,12 +250,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
   function setSelectinitiatorAddress(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
-      setinitiatorAddress(e.target.value.length <= 200 ? e.target.value : e.target.value.substring(0, 200));
+      setinitiatorAddress(e.target.value.length <= 100 ? e.target.value : e.target.value.substring(0, 200));
     }
   }
 
   function setselectCareofApplicant(e) {
-    setcareofapplicant(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setcareofapplicant(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
   }
   function setSelectinitiatorAadhar(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
