@@ -17,6 +17,7 @@ import BPAREGActionModal from "./BPAREGActionModal";
 import BPAActionModal from "./BPAActionModal";
 import NOCActionModal from "./NOCActionModal";
 import BirthCorrectionModal from "./BirthCorrectionModal";
+import MarriageCorrectionModal from "./MarriageCorrectionModal";
 
 const ActionModal = (props) => {
   console.log("businessService" + props?.businessService);
@@ -40,6 +41,9 @@ const ActionModal = (props) => {
   }
   if (props?.businessService.includes("CORRECTIONBIRTH")) {
     return <BirthCorrectionModal {...props} />;
+  }
+  if (props?.businessService.includes("CORRECTIONMARRIAGE")) {
+    return <MarriageCorrectionModal {...props} />;
   }
   if (props?.businessService.includes("ADOPTIONHOME")) {
     return <AdoptionActionModal {...props} />;

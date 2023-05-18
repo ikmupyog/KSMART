@@ -24,48 +24,37 @@ const convertEpochToDate = (dateEpoch) => {
     return null;
   }
 };
-// const getAddress = (address, t) => {
-//   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
-//     address?.landmark ? `${address?.landmark}, ` : ""
-//   }${t(Digit.Utils.pt.getMohallaLocale(address?.locality.code, address?.tenantId))}, ${t(Digit.Utils.pt.getCityLocale(address?.tenantId))}${
-//     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
-//   }`;
-// };
 
-const formatBirthCorrectionDetails = (correctionData,t) =>{
-  console.log("correctioinn data",correctionData);
-  if(correctionData?.length > 0 ){
-     const formattedCorrectionData = correctionData?.map((item)=>{
-      console.log("looped item",item);  
+const formatCorrectionDetails = (correctionData, t) => {
+  if (correctionData?.length > 0) {
+    const formattedCorrectionData = correctionData?.map((item) => {
       const correctionValues = item.correctionFieldValue;
       const correctionTitle = item.correctionFieldName;
-      const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue,t)
-      // correctionValues.map((corr)=>{
-      // console.log("corr-----item",corr);
-     
-      return (
-        {
-          title: t(correctionTitle),
-          asSectionHeader: true,
-          fieldValues: correctionFieldValues,
-        }
-      )
-    // })
-     })
-     console.log("formattedCorrectionData",formattedCorrectionData);
-     return formattedCorrectionData;
-}
-}
+      const correctionFieldValues = getCorrectionFieldValues(item.correctionFieldValue, t);
+      const documentIds = getDocumentIds(item.CorrectionDocument);
 
+      return {
+        title: t(correctionTitle),
+        asSectionHeader: true,
+        fieldValues: correctionFieldValues,
+        documentIds,
+      };
+    });
+    return formattedCorrectionData;
+  }
+};
 
-const getCorrectionFieldValues = (correctionFieldValues,t) =>{
-  const formattedCorrectionvalues =  correctionFieldValues?.map((item)=>{
-   
-     return ({ title: t(item.column), oldValue: item.oldValue ,newValue: item.newValue  })
-  })
-  console.log("returnd correction values==",formattedCorrectionvalues);
+const getDocumentIds = (documentData) => {
+  const documentIds = documentData?.map((item) => item.fileStoreId);
+  return documentIds;
+};
+
+const getCorrectionFieldValues = (correctionFieldValues, t) => {
+  const formattedCorrectionvalues = correctionFieldValues?.map((item) => {
+    return { title: t(item.column), oldValue: item.oldValue, newValue: item.newValue };
+  });
   return formattedCorrectionvalues;
-}
+};
 
 export const CRCorrectionSearch = {
   all: async (tenantId, filters = {}) => {
@@ -73,21 +62,18 @@ export const CRCorrectionSearch = {
     return response;
   },
   birthApplication: async (tenantId, filters = {}) => {
-    console.log("birth resp==",filters);
-    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters});
-   
+    const response = await CRService.CRBirthCorrectionSearch({ tenantId, filters });
+
     return response?.CorrectionApplication?.[0];
   },
   deathApplication: async (tenantId, filters = {}) => {
     const response = await CRService.CRDeathCorrectionSearch({ tenantId, filters });
-    console.log("death resp==",response);
     return response;
   },
   marriageApplication: async (tenantId, filters = {}) => {
-    console.log("marriage resp==",filters);
-    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters});
-    
-    return response?.MarriageDetails[0];
+    const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters });
+
+    return response?.marriageCorrectionDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
@@ -96,42 +82,27 @@ export const CRCorrectionSearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, correctionType) => {
-    console.log("applicationNumber",correctionType,correctionType === "birth");
-    const filter = { applicationNumber };
+    const filter = correctionType === "marriage" ? { applicationNo: applicationNumber } : { applicationNumber };
     let response = [];
-    if(correctionType === "birth"){
-     response = await CRCorrectionSearch.birthApplication(tenantId, filter);
-    } else if(correctionType === "death"){
-      response = await CRCorrectionSearch.deathApplication(tenantId, filter);
-    } else if(correctionType === "marriage") {
+    if (correctionType === "birth") {
       response = await CRCorrectionSearch.birthApplication(tenantId, filter);
+    } else if (correctionType === "death") {
+      response = await CRCorrectionSearch.deathApplication(tenantId, filter);
+    } else if (correctionType === "marriage") {
+      response = await CRCorrectionSearch.marriageApplication(tenantId, filter);
     }
-    console.log("resappp===",response);
 
-    // const propertyDetails =
-    //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
-    //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
-    // if (response?.licenseNumber) {
-    //   const birthNumbers = response?.applicationNumber;
-    //   const filters = { birthNumbers, offset: 0 };
-    //   numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
-    // }
-    let employeeResponse = [];
 
-   
+    let correctionDetails = [];
+    correctionDetails = await formatCorrectionDetails(response?.CorrectionField, t);
 
-    
-    const birthCorrectionDetails =  await formatBirthCorrectionDetails(response?.CorrectionField,t);
-
-    console.log("birthCorrectionDetails==",birthCorrectionDetails);
-  
     return {
       tenantId: response.tenantId,
       // applicationDetails: employeeResponse,
-      applicationDetails: birthCorrectionDetails,
+      applicationDetails: correctionDetails,
       // additionalDetails: response?.additionalDetails,
-      applicationData: response,  
+      applicationData: response,
       numOfApplications: numOfApplications,
     };
   },

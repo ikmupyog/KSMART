@@ -27,6 +27,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   console.log({ isEditMarriage, formData });
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
+  console.log({locale});
   let validation = {};
   let tenantId = "";
   let districtid = null;
@@ -202,6 +204,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   const stateDist = cmbDistrict?.filter((dist) => dist.statecode == Digit.ULBService.getStateId());
 
+  console.log({ stateDist });
+
   const filteredLBType = cmbLBType?.filter((lbType) => lbType?.code === "LB_TYPE_MUNICIPALITY" || lbType?.code === "LB_TYPE_CORPORATION");
 
   const cmbSortedWards = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
@@ -330,7 +334,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //     }
   //   }
   // });
-
+  
   function setSelectmarriageDOM(value) {
     setDifferenceInTime(null);
     setmarriageDOM(value);
@@ -479,7 +483,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       return filteredSubRegistrarOfficeList;
     }
   }
-
 
   useEffect(() => {
     if (!isEditMarriage) {
@@ -720,6 +723,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           setmarriageStreetMlError(false);
           setmarriageStreetEnError(false);
         }
+        stateDist;
       }
       if (marriageStreetMl === null || marriageStreetMl.trim() == "" || marriageStreetMl.trim() == undefined) {
         setmarriageStreetMl("");
@@ -997,7 +1001,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   };
 
-  console.log("Registration", formData);
+  // console.log({filterLBs});
+  // console.log("dssadsadsa"+filterLBs?.city?.localName);
+
+  // console.log("Registration", formData);
 
   if (
     isLoading ||
@@ -1093,7 +1100,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     <Dropdown
                       t={t}
                       isMandatory={true}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? "namelocal" : "name"}
                       option={sortDropdownNames(stateDist ? stateDist : [], "name", t)}
                       // name="marriageDistrictid"
                       // value={marriageDistrictid}
@@ -1110,7 +1117,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     <Dropdown
                       t={t}
                       isMandatory={true}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? "namelocal" : "name"}
                       option={sortDropdownNames(Talukvalues ? Talukvalues : [], "name", t)}
                       name="marriageTalukID"
                       value={marriageTalukID}
@@ -1126,7 +1133,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     </CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? "namelocal" : "name"}
                       isMandatory={true}
                       option={sortDropdownNames(Villagevalues ? Villagevalues : [], "name", t)}
                       name="marriageVillageName"
@@ -1147,7 +1154,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     </CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? "namelocal" : "name"}
                       isMandatory={true}
                       option={sortDropdownNames(filteredLBType ? filteredLBType : [], "name", t)}
                       name="marriageLBtype"
@@ -1164,7 +1171,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     </CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? `${filterLBs?.city?.localName}` : "name"}
                       isMandatory={true}
                       option={sortDropdownNames(filterLBs ? filterLBs : [], "name", t)}
                       name="marriageTenantid"
@@ -1181,7 +1188,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     </CardLabel>
                     <Dropdown
                       t={t}
-                      optionKey="namecmb"
+                      optionKey={locale === "ml_IN" ? "localname" : "name"}
                       isMandatory={true}
                       placeholder={t("CS_COMMON_WARD")}
                       option={cmbSortedWards}
@@ -1201,7 +1208,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     <Dropdown
                       t={t}
                       type={"text"}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? "namelocal" : "name"}
                       option={sortDropdownNames(cmbPlaceType ? cmbPlaceType : [], "name", t)}
                       selected={marriagePlacetype}
                       select={setSelectmarriagePlacetype}
@@ -1327,7 +1334,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                     <Dropdown
                       t={t}
                       type={"text"}
-                      optionKey="name"
+                      optionKey={locale === "ml_IN" ? "namelocal" : "name"}
                       option={sortDropdownNames(cmbTypeOfMarriage ? cmbTypeOfMarriage : [], "name", t)}
                       selected={marriageType}
                       select={setSelectmarriageType}

@@ -1,13 +1,12 @@
-import { Loader, Modal, FormComposer, Toast } from "@egovernments/digit-ui-react-components";
+import { Loader, Modal, FormComposer } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect } from "react";
 
-import { configTLApproverApplication } from "../config";
+import { configBirthApproverApplication } from "../config";
 import * as predefinedConfig from "../config";
 
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
-};
-
+}; 
 const Close = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
     <path d="M0 0h24v24H0V0z" fill="none" />
@@ -23,16 +22,12 @@ const CloseBtn = (props) => {
   );
 };
 
-const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction, actionData, applicationData, businessService, moduleCode, wardcodes }) => {
+const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction, actionData, applicationData, businessService, moduleCode }) => {
   const { data: approverData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
       roles: action?.assigneeRoles?.map?.((e) => ({ code: e })),
       isActive: true,
-      rolecodes: action?.assigneeRoles?.map?.((e) => (e)).join(","),
-      wardcodes: wardcodes
-      // rolecodes: businessService==="PdeTL"? action?.assigneeRoles?.map?.((e) => (e)).join(","):null,
-      // wardcodes: businessService==="PdeTL"? wardcodes?wardcodes:null :null
     },
     { enabled: !action?.isTerminateState }
   );
@@ -44,12 +39,11 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     {
       details: {
         tenantId: Digit.ULBService.getStateId(),
-        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'TL')]" }] }],
+        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'birth-services')]" }] }],
       },
     }
   );
 
-  const [toast, setToast] = useState(false);
   const [config, setConfig] = useState({});
   const [defaultValues, setDefaultValues] = useState({});
   const [approvers, setApprovers] = useState([]);
@@ -98,103 +92,29 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
 
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
-
-    if (applicationData?.correctionId !== null && applicationData?.correctionAppNumber !== null) {
-      applicationData = {
-        id: applicationData?.correctionId,
-        tenantId: applicationData?.tenantId,
-        tradeLicenseId: applicationData?.id,
-        status: action?.applicationStatus,
-        assignUser: !selectedApprover?.uuid ? null : selectedApprover?.uuid,
-        applicationNumber: applicationData?.correctionAppNumber,//"KL-KOCHI-C-000039-BFIFLC-2023-APLN",
-        action: action?.action,
-        applicationType: "CORRECTION",
-        workflowCode: "CorrectionTL",
-        assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
-        wfDocuments: uploadedFile
-          ? [
-            {
-              documentType: action?.action + " DOC",
-              fileName: file?.name,
-              fileStoreId: uploadedFile,
-            },
-          ]
-          : null,
-      };
-      if ((action?.action != "APPROVE") && (action?.applicationStatus != "APPROVED") ) {
-        if((action?.action === "REJECT")&&(action?.applicationStatus === "REJECTED")){
-          submitAction({
-            Licenses: [applicationData],
-          });
-        }
-        if (selectedApprover?.uuid)
-          submitAction({
-            LicenseCorrection: [applicationData],
-          });
-        else {
-          setError(t("Please select Assignee"));
-          setToast(true)
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        }
-      }
-      else {
-        submitAction({
-          LicenseCorrection: [applicationData],
-        });
-      }
-    } else {
-      applicationData = {
-        ...applicationData,
-        action: action?.action,
-        comment: data?.comments,
-        assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
-        // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
-        wfDocuments: uploadedFile
-          ? [
-            {
-              documentType: action?.action + " DOC",
-              fileName: file?.name,
-              fileStoreId: uploadedFile,
-            },
-          ]
-          : null,
-      };
-      if ((action?.action != "APPROVE") && (action?.applicationStatus != "APPROVED")) {
-        if((action?.action === "REJECT")&&(action?.applicationStatus === "REJECTED")){
-          submitAction({
-            Licenses: [applicationData],
-          });
-        }
-        if (selectedApprover?.uuid)
-          submitAction({
-            Licenses: [applicationData],
-          });
-        else {
-          setError(t("Please select Assignee"));
-          setToast(true)
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        }
-      }
-      else {
-        submitAction({
-          Licenses: [applicationData],
-        });
-      }
-    }
-
-
-
-
+    console.log("APPLICATION--DATA",applicationData);
+    let applicationParams = {
+      id: applicationData?.id,
+      tenantid: applicationData?.tenantid,
+      applicationtype: applicationData?.applicationtype,
+      businessservice: applicationData?.businessservice,
+      workflowcode: applicationData?.workflowcode,
+      action: "",
+      applicationNumber: applicationData?.applicationNumber,
+      registrationNo: applicationData?.registrationNo,
+      registerid: applicationData?.registerid,
+      registrationDate: applicationData?.registrationDate,
+      applicationStatus: applicationData?.applicationStatus,
+    };
+    submitAction({
+      CorrectionDetails: [{...applicationParams}],
+    });
   }
 
   useEffect(() => {
     if (action) {
       setConfig(
-        configTLApproverApplication({
+        configBirthApproverApplication({
           t,
           action,
           approvers,
@@ -216,7 +136,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
       actionCancelLabel={t(config.label.cancel)}
       actionCancelOnSubmit={closeModal}
       actionSaveLabel={t(config.label.submit)}
-      actionSaveOnSubmit={() => { }}
+      actionSaveOnSubmit={() => {}}
       // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
       formId="modal-action"
     >
@@ -231,18 +151,9 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           onSubmit={submit}
           defaultValues={defaultValues}
           formId="modal-action"
-        // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
+          // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
         />
       )}
-      <div>
-        {toast && (
-          <Toast
-            error={toast}
-            label={error}
-            onClose={() => setToast(false)}
-          />
-        )}{""}
-      </div>
     </Modal>
   ) : (
     <Loader />
