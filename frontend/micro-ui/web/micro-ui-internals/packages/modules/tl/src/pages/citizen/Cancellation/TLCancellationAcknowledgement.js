@@ -60,8 +60,6 @@ const TLCancellationAcknowledgement = ({ data, datanew, onSuccess }) => {
       setIsInitialRender(false);
       //let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
      // data.tenantId = tenantId1;
-      console.log("resubmit"+resubmit);
-      console.log("isEdit"+isEdit);
       if (!resubmit) {
          let formdata =  convertToTradeCorrection(data,datanew.TradeDetails);   
       //  formdata.LicenseCorrection[0].tenantId = formdata?.LicenseCorrection[0]?.tenantId || tenantId1;

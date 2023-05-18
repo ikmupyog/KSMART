@@ -38,7 +38,7 @@ const CorrectionApplicationDetails = (props) => {
   
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,"birth");
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
@@ -50,7 +50,7 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.updateBirthCorrectionAction({ params: { tenantId } });
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -114,6 +114,7 @@ const CorrectionApplicationDetails = (props) => {
 
   useEffect(() => {
     if (workflowDetails?.data?.applicationBusinessService) {
+      console.log("WRK FLO DETAILS",workflowDetails?.data);
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
@@ -154,6 +155,7 @@ const CorrectionApplicationDetails = (props) => {
   };
 
   const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    console.log("data==submit",data);
     setIsEnableLoader(true);
     if (typeof data?.customFunctionToExecute === "function") {
       data?.customFunctionToExecute({ ...data });
@@ -182,7 +184,7 @@ const CorrectionApplicationDetails = (props) => {
     }
     if (mutate) {
       setIsEnableLoader(true);
-      mutate(data, {
+      mutate({ filters: JSON.parse(JSON.stringify(data)) }, {
         onError: (error, variables) => {
           setIsEnableLoader(false);
           setShowToast({ key: "error", error });
@@ -212,7 +214,7 @@ const CorrectionApplicationDetails = (props) => {
     closeModal();
   };
 
-  
+
   if (
     rolecheck &&
     (applicationDetails?.applicationData?.status === "APPROVED" ||

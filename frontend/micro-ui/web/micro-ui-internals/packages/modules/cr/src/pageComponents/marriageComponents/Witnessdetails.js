@@ -157,10 +157,18 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   const [uniqueId, setUniqueId] = useState(null);
 
   const [brideFilestoreId, setUploadedBrideImageId] = useState(
-    _.isArray(formData?.WitnessDetails?.brideFilestoreId) ? formData?.WitnessDetails?.brideFilestoreId : [formData?.WitnessDetails?.brideFilestoreId]
+    formData?.WitnessDetails?.brideFilestoreId
+      ? _.isArray(formData?.WitnessDetails?.brideFilestoreId)
+        ? formData?.WitnessDetails?.brideFilestoreId
+        : [formData?.WitnessDetails?.brideFilestoreId]
+      : null
   );
   const [groomFilestoreId, setUploadedGroomImageId] = useState(
-    _.isArray(formData?.WitnessDetails?.groomFilestoreId) ? formData?.WitnessDetails?.groomFilestoreId : [formData?.WitnessDetails?.groomFilestoreId]
+    formData?.WitnessDetails?.groomFilestoreId
+      ? _.isArray(formData?.WitnessDetails?.groomFilestoreId)
+        ? formData?.WitnessDetails?.groomFilestoreId
+        : [formData?.WitnessDetails?.groomFilestoreId]
+      : null
   );
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
@@ -524,6 +532,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   async function handleUploadGroom(id) {
+    console.log({ id });
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
     setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
@@ -736,6 +745,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
         brideFilestoreId,
         groomFilestoreId,
         uniqueId,
+        isBackward,
       });
     }
   };

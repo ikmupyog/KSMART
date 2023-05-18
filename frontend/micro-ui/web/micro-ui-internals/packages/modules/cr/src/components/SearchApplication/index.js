@@ -56,6 +56,9 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       setValue("sortBy", args.id)
       setValue("sortOrder", args.desc ? "DESC" : "ASC")
     }, [])
+    useEffect(()=>{
+          console.log("data in correction==",data);
+    },[data])
 
     function onPageSizeChange(e){
         setValue("limit",Number(e.target.value))
@@ -101,20 +104,78 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
        sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
     }
 
+    const goto = (applicationNumber) => {
+    let url ="";
+      if (["CRBRCN"].some(term => applicationNumber?.includes(term))) {
+        url = `/digit-ui/employee/cr/birth-correction-details/${applicationNumber}`;
+      } else {
+        url = `/digit-ui/employee/cr/application-details/${applicationNumber}`
+      }
+      return url;
+    }
+  
+
     //need to get from workflow
     const GetCell = (value) => <span className="cell-text">{value}</span>;
+    const correctionColumns = useMemo( () => ([
+      {
+        Header: t("CR_COMMON_COL_APP_NO"),
+        accessor: "applicationNumber",
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          console.log("row data looped",row?.original);
+          return (
+            <div>
+              <span className="link">
+                <Link onClick={event => handleLinkClick(row.original)} to={goto(row?.original?.applicationNumber)}>
+                  {/* {row.original.applicationNumber} */}
+                  {row?.original?.applicationNumber}
+                </Link>
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        Header: t("CR_COMMON_COL_APP_DATE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+      },
+      {
+          Header: t("CR_COMMON_COL_DOB"),
+          disableSortBy: true,            
+          accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+      },
+      // {
+      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+      //     disableSortBy: true,
+      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+      // },
+      {
+        Header: t("CR_COMMON_COL_MOTHER_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.motherFirstNameEn),
+      
+      },
+      {
+          Header: t("CR_COMMON_COL_FATHER_NAME"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.fatherFirstNameEn),
+      },
+    ]), [] )
     const columns = useMemo( () => ([
         {
           Header: t("CR_COMMON_COL_APP_NO"),
           accessor: "applicationNumber",
           disableSortBy: true,
           Cell: ({ row }) => {
+            console.log("row data looped",row?.original);
             return (
               <div>
                 <span className="link">
-                  <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
+                  <Link onClick={event => handleLinkClick(row.original)} to={goto(row?.original?.applicationNumber)}>
                     {/* {row.original.applicationNumber} */}
-                    {row.original.applicationNumber}
+                    {row?.original?.applicationNumber}
                   </Link>
                 </span>
               </div>
@@ -543,7 +604,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
               data={data}
               totalRecords={count}
               // columns={applicationType?.value =="adoptionsearch"?AdoptionColumns:applicationType?.value =="birthsearch"?columns:[]}
-              columns={applicationType?.value == "adoptionsearch" ? AdoptionColumns : applicationType?.value == "stillbirthsearch" ? StillBirthColumns : applicationType?.value == "bornoutsidebirthsearch" ? BornOutSideBirthColumns  : applicationType?.value === "nacbirthsearch" ? NACBirthColumns: applicationType?.value == "abandonedbirthsearch" ? AbandonedBirthColumns: applicationType?.value == "birthsearch" ? columns : []}
+              columns={applicationType?.value == "adoptionsearch" ? AdoptionColumns : applicationType?.value == "stillbirthsearch" ? StillBirthColumns : applicationType?.value == "bornoutsidebirthsearch" ? BornOutSideBirthColumns  : applicationType?.value === "nacbirthsearch" ? NACBirthColumns: applicationType?.value == "abandonedbirthsearch" ? AbandonedBirthColumns: applicationType?.value == "birthcorrection" ? correctionColumns : applicationType?.value == "birthsearch" ? columns :  []}
               getCellProps={(cellInfo) => {
                 return {
                   style: {

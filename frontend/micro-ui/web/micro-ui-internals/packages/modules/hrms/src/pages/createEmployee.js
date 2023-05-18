@@ -212,7 +212,8 @@ const CreateEmployee = ({userType}) => {
       formData?.SelectEmployeeName?.employeeName &&
       formData?.SelectEmployeeAadhaarNumber?.aadhaarNumber &&
       formData?.SelectEmployeeType?.code &&
-      formData?.SelectEmployeePhoneNumber?.mobileNumber 
+      formData?.SelectEmployeePhoneNumber?.mobileNumber &&
+      formData?.SelectEmployeeId?.code
       &&
       checkfield 
       &&
