@@ -1,4 +1,4 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CardLabelDesc, FormStep, UploadFile, CloseSvg } from "@egovernments/digit-ui-react-components";
 import { find, set } from "lodash";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
@@ -65,10 +65,8 @@ const getStyle = () => {
 }
 
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
-  const [tradesubtype, setTradesubtype] = useState(formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code?.split(".")[2]);
-  //console.log(JSON.stringify(formData?.TradeDetails?.ownersdoc));
-  // const { data: Documentsob = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "ApplicationDocuments");
 
+  const [tradesubtype, setTradesubtype] = useState(formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code?.split(".")[2]);
   let extraStyles = {};
   extraStyles = getStyle();
   const [documentList, setDocumentList] = useState([{ "code": "OWNERIDPROOF", "description": "ProofOfIdentity", "name": "Proof Of Identity" },
@@ -79,7 +77,6 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
   //   { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership","name" : "Proof Of Ownership" },
   //   { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","name" : "Photo" }
   // ]);
-  // console.log("kkk"+documentList);
   let documentListtemp = [
     { "code": "OWNERIDPROOF", "description": "ProofOfIdentity", "name": "Proof Of Identity" },
     { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership", "name": "Proof Of Ownership" },
@@ -99,13 +96,12 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
   const { data: DocumentsProof = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "ApplicationDocuments"); //Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
-  //console.log(JSON.stringify(DocumentsProof?.TradeLicense?.ApplicationDocuments));
   if (DocumentsProof?.TradeLicense?.ApplicationDocuments && docflag) {
     let temp = DocumentsProof?.TradeLicense?.ApplicationDocuments.filter((doclist) => doclist.code === tradesubtype);
-   if(temp?.length>0){
-    documentListtemp.push(...temp[0]?.DocumentList);
-    setDocumentList(documentListtemp);
-   }
+    if (temp?.length > 0) {
+      documentListtemp.push(...temp[0]?.DocumentList);
+      setDocumentList(documentListtemp);
+    }
     setDocflag(false);
   }
   // if(DocumentsProof?TradeLicense?.DocumentList?.length>0){
@@ -150,7 +146,8 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
     if (removeindex === -1) {
       return false;
     };
-    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+    uploadedFiles.splice(removeindex, 1);
+    //setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
   }
 
   function handleDelete(e) {
@@ -160,7 +157,9 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
     if (removeindex === -1) {
       return false;
     };
-    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+    uploadedFiles.splice(removeindex, 1);
+    setUploadedFile(null);
+    //setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
   }
 
   useEffect(() => {
@@ -175,7 +174,14 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
-            if (response?.data?.files?.length > 0) {
+             if (response?.data?.files?.length > 0) {
+              const removeindex = uploadedFiles.findIndex(element => {
+                return element.documentType === docuploadedId
+              });
+              if (removeindex >= 0) {
+                uploadedFiles.splice(removeindex, 1)
+                //setUploadedFiles(!!uploadedFiles.splice(removeindex, 1));
+              }
               const temp = {
                 "documentType": docuploadedId, "description": docuploadedName,
                 "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
@@ -190,7 +196,9 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
               //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
               // }
               uploadedFiles.push(temp);
+
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              setFile(null);
             } else {
               setError(t("PT_FILE_UPLOAD_ERROR"));
             }
@@ -200,6 +208,7 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
       }
     })();
   }, [file, uploadedFiles]);
+
 
   return (
     <React.Fragment>
@@ -257,11 +266,14 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
                                   setUploadedFile(null);
                                 }}
 
-                                message={uploadedFiles?.length > 0 ? (uploadedFiles.find(({ documentType }) => documentType === doc.code) ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)) : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                                message={uploadedFiles?.length > 0 ? (uploadedFiles.find(({ documentType }) => documentType === doc.code) ?
+                                  //   `1 ${t(`TL_ACTION_FILEUPLOADED`)}`+"  iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+                                  uploadedFiles?.find(({ documentType }) => documentType === doc.code)?.name
+                                  : t(`TL_ACTION_NO_FILEUPLOADED`)) : t(`TL_ACTION_NO_FILEUPLOADED`)}
                                 // message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                                 error={error}
                               />
-                            </div>
+                           </div>
                           </td>
                         </div>
                       </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 // import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import ApplicationDetailsTemplate from "./ApplicationContent";
 import cloneDeep from "lodash/cloneDeep";
@@ -14,6 +15,7 @@ import ApplicationDetailsWarningPopup from "../../../../../templates/Application
 
 const CorrectionApplicationDetails = (props) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
@@ -131,7 +133,6 @@ const CorrectionApplicationDetails = (props) => {
     if(applicationDetails?.applicationData?.applicationNumber?.length >0){
       setEnableApi(true)
     }
-    console.log("applicationDetails==",applicationDetails);
   },[applicationDetails])
 
   useEffect(()=>{

@@ -7,7 +7,7 @@ const SelectEmployeeId = ({ t, config, onSelect, formData = {}, userType, regist
   const isEdit = window.location.pathname.includes("/edit/");
   const inputs = [
     {
-      label: "Login ID / Pen No",
+      label: "HR_PEN_NO",
       type: "text",
       name: "code",
       validation: {
