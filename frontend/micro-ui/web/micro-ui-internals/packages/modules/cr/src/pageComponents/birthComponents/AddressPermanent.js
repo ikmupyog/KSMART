@@ -203,7 +203,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
+                                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                                 isMandatory={false}
                                 option={sortDropdownNames(cmbCountry ? cmbCountry : [], "name", t)}
                                 selected={permtaddressCountry}
@@ -219,7 +219,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                                 </CardLabel>
                                 <Dropdown
                                     t={t}
-                                    optionKey={locale === "en_IN" ? "name" : "namelocal"}
+                                    optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                                     isMandatory={false}
                                     option={sortDropdownNames(cmbState ? cmbState : [], "name", t)}
                                     selected={permtaddressStateName}

@@ -124,6 +124,7 @@ const Urls = {
   crcorrection: {
     marriage_correction_search: "/marriage-services/v1/marriagedetails/_searchmarriage",
     marriage_correction_details:"/marriage-services/v1/marriagedetails/_searchmarriagecorrection",
+    marriage_correction_update: "/marriage-services/v1/marriagedetails/_updatemarriagecorrection",
     birth_correction_search: "/birth-services/cr/searchbirthcorrection",
     birth_correction_update: "/birth-services/cr/updatebirthcorrection",
     death_correction_update: "/v1/deathdetails/updatedeathcorrection",

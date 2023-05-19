@@ -270,7 +270,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               </CardLabel>
               <Dropdown
                 t={t}
-                optionKey={locale === "en_IN" ? "name" : "namelocal"}
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}

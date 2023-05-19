@@ -25,7 +25,7 @@ const SelectSubType = ({ t, config, onSelect, value }) => {
 
   const configNew = {
     ...config.texts,
-    ...{ headerCaption: t(`SERVICEDEFS.${complaintType.key.toUpperCase()}`) },
+    ...{ headerCaption: t(`SERVICEDEFS.${complaintType?.key.toUpperCase()}`) },
     ...{ menu: arraySort(menu ? menu : [], "name", t) },
     ...{ optionsKey: "name" },
     ...{ selected: selectedValue },

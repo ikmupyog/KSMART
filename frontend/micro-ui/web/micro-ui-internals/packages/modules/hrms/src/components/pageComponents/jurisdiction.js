@@ -700,10 +700,10 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
     
 
         <LabelFieldPair>
-          <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
+          <CardLabel>{`${t("HR_FUNCTIONAL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
             <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={rolesData && rolesData[0]}
-              select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
+              select={selectrolenew} placeholder={`${t("HR_FUNCTIONAL_ROLE")}`} /></div>
         </LabelFieldPair>
 
         {displayHospital ?
