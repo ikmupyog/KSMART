@@ -1,5 +1,5 @@
 import {
-  Card, CardText, StatusTable, CheckBox, Toast, Accordion, FormStep, ImageViewer
+  Card, CardText, StatusTable, CheckBox, Toast, Accordion, FormStep, ImageViewer, Loader
 } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import PGRTimeline from "../../components/PGRTimeline";
@@ -41,7 +41,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
 
   const { uuid = "" } = Digit.UserService.getUser()?.info;
 
-  const { data: userData = {}, isSuccess = false } = Digit.Hooks.useEmployeeSearch(
+  const { data: userData = {}, isSuccess = false, isLoading = true } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
       roles: [{ code: roleCode }],
@@ -58,6 +58,13 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
     }
   }, [])
 
+  const startToast = () => {
+    setToast(true)
+    setTimeout(() => {
+      setToast(false)
+    }, 2000)
+  }
+
   const fetchImage = async () => {
     setImagesThumbs(null)
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
@@ -72,6 +79,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
 
   function handleDeclaration(e) {
     if (e.target.checked == false) {
+      startToast()
       setDeclarationError(t("PGR_DECLARATION_ERROR"))
       setDeclaration(e.target.checked);
     } else {
@@ -80,13 +88,22 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
   }
 
   const goNext = () => {
-    onSelect({ assignes });
+    if (assignes.length > 0) {
+      onSelect({ assignes });
+    } else {
+      startToast()
+      setDeclarationError(t("PGR_ASSIGNES_ERROR"))
+    }
   };
 
   let userType = "employee"
 
   if (window.location.href.includes("/citizen")) {
     userType = "citizen"
+  }
+
+  if (isLoading) {
+    return <Loader></Loader>;
   }
 
   return (
@@ -249,7 +266,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
 
             {toast && (
               <Toast error={declarationError} onClose={() => setToast(false)}
-                label={declarationError ? declarationError ? t(`PGR_DECLARATION_ERROR`) : setToast(false) : setToast(false)}
+                label={declarationError ? declarationError : setToast(false)}
               />
             )}
             {""}
