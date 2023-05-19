@@ -3,17 +3,19 @@ import { useTranslation } from "react-i18next";
 import ApplicationDetailsTemplate from "../../../../templates/CR/CommonTemplate";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
-import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
 const ApplicationDetails = () => {
   const { t } = useTranslation();
-  const tenantId = Digit.ULBService.getCurrentTenantId();
+  let tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("MARRIAGE45DAYS");
+  const [businessService, setBusinessService] = useState("MARRIAGE45DYS");
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
@@ -77,7 +79,7 @@ const ApplicationDetails = () => {
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
         (data.redirectionUrl = {
-          pathname: `/digit-ui/employee/cr/create-birth/child-details`,
+          pathname: `/digit-ui/employee/cr/cr-marriage-creation/marriage-registration`,
           state: applicationDetails,
         }),
           (data.tenantId = stateId);

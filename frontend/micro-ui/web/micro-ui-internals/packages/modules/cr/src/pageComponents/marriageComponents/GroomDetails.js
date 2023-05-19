@@ -15,8 +15,9 @@ import {
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
+import { sortDropdownNames } from "../../utils";
 
-const GroomDetails = ({ config, onSelect, userType, formData }) => {
+const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   Menu;
   const { t } = useTranslation();
@@ -33,6 +34,23 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_GROOM_GUARDIAN", code: "GUARDIAN" },
   ];
   const groomParent = parentDetails.map((parent) => parent.code);
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      console.log(`{${year}-${month}-${day}}`);
+      return `${year}-${month}-${day}`;
+
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
   let gender = [];
   let cmbMaritalStatus = [];
   Menu &&
@@ -49,12 +67,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     maritalStatus["birth-death-service"].MaritalStatus.map((ob) => {
       cmbMaritalStatus.push(ob);
     });
+
+  const filteredGender = gender?.filter((gen) => gen.code === "MALE" || gen.code === "FEMALE");
+
+  console.log({ gender });
+
   const [isParent, setIsParent] = useState(formData?.GroomDetails?.isParent ? formData?.GroomDetails?.isParent : false);
   const [isGuardian, setIsGuardian] = useState(formData?.GroomDetails?.isGuardian ? formData?.GroomDetails?.isGuardian : false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   // const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
-  const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
+  const [groomDOB, setGroomDOB] = useState(isEditMarriage ? convertEpochToDate(formData?.GroomDetails?.groomDOB) : formData?.GroomDetails?.groomDOB);
   const [groomFathernameEn, setGroomFathernameEn] = useState(
     formData?.GroomDetails?.groomFathernameEn ? formData?.GroomDetails?.groomFathernameEn : ""
   );
@@ -541,10 +564,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
 
   useEffect(() => {
-    if (gender.length > 0) {
-      const selectedGender = gender.filter((option) => option.code === "MALE");
-      console.log({ selectedGender });
-      selectGroomGender(selectedGender[0]);
+    if (!isEditMarriage) {
+      if (gender.length > 0) {
+        const selectedGender = gender.filter((option) => option.code === "MALE");
+        console.log({ selectedGender });
+        selectGroomGender(selectedGender[0]);
+      }
     }
   }, [gender.length]);
 
@@ -945,6 +970,20 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
 
+  useEffect(() => {
+    if (cmbMaritalStatus.length > 0 && gender.length > 0) {
+      const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.GroomDetails?.groomMaritalstatusID);
+      setGroomMaritalstatusID(currentMarritalStatus[0]);
+      console.log({ currentMarritalStatus });
+      const currentGender = gender?.filter((gender) => gender.code === formData?.GroomDetails?.groomGender);
+      selectGroomGender(currentGender[0]);
+      console.log({ currentGender });
+      const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.GroomDetails?.groomIsSpouseLiving);
+      setGroomIsSpouseLiving(currentIsSpouseLiving[0]);
+      console.log({ currentIsSpouseLiving });
+    }
+  }, [cmbMaritalStatus.length, gender.length]);
+
   console.log("Groom", formData);
 
   if (isLoading || isMaritalStatusLoading) {
@@ -1012,109 +1051,111 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div className="row">
-            {groomResidentShip === "INDIAN" ? (
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_GROOM_AADHAR_NO")}`}
-                  {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomAadharNo"
-                  value={groomAadharNo}
-                  onChange={setSelectGroomAadharNo}
-                  onKeyPress={setCheckSpecialChar}
-                  placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
-                  {...(groomResidentShip === "INDIAN" && {
-                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
-                  })}
-                />
-              </div>
-            ) : (
-              <React.Fragment>
-                {groomResidentShip === "NRI" && (
+            <div className="col-md-12">
+              {groomResidentShip === "INDIAN" ? (
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {`${t("CR_GROOM_AADHAR_NO")}`}
+                    {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="groomAadharNo"
+                    value={groomAadharNo}
+                    onChange={setSelectGroomAadharNo}
+                    onKeyPress={setCheckSpecialChar}
+                    placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(groomResidentShip === "INDIAN" && {
+                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CR_AADHAR_NO_ERROR") }),
+                    })}
+                  />
+                </div>
+              ) : (
+                <React.Fragment>
+                  {groomResidentShip === "NRI" && (
+                    <div className="col-md-4">
+                      {" "}
+                      <CardLabel>
+                        {`${t("CR_GROOM_AADHAR_NO")}`}
+                        {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="groomAadharNo"
+                        value={groomAadharNo}
+                        onChange={setSelectGroomAadharNo}
+                        onKeyPress={setCheckSpecialChar}
+                        placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                        inputProps={{
+                          maxLength: 12,
+                        }}
+                        {...(validation = {
+                          pattern: "^([0-9]){12}$",
+                          isRequired: groomResidentShip === "INDIAN" ? true : false,
+                          type: "text",
+                          title: t("CR_AADHAR_NO_ERROR"),
+                        })}
+                      />
+                    </div>
+                  )}
                   <div className="col-md-4">
                     {" "}
                     <CardLabel>
-                      {`${t("CR_GROOM_AADHAR_NO")}`}
-                      {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                      {t("CR_GROOM_PASSPORT_NO")}
+                      {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
                     </CardLabel>
                     <TextInput
                       t={t}
                       isMandatory={false}
                       type={"text"}
                       optionKey="i18nKey"
-                      name="groomAadharNo"
-                      value={groomAadharNo}
-                      onChange={setSelectGroomAadharNo}
-                      onKeyPress={setCheckSpecialChar}
-                      placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                      inputProps={{
-                        maxLength: 12,
-                      }}
-                      {...(validation = {
-                        pattern: "^([0-9]){12}$",
-                        isRequired: groomResidentShip === "INDIAN" ? true : false,
-                        type: "text",
-                        title: t("CR_AADHAR_NO_ERROR"),
+                      name="groomPassportNo"
+                      value={groomPassportNo}
+                      onChange={setSelectGroomPassportNo}
+                      placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
+                      {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                        ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CR_PASSPORT_NO_ERROR") }),
                       })}
                     />
                   </div>
-                )}
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_PASSPORT_NO")}
-                    {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomPassportNo"
-                    value={groomPassportNo}
-                    onChange={setSelectGroomPassportNo}
-                    placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                    {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
-                      ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CR_PASSPORT_NO_ERROR") }),
-                    })}
-                  />
-                </div>
 
-                <div className="col-md-4">
-                  <CardLabel>
-                    {t("CR_GROOM_SOCIAL_SECURITY_NO")}
-                    {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomSocialSecurityNo"
-                    value={groomSocialSecurityNo}
-                    onChange={setSelectGroomSocialSecurityNo}
-                    placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                    {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
-                      ...(validation = {
-                        pattern: "^[A-Z0-9-]{8,12}$",
-                        type: "text",
-                        isRequired: true,
-                        title: t("CR_SOCIAL_SECURITY_NO_ERROR"),
-                      }),
-                    })}
-                  />
-                </div>
-              </React.Fragment>
-            )}
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {t("CR_GROOM_SOCIAL_SECURITY_NO")}
+                      {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomSocialSecurityNo"
+                      value={groomSocialSecurityNo}
+                      onChange={setSelectGroomSocialSecurityNo}
+                      placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
+                      {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                        ...(validation = {
+                          pattern: "^[A-Z0-9-]{8,12}$",
+                          type: "text",
+                          isRequired: true,
+                          title: t("CR_SOCIAL_SECURITY_NO_ERROR"),
+                        }),
+                      })}
+                    />
+                  </div>
+                </React.Fragment>
+              )}
+            </div>
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -1124,257 +1165,264 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_GROOM_FIRST_NAME_EN")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomFirstnameEn"
-                value={groomFirstnameEn}
-                onChange={setSelectGroomFirstnameEn}
-                placeholder={`${t("CR_GROOM_FIRST_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_FIRST_NAME_EN_ERROR") })}
-              />
-            </div>
-
-            <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_MIDDLE_NAME_EN")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomMiddlenameEn"
-                value={groomMiddlenameEn}
-                onChange={setSelectGroomMiddlenameEn}
-                placeholder={`${t("CR_GROOM_MIDDLE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_MIDDLE_NAME_EN_ERROR") })}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_LAST_NAME_EN")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomLastnameEn"
-                value={groomLastnameEn}
-                onChange={setSelectGroomLastnameEn}
-                placeholder={`${t("CR_GROOM_LAST_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_LAST_NAME_EN_ERROR") })}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_GROOM_MOBILE_NO")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomMobile"
-                value={groomMobile}
-                onChange={setSelectGroomMobile}
-                placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_MOBILE_NO_ERROR") })}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_GROOM_FIRST_NAME_ML")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomFirstnameMl"
-                value={groomFirstnameMl}
-                onChange={setSelectGroomFirstnameMal}
-                placeholder={`${t("CR_GROOM_FIRST_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
-                  type: "text",
-                  title: t("CR_FIRST_NAME_ML_ERROR"),
-                })}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_MIDDLE_NAME_ML")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomMiddlenameMl"
-                value={groomMiddlenameMl}
-                onChange={setSelectGroomMiddlenameMal}
-                placeholder={`${t("CR_GROOM_MIDDLE_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
-                  type: "text",
-                  title: t("CR_MIDDLE_NAME_ML_ERROR"),
-                })}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_LAST_NAME_ML")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomLastnameMl"
-                value={groomLastnameMl}
-                onChange={setSelectGroomLastnameMal}
-                placeholder={`${t("CR_GROOM_LAST_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
-                  type: "text",
-                  title: t("CR_LAST_NAME_ML_ERROR"),
-                })}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_GROOM_EMAIL")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"email"}
-                optionKey="i18nKey"
-                name="groomEmailid"
-                value={groomEmailid}
-                onChange={setSelectGroomEmailid}
-                placeholder={`${t("CR_GROOM_EMAIL")}`}
-                //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_GROOM_GENDER")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={true}
-                option={gender}
-                selected={groomGender}
-                select={setselectGroomGender}
-                placeholder={`${t("CR_GROOM_GENDER")}`}
-                {...(validation = { isRequired: true })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_GROOM_DATE_OF_BIRTH")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <DatePicker
-                date={groomDOB}
-                name="groomDOB"
-                max={moment().subtract(21, "year").format("YYYY-MM-DD")}
-                //max={convertEpochToDate(new Date())}
-                onChange={setselectGroomDOB}
-                placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
-                {...(validation = {
-                  pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                  isRequired: true,
-                  type: "text",
-                  title: t("CR_INVALID_DATE"),
-                })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_GROOM_AGE")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomAge"
-                value={groomAge}
-                disable={true}
-                onChange={setSelectGroomAge}
-                placeholder={`${t("CR_GROOM_AGE")}`}
-                {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CR_GROOM_MARITAL_STATUS")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>{" "}
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbMaritalStatus}
-                selected={groomMaritalstatusID}
-                select={setSelectGroomMaritalstatusID}
-                placeholder={`${t("CR_GROOM_MARITAL_STATUS")}`}
-                {...(validation = { isRequired: true })}
-              />
-            </div>
-            {groomMaritalstatusID?.code === "MARRIED" && (
-              <div className="col-md-4">
+            <div className="col-md-12">
+              <div className="col-md-3">
                 <CardLabel>
-                  {t("CR_ANY_SPOUSE_LIVING")}
+                  {t("CR_GROOM_FIRST_NAME_EN")}
                   <span className="mandatorycss">*</span>
-                </CardLabel>{" "}
-                <Dropdown
-                  t={t}
-                  optionKey="i18nKey"
-                  isMandatory={false}
-                  option={cmbSpouseLiving}
-                  selected={groomIsSpouseLiving}
-                  select={setSelectGroomSpouseLiving}
-                  placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}
-                  {...(validation = { isRequired: true })}
-                />
-              </div>
-            )}
-            {groomMaritalstatusID?.code === "MARRIED" && groomIsSpouseLiving?.code && (
-              <div className="col-md-4">
-                <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
+                </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
-                  name="groomNoOfSpouse"
-                  value={groomNoOfSpouse}
-                  onChange={setSelectGroomNoOfSpouse}
-                  placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
-                  {...(validation = { pattern: "^([0-3]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
+                  name="groomFirstnameEn"
+                  value={groomFirstnameEn}
+                  onChange={setSelectGroomFirstnameEn}
+                  placeholder={`${t("CR_GROOM_FIRST_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_FIRST_NAME_EN_ERROR") })}
                 />
               </div>
-            )}
+              <div className="col-md-3">
+                <CardLabel>{t("CR_GROOM_MIDDLE_NAME_EN")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomMiddlenameEn"
+                  value={groomMiddlenameEn}
+                  onChange={setSelectGroomMiddlenameEn}
+                  placeholder={`${t("CR_GROOM_MIDDLE_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_MIDDLE_NAME_EN_ERROR") })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_GROOM_LAST_NAME_EN")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomLastnameEn"
+                  value={groomLastnameEn}
+                  onChange={setSelectGroomLastnameEn}
+                  placeholder={`${t("CR_GROOM_LAST_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_LAST_NAME_EN_ERROR") })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_GROOM_MOBILE_NO")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomMobile"
+                  value={groomMobile}
+                  onChange={setSelectGroomMobile}
+                  placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
+                  {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_MOBILE_NO_ERROR") })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_GROOM_FIRST_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomFirstnameMl"
+                  value={groomFirstnameMl}
+                  onChange={setSelectGroomFirstnameMal}
+                  placeholder={`${t("CR_GROOM_FIRST_NAME_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_FIRST_NAME_ML_ERROR"),
+                  })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_GROOM_MIDDLE_NAME_ML")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomMiddlenameMl"
+                  value={groomMiddlenameMl}
+                  onChange={setSelectGroomMiddlenameMal}
+                  placeholder={`${t("CR_GROOM_MIDDLE_NAME_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: false,
+                    type: "text",
+                    title: t("CR_MIDDLE_NAME_ML_ERROR"),
+                  })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_GROOM_LAST_NAME_ML")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomLastnameMl"
+                  value={groomLastnameMl}
+                  onChange={setSelectGroomLastnameMal}
+                  placeholder={`${t("CR_GROOM_LAST_NAME_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: false,
+                    type: "text",
+                    title: t("CR_LAST_NAME_ML_ERROR"),
+                  })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_GROOM_EMAIL")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"email"}
+                  optionKey="i18nKey"
+                  name="groomEmailid"
+                  value={groomEmailid}
+                  onChange={setSelectGroomEmailid}
+                  placeholder={`${t("CR_GROOM_EMAIL")}`}
+                  //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                  {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_GROOM_GENDER")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={true}
+                  option={sortDropdownNames(filteredGender ? filteredGender : [], "code", t)}
+                  selected={groomGender}
+                  select={setselectGroomGender}
+                  placeholder={`${t("CR_GROOM_GENDER")}`}
+                  {...(validation = { isRequired: true })}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_GROOM_DATE_OF_BIRTH")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <DatePicker
+                  date={groomDOB}
+                  name="groomDOB"
+                  max={moment().subtract(21, "year").format("YYYY-MM-DD")}
+                  //max={convertEpochToDate(new Date())}
+                  onChange={setselectGroomDOB}
+                  placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
+                  {...(validation = {
+                    pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_INVALID_DATE"),
+                  })}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_GROOM_AGE")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomAge"
+                  value={groomAge}
+                  disable={true}
+                  onChange={setSelectGroomAge}
+                  placeholder={`${t("CR_GROOM_AGE")}`}
+                  {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CR_GROOM_MARITAL_STATUS")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>{" "}
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={sortDropdownNames(cmbMaritalStatus ? cmbMaritalStatus : [], "name", t)}
+                  selected={groomMaritalstatusID}
+                  select={setSelectGroomMaritalstatusID}
+                  placeholder={`${t("CR_GROOM_MARITAL_STATUS")}`}
+                  {...(validation = { isRequired: true })}
+                />
+              </div>
+              {groomMaritalstatusID?.code === "MARRIED" && (
+                <div className="col-md-4">
+                  <CardLabel>
+                    {t("CR_ANY_SPOUSE_LIVING")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
+                  <Dropdown
+                    t={t}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    option={cmbSpouseLiving}
+                    selected={groomIsSpouseLiving}
+                    select={setSelectGroomSpouseLiving}
+                    placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}
+                    {...(validation = { isRequired: true })}
+                  />
+                </div>
+              )}
+              {groomMaritalstatusID?.code === "MARRIED" && groomIsSpouseLiving?.code && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="groomNoOfSpouse"
+                    value={groomNoOfSpouse}
+                    onChange={setSelectGroomNoOfSpouse}
+                    placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
+                    {...(validation = { pattern: "^([0-3]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -1410,121 +1458,125 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           {groomParentGuardian === "PARENT" && (
             <div>
               <div className="row">
-                <div className="col-md-4">
-                  <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomFatherAadharNo"
-                    value={groomFatherAadharNo}
-                    onChange={setSelectGroomFatherAdharNo}
-                    onKeyPress={setCheckSpecialChar}
-                    placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_FATHER_NAME_EN")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomFathernameEn"
-                    value={groomFathernameEn}
-                    onChange={setSelectGroomFathernameEn}
-                    placeholder={`${t("CR_GROOM_FATHER_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_FATHER_NAME_EN_ERROR") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_FATHER_NAME_ML")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomFathernameMl"
-                    value={groomFathernameMl}
-                    onChange={setSelectGroomFathernameMal}
-                    placeholder={`${t("CR_GROOM_FATHER_NAME_ML")}`}
-                    {...(validation = {
-                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_FATHER_NAME_ML_ERROR"),
-                    })}
-                  />
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomFatherAadharNo"
+                      value={groomFatherAadharNo}
+                      onChange={setSelectGroomFatherAdharNo}
+                      onKeyPress={setCheckSpecialChar}
+                      placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_FATHER_NAME_EN")}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomFathernameEn"
+                      value={groomFathernameEn}
+                      onChange={setSelectGroomFathernameEn}
+                      placeholder={`${t("CR_GROOM_FATHER_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_FATHER_NAME_EN_ERROR") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_FATHER_NAME_ML")}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomFathernameMl"
+                      value={groomFathernameMl}
+                      onChange={setSelectGroomFathernameMal}
+                      placeholder={`${t("CR_GROOM_FATHER_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: true,
+                        type: "text",
+                        title: t("CR_FATHER_NAME_ML_ERROR"),
+                      })}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomMotherAadharNo"
-                    value={groomMotherAadharNo}
-                    onChange={setSelectGroomMotherAdharNo}
-                    onKeyPress={setCheckSpecialChar}
-                    placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_MOTHER_NAME_EN")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomMothernameEn"
-                    value={groomMothernameEn}
-                    onChange={setSelectGroomMothernameEn}
-                    placeholder={`${t("CR_GROOM_MOTHER_NAME_EN")}`}
-                    {...(validation = { isRequired: true })}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_MOTHER_NAME_EN_ERROR") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_MOTHER_NAME_ML")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomMothernameMl"
-                    value={groomMothernameMl}
-                    onChange={setSelectGroomMothernameMal}
-                    placeholder={`${t("CR_GROOM_MOTHER_NAME_ML")}`}
-                    {...(validation = {
-                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_MOTHER_NAME_ML_ERROR"),
-                    })}
-                  />
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomMotherAadharNo"
+                      value={groomMotherAadharNo}
+                      onChange={setSelectGroomMotherAdharNo}
+                      onKeyPress={setCheckSpecialChar}
+                      placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_MOTHER_NAME_EN")}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomMothernameEn"
+                      value={groomMothernameEn}
+                      onChange={setSelectGroomMothernameEn}
+                      placeholder={`${t("CR_GROOM_MOTHER_NAME_EN")}`}
+                      {...(validation = { isRequired: true })}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_MOTHER_NAME_EN_ERROR") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_MOTHER_NAME_ML")}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomMothernameMl"
+                      value={groomMothernameMl}
+                      onChange={setSelectGroomMothernameMal}
+                      placeholder={`${t("CR_GROOM_MOTHER_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: true,
+                        type: "text",
+                        title: t("CR_MOTHER_NAME_ML_ERROR"),
+                      })}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1532,61 +1584,63 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           {groomParentGuardian === "GUARDIAN" && (
             <div>
               <div className="row">
-                <div className="col-md-4">
-                  <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomGuardianAadharNo"
-                    value={groomGuardianAadharNo}
-                    onChange={setSelectGroomGardianAdhar}
-                    onKeyPress={setCheckSpecialChar}
-                    placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
-                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_GUARDIAN_NAME_EN")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomGuardiannameEn"
-                    value={groomGuardiannameEn}
-                    onChange={setSelectGroomGuardiannameEn}
-                    placeholder={`${t("CR_GROOM_GUARDIAN_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_GUARDIAN_NAME_EN_ERROR") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {t("CR_GROOM_GUARDIAN_NAME_ML")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="groomGuardiannameMl"
-                    value={groomGuardiannameMl}
-                    onChange={setSelectGroomGuardiannameMal}
-                    placeholder={`${t("CR_GROOM_GUARDIAN_NAME_ML")}`}
-                    {...(validation = {
-                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_GUARDIAN_NAME_ML_ERROR"),
-                    })}
-                  />
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomGuardianAadharNo"
+                      value={groomGuardianAadharNo}
+                      onChange={setSelectGroomGardianAdhar}
+                      onKeyPress={setCheckSpecialChar}
+                      placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_AADHAR_NO_ERROR") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_GUARDIAN_NAME_EN")}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomGuardiannameEn"
+                      value={groomGuardiannameEn}
+                      onChange={setSelectGroomGuardiannameEn}
+                      placeholder={`${t("CR_GROOM_GUARDIAN_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_GUARDIAN_NAME_EN_ERROR") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_GUARDIAN_NAME_ML")}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomGuardiannameMl"
+                      value={groomGuardiannameMl}
+                      onChange={setSelectGroomGuardiannameMal}
+                      placeholder={`${t("CR_GROOM_GUARDIAN_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: true,
+                        type: "text",
+                        title: t("CR_GUARDIAN_NAME_ML_ERROR"),
+                      })}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

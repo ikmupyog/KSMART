@@ -120,6 +120,13 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
     setMedicalAttensionSub(value);
   }
 
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+
   function setSelectOrderofChildren(e) {
     if (e.target.value.trim().length === 3) {
       return false;
@@ -422,10 +429,11 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
                   optionKey="i18nKey"
                   name="orderofChildren"
                   value={orderofChildren}
+                  onKeyPress={setCheckSpecialChar}
                   onChange={setSelectOrderofChildren}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
-                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
+                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                 />
               </div>
             </div>

@@ -132,7 +132,10 @@ function ApplicationContent({
   };
 
   const deathNACurl = window.location.href.includes("application-deathnacdetails") ? true : false;
-  const birthNACurl = window.location.href.includes("application-birthnacdetails") ? true : false;
+  const { roles: userRoles,} = Digit.UserService.getUser().info; 
+  
+  const isLocalRegistrator = userRoles[0]?.code === "BND_LOCAL_REGISTRAR" ? true : false;
+  const birthNACurl = window.location.href.includes("application-nacbirth") ? true : false;
 
   const getMainDivStyles = () => {
     if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
@@ -169,6 +172,7 @@ function ApplicationContent({
         return { image: key.url, key: key.id };
       }
     });
+    console.log({newdocuments})
     setDocuments(newdocuments);
   };
 
@@ -294,12 +298,12 @@ function ApplicationContent({
               )}
             </React.Fragment>
           ))}
-          {deathNACurl && (
+          {deathNACurl && isLocalRegistrator && (
             <div style={{ marginTop: "50px" }}>
               <div className="row">
                 <div className="col-md-6">
                   <h1>
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NIA / NAC ?")}`}</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IS_NAC_OR_NIA")}`}</span>{" "}
                   </h1>
                 </div>
                 <div className="col-md-6">
@@ -330,7 +334,7 @@ function ApplicationContent({
               <div className="row">
                 <div className="col-md-6">
                   <h1>
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NIA / NAC ?")}`}</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IS_NAC_OR_NIA")}`}</span>{" "}
                   </h1>
                 </div>
                 <div className="col-md-6">

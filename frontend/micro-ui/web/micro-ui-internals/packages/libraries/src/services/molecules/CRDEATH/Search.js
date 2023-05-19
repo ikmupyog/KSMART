@@ -398,6 +398,7 @@ export const CRDeathsearch = {
     //   title: "CR_ADDRESS_INFORMATION_HEADER",
     //   values: [
 
+
     const FamilyInformationDeath = {
       title: "CR_FAMILY_DETAILS",
       values: [
@@ -408,6 +409,7 @@ export const CRDeathsearch = {
             response?.FamilyInformationDeath?.SpouseNameML ? response?.FamilyInformationDeath?.SpouseNameML:"CR_NOT_RECORDED"
         },
         { title: "CR_AADHAR", value: response?.FamilyInformationDeath?.SpouseAadhaar || "CR_NOT_RECORDED" },
+        { title: "CR_SPOUSE_AGE", value: response?.FamilyInformationDeath?.spouseAge || "NA" },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
           value: response?.FamilyInformationDeath?.FatherNameEn + " / " + response?.FamilyInformationDeath?.FatherNameMl || "CR_NOT_RECORDED",

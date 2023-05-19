@@ -1974,7 +1974,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     date={AdoptionDecreOrderDate}
                     name="adoptdateoforderdecree"
                     max={convertEpochToDate(new Date())}
-                    //min={convertEpochToDate("1900-01-01")}
+                    min={convertEpochToDate(new Date(childDOB))}
                     onChange={setSelectDeeOrderDate}
                     disabled={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
                     //  inputFormat="DD-MM-YYYY"
@@ -2032,7 +2032,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     {...(validation = {
                       pattern: "^[0-9`' ]*$",
                       isRequired: AdoptionDecreOrderNo == "" ? true : false,
-                      type: "text",
+                      type: "number",
                       title: t("CR_INVALID_ADOPTION_DEED_NO"),
                     })}
                   />
@@ -2046,7 +2046,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     date={AdoptionDeedRegDate}
                     name="adoptdateoforderdeed"
                     max={convertEpochToDate(new Date())}
-                    //min={convertEpochToDate("1900-01-01")}
+                    min={convertEpochToDate(new Date(childDOB))}
                     onChange={setSelectDeedRegDate}
                     disabled={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
                     //  inputFormat="DD-MM-YYYY"

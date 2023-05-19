@@ -10,7 +10,7 @@ const BrideAddressSameAsAbove = ({
   formData,
   isPrsentAddress,
   setIsPrsentAddress,
-  isEditBirth = false,
+  isEditMarriage = false,
   isEditDeath = false,
   isEditStillBirth = false,
   isEditBirthNAC = false,
@@ -177,7 +177,7 @@ const BrideAddressSameAsAbove = ({
   const { t } = useTranslation();
   let validation = {};
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 
@@ -266,6 +266,48 @@ const BrideAddressSameAsAbove = ({
       setadrsPermntOutsideIndiaCityTown("");
       setPermantpostCode("");
     }
+  }
+
+  if (isPrsentAddress && isEditMarriage) {
+    setpermtaddressCountry(presentaddressCountry);
+    setpermtaddressStateName(presentaddressStateName);
+    setCountryValuePermanent(countryValuePermanent);
+    setValuePermanent(valuePermanent);
+    setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
+    setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
+    setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
+    setpermntInKeralaAdrVillage(presentInsideKeralaVillage);
+    setpermntInKeralaAdrPostOffice(presentInsideKeralaPostOffice);
+    setpermntInKeralaAdrPincode(presentInsideKeralaPincode);
+    setpermntInKeralaAdrHouseNameEn(presentInsideKeralaHouseNameEn);
+    setpermntInKeralaAdrHouseNameMl(presentInsideKeralaHouseNameMl);
+    setpermntInKeralaAdrLocalityNameEn(presentInsideKeralaLocalityNameEn);
+    setpermntInKeralaAdrLocalityNameMl(presentInsideKeralaLocalityNameMl);
+    setpermntInKeralaAdrStreetNameEn(presentInsideKeralaStreetNameEn);
+    setpermntInKeralaAdrStreetNameMl(presentInsideKeralaStreetNameMl);
+    setpermntInKeralaWardNo(presentWardNo);
+    setpermntOutsideKeralaDistrict(presentOutsideKeralaDistrict);
+    setpermntOutsideKeralaTaluk(presentOutsideKeralaTaluk);
+    setpermntOutsideKeralaCityVilgeEn(presentOutsideKeralaCityVilgeEn);
+    setpermntOutsideKeralaVillage(presentOutsideKeralaVillage);
+    setpermntOutsideKeralaPincode(presentOutsideKeralaPincode);
+    setpermntOutsideKeralaHouseNameEn(presentOutsideKeralaHouseNameEn);
+    setpermntOutsideKeralaHouseNameMl(presentOutsideKeralaHouseNameMl);
+    setpermntOutsideKeralaLocalityNameEn(presentOutsideKeralaLocalityNameEn);
+    setpermntOutsideKeralaLocalityNameMl(presentOutsideKeralaLocalityNameMl);
+    setpermntOutsideKeralaStreetNameEn(presentOutsideKeralaStreetNameEn);
+    setpermntOutsideKeralaStreetNameMl(presentOutsideKeralaStreetNameMl);
+    setpermntoutsideKeralaPostOfficeEn(presentOutsideKeralaPostOfficeEn);
+    setpermntoutsideKeralaPostOfficeMl(presentOutsideKeralaPostOfficeMl);
+    setadrsPermntOutsideIndiaLineoneEn(presentOutSideIndiaAdressEn);
+    setadrsPermntOutsideIndiaLineoneMl(presentOutSideIndiaAdressMl);
+    setadrsPermntOutsideIndiaLinetwoEn(presentOutSideIndiaAdressEnB);
+    setadrsPermntOutsideIndiaLinetwoMl(presentOutSideIndiaAdressMlB);
+    setPermntOutsideIndiaprovinceEn(presentOutSideIndiaProvinceEn);
+    setPermntOutsideIndiaprovinceMl(presentOutSideIndiaProvinceMl);
+    setadrsPermntOutsideIndiaVillage(presentOutSideIndiaadrsVillage);
+    setadrsPermntOutsideIndiaCityTown(presentOutSideIndiaadrsCityTown);
+    setPermantpostCode(presentOutSideIndiaPostCode);
   }
 
   const goNext = () => {

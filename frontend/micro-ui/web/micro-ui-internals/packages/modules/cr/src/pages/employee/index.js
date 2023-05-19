@@ -265,6 +265,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const CreateBornOutsideEmp = Digit?.ComponentRegistryService?.getComponent("CreateBornOutsideEmp");
   const CreateNACBirth = Digit?.ComponentRegistryService?.getComponent("CreateNACBirth");
   const CreateAdoption = Digit?.ComponentRegistryService?.getComponent("CRCreateAdoptions");
+  const CreateMarriageRegistrationEmp = Digit?.ComponentRegistryService?.getComponent("CreateMarriageRegistrationEmp");
 
   const CreateDeathEmp = Digit?.ComponentRegistryService?.getComponent("CreateDeathEmp");
   const Response = Digit?.ComponentRegistryService?.getComponent("CRResponse");
@@ -290,6 +291,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/create-bornoutsidebirth`} component={CreateBornOutsideEmp} />
           <PrivateRoute path={`${path}/create-nacbirthsearch`} component={CreateNACBirth} />
           <PrivateRoute path={`${path}/create-adoption`} component={CreateAdoption} />
+          <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistrationEmp} />
 
           <PrivateRoute path={`${path}/create-death`} component={CreateDeathEmp} />
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />

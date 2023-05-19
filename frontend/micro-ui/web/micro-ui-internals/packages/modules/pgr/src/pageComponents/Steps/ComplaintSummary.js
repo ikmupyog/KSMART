@@ -35,7 +35,22 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
     anonymous = true
   } = value;
 
-  const tenantId = city_complaint.code;
+  const tenantId = city_complaint?.code || "kl";
+
+  const roleCode = complaintType?.deptCode == "HTH" ? "WARD_JHI" : "WARD_OVERSEER"
+
+  const { uuid = "" } = Digit.UserService.getUser()?.info;
+
+  const { data: userData = {}, isSuccess = false } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: [{ code: roleCode }],
+      wardcodes: locality_complaint?.code || "",
+      uuid: uuid
+    }
+  );
+
+  const assignes = userData?.Employees?.map(e => e.uuid) || []
 
   useEffect(() => {
     if (uploadedImages?.length > 0) {
@@ -65,7 +80,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
   }
 
   const goNext = () => {
-    onSelect();
+    onSelect({ assignes });
   };
 
   let userType = "employee"
@@ -78,7 +93,7 @@ const ComplaintSummary = ({ t, config, onSelect, value }) => {
     <React.Fragment>
       {userType == "citizen" ? <PGRTimeline currentStep={7} /> : null}
       {userType == "employee" ? <EmpTimeLine currentStep={6} /> : null}
-      <FormStep config={config} onSelect={goNext} isDisabled={!declaration}>
+      <FormStep config={config} onSelect={goNext} isDisabled={!declaration && isSuccess}>
         <Card>
           <Accordion expanded={true} title={t("CS_ADDCOMPLAINT_DETAILS")}
             content={<StatusTable >
