@@ -15,6 +15,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
@@ -149,7 +150,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
       setvehicleDesDetailsEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -189,7 +190,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 isMandatory={true}
                 option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
                 selected={vehicleType}
@@ -311,7 +312,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="hospitalName"
+                optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "name"}
                 isMandatory={true}
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={setadmittedHospitalEn}
@@ -347,7 +348,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
                 onChange={setSelectVehicleOtherDetailsEn}
                 placeholder={`${t("CR_DESCRIPTION")}`}
                 disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
+                {...(validation = { pattern: "^[a-zA-Z,-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
               />
             </div>
           </div>
