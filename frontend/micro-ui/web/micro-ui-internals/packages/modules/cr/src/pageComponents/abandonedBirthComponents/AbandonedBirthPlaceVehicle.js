@@ -15,6 +15,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
@@ -69,6 +70,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
       cmbLB.push(ob);
     });
     let currentLB=[];
+    const sortWardList = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
   useEffect(() => {
 
     if (isInitialRender) {
@@ -189,7 +191,8 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
             <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              // optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               isMandatory={true}
               option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
               selected={vehicleType}
@@ -311,7 +314,9 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
             <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
-              optionKey="hospitalName"
+              // optionKey="hospitalName"
+              optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "hospitalName"}
+
               isMandatory={true}
               option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
               selected={setadmittedHospitalEn}
@@ -328,7 +333,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
             <Dropdown
               t={t}
               optionKey="namecmb"
-              option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+              option={sortWardList}
               selected={wardNo}
               select={setSelectWard}
               placeholder={`${t("CS_COMMON_WARD")}`}
