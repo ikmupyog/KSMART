@@ -30,21 +30,24 @@ const SearchDeathFields = ({ register, control, reset, tenantId, previousPage, t
             <SearchField>
                 <label>
                 {" "}
-                <span className="mandatorycss">*</span>
                 {t("CR_SEARCH_DECEASED_NAME")}
+                <span className="mandatorycss">*</span>
                 </label>
                 <TextInput
                 name="fullName"
                 placeholder={`${t("CR_SEARCH_DECEASED_NAME")}`}
                 inputRef={register({})}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TEMPLATE_INVALID", { type: t("DC_NAME_DECEASED") }) })}
                 />
             </SearchField>
             <SearchField>
                 <label> 
                     {/* <span className="mandatorycss">*</span> */}
-                    {t("CR_DATE_OF_DEATH")}</label>
+                    {t("CR_DATE_OF_DEATH")}
+                    <span className="mandatorycss">*</span>
+                    </label>
                 <Controller
-                    render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_DATE_OF_DEATH") })} />}
+                    render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, title: t("CR_DATE_OF_DEATH") })} />}
                     name="DeathDate"
                     control={control}
                 />
@@ -53,12 +56,15 @@ const SearchDeathFields = ({ register, control, reset, tenantId, previousPage, t
                 <label>
                     {/* <span className="mandatorycss">*</span> */}
                     {t("CR_GENDER")}
+                    <span className="mandatorycss">*</span>
                 </label>
                 <Controller
                     control={control}
                     name="deceasedGender"
                     render={(props) => (
                         <Dropdown
+                            isMandatory={true}
+                            
                             selected={props.value}
                             select={props.onChange}
                             onBlur={props.onBlur}
@@ -66,7 +72,7 @@ const SearchDeathFields = ({ register, control, reset, tenantId, previousPage, t
                             optionKey="coGenderOptionsde"
                             t={t}
                             placeholder={`${t("CR_GENDER")}`}
-                            {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
+                            {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                         />
                     )}
                 />

@@ -66,7 +66,7 @@ const ApplicationDetails = () => {
     if (workflowDetails?.data?.applicationBusinessService) {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
-  }, [workflowDetails.data]);
+  }, [workflowDetails]);
 
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];

@@ -38,7 +38,7 @@ console.log("api filters==",tenantId, filter);
 export const useMarriageCorrectionApplicationDetail = ({ tenantId, filter,config={}}) => {
   console.log("api filters==",tenantId, filter);
     const resp =  useQuery(
-      ["CR_MARRIAGE_CORRECTION_APPLICATION_SEARCH", "CRsearch", filter?.applicationNumber],
+      ["CR_MARRIAGE_CORRECTION_APPLICATION_SEARCH", "CRsearch", ...Object.keys(filter)?.map( e => filter?.[e] )],
       () => CRService.marriageCorrectionSearch({tenantId, filter}),
       config
     );

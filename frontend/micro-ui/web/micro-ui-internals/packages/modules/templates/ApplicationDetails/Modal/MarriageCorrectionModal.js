@@ -93,25 +93,24 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
 
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
-    applicationData = {
-      tenantid: "kl.cochin",
-      applicationType: "corr",
-      id: "72e35485-1e71-420a-a541-5e79f995d9e0",
+    console.log("APPLICATION--DATA",applicationData);
+    let applicationParams = {
+      tenantid: applicationData?.tenantid,
+      applicationType: applicationData?.applicationType,
+      id: applicationData?.id,
       moduleCode: "CRMRCR",
       businessservice: "CR",
       workflowcode: "CORRECTIONMARRIAGE",
       isWorkflow:true,
-      action: "PAY",
-      assignee: [
-          "da6e1f71-6196-4f5b-898f-fbd212244c4a"
-      ],
-      registerid: "6db52c40-8462-4334-9844-e38724831800",
-      registrationNo: "KL-KOCHI-C-000238-CRMRNR-2023-REG",
+      action: action?.action,
+      assignee: [],
+      registerid: applicationData?.id,
+      registrationNo: applicationData?.registrationno,
       registrationDate: null,
-      applicationNumber: "KL-KOCHI-CRBRCN-ACK-000128-2023",
+      applicationNumber: applicationData?.applicationNumber,
     };
     submitAction({
-      CorrectionDetails: [applicationData],
+      CorrectionDetails: [{ ...applicationParams }],
     });
   }
 
