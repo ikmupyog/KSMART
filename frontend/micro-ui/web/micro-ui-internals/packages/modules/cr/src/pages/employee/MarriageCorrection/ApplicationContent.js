@@ -26,7 +26,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     const [imagesThumbs, setImagesThumbs] = useState([]);
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getStateId();
-    console.log("applicationDetails in content==", applicationDetails);
 
     const marriageFieldLabels = {
         marriageDOM: "CR_DATE_OF_MARRIAGE",
@@ -150,7 +149,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
             };
             return tempObj;
           });
-          console.log("formattedImageThumbs ===", formattedImageThumbs);
         setImagesThumbs(formattedImageThumbs);
       };
 
@@ -225,7 +223,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     };
 
 const getFieldType = (fieldName, value) => {
-    console.log("values ===>", value);
     let fieldType = "text";
     if (
       fieldName === "DOM" ||
@@ -257,7 +254,7 @@ const getFieldType = (fieldName, value) => {
                         </h4>
                     </div>
                     <div className="col-md-1">
-                        <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+                        <LinkButton label={t("CR_VIEW")} onClick={() => setDocumentsView(documentData)} />
                     </div>
                 </div>
             </div>
@@ -265,7 +262,6 @@ const getFieldType = (fieldName, value) => {
     };
 
     const renderSummaryCard = (detail, index) => {
-        console.log("render summary==", detail);
         //  switch()
         return (
             <React.Fragment key={index}>
