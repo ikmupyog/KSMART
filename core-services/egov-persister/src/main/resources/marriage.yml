@@ -1473,24 +1473,24 @@ serviceMaps:
             - jsonPath: $.PaymentDetails.*.amount         
 
             - jsonPath: $.PaymentDetails.*.applicationNumber
-    - version: 1.0
-      description: Persists update payment amount workflow details in marriage  table
-      fromTopic: persister.update.marriage.payment.topic
-      isTransaction: true
-      queryMaps:
+    # - version: 1.0
+    #   description: Persists update payment amount workflow details in marriage  table
+    #   fromTopic: persister.update.marriage.payment.topic
+    #   isTransaction: true
+    #   queryMaps:
 
-        - query: UPDATE public.eg_marriage_details  SET action = ?, status = ?, amount = ?
-            WHERE  applicationnumber = ? ;
-          basePath: PaymentDetails.*
-          jsonMaps:
+    #     - query: UPDATE public.eg_marriage_details  SET action = ?, status = ?, amount = ?
+    #         WHERE  applicationnumber = ? ;
+    #       basePath: PaymentDetails.*
+    #       jsonMaps:
 
-            - jsonPath: $.PaymentDetails.*.action
+    #         - jsonPath: $.PaymentDetails.*.action
 
-            - jsonPath: $.PaymentDetails.*.applicationStatus
+    #         - jsonPath: $.PaymentDetails.*.applicationStatus
 
-            - jsonPath: $.PaymentDetails.*.amount
+    #         - jsonPath: $.PaymentDetails.*.amount
 
-            - jsonPath: $.PaymentDetails.*.applicationNumber
+    #         - jsonPath: $.PaymentDetails.*.applicationNumber
          
 
 
