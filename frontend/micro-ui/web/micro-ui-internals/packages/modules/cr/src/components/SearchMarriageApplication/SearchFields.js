@@ -7,7 +7,7 @@ const mystyle = {
   display: "block",
 };
 
-const   SearchFields = ({ register, control, reset, tenantId, t }) => {
+const   SearchFields = ({ register, control, reset, tenantId, t, applicationType: marriageApplicationType }) => {
   const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.tl.useMDMS.applicationTypes(tenantId);
 
   const applicationType = useWatch({ control, name: "applicationType" });
@@ -33,6 +33,8 @@ const   SearchFields = ({ register, control, reset, tenantId, t }) => {
     });
 
   return (
+    <>
+    {marriageApplicationType?.value &&(
     <>
       <SearchField>
         <label>
@@ -94,6 +96,8 @@ const   SearchFields = ({ register, control, reset, tenantId, t }) => {
           {t(`ES_COMMON_CLEAR_ALL`)}
         </p>
       </SearchField>
+    </>
+    )}
     </>
   );
 };

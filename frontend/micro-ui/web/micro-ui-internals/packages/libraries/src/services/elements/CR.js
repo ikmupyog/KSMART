@@ -116,7 +116,7 @@ export const CRService = {
     })},
     CRDeathCorrectionSearch: ({ tenantId, filters }) =>
     Request({
-      url: Urls.crcorrection.birth_correction_search, 
+      url: Urls.crcorrection.death_correction_search, 
       useCache: false,
       method: "POST",
       auth: true,
@@ -132,12 +132,85 @@ export const CRService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
-
-
-
+    CRMarriageCorrectionDeatils: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crcorrection.marriage_correction_details, 
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
   update: (details, tenantId) =>
     Request({
       url: Urls.cr.update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+    birthCorrectionSearch: ({tenantId,filter}) =>
+    Request({
+      url: Urls.crcorrection.birth_correction_search,
+      // data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId, ...filter },
+      auth: true,
+    }),
+    deathCorrectionSearch: ({tenantId,filter}) =>
+    Request({
+      url: Urls.crcorrection.birth_correction_search,
+      // data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId, ...filter },
+      auth: true,
+    }),
+    birthCorrectionUpdate: (details,tenantId) =>
+    Request({
+      url: Urls.crcorrection.birth_correction_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+    deathCorrectionUpdate: (details,tenantId) =>
+    Request({
+      url: Urls.crcorrection.birth_correction_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+
+    marriageCorrectionSearch: ({tenantId,filter}) =>
+    Request({
+      url: `${Urls.crcorrection.marriage_correction_search}?applicationType=corr`,
+      // data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId, ...filter },
+      auth: true,
+    }),
+    marriageCorrectionUpdate: (details,tenantId) =>
+    Request({
+      url: Urls.crcorrection.marriage_correction_update,
       data: details,
       useCache: false,
       setTimeParam: false,

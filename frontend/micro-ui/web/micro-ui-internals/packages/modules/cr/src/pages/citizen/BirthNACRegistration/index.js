@@ -61,7 +61,7 @@ const CreateBirthNACRegistration = ({ data, parentUrl, isEditBirth }) => {
 
   const onSuccess = () => {
     if (isEditBirthNAC === false) {
-      clearParams();
+      //clearParams();
     }
     queryClient.invalidateQueries("CR_CREATE_NAC_BIRTH_REG");
   };

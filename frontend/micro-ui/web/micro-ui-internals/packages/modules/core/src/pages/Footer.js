@@ -5,7 +5,7 @@ const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+an
 
 const Footer = () => {
     return (
-        <div className='col-md-12' style={{ width: '100%', bottom: 0, padding: "10px" }}>
+        <div className='col-md-12' style={{ width: '100%', position:"fixed", bottom: 0, padding: "0px", backgroundColor: "#f4f1ec" }}>
             <div style={{ display: 'flex', justifyContent: 'center', color: "#22394d" }}>
                 <div onClick={() => {
                     window.open('https://niua.in/cdg/UPYOG', '_blank').focus();

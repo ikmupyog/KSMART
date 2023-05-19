@@ -54,9 +54,9 @@ const MyApplications = ({ view }) => {
 
   });
 
-  console.log("data json" + JSON.stringify(data));
+
   const searchData =  () => {
-    console.log("hai");
+
   }
   if (isLoading) {
     return <Loader />;

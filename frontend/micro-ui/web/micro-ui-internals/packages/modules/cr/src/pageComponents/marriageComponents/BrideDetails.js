@@ -20,7 +20,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import moment from "moment";
 import { sortDropdownNames } from "../../utils";
 
-const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage }) => {
+const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -33,7 +33,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
   );
   // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
-  const cmbSpouseLiving  = [
+  const cmbSpouseLiving = [
     { i18nKey: "Yes", code: true },
     { i18nKey: "No", code: false },
   ];
@@ -632,16 +632,18 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
   }, [gender.length]);
 
   useEffect(() => {
-    if (cmbMaritalStatus.length > 0 && gender.length > 0) {
-      const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.BrideDetails?.brideMaritalstatusID);
-      setbrideMaritalstatusID(currentMarritalStatus[0]);
-      console.log({ currentMarritalStatus });
-      const currentGender = gender?.filter((gender) => gender.code === formData?.BrideDetails?.brideGender);
-      setbrideGender(currentGender[0]);
-      console.log({ currentGender });
-      const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.BrideDetails?.brideIsSpouseLiving);
-      setbrideIsSpouseLiving(currentIsSpouseLiving[0]);
-      console.log({ currentIsSpouseLiving });
+    if (isEditMarriage) {
+      if (cmbMaritalStatus.length > 0 && gender.length > 0) {
+        const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.BrideDetails?.brideMaritalstatusID);
+        setbrideMaritalstatusID(currentMarritalStatus[0]);
+        console.log({ currentMarritalStatus });
+        const currentGender = gender?.filter((gender) => gender.code === formData?.BrideDetails?.brideGender);
+        setbrideGender(currentGender[0]);
+        console.log({ currentGender });
+        const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.BrideDetails?.brideIsSpouseLiving);
+        setbrideIsSpouseLiving(currentIsSpouseLiving[0]);
+        console.log({ currentIsSpouseLiving });
+      }
     }
   }, [cmbMaritalStatus.length, gender.length]);
 
@@ -1020,7 +1022,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             (brideResidentShip === "NRI" ? !bridePassportNo || !brideSocialSecurityNo : false) ||
             (brideResidentShip === "FOREIGN" ? !brideSocialSecurityNo || !bridePassportNo : false) ||
             (brideParentGuardian === "PARENT" ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl : false) ||
-            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false)
+            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false) ||
+            (brideMaritalstatusID?.code === "MARRIED" ? !brideIsSpouseLiving : false) 
           }
         >
           <div className="row">
@@ -1407,7 +1410,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
                     t={t}
                     optionKey="i18nKey"
                     isMandatory={false}
-                    option={cmbSpouseLiving }
+                    option={cmbSpouseLiving}
                     selected={brideIsSpouseLiving}
                     select={setSelectbrideIsSpouseLiving}
                     placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}

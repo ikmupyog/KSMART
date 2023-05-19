@@ -23,7 +23,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlace:_.get(DeathNACDetails, "DeathPlace.code",""),
         DeathPlaceType:_.get(DeathNACDetails, "DeathPlaceType.code",""),
         hospitalNameEn:_.get(DeathNACDetails, "hospitalNameEn.code",""),
-        institution: _.get(DeathNACDetails, "institution.code",""),
+        institution: _.get(DeathNACDetails, "InstitutionIdMl.code",""),
         vehicleType: _.get(DeathNACDetails, "vehicleType.code",""),
         publicPlaceType: _.get(DeathNACDetails, "publicPlaceType.code",""),
 
@@ -110,7 +110,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         presentOutSideIndiaProvinceMl: _.get(DeathNACAddressPage, "presentOutSideIndiaProvinceMl", ""),
         presentOutSideIndiaadrsCityTown: _.get(DeathNACAddressPage, "presentOutSideIndiaadrsCityTown", ""),
         presentOutSideCountry: null,
-        presentOutSideIndiaadrsVillage: _.get(DeathNACAddressPage, "presentOutSideIndiaadrsVillage", null),
+        presentOutSideIndiaadrsVillage: _.get(DeathNACAddressPage, "presentOutSideIndiaadrsVillage.code", null),
         presentOutSideIndiaPostCode: _.get(DeathNACAddressPage, "presentOutSideIndiaPostCode", ""),
 
         isPrsentAddress: _.get(DeathNACAddressPage, "isPrsentAddress", false),
@@ -150,7 +150,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         PermntOutsideIndiaLinetwoMl: _.get(DeathNACAddressPage, "permntOutsideIndiaLinetwoMl", ""),
         PermntOutsideIndiaprovinceEn: _.get(DeathNACAddressPage, "permntOutsideIndiaprovinceEn", ""),
         PermntOutsideIndiaprovinceMl: _.get(DeathNACAddressPage, "permntOutsideIndiaprovinceMl", ""),
-        PermntOutsideIndiaVillage:  _.get(DeathNACAddressPage, "permntOutsideIndiaVillage", null),
+        PermntOutsideIndiaVillage:  _.get(DeathNACAddressPage, "permntOutsideIndiaVillage.code", null),
         PermntOutsideIndiaCityTown:  _.get(DeathNACAddressPage, "permntOutsideIndiaCityTown", ""),
         PermanentOutsideIndiaPostCode:  _.get(DeathNACAddressPage, "permanentOutsideIndiaPostCode", ""),
 

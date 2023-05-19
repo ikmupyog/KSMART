@@ -20,7 +20,7 @@ const ComplaintInformer = ({ t, config, onSelect, value }) => {
     }
   }, [selected])
 
-  const locale = Digit.SessionStorage.get("locale");
+  const locale = Digit.SessionStorage.get("locale") || "en_IN";
 
 
   let validation = {}

@@ -25,7 +25,7 @@ const createComplaint = (props) => async (dispatch, getState) => {
     address,
     assignes
   });
-  // sessionStorage.removeItem('Digit.PGR_CITIZEN_CREATE_COMPLAINT')
+  sessionStorage.removeItem('Digit.PGR_CITIZEN_CREATE_COMPLAINT')
   dispatch({
     type: CREATE_COMPLAINT,
     payload: response

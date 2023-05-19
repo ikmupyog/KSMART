@@ -19,7 +19,6 @@ import { sortDropdownNames } from "../../utils";
 
 const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
-  Menu;
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -573,6 +572,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     }
   }, [gender.length]);
 
+  console.log({ isEditMarriage });
+
   let validFlag = true;
   const goNext = () => {
     if (groomAadharNo != null && groomAadharNo != "") {
@@ -971,16 +972,18 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   };
 
   useEffect(() => {
-    if (cmbMaritalStatus.length > 0 && gender.length > 0) {
-      const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.GroomDetails?.groomMaritalstatusID);
-      setGroomMaritalstatusID(currentMarritalStatus[0]);
-      console.log({ currentMarritalStatus });
-      const currentGender = gender?.filter((gender) => gender.code === formData?.GroomDetails?.groomGender);
-      selectGroomGender(currentGender[0]);
-      console.log({ currentGender });
-      const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.GroomDetails?.groomIsSpouseLiving);
-      setGroomIsSpouseLiving(currentIsSpouseLiving[0]);
-      console.log({ currentIsSpouseLiving });
+    if (isEditMarriage) {
+      if (cmbMaritalStatus.length > 0 && gender.length > 0) {
+        const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.GroomDetails?.groomMaritalstatusID);
+        setGroomMaritalstatusID(currentMarritalStatus[0]);
+        console.log({ currentMarritalStatus });
+        const currentGender = gender?.filter((gender) => gender.code === formData?.GroomDetails?.groomGender);
+        selectGroomGender(currentGender[0]);
+        console.log({ currentGender });
+        const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.GroomDetails?.groomIsSpouseLiving);
+        setGroomIsSpouseLiving(currentIsSpouseLiving[0]);
+        console.log({ currentIsSpouseLiving });
+      }
     }
   }, [cmbMaritalStatus.length, gender.length]);
 
@@ -1010,7 +1013,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
             (groomResidentShip === "NRI" ? !groomPassportNo || !groomSocialSecurityNo : false) ||
             (groomResidentShip === "FOREIGN" ? !groomSocialSecurityNo || !groomPassportNo : false) ||
             (groomParentGuardian === "PARENT" ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl : false) ||
-            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl : false)
+            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl : false) ||
+            (groomMaritalstatusID?.code === "MARRIED" ? !groomIsSpouseLiving : false)
           }
         >
           <div className="row">
