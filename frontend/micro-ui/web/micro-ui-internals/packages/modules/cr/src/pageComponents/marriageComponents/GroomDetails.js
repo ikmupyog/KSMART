@@ -1013,7 +1013,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
             (groomResidentShip === "NRI" ? !groomPassportNo || !groomSocialSecurityNo : false) ||
             (groomResidentShip === "FOREIGN" ? !groomSocialSecurityNo || !groomPassportNo : false) ||
             (groomParentGuardian === "PARENT" ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl : false) ||
-            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl : false)
+            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl : false) ||
+            (groomMaritalstatusID?.code === "MARRIED" ? !groomIsSpouseLiving : false)
           }
         >
           <div className="row">

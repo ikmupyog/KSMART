@@ -9,7 +9,7 @@ const SelectDetails = ({ t, config, onSelect, value }) => {
     return details ? details : "";
   });
 
-  const locale = Digit.SessionStorage.get("locale");
+  const locale = Digit.SessionStorage.get("locale") || "en_IN";
 
   let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C 0-9!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
   let en_pattern = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;

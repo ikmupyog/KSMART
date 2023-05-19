@@ -15,6 +15,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   const [pofilter, setPofilter] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   // const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   // console.log(tenantId);
@@ -252,7 +253,8 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               </CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                // optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [],"name",t)}
                 selected={adrsPostOffice}
                 select={setSelectAdrsPostOffice}

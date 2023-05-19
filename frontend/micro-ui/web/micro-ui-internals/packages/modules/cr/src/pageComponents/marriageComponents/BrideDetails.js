@@ -1022,7 +1022,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             (brideResidentShip === "NRI" ? !bridePassportNo || !brideSocialSecurityNo : false) ||
             (brideResidentShip === "FOREIGN" ? !brideSocialSecurityNo || !bridePassportNo : false) ||
             (brideParentGuardian === "PARENT" ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl : false) ||
-            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false)
+            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false) ||
+            (brideMaritalstatusID?.code === "MARRIED" ? !brideIsSpouseLiving : false) 
           }
         >
           <div className="row">
