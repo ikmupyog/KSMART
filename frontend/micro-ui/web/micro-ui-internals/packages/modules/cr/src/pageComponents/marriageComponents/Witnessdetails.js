@@ -214,13 +214,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
   const [witness2NameEnError, setwitness2NameEnError] = useState(false);
-  const [witness1AgeError, setwitness1AgeError] = useState(formData?.WitnessDetails?.witness1Age ? false : false);
-  const [witness2AgeError, setwitness2AgeError] = useState(formData?.WitnessDetails?.witness2Age ? false : false);
+  const [witness1AgeError, setwitness1AgeError] = useState(false);
+  const [witness2AgeError, setwitness2AgeError] = useState(false);
   const [witness1AddressEnError, setwitness1AddressEnError] = useState(false);
   const [witness2AddressEnError, setwitness2AddressEnError] = useState(false);
   const [witness1MobileError, setwitness1MobileError] = useState(false);
   const [witness2MobileError, setwitness2MobileError] = useState(false);
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(e) {
@@ -781,6 +782,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   console.log("Witness", formData);
   console.log({ isExpiredHusband, isExpiredWife });
   console.log({ isOpenHusbandModal, isOpenWifeModal });
+  console.log({ isGroomImageLoading, isBrideImageLoading });
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -1156,6 +1158,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                             isMulti={false}
                             moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
                             extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
+                            type="groomImage"
                           />
                         </div>
                       </div>
@@ -1169,6 +1172,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                             isMulti={false}
                             moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
                             extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
+                            type="brideImage"
                           />
                         </div>
                       </div>
