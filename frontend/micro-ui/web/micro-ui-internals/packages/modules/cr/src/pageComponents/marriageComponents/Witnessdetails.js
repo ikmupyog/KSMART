@@ -173,8 +173,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({ brideFilestoreId, groomFilestoreId });
-
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -195,21 +193,21 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     sendOtp({ otp: { ...data, ...{ type: "register" } } });
   };
 
-  const sendOtp = async (data) => {
-    console.log("sendOtp");
+  // const sendOtp = async (data) => {
+  //   console.log("sendOtp");
 
-    try {
-      console.log("try reached==", data);
+  //   try {
+  //     console.log("try reached==", data);
 
-      const res = await Digit.UserService.sendOtp(data, 32);
+  //     const res = await Digit.UserService.sendOtp(data, 32);
 
-      return [res, null];
-    } catch (err) {
-      console.log("catch reached==", err);
+  //     return [res, null];
+  //   } catch (err) {
+  //     console.log("catch reached==", err);
 
-      return [null, err];
-    }
-  };
+  //     return [null, err];
+  //   }
+  // };
 
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
@@ -225,7 +223,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(e) {
-    console.log(e);
     if (e.target.checked === true) {
       setIsOpenHusbandModal(true);
     }
@@ -233,7 +230,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   function setSelectExpirationTypeWife(e) {
-    console.log(e);
     if (e.target.checked === true) {
       setIsOpenWifeModal(true);
     }
@@ -241,12 +237,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   function setSelectIsBackward(e) {
-    console.log(e);
     setIsBackward(e.target.checked);
   }
-
-  console.log({ isBackward });
-
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
   //   const today = new Date();
@@ -397,7 +389,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
             .substring(0, 2)
     );
     if (e.target.value < 18) {
-      console.log("agge", e.target.value);
       setAgeValidationMsg(true);
       setToast(true);
       setTimeout(() => {
@@ -405,7 +396,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
       }, 2000);
       setwitness1Age(null);
     } else {
-      console.log("aggeee", e.target.value);
       setAgeValidationMsg(false);
     }
     // if (e.target.value.length === 3) {
@@ -533,13 +523,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   async function handleUploadGroom(id) {
-    console.log({ id });
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
     setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
 
-  console.log({ groomURL, brideURL });
 
   let validFlag = true;
   const goNext = () => {
@@ -774,15 +762,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     setPreviewGroomImage(previewGroomUrl);
   }, [groomImage]);
 
-  // console.log({ groomImage });
-  // console.log({ brideImage })
-  // console.log({ previewGroomImage });
-  // console.log({ previewBrideImage })
 
   console.log("Witness", formData);
-  console.log({ isExpiredHusband, isExpiredWife });
-  console.log({ isOpenHusbandModal, isOpenWifeModal });
-  console.log({ isGroomImageLoading, isBrideImageLoading });
+
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -1176,6 +1158,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                           />
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BELONG_TO_BACKWARD_COMMUNITY")}`}</span>{" "}
+                      </h1>
                     </div>
                   </div>
                   <div className="row">
