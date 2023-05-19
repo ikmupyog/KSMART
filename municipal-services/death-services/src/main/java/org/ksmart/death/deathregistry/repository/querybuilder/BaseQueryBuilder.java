@@ -52,7 +52,14 @@ class BaseQueryBuilder {
             ids.forEach(paramValues::add);
         }
     }
-
+    void addLongFilter(String column, Long value, StringBuilder query, List<Object> paramValues) {
+        if (value != null)  {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("=? ");
+            paramValues.add(value);
+        }
+    }
     void addFilter(String column, String value, StringBuilder query, List<Object> paramValues) {
         if (StringUtils.isNotBlank(value)) {
             addWhereClause(paramValues, query);
