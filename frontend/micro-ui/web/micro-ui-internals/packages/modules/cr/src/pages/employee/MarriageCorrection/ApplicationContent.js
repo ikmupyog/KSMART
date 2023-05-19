@@ -234,7 +234,7 @@ const getFieldType = (fieldName, value) => {
       return fieldType;
   };
 
-    const renderCardDetail = (value, fieldName, documentData) => {
+    const renderCardDetail = (index, value, fieldName, documentData) => {
         const type = getFieldType(fieldName, value);
         console.log("fieldvalues", value, type);
         return (
@@ -254,7 +254,9 @@ const getFieldType = (fieldName, value) => {
                         </h4>
                     </div>
                     <div className="col-md-1">
+                        {index === 0 &&
                         <LinkButton label={t("CR_VIEW")} onClick={() => setDocumentsView(documentData)} />
+                        }
                     </div>
                 </div>
             </div>
@@ -288,7 +290,7 @@ const getFieldType = (fieldName, value) => {
                                         </div>
                                     </div>
                                 </div>
-                                {detail?.fieldValues?.map((value, index) => renderCardDetail(value, detail.title, detail.documentIds))}
+                                {detail?.fieldValues?.map((value, index) => renderCardDetail(index, value, detail.title, detail.documentIds))}
                             </StatusTable>
                         }
                     />
