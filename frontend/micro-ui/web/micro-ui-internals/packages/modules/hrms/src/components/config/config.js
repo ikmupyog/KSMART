@@ -75,7 +75,7 @@ export const newConfig = [
         withoutLabel: true,
         texts: {
           headerCaption: "Info",
-          header: "HR_EMP_ID_MESSAGE",
+          header: "HR_PEN_ID_MESSAGE",
         },
       },
     ],
