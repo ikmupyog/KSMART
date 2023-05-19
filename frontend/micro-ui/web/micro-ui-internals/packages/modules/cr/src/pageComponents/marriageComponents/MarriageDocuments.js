@@ -29,8 +29,7 @@ const DOCUMENT_OWNER = {
 };
 
 const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false }) => {
-  // console.log("MD", formData);
-  console.log({ isEditMarriage, formData });
+  console.log("MD", formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
 
