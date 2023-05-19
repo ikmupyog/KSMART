@@ -165,6 +165,7 @@ import TextArea from "./atoms/TextArea";
 import TextInput from "./atoms/TextInput";
 import Toast from "./atoms/Toast";
 import TopBar from "./atoms/TopBar";
+import TopBarKsmart from "./atoms/TopBarKsmart";
 import UploadFile from "./atoms/UploadFile";
 import UploadImages from "./atoms/UploadImages";
 import CardBasedOptions from "./atoms/CardBasedOptions";
@@ -212,6 +213,7 @@ export {
   Body,
   Loader,
   TopBar,
+  TopBarKsmart,
   OpenLinkContainer,
   HomeLink,
   AppContainer,

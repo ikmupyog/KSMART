@@ -5,6 +5,7 @@ import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-rou
 import ErrorBoundary from "../../components/ErrorBoundaries";
 import { AppHome } from "../../components/Home";
 import TopBarSideBar from "../../components/TopBarSideBar";
+import TopBarSideBarKsmart from "../../components/KsmartNew/TopBarKsmartNew/index";
 import CitizenHome from "./Home";
 import LanguageSelection from "./Home/LanguageSelection";
 import LocationSelection from "./Home/LocationSelection";
@@ -14,6 +15,7 @@ import Dashboard from "./Dashboard";
 // import PDF from "../../assets/";
 import { useQueryClient } from "react-query";
 import Footer from "../Footer";
+import KsmartHome from "../../components/KsmartNew";
 
 const getTenants = (codes, tenants) => {
   return tenants.filter((tenant) => codes.map((item) => item.code).includes(tenant.code));
@@ -500,7 +502,7 @@ const Home = ({
 
   return (
     <div className={classname}>
-      <TopBarSideBar
+      {/* <TopBarSideBar
         t={t}
         stateInfo={stateInfo}
         userDetails={userDetails}
@@ -510,12 +512,29 @@ const Home = ({
         handleUserDropdownSelection={handleUserDropdownSelection}
         logoUrl={logoUrl}
         showSidebar={true}
-      />
+      /> */}
+      {/* <TopBarSideBarKsmart 
+       t={t}
+       stateInfo={stateInfo}
+       userDetails={userDetails}
+       CITIZEN={CITIZEN}
+       cityDetails={cityDetails}
+       mobileView={mobileView}
+       handleUserDropdownSelection={handleUserDropdownSelection}
+       logoUrl={logoUrl}
+       showSidebar={true}
+      /> */}
 
       <div className={`main center-container mb-25`}>
         <Switch>
           <Route exact path={path}>
             <CitizenHome />
+          </Route>
+
+          <Route exact path={`${path}/ksmart-home`}>
+            <KsmartHome 
+            
+            />
           </Route>
 
           <Route exact path={`${path}/select-language`}>

@@ -30,7 +30,8 @@ const Home = () => {
   });
 
   if (!tenantId) {
-    history.push(`/digit-ui/citizen/select-language`);
+    history.push(`/digit-ui/citizen/ksmart-home`);
+    // history.push(`/digit-ui/citizen/select-language`);
   }
 
   const allCitizenServicesProps = {
