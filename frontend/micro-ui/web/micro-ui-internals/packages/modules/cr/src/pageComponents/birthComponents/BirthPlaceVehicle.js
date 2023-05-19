@@ -312,7 +312,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "name"}
+                optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "hospitalName"}
                 isMandatory={true}
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={setadmittedHospitalEn}
