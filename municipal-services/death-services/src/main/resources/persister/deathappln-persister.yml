@@ -2547,4 +2547,33 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.DeathACKNo
+
+  - version: 1.0
+    description: Persists update death details in eg_death_dtls  table
+    fromTopic: update-death-application-payment-topic
+    isTransaction: true
+    queryMaps:
+    - query: INSERT INTO eg_death_dtls_log SELECT * FROM eg_death_dtls WHERE ack_no = ?;
+      basePath: PaymentDetails.*
+      jsonMaps:
+      - jsonPath: $.PaymentDetails.*.applicationNumber
+
+    - query: UPDATE public.eg_death_dtls SET action=?, status=?, haspayment=?, ispaymentsuccess=?, amount=?, lastmodifiedby=?,  lastmodifiedtime=? WHERE ack_no=?;
+      basePath: PaymentDetails.*
+      jsonMaps:
+      - jsonPath: $.PaymentDetails.*.action
+
+      - jsonPath: $.PaymentDetails.*.applicationStatus
+
+      - jsonPath: $.PaymentDetails.*.hasPayment
+
+      - jsonPath: $.PaymentDetails.*.isPaymentSuccess
+
+      - jsonPath: $.PaymentDetails.*.amount
+
+      - jsonPath: $.PaymentDetails.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.PaymentDetails.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.PaymentDetails.*.applicationNumber
     

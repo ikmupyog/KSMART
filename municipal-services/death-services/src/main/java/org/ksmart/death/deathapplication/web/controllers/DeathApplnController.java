@@ -1,8 +1,13 @@
 package org.ksmart.death.deathapplication.web.controllers;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.ksmart.death.common.contract.RequestInfoWrapper;
+import org.ksmart.death.common.model.common.CommonPay;
+import org.ksmart.death.common.model.common.CommonPayRequest;
+import org.ksmart.death.common.repository.CommonRepository;
 import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
 import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
@@ -53,15 +58,18 @@ public class DeathApplnController {
     private final DeathRegistryRequestService deathRegistryRequestService;
     private final DeathRegistryService deathRegistryService;
     private final DeathApplnRepository repository;
+    private CommonRepository crepository;
 
     @Autowired
     public DeathApplnController(DeathApplnService deathService,DeathRegistryRequestService deathRegistryRequestService ,  
                                 DeathRegistryService deathRegistryService,
-                                DeathApplnRepository repository) {      
+                                DeathApplnRepository repository,
+                                CommonRepository crepository) {      
         this.deathService = deathService;
         this.deathRegistryRequestService = deathRegistryRequestService;
         this.deathRegistryService = deathRegistryService;
         this.repository = repository;
+        this.crepository = crepository;
     }
 
     //Rakhi S on 06.02.2023 - Death Create Controller 
@@ -241,6 +249,39 @@ public class DeathApplnController {
 //                                         .build();
 //         return ResponseEntity.ok(response);    
 // }
+//    @PostMapping(value = {"/get"})
+//    public void getdet(@RequestBody DeathDtlRequest request) {
+   	
+//   	 List<CommonPay> commonPays =  new ArrayList<>();
+// 	 CommonPay pay = new CommonPay();
+	 
+          
+// 		  pay.setAction("PAY");
+// 		  pay.setApplicationStatus("INITIATED");
+// 		  pay.setHasPayment(true);
+// 		  pay.setAmount(new BigDecimal(10));
+//          pay.setIsPaymentSuccess(true);    
+//          pay.setApplicationNumber("KL-KOCHI-C-000091-CRDRAB-2023-AKNO");
+// //          pay.setAuditDetails(auditDetails);
+//          commonPays.add(pay);
+           
+
+// 	 System.out.println("commonPays1 "+commonPays.get(0).getAction());
+	  
+// 	CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(request.getRequestInfo())
+// 				.commonPays(commonPays).build();
+		
+//                         try {
+//             ObjectMapper mapper = new ObjectMapper();
+//             Object obj = paymentReq;
+//             mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+//            System.out.println("rakhi4 "+ mapper.writeValueAsString(obj));
+//     }catch(Exception e) {
+//         log.error("Exception while fetching from searcher: ",e);
+//     }
+//                 crepository.updatePaymentDetails(paymentReq);
+
+//    	}
 
  
 }

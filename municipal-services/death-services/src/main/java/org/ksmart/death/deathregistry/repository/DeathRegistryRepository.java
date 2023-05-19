@@ -956,6 +956,17 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPermanentAddrDistrictMl()+
                                             cert.getDeathAddressInfo().getPermanentAddrStateMl()+ 
                                             cert.getDeathAddressInfo().getPermanentAddrcountryMl());
+                //19.05.2023
+                if (cert.getDeathBasicInfo().getPresentAddressFullEn() != null && cert.getDeathBasicInfo().getPresentAddressFullEn() != "") {
+                    cert.getDeathBasicInfo().setPresentAddressFullEn(cert.getDeathBasicInfo().getPresentAddressFullEn());
+                } else {
+                    cert.getDeathBasicInfo().setPresentAddressFullEn(DeathRegistryConstants.NOT_RECORDED_EN);
+                }
+                if (cert.getDeathBasicInfo().getPresentAddressFullMl() != null && cert.getDeathBasicInfo().getPresentAddressFullMl() != "") {
+                    cert.getDeathBasicInfo().setPresentAddressFullMl(cert.getDeathBasicInfo().getPresentAddressFullMl());
+                } else {
+                    cert.getDeathBasicInfo().setPresentAddressFullMl(DeathRegistryConstants.NOT_RECORDED_ML);
+                }
                 //Rakhi S 11.02.2023
                 // place of death HOME
                 if(DeathRegistryConstants.DEATH_PLACE_HOME.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){

@@ -109,4 +109,6 @@ public class DeathConfiguration {
     @Value("${persister.update.deathnac.topic}")
     private String updateDeathNACTopic;
     
+    @Value("${persister.update.death.payment.topic}")
+    private String updateDeathPaymentTopic;
 }

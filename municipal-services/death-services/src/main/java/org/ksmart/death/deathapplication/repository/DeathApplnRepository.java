@@ -379,11 +379,8 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLinetwoMl(null);
                             }
                           }
-                        }else{
-                            System.out.println("addresscheck6"+deathDtl.getDeathAddressInfo().getPermtaddressCountry());
-                          
+                        }else{                          
                             if (deathDtl.getDeathAddressInfo().getPermtaddressCountry() != null && deathDtl.getDeathAddressInfo().getPermtaddressCountry() != DeathConstants.COUNTRY_CODE) {
-                                System.out.println("addresscheck7");
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaCountry(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCountry());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaVillage(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaVillage());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaCityTown(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaCityTown());
@@ -391,8 +388,6 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLineoneMl(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaLineoneMl());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLinetwoEn(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaLinetwoEn());
                                 deathDtl.getDeathAddressInfo().setPermntOutsideIndiaLinetwoMl(deathDtl.getDeathAddressInfo().getPermntOutsideIndiaLinetwoMl());
-                                
-                                // deathDtl.getDeathAddressInfo().setPermtaddressCountry(null);
                                 deathDtl.getDeathAddressInfo().setPermtaddressStateName(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrDistrict(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrVillage(null);
@@ -401,8 +396,6 @@ public class DeathApplnRepository {
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrLocalityNameMl(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrStreetNameEn(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrStreetNameMl(null);
-
-                                System.out.println("address1:"+deathDtl.getDeathAddressInfo().getPermntInKeralaAdrStreetNameMl());
 
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrHouseNameEn(null);
                                 deathDtl.getDeathAddressInfo().setPermntInKeralaAdrHouseNameMl(null);
