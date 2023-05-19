@@ -124,7 +124,8 @@ public class PaymentUpdateService implements BaseEnrichment {
 			// Update marriage table with status initiated
 			
 				List<CommonPay> commonPays =  new ArrayList<>();
-				CommonPay pay = new CommonPay();		           
+				CommonPay pay = new CommonPay();	
+				System.out.println("Action after wf1"+updateRequest.getMarriageDetails().get(0).getAction());	           
 				pay.setAction(updateRequest.getMarriageDetails().get(0).getAction());
 				pay.setApplicationStatus(updateRequest.getMarriageDetails().get(0).getStatus());
 				pay.setHasPayment(true);
@@ -134,7 +135,8 @@ public class PaymentUpdateService implements BaseEnrichment {
 				pay.setAuditDetails(auditDetails);
 				commonPays.add(pay);	     
 				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();		
-			  	repository.updatePaymentDetails(paymentReq);
+				System.out.println("Action after wf2"+new Gson().toJson(paymentReq));	
+				repository.updatePaymentDetails(paymentReq);
 			}
 		}
 
