@@ -127,7 +127,7 @@ const Urls = {
     birth_correction_search: "/birth-services/cr/searchbirthcorrection",
     birth_correction_update: "/birth-services/cr/updatebirthcorrection",
     death_correction_update: "/v1/deathdetails/updatedeathcorrection",
-    death_correction_search: "/v1/deathdetails/searchdeath  correction"
+    death_correction_search: "/death-services/v1/deathdetails/searchdeathcorrection",
   },
   crcommonpayment: {
     update: "/birth-services/cr/common/updatepaywf",

@@ -68,6 +68,7 @@ const DeathCorrectionAcknowledgement = () => {
   }, []);
  
     if (mutationData?.isSuccess) {
+      console.log("data....", mutationData.data);
       return (
         <Card>
           <BannerPicker t={t} data={deathCorrectionData} isSuccess={true} />
@@ -91,8 +92,8 @@ const DeathCorrectionAcknowledgement = () => {
 {mutationData?.data?.deathCorrection[0]?.applicationStatus === "PENDINGPAYMENT" && (
           <Link
             to={{
-              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.deathCorrection[0].businessservice}/${mutationData.data.deathCorrection[0].applicationNumber}`,
-              state: { tenantId: mutationData.data.deathCorrection[0].tenantid },
+              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.deathCorrection?.[0].businessService}/${mutationData.data.deathCorrection?.[0].InformationDeathCorrection?.DeathACKNo}`,
+              state: { tenantId: mutationData.data.deathCorrection?.[0].InformationDeathCorrection?.TenantId },
             }}
           >
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
