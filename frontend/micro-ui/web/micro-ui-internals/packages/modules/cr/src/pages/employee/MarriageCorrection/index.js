@@ -133,7 +133,6 @@ const CorrectionApplicationDetails = (props) => {
     if(applicationDetails?.applicationData?.applicationNumber?.length >0){
       setEnableApi(true)
     }
-    console.log("applicationDetails==",applicationDetails);
   },[applicationDetails])
 
   useEffect(()=>{
