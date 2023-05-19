@@ -35,7 +35,6 @@ public class DeathCorrectionController {
     @PostMapping(value = {"/createdeathcorrection"})
     public ResponseEntity<CorrectionResponse> create(@Valid @RequestBody CorrectionRequest request) {
         List<CorrectionDetails> deathCorrDetails = service.createcorrection(request);
-
         CorrectionResponse response = CorrectionResponse
                 .builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
@@ -56,7 +55,7 @@ public class DeathCorrectionController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = {"/searchbirthcorrection"})
+    @PostMapping(value = {"/searchdeathcorrection"})
     public ResponseEntity<CorrectionResponse> searchKsmartBirth(@RequestBody CorrectionRequest request, @Valid @ModelAttribute DeathSearchCriteria criteria) {
         List<CorrectionDetails> details=service.searcCorrectionDetails(request, criteria);
         CorrectionResponse response=CorrectionResponse.builder()

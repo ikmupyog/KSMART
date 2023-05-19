@@ -6,6 +6,7 @@ import org.ksmart.death.deathapplication.web.models.AuditDetails;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathDocument;
+import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.springframework.validation.annotation.Validated;
 
 import javax.swing.text.Document;
@@ -62,6 +63,11 @@ public class CorrectionDetails {
    private String workflowcode;
 
    private String assignuser;
+
+
+
+   @JsonProperty("Demands")
+   private List<Demand> demands;
 
    @Size(max = 128)
 //  @Html
