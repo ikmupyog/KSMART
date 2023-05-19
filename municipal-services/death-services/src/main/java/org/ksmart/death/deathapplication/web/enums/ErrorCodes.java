@@ -24,8 +24,12 @@ public enum ErrorCodes {
  
 //  Search
     INVALID_SEARCH("INVALID_SEARCH"),
+
+    ROW_MAPPER_ERROR("ROW-MAPPER_ERROR"),
 //  Idgen Service
     IDGEN_ERROR("IDGEN_ERROR");
+
+
 
       private String code;
     

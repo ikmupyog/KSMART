@@ -55,7 +55,7 @@ public class DeathCorrectionController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = {"/searchbirthcorrection"})
+    @PostMapping(value = {"/searchdeathcorrection"})
     public ResponseEntity<CorrectionResponse> searchKsmartBirth(@RequestBody CorrectionRequest request, @Valid @ModelAttribute DeathSearchCriteria criteria) {
         List<CorrectionDetails> details=service.searcCorrectionDetails(request, criteria);
         CorrectionResponse response=CorrectionResponse.builder()

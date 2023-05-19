@@ -1,6 +1,7 @@
 package org.ksmart.death.deathapplication.web.models.DeathCorrection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 
 import javax.swing.text.Document;
 import javax.validation.Valid;
@@ -321,7 +322,6 @@ public class CorrectionBasic {
 
     @JsonProperty("DocumentFileStoreId")
     private String documentFileStoreId ;
-
 
 
 }

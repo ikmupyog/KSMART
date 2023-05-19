@@ -63,6 +63,8 @@ public class DeathCorrectionEnrichment implements BaseEnrichment{
                         deathCorrectionBasicInfo.setDateOfDeath(registerBirthDetails.get(0).getDeathBasicInfo().getDateOfDeath());
                         deathCorrectionBasicInfo.setTenantId(registerBirthDetails.get(0).getDeathBasicInfo().getTenantId());
                         deathCorrectionBasicInfo.setApplicationDate(doreport);
+
+                       // deathCorrectionBasicInfo.setDO
                         death.setDeathCorrectionBasicInfo(deathCorrectionBasicInfo);
                     }
                 });
