@@ -167,7 +167,7 @@ export const CRStillBirthsearch = {
         { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationalityEn + " / " + (response?.StillBirthParentsDetails?.motherNationalityMl != null ? response?.StillBirthParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
        
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.StillBirthParentsDetails?.motherMarriageBirth || "NOT_RECORDED"},   
-        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NOT_RECORDED"},        
+        // { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NOT_RECORDED"},        
         { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.motherEducationEn + " / " + response?.StillBirthParentsDetails?.motherEducationMl || "NOT_RECORDED" },
         { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfessionEn + " / " + response?.StillBirthParentsDetails?.motherProfessionMl || "NOT_RECORDED" },
        
