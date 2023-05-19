@@ -3,9 +3,9 @@ import Timeline from "../../components/BOBRTimeline";
 import { FormStep, CardLabel, UploadFile } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import _ from "lodash";
+import { trimURL } from "../../utils";
 
 const BornOutsideDocuments = ({ config, onSelect, formData }) => {
-
   const { t } = useTranslation();
 
   let tenantId = "";
@@ -14,7 +14,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
 
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
   const [childBirthCertificateFile, setChildBirthCertificateFile] = useState(
     formData?.BornOutsideDocuments?.childBirthCertificateFile ? formData?.BornOutsideDocuments?.childBirthCertificateFile : null
@@ -23,14 +23,20 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
     formData?.BornOutsideDocuments?.childBirthCertificate ? formData?.BornOutsideDocuments?.childBirthCertificate : null
   );
 
+
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
-    const newThumbnails = fileStoreIds.map((key) => {
+    const newThumbnails = fileStoreIds.map((key)=>{
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
-    });
+    })
+    console.log({newThumbnails})
     return newThumbnails;
   };
+
+  function selectchildBirthCertificate(e) {
+    setChildBirthCertificateFile(e.target.files[0])
+  }
 
   useEffect(() => {
     (async () => {
@@ -40,10 +46,9 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage(`bornoutside/childbirthcertificate`, childBirthCertificateFile, tenantId);
+            const response = await Digit.UploadServices.Filestorage("bornoutside/childbirthcertificate", childBirthCertificateFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              console.log({fileDetails})
               setChildBirthCertificate(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
@@ -56,11 +61,9 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   const onSkip = () => onSelect();
 
-  const goNext = ()=>{
-    onSelect(config.key, {
-
-    })
-  }
+  const goNext = () => {
+    onSelect(config.key, {});
+  };
 
   return (
     <React.Fragment>
@@ -102,24 +105,36 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           </div>
           <div className="col-md-6">
             <UploadFile
-              id={"marriage-docs"}
+              id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
               accept=".jpg,.png,.pdf"
-              onUpload={(e)=>setChildBirthCertificateFile(e.target.files[0])}
+              onUpload={selectchildBirthCertificate}
               onDelete={() => {
-                childBirthCertificate(null);
+                setChildBirthCertificate(null);
               }}
-              message={childBirthCertificateFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+              message={childBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
           {childBirthCertificate && (
             <div className="col-md-2">
               {_.head(childBirthCertificate)?.type === "pdf" ? (
                 <React.Fragment>
-                  <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(childBirthCertificate)?.pdfUrl} alt="Child Birth Certificate Pdf" />
+                  <object
+                    style={{ margin: "5px 0" }}
+                    height={120}
+                    width={100}
+                    data={_.head(childBirthCertificate)?.pdfUrl}
+                    alt="Child Birth Certificate Pdf"
+                  />
                 </React.Fragment>
               ) : (
-                <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(childBirthCertificate)?.small} alt="Child Birth Certificate Image" />
+                <img
+                  style={{ margin: "5px 0" }}
+                  height={120}
+                  width={100}
+                  src={_.head(childBirthCertificate)?.small}
+                  alt="Child Birth Certificate Image"
+                />
               )}
               <a
                 style={{ color: "blue" }}

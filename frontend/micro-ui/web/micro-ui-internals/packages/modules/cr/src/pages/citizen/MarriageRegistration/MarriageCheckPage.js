@@ -2801,7 +2801,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness1AddressEn ? WitnessDetails?.witness1AddressEn : "CR_NOT_RECORDED"}
+                      {WitnessDetails?.witness1AddresSEn ? WitnessDetails?.witness1AddresSEn : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -2858,7 +2858,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {WitnessDetails?.witness2AddressEn ? WitnessDetails?.witness2AddressEn : "CR_NOT_RECORDED"}
+                      {WitnessDetails?.witness2AddresSEn ? WitnessDetails?.witness2AddresSEn : "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                   <div className="col-md-2">
