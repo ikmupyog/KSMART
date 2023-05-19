@@ -130,6 +130,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 				pay.setApplicationStatus(updateRequest.getMarriageDetails().get(0).getStatus());
 				pay.setHasPayment(true);
 				pay.setAmount(paymentDetails.get(0).getBill().getBillDetails().get(0).getAmountPaid());
+				pay.setPaymentTransactionId(paymentRequest.getPayment().getTransactionNumber());
 				pay.setIsPaymentSuccess(true);    
 				pay.setApplicationNumber(paymentDetail.getBill().getConsumerCode());
 				pay.setAuditDetails(auditDetails);

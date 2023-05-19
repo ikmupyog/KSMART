@@ -24,7 +24,9 @@ public class CommonPay {
     private String applicationStatus;
 
     private Boolean hasPayment;
-    
+
+    @JsonProperty("paymentTransactionId")
+    private String paymentTransactionId;
     @JsonProperty("isPaymentSuccess")
     private Boolean isPaymentSuccess;
 

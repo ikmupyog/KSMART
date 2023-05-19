@@ -1461,7 +1461,7 @@ serviceMaps:
       isTransaction: true
       queryMaps:
 
-        - query: UPDATE public.eg_marriage_details  SET action = ?, status = ?, amount = ?
+        - query: UPDATE public.eg_marriage_details  SET action = ?, status = ?, amount = ?, payment_transaction_id = ?, payment_success = ?
                  WHERE  applicationnumber = ? ;
           basePath: PaymentDetails.*
           jsonMaps:
@@ -1470,7 +1470,11 @@ serviceMaps:
 
             - jsonPath: $.PaymentDetails.*.applicationStatus
 
-            - jsonPath: $.PaymentDetails.*.amount         
+            - jsonPath: $.PaymentDetails.*.amount
+
+            - jsonPath: $.PaymentDetails.*.paymentTransactionId
+
+            - jsonPath: $.PaymentDetails.*.isPaymentSuccess
 
             - jsonPath: $.PaymentDetails.*.applicationNumber
     # - version: 1.0
