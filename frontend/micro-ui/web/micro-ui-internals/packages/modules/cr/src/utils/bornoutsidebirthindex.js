@@ -522,6 +522,53 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
           informarMobile: data?.BornOutsideStaticInfn?.informarMobile,
           informarAddress: data?.BornOutsideStaticInfn?.informarAddress,
         },
+        BornOutsideDocuments: [
+          {
+            DocumentType: "Birth Certificate or Proof of Date of Birth of the Child",
+            filestoreId: data?.BornOutsideDocuments?.birthCertificateFile,
+          },
+          {
+            DocumentType: "Copy of Child's Passport",
+            filestoreId: data?.BornOutsideDocuments?.childPassportFile,
+          },
+          {
+            DocumentType: "A Copy of the certificate of Indian citizenship if acquired by registration/naturalization",
+            filestoreId: data?.BornOutsideDocuments?.citizenshipFile,
+          },
+          {
+            DocumentType: "Copy of Father's Passport",
+            filestoreId: data?.BornOutsideDocuments?.fatherPassportFile,
+          },
+          {
+            DocumentType: "Copy of Mother's Passport",
+            filestoreId: data?.BornOutsideDocuments?.motherPassportFile,
+          },
+          {
+            DocumentType: "Document on Cancelling Visa",
+            filestoreId: data?.BornOutsideDocuments?.cancellingVisaFile,
+          },
+          {
+            DocumentType: "Address Proof Residency in the Registering Local Body",
+            filestoreId: data?.BornOutsideDocuments?.addressProofFile,
+          },
+          {
+            DocumentType: "Notary Affidavit of Permanent Settling & Residency in India",
+            filestoreId: data?.BornOutsideDocuments?.notaryFile,
+          },
+          {
+            DocumentType: "A Copy of the Marriage certificate of the parents",
+            filestoreId: data?.BornOutsideDocuments?.marriageCertificateFile,
+          },
+          {
+            DocumentType:
+              "In case either of the parents is a foreign national, a documentary proof that the child has not obtained another nationality from the foreign parent(Check nationality)",
+            filestoreId: data?.BornOutsideDocuments?.nationalityFile,
+          },
+          {
+            DocumentType: "Proceedings of Sub Divisional Magistrate(Optional in RDO cases)",
+            filestoreId: data?.BornOutsideDocuments?.magistrateFile,
+          },
+        ],
         Demands: [
           {
             tenantId: "kl.cochin",
