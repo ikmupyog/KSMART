@@ -42,14 +42,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
   }
 
   // const [uniqueId, setUniqueId] = useState(null);
-  const [uploadedImages, setUploadedImagesIds] = useState(null);
-  const [file, setFile] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState([]);
 
   let validation = {};
-
-  // const groomResidentShip = "INDIAN";
-  // const brideResidentShip = "NRI";
 
   const groomResidentShip = formData?.GroomDetails?.groomResidentShip;
   // const groomResidentShip = "INDIAN";
@@ -2832,7 +2826,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                               height={120}
                               width={100}
                               data={_.head(backwardCertificate)?.pdfUrl}
-                              alt="Other Certificate Pdf"
+                              alt="Backward Certificate Pdf"
                             />
                           ) : (
                             <img
@@ -2840,7 +2834,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                               height={120}
                               width={100}
                               src={_.head(backwardCertificate)?.small}
-                              alt="Other Certificate Image"
+                              alt="Backward Certificate Image"
                             />
                           )}
                           <a
@@ -2902,7 +2896,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                               height={120}
                               width={100}
                               data={_.head(witness1Aadhar)?.pdfUrl}
-                              alt="Other Certificate Pdf"
+                              alt="Witness1 Aadhar Pdf"
                             />
                           </React.Fragment>
                         ) : (
@@ -2911,7 +2905,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                             height={120}
                             width={100}
                             src={_.head(witness1Aadhar)?.small}
-                            alt="Other Certificate Image"
+                            alt="Witness1 Aadhar Image"
                           />
                         )}
                         <a
@@ -2960,7 +2954,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                               height={120}
                               width={100}
                               data={_.head(witness2Aadhar)?.pdfUrl}
-                              alt="Other Certificate Pdf"
+                              alt="Witness2 Aadhar Pdf"
                             />
                           </React.Fragment>
                         ) : (
@@ -2969,7 +2963,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                             height={120}
                             width={100}
                             src={_.head(witness2Aadhar)?.small}
-                            alt="Other Certificate Image"
+                            alt="Witness2 Aadhar Image"
                           />
                         )}
                         <a
