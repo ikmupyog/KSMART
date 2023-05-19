@@ -15,6 +15,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
@@ -189,7 +190,8 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
             <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              // optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               isMandatory={true}
               option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
               selected={vehicleType}

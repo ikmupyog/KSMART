@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 // import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import ApplicationDetailsTemplate from "./ApplicationContent";
 import cloneDeep from "lodash/cloneDeep";
@@ -14,6 +15,7 @@ import ApplicationDetailsWarningPopup from "../../../../../templates/Application
 
 const CorrectionApplicationDetails = (props) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
@@ -115,10 +117,6 @@ const CorrectionApplicationDetails = (props) => {
     closeModal();
   };
 
-
-  // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  // console.log(applicationDetails?.applicationData?.applicationtype);
-
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
@@ -131,7 +129,6 @@ const CorrectionApplicationDetails = (props) => {
     if(applicationDetails?.applicationData?.applicationNumber?.length >0){
       setEnableApi(true)
     }
-    console.log("applicationDetails==",applicationDetails);
   },[applicationDetails])
 
   useEffect(()=>{
@@ -189,7 +186,6 @@ const CorrectionApplicationDetails = (props) => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      // console.log(data.action);
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {

@@ -10,16 +10,17 @@ import StillBirthPlaceVehicle from "../../pageComponents/stillBirthComponents/St
 import StillBirthPlacePublicPlace from "../../pageComponents/stillBirthComponents/StillBirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 import { sortDropdownNames } from "../../utils";
+import moment from "react";
+import _ from "lodash";
 
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
-  console.log(JSON.stringify(formData));
-  console.log(formData);
-  console.log(isEditStillBirth);
   sessionStorage.removeItem("applicationNumber");
-  const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
-  //const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
+  // console.log(JSON.stringify(formData));
+  // console.log(formData);
+  // console.log(isEditStillBirth);
+ 
+  const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false); 
   const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
-
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -27,6 +28,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   //const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -53,7 +55,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
   const [hospitalCode, sethospitalCode] = useState(formData?.StillBirthChildDetails?.hospitalCode);
-
+  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
   const { roles: userRoles, uuid: uuid } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
   // const { uuid: uuid } = Digit.UserService.getUser().info;
@@ -559,11 +561,16 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      // setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (birthPlace) {
         let currentWorgFlow = workFlowData.filter(
           (workFlowData) =>
@@ -623,10 +630,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-      console.log(value);
-      let time = value;
-      let timeParts = time.split(":");
-      console.log(+timeParts[0] * (60000 * 60) + +timeParts[1] * 60000);
+    //  console.log(value);
+    //  let time = value;
+  //    let timeParts = time.split(":");
+   //   console.log(+timeParts[0] * (60000 * 60) + +timeParts[1] * 60000);
       // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
       // // Usage
       // const milliSecTime = milliseconds(24, 36,0);
@@ -1201,7 +1208,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setToast(false);
       }, 2000);
     } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+      if (pregnancyDuration < 20 || pregnancyDuration > 53) {
         validFlag = false;
         setPregnancyDurationInvalidError(true);
         setToast(true);
@@ -1456,11 +1463,13 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                  // optionKey="name"
                   isMandatory={false}
                   option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [], "name", t)}
                   selected={birthPlace}
-                  disable={isDisableEdit}
+                  disable={isDisableEditRole}
+                  // disable={isDisableEdit}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -1598,7 +1607,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  // optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [], "name", t)}
                   selected={medicalAttensionSub}
@@ -1634,7 +1644,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  // optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [], "name", t)}
                   selected={deliveryMethods}

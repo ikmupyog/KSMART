@@ -16,12 +16,10 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     pincode: complaint_details?.pincode || "", street: complaint_details?.street || "", ward: complaint_details?.ward || ""
   })
 
-  const stateId = Digit.SessionStorage.get("Citizen.tenantId");
   const tenantId = Digit.SessionStorage.get("Employee.tenantId");
-  const { tenants } = Digit.SessionStorage.get("initData");
-  const locale = Digit.SessionStorage.get("locale");
-
-  const stateCode = window?.globalConfigs?.getConfig("STATE_LEVEL_TENANT_ID") || "kl";
+  const { tenants, districts, stateInfo } = Digit.SessionStorage.get("initData");
+  const locale = Digit.SessionStorage.get("locale") || "en_IN";
+  const stateCode = window?.globalConfigs?.getConfig("STATE_LEVEL_TENANT_ID") || stateInfo.code || "kl";
 
   const [tenantWard, setTenantWard] = useState(tenantId);
   const [districtId, setDistrictId] = useState(complaint_details?.district?.districtid || tenantId);
@@ -36,28 +34,32 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     setTenantboundary(false);
   }
 
-  // const { data: { districts:District } = {}, isLoad:isDistrictLoading } = Digit.Hooks.useStore.getInitData();
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateCode, "common-masters", "PostOffice");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateCode, "common-masters", "Village");
-  const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateCode, "common-masters", "District");
   const { data: BoundaryList = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
 
-  let cmbDistrict = [];
+  let cmbDistrict = districts || [];
   let cmbVillage = [];
   let cmbLB = [];
+  let cmbLBFinal = [];
   let cmbPostOffice = [];
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
 
-  District && District["common-masters"] &&
-    District["common-masters"].District.map((ob) => {
-      if (ob.statecode === stateCode) { cmbDistrict.push(ob) };
-    });
+  tenants && tenants.map((lbMst) => {
+    lbMst.districtid = lbMst?.city?.districtid;
+    lbMst.distCodeStr = lbMst?.city?.distCodeStr;
+    lbMst.localnamecmb = lbMst?.city?.localName;
+    lbMst.namecmb = lbMst?.city?.name;
+    cmbLB.push(lbMst);
+  });
 
-  tenants && tenants.map((ob) => {
-    if (ob.city.districtid === districtId) {
-      cmbLB.push(ob);
-    }
+  cmbLBFinal = cmbLB.filter(e => e.districtid == districtId)
+
+  cmbLBFinal = cmbLBFinal.sort((a, b) => {
+    if (parseInt(a.name) > parseInt(b.name)) { return 1; }
+    if (parseInt(b.name) > parseInt(a.name)) { return -1; }
+    return 0;
   });
 
   Village && Village["common-masters"] && Village["common-masters"].Village.map((ob) => {
@@ -131,7 +133,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     }
   }
 
-  if (isPostOfficeLoading || isDistrictLoading || isVillageLoading) {
+  if (isPostOfficeLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
 
@@ -158,7 +160,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     }
   }
 
-  const isDisabled = selected.pincode && selected.street && selected.locality
+  const isDisabled = selected.pincode && selected.street && selected.locality && selected.ward && selected.lbName
 
   return (
     <React.Fragment>
@@ -174,8 +176,8 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_LOCAL_BODY")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="i18nKey" option={arraySort(cmbLB || [], "name", t)} placeholder={`${t("CS_COMMON_LOCAL_BODY")}`}
-                selected={selected.lbName} select={(val) => handleChange("LB", val)}
+              <Dropdown optionKey={locale == "en_IN" ? "namecmb" : "localnamecmb"} option={cmbLBFinal} selected={selected.lbName}
+                placeholder={`${t("CS_COMMON_LOCAL_BODY")}`} select={(val) => handleChange("LB", val)}
               />
             </div>
             <div className="col-md-4">

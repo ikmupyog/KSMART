@@ -26,7 +26,72 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     const [imagesThumbs, setImagesThumbs] = useState([]);
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getStateId();
-    console.log("applicationDetails in content==", applicationDetails);
+
+    const marriageFieldLabels = {
+        marriageDOM: "CR_DATE_OF_MARRIAGE",
+        "GroomDetails.groomFirstnameEn": "CR_FIRST_NAME_EN",
+        "GroomDetails.groomFirstnameMl": "CR_FIRST_NAME_ML",
+        "GroomDetails.groomMiddlenameEn": "CR_MIDDLE_NAME_EN",
+        "GroomDetails.groomMiddlenameMl": "CR_MIDDLE_NAME_ML",
+        "GroomDetails.groomLastnameEn": "CR_LAST_NAME_EN",
+        "GroomDetails.groomLastnameMl": "CR_LAST_NAME_ML",
+        "GroomDetails.groomDOB": "CR_DATE_OF_BIRTH_TIME",
+        "GroomDetails.groomAge": "CR_AGE",
+        "GroomDetails.groomMothernameEn": "CR_MOTHER_NAME_EN",
+        "GroomDetails.groomMothernameMl": "CR_MOTHER_NAME_ML",
+        "GroomDetails.groomFathernameEn": "CR_FATHER_NAME_EN",
+        "GroomDetails.groomFathernameMl": "CR_FATHER_NAME_ML",
+        "GroomDetails.groomGuardiannameEn": "CR_GUARDIAN_NAME_EN",
+        "GroomDetails.groomGuardiannameMl": "CR_GUARDIAN_NAME_ML",
+        "GroomAddressDetails.permntInKeralaAdrHouseNameEn": "CR_HOUSE_NO_AND_NAME_EN",
+        "GroomAddressDetails.permntInKeralaAdrHouseNameMl": "CR_HOUSE_NO_AND_NAME_MAL",
+        "GroomAddressDetails.permntInKeralaAdrLocalityNameEn": "CR_LOCALITY_EN",
+        "GroomAddressDetails.permntInKeralaAdrLocalityNameMl": "CR_LOCALITY_ML",
+        "GroomAddressDetails.permntInKeralaAdrStreetNameEn": "CR_STREET_EN",
+        "GroomAddressDetails.permntInKeralaAdrStreetNameMl": "CR_STREET_MAL",
+        "GroomAddressDetails.permntOutsideKeralaHouseNameEn": "CR_HOUSE_NO_AND_NAME_EN",
+        "GroomAddressDetails.permntOutsideKeralaHouseNameMl": "CR_HOUSE_NO_AND_NAME_MAL",
+        "GroomAddressDetails.permntOutsideKeralaLocalityNameEn": "CR_LOCALITY_EN",
+        "GroomAddressDetails.permntOutsideKeralaLocalityNameMl": "CR_LOCALITY_ML",
+        "GroomAddressDetails.permntOutsideKeralaStreetNameEn": "CR_STREET_EN",
+        "GroomAddressDetails.permntOutsideKeralaStreetNameMl": "CR_STREET_MAL",
+        "GroomAddressDetails.permntOutsideIndiaLineoneEn": "CR_ADDRES_LINE_ONE_EN",
+        "GroomAddressDetails.permntOutsideIndiaLineoneMl": "CR_ADDRES_LINE_ONE_ML",
+        "GroomAddressDetails.permntOutsideIndiaLinetwoEn": "CR_ADDRES_LINE_TWO_EN",
+        "GroomAddressDetails.permntOutsideIndiaLinetwoMl": "CR_ADDRES_LINE_TWO_ML",
+    
+        "BrideDetails.brideFirstnameEn": "CR_FIRST_NAME_EN",
+        "BrideDetails.brideFirstnameMl": "CR_FIRST_NAME_ML",
+        "BrideDetails.brideMiddlenameEn": "CR_MIDDLE_NAME_EN",
+        "BrideDetails.brideMiddlenameMl": "CR_MIDDLE_NAME_ML",
+        "BrideDetails.brideLastnameEn": "CR_LAST_NAME_EN",
+        "BrideDetails.brideLastnameMl": "CR_LAST_NAME_ML",
+        "BrideDetails.brideDOB": "CR_DATE_OF_BIRTH_TIME",
+        "BrideDetails.brideAge": "CR_AGE",
+        "BrideDetails.brideMothernameEn": "CR_MOTHER_NAME_EN",
+        "BrideDetails.brideMothernameMl": "CR_MOTHER_NAME_ML",
+        "BrideDetails.brideFathernameEn": "CR_FATHER_NAME_EN",
+        "BrideDetails.brideFathernameMl": "CR_FATHER_NAME_ML",
+        "BrideDetails.brideGuardiannameEn": "CR_GUARDIAN_NAME_EN",
+        "BrideDetails.brideGuardiannameMl": "CR_GUARDIAN_NAME_ML",
+        "BrideAddressDetails.permntInKeralaAdrHouseNameEn": "CR_HOUSE_NO_AND_NAME_EN",
+        "BrideAddressDetails.permntInKeralaAdrHouseNameMl": "CR_HOUSE_NO_AND_NAME_MAL",
+        "BrideAddressDetails.permntInKeralaAdrLocalityNameEn": "CR_LOCALITY_EN",
+        "BrideAddressDetails.permntInKeralaAdrLocalityNameMl": "CR_LOCALITY_ML",
+        "BrideAddressDetails.permntInKeralaAdrStreetNameEn": "CR_STREET_EN",
+        "BrideAddressDetails.permntInKeralaAdrStreetNameMl": "CR_STREET_ML",
+        "BrideAddressDetails.permntOutsideKeralaHouseNameEn": "CR_HOUSE_NO_AND_NAME_EN",
+        "BrideAddressDetails.permntOutsideKeralaHouseNameMl": "CR_HOUSE_NO_AND_NAME_MAL",
+        "BrideAddressDetails.permntOutsideKeralaLocalityNameEn": "CR_LOCALITY_EN",
+        "BrideAddressDetails.permntOutsideKeralaLocalityNameMl": "CR_LOCALITY_ML",
+        "BrideAddressDetails.permntOutsideKeralaStreetNameEn": "CR_STREET_EN",
+        "BrideAddressDetails.permntOutsideKeralaStreetNameMl": "CR_STREET_ML",
+        "BrideAddressDetails.permntOutsideIndiaLineoneEn": "CR_ADDRES_LINE_ONE_EN",
+        "BrideAddressDetails.permntOutsideIndiaLineoneMl": "CR_ADDRES_LINE_ONE_ML",
+        "BrideAddressDetails.permntOutsideIndiaLinetwoEn": "CR_ADDRES_LINE_TWO_EN",
+        "BrideAddressDetails.permntOutsideIndiaLinetwoMl": "CR_ADDRES_LINE_TWO_ML",
+      };
+
     function OpenImage(imageSource, index, thumbnailsToShow) {
         window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
     }
@@ -50,12 +115,12 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
             return <TLCaption data={caption} OpenImage={OpenImage} />;
         } else {
             const caption = {
-                date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-                name: checkpoint?.assignes?.[0]?.name,
+                date: checkpoint?.auditDetails?.lastModified,
+                name: checkpoint?.assigner?.name,
                 // mobileNumber: checkpoint?.assigner?.mobileNumber,
                 wfComment: checkpoint?.wfComment,
-                mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-            };
+                mobileNumber: checkpoint?.assigner?.mobileNumber,
+              };
             return <TLCaption data={caption} />;
         }
     };
@@ -84,7 +149,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
             };
             return tempObj;
           });
-          console.log("formattedImageThumbs ===", formattedImageThumbs);
         setImagesThumbs(formattedImageThumbs);
       };
 
@@ -158,16 +222,26 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
         return fieldValue;
     };
 
+const getFieldType = (fieldName, value) => {
+    let fieldType = "text";
+    if (
+      fieldName === "DOM" ||
+      (fieldName === "GROOM_AGE" && value.title === "GroomDetails.groomDOB") ||
+      (fieldName === "BRIDE_AGE" && value.title === "BrideDetails.brideDOB")
+    ){
+      fieldType = "date";
+    }
+      return fieldType;
+  };
 
-
-    const renderCardDetail = (value, fieldName, documentData) => {
-        const type = fieldName === "CHILD_DOB" ? "date" : "text";
+    const renderCardDetail = (index, value, fieldName, documentData) => {
+        const type = getFieldType(fieldName, value);
         console.log("fieldvalues", value, type);
         return (
             <div className="row">
                 <div className="col-md-12">
                     <div className="col-md-3">
-                        <h3 style={{ overflowWrap: "break-word" }}>{t(value.title)} :</h3>
+                        <h3 style={{ overflowWrap: "break-word" }}>{t(marriageFieldLabels[value.title])} :</h3>
                     </div>
                     <div className="col-md-4">
                         <h4>
@@ -180,7 +254,9 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                         </h4>
                     </div>
                     <div className="col-md-1">
-                        <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+                        {index === 0 &&
+                        <LinkButton label={t("CR_VIEW")} onClick={() => setDocumentsView(documentData)} />
+                        }
                     </div>
                 </div>
             </div>
@@ -188,7 +264,6 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
     };
 
     const renderSummaryCard = (detail, index) => {
-        console.log("render summary==", detail);
         //  switch()
         return (
             <React.Fragment key={index}>
@@ -215,7 +290,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                                         </div>
                                     </div>
                                 </div>
-                                {detail?.fieldValues?.map((value, index) => renderCardDetail(value, detail.title, detail.documentIds))}
+                                {detail?.fieldValues?.map((value, index) => renderCardDetail(index, value, detail.title, detail.documentIds))}
                             </StatusTable>
                         }
                     />
