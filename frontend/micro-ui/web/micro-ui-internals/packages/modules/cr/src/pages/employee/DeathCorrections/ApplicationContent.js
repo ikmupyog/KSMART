@@ -32,33 +32,33 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
   }
 
   const getTimelineCaptions = (checkpoint) => {
-      if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
-          const caption = {
-              date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
-              source: applicationData?.channel || "",
+    if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
+        const caption = {
+            date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
+            source: applicationData?.channel || "",
+        };
+        return <TLCaption data={caption} />;
+    } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
+        const caption = {
+            date: checkpoint?.auditDetails?.lastModified,
+            name: checkpoint?.assignes?.[0]?.name,
+            mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
+            comment: t(checkpoint?.comment),
+            wfComment: checkpoint.wfComment,
+            thumbnailsToShow: checkpoint?.thumbnailsToShow,
+        };
+        return <TLCaption data={caption} OpenImage={OpenImage} />;
+    } else {
+        const caption = {
+            date: checkpoint?.auditDetails?.lastModified,
+            name: checkpoint?.assigner?.name,
+            // mobileNumber: checkpoint?.assigner?.mobileNumber,
+            wfComment: checkpoint?.wfComment,
+            mobileNumber: checkpoint?.assigner?.mobileNumber,
           };
-          return <TLCaption data={caption} />;
-      } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
-          const caption = {
-              date: checkpoint?.auditDetails?.lastModified,
-              name: checkpoint?.assignes?.[0]?.name,
-              mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-              comment: t(checkpoint?.comment),
-              wfComment: checkpoint.wfComment,
-              thumbnailsToShow: checkpoint?.thumbnailsToShow,
-          };
-          return <TLCaption data={caption} OpenImage={OpenImage} />;
-      } else {
-          const caption = {
-              date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-              name: checkpoint?.assignes?.[0]?.name,
-              // mobileNumber: checkpoint?.assigner?.mobileNumber,
-              wfComment: checkpoint?.wfComment,
-              mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-          };
-          return <TLCaption data={caption} />;
-      }
-  };
+        return <TLCaption data={caption} />;
+    }
+};
 
   const getTranslatedValues = (dataValue, isNotTranslated) => {
       if (dataValue) {

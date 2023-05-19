@@ -116,12 +116,12 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
             return <TLCaption data={caption} OpenImage={OpenImage} />;
         } else {
             const caption = {
-                date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-                name: checkpoint?.assignes?.[0]?.name,
+                date: checkpoint?.auditDetails?.lastModified,
+                name: checkpoint?.assigner?.name,
                 // mobileNumber: checkpoint?.assigner?.mobileNumber,
                 wfComment: checkpoint?.wfComment,
-                mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
-            };
+                mobileNumber: checkpoint?.assigner?.mobileNumber,
+              };
             return <TLCaption data={caption} />;
         }
     };
