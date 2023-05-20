@@ -549,6 +549,15 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   function setselectGender(value) {
     selectGender(value);
   }
+  useEffect(() => {
+    if (birthPlace && DifferenceInTime != null) {
+      setWorkFlowCode("STILLBIRTHHOSP");
+      console.log(workFlowCode);
+    } else {
+      setWorkFlowCode("STILLBIRTHHOME");
+    }    
+ 
+  }, [DifferenceInTime])
 
   function setselectChildDOB(value) {
     setChildDOB(value);
@@ -561,35 +570,18 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      if (Difference_In_Time != null) {
-        setDifferenceInTime(Difference_In_Time);
-      }
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       // console.log("Difference_In_Time" + Difference_In_Time);
-      // setDifferenceInTime(today.getTime() - birthDate.getTime());
-      // let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
-      // setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(
-          (workFlowData) =>
-            workFlowData.BirtPlace === birthPlace.code &&
-            workFlowData.startdateperiod <= DifferenceInTime &&
-            workFlowData.enddateperiod >= DifferenceInTime
-        );
-        if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
-        }
-      }
-      // if (Difference_In_Days >= 365) {
-      //   setChildAadharHIde(true);
-      // } else {
-      //   setChildAadharHIde(false);
-      //   setChildAadharNo("");
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      // if (birthPlace) {
+      //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      //   console.log("currentWorgFlowDOB" + currentWorgFlow);
+      //   if (currentWorgFlow.length > 0) {
+      //     // console.log(currentWorgFlow[0].WorkflowCode);
+      //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //   }
       // }
     }
   }
@@ -784,11 +776,13 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
   }
   function setselectBirthPlace(value) {
-    selectBirthPlace(value);
+    selectBirthPlace(value);    
     setValue(value.code);
+    //console.log(value);
     if (value.code === "HOSPITAL") {
       setWorkFlowCode("STILLBIRTHHOSP");
       console.log(workFlowCode);
+      console.log(value);
     } else {
       setWorkFlowCode("STILLBIRTHHOME");
     }
