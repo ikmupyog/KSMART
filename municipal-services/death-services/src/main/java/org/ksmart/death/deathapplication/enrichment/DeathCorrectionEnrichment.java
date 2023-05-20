@@ -40,7 +40,6 @@ public class DeathCorrectionEnrichment implements BaseEnrichment{
 
     public void enrichCreateCorrection(CorrectionRequest request) {
         String registrationNo = null;
-        String tenantId = null;
         Date date = new Date();
         long doreport = date.getTime();
         RequestInfo requestInfo = request.getRequestInfo();
@@ -49,11 +48,12 @@ public class DeathCorrectionEnrichment implements BaseEnrichment{
         for (CorrectionDetails correctionApplication : request.getCorrectionDetails()) {
             correctionApplication.setDeathCorrAuditDetails(auditDetails);
             registrationNo = correctionApplication.getRegistrationNo();
+            setApplicationNumbers(request,correctionApplication.getDeathCorrectionBasicInfo());
         }
         DeathRegistryCriteria criteria =  new DeathRegistryCriteria();
         criteria.setRegistrationNo(registrationNo);
         List<DeathRegistryDtl> registerBirthDetails = registerRepo.getDeathApplication(criteria,request.getRequestInfo());
-    //    setApplicationNumbers(request);
+
         request.getCorrectionDetails()
                 .forEach(death -> {
                     if(registerBirthDetails.size() > 0) {
@@ -68,7 +68,6 @@ public class DeathCorrectionEnrichment implements BaseEnrichment{
                         death.setDeathCorrectionBasicInfo(deathCorrectionBasicInfo);
                     }
                 });
-        System.out.println(registerBirthDetails.size());
         if(registerBirthDetails.size() >0) {
             detailCorrectionEnrichment.correctionField(request, registerBirthDetails, auditDetails);
         }
