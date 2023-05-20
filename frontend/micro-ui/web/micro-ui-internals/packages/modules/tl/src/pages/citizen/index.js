@@ -56,10 +56,10 @@ const App = () => {
           <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
           {/* <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} /> */}
           <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={()=><SearchRenewalTrade isCorrectionreq={false}/>} />
-          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isProcessreq="correction"/>}/>
+          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isProcessreq="CORRECTION"/>}/>
           <PrivateRoute path={`${path}/tradelicence/license-renewal-pde`}   component={() => <CreateTradeLicence  isRenewal={true}/>} />
            <PrivateRoute path={`${path}/tradelicence/license-correction`} component={() => <CorrectionTradeLicence  isRenewal={false}/>} /> 
-           <PrivateRoute path={`${path}/tradelicence/license-cancellation-search`} component={()=><SearchRenewalTrade isProcessreq="cancellation"/>}/>
+           <PrivateRoute path={`${path}/tradelicence/license-cancellation-search`} component={()=><SearchRenewalTrade isProcessreq="CANCELLATION"/>}/>
            <PrivateRoute path={`${path}/tradelicence/license-cancellation`} component={() => <CancelTradeLicence  isRenewal={false}/>} /> 
           {/* component={() => <CreateTradeLicence  isRenewal={true}/>} />	 */}
         </AppContainer>

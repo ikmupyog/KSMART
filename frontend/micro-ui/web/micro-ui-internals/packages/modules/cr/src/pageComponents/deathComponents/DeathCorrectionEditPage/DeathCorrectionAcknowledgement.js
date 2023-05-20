@@ -54,7 +54,18 @@ const DeathCorrectionAcknowledgement = () => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((resp) => Digit.Utils.pdf.generate(resp));
   };
+
+  const gotoHome = () => {
+    history.go(-3);
+  }
+
   
+  useEffect(() => {
+    window.addEventListener("popstate", gotoHome);
+    return () => {
+      window.removeEventListener("popstate", gotoHome);
+    };
+  }, []);
  
     if (mutationData?.isSuccess) {
       return (

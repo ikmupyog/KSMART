@@ -53,15 +53,15 @@ function ApplicationContent({
     applicationDetails?.InformationDeath?.isDeathNAC
       ? { i18nKey: "CR_IS_NAC", code: "NAC" }
       : applicationDetails?.InformationDeath?.isDeathNIA
-      ? { i18nKey: "CR_IS_NIA", code: "NIA" }
-      : {}
+        ? { i18nKey: "CR_IS_NIA", code: "NIA" }
+        : {}
   );
   const [selectedNACValueRadio, setSelectedNACValue] = useState(
     applicationDetails?.isBirthNAC
       ? { i18nKey: "CR_IS_NAC", code: "NAC" }
       : applicationDetails?.isBirthNIA
-      ? { i18nKey: "CR_IS_NIA", code: "NIA" }
-      : {}
+        ? { i18nKey: "CR_IS_NIA", code: "NIA" }
+        : {}
   );
 
   const radiomenu = [
@@ -72,8 +72,10 @@ function ApplicationContent({
   const getTimelineCaptions = (checkpoint) => {
     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
       const caption = {
-        date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
+        date: checkpoint?.auditDetails?.created,
         source: applicationData?.channel || "",
+        name: checkpoint?.assigner?.name,
+        mobileNumber: checkpoint?.assigner?.mobileNumber,
       };
       return <TLCaption data={caption} />;
     } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
@@ -87,12 +89,13 @@ function ApplicationContent({
       };
       return <TLCaption data={caption} OpenImage={OpenImage} />;
     } else {
+      console.log({ checkpoint })
       const caption = {
-        date: Digit.DateUtils?.ConvertTimestampToDate(applicationData?.auditDetails?.lastModifiedTime),
-        name: checkpoint?.assignes?.[0]?.name,
+        date: checkpoint?.auditDetails?.lastModified,
+        name: checkpoint?.assigner?.name,
         // mobileNumber: checkpoint?.assigner?.mobileNumber,
         wfComment: checkpoint?.wfComment,
-        mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
+        mobileNumber: checkpoint?.assigner?.mobileNumber,
       };
       return <TLCaption data={caption} />;
     }
@@ -132,6 +135,9 @@ function ApplicationContent({
   };
 
   const deathNACurl = window.location.href.includes("application-deathnacdetails") ? true : false;
+  const { roles: userRoles } = Digit.UserService.getUser().info;
+
+  const isLocalRegistrator = userRoles[0]?.code === "BND_LOCAL_REGISTRAR" ? true : false;
   const birthNACurl = window.location.href.includes("application-nacbirth") ? true : false;
 
   const getMainDivStyles = () => {
@@ -153,7 +159,7 @@ function ApplicationContent({
   const [documents, setDocuments] = useState(null);
 
   useEffect(() => {
-    if (applicationDetails?.documents && applicationDetails?.documents?.values.length > 0) {
+    if (applicationDetails?.documents && applicationDetails?.documents?.values?.length > 0) {
       fetchImage(applicationDetails?.documents?.values);
     }
   }, [applicationDetails]);
@@ -169,7 +175,7 @@ function ApplicationContent({
         return { image: key.url, key: key.id };
       }
     });
-    console.log({newdocuments})
+    console.log({ newdocuments });
     setDocuments(newdocuments);
   };
 
@@ -295,7 +301,7 @@ function ApplicationContent({
               )}
             </React.Fragment>
           ))}
-          {deathNACurl && (
+          {deathNACurl && isLocalRegistrator && (
             <div style={{ marginTop: "50px" }}>
               <div className="row">
                 <div className="col-md-6">
@@ -326,7 +332,7 @@ function ApplicationContent({
               </div>
             </div>
           )}
-          {birthNACurl && (
+          {birthNACurl && isLocalRegistrator && (
             <div style={{ marginTop: "50px" }}>
               <div className="row">
                 <div className="col-md-6">
@@ -390,8 +396,7 @@ function ApplicationContent({
                                 isCompleted={index === 0}
                                 info={checkpoint.comment}
                                 label={t(
-                                  `${timelineStatusPrefix}${
-                                    checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
+                                  `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
                                 customChild={getTimelineCaptions(checkpoint)}

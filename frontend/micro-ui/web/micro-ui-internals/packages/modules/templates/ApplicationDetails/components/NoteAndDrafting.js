@@ -42,7 +42,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   const mobileView = Digit.Utils.browser.isMobile() ? true : false;
   // const state = useSelector((state) => state);
   const [checkDraft, setCheckDraft] = useState(false);
-  const [checkNote, setCheckNote] = useState(true);
+  const [checkNote, setCheckNote] = useState(false);
   const [checkEnquiry, setCheckEnquiry] = useState(false);
   const [showGeoLocation, setShowGeoLocation] = useState(false);
   const [longitude, setLongitude] = useState("");
@@ -60,7 +60,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   };
   const autoNoteListChange =(e)=>{
     setSelectedAutoNote(e)
-    setNoteText(e.name)
+    setNoteText(noteText +"  "+ e.name)
 
   }
 
@@ -414,7 +414,91 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                         ></CustomButton>
                     </div> */}
 
-          {showGeoLocation && (
+         
+
+          <div className="row">
+            <div className="col-md-12 col-sm-12  col-xs-12">
+              <div className="col-md-3  col-sm-3  col-xs-12 notes">
+                <CheckBox t={t} optionKey="name" checked={checkNote} value={checkNote} onChange={(e) => handleNoteChange(e)}  />
+                <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
+              </div>
+              <div className="col-md-3 col-sm-3  col-xs-12 link-file">
+                <CheckBox t={t} optionKey="name" checked={checkEnquiry} value={checkEnquiry} onChange={(e) => handleEnquiryChange(e)} />
+                <CardLabel className="card-label-file">{`${t("ENQUIRY")}`}</CardLabel>{" "}
+              </div>
+              <div className="col-md-3  col-sm-3  col-xs-12 drafting">
+                <CheckBox t={t} optionKey="name" checked={checkDraft} value={checkDraft} onChange={(e) => handleDraftChange(e)} />
+                <CardLabel className="card-label-file">{`${t("DRAFTING")}`} </CardLabel>{" "}
+              </div>
+            </div>
+          </div>
+            <div>
+            <SubmitBar label={t("View Notes")} onSubmit={() => setDisplayNotePopup(!displayNotePopup)} />
+            </div>
+            {checkNote &&(
+               <div className="row ">
+            <div className="col-md-12 col-sm-12">
+              <div className="col-md-7 search-file">
+                <TextArea
+                  className={(isValidate == true && noteTextErr)?'employee-card-textarea employee-textarea-error':'employee-card-textarea'}
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="NoteText"
+                  placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                  onChange={setNoteTextField}
+                  // value={selectedAutoNote}
+                  value={noteText}
+                />
+
+                {/* <div class="link-file">
+
+                                    <LinkButton
+                                        label={t("+ADD_REFERENCE_HERE")}
+                                        className="file-link-button"
+                                    />
+                                </div>
+                                <div class="link-file">
+                                    <LinkButton
+                                        label={t("ADD")}
+                                        className="file-link-button"
+
+
+                                    />
+                                </div>
+                                <div class="link-file-sec" >
+                                    <LinkButton
+                                        label={t("REMOVE")}
+                                        className="file-link-button"
+
+
+                                    />
+                                </div> */}
+              </div>
+              <div className="col-md-5 search-file selectNotes">
+                <CardLabel className="card-label-file">{`${t("DFM_SELECT_NOTES")}`}</CardLabel>
+                <Dropdown t={t} option={cmbautoNoteList[0]} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  selected={selectedAutoNote}
+                                    select={autoNoteListChange} placeholder={t("SEARCH_SELECT_AUTO_NOTES")} />
+
+                {/* <ul
+                  style={{
+                    maxHeight: "120px",
+                    overflowY: "scroll",
+                    border: "1px solid rgb(69 69 69 / 18%)",
+                    padding: "10px",
+                  }}
+                >
+                  {selectedAutoNote?selectedAutoNote?.Notes.map((item,key)=>(
+                     <li key={key} >{item.name}</li>
+                  )):<li></li>}
+                 
+                 
+                </ul> */}
+              </div>
+            </div>
+          </div>
+            )}
+             {showGeoLocation && (
             <div className="row geo-location">
               <div className="col-md-12  col-sm-12 geo-column">
                 {/* <div className="col-md-2 col-sm-12">
@@ -454,87 +538,6 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
               </div>
             </div>
           )}
-
-          <div className="row">
-            <div className="col-md-12 col-sm-12  col-xs-12">
-              <div className="col-md-3  col-sm-3  col-xs-12 notes">
-                <CheckBox t={t} optionKey="name" checked={checkNote} value={checkNote} onChange={(e) => handleNoteChange(e)} disable={checkNote} />
-                <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
-              </div>
-              <div className="col-md-3 col-sm-3  col-xs-12 link-file">
-                <CheckBox t={t} optionKey="name" checked={checkEnquiry} value={checkEnquiry} onChange={(e) => handleEnquiryChange(e)} />
-                <CardLabel className="card-label-file">{`${t("ENQUIRY")}`}</CardLabel>{" "}
-              </div>
-              <div className="col-md-3  col-sm-3  col-xs-12 drafting">
-                <CheckBox t={t} optionKey="name" checked={checkDraft} value={checkDraft} onChange={(e) => handleDraftChange(e)} />
-                <CardLabel className="card-label-file">{`${t("DRAFTING")}`} </CardLabel>{" "}
-              </div>
-            </div>
-          </div>
-            <div>
-            <SubmitBar label={t("View Notes")} onSubmit={() => setDisplayNotePopup(!displayNotePopup)} />
-            </div>
-          <div className="row ">
-            <div className="col-md-12 col-sm-12">
-              <div className="col-md-7 search-file">
-                <TextArea
-                  className={(isValidate == true && noteTextErr)?'employee-card-textarea employee-textarea-error':'employee-card-textarea'}
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="NoteText"
-                  placeholder={t("shows_subject_from_application_with_edit_bitton")}
-                  onChange={setNoteTextField}
-                  // value={selectedAutoNote}
-                  value={noteText}
-                />
-
-                {/* <div class="link-file">
-
-                                    <LinkButton
-                                        label={t("+ADD_REFERENCE_HERE")}
-                                        className="file-link-button"
-                                    />
-                                </div>
-                                <div class="link-file">
-                                    <LinkButton
-                                        label={t("ADD")}
-                                        className="file-link-button"
-
-
-                                    />
-                                </div>
-                                <div class="link-file-sec" >
-                                    <LinkButton
-                                        label={t("REMOVE")}
-                                        className="file-link-button"
-
-
-                                    />
-                                </div> */}
-              </div>
-              <div className="col-md-5 search-file">
-                <Dropdown t={t} option={cmbautoNoteList[0]} type={"text"} optionKey="name" name="SEARCH_SELECT_AUTO_NOTES"  selected={selectedAutoNote}
-                                    select={autoNoteListChange} placeholder={t("SEARCH_SELECT_AUTO_NOTES")} />
-
-                {/* <ul
-                  style={{
-                    maxHeight: "120px",
-                    overflowY: "scroll",
-                    border: "1px solid rgb(69 69 69 / 18%)",
-                    padding: "10px",
-                  }}
-                >
-                  {selectedAutoNote?selectedAutoNote?.Notes.map((item,key)=>(
-                     <li key={key} >{item.name}</li>
-                  )):<li></li>}
-                 
-                 
-                </ul> */}
-              </div>
-            </div>
-          </div>
-
           <div
             className="row"
             // style={{
@@ -571,7 +574,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
           </div>
           {displayNotePopup &&(
              <Modal
-             headerBarMain={<Heading t={t} heading={"CR_SEARCH_BR_APPLICATIONS"} />}
+             headerBarMain={<Heading t={t} heading={"DFM_NOTES"} />}
              headerBarEnd={<CloseBtn onClick={closePopup} />}
              popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto" }}
              formId="modal-action"
@@ -589,15 +592,16 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                   paddingLeft: "20px",
                 }}
               >
-                {workflowDetails?.data?.processInstances?.map((item) => {
+                {workflowDetails?.data?.processInstances?.map((item,index) => {
                   return (
                     <ol>
+                       {/* <li>Notes </li> */}
                       {/* <li>Status: {item.action}</li>
                       <li>Assignes: {item?.assignes?.[0]?.name}</li>
                       <li>Created: {item?.auditDetails?.lastModifiedTime}</li> */}
                      {item?.comment && (
                       <React.Fragment>
-                        <li>Notes: {item?.comment}</li>
+                        <li>{index+1}. {item?.comment}</li>
                          <hr style={{ border: "1px solid rgba(69, 69, 69, 0.18)", marginBottom: "15px" }} />
                       </React.Fragment>
                      )     

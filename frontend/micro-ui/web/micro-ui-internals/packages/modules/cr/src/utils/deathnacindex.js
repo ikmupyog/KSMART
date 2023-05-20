@@ -23,7 +23,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlace:_.get(DeathNACDetails, "DeathPlace.code",""),
         DeathPlaceType:_.get(DeathNACDetails, "DeathPlaceType.code",""),
         hospitalNameEn:_.get(DeathNACDetails, "hospitalNameEn.code",""),
-        institution: _.get(DeathNACDetails, "institution.code",""),
+        institution: _.get(DeathNACDetails, "InstitutionIdMl.code",""),
         vehicleType: _.get(DeathNACDetails, "vehicleType.code",""),
         publicPlaceType: _.get(DeathNACDetails, "publicPlaceType.code",""),
 

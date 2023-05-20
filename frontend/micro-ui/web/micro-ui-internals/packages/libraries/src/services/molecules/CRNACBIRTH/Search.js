@@ -330,7 +330,7 @@ export const CRNACsearch = {
         { title: "CR_APPLICANT_AADHAR", value: response?.ApplicantDetails.aadharNo || t("CR_NOT_RECORDED") },
         { title: "CR_APPLICANT_MOBILE", value: response?.ApplicantDetails.mobileNo || t("CR_NOT_RECORDED") },
         { title: "CR_APPLICANT_ADDRESS", value: response?.ApplicantDetails.applicantAddressEn || t("CR_NOT_RECORDED") },
-        { title: "CR_CARE_OF_APPLICATION", value: response?.ApplicantDetails.careofapplicant || t("CR_NOT_RECORDED") },
+        { title: "CR_IS_CAREOF", value: response?.ApplicantDetails.careofapplicant || t("CR_NOT_RECORDED") },
       ],
     };
 

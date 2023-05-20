@@ -39,12 +39,24 @@ const MarriageCorrectionAcknowledgement = () => {
   const { t } = useTranslation();
 
   let location = useLocation();
+  let history = useHistory();
   // let navigationData = location?.state?.navData;
   let marriageCorrectionData = location?.state?.marriageCorrectionData;
   let mutationData = location?.state?.mutationData;
 
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
+
+   const gotoHome = () => {
+    history.go(-3);
+  }
+
+  useEffect(() => {
+    window.addEventListener("popstate", gotoHome);
+    return () => {
+      window.removeEventListener("popstate", gotoHome);
+    };
+  }, []);
 
   const handleDownloadPdf = async () => {
   

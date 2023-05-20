@@ -100,6 +100,7 @@ const TLApplicationDetails = () => {
       let commencementDateV = application[0].commencementDate;
       let structureTypeV = application[0].tradeLicenseDetail.structureType;
       let owners = [];
+      let ownerName = "";
       application[0].tradeLicenseDetail.owners.map((owner, index) => {
         let address = owner?.designation ? owner?.designation + ", " : "" +
           owner.houseName ? owner.houseName + "," : '' +
@@ -116,6 +117,7 @@ const TLApplicationDetails = () => {
           designation: owner?.designation ? owner?.designation : '', address: address
         }
         owners.push(singleOwner);
+        ownerName = ownerName === "" ? owner.name : (", " + owner.name);
       });
       let structurePlaceV = [];
       let tempString = "";
@@ -230,6 +232,7 @@ const TLApplicationDetails = () => {
       let licenseeType = application[0]?.licenseeType;
       let ownershipCategory = application[0]?.tradeLicenseDetail?.ownershipCategory;
       let applicationDocuments = application[0]?.tradeLicenseDetail?.applicationDocuments;
+      let fileStoreId = application[0]?.fileStoreId;
       let finalJson =
         [{
           tenantId: tenantIdV,
@@ -263,7 +266,8 @@ const TLApplicationDetails = () => {
             applicationDocuments: applicationDocuments
           },
           desiredLicensePeriod: desiredLicensePeriodV,
-          signedCertificate: "111111111111"
+          signedCertificate: "License No : "+licenseNumberV+"\nLicensee : " + ownerName + "\nUnitName : " + licenseUnitName,
+          fileStoreId: fileStoreId
         }];
       return finalJson;
     }
@@ -297,34 +301,112 @@ const TLApplicationDetails = () => {
     history.goBack();
   }
 
-  const handleDownloadPdf = async () => {
-    const tenantInfo = tenants.find((tenant) => tenant.code === application[0]?.tenantId);
-    let res = application[0];
-    const data = getPDFData({ ...res }, tenantInfo, t);
-    data.then((ress) => Digit.Utils.pdf.generate(ress));
-    setShowOptions(false);
+  // const handleDownloadPdf = async () => {
+  //   const tenantInfo = tenants.find((tenant) => tenant.code === application[0]?.tenantId);
+  //   let res = application[0];
+  //   const data = getPDFData({ ...res }, tenantInfo, t);
+  //   data.then((ress) => Digit.Utils.pdf.generate(ress));
+  //   setShowOptions(false);
+  // };
+  const handleDownloadPdf = async () => { 
+      const tenantInfo = tenants.find((tenant) => tenant.code === application[0]?.tenantId);
+      let res = rearrangeAcknowledgment(application[0]);
+      const TLack = await Digit.PaymentService.generatePdf(tenantId, { Licenses: res }, "tlacknowledgment");
+      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLack.filestoreIds[0] });
+      window.open(fileStore[TLack.filestoreIds[0]], "_blank");
+      setShowOptions(false);
   };
+  function rearrangeAcknowledgment(application) {
+    if (application.applicationNumber) {
+      let tenantIdV = application.tenantId;
+
+      let applicationNumberV = application.applicationNumber;
+      let applicationDateV = application.applicationDate;
+     
+      let owners = [];
+      let ownerName = "";
+      application.tradeLicenseDetail.owners.map((owner, index) => {
+        let address = owner?.designation ? owner?.designation + ", " : "" +
+          owner.houseName ? owner.houseName + "," : '' +
+            owner.street ? owner.street + "," : '' +
+              owner.locality ? owner.locality + "," : '' +
+                owner.postOffice ? owner.postOffice + "," : '' + "-" +
+                  owner.pincode ? owner.pincode : '';
+
+
+
+        let singleOwner = {
+          name: owner.name, mobileNumber: owner.mobileNumber, emailId: owner.emailId,
+          applicantNameLocal: owner.applicantNameLocal, careOf: owner.careOf, careOfName: owner.careOfName,
+          designation: owner?.designation ? owner?.designation : '', address: address
+        }
+        owners.push(singleOwner);
+        ownerName = ownerName === "" ? owner.name : (", " + owner.name);
+      });
+
+      let licenseUnitName = application?.tradeLicenseDetail?.institution?.licenseUnitId ? application?.tradeLicenseDetail?.institution?.licenseUnitId + " - " : "" +
+        application?.licenseUnitName ? application?.licenseUnitName : ""
+          + application?.licenseUnitNameLocal ? " ( " + application?.licenseUnitNameLocal + " ) " : "";
+      let applicationDocuments = "";
+      application?.tradeLicenseDetail?.applicationDocuments.map((doc)=>{
+        applicationDocuments += doc?.documentType === "" ? doc?.documentType : ", " + doc?.documentType
+      });
+      let fileStoreId = application?.fileStoreId;
+      let finalJson =
+        [{
+          tenantId: tenantIdV,
+          applicationNumber: applicationNumberV,
+          licenseUnitName: licenseUnitName,
+          applicationDate: applicationDateV,
+          tradeLicenseDetail: {
+            owners: ownerName,
+            address : owners[0].address,
+            applicationDocuments: applicationDocuments
+          },
+          signedCertificate: "Efile No : "+applicationNumberV+"\nLicensee : " + ownerName + "\nUnitName : " + licenseUnitName,
+          fileStoreId: fileStoreId
+        }];
+      return finalJson;
+    }
+    else {
+      return [{}];
+    }
+  }
 
   const downloadPaymentReceipt = async () => {
-    const receiptFile = { filestoreIds: [paymentsHistory.Payments[0]?.fileStoreId] };
-    if (!receiptFile?.fileStoreIds?.[0]) {
+    const receiptFile = { fileStoreId: [paymentsHistory.Payments[0]?.fileStoreId] };
+    if (!receiptFile?.fileStoreId?.[0]) {
       const newResponse = await Digit.PaymentService.generatePdf(tenantId, { Payments: [paymentsHistory.Payments[0]] }, "tradelicense-receipt");
       const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: newResponse.filestoreIds[0] });
       window.open(fileStore[newResponse.filestoreIds[0]], "_blank");
       setShowOptions(false);
     } else {
-      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: receiptFile.filestoreIds[0] });
-      window.open(fileStore[receiptFile.filestoreIds[0]], "_blank");
+      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: receiptFile.fileStoreId[0] });
+      window.open(fileStore[receiptFile.fileStoreId[0]], "_blank");
+      setShowOptions(false);
+    }
+  };
+  const downloadTLcertificate = async () => {
+    const TLcertificatefile = application_cert?.fileStoreId && application_cert?.fileStoreId !== null ? { fileStoreIds: [application_cert?.fileStoreId]} : { fileStoreIds: [] };
+    if(!TLcertificatefile?.fileStoreIds?.[0]){
+      const TLcertificate = await Digit.PaymentService.generatePdf(tenantId, { Licenses: application_cert }, "tlcertificate");
+      application_cert.fileStoreId = TLcertificate.filestoreIds[0];
+      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLcertificate.filestoreIds[0] });
+      window.open(fileStore[TLcertificate.filestoreIds[0]], "_blank");
+      setShowOptions(false);
+    } else {
+      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLcertificatefile.fileStoreIds[0] });
+      window.open(fileStore[TLcertificatefile?.fileStoreIds[0]], "_blank");
       setShowOptions(false);
     }
   };
 
-  const downloadTLcertificate = async () => {
-    const TLcertificatefile = await Digit.PaymentService.generatePdf(tenantId, { Licenses: application_cert }, "tlcertificate");
-    const receiptFile = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLcertificatefile.filestoreIds[0] });
-    window.open(receiptFile[TLcertificatefile.filestoreIds[0]], "_blank");
-    setShowOptions(false);
-  };
+   // const downloadTLcertificate = async () => {
+  //   const TLcertificatefile = await Digit.PaymentService.generatePdf(tenantId, { Licenses: application_cert }, "tlcertificate");
+  //   const receiptFile = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLcertificatefile.filestoreIds[0] });
+  //   window.open(receiptFile[TLcertificatefile.filestoreIds[0]], "_blank");
+  //   setShowOptions(false);
+  // };
 
   let propertyAddress = "";
   // if (PTData && PTData?.Properties?.length) {

@@ -46,6 +46,7 @@ const getPath = (path, params) => {
 
 const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   const history = useHistory();
   const match = useRouteMatch();
   const [InitiatorDeclareError, setInitiatorDeclareError] = useState(false);
@@ -137,7 +138,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const { roles: userRoles, } = Digit.UserService.getUser().info;
   const [isHospitalUser, setIsHospitalUser] = useState(false);
   useEffect(() => {
-    console.log("userRoles", userRoles);
+    // console.log("userRoles", userRoles);
     if (userRoles.length > 0) {
       if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER" ||
         userRoles[0].code === "BND_LOCAL_REGISTRAR" || userRoles[0].code === "BND_SUB_REGISTRAR" || userRoles[0].code === "BND_DISTRICT_REGISTRAR") {
@@ -638,7 +639,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} :</CardText>
                   </div>
                   <div className="col-md-3">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.medicalAttensionSub?.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {locale === "en_IN" ? ChildDetails?.medicalAttensionSub?.name : ChildDetails?.medicalAttensionSub?.namelocal}</CardText>
                   </div>
                   <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PREGNANCY_DURATION")}`} :</CardText>
@@ -654,7 +656,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DELIVERY_METHOD")}`} :</CardText>
                   </div>
                   <div className="col-md-3">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.deliveryMethods.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {locale === "en_IN" ? ChildDetails?.deliveryMethods?.name : ChildDetails?.deliveryMethods?.namelocal}</CardText>
                   </div>
                   <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`} :</CardText>
@@ -727,7 +730,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {ParentsDetails?.motherNationality.nationalityname}
+                          {locale === "en_IN" ? ParentsDetails?.motherNationality?.nationalityname : ParentsDetails?.motherNationality?.nationalitynamelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -735,7 +738,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {ParentsDetails?.motherMaritalStatus.code}
+                          {locale === "en_IN" ? ParentsDetails?.motherMaritalStatus?.name : ParentsDetails?.motherMaritalStatus?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -772,13 +775,17 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
                       </div>
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherEducation.name}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {locale === "en_IN" ? ParentsDetails?.motherEducation?.name : ParentsDetails?.motherEducation?.namelocal}
+                        </CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
                       </div>
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.motherProfession.name}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {locale === "en_IN" ? ParentsDetails?.motherProfession?.name : ParentsDetails?.motherProfession?.namelocal}
+                        </CardText>
                         {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
                       </div>
                     </div>
@@ -835,14 +842,16 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {ParentsDetails?.fatherNationality.nationalityname}
+                          {locale === "en_IN" ? ParentsDetails?.fatherNationality?.nationalityname : ParentsDetails?.fatherNationality?.nationalitynamelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
                       </div>
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.fatherEducation.name}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {locale === "en_IN" ? ParentsDetails?.fatherEducation?.name : ParentsDetails?.fatherEducation?.namelocal}
+                        </CardText>
                       </div>
                     </div>
                   </div>
@@ -852,7 +861,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
                       </div>
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.fatherProfession.name}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {locale === "en_IN" ? ParentsDetails?.fatherProfession?.name : ParentsDetails?.fatherProfession?.namelocal}
+                        </CardText>
                       </div>
                     </div>
                   </div>
@@ -871,7 +882,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_RELIGION")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ParentsDetails?.Religion.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {locale === "en_IN" ? ParentsDetails?.Religion?.name : ParentsDetails?.Religion?.namelocal}
+                    </CardText>
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_CONTACT_NO")}`} :</CardText>
@@ -916,7 +929,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaDistrict?.name : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -924,7 +937,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaTaluk.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaTaluk?.name : AddressBirthDetails?.presentInsideKeralaTaluk?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -932,7 +945,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaVillage.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaVillage?.name : AddressBirthDetails?.presentInsideKeralaVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -944,7 +957,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaLBName.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaLBName?.name : AddressBirthDetails?.presentInsideKeralaLBName?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -964,7 +977,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaPostOffice.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaPostOffice?.name : AddressBirthDetails?.presentInsideKeralaPostOffice?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1056,7 +1069,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaDistrict.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentOutsideKeralaDistrict?.name : AddressBirthDetails?.presentOutsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1076,7 +1089,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentOutsideKeralaVillage?.name : AddressBirthDetails?.presentOutsideKeralaVillage?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1212,7 +1225,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {locale === "en_IN" ? AddressBirthDetails?.presentOutSideIndiaadrsVillage?.name : AddressBirthDetails?.presentOutSideIndiaadrsVillage?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1297,7 +1310,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrDistrict.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrDistrict?.name : AddressBirthDetails?.permntInKeralaAdrDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1305,7 +1318,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrTaluk.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrTaluk?.name : AddressBirthDetails?.permntInKeralaAdrTaluk?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1313,7 +1326,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrVillage.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrVillage?.name : AddressBirthDetails?.permntInKeralaAdrVillage?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -1325,7 +1338,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrLBName.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrLBName?.name : AddressBirthDetails?.permntInKeralaAdrLBName?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1345,7 +1358,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrPostOffice.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrPostOffice?.name : AddressBirthDetails?.permntInKeralaAdrPostOffice?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1437,7 +1450,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaDistrict.name}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntOutsideKeralaDistrict?.name : AddressBirthDetails?.permntOutsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1457,7 +1470,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntOutsideKeralaVillage?.name : AddressBirthDetails?.permntOutsideKeralaVillage?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1593,7 +1606,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {locale === "en_IN" ? AddressBirthDetails?.permntOutsideIndiaVillage?.name : AddressBirthDetails?.permntOutsideIndiaVillage?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1771,7 +1784,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`} :</CardText>
                           </div>
                           <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiator.name}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {locale === "en_IN" ? InitiatorinfoDetails?.initiator?.name : InitiatorinfoDetails?.initiator?.namelocal}
+                            </CardText>
                           </div>
                           <div className="col-md-2">
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
@@ -1818,13 +1833,17 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`} :</CardText>
                           </div>
                           <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiator.name}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {locale === "en_IN" ? InitiatorinfoDetails?.initiator?.name : InitiatorinfoDetails?.initiator?.namelocal}
+                            </CardText>
                           </div>
                           <div className="col-md-2">
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
                           </div>
                           <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.relation.name}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {locale === "en_IN" ? InitiatorinfoDetails?.relation?.name : InitiatorinfoDetails?.relation?.namelocal}
+                            </CardText>
                           </div>
                         </div>
                       </div>
@@ -1871,7 +1890,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`} :</CardText>
                           </div>
                           <div className="col-md-3">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiator.name}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {locale === "en_IN" ? InitiatorinfoDetails?.initiator?.name : InitiatorinfoDetails?.initiator?.namelocal}
+                            </CardText>
                           </div>
                           <div className="col-md-2">
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME")}`} :</CardText>
@@ -1887,7 +1908,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} :</CardText>
                           </div>
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.initiatorDesi.name}</CardText>
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                              {locale === "en_IN" ? InitiatorinfoDetails?.initiatorDesi?.name : InitiatorinfoDetails?.initiatorDesi?.namelocal}
+                            </CardText>
                           </div>
                           <div className="col-md-2">
                             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
@@ -2018,7 +2041,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InitiatorinfoDetails?.ipopList?.name}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN" ? InitiatorinfoDetails?.ipopList?.name : InitiatorinfoDetails?.ipopList?.namelocal}
+                      </CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP_NO")}`} :</CardText>

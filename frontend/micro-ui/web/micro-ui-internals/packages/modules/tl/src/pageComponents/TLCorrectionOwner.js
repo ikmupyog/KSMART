@@ -65,7 +65,6 @@ const TLCorrectionOwner = ({ t, config,onSelect,formData }) => {
       return
   }, [disptachowner]);
   const goNext = async () => {
-    console.log("sdkfsdhgkjsdhfkjdsjkgfbdskj");
     let ownerspremise = ownerState;
     let tradeLicenseDetail = {ownerspremise:ownerspremise}
     onSelect(config.key,{tradeLicenseDetail});
