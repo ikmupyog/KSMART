@@ -15,6 +15,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
@@ -132,7 +133,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               <CardLabel>{`${t("CR_PUBLIC_PLACE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(cmbOtherplace ? cmbOtherplace : [],"name",t)}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}

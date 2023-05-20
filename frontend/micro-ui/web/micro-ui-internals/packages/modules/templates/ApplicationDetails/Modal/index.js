@@ -69,7 +69,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
     return <AbandonedActionModal {...props} />;
   }
-  if (props?.businessService.includes("NACAPP")) {
+  if (props?.businessService.includes("BIRTHNAC")) {
     return <BirthNACActionModal {...props} />;
   }
   if (
