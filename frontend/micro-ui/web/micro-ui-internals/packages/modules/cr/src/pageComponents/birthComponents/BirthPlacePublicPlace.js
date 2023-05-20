@@ -69,7 +69,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     setWardNo(value);
   }
   function setSelectlocalityNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setlocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -85,7 +85,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
 
   function setSelectstreetNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setstreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -100,7 +100,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
       setpublicPlaceDecpEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     //setpublicPlaceDecpEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
@@ -173,7 +173,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 onChange={setSelectlocalityNameEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
             </div>
             <div className="col-md-6">
@@ -213,7 +213,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 disable={isDisableEdit}
                 onChange={setSelectstreetNameEn}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
             </div>
             <div className="col-md-6">
@@ -249,7 +249,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 disable={isDisableEdit}
                 onChange={setSelectVehicleOtherDetailsEn}
                 placeholder={`${t("CR_DESCRIPTION")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
+                {...(validation = { pattern: "^[a-zA-Z,-0-9, ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
               />
             </div>
           </div>
