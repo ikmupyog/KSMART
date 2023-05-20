@@ -18,9 +18,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   // console.log(JSON.stringify(formData));
   // console.log(formData);
   // console.log(isEditStillBirth);
- 
-  const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false); 
-  const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
+
+  const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
+  const [workFlowCode, setWorkFlowCode] = useState(
+    formData?.StillBirthChildDetails?.workFlowCode ? formData?.StillBirthChildDetails?.workFlowCode : null
+  );
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -550,14 +552,15 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     selectGender(value);
   }
   useEffect(() => {
-    if (birthPlace && DifferenceInTime != null) {
-      setWorkFlowCode("STILLBIRTHHOSP");
-      console.log(workFlowCode);
-    } else {
-      setWorkFlowCode("STILLBIRTHHOME");
-    }    
- 
-  }, [DifferenceInTime])
+    if (birthPlace) {
+      if (birthPlace.code === "HOSPITAL") {
+        setWorkFlowCode("STILLBIRTHHOSP");
+        console.log(workFlowCode);
+      } else {
+        setWorkFlowCode("STILLBIRTHHOME");
+      }
+    }
+  }, [birthPlace]);
 
   function setselectChildDOB(value) {
     setChildDOB(value);
@@ -622,10 +625,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-    //  console.log(value);
-    //  let time = value;
-  //    let timeParts = time.split(":");
-   //   console.log(+timeParts[0] * (60000 * 60) + +timeParts[1] * 60000);
+      //  console.log(value);
+      //  let time = value;
+      //    let timeParts = time.split(":");
+      //   console.log(+timeParts[0] * (60000 * 60) + +timeParts[1] * 60000);
       // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
       // // Usage
       // const milliSecTime = milliseconds(24, 36,0);
@@ -776,7 +779,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
   }
   function setselectBirthPlace(value) {
-    selectBirthPlace(value);    
+    selectBirthPlace(value);
     setValue(value.code);
     //console.log(value);
     if (value.code === "HOSPITAL") {
@@ -898,7 +901,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
 
     if (birthPlace.code === "HOSPITAL") {
-      setWorkFlowCode("STILLBIRTHHOSP");
+      console.log(birthPlace.code, "code");
+      let wrkflowcode = "STILLBIRTHHOSP";
+      console.log(wrkflowcode, "wrkflowcode");
+      setWorkFlowCode(wrkflowcode);
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
         validFlag = false;
