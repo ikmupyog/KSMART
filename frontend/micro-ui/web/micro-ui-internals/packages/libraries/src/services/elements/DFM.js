@@ -149,6 +149,17 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
+    serviceAdding: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.serviceAdding,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
   updatemodule: (details, tenantId) =>
     Request({
       url: Urls.dfm.updatemodule,

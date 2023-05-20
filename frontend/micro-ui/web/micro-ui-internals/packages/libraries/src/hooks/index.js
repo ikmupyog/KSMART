@@ -39,6 +39,7 @@ import useDeleteSubFunct from "./dfm/useDeleteSubFunct";
 import useUpdateMajorFunc from "./dfm/useUpdateMajorFunc";
 import useSearchmajorFunction from "./dfm/useSearchmajorFunction";
 import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
+import useServiceAdding from "./dfm/useServiceAdding";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -192,8 +193,7 @@ import useDeathNACSearch from "./cr/useDeathNACSearch";
 import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 import useMarriageSearch from "./cr/useMarriageSearch";
-import {useMarriageApplicationSearch} from "./cr/marriage";
-
+import { useMarriageApplicationSearch } from "./cr/marriage";
 
 import useSearchDeath from "./cr/useSearchDeath";
 // useSearchAbandonedDeath
@@ -501,6 +501,7 @@ const dfm = {
   useUpdateMajorFunc,
   useMajorFunctionAdd,
   useUpdateSubFunct,
+  useServiceAdding,
 };
 const receipts = {
   useReceiptsMDMS,

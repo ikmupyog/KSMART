@@ -124,11 +124,11 @@ const Urls = {
   crcorrection: {
     marriage_correction_search: "/marriage-services/v1/marriagedetails/_searchmarriage",
     birth_correction_search: "/birth-services/cr/searchbirthcorrection",
-    death_correction_search: "/birth-services/cr/searchbirthcorrection"
+    death_correction_search: "/birth-services/cr/searchbirthcorrection",
   },
   crcommonpayment: {
     update: "/birth-services/cr/common/updatepaywf",
-    update_status: "/egov-workflow-v2/egov-wf/process/_transition"
+    update_status: "/egov-workflow-v2/egov-wf/process/_transition",
   },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
@@ -194,20 +194,20 @@ const Urls = {
     create_note: "/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
     fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
     arising_file: "/filemgmnt/v1/applicantservices/_createArisingFile",
-    createmodule:"/filemgmnt/v1/masterdata/modules/_create",
-    updatemodule:"/filemgmnt/v1/masterdata/modules/_update",
-    updatesubfunct:"/filemgmnt/v1/masterdata/subfunctions/_update",
-    updatemajor:"/filemgmnt/v1/masterdata/majorfunctions/_update",
-    deleteModule:"/filemgmnt/v1/masterdata/modules/_delete",
-    deleteSubFunct:"/filemgmnt/v1/masterdata/subfunctions/_delete",
-    deleteMajor:"/filemgmnt/v1/masterdata/majorfunctions/_delete",
-    submodulesearch:"/filemgmnt/v1/masterdata/subfunctions/_search",
+    createmodule: "/filemgmnt/v1/masterdata/modules/_create",
+    updatemodule: "/filemgmnt/v1/masterdata/modules/_update",
+    updatesubfunct: "/filemgmnt/v1/masterdata/subfunctions/_update",
+    updatemajor: "/filemgmnt/v1/masterdata/majorfunctions/_update",
+    deleteModule: "/filemgmnt/v1/masterdata/modules/_delete",
+    deleteSubFunct: "/filemgmnt/v1/masterdata/subfunctions/_delete",
+    deleteMajor: "/filemgmnt/v1/masterdata/majorfunctions/_delete",
+    submodulesearch: "/filemgmnt/v1/masterdata/subfunctions/_search",
     modulesearch: "/filemgmnt/v1/masterdata/modules/_search",
-    majorFunctionSearch:"/filemgmnt/v1/masterdata/majorfunctions/_search",
-    createsubmodule:"/filemgmnt/v1/masterdata/subfunctions/_create",
+    majorFunctionSearch: "/filemgmnt/v1/masterdata/majorfunctions/_search",
+    createsubmodule: "/filemgmnt/v1/masterdata/subfunctions/_create",
     arising_file: "/filemgmnt/v1/arisingfiles/_create",
-    majorFunction:"/filemgmnt/v1/masterdata/majorfunctions/_create"
-
+    majorFunction: "/filemgmnt/v1/masterdata/majorfunctions/_create",
+    serviceAdding: "/filemgmnt/v1/masterdata/services/_create",
   },
 
   receipts: {
@@ -269,6 +269,5 @@ const Urls = {
   noc: {
     nocSearch: "/noc-services/v1/noc/_search",
   },
-
 };
 export default Urls;

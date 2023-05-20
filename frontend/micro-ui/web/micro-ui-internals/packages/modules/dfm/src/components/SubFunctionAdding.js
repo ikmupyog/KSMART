@@ -26,7 +26,6 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const deleteItem = Digit.Hooks.dfm.useDeleteSubFunct(tenantId);
   const mutation = Digit.Hooks.dfm.useCreateSubModule(tenantId);
   const updatemutation = Digit.Hooks.dfm.useUpdateSubFunct();
-
   const [majorFunction, setmajorFunction] = useState("");
   const [sfCode, setSfcode] = useState("");
   const [subFuncNm, setsubFuncNm] = useState("");
@@ -68,12 +67,14 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       setsubFuncNmMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   };
-
   function setsetmoduleNameEnglish(value) {
     setmoduleNameEnglish(value);
   }
   function selectMajorFunction(value) {
     setmajorFunction(value);
+  }
+  function handleClick() {
+    updateDraft();
   }
   const [edit, setIsEdit] = useState(false);
   function handleLinkClick(row) {
@@ -164,10 +165,6 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     };
     deleteItem.mutate(formData);
   };
-  function handleClick() {
-    updateDraft();
-  }
-
   const updateDraft = () => {
     const formData = {
       SubFunctionDetails: {
