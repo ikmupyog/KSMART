@@ -95,22 +95,26 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     console.log("APPLICATION--DATA",applicationData);
     let applicationParams = {
-      id: applicationData?.id,
       tenantid: applicationData?.tenantid,
-      applicationtype: applicationData?.applicationtype,
-      businessservice: applicationData?.businessservice,
-      workflowcode: applicationData?.workflowcode,
+      applicationType: applicationData?.applicationType,
+      id: applicationData?.id,
+      moduleCode: "CRMRCR",
+      businessservice: "CR",
+      workflowcode: "CORRECTIONMARRIAGE",
+      isWorkflow:true,
       action: action?.action,
+      assignee: [],
+      registerid: applicationData?.id,
+      registrationNo: applicationData?.registrationno,
+      registrationDate: null,
       applicationNumber: applicationData?.applicationNumber,
-      registrationNo: applicationData?.registrationNo,
-      registerid: applicationData?.registerid,
-      registrationDate: applicationData?.registrationDate,
-      applicationStatus: applicationData?.applicationStatus,
     };
     submitAction({
-      CorrectionDetails: [{...applicationParams}],
+      CorrectionDetails: [{ ...applicationParams }],
     });
   }
+
+  
 
   useEffect(() => {
     if (action) {

@@ -19,7 +19,7 @@ const SelectEmployeeType = ({ t, config, onSelect, formData = {}, userType }) =>
   }, [employeeType]);
   const inputs = [
     {
-      label: "HR_EMPLOYMENT_TYPE_LABEL",
+      label: "HR_ORGANIZATION_TYPE",
       type: "text",
       name: "EmployeeType",
       validation: {

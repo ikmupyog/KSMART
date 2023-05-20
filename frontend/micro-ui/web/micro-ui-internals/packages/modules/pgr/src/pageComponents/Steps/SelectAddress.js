@@ -14,7 +14,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
     return city_complaint ? city_complaint : null;
   });
 
-  const locale = Digit.SessionStorage.get("locale");
+  const locale = Digit.SessionStorage.get("locale") || "en_IN";
 
   const [localities, setLocalities] = useState(null);
   const [landmark, setLandmark] = useState(value?.landmark || "");

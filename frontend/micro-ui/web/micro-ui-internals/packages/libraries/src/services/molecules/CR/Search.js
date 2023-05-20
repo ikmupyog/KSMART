@@ -368,9 +368,9 @@ export const CRsearch = {
       title: "CR_HOSPITAL_ADMISION_DETAILS",
       // asSectionHeader: true,
       values: [
-        { title: "CR_IP_OP", value: response?.InformarHosInstDetails?.ipopList || "NOT_RECORDED" },
-        { title: "CR_IP_OP_NO", value: response?.InformarHosInstDetails?.ipopNumber || "NOT_RECORDED" },
-        { title: "CR_GYNC_REG_NO", value: response?.InformarHosInstDetails?.obstetricsNumber || "NOT_RECORDED" },
+        { title: "CR_IP_OP", value: response?.InitiatorinfoDetails?.ipopList || "NOT_RECORDED" },
+        { title: "CR_IP_OP_NO", value: response?.InitiatorinfoDetails?.ipopNumber || "NOT_RECORDED" },
+        { title: "CR_GYNC_REG_NO", value: response?.InitiatorinfoDetails?.obstetricsNumber || "NOT_RECORDED" },
       ],
     };
 

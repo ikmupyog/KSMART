@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 // import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import ApplicationDetailsTemplate from "./ApplicationContent";
 import cloneDeep from "lodash/cloneDeep";
@@ -14,6 +15,7 @@ import ApplicationDetailsWarningPopup from "../../../../../templates/Application
 
 const CorrectionApplicationDetails = (props) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
@@ -50,7 +52,7 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.updateBirthCorrectionAction({ params: { tenantId } });
+  } = Digit.Hooks.cr.updateBirthCorrectionAction(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -59,7 +61,7 @@ const CorrectionApplicationDetails = (props) => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: "CORRECTIONBIRTH",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "CHIEF_REGISTRAR" || "DISTRICT_REGISTRAR",
     config: {enabled:enableApi},
   });
 
@@ -114,6 +116,7 @@ const CorrectionApplicationDetails = (props) => {
 
   useEffect(() => {
     if (workflowDetails?.data?.applicationBusinessService) {
+      console.log("WRK FLO DETAILS",workflowDetails?.data);
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
@@ -154,6 +157,7 @@ const CorrectionApplicationDetails = (props) => {
   };
 
   const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    console.log("data==submit",data);
     setIsEnableLoader(true);
     if (typeof data?.customFunctionToExecute === "function") {
       data?.customFunctionToExecute({ ...data });
@@ -182,7 +186,7 @@ const CorrectionApplicationDetails = (props) => {
     }
     if (mutate) {
       setIsEnableLoader(true);
-      mutate({ filters: data }, {
+      mutate(data, {
         onError: (error, variables) => {
           setIsEnableLoader(false);
           setShowToast({ key: "error", error });

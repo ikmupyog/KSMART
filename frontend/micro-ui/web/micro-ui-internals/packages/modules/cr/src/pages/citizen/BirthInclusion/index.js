@@ -61,7 +61,7 @@ const BirthInclusion = () => {
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess, status } = Digit.Hooks.cr.useRegistrySearchBirth({
-    filters: { ...payload, birthDate: payload.birthDate && moment(payload.birthDate, "YYYY-MM-DD").valueOf() },
+    filters: { ...payload, birthDate: payload.birthDate && moment(payload.birthDate).valueOf() },
     config,
   });
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 // import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import ApplicationDetailsTemplate from "./ApplicationContent";
 import cloneDeep from "lodash/cloneDeep";
@@ -14,11 +15,12 @@ import ApplicationDetailsWarningPopup from "../../../../../templates/Application
 
 const CorrectionApplicationDetails = (props) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("CORRECTIONBIRTH"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("MARRIAGECORRECTION"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   const [enableApi, setEnableApi] = useState(false);
@@ -38,7 +40,7 @@ const CorrectionApplicationDetails = (props) => {
   
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,"marriage");
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
@@ -49,16 +51,77 @@ const CorrectionApplicationDetails = (props) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.updateMarriageCorrectionAction(tenantId);
 
-  // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  // console.log(applicationDetails?.applicationData?.applicationtype);
+  const closeModal = () => {
+    setSelectedAction(null);
+    setShowModal(false);
+  };
+
+  const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    setIsEnableLoader(true);
+    if (typeof data?.customFunctionToExecute === "function") {
+      data?.customFunctionToExecute({ ...data });
+    }
+    if (nocData !== false && nocMutation) {
+      const nocPrmomises = nocData?.map((noc) => {
+        return nocMutation?.mutateAsync(noc);
+      });
+      try {
+        setIsEnableLoader(true);
+        const values = await Promise.all(nocPrmomises);
+        values &&
+          values.map((ob) => {
+            Digit.SessionStorage.del(ob?.Noc?.[0]?.nocType);
+          });
+      } catch (err) {
+        setIsEnableLoader(false);
+        let errorValue = err?.response?.data?.Errors?.[0]?.code
+          ? t(err?.response?.data?.Errors?.[0]?.code)
+          : err?.response?.data?.Errors?.[0]?.message || err;
+        closeModal();
+        setShowToast({ key: "error", error: { message: errorValue } });
+        setTimeout(closeToast, 5000);
+        return;
+      }
+    }
+    if (mutate) {
+      setIsEnableLoader(true);
+      mutate(data, {
+        onError: (error, variables) => {
+          setIsEnableLoader(false);
+          setShowToast({ key: "error", error });
+          setTimeout(closeToast, 5000);
+        },
+        onSuccess: (data, variables) => {
+          setIsEnableLoader(false);
+          if (isOBPS?.bpa) {
+            data.selectedAction = selectedAction;
+            history.replace(`/digit-ui/employee/obps/response`, { data: data });
+          }
+          if (isOBPS?.isStakeholder) {
+            data.selectedAction = selectedAction;
+            history.push(`/digit-ui/employee/obps/stakeholder-response`, { data: data });
+          }
+          if (isOBPS?.isNoc) {
+            history.push(`/digit-ui/employee/noc/response`, { data: data });
+          }
+          setShowToast({ key: "success", action: selectedAction });
+          setTimeout(closeToast, 5000);
+          queryClient.clear();
+          queryClient.refetchQueries("APPLICATION_SEARCH");
+        },
+      });
+    }
+
+    closeModal();
+  };
 
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
-    moduleCode: "CORRECTIONBIRTH",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    moduleCode: "CORRECTIONMARRIAGE",
+    role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "CHIEF_REGISTRAR" || "DISTRICT_REGISTRAR",
     config: {enabled:enableApi},
   });
 
@@ -66,7 +129,6 @@ const CorrectionApplicationDetails = (props) => {
     if(applicationDetails?.applicationData?.applicationNumber?.length >0){
       setEnableApi(true)
     }
-    console.log("applicationDetails==",applicationDetails);
   },[applicationDetails])
 
   useEffect(()=>{
@@ -124,7 +186,6 @@ const CorrectionApplicationDetails = (props) => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      // console.log(data.action);
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {
@@ -234,7 +295,7 @@ const CorrectionApplicationDetails = (props) => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_BIRTH_SUMMARY_DETAILS"}
+        header={"CR_MARRIAGE_CORRECTION_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -242,18 +303,18 @@ const CorrectionApplicationDetails = (props) => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="birth-services"
+        moduleCode="CRMRCR"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WFBIRTH21DAYS"}
+        timelineStatusPrefix={"WFMARRIAGE21DAYS"}
       />
        {showModal ? (
             <ActionModal
               t={t}
               action={selectedAction}
               tenantId={tenantId}
-              state={state}
+              state={stateId}
               id={applicationNumber}
               applicationDetails={applicationDetails}
               applicationData={applicationDetails?.applicationData}

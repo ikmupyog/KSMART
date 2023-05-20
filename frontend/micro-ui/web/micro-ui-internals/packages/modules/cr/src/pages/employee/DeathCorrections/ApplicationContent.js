@@ -1,293 +1,310 @@
-import React, { useEffect, useState } from "react";
+import {
+  BreakLine, CardSectionHeader, CardSubHeader, CheckPoint, ConnectingCheckPoints, Loader, Row, StatusTable,
+  LinkButton, Carousel, Accordion
+} from "@egovernments/digit-ui-react-components";
+import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-// import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
-import ApplicationDetailsTemplate from "./ApplicationContent";
-import cloneDeep from "lodash/cloneDeep";
-import { useParams } from "react-router-dom";
-import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
-import get from "lodash/get";
-import orderBy from "lodash/orderBy";
-import ActionModal from "../../../../../templates/ApplicationDetails/Modal";
-import ApplicationDetailsToast from "../../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
-import ApplicationDetailsActionBar from "../../../../../templates/ApplicationDetails/components/ApplicationDetailsActionBar";
-import ApplicationDetailsWarningPopup from "../../../../../templates/ApplicationDetails/components/ApplicationDetailsWarningPopup";
+import { Link } from "react-router-dom";
+import BPADocuments from "../../../../../templates/ApplicationDetails/components/BPADocuments";
+import InspectionReport from "../../../../../templates/ApplicationDetails/components/InspectionReport";
+import NOCDocuments from "../../../../../templates/ApplicationDetails/components/NOCDocuments";
+import PermissionCheck from "../../../../../templates/ApplicationDetails/components/PermissionCheck";
+import PropertyDocuments from "../../../../../templates/ApplicationDetails/components/PropertyDocuments";
+import PropertyEstimates from "../../../../../templates/ApplicationDetails/components/PropertyEstimates";
+import PropertyFloors from "../../../../../templates/ApplicationDetails/components/PropertyFloors";
+import PropertyOwners from "../../../../../templates/ApplicationDetails/components/PropertyOwners";
+import ScruntinyDetails from "../../../../../templates/ApplicationDetails/components/ScruntinyDetails";
+import SubOccupancyTable from "../../../../../templates/ApplicationDetails/components/SubOccupancyTable";
+import TLCaption from "../../../../../templates/ApplicationDetails/components/TLCaption";
+import TLTradeAccessories from "../../../../../templates/ApplicationDetails/components/TLTradeAccessories";
+import TLTradeUnits from "../../../../../templates/ApplicationDetails/components/TLTradeUnits";
+import DocumentsPreview from "../../../../../templates/ApplicationDetails/components/DocumentsPreview";
+import moment from "moment";
 
-const CorrectionApplicationDetails = (props) => {
+function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading, applicationData,
+  businessService, timelineStatusPrefix, showTimeLine = true, statusAttribute = "status", paymentsList }) {
+  const tenantId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
-  const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationNumber, type: inboxType } = useParams();
-  const [showToast, setShowToast] = useState(null);
-  // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("CORRECTIONBIRTH"); //DIRECTRENEWAL BIRTHHOSP21
-  const [numberOfApplications, setNumberOfApplications] = useState([]);
-  const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  const [enableApi, setEnableApi] = useState(false);
-  const [displayMenu, setDisplayMenu] = useState(false);
-  const [selectedAction, setSelectedAction] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [isEnableLoader, setIsEnableLoader] = useState(false);
-  const [isWarningPop, setWarningPopUp] = useState(false);
-
-  const {
-    moduleCode,
-    forcedActionPrefix,
-    ActionBarStyle,
-    MenuStyle,
-    wardcodes,
-  } = props;
-  
-  sessionStorage.setItem("applicationNumber", applicationNumber);
-  // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
-  const stateId = Digit.ULBService.getStateId();
-
-  const {
-    isLoading: updatingApplication,
-    isError: updateApplicationError,
-    data: updateResponse,
-    error: updateError,
-    mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
-
-  // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  // console.log(applicationDetails?.applicationData?.applicationtype);
-
-  let workflowDetails = Digit.Hooks.useWorkflowDetails({
-    tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.applicationNumber,
-    moduleCode: "CORRECTIONBIRTH",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
-    config: {enabled:enableApi},
-  });
-
-  useEffect(()=>{
-    if(applicationDetails?.applicationData?.applicationNumber?.length >0){
-      setEnableApi(true)
-    }
-    console.log("applicationDetails==",applicationDetails);
-  },[applicationDetails])
-
-  useEffect(()=>{
-    console.log("workflowDetails==",workflowDetails);
-  },[workflowDetails])
-
-  const closeToast = () => {
-    setShowToast(null);
-  };
-
-  function onActionSelect(action) {
-    if (action) {
-      if (action?.isWarningPopUp) {
-        setWarningPopUp(true);
-      } else if (action?.redirectionUrll) {
-        window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
-      } else if (!action?.redirectionUrl) {
-        setShowModal(true);
-      } else {
-        history.push({
-          pathname: action.redirectionUrl?.pathname,
-          state: { ...action.redirectionUrl?.state },
-        });
-      }
-    }
-    setSelectedAction(action);
-    setDisplayMenu(false);
+  const [imagesThumbs, setImagesThumbs] = useState([]);
+  console.log("applicationDetails in content==", applicationDetails);
+  function OpenImage(imageSource, index, thumbnailsToShow) {
+      window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
 
-
-  useEffect(() => {
-    if (applicationDetails?.numOfApplications?.length > 0) {
-      let financialYear = cloneDeep(applicationDetails?.applicationData?.financialYear);
-      const financialYearDate = financialYear?.split("-")[1];
-      const finalFinancialYear = `20${Number(financialYearDate)}-${Number(financialYearDate) + 1}`;
-      const isAllowedToNextYear = applicationDetails?.numOfApplications?.filter(
-        (data) => data.financialYear == finalFinancialYear && data?.status !== "REJECTED"
-      );
-      if (isAllowedToNextYear?.length > 0) setAllowedToNextYear(false);
-      if (!isAllowedToNextYear || isAllowedToNextYear?.length == 0) setAllowedToNextYear(true);
-      setNumberOfApplications(applicationDetails?.numOfApplications);
-    }
-  }, [applicationDetails?.numOfApplications]);
-
-  useEffect(() => {
-    if (workflowDetails?.data?.applicationBusinessService) {
-      setBusinessService(workflowDetails?.data?.applicationBusinessService);
-    }
-  }, [workflowDetails.data]);
-
-  if (workflowDetails?.data?.processInstances?.length > 0) {
-    let filteredActions = [];
-    filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter((item) => item.action != "ADHOC");
-    let actions = orderBy(filteredActions, ["action"], ["desc"]);
-    if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
-
-    workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      // console.log(data.action);
-      if (data.action == "EDIT") {
-        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
-          data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/create-birth/child-details`,
-            state: applicationDetails,
-          },
-            data.tenantId = stateId
-        
-      }
-    });
-  }
-
-  const userInfo = Digit.UserService.getUser();
-  const rolearray = userInfo?.info?.roles.filter((item) => {
-    if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN") return true;
-  });
-
-  const rolecheck = rolearray.length > 0 ? true : false;
-  const validTo = applicationDetails?.applicationData?.validTo;
-  const currentDate = Date.now();
-  const duration = validTo - currentDate;
-  if (
-    rolecheck &&
-    (applicationDetails?.applicationData?.status === "APPROVED" ||
-      applicationDetails?.applicationData?.status === "EXPIRED" ||
-      (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending === "true"))
-  ) {
-    if (workflowDetails?.data && allowedToNextYear) {
-      if (!workflowDetails?.data?.actionState) {
-        workflowDetails.data.actionState = {};
-        workflowDetails.data.actionState.nextActions = [];
-      }
-      const flagData = workflowDetails?.data?.actionState?.nextActions?.filter((data) => data.action == "RENEWAL_SUBMIT_BUTTON");
-      if (flagData && flagData.length === 0) {
-        workflowDetails?.data?.actionState?.nextActions?.push({
-          action: "RENEWAL_SUBMIT_BUTTON",
-          redirectionUrl: {
-            pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
-            state: applicationDetails,
-          },
-          tenantId: stateId,
-          role: [],
-        });
-      }
-      // workflowDetails = {
-      //   ...workflowDetails,
-      //   data: {
-      //     ...workflowDetails?.data,
-      //     actionState: {
-      //       nextActions: allowedToNextYear ?[
-      //         {
-      //           action: "RENEWAL_SUBMIT_BUTTON",
-      //           redirectionUrl: {
-      //             pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
-      //             state: applicationDetails
-      //           },
-      //           tenantId: stateId,
-      //         }
-      //       ] : [],
-      //     },
-      //   },
-      // };
-    }
-  }
-
-  if (rolearray && applicationDetails?.applicationData?.status === "PENDINGPAYMENT") {
-    workflowDetails?.data?.nextActions?.map((data) => {
-      if (data.action === "PAY") {
-        workflowDetails = {
-          ...workflowDetails,
-          data: {
-            ...workflowDetails?.data,
-            actionState: {
-              nextActions: [
-                {
-                  action: data.action,
-                  redirectionUrll: {
-                    pathname: `TL/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
-                    state: tenantId,
-                  },
-                  tenantId: tenantId,
-                },
-              ],
-            },
-          },
+  const getTimelineCaptions = (checkpoint) => {
+    if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
+        const caption = {
+            date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
+            source: applicationData?.channel || "",
         };
-      }
-    });
-  }
-
-  const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
-    return wfDocuments ? [...acc, ...wfDocuments] : acc;
-  }, []);
-  // const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
-  // let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
-  // if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
-  //   ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
-  //     title: "TL_WORKFLOW_DOCS",
-  //     values: wfDocs?.map?.((e) => ({ ...e, title: e.documentType})),
-  //   }];
-  // }
-
-  return (
-    <div>
-      <div /* style={{marginLeft: "15px"}} */>
-        {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
-      </div>
-      <ApplicationDetailsTemplate
-        header={"CR_BIRTH_SUMMARY_DETAILS"}
-        applicationDetails={applicationDetails}
-        isLoading={isLoading}
-        isDataLoading={isLoading}
-        applicationData={applicationDetails?.applicationData}
-        mutate={mutate}
-        workflowDetails={workflowDetails}
-        businessService={businessService}
-        moduleCode="birth-services"
-        showToast={showToast}
-        setShowToast={setShowToast}
-        closeToast={closeToast}
-        timelineStatusPrefix={"WFBIRTH21DAYS"}
-      />
-       {showModal ? (
-            <ActionModal
-              t={t}
-              action={selectedAction}
-              tenantId={tenantId}
-              state={state}
-              id={applicationNumber}
-              applicationDetails={applicationDetails}
-              applicationData={applicationDetails?.applicationData}
-              closeModal={closeModal}
-              submitAction={submitAction}
-              actionData={workflowDetails?.data?.timeline}
-              businessService={businessService}
-              workflowDetails={workflowDetails}
-              moduleCode={moduleCode}
-              wardcodes={wardcodes}
-            />
-          ) : null}
-          {isWarningPop ? (
-            <ApplicationDetailsWarningPopup
-              action={selectedAction}
-              workflowDetails={workflowDetails}
-              businessService={businessService}
-              isWarningPop={isWarningPop}
-              closeWarningPopup={closeWarningPopup}
-            />
-          ) : null}
-          <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
-          <ApplicationDetailsActionBar
-            workflowDetails={workflowDetails}
-            displayMenu={displayMenu}
-            onActionSelect={onActionSelect}
-            setDisplayMenu={setDisplayMenu}
-            businessService={businessService}
-            forcedActionPrefix={forcedActionPrefix}
-            ActionBarStyle={ActionBarStyle}
-            MenuStyle={MenuStyle}
-          />
-    </div>
-  );
+        return <TLCaption data={caption} />;
+    } else if (window.location.href.includes("/obps/") || window.location.href.includes("/noc/")) {
+        const caption = {
+            date: checkpoint?.auditDetails?.lastModified,
+            name: checkpoint?.assignes?.[0]?.name,
+            mobileNumber: checkpoint?.assignes?.[0]?.mobileNumber,
+            comment: t(checkpoint?.comment),
+            wfComment: checkpoint.wfComment,
+            thumbnailsToShow: checkpoint?.thumbnailsToShow,
+        };
+        return <TLCaption data={caption} OpenImage={OpenImage} />;
+    } else {
+        const caption = {
+            date: checkpoint?.auditDetails?.lastModified,
+            name: checkpoint?.assigner?.name,
+            // mobileNumber: checkpoint?.assigner?.mobileNumber,
+            wfComment: checkpoint?.wfComment,
+            mobileNumber: checkpoint?.assigner?.mobileNumber,
+          };
+        return <TLCaption data={caption} />;
+    }
 };
 
-export default CorrectionApplicationDetails;
+  const getTranslatedValues = (dataValue, isNotTranslated) => {
+      if (dataValue) {
+          return !isNotTranslated ? t(dataValue) : dataValue;
+      } else {
+          return t("NA");
+      }
+  };
+
+  const fetchImage = async (uploadedImages) => {
+      setImagesThumbs(null);
+      const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
+      const newThumbnails = fileStoreIds.map((key) => {
+        const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+        return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
+      });
+      const formattedImageThumbs =
+        newThumbnails?.length > 0 &&
+        newThumbnails.map((item, index) => {
+          const tempObj = {
+            image: item.large,
+            caption: `Caption ${index}`,
+          };
+          return tempObj;
+        });
+        console.log("formattedImageThumbs ===", formattedImageThumbs);
+      setImagesThumbs(formattedImageThumbs);
+    };
+
+  useEffect(() => {
+      if(applicationDetails?.applicationDetails?.[0]?.documentIds?.length > 0) {
+          fetchImage(applicationDetails?.applicationDetails?.[0]?.documentIds);
+      }
+  }, [applicationDetails?.applicationDetails])
+
+  const setDocumentsView = (documentData) => {
+      if(documentData?.length > 0){
+       fetchImage(documentData);
+      } else return;
+     }; 
+
+  useEffect(() => {
+      console.log("workflowDetails==", workflowDetails?.data);
+  }, [workflowDetails])
+
+  const checkLocation = window.location.href.includes("employee/tl") || window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc");
+  const isNocLocation = window.location.href.includes("employee/noc");
+  const isBPALocation = window.location.href.includes("employee/obps");
+
+  const getRowStyles = () => {
+      if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
+          return { justifyContent: "space-between", fontSize: "16px", lineHeight: "19px", color: "#0B0C0C" };
+      } else if (checkLocation) {
+          return { justifyContent: "space-between", fontSize: "16px", lineHeight: "19px", color: "#0B0C0C" };
+      } else {
+          return {};
+      }
+  };
+
+  const getTableStyles = () => {
+      if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
+          return { position: "relative", marginTop: "19px" };
+      } else if (checkLocation) {
+          return { position: "relative", marginTop: "19px" };
+      } else {
+          return {};
+      }
+  };
+
+  const getMainDivStyles = () => {
+      if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
+          return { lineHeight: "19px", maxWidth: "950px", minWidth: "280px" };
+      } else if (checkLocation) {
+          return { lineHeight: "19px", maxWidth: "600px", minWidth: "280px" };
+      } else {
+          return {};
+      }
+  };
+
+  const getTextValue = (value) => {
+      if (value?.skip) return value.value;
+      else if (value?.isUnit) return value?.value ? `${getTranslatedValues(value?.value, value?.isNotTranslated)} ${t(value?.isUnit)}` : t("N/A");
+      else return value?.value ? getTranslatedValues(value?.value, value?.isNotTranslated) : t("N/A");
+  };
+
+  const getFieldValue = (data, type = "text") => {
+      let fieldValue = "";
+      switch (type) {
+          case "text":
+              fieldValue = data ? data : t("CR_NOT_RECORDED");
+              break;
+          case "date":
+              fieldValue = data ? moment(parseInt(data, 10)).format("DD/MM/YYYY") : t("CR_NOT_RECORDED");
+              break;
+      }
+      return fieldValue;
+  };
+
+
+
+  const renderCardDetail = (index, value, fieldName, documentData) => {
+      const type = fieldName === "CHILD_DOB" ? "date" : "text";
+      console.log("fieldvalues", value, type);
+      return (
+          <div className="row">
+              <div className="col-md-12">
+                  <div className="col-md-3">
+                      <h3 style={{ overflowWrap: "break-word" }}>{t(value.title)} :</h3>
+                  </div>
+                  <div className="col-md-4">
+                      <h4>
+                          <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.oldValue, type)}</strong>
+                      </h4>
+                  </div>
+                  <div className="col-md-4">
+                      <h4>
+                          <strong style={{ overflowWrap: "break-word" }}>{getFieldValue(value?.newValue, type)}</strong>
+                      </h4>
+                  </div>
+                  <div className="col-md-1">
+                    {index === 0 &&
+                      <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+                    }
+                  </div>
+              </div>
+          </div>
+      );
+  };
+
+  const renderSummaryCard = (detail, index) => {
+      console.log("render summary==", detail);
+      //  switch()
+      return (
+          <React.Fragment key={index}>
+              <div style={getMainDivStyles()}>
+                  <Accordion
+                      expanded={index === 0 ? true : false}
+                      title={t(detail?.title)}
+                      style={{ margin: "10px" }}
+                      content={
+                          <StatusTable style={getTableStyles()}>
+                              <div className="row">
+                                  <div className="col-md-12">
+                                      <div className="col-md-3">
+                                          {" "}
+                                          <h3></h3>{" "}
+                                      </div>
+                                      <div className="col-md-4">
+                                          {" "}
+                                          <h5>{t("OLD_VALUE")}</h5>{" "}
+                                      </div>
+                                      <div className="col-md-3">
+                                          {" "}
+                                          <h5>{t("NEW_VALUE")}</h5>{" "}
+                                      </div>
+                                  </div>
+                              </div>
+                              {detail?.fieldValues?.map((value, index) => renderCardDetail(index, value, detail.title, detail.CorrectionDocument))}
+                          </StatusTable>
+                      }
+                  />
+              </div>
+              {detail?.belowComponent && <detail.belowComponent />}
+              {detail?.additionalDetails?.inspectionReport && (<ScruntinyDetails scrutinyDetails={detail?.additionalDetails} paymentsList={paymentsList} />)}
+              {applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending?.length > 0 && detail?.additionalDetails?.fiReport && (
+                  <InspectionReport fiReport={applicationDetails?.applicationData?.additionalDetails?.fieldinspection_pending} />
+              )}
+              {detail?.additionalDetails?.floors && <PropertyFloors floors={detail?.additionalDetails?.floors} />}
+              {detail?.additionalDetails?.owners && <PropertyOwners owners={detail?.additionalDetails?.owners} />}
+              {detail?.additionalDetails?.units && <TLTradeUnits units={detail?.additionalDetails?.units} />}
+              {detail?.additionalDetails?.accessories && <TLTradeAccessories units={detail?.additionalDetails?.accessories} />}
+              {detail?.additionalDetails?.permissions && workflowDetails?.data?.nextActions?.length > 0 && (
+                  <PermissionCheck applicationData={applicationDetails?.applicationData} t={t} permissions={detail?.additionalDetails?.permissions} />
+              )}
+              {detail?.additionalDetails?.obpsDocuments && (
+                  <BPADocuments t={t} applicationData={applicationDetails?.applicationData} docs={detail.additionalDetails.obpsDocuments} bpaActionsDetails={workflowDetails} />
+              )}
+              {detail?.additionalDetails?.noc && (
+                  <NOCDocuments t={t} isNoc={true} NOCdata={detail.values} applicationData={applicationDetails?.applicationData}
+                      docs={detail.additionalDetails.noc} noc={detail.additionalDetails?.data} bpaActionsDetails={workflowDetails} />
+              )}
+              {detail?.additionalDetails?.scruntinyDetails && <ScruntinyDetails scrutinyDetails={detail?.additionalDetails} />}
+              {detail?.additionalDetails?.buildingExtractionDetails && <ScruntinyDetails scrutinyDetails={detail?.additionalDetails} />}
+              {detail?.additionalDetails?.subOccupancyTableDetails && (
+                  <SubOccupancyTable edcrDetails={detail?.additionalDetails} applicationData={applicationDetails?.applicationData} />
+              )}
+              {detail?.additionalDetails?.documentsWithUrl && <DocumentsPreview documents={detail?.additionalDetails?.documentsWithUrl} />}
+              {detail?.additionalDetails?.documents && <PropertyDocuments documents={detail?.additionalDetails?.documents} />}
+              {detail?.additionalDetails?.taxHeadEstimatesCalculation && (
+                  <PropertyEstimates taxHeadEstimatesCalculation={detail?.additionalDetails?.taxHeadEstimatesCalculation} />
+              )}
+          </React.Fragment>
+      );
+  };
+
+  return (
+      <>
+          <div className="file-main">
+              <div className={"cr-wrapper-app"}>
+                  {applicationDetails?.applicationDetails?.length > 0 && applicationDetails?.applicationDetails?.map((detail, index) => renderSummaryCard(detail, index))}
+              </div>
+              <div className={"cr-timeline-wrapper"}>
+              {imagesThumbs?.length > 0 && (
+          <Carousel {...{ carouselItems: imagesThumbs }}  imageHeight={300} containerStyle={{ height: "300px", width: "400px", overflow: "scroll" }} />
+        )}
+
+                  {showTimeLine && workflowDetails?.data?.timeline?.length > 0 && (
+                      <React.Fragment>
+                          {(workflowDetails?.isLoading || isDataLoading) && <Loader />}
+                          {!workflowDetails?.isLoading && !isDataLoading && (
+                              <Fragment>
+                                  <CardSectionHeader>
+                                      {/* {t("ES_APPLICATION_DETAILS_APPLICATION_TIMELINE")} */}
+                                      {t("Activities")}
+                                  </CardSectionHeader>
+                                  <BreakLine />
+                                  {workflowDetails?.data?.timeline && workflowDetails?.data?.timeline?.length === 1 ? (
+                                      <CheckPoint isCompleted={true} label={t(`${timelineStatusPrefix}${workflowDetails?.data?.timeline[0]?.state}`)}
+                                          customChild={getTimelineCaptions(workflowDetails?.data?.timeline[0])}
+                                      />
+                                  ) : (
+                                      <ConnectingCheckPoints>
+                                          {workflowDetails?.data?.timeline &&
+                                              workflowDetails?.data?.timeline.map((checkpoint, index, arr) => {
+                                                  return (
+                                                      <React.Fragment key={index}>
+                                                          <CheckPoint keyValue={index} isCompleted={index === 0} info={checkpoint.comment}
+                                                              label={t(
+                                                                  `${timelineStatusPrefix}${checkpoint?.[statusAttribute]}`
+                                                              )}
+                                                              customChild={getTimelineCaptions(checkpoint)}
+                                                          />
+                                                      </React.Fragment>
+                                                  );
+                                              })}
+                                      </ConnectingCheckPoints>
+                                  )}
+                              </Fragment>
+                          )}
+
+                      </React.Fragment>
+                  )}
+              </div>
+          </div>
+      </>
+  );
+}
+
+export default ApplicationContent;

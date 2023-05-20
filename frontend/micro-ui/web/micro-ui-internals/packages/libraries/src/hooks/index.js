@@ -135,7 +135,7 @@ import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
 import useApplicationMarriageActions from "./cr/useApplicationMarriageActions";
 import useCRCommonPaymentUpdate from "./cr/useCRCommonPaymentUpdate";
-import useCorrectionApplicationDetail,{useBirthCorrectionApplicationDetail} from "./cr/useCorrectionApplicationDetail";
+import useCorrectionApplicationDetail,{useBirthCorrectionApplicationSearch,useMarriageCorrectionApplicationDetail,useDeathCorrectionApplicationSearch} from "./cr/useCorrectionApplicationDetail";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -182,7 +182,7 @@ import useDeathNACSearch from "./cr/useDeathNACSearch";
 import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 import useMarriageSearch from "./cr/useMarriageSearch";
-import {useMarriageApplicationSearch} from "./cr/marriage";
+import {useMarriageApplicationSearch, updateMarriageCorrectionAction} from "./cr/marriage";
 
 
 import useSearchDeath from "./cr/useSearchDeath";
@@ -263,7 +263,7 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
-import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails } from "./cr/death";
+import { useRegSearchDeath, getDeathFileSourceDetails, getNacDeathFileSourceDetails, updateDeathCorrectionAction} from "./cr/death";
 import { getBirthFileSourceDetails, getNacBirthFileSourceDetails, updateBirthCorrectionAction } from "./cr/birth";
 import { setPaymentStatus } from "./cr/payment";
 import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
@@ -382,11 +382,15 @@ const tl = {
   useTradeLicenseCorrectionAPI,
 };
 const cr = {
+  useDeathCorrectionApplicationSearch,
+  useMarriageCorrectionApplicationDetail,
   useCorrectionApplicationDetail,
-  useBirthCorrectionApplicationDetail,
+  useBirthCorrectionApplicationSearch,
   getBirthFileSourceDetails,
   getNacBirthFileSourceDetails,
   updateBirthCorrectionAction,
+  updateMarriageCorrectionAction,
+  updateDeathCorrectionAction,
   getNacDeathFileSourceDetails,
   useBirthCorrectionAction,
   useDeathCorrectionAction,

@@ -173,6 +173,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
       if (currentLB.length > 0) {
         setpermntInKeralaAdrLBName(currentLB[0]);
+        setPermLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
       }
       if (currentLB.length > 0 && cmbDistrict.length > 0) {
         cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.statecode);
@@ -462,7 +463,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null)) {
-      setpermntInKeralaAdrHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrHouseNameEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
@@ -472,13 +473,13 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       setpermntInKeralaAdrHouseNameMl('');
     }
     else {
-      setpermntInKeralaAdrHouseNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrHouseNameMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
   function setSelectpermntInKeralaAdrLocalityNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setpermntInKeralaAdrLocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrLocalityNameEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
@@ -489,13 +490,13 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       setpermntInKeralaAdrLocalityNameMl('');
     }
     else {
-      setpermntInKeralaAdrLocalityNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrLocalityNameMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
   function setSelectpermntInKeralaAdrStreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setpermntInKeralaAdrStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrStreetNameEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
@@ -506,7 +507,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       setpermntInKeralaAdrStreetNameMl('');
     }
     else {
-      setpermntInKeralaAdrStreetNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrStreetNameMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
@@ -555,7 +556,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey={locale === "en_IN" ? "name" : "namelocal"}
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(DistrictPermvalues ? DistrictPermvalues : [], "name", t)}
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
@@ -582,7 +583,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey={locale === "en_IN" ? "name" : "namelocal"}
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(TalukPermvalues ? TalukPermvalues : [], "name", t)}
               selected={permntInKeralaAdrTaluk}
               select={setSelectpermntInKeralaAdrTaluk}
@@ -597,7 +598,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey={locale === "en_IN" ? "name" : "namelocal"}
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(VillagePermvalues ? VillagePermvalues : [], "name", t)}
               selected={permntInKeralaAdrVillage}
               select={setSelectpermntInKeralaAdrVillage}
@@ -612,7 +613,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey={locale === "en_IN" ? "name" : "namelocal"}
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(permlbs ? permlbs : [], "name", t)}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
@@ -647,7 +648,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey={locale === "en_IN" ? "name" : "namelocal"}
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(PostOfficePermvalues ? PostOfficePermvalues : [], "name", t)}
               selected={permntInKeralaAdrPostOffice}
               select={setSelectpermntInKeralaAdrPostOffice}

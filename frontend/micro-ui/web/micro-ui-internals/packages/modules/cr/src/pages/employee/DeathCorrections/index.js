@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 // import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import ApplicationDetailsTemplate from "./ApplicationContent";
 import cloneDeep from "lodash/cloneDeep";
@@ -14,6 +15,7 @@ import ApplicationDetailsWarningPopup from "../../../../../templates/Application
 
 const CorrectionApplicationDetails = (props) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber, type: inboxType } = useParams();
   const [showToast, setShowToast] = useState(null);
@@ -38,18 +40,27 @@ const CorrectionApplicationDetails = (props) => {
   
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber,inboxType);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useCorrectionApplicationDetail(t, tenantId, applicationNumber, "death");
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
 
+  // const {
+  //   isLoading: updatingApplication,
+  //   isError: updateApplicationError,
+  //   data: updateResponse,
+  //   error: updateError,
+  //   mutate,
+  // } = Digit.Hooks.cr.useApplicationActions(tenantId);
+
+  
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.updateDeathCorrectionAction(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -58,16 +69,16 @@ const CorrectionApplicationDetails = (props) => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: "CORRECTIONBIRTH",
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "CHIEF_REGISTRAR" || "DISTRICT_REGISTRAR",
     config: {enabled:enableApi},
   });
 
-  useEffect(()=>{
-    if(applicationDetails?.applicationData?.applicationNumber?.length >0){
-      setEnableApi(true)
-    }
-    console.log("applicationDetails==",applicationDetails);
-  },[applicationDetails])
+  // useEffect(()=>{
+  //   if(applicationDetails?.applicationData?.applicationNumber?.length >0){
+  //     setEnableApi(true)
+  //   }
+  //   console.log("applicationDetails==",applicationDetails);
+  // },[applicationDetails])
 
   useEffect(()=>{
     console.log("workflowDetails==",workflowDetails);
@@ -234,7 +245,7 @@ const CorrectionApplicationDetails = (props) => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_BIRTH_SUMMARY_DETAILS"}
+        header={"CR_DEATH_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -246,7 +257,7 @@ const CorrectionApplicationDetails = (props) => {
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WFBIRTH21DAYS"}
+        timelineStatusPrefix={"WFDEATH21DAYS"}
       />
        {showModal ? (
             <ActionModal

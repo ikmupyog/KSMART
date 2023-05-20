@@ -62,7 +62,10 @@ export const CRsearch = {
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || t("CR_NOT_RECORDED") },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn },
+        {
+          title: "PDF_BIRTH_CHILD_NAME",
+          value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn,
+        },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : t("CR_NOT_RECORDED") },
       ],

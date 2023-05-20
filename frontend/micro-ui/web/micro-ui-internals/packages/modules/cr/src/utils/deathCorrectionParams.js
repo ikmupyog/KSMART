@@ -136,20 +136,16 @@ const formFielColumns = {
       CorrectionDetails: [
         {
           id: userData?.id,
-          funcionUID: "CRDRNR",
-          // InformationDeath: { 
-          // funcionUID: "CRDRNR",
-          // },
+          funcionUID: "CRDRCN",
           businessservice: "CR",
-          // workflowcode: "BIRTHHOSP21",
-          workflowcode: "DEATHCORRECTION",
-          action: "",
+          workflowcode: "CORRECTIONDEATH",
+          action: "INITIATE",
           registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
           registrationNo: userData?.InformationDeath.registrationNo,
           registrationDate: null,
-          applicationStatus: "INITIATED",
           InformationDeathCorrection: { 
-            tenantId: userData?.StatisticalInfo.TenantId
+            tenantId: userData?.StatisticalInfo.TenantId,
+            funcionUID: "CRDRCN",
         },
           CorrectionField: correctionFieldData,
         },

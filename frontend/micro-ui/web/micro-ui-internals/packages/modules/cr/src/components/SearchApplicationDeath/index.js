@@ -25,7 +25,7 @@ const selectedDeathSearch = [
   { label: "Death", value: "death" },
   { label: "Death NAC", value: "deathnac" },
   { label: "Abandoned Death", value: "abandoneddeathsearch" },
-  { label: "Correction", value: "correction" },
+  { label: "Correction", value: "deathcorrection" },
 ]
 let validation = ''
 
@@ -89,6 +89,8 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
   if (isMobile) {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
   }
+
+
   const handleLinkClick = (finaldata) => {
     console.log({ finaldata });
     Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
@@ -108,16 +110,18 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
         accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
+          console.log("row.....", row.original);
           return (
             <div>
               <span className="link">
                 <Link
                   onClick={handleLinkClick(row.original)}
-                  to={row.original.InformationDeath["DeathACKNo"].includes("CRDRNR") ?
-                    `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                  to={
+                    row.original.InformationDeath?.["DeathACKNo"].includes("CRDRNR") ?
+                    `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath?.["DeathACKNo"]}`
                     :
-                    row.original.InformationDeath["DeathACKNo"].includes("CRDRNA") ?
-                      `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` 
+                    row.original.InformationDeath?.["DeathACKNo"].includes("CRDRNA") ?
+                      `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath?.["DeathACKNo"]}` 
                     // :
                     //   row.original.InformationDeathAbandoned["DeathACKNo"].includes("CRDRAB") ?
                     //   `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeathAbandoned["DeathACKNo"]}`
@@ -125,7 +129,8 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
                     : "/digit-ui/employee/cr/search-flow/deathsearch/application"
                   }
                 >
-                  {row.original.InformationDeath["DeathACKNo"]}
+
+                  {row.original.InformationDeath?.["DeathACKNo"]}
                 </Link>
               </span>
             </div>
@@ -151,6 +156,70 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
         Header: t("CR_COMMON_DEATH_PLACE"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.deathPlace || "-"),
+      },
+      // {
+      //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.tradeName || ""),
+      // },
+      // {
+      //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+      //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+      //   disableSortBy: true,
+      // },
+      // {
+      //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+      //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+      //   disableSortBy: true,
+      // }
+    ],
+    []
+  );
+  const deathCorrectionColumns = useMemo(
+    () => [
+      {
+        Header: t("CR_SEARCH_ACK_NO"),
+        accessor: "DeathACKNo",
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          console.log("row.....", row.original);
+          return (
+            <div>
+              <span className="link">
+                <Link
+                  onClick={handleLinkClick(row.original)}
+                  to={
+                    `/digit-ui/employee/cr/death-correction-details/${row.original.InformationDeathCorrection?.["DeathACKNo"]}`
+                  }
+                >
+
+                  {
+                 row.original.InformationDeathCorrection?.["DeathACKNo"]}
+                </Link>
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        Header: t("CR_DECEASED_DOB"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.InformationDeathCorrection?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeathCorrection?.DateOfDeath) : ""),
+      },
+
+      {
+        Header: t("CR_COMMON_DECEASED_NAME"),
+        disableSortBy: true,
+        accessor: (row) =>
+          GetCell(
+            row.InformationDeathCorrection?.DeceasedFirstNameEn + " " + row.InformationDeathCorrection?.DeceasedMiddleNameEn +" " + row.InformationDeathCorrection?.DeceasedLastNameEn ||
+            t("CR_NOT_RECORDED")
+          ),
+      },
+      {
+        Header: t("CR_COMMON_DEATH_PLACE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.InformationDeathCorrection.DeathPlace || "-"),
       },
       // {
       //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
@@ -238,6 +307,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     ],
     []
   );
+  
   return (
     <React.Fragment>
       <div style={mystyle}>
@@ -280,7 +350,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
             t={t}
             data={data}
             totalRecords={count}
-            columns={applicationDeathType?.value === "abandoneddeathsearch" ? Abandonedcolumns : columns}
+            columns={applicationDeathType?.value === "abandoneddeathsearch" ? Abandonedcolumns :  applicationDeathType?.value === "deathcorrection" ? deathCorrectionColumns :columns}
             getCellProps={(cellInfo) => {
               return {
                 style: {

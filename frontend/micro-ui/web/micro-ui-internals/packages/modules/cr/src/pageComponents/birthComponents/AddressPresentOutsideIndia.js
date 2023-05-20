@@ -80,9 +80,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
 
   function setSelectadrsCityTown(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setadrsCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setadrsCityTown(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setadrsPermntOutsideIndiaCityTown('');
@@ -92,9 +92,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
 
   function setSelectAdressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setAdressEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdressEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setadrsPermntOutsideIndiaLineoneEn('');
@@ -103,9 +103,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   }
   function setSelectAdressEnB(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setAdressEnB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdressEnB(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setadrsPermntOutsideIndiaLinetwoEn('');
@@ -120,9 +120,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       setAdressMlB('');
     }
     else {
-      setAdressMlB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdressMlB(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setadrsPermntOutsideIndiaLinetwoMl('');
@@ -136,9 +136,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       setAdressMl('');
     }
     else {
-      setAdressMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdressMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setadrsPermntOutsideIndiaLineoneMl('');
@@ -148,9 +148,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
 
   function setSelectProvinceEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setProvinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setProvinceEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setPermntOutsideIndiaprovinceEn('');
@@ -164,9 +164,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       setProvinceMl('');
     }
     else {
-      setProvinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setProvinceMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
       } 
       // else {
       //   setPermntOutsideIndiaprovinceMl('');
@@ -270,7 +270,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               </CardLabel>
               <Dropdown
                 t={t}
-                optionKey={locale === "en_IN" ? "name" : "namelocal"}
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
@@ -371,7 +371,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}</CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
@@ -384,7 +384,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
+                  isRequired: false,
                   type: "text",
                   title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
                 })}

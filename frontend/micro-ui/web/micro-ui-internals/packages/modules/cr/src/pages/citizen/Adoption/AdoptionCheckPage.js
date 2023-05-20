@@ -477,7 +477,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.adrsLocalityNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-child-details`} />}
                       </div>
                     </div>
                   </div>
@@ -698,92 +697,90 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </h1>
                 </div>
               </div>
-              {AdoptionParentsDetails?.isMotherInfo === true && (
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-6">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {`${t("CR_MOTHER_INFORMATION_MISSING")}`} : {`${t("CR_NOT_RECORDED")}`}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-6">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {`${t("CR_MOTHER_INFORMATION_MISSING")}`} : {`${t("CR_NOT_RECORDED")}`}
+                        {AdoptionParentsDetails?.motherAadhar ? AdoptionParentsDetails?.motherAadhar : t("CR_NOT_RECORDED")}
+                      </CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {AdoptionParentsDetails?.motherFirstNameEn ? AdoptionParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED")}
+                      </CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {AdoptionParentsDetails?.motherFirstNameMl ? AdoptionParentsDetails?.motherFirstNameMl : t("CR_NOT_RECORDED")}
                       </CardText>
                     </div>
                   </div>
                 </div>
-              )}
-              {AdoptionParentsDetails?.isMotherInfo === false && (
-                <div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherAadhar ? AdoptionParentsDetails?.motherAadhar : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherFirstNameEn ? AdoptionParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherFirstNameMl ? AdoptionParentsDetails?.motherFirstNameMl : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherNationality.nationalityname
-                            ? AdoptionParentsDetails?.motherNationality.nationalityname
-                            : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_MARITAL_STATUS")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMaritalStatus.code ? AdoptionParentsDetails?.motherMaritalStatus.code : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherEducation.name ? AdoptionParentsDetails?.motherEducation.name : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN"
+                          ? AdoptionParentsDetails?.motherNationality?.nationalityname
+                          : AdoptionParentsDetails?.motherNationality?.nationalitynamelocal}
+                      </CardText>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherProfession.name ? AdoptionParentsDetails?.motherProfession.name : t("CR_NOT_RECORDED")}
-                        </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-parents-details`} />}
-                      </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_MARITAL_STATUS")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN"
+                          ? AdoptionParentsDetails?.motherMaritalStatus?.name
+                          : AdoptionParentsDetails?.motherMaritalStatus?.namelocal}
+                      </CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN" ? AdoptionParentsDetails?.motherEducation?.name : AdoptionParentsDetails?.motherEducation?.namelocal}
+                      </CardText>
                     </div>
                   </div>
                 </div>
-              )}
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN" ? AdoptionParentsDetails?.motherProfession?.name : AdoptionParentsDetails?.motherProfession?.namelocal}
+                      </CardText>
+                      {<ActionButton jumpTo={`${routeLink}/adoption-parents-details`} />}
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
@@ -839,9 +836,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherNationality.nationalityname
-                            ? AdoptionParentsDetails?.fatherNationality.nationalityname
-                            : t("CR_NOT_RECORDED")}
+                          {locale === "en_IN"
+                            ? AdoptionParentsDetails?.fatherNationality?.nationalityname
+                            : AdoptionParentsDetails?.fatherNationality?.nationalitynamelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -849,7 +846,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherEducation.name ? AdoptionParentsDetails?.fatherEducation.name : t("CR_NOT_RECORDED")}
+                          {locale === "en_IN" ? AdoptionParentsDetails?.fatherEducation?.name : AdoptionParentsDetails?.fatherEducation?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -861,7 +858,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherProfession.name ? AdoptionParentsDetails?.fatherProfession.name : t("CR_NOT_RECORDED")}
+                          {locale === "en_IN" ? AdoptionParentsDetails?.fatherProfession?.name : AdoptionParentsDetails?.fatherProfession?.namelocal}
                         </CardText>
                         {<ActionButton jumpTo={`${routeLink}/adoption-parents-details`} />}
                       </div>
@@ -882,7 +879,10 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_RELIGION")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionParentsDetails?.Religion.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {" "}
+                      {locale === "en_IN" ? AdoptionParentsDetails?.Religion?.name : AdoptionParentsDetails?.Religion?.namelocal}
+                    </CardText>
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_CONTACT_NO")}`} :</CardText>
@@ -929,9 +929,10 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}{" "}
                           {locale === "en_IN"
                             ? AddressBirthDetails?.presentInsideKeralaDistrict?.name
-                            : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}{" "}
+                            : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1035,7 +1036,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaStreetNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1056,6 +1056,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1412,7 +1413,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrLocalityNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>
@@ -1453,6 +1453,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
+                        {<ActionButton jumpTo={`${routeLink}/adoption-address-birth`} />}
                       </div>
                     </div>
                   </div>

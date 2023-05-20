@@ -269,7 +269,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                             </CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey={locale === "en_IN" ? "name" : "namelocal"}
+                                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                                 isMandatory={false}
                                 option={sortDropdownNames(cmbCountry ? cmbCountry : [], "code", t)}
                                 selected={presentaddressCountry}
@@ -285,7 +285,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                                 </CardLabel>
                                 <Dropdown
                                     t={t}
-                                    optionKey={locale === "en_IN" ? "name" : "namelocal"}
+                                    optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                                     isMandatory={false}
                                     option={sortDropdownNames(cmbState ? cmbState : [], "code", t)}
                                     selected={presentaddressStateName}

@@ -13,6 +13,7 @@ const getAction = (flow) => {
       'CR_PARENTS_DETAILS',
       'BIRTH_TIME_LINE_ADDRESS',
       'BORNOUTSIDE_BIRTH_STATIC_INFORMATION',
+      'BORNOUTSIDE_DOCUMENTS',
       'BIRTH_TIME_LINE_SUMMARY',
       
     ]

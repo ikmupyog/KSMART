@@ -18,7 +18,7 @@ const ResultTable = ({ setValue, getValues, data = [], count = 0, handleSubmit, 
 
   const generateActions = (rowData) => {
     console.log({ rowData })
-    const status = _.get(rowData, "TL_APPLICATION_STATUS", "INITIATED");
+    const status = _.get(rowData, "status", "INITIATED");
     let response = "";
     switch (status) {
       case "CITIZENACTIONREQUIRED":

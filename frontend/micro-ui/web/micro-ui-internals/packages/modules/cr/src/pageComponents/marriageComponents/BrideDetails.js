@@ -20,7 +20,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import moment from "moment";
 import { sortDropdownNames } from "../../utils";
 
-const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage }) => {
+const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -1022,7 +1022,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             (brideResidentShip === "NRI" ? !bridePassportNo || !brideSocialSecurityNo : false) ||
             (brideResidentShip === "FOREIGN" ? !brideSocialSecurityNo || !bridePassportNo : false) ||
             (brideParentGuardian === "PARENT" ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl : false) ||
-            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false)
+            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false) ||
+            (brideMaritalstatusID?.code === "MARRIED" ? !brideIsSpouseLiving : false) 
           }
         >
           <div className="row">
