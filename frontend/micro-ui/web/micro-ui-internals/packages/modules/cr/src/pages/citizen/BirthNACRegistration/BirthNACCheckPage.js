@@ -778,7 +778,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaPostOffice.name}
+                          {locale === "en_IN"
+                            ? AddressBirthDetails?.presentInsideKeralaPostOffice?.name
+                            : AddressBirthDetails?.presentInsideKeralaPostOffice?.namelocal}
                         </CardText>
                       </div>
                     </div>

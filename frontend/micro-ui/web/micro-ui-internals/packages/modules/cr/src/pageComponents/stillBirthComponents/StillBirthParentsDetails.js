@@ -1038,10 +1038,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                 FatherMobileError ||
                 ReligionError ||
               
-                OrderofChildrenError ||
+              
                 AdhaarDuplicationError ||
-                AgeValidationMsg ||
-                OrderofChildrenValidationMsg
+                AgeValidationMsg 
               }
               label={
                 MotherAadharError ||
@@ -1057,9 +1056,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
 
                   FatherMobileError ||
                   ReligionError ||
-                  OrderofChildrenError ||
+                 
                   AdhaarDuplicationError ||
-                  AgeValidationMsg || OrderofChildrenValidationMsg
+                  AgeValidationMsg 
 
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
@@ -1090,8 +1089,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                                               ? t(`CR_DUPLICATE_AADHAR_NO`)
                                               : AgeValidationMsg
                                                 ? t(`CR_MOTHER_AGE_WARNING`)
-                                                : OrderofChildrenValidationMsg
-                                                  ? t(`CR_ORDER_CHILDREN_WARNING`)
+                                                
                                                   :
 
                                                   setToast(false)

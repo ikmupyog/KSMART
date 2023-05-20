@@ -510,7 +510,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "BornOutsideStaticInfn",
-        nextStep: "bornOutside-document-details",
+        nextStep: "born-outside-document-details",
         type: "component",
         hideInEmployee: false,
       },
