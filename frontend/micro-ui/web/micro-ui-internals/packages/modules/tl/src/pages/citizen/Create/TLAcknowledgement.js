@@ -143,7 +143,7 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
     const License = (Licenses && Licenses[0]) || {};
 
     const TLackfile = License?.fileStoreId && License?.fileStoreId !== null ? { fileStoreIds: [License?.fileStoreId]} : { fileStoreIds: [] };
-    const Licensedata = rearrangeAcknowledgment(License[0]);
+    const Licensedata = rearrangeAcknowledgment(License);
     const TLack = await Digit.PaymentService.generatePdf(tenantId, { Licenses: Licensedata }, "tlacknowledgment");
     const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLack.filestoreIds[0] });
     window.open(fileStore[TLack.filestoreIds[0]], "_blank");
