@@ -371,7 +371,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}</CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
@@ -384,7 +384,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
+                  isRequired: false,
                   type: "text",
                   title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
                 })}
