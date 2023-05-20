@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
+import { convertEpochToDateDMY } from "../../../utils";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -142,25 +143,18 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
     const License = (Licenses && Licenses[0]) || {};
 
     const TLackfile = License?.fileStoreId && License?.fileStoreId !== null ? { fileStoreIds: [License?.fileStoreId]} : { fileStoreIds: [] };
-    const Licensedata = rearrangeApplication(License);
-    if(!TLackfile?.fileStoreIds?.[0]){
-      const TLack = await Digit.PaymentService.generatePdf(tenantId, { Licenses: Licensedata }, "tlacknowledgment");
-      TLackfile.License.fileStoreId = TLack.filestoreIds[0];
-      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLack.filestoreIds[0] });
-      window.open(fileStore[TLac.filestoreIds[0]], "_blank");
-      setShowOptions(false);
-    } else {
-      const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLackfile.fileStoreIds[0] });
-      window.open(fileStore[TLackfile?.fileStoreIds[0]], "_blank");
-      setShowOptions(false);
-    }
+    const Licensedata = rearrangeAcknowledgment(License[0]);
+    const TLack = await Digit.PaymentService.generatePdf(tenantId, { Licenses: Licensedata }, "tlacknowledgment");
+    const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLack.filestoreIds[0] });
+    window.open(fileStore[TLack.filestoreIds[0]], "_blank");
+    setShowOptions(false);
   };
-  function rearrangeApplication(application) {
+  function rearrangeAcknowledgment(application) {
     if (application.applicationNumber) {
       let tenantIdV = application.tenantId;
 
       let applicationNumberV = application.applicationNumber;
-      let applicationDateV = application.applicationDate;
+      let applicationDateV = convertEpochToDateDMY(application.applicationDate);
      
       let owners = [];
       let ownerName = "";
@@ -186,17 +180,22 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
       let licenseUnitName = application?.tradeLicenseDetail?.institution?.licenseUnitId ? application?.tradeLicenseDetail?.institution?.licenseUnitId + " - " : "" +
         application?.licenseUnitName ? application?.licenseUnitName : ""
           + application?.licenseUnitNameLocal ? " ( " + application?.licenseUnitNameLocal + " ) " : "";
-
-      let applicationDocuments = application?.tradeLicenseDetail?.applicationDocuments;
+      let applicationDocuments = "";
+      application?.tradeLicenseDetail?.applicationDocuments.map((doc)=>{
+        applicationDocuments += doc?.documentType === "" ? doc?.documentType : ", " + doc?.documentType
+      });
       let fileStoreId = application?.fileStoreId;
+      let serviceV = application?.applicationType === "NEW" ? "IFTE & OS New License" : application?.applicationType === "RENEWAL" ? "IFTE & OS Renewal License" : "";
       let finalJson =
         [{
           tenantId: tenantIdV,
+          service : serviceV,
           applicationNumber: applicationNumberV,
           licenseUnitName: licenseUnitName,
           applicationDate: applicationDateV,
           tradeLicenseDetail: {
-            owners: owners,
+            owners: ownerName,
+            address : owners[0].address,
             applicationDocuments: applicationDocuments
           },
           signedCertificate: "Efile No : "+applicationNumberV+"\nLicensee : " + ownerName + "\nUnitName : " + licenseUnitName,
@@ -217,7 +216,6 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
     return (
     <Card>
       <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
-      {console.log("Response1 : "+JSON.stringify(mutation))}
       {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
       <div><CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")} </CardText><SubmitBar label={t("TL_RESUBMIT")} onSubmit={setResubmit} /></div>
       <Link to={`/digit-ui/citizen`}>
