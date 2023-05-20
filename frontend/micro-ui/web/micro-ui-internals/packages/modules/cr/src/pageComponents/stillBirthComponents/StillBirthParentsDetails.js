@@ -155,7 +155,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
 
   function setSelectMotherFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setMotherFirstNameEn(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
 
@@ -166,7 +166,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setMotherFirstNameMl('');
     }
     else {
-      setMotherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setMotherFirstNameMl(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectMotherAadhar(e) {
@@ -274,7 +274,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
 
   function setSelectFatherFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setFatherFirstNameEn(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectFatherFirstNameMl(e) {
@@ -284,7 +284,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setFatherFirstNameMl('');
     }
     else {
-      setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setFatherFirstNameMl(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
 
