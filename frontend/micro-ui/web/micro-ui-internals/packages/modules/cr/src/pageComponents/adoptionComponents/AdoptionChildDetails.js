@@ -998,8 +998,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
       let adharLength = childAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
-        setAadharError(true);
-        setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
