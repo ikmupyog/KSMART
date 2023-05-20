@@ -5,7 +5,6 @@ import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-rou
 import ErrorBoundary from "../../components/ErrorBoundaries";
 import { AppHome } from "../../components/Home";
 import TopBarSideBar from "../../components/TopBarSideBar";
-import TopBarSideBarKsmart from "../../components/KsmartNew/TopBarKsmartNew/index";
 import CitizenHome from "./Home";
 import LanguageSelection from "./Home/LanguageSelection";
 import LocationSelection from "./Home/LocationSelection";
@@ -532,8 +531,8 @@ const Home = ({
           </Route>
 
           <Route exact path={`${path}/ksmart-home`}>
-            <KsmartHome 
-            
+            <KsmartHome
+
             />
           </Route>
 

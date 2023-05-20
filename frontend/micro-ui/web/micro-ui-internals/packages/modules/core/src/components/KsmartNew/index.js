@@ -3,15 +3,20 @@ import MenuBar from "./Menu";
 import Carousel from "./Carousel";
 import Footer from "./Footer";
 import Services from "./Services";
-import TopBarSideBarKsmart from "./TopBarKsmartNew";
+import { Card, Row } from "react-bootstrap";
 
 const KsmartHome = () => (<React.Fragment>
-    {/* <TopBarSideBarKsmart/> */}
-    <MenuBar/>
-    <Carousel/>
-    <Services/>
-    <Footer/>
+    <Row>
+        <MenuBar />
+    </Row>
+    <Row style={{ paddingBottom: 20 }}>
+        <Card style={{ backgroundColor: "darkblue" }} >
+            <Carousel />
+        </Card>
+    </Row>
+    <Services />
+    <Footer />
     {/* common footer */}
-    </React.Fragment>);
+</React.Fragment>);
 
 export default KsmartHome;

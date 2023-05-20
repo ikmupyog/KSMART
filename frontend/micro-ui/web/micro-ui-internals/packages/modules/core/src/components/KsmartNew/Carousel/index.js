@@ -1,20 +1,22 @@
 import React from "react";
-import AutoCarousel from "./carousel";
+import { Carousel, Image } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Carousel = () => {
+const CarouselHome = () => <Carousel>
+  <Carousel.Item>
+    <Image src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" />
+    <Carousel.Caption>
+      <h3>First slide label</h3>
+      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item>
+    <Image src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/citizenlogin.png" />
+    <Carousel.Caption>
+      <h3>Second slide label</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </Carousel.Caption>
+  </Carousel.Item>
+</Carousel>
 
-    const carouselItems = [
-        { image: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/HA1RQCRQJ7.jpg' },
-        { image: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/EVHXF4MUT6.jpg' },
-        { image: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/D7VE3SK3RD.jpg' },
-        { image: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/0XRFUE80AZ.jpg' },
-        { image: 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/2DQJJ9RLVD.jpg' }
-    ]
-
-    return <div>
-        Carousel
-        <AutoCarousel carouselItems={carouselItems} />
-    </div>
-}
-
-export default Carousel
+export default CarouselHome
