@@ -54,7 +54,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { ChildDetails, ParentsDetails, AddressBirthDetails, InitiatorinfoDetails, InformarHosInstDetails } = value;
-  // console.log(AddressBirthDetails);
+  console.log(ChildDetails?.proceedNoRDO);
   const uploadedImages = [ChildDetails.uploadedFile];
   useEffect(() => {
     if (uploadedImages?.length > 0) {
@@ -1677,7 +1677,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
-        {ChildDetails?.proceedNoRDO != null && ChildDetails?.regNoNAC != null && (
+        {ChildDetails?.UploadNACHIde === true && (
           <Accordion
             expanded={false}
             title={t("CR_DOCUMENTS")}

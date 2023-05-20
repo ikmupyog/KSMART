@@ -664,15 +664,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   function setChildName(e) {
     if (e.target.checked === true) {
       setIsChildName(e.target.checked);
-
-    } else {
-      setIsChildName(e.target.checked);
       setChildFirstNameEn("");
       setChildMiddleNameEn("");
       setChildLastNameEn("");
       setChildFirstNameMl("");
       setChildMiddleNameMl("");
       setChildLastNameMl("");
+    } else {
+      setIsChildName(e.target.checked);      
     }
   }
   function setSelectDeliveryMethod(value) {

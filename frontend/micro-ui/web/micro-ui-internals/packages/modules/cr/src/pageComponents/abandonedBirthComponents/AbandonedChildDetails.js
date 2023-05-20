@@ -21,6 +21,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const locale = Digit.SessionStorage.get("locale");
   const { t } = useTranslation();
   let validation = {};
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -1115,7 +1116,9 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
               </div>
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={val => handleTimeChange(val, setbirthDateTime)}
+                <CustomTimePicker 
+                name="birthDateTime" 
+                onChange={val => handleTimeChange(val, setbirthDateTime)}
                   value={birthDateTime}
                   disable={isDisableEdit}
                   // disable={isEdit}
@@ -1154,7 +1157,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
@@ -1395,7 +1398,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={cmbAttDeliverySub}
                   selected={medicalAttensionSub}
@@ -1441,7 +1444,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
                   {`${t("CR_DELIVERY_METHOD")}`}</CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  // optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={cmbDeliveryMethod}
                   selected={deliveryMethods}
