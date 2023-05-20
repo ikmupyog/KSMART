@@ -36,7 +36,6 @@ const MyApplicationDetails = ({path}) => {
     const config = {
         enabled: !!( payload && Object.keys(payload).length > 0 )
     }
-
     const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
     let correction = [];
     let newAppln = [];
@@ -46,8 +45,8 @@ const MyApplicationDetails = ({path}) => {
     searchReult ? searchReult.filter((data) => data?.applicationType === "NEW" &&  data?.correctionAppNumber === null && payload?.applicationType === "NEW" ? sortedData.push(data) : "" ) : "";
     searchReult ? searchReult.filter((data) => data?.applicationType === "RENEWAL" &&  data?.correctionAppNumber === null && payload?.applicationType === "RENEWAL"  ? sortedData.push(data)  : "") : "";
     searchReult ? searchReult.filter((data) => data?.correctionAppNumber !== null && payload?.applicationType === "CORRECTION" ? sortedData.push(data) : "") : "";
-   // searchReult ? searchReult.filter((data) => !data?.applicationType ? sortedData.push(data) : "" ) : "";
-    
+
+    // searchReult ? searchReult.filter((data) => !data?.applicationType ? sortedData.push(data) : "" ) : "";
     sortedData = sortedData?.length > 0 ? sortedData : searchReult;
     
     return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={ !isLoading && isSuccess ? (sortedData?.length>0? sortedData : { display: "ES_COMMON_NO_DATA" }) : "" } count={count} /> 
