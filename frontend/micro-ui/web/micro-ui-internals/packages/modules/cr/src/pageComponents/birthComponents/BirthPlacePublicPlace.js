@@ -70,7 +70,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   function setSelectlocalityNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setlocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setlocalityNameEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectlocalityNameMl(e) {
@@ -80,13 +80,13 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
       setlocalityNameMl('');
     }
     else {
-      setlocalityNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setlocalityNameMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
   function setSelectstreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setstreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setstreetNameEn(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectstreetNameMl(e) {
@@ -96,12 +96,12 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
       setstreetNameMl('');
     }
     else {
-      setstreetNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setstreetNameMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
-      setpublicPlaceDecpEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpublicPlaceDecpEn(e.target.value.trim().length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
     //setpublicPlaceDecpEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
   }

@@ -170,13 +170,13 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   }
   function setSelectinitiatorInstitutionName(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorInstitutionName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setinitiatorInstitutionName(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
 
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setinitiatorNameEn(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectinitiatorDesi(value) {
