@@ -318,7 +318,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-6">
-            <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}</CardLabel>
+            <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
               type={"text"}
@@ -328,11 +328,11 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               onChange={setSelectadrsPermntOutsideIndiaLineoneEn}
               disable={isDisableEdit}
               placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}</CardLabel>
+            <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
               type={"text"}
@@ -345,7 +345,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
-                isRequired: false,
+                isRequired: true,
                 type: "text",
                 title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
               })}
