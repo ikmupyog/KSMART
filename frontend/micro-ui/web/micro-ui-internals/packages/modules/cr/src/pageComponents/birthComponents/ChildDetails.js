@@ -28,9 +28,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [popUpState, setpopUpState] = useState(false);
   const [popUpStateNac, setpopUpStateNac] = useState(false);
   const [UploadNACHIde, setUploadNACHIde] = useState(formData?.ChildDetails?.UploadNACHIde ? true : false);
-  const [displaytime, setDisplaytime] = useState(formData?.ChildDetails?.displaytime ? formData?.ChildDetails?.displaytime : null);
-  const [displayAmPm, setDisplayAmPm] = useState(formData?.ChildDetails?.displayAmPm ? formData?.ChildDetails?.displayAmPm : null);
-
+ 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -171,8 +169,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   const [birthDateTime, setbirthDateTime] = useState(isEditBirth === false && formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.ChildDetails?.checkbirthDateTime.hh ? formData?.ChildDetails?.checkbirthDateTime.hh : null, mm: formData?.ChildDetails?.checkbirthDateTime.mm ? formData?.ChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.ChildDetails?.checkbirthDateTime.amPm ? formData?.ChildDetails?.checkbirthDateTime.amPm : null });
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.ChildDetails?.checkbirthDateTime?.hh ? formData?.ChildDetails?.checkbirthDateTime.hh : null, mm: formData?.ChildDetails?.checkbirthDateTime?.mm ? formData?.ChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.ChildDetails?.checkbirthDateTime?.amPm ? formData?.ChildDetails?.checkbirthDateTime.amPm : null });
   //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [displaytime, setDisplaytime] = useState(formData?.ChildDetails?.displaytime ? formData?.ChildDetails?.displaytime : null);
+  const [displayAmPm, setDisplayAmPm] = useState(formData?.ChildDetails?.displayAmPm ? formData?.ChildDetails?.displayAmPm : null);
+
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
@@ -280,6 +281,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }, [isInitialRender]);
+ 
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
