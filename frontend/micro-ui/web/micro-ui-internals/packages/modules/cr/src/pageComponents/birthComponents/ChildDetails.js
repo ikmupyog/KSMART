@@ -28,6 +28,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [popUpState, setpopUpState] = useState(false);
   const [popUpStateNac, setpopUpStateNac] = useState(false);
   const [UploadNACHIde, setUploadNACHIde] = useState(formData?.ChildDetails?.UploadNACHIde ? true : false);
+  const [displaytime, setDisplaytime] = useState(formData?.ChildDetails?.displaytime ? formData?.ChildDetails?.displaytime : null);
+  const [displayAmPm, setDisplayAmPm] = useState(formData?.ChildDetails?.displayAmPm ? formData?.ChildDetails?.displayAmPm : null);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -635,6 +637,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     //console.log("time while onchange", birthDateTime);
   }, [birthDateTime])
 
+
   const handleTimeChange = (value, cb) => {
     //console.log("valuee--", value, value?.target?.value, value?.target?.name);
     if (value?.target?.name === "hour12") {
@@ -647,7 +650,88 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-      // console.log(value);
+      let time = value;
+      let timeParts = time.split(":");
+
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
+
+        }
+      }
       // let time = value;
       // let timeParts = time.split(":");
       // console.log((+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000));
@@ -671,7 +755,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       setChildMiddleNameMl("");
       setChildLastNameMl("");
     } else {
-      setIsChildName(e.target.checked);      
+      setIsChildName(e.target.checked);
     }
   }
   function setSelectDeliveryMethod(value) {
@@ -1423,8 +1507,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
-        stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
-        isChildName,
+        stateId, tenantId, workFlowCode, childDOB, birthDateTime, displaytime, displayAmPm,
+        gender, childAadharNo, isChildName,
         childFirstNameEn: childFirstNameEn.trim(),
         childMiddleNameEn: childMiddleNameEn.trim(),
         childLastNameEn: childLastNameEn.trim(),
