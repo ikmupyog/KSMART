@@ -171,7 +171,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   const [birthDateTime, setbirthDateTime] = useState(isEditBirth === false && formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.ChildDetails?.checkbirthDateTime.hh ? formData?.ChildDetails?.checkbirthDateTime.hh : null, mm: formData?.ChildDetails?.checkbirthDateTime.mm ? formData?.ChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.ChildDetails?.checkbirthDateTime.amPm ? formData?.ChildDetails?.checkbirthDateTime.amPm : null });
   //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
@@ -1507,7 +1507,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
-        stateId, tenantId, workFlowCode, childDOB, birthDateTime, displaytime, displayAmPm,
+        stateId, tenantId, workFlowCode, childDOB, birthDateTime, checkbirthDateTime,
+        displaytime, displayAmPm,
         gender, childAadharNo, isChildName,
         childFirstNameEn: childFirstNameEn.trim(),
         childMiddleNameEn: childMiddleNameEn.trim(),
