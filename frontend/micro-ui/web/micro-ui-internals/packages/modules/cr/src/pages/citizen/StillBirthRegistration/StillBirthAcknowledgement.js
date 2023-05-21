@@ -29,7 +29,7 @@ const BannerPicker = (props) => {
   if (props.isSuccess && sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")) {
  //console.log(JSON.stringify(props));
     sessionStorage.setItem("applicationNumber", props.data?.StillBirthChildDetails[0]?.applicationNumber);   
-      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);   
+      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-stillbirth/${sessionStorage.getItem("applicationNumber")}`);   
     return (
       <Banner
         message={GetActionMessage(props)}
