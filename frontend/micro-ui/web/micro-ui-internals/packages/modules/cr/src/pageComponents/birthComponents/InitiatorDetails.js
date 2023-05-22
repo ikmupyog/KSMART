@@ -69,10 +69,13 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     IPOPListDetails["birth-death-service"].IPOPList.map((ob) => {
       cmbIpopList.push(ob);
     });
+    console.log(cmbInitiator);
+    console.log(cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0],"Test");
+    console.log(formData?.InitiatorinfoDetails?.initiator,"Initiator");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isGuardian, setIsGuardian] = useState(formData?.InitiatorinfoDetails?.isGuardian ? formData?.InitiatorinfoDetails?.isGuardian : formData?.ChildDetails?.InitiatorinfoDetails?.isGuardian ? formData?.ChildDetails?.InitiatorinfoDetails?.isGuardian : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
-  const [initiator, setInitiator] = useState(formData?.InitiatorinfoDetails?.initiator?.code ? formData?.InitiatorinfoDetails?.initiator : formData?.ChildDetails?.InitiatorinfoDetails?.initiator ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0] : null);
+  const [initiator, setInitiator] = useState(formData?.InitiatorinfoDetails?.initiator?.code ? formData?.InitiatorinfoDetails?.initiator : formData?.ChildDetails?.InitiatorinfoDetails?.initiator ? cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0] : null);
   const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation?.code ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.relation)[0] : null);
   const [initiatorInstitutionName, setinitiatorInstitutionName] = useState(formData?.InitiatorinfoDetails?.initiatorInstitutionName ? formData?.InitiatorinfoDetails?.initiatorInstitutionName : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorInstitutionName ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorInstitutionName : name);
   const [isDisableEdit, setisDisableEdit] = useState(false);
@@ -404,7 +407,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                 t={t}
                 optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 isMandatory={false}
-                option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "code", t)}
+                option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "name", t)}
                 selected={initiator}
                 select={setSelectInitiator}
                 disable={isDisableEdit}
