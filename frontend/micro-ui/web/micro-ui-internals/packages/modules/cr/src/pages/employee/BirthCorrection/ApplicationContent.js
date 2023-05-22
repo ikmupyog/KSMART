@@ -44,13 +44,11 @@ function ApplicationContent({
   const tenantId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const [imagesThumbs, setImagesThumbs] = useState([]);
-  console.log("applicationDetails in content==", applicationDetails);
   function OpenImage(imageSource, index, thumbnailsToShow) {
     window.open(thumbnailsToShow?.fullImage?.[0], "_blank");
   }
 
   const getTimelineCaptions = (checkpoint) => {
-    console.log("correction check point==", checkpoint);
     if (checkpoint.state === "OPEN" || (checkpoint.status === "INITIATED" && !window.location.href.includes("/obps/"))) {
       const caption = {
         date: Digit.DateUtils.ConvertTimestampToDate(applicationData?.auditDetails?.createdTime),
@@ -109,7 +107,6 @@ function ApplicationContent({
         };
         return tempObj;
       });
-    console.log("formattedImageThumbs ===", formattedImageThumbs);
     setImagesThumbs(formattedImageThumbs);
   };
 

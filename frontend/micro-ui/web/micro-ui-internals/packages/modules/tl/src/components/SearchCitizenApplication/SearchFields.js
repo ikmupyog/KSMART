@@ -41,7 +41,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <label>{t("TL_HOME_SEARCH_RESULTS_APP_NO_LABEL")}</label>
             <TextInput name="applicationNumber" inputRef={register({})} />
         </SearchField>
-        {applicationTypesLoading ? <Loader/> : <SearchField>
+        {/* {applicationTypesLoading ? <Loader/> : <SearchField>
             <label>{t("TL_LOCALIZATION_APPLICATION_TYPE")}</label>
             <Controller
            
@@ -58,7 +58,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                         />
                     )}
                     />
-        </SearchField>}
+        </SearchField>} */}
         <SearchField>
             <label  style={mystyle}>{t("TL_COMMON_TABLE_COL_APP_FROM_DATE")}</label>  
             <Controller

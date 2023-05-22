@@ -72,6 +72,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId, setSearchRegId] = useState();
   const [birthRegPopup, setBirthRegPopup] = useState(false);
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+
   // console.log('M',formData,isEditAdoption);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -579,8 +581,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     if (SearchRegId) {
       SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)) : setChildDOB(null);
       SearchRegId?.gender ? selectGender(menu.filter((menu) => menu.code === SearchRegId?.gender)[0]) : selectGender("");
-      SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId.childAadharNo) : setChildAadharNo(null);
-      SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId.childFirstNameEn) : setChildFirstNameEn("");
+      SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId?.childAadharNo) : setChildAadharNo(null);
+      SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId?.childFirstNameEn) : setChildFirstNameEn("");
       SearchRegId?.childMiddleNameEn ? setChildMiddleNameEn(SearchRegId.childMiddleNameEn) : setChildMiddleNameEn("");
       SearchRegId?.childLastNameEn ? setChildLastNameEn(SearchRegId.childLastNameEn) : setChildLastNameEn("");
       SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl) : setChildFirstNameMl("");
@@ -994,21 +996,20 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   }
   let validFlag = true;
   const goNext = () => {
-    if (childAadharNo != null) {
-      let adharLength = childAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    } else {
-      setAadharError(false);
-    }
+    // if (childAadharNo != null) {
+    //   let adharLength = childAadharNo;
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setAadharError(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setAadharError(false);
+    //   }
+    // } else {
+    //   setAadharError(false);
+    // }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
@@ -1704,7 +1705,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   optionKey="i18nKey"
                   name="childAadharNo"
                   value={childAadharNo}
-                  disable={isDisableEdit}
+                  //disable={childAadharNo === "" ? false : isDisableEdit}
                   onChange={setSelectChildAadharNo}
                   placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                   inputProps={{

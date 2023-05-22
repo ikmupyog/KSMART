@@ -2951,7 +2951,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BRIDE_NAME")}`} :</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_WHETHER_BACKWARD")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>

@@ -52,7 +52,11 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("ADOPTIONHOME")) {
     return <AdoptionActionModal {...props} />;
   }
-  if (props?.businessService.includes("BORNOUTSIDENORMAL")) {
+  if (
+  props?.businessService.includes("BORNOUTSIDENORMAL") ||
+  props?.businessService.includes("BORNOUTSIDE60TO1YR")
+  
+  ) {
     return <BornOutsideActionModal {...props} />;
   }
   if (props?.businessService.includes("ABANDONEDBIRTH")) {
@@ -73,7 +77,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
     return <AbandonedActionModal {...props} />;
   }
-  if (props?.businessService.includes("NACAPP")) {
+  if (props?.businessService.includes("BIRTHNAC")) {
     return <BirthNACActionModal {...props} />;
   }
   if (
