@@ -72,6 +72,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId, setSearchRegId] = useState();
   const [birthRegPopup, setBirthRegPopup] = useState(false);
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+
   // console.log('M',formData,isEditAdoption);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -1703,7 +1705,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   optionKey="i18nKey"
                   name="childAadharNo"
                   value={childAadharNo}
-                  disable={isDisableEdit}
+                  //disable={childAadharNo === "" ? false : isDisableEdit}
                   onChange={setSelectChildAadharNo}
                   placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                   inputProps={{
