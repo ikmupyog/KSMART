@@ -20,6 +20,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -285,7 +286,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : "namelocal"}
               option={sortDropdownNames(cmbFilterPerDistrict ? cmbFilterPerDistrict : [], "name", t)}
               selected={permntOutsideKeralaDistrict}
               select={setSelectpermntOutsideKeralaDistrict}
@@ -326,7 +327,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="i18nKey"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [], "code", t)}
               selected={permntOutsideKeralaVillage}
               select={setSelectpermntOutsideKeralaVillage}

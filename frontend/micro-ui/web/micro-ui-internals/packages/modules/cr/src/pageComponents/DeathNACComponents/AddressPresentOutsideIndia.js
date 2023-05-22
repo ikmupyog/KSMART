@@ -20,6 +20,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -269,7 +270,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               </CardLabel>
               <Dropdown
                 t={t}
-                optionKey="i18nKey"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
