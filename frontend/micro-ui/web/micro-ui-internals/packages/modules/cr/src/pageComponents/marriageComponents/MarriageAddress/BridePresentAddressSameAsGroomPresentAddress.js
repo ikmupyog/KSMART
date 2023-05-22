@@ -60,10 +60,6 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
       setaddressCountry(formData?.GroomAddressDetails?.presentaddressCountry);
       setaddressStateName(formData?.GroomAddressDetails?.presentaddressStateName);
       setoutsideKeralaDistrict(formData?.GroomAddressDetails?.presentOutsideKeralaDistrict);
-      setValue(formData?.GroomAddressDetails?.value);
-      setCountryValue(formData?.GroomAddressDetails?.countryvalue);
-      setCountryValuePermanent(formData?.GroomAddressDetails?.countryValuePermanent);
-      setValuePermanent(formData?.GroomAddressDetails?.valuePermanent);
       setpermtaddressCountry(formData?.GroomAddressDetails?.permtaddressCountry);
       setpermtaddressStateName(formData?.GroomAddressDetails?.permtaddressStateName);
       setPresentWardNo(formData?.GroomAddressDetails?.presentWardNo);
@@ -105,10 +101,6 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
       setaddressCountry("");
       setaddressStateName("");
       setoutsideKeralaDistrict("");
-      setValue("");
-      setCountryValue("");
-      setCountryValuePermanent("");
-      setValuePermanent("");
       setpermtaddressCountry("");
       setpermtaddressStateName("");
       setPresentWardNo("");

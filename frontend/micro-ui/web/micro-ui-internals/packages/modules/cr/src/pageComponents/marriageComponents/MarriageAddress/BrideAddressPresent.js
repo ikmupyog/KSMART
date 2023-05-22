@@ -27,6 +27,7 @@ const BrideAddressPresent = ({
   isEditMarriage = false,
   presentOutsideKeralaDistrict,
   setoutsideKeralaDistrict,
+  isBridePresentAddressSameAsGroomPresentAddress,
 }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
@@ -74,7 +75,6 @@ const BrideAddressPresent = ({
   let cmbFilterCountry = [];
   let cmbFilterState = [];
   let cmbFilterVillage = [];
-
 
   if (isEditMarriage) {
     if (formData?.BrideAddressDetails?.presentaddressCountry != null) {
@@ -189,7 +189,7 @@ const BrideAddressPresent = ({
         // }
       }
     } 
-  }, [cmbLB.length, cmbCountry.length]);
+  }, [cmbLB.length, cmbCountry.length, isBridePresentAddressSameAsGroomPresentAddress]);
 
   const goNext = () => {};
   if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
@@ -202,7 +202,7 @@ const BrideAddressPresent = ({
           <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
               </h1>
             </div>
           </div>
