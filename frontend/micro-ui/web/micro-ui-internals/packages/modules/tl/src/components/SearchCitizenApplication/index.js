@@ -132,7 +132,16 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
       accessor: "Action",
       disableSortBy: true,
       Cell: ({ row }) => {
-        return (
+
+        return ((row.original["correctionId"] !== null && row.original["correctionAppNumber"] !== null)?
+          <div>
+            <span className="link">
+              <Link to={`/digit-ui/citizen/tl/tradelicence/application/${row.original["correctionAppNumber"]}/${row.original["tenantId"]}`}>
+              {t(row.original["status"]!= "PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY") }
+              </Link>
+            </span>
+          </div>
+        :
           <div>
             <span className="link">
               <Link to={`/digit-ui/citizen/tl/tradelicence/application/${row.original["applicationNumber"]}/${row.original["tenantId"]}`}>

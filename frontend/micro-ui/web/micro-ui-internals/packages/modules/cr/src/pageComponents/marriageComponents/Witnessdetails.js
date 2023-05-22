@@ -438,7 +438,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
   function setSelectwitness1AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
-      setwitness1AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness1AddressEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -454,7 +454,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
   function setSelectwitness2AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
-      setwitness2AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness2AddressEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
     // if (e.target.value.length === 51) {
     //   return false;
