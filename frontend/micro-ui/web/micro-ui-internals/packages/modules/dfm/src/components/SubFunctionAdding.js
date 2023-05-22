@@ -1,18 +1,9 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useForm, Controller } from "react-hook-form";
-
-import { useNavigate } from "react-router-dom";
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { SubmitBar, CardLabel, Dropdown, TextInput, Table } from "@egovernments/digit-ui-react-components";
+import { SubmitBar, CardLabel, Dropdown, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
-import viewToPlainText from "@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext";
 
 const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -40,13 +31,13 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   }));
 
   const { data: searchData } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
+
   const majorData = searchData?.MajorFunctionDetails?.map((item) => ({
     label: item.id,
     value: item.majorFunctionNameEnglish,
   }));
 
   const { data: searchsubfunct, refetch } = Digit.Hooks.dfm.useSearchsubModule({ tenantId, majorFunctionId: majorFunction.label });
-  console.log("majorFunction", majorFunction.label);
 
   const setsetSfcode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -85,12 +76,36 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     setsubFuncNm(row.subFunctionNameEnglish);
     setsubFuncNmMl(row.subFunctionNameMalayalam);
   }
-  const textValue = searchsubfunct?.SubFunctionDetails;
-  console.log(textValue);
+  const [toast, setToast] = useState(false);
+  const deleteClick = (subFunctionCode, majorFunctionId, subFunctionNameEnglish, subFunctionNameMalayalam) => {
+    const formData = {
+      SubFunctionDetails: {
+        id: "",
+        tenantId: tenantId,
+        subFunctionCode: subFunctionCode,
+        majorFunctionId: majorFunctionId,
+        subFunctionNameEnglish: subFunctionNameEnglish,
+        subFunctionNameMalayalam: subFunctionNameMalayalam,
+        status: "",
+      },
+    };
+    deleteItem.mutate(formData);
+    setToast(true);
+    setTimeout(() => {
+      setToast(false);
+    }, 2000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
+  };
+  // const textValue = searchsubfunct?.SubFunctionDetails;
+  const textValue = searchsubfunct?.SubFunctionDetails.filter((item) => {
+    return item.majorFunctionId === majorFunction.label && item.status !== "0";
+  });
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = [
     {
-      Header: t("MODULE_CODE"),
+      Header: t("MODULE_NAME_EN"),
       Cell: ({ row }) => {
         return (
           <div>
@@ -105,26 +120,43 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       disableSortBy: true,
     },
     {
-      Header: t("MODULE_NAME_ENG"),
+      Header: t("MAJOR_FUNCTION_NAME_EN"),
       Cell: ({ row }) => GetCell(t(row?.original.subFunctionNameEnglish || "NA")),
       disableSortBy: true,
     },
     {
-      Header: t("MODULE_NAME_MAL"),
+      Header: t("SUBFUNCTION_CODE"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.subFunctionCode) || ""),
+    },
+    {
+      Header: t("SUBFUNCTION_NAME_EN"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.subFunctionNameEnglish) || ""),
+    },
+    {
+      Header: t("SUBFUNCTION_NAME_ML"),
       disableSortBy: true,
       Cell: ({ row }) => GetCell(t(row.original.subFunctionNameMalayalam) || ""),
     },
     {
-      Header: t("Download Certificate"),
+      Header: t("DELETE_MODULE"),
       disableSortBy: true,
       Cell: ({ row }) => {
+        const subFunctionCode = row.original.subFunctionCode;
+        const majorFunctionId = row.original.majorFunctionId;
+        const subFunctionNameEnglish = row.original.subFunctionNameEnglish;
+        const subFunctionNameMalayalam = row.original.subFunctionNameMalayalam;
+
         return (
-          <div onClick={Delete}>
-            <button class="btn btn-delete">
-              <span class="mdi mdi-delete mdi-24px"></span>
-              <span class="mdi mdi-delete-empty mdi-24px"></span>
-              <span>Delete</span>
-            </button>
+          <div>
+            <a onClick={() => deleteClick(subFunctionCode, majorFunctionId, subFunctionNameEnglish, subFunctionNameMalayalam)}>
+              <button className="btn btn-delete">
+                <span className="mdi mdi-delete mdi-24px"></span>
+                <span className="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+              </button>
+            </a>
           </div>
         );
       },
@@ -151,20 +183,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     mutation.mutate(formData);
     refetch();
   };
-  const Delete = () => {
-    const formData = {
-      SubFunctionDetails: {
-        id: "",
-        tenantId: tenantId,
-        subFunctionCode: sfCode,
-        majorFunctionId: majorFunction.label,
-        subFunctionNameEnglish: subFuncNm,
-        subFunctionNameMalayalam: subFuncNmMl,
-        status: "",
-      },
-    };
-    deleteItem.mutate(formData);
-  };
+
   const updateDraft = () => {
     const formData = {
       SubFunctionDetails: {
@@ -208,7 +227,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
             <div className="col-md-3 col-sm-12 col-xs-12">
               <CardLabel>
                 {" "}
-                {t("SF_CODE")}
+                {t("SUB_FUNCTION_CODE")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -260,9 +279,8 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
             <button className="btn-row" onClick={handleClick}>
               Update
             </button>
-
             <SubmitBar onSubmit={saveModule} disabled={edit} label={t("save")} className="btn-row" />
-            <SubmitBar label={t("CLOSE")} disabled={!edit} className="btn-row" />
+            <SubmitBar label={t("CLOSE")}  className="btn-row" />
           </div>
         </div>
       </div>
@@ -286,6 +304,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
           )}
         </div>
       </div>
+      {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />}
     </React.Fragment>
   );
 };

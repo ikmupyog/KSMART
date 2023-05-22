@@ -40,6 +40,7 @@ import useUpdateMajorFunc from "./dfm/useUpdateMajorFunc";
 import useSearchmajorFunction from "./dfm/useSearchmajorFunction";
 import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
 import useServiceAdding from "./dfm/useServiceAdding";
+import useSearchservice from "./dfm/useSearchservice";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -505,6 +506,7 @@ const dfm = {
   useMajorFunctionAdd,
   useUpdateSubFunct,
   useServiceAdding,
+  useSearchservice,
 };
 const receipts = {
   useReceiptsMDMS,

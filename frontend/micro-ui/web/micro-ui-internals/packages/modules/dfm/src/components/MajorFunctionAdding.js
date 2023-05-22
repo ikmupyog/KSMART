@@ -62,6 +62,8 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       item.status !== "0"
     );
   });
+  console.log("majorData", majorData);
+
   // const moduleId = searchData?.MajorFunctionDetails?.moduleId;
   // console.log("moduleIdsearch", moduleId);
   // const Delete = () => {

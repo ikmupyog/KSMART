@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo,useEffect } from "react";
 import { SubmitBar, CardLabel, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
@@ -14,7 +14,9 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [moduleNameEn, setModuleNameEn] = useState("");
   const [moduleNameMl, setModuleNameMl] = useState("");
   const [selectedModuleCode, setSelectedModuleCode] = useState("");
-
+  const [mutationSuccess, setMutationSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const setsetModulecode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setModulecode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -38,11 +40,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     setModuleNameEn(row.moduleNameEnglish);
     setModuleNameMl(row.moduleNameMalayalam);
   }
-  // function deleteClick(row) {
-  //   Delete();
-  //   setModulecode(row.moduleCode);
-  //   console.log(setModulecode(row.moduleCode));
-  // }
   const [toast, setToast] = useState(false);
 
   const deleteClick = (moduleCode) => {
@@ -54,9 +51,9 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
       },
     };
     deleteItem.mutate(formData);
-    setToast(true);
+    setDeleteSuccess(true);
     setTimeout(() => {
-      setToast(false);
+      setDeleteSuccess(false);
     }, 2000);
     setTimeout(() => {
       window.location.reload();
@@ -134,13 +131,35 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         },
       },
     };
-
     if (edit === false) {
       mutation.mutate(formData);
     } else {
       updatemutation.mutate(formData);
     }
   };
+ 
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setMutationSuccess(true);
+      setTimeout(() => {
+        setMutationSuccess(false);
+      }, 2500);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
+    }
+    if (updatemutation.isSuccess) {
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess ,updatemutation.isSuccess]);
+
+  
 
   return (
     <React.Fragment>
@@ -223,7 +242,12 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
           )}
         </div>
       </div>
-      {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />}
+      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+
+      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+
+      {updateSuccess && <Toast label="Item updated" onClose={() => setUpdateSuccess(false)} />}
+      {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
     </React.Fragment>
   );
 };

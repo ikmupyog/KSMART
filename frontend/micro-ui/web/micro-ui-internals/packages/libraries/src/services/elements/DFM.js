@@ -33,6 +33,16 @@ export const DFMService = {
       params: details,
       auth: true,
     }),
+  servicesearch: ({ tenantId, subFunctionId }) =>
+    Request({
+      url: Urls.dfm.servicesearch,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId, subFunctionId },
+      auth: true,
+    }),
   majorFunctionSearch: (tenantId, moduleId) =>
     Request({
       url: Urls.dfm.majorFunctionSearch,
@@ -43,17 +53,16 @@ export const DFMService = {
       params: { tenantId, moduleId },
       auth: true,
     }),
-  submodulesearch: ({tenantId,majorFunctionId}) =>
+  submodulesearch: ({ tenantId, majorFunctionId }) =>
     Request({
       url: Urls.dfm.submodulesearch,
       useCache: false,
       setTimeParam: false,
       userService: true,
       method: "POST",
-      params: {tenantId,majorFunctionId},
+      params: { tenantId, majorFunctionId },
       auth: true,
     }),
- 
 
   // search_bill: ({ tenantId, filters }) =>
   //   Request({
@@ -149,7 +158,7 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
-    serviceAdding: (details, tenantId) =>
+  serviceAdding: (details, tenantId) =>
     Request({
       url: Urls.dfm.serviceAdding,
       data: details,
@@ -171,7 +180,7 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
-    updatesubfunct: (details, tenantId) =>
+  updatesubfunct: (details, tenantId) =>
     Request({
       url: Urls.dfm.updatesubfunct,
       data: details,
@@ -182,7 +191,7 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
-  updatemajor: (details, ) =>
+  updatemajor: (details) =>
     Request({
       url: Urls.dfm.updatemajor,
       data: details,
@@ -190,10 +199,10 @@ export const DFMService = {
       setTimeParam: false,
       userService: true,
       method: "POST",
-      params: {  },
+      params: {},
       auth: true,
     }),
-    deleteSubFunct: (details, tenantId) =>
+  deleteSubFunct: (details, tenantId) =>
     Request({
       url: Urls.dfm.deleteSubFunct,
       data: details,

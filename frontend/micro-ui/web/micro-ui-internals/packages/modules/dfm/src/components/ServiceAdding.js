@@ -64,13 +64,18 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     value: item.majorFunctionNameEnglish,
   }));
   const { data: searchsubfunct } = Digit.Hooks.dfm.useSearchsubModule({ tenantId, majorFunctionId: majorFunction.label });
-  console.log("majorFunction", majorFunction.label);
   console.log(searchsubfunct);
   const subData = searchsubfunct?.SubFunctionDetails?.map((item) => ({
     label: item.id,
     value: item.subFunctionNameEnglish,
   }));
-  console.log("subData", subFunction.label);
+
+  const { data: serviceData, refetch } = Digit.Hooks.dfm.useSearchservice({ tenantId, subFunctionId: subFunction.label });
+  console.log("serviceData:", serviceData);
+
+  const serviceAddData = serviceData?.ServiceDetails.filter((item) => {
+    return item.subFunctionId === subFunction.label && item.status !== "0";
+  });
 
   const setsetserviceCode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -84,7 +89,11 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     }
   };
   const setsetserviceNameMl = (e) => {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setserviceNameMl("");
+    } else {
       setserviceNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   };
@@ -104,61 +113,107 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   function selectsubFunction(value) {
     setsubFunction(value);
   }
+  const [edit, setIsEdit] = useState(false);
+  function handleLinkClick(row) {
+    setIsEdit(true);
+    // moduleNameEnglish(moduleNameEnglish)
+    // setmoduleNameEnglish(row.moduleNameEnglish)
+    setserviceCode(row.serviceCode);
+    setserviceNameEn(row.serviceNameEnglish);
+    setserviceNameMl(row.serviceNameMalayalam);
+  }
+  const GetCell = (value) => <span className="cell-text">{value}</span>;
+
   const columns = useMemo(
     () => [
       {
-        Header: t("SL_NO"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(row.original.fileNumber || ""),
-      },
-
-      {
-        Header: t("MODULE_CODE"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      },
-      {
-        Header: t("MF_CODE"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-        disableSortBy: true,
-      },
-
-      {
-        Header: t("SF_CODE"),
-        disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      },
-      {
         Header: t("SERVICE_CODE"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
         disableSortBy: true,
+        Cell: ({ row }) => {
+          return (
+            <div>
+              <span className="link">
+                <div>
+                  <a onClick={() => handleLinkClick(row.original)}> {row.original.serviceCode}</a>
+                </div>
+              </span>
+            </div>
+          );
+        },
       },
 
       {
-        Header: t("SERVICE_NAME_ENG"),
+        Header: t("SERVICE_NAME_EN"),
         disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.function) || ""),
+        Cell: ({ row }) => GetCell(t(row.original.serviceNameEnglish) || ""),
       },
       {
-        Header: t("SERVICE_NAME_MAL"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-        disableSortBy: true,
-      },
-      {
-        Header: t("ATTACHMENTS"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+        Header: t("SERVICE_NAME_ML"),
+        Cell: ({ row }) => GetCell(t(row?.original?.serviceNameMalayalam || "NA")),
         disableSortBy: true,
       },
       {
-        Header: t("FEES"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+        Header: t("DELETE_MODULE"),
         disableSortBy: true,
+        Cell: ({ row }) => {
+          //   const majorFunctionCode = row.original.majorFunctionCode;
+          //   const moduleId = row.original.moduleId;
+          //   const majorFunctionNameEnglish = row.original.majorFunctionNameEnglish;
+          //   const majorFunctionNameMalayalam = row.original.majorFunctionNameMalayalam;
+
+          return (
+            <div>
+              <a
+              //   onClick={() =>
+              //    deleteClick(majorFunctionCode, moduleId, majorFunctionNameEnglish, majorFunctionNameMalayalam)}
+              >
+                <button className="btn btn-delete">
+                  <span className="mdi mdi-delete mdi-24px"></span>
+                  <span className="mdi mdi-delete-empty mdi-24px"></span>
+                  <span>Delete</span>
+                </button>
+              </a>
+            </div>
+          );
+        },
       },
-      {
-        Header: t("-"),
-        Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-        disableSortBy: true,
-      },
+
+      //   {
+      //     Header: t("SF_CODE"),
+      //     disableSortBy: true,
+      //     Cell: ({ row }) => GetCell(t(row.original.function) || ""),
+      //   },
+      //   {
+      //     Header: t("SERVICE_CODE"),
+      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      //     disableSortBy: true,
+      //   },
+
+      //   {
+      //     Header: t("SERVICE_NAME_ENG"),
+      //     disableSortBy: true,
+      //     Cell: ({ row }) => GetCell(t(row.original.function) || ""),
+      //   },
+      //   {
+      //     Header: t("SERVICE_NAME_MAL"),
+      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      //     disableSortBy: true,
+      //   },
+      //   {
+      //     Header: t("ATTACHMENTS"),
+      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      //     disableSortBy: true,
+      //   },
+      //   {
+      //     Header: t("FEES"),
+      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      //     disableSortBy: true,
+      //   },
+      //   {
+      //     Header: t("-"),
+      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
+      //     disableSortBy: true,
+      //   },
     ],
     []
   );
@@ -175,13 +230,14 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
       },
     };
     mutation.mutate(formData);
+    refetch;
   };
 
-  useEffect(() => {
-    if (mutation.isSuccess == true) {
-      history.push("/digit-ui/employee/dfm/note-drafting");
-    }
-  }, [mutation.isSuccess]);
+  //   useEffect(() => {
+  //     if (mutation.isSuccess == true) {
+  //       history.push("/digit-ui/employee/dfm/note-drafting");
+  //     }
+  //   }, [mutation.isSuccess]);
 
   return (
     <React.Fragment>
@@ -302,13 +358,28 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
             </button>
 
             <SubmitBar onSubmit={saveService} label={t("save")} className="btn-row" />
-            <SubmitBar label={t("CLOSE")}  className="btn-row" />
+            <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
         </div>
       </div>
       <div className="moduleLinkHomePageModuleLinks">
         <div className="FileFlowWrapper customSubFunctionTable">
-          <Table className="customTable table-fixed-first-column table-border-style" t={t} data={[]} columns={columns} />
+          {serviceAddData?.length > 0 && (
+            <Table
+              t={t}
+              data={serviceAddData}
+              columns={columns}
+              getCellProps={(cellInfo) => {
+                return {
+                  style: {
+                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                    padding: "20px 18px",
+                    fontSize: "16px",
+                  },
+                };
+              }}
+            />
+          )}
         </div>
       </div>
     </React.Fragment>
