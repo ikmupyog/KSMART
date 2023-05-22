@@ -246,16 +246,16 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     isEditMarriage ? formData?.marriageHouseNoAndNameEn : formData?.MarriageDetails?.marriageHouseNoAndNameEn
   );
   const [marriageHouseNoAndNameMl, setmarriageHouseNoAndNameMl] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameMl ? formData?.MarriageDetails?.marriageHouseNoAndNameMl : ""
+    isEditMarriage ? formData?.marriageHouseNoAndNameMl : formData?.MarriageDetails?.marriageHouseNoAndNameMl
   );
 
   const [placeidEn, setplaceidEn] = useState(formData?.MarriageDetails?.placeidEn?.code ? formData?.MarriageDetails?.placeidEn : "");
   const [placeidMl, setplaceidMl] = useState(formData?.MarriageDetails?.placeidMl?.code ? formData?.MarriageDetails?.placeidMl : "");
   const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
-    formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
+    isEditMarriage ? formData?.marriagePlacenameEn : formData?.MarriageDetails?.marriagePlacenameEn
   );
   const [marriagePlacenameMl, setmarriagePlacenameMl] = useState(
-    formData?.MarriageDetails?.marriagePlacenameMl ? formData?.MarriageDetails?.marriagePlacenameMl : ""
+    isEditMarriage ? formData?.marriagePlacenameMl : formData?.MarriageDetails?.marriagePlacenameMl
   );
   // const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
   //   formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
@@ -266,19 +266,19 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
   const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-    formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
+    isEditMarriage ? formData?.marriageLocalityEn : formData?.MarriageDetails?.marriageLocalityEn
   );
   const [marriageLocalityMl, setmarriageLocalityMl] = useState(
-    formData?.MarriageDetails?.marriageLocalityMl ? formData?.MarriageDetails?.marriageLocalityMl : ""
+    isEditMarriage ? formData?.marriageLocalityMl : formData?.MarriageDetails?.marriageLocalityMl
   );
   const [marriageStreetEn, setmarriageStreetEn] = useState(
-    formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
+    isEditMarriage ? formData?.marriageStreetEn : formData?.MarriageDetails?.marriageStreetEn
   );
   const [marriageStreetMl, setmarriageStreetMl] = useState(
-    formData?.MarriageDetails?.marriageStreetMl ? formData?.MarriageDetails?.marriageStreetMl : ""
+    isEditMarriage ? formData?.marriageStreetMl : formData?.MarriageDetails?.marriageStreetMl
   );
   const [marriageLandmark, setmarriageLandmark] = useState(
-    formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
+    isEditMarriage ? formData?.marriageLandmark : formData?.MarriageDetails?.marriageLandmark
   );
   const [workFlowCode, setWorkFlowCode] = useState(formData?.MarriageDetails?.workFlowCode ? formData?.MarriageDetails?.workFlowCode : null);
   const [isPayment, setIsPayment] = useState(formData?.MarriageDetails?.isPayment);
