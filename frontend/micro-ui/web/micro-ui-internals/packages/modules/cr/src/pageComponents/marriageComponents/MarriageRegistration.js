@@ -413,6 +413,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     if (value.code === "SUB_REGISTRAR_OFFICE") {
       const specialType = cmbTypeOfMarriage.filter((type) => type.code === "MARRIAGE_TYPE_SPECIAL_ACT");
       setmarriageType(specialType[0]);
+    } else {
+      setmarriageType("");
     }
     setplaceidEn("");
     setplaceidMl("");
