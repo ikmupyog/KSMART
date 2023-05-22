@@ -141,7 +141,7 @@ const DeathPlaceHome = ({
   };
   function setSelectDeathPlaceHomehoueNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
-      setDeathPlaceHomehoueNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setDeathPlaceHomehoueNameEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
  
@@ -157,7 +157,7 @@ const DeathPlaceHome = ({
 
   function setSelectDeathPlaceHomelocalityEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setDeathPlaceHomelocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setDeathPlaceHomelocalityEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setSelectDeathPlaceHomelocalityMl(e) {
@@ -166,7 +166,7 @@ const DeathPlaceHome = ({
       e.preventDefault();
       setDeathPlaceHomelocalityMl("");
     } else {
-      setDeathPlaceHomelocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setDeathPlaceHomelocalityMl(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
 
@@ -177,12 +177,12 @@ const DeathPlaceHome = ({
       setDeathPlaceHomehoueNameMl('');
     }
     else {
-      setDeathPlaceHomehoueNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setDeathPlaceHomehoueNameMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectDeathPlaceHomestreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setDeathPlaceHomestreetNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setDeathPlaceHomestreetNameEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setSelectDeathPlaceHomestreetNameMl(e) {
@@ -191,7 +191,7 @@ const DeathPlaceHome = ({
       e.preventDefault();
       setDeathPlaceHomestreetNameMl("");
     } else {
-      setDeathPlaceHomestreetNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setDeathPlaceHomestreetNameMl(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setCheckMalayalamInputField(e) {

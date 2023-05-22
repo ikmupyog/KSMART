@@ -314,9 +314,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     // }
     function setSelectinsideKeralaHouseNameEn(e) {
         if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
-            setinsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+            setinsideKeralaHouseNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+                setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             } else {
                 setpermntInKeralaAdrHouseNameEn('');
             }
@@ -329,9 +329,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setinsideKeralaHouseNameMl('');
         }
         else {
-            setinsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+            setinsideKeralaHouseNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+                setpermntInKeralaAdrHouseNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             } else {
                 setpermntInKeralaAdrHouseNameMl('');
             }
@@ -340,9 +340,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
 
     function setSelectinsideKeralaLocalityNameEn(e) {
         if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-            setinsideKeralaLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+            setinsideKeralaLocalityNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+                setpermntInKeralaAdrLocalityNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             } else {
                 setpermntInKeralaAdrLocalityNameEn('');
             }
@@ -356,9 +356,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setinsideKeralaLocalityNameMl('');
         }
         else {
-            setinsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+            setinsideKeralaLocalityNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+                setpermntInKeralaAdrLocalityNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             } else {
                 setpermntInKeralaAdrLocalityNameMl('');
             }
@@ -367,9 +367,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
 
     function setSelectinsideKeralaStreetNameEn(e) {
         if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-            setinsideKeralaStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+            setinsideKeralaStreetNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+                setpermntInKeralaAdrStreetNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             } else {
                 setpermntInKeralaAdrStreetNameEn('');
             }
@@ -383,9 +383,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setinsideKeralaStreetNameMl('');
         }
         else {
-            setinsideKeralaStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+            setinsideKeralaStreetNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+                setpermntInKeralaAdrStreetNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
             } else {
                 setpermntInKeralaAdrStreetNameMl('');
             }
