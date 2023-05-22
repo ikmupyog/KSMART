@@ -132,7 +132,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
 
   function setSelectAdrsHouseNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
-      setAdrsHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdrsHouseNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectAdrsHouseNameMl(e) {
@@ -142,13 +142,13 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
       setAdrsHouseNameMl('');
     }
     else {
-      setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdrsHouseNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
   function setSelectAdrsLocalityNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setAdrsLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdrsLocalityNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectAdrsLocalityNameMl(e) {
@@ -158,13 +158,13 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
       setAdrsLocalityNameMl('');
     }
     else {
-      setAdrsLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdrsLocalityNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
 
   function setSelectAdrsStreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setAdrsStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdrsStreetNameEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectAdrsStreetNameMl(e) {
@@ -174,7 +174,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
       setAdrsStreetNameMl('');
     }
     else {
-      setAdrsStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setAdrsStreetNameMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectWard(value) {
