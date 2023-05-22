@@ -23,6 +23,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -553,7 +554,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(DistrictPermvalues ? DistrictPermvalues : [], "name", t)}
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
@@ -580,7 +581,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(TalukPermvalues ? TalukPermvalues : [], "name", t)}
               selected={permntInKeralaAdrTaluk}
               select={setSelectpermntInKeralaAdrTaluk}
@@ -595,7 +596,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(VillagePermvalues ? VillagePermvalues : [], "name", t)}
               selected={permntInKeralaAdrVillage}
               select={setSelectpermntInKeralaAdrVillage}
@@ -610,7 +611,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(permlbs ? permlbs : [], "name", t)}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
@@ -645,7 +646,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               option={sortDropdownNames(PostOfficePermvalues ? PostOfficePermvalues : [], "name", t)}
               selected={permntInKeralaAdrPostOffice}
               select={setSelectpermntInKeralaAdrPostOffice}
