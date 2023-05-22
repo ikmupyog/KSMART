@@ -274,7 +274,7 @@ export const convertToBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
         birthDateTime: data?.ChildDetails?.birthDateTime,
-        am_pm:data?.ChildDetails?.displayAmPm,
+        am_pm: data?.ChildDetails?.displayAmPm,
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
@@ -533,13 +533,13 @@ export const convertToBirthRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditBirthRegistration = (data = {}) => {
-
+  console.log(data?.ParentsDetails?.isMotherInfo);
   const formdata = {
     ChildDetails: [
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
         birthDateTime: data?.ChildDetails?.birthDateTime,
-        am_pm:data?.ChildDetails?.displayAmPm,
+        am_pm: data?.ChildDetails?.displayAmPm,
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
@@ -603,7 +603,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn ? data?.ParentsDetails?.motherFirstNameEn : data?.ChildDetails?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl ? data?.ParentsDetails?.motherFirstNameMl : data?.ChildDetails?.ParentsDetails?.motherFirstNameMl,
-          motherAadhar: data?.ParentsDetails?.motherAadhar ? data?.ChildDetails?.ParentsDetails?.motherAadhar : data?.ChildDetails?.ParentsDetails?.motherAadhar,
+          motherAadhar: data?.ParentsDetails?.motherAadhar ? data?.ParentsDetails?.motherAadhar : data?.ChildDetails?.ParentsDetails?.motherAadhar ? data?.ChildDetails?.ParentsDetails?.motherAadhar : null,
           motherMarriageAge: data?.ParentsDetails?.motherMarriageAge ? data?.ParentsDetails?.motherMarriageAge : data?.ChildDetails?.ParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth ? data?.ParentsDetails?.motherMarriageBirth : data?.ChildDetails?.ParentsDetails?.motherMarriageBirth,
           motherMaritalStatus: data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code :
@@ -613,8 +613,8 @@ export const convertToEditBirthRegistration = (data = {}) => {
           motherNationality: data?.ParentsDetails?.motherNationality ? data?.ParentsDetails?.motherNationality.code : data?.ChildDetails?.ParentsDetails?.motherNationality ? data?.ChildDetails?.ParentsDetails?.motherNationality : null,
           orderofChildren: data?.ParentsDetails?.orderofChildren ? data?.ParentsDetails?.orderofChildren : data?.ChildDetails?.ParentsDetails?.orderofChildren,
           fatherAadhar: data?.ParentsDetails?.fatherAadhar ? data?.ParentsDetails?.fatherAadhar : data?.ChildDetails?.ParentsDetails?.fatherAadhar,
-          ismotherInfo: data?.ParentsDetails.ismotherInfo ? data?.ParentsDetails.ismotherInfo : data?.ChildDetails?.ParentsDetails.ismotherInfo,
-          isfatherInfo: data?.ParentsDetails.isfatherInfo ? data?.ParentsDetails.isfatherInfo : data?.ChildDetails?.ParentsDetails.isfatherInfo,
+          ismotherInfo: data?.ParentsDetails?.isMotherInfo === true ? true : data?.ParentsDetails?.isMotherInfo === false ? false : data?.ChildDetails?.ParentsDetails?.ismotherInfo ? data?.ChildDetails?.ParentsDetails?.ismotherInfo : false,
+          isfatherInfo: data?.ParentsDetails?.isFatherInfo  === true ? true :  data?.ParentsDetails?.isFatherInfo === false ? false : data?.ChildDetails?.ParentsDetails?.isfatherInfo ? data?.ChildDetails?.ParentsDetails?.isfatherInfo : false,
           fatherFirstNameEn: data?.ParentsDetails?.fatherFirstNameEn ? data?.ParentsDetails?.fatherFirstNameEn : data?.ChildDetails?.ParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.ParentsDetails?.fatherFirstNameMl ? data?.ParentsDetails?.fatherFirstNameMl : data?.ChildDetails?.ParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.ParentsDetails?.fatherNationality ? data?.ParentsDetails?.fatherNationality.code : data?.ChildDetails?.ParentsDetails?.fatherNationality ? data?.ChildDetails?.ParentsDetails?.fatherNationality : null,
