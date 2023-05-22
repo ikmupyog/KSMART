@@ -109,12 +109,12 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
   }
   function setSelectVehicleFromEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleFromEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleToEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleToEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleFromMl(e) {
@@ -124,12 +124,12 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleFromMl('');
     }
     else{
-      setvehicleFromMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleHaltPlace(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleHaltPlace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleHaltPlace(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   
@@ -140,7 +140,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleToMl('');
     }
     else{
-      setvehicleToMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   // function setSelectVehicleOtherDetailsEn(e) {
