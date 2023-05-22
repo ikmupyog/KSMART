@@ -205,8 +205,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     }
     const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? countryPermcode :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? countryPermcode : "IND");
-    const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "kl");
+    const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName :
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName : "kl");
 
     //################################################# Permanent Inside Kerala ##########################################################################################
 

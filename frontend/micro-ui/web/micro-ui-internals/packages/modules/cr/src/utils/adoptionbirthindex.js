@@ -345,7 +345,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
           ? data?.AdoptionChildDetails.SearchRegId?.applicationNumber
           : "",
         applicationtype: "CRBRAD",
-        businessservice: "CR",
+        businessService: "CR",
         workflowcode: data?.AdoptionChildDetails?.workFlowCode,
         isPayment: data?.AdoptionChildDetails?.isPayment,
         Amount: data?.AdoptionChildDetails?.Amount,
