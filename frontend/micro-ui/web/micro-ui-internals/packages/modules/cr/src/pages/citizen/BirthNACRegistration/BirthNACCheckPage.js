@@ -55,17 +55,17 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [isDeclaration, setDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
-  const { BirthNACInitiator, BirthNACDetails, BirthNACParentsDetails, AddressBirthDetails } = value;
+  const { BirthNACInitiator, BirthNACDetails, BirthNACParentsDetails, AddressBirthDetails, BirthNACDocuments } = value;
   const ownerState = useState(BirthNACInitiator?.ownerState);
 
-  const uploadedImages = [
-    BirthNACInitiator.uploadedFile,
-    BirthNACInitiator.uploadedFile1,
-    BirthNACInitiator.uploadedFile2,
-    BirthNACInitiator.uploadedFile3,
-    BirthNACInitiator.uploadedFile4,
-    BirthNACInitiator.uploadedFile5,
-  ];
+  // const uploadedImages = [
+  //   BirthNACInitiator.uploadedFile,
+  //   BirthNACInitiator.uploadedFile1,
+  //   BirthNACInitiator.uploadedFile2,
+  //   BirthNACInitiator.uploadedFile3,
+  //   BirthNACInitiator.uploadedFile4,
+  //   BirthNACInitiator.uploadedFile5,
+  // ];
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -75,23 +75,23 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
   let routeLink = "";
   routeLink = `${getPath(match.path, match.params)}`;
   routeLink = routeLink.replace("/check", "");
-  useEffect(() => {
-    if (uploadedImages?.length > 0) {
-      fetchImage();
-    }
-  }, []);
-  const [imagesThumbs, setImagesThumbs] = useState(null);
-  const [imageZoom, setImageZoom] = useState(null);
+  // useEffect(() => {
+  //   if (uploadedImages?.length > 0) {
+  //     fetchImage();
+  //   }
+  // }, []);
+  // const [imagesThumbs, setImagesThumbs] = useState(null);
+  // const [imageZoom, setImageZoom] = useState(null);
 
-  const fetchImage = async () => {
-    setImagesThumbs(null);
-    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
-    const newThumbnails = fileStoreIds.map((key) => {
-      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
-    });
-    setImagesThumbs(newThumbnails);
-  };
+  // const fetchImage = async () => {
+  //   setImagesThumbs(null);
+  //   const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
+  //   const newThumbnails = fileStoreIds.map((key) => {
+  //     const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+  //     return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+  //   });
+  //   setImagesThumbs(newThumbnails);
+  // };
 
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
@@ -1595,62 +1595,124 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
           title={t("CR_DOCUMENTS")}
           content={
             <StatusTable>
-              {uploadedImages.length > 0 && (
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+              <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                <div className="col-md-12">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
-              )}
-              {uploadedImages.length > 0 && (
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
-                  <div
-                    className="col-md-12"
-                    style={{
-                      display: "flex",
-                      marginLeft: "15px",
-                      flexWrap: "wrap",
-                      justifyContent: "center",
-                      alignContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {imagesThumbs &&
-                      imagesThumbs.map((thumbnail, index) => {
-                        return (
-                          <div key={index}>
-                            {thumbnail.type == "pdf" ? (
-                              <React.Fragment>
-                                <object
-                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
-                                  height={120}
-                                  data={thumbnail.pdfUrl}
-                                  alt={`upload-thumbnails-${index}`}
-                                />
-                              </React.Fragment>
-                            ) : (
-                              <img
-                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
-                                height={120}
-                                src={thumbnail.small}
-                                alt={`upload-thumbnails-${index}`}
-                                onClick={() => setImageZoom(thumbnail.large)}
-                              />
-                            )}
-                          </div>
-                        );
-                      })}
+              </div>
+              <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile1)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile1)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile1)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile1)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile1)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile2)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile2)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile2)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile2)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile2)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile3)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile3)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile3)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile3)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile3)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile4)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile4)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile4)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile4)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile4)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile5)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile5)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile5)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile5)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile5)?.large
+                      }
+                    >
+                      Preview
+                    </a>
                   </div>
                 </div>
-              )}
+              </div>
             </StatusTable>
           }
         />
-        {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">

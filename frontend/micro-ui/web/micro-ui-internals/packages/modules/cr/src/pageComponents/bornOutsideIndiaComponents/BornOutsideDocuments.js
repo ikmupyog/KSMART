@@ -349,13 +349,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_CHILD_BIRTH_CERTIFICATE")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -399,13 +399,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_CHILD'S_PASSPORT")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -449,13 +449,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_CERTIFICATE_OF_INDIAN_CITIZENSHIP")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -499,13 +499,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_FATHER'S_PASSPORT")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -549,13 +549,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_MOTHER'S_PASSPORT")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -599,13 +599,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_DOCUMENT_ON_CANCELLING_VISA")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -649,13 +649,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_ADDRESS_PROOF")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -699,13 +699,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_NOTARY_AFFIDAVIT_OF_PERMANENT_SETTLING_AND_RESIDENCY_IN_INDIA")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -749,13 +749,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_MARRIAGE_CERTIFICATE_OF_PARENTS")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -799,63 +799,13 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           )}
         </div>
         <div className="row">
-          <div className="col-md-4">
-            <CardLabel>
-              {`${t("CR_CHECK_NATIONALITY")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-          </div>
           <div className="col-md-6">
-            <UploadFile
-              id={"born-ouside-docs"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              onUpload={(e) => setNationalityFile(e.target.files[0])}
-              onDelete={() => {
-                setNationality(null);
-              }}
-              message={childBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-            />
-          </div>
-          {nationality && (
-            <div className="col-md-2">
-              {_.head(nationality)?.type === "pdf" ? (
-                <React.Fragment>
-                  <object
-                    style={{ margin: "5px 0" }}
-                    height={120}
-                    width={100}
-                    data={_.head(nationality)?.pdfUrl}
-                    alt="Check Nationality Pdf"
-                  />
-                </React.Fragment>
-              ) : (
-                <img
-                  style={{ margin: "5px 0" }}
-                  height={120}
-                  width={100}
-                  src={_.head(nationality)?.small}
-                  alt="Check Nationality Image"
-                />
-              )}
-              <a
-                style={{ color: "blue" }}
-                target="_blank"
-                href={_.head(nationality)?.type === "pdf" ? _.head(nationality)?.pdfUrl : _.head(nationality)?.large}
-              >
-                Preview
-              </a>
-            </div>
-          )}
-        </div>
-        <div className="row">
-          <div className="col-md-4">
             <CardLabel>
               {`${t("CR_PROCEEDINGS_OF_SUB_DIVISIONAL_MAGISTRATE")}`}
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
               extraStyleName={"propertyCreate"}
@@ -898,6 +848,57 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
             </div>
           )}
         </div>
+        <div className="row">
+          <div className="col-md-6">
+            <CardLabel>
+              {`${t("CR_CHECK_NATIONALITY")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+          </div>
+          <div className="col-md-4">
+            <UploadFile
+              id={"born-ouside-docs"}
+              extraStyleName={"propertyCreate"}
+              accept=".jpg,.png,.pdf"
+              onUpload={(e) => setNationalityFile(e.target.files[0])}
+              onDelete={() => {
+                setNationality(null);
+              }}
+              message={nationality ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+            />
+          </div>
+          {nationality && (
+            <div className="col-md-2">
+              {_.head(nationality)?.type === "pdf" ? (
+                <React.Fragment>
+                  <object
+                    style={{ margin: "5px 0" }}
+                    height={120}
+                    width={100}
+                    data={_.head(nationality)?.pdfUrl}
+                    alt="Check Nationality Pdf"
+                  />
+                </React.Fragment>
+              ) : (
+                <img
+                  style={{ margin: "5px 0" }}
+                  height={120}
+                  width={100}
+                  src={_.head(nationality)?.small}
+                  alt="Check Nationality Image"
+                />
+              )}
+              <a
+                style={{ color: "blue" }}
+                target="_blank"
+                href={_.head(nationality)?.type === "pdf" ? _.head(nationality)?.pdfUrl : _.head(nationality)?.large}
+              >
+                Preview
+              </a>
+            </div>
+          )}
+        </div>
+
       </FormStep>
     </React.Fragment>
   );
