@@ -13,7 +13,7 @@ const KsmartHome = () => (<React.Fragment>
     </Row>
     <Row style={{ marginTop: '80px', backgroundColor: "#bbd6df" }}>
         <Carousel />
-        <Cards title="Quick Search" icon={<FaUserCircle />} />
+        <Cards />
     </Row>
     <Services />
     <Footer />
