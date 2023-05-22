@@ -13,6 +13,7 @@ import BrideAddressPermanent from "./BrideAddressPermanent";
 import BrideAddressPermanentInsideKerala from "./BrideAddressPermanentInsideKerala";
 import BrideAddressPermanentOutsideKerala from "./BrideAddressPermanentOutsideKerala";
 import BrideAddressPermanentOutsideIndia from "./BrideAddressPermanentOutsideIndia";
+import BridePresentAddressSameAsGroomPresentAddress from "./BridePresentAddressSameAsGroomPresentAddress";
 
 const BrideAddressBasePage = ({
   config,
@@ -238,10 +239,13 @@ const BrideAddressBasePage = ({
   //############################################### Same As Above ##################################################################################################
 
   const [isPrsentAddress, setIsPrsentAddress] = useState(
-    formData?.BrideAddressDetails?.isPrsentAddress
-      ? formData?.BrideAddressDetails?.isPrsentAddress
-      : formData?.BrideAddressDetails?.isPermanentAddress
-      ? formData?.BrideAddressDetails?.isPermanentAddress
+    formData?.BrideAddressDetails?.isPrsentAddress ? formData?.BrideAddressDetails?.isPrsentAddress : false
+  );
+
+  //############################################### Bride Present Address Same as Groom Present Address ##################################################################################################
+  const [isBridePresentAddressSameAsGroomPresentAddress, setIsBridePresentAddressSameAsGroomPresentAddress] = useState(
+    formData?.BrideAddressDetails?.isBridePresentAddressSameAsGroomPresentAddress
+      ? formData?.BrideAddressDetails?.isBridePresentAddressSameAsGroomPresentAddress
       : false
   );
 
@@ -486,7 +490,7 @@ const BrideAddressBasePage = ({
   const [PermanentOutSideIndiaLineTwoEnError, setPermanentOutSideIndiaLineTwoEnError] = useState(false);
   const [PermanentOutSideIndiaLineTwoMlError, setPermanentOutSideIndiaLineTwoMlError] = useState(false);
 
-  console.log({ presentOutSideIndiaadrsCityTown });
+  console.log({ formData });
 
   const onSkip = () => onSelect();
   function setSameAsPresent(e) {
@@ -1618,7 +1622,7 @@ const BrideAddressBasePage = ({
         presentOutSideIndiaAdressMl: presentOutSideIndiaAdressMl.trim(),
         presentOutSideIndiaAdressMlB: presentOutSideIndiaAdressMlB.trim(),
         isPrsentAddress,
-
+        isBridePresentAddressSameAsGroomPresentAddress,
         permtaddressCountry,
         permtaddressStateName,
         permntInKeralaAdrLBName,
@@ -1660,46 +1664,100 @@ const BrideAddressBasePage = ({
       });
     }
   };
+
   // if (isCountryLoading || isStateLoading || islocalbodiesLoading  || isDistrictLoading  ) {
   //     return <Loader></Loader>;
   // } else
   return (
     <React.Fragment>
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <div className="accordion-wrapper">
-          <BrideAddressPresent
-            presentaddressCountry={presentaddressCountry}
-            setaddressCountry={setaddressCountry}
-            presentaddressStateName={presentaddressStateName}
-            setaddressStateName={setaddressStateName}
-            presentOutsideKeralaDistrict={presentOutsideKeralaDistrict}
-            setoutsideKeralaDistrict={setoutsideKeralaDistrict}
-            value={value}
-            setValue={setValue}
-            countryvalue={countryvalue}
-            setCountryValue={setCountryValue}
-            Villagevalues={Villagevalues}
-            setLbsVillagevalue={setLbsVillagevalue}
-            permtaddressCountry={permtaddressCountry}
-            setpermtaddressCountry={setpermtaddressCountry}
-            permtaddressStateName={permtaddressStateName}
-            setpermtaddressStateName={setpermtaddressStateName}
-            isPrsentAddress={isPrsentAddress}
-            setIsPrsentAddress={setIsPrsentAddress}
-            isEditMarriage={isEditMarriage}
-            isEditDeath={isEditDeath}
-            isEditStillBirth={isEditStillBirth}
-            isEditAdoption={isEditAdoption}
-            isEditBirthNAC={isEditBirthNAC}
-            formData={formData}
-            Districtvalues={Districtvalues}
-            setDistrictvalue={setDistrictvalue}
-          />
-        </div>
-        {countryvalue === "IND" && value === "kl" && (
+        <BridePresentAddressSameAsGroomPresentAddress
+          isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
+          setIsBridePresentAddressSameAsGroomPresentAddress={setIsBridePresentAddressSameAsGroomPresentAddress}
+          isEditMarriage={isEditMarriage}
+          formData={formData}
+          setaddressCountry={setaddressCountry}
+          setaddressStateName={setaddressStateName}
+          setoutsideKeralaDistrict={setoutsideKeralaDistrict}
+          setValue={setValue}
+          setCountryValue={setCountryValue}
+          setCountryValuePermanent={setCountryValuePermanent}
+          setValuePermanent={setValuePermanent}
+          setpermtaddressCountry={setpermtaddressCountry}
+          setpermtaddressStateName={setpermtaddressStateName}
+          setPresentWardNo={setPresentWardNo}
+          setinsideKeralaDistrict={setinsideKeralaDistrict}
+          setinsideKeralaLBTypeName={setinsideKeralaLBTypeName}
+          setinsideKeralaLBName={setinsideKeralaLBName}
+          setinsideKeralaTaluk={setinsideKeralaTaluk}
+          setinsideKeralaVillage={setinsideKeralaVillage}
+          setinsideKeralaPostOffice={setinsideKeralaPostOffice}
+          setinsideKeralaPincode={setinsideKeralaPincode}
+          setinsideKeralaHouseNameEn={setinsideKeralaHouseNameEn}
+          setinsideKeralaHouseNameMl={setinsideKeralaHouseNameMl}
+          setinsideKeralaLocalityNameEn={setinsideKeralaLocalityNameEn}
+          setinsideKeralaLocalityNameMl={setinsideKeralaLocalityNameMl}
+          setinsideKeralaStreetNameEn={setinsideKeralaStreetNameEn}
+          setinsideKeralaStreetNameMl={setinsideKeralaStreetNameMl}
+          setoutsideKeralaTaluk={setoutsideKeralaTaluk}
+          setoutsideKeralaCityVilgeEn={setoutsideKeralaCityVilgeEn}
+          setoutsideKeralaVillage={setoutsideKeralaVillage}
+          setoutsideKeralaPincode={setoutsideKeralaPincode}
+          setoutsideKeralaHouseNameEn={setoutsideKeralaHouseNameEn}
+          setoutsideKeralaHouseNameMl={setoutsideKeralaHouseNameMl}
+          setoutsideKeralaLocalityNameEn={setoutsideKeralaLocalityNameEn}
+          setoutsideKeralaLocalityNameMl={setoutsideKeralaLocalityNameMl}
+          setoutsideKeralaStreetNameEn={setoutsideKeralaStreetNameEn}
+          setoutsideKeralaStreetNameMl={setoutsideKeralaStreetNameMl}
+          setoutsideKeralaPostOfficeEn={setoutsideKeralaPostOfficeEn}
+          setoutsideKeralaPostOfficeMl={setoutsideKeralaPostOfficeMl}
+          setAdressEn={setAdressEn}
+          setAdressMl={setAdressMl}
+          setAdressEnB={setAdressEnB}
+          setAdressMlB={setAdressMlB}
+          setProvinceEn={setProvinceEn}
+          setProvinceMl={setProvinceMl}
+          setadrsVillage={setadrsVillage}
+          setadrsCityTown={setadrsCityTown}
+          setPostCode={setPostCode}
+        />
+        {!isBridePresentAddressSameAsGroomPresentAddress && (
+          <div className="accordion-wrapper">
+            <BrideAddressPresent
+              presentaddressCountry={presentaddressCountry}
+              setaddressCountry={setaddressCountry}
+              presentaddressStateName={presentaddressStateName}
+              setaddressStateName={setaddressStateName}
+              presentOutsideKeralaDistrict={presentOutsideKeralaDistrict}
+              setoutsideKeralaDistrict={setoutsideKeralaDistrict}
+              value={value}
+              setValue={setValue}
+              countryvalue={countryvalue}
+              setCountryValue={setCountryValue}
+              Villagevalues={Villagevalues}
+              setLbsVillagevalue={setLbsVillagevalue}
+              permtaddressCountry={permtaddressCountry}
+              setpermtaddressCountry={setpermtaddressCountry}
+              permtaddressStateName={permtaddressStateName}
+              setpermtaddressStateName={setpermtaddressStateName}
+              isPrsentAddress={isPrsentAddress}
+              setIsPrsentAddress={setIsPrsentAddress}
+              isEditMarriage={isEditMarriage}
+              isEditDeath={isEditDeath}
+              isEditStillBirth={isEditStillBirth}
+              isEditAdoption={isEditAdoption}
+              isEditBirthNAC={isEditBirthNAC}
+              formData={formData}
+              Districtvalues={Districtvalues}
+              setDistrictvalue={setDistrictvalue}
+              isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
+            />
+          </div>
+        )}
+        {countryvalue === "IND" && value === "kl" && !isBridePresentAddressSameAsGroomPresentAddress && (
           <div>
             <BrideAddressPresentInsideKerala
               presentWardNo={presentWardNo}
@@ -1781,7 +1839,7 @@ const BrideAddressBasePage = ({
             />
           </div>
         )}
-        {countryvalue === "IND" && value != "kl" && (
+        {countryvalue === "IND" && value != "kl" && !isBridePresentAddressSameAsGroomPresentAddress && (
           <div>
             <BrideAddressPresentOutsideKerala
               value={value}
@@ -1851,7 +1909,7 @@ const BrideAddressBasePage = ({
             />
           </div>
         )}
-        {countryvalue != "IND" && (
+        {countryvalue != "IND" && !isBridePresentAddressSameAsGroomPresentAddress && (
           <div>
             <BrideAddressPresentOutsideIndia
               presentOutSideIndiaAdressEn={presentOutSideIndiaAdressEn}
@@ -2117,10 +2175,7 @@ const BrideAddressBasePage = ({
               valuePermanent={valuePermanent}
               setValuePermanent={setValuePermanent}
               isEditMarriage={isEditMarriage}
-              isEditDeath={isEditDeath}
-              isEditStillBirth={isEditStillBirth}
-              isEditAdoption={isEditAdoption}
-              isEditBirthNAC={isEditBirthNAC}
+              isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
               formData={formData}
             />
           </div>

@@ -28,7 +28,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
-  console.log({locale});
+  console.log({ locale });
   let validation = {};
   let tenantId = "";
   let districtid = null;
@@ -243,19 +243,19 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   // );
 
   const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
+    isEditMarriage ? formData?.marriageHouseNoAndNameEn : formData?.MarriageDetails?.marriageHouseNoAndNameEn
   );
   const [marriageHouseNoAndNameMl, setmarriageHouseNoAndNameMl] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameMl ? formData?.MarriageDetails?.marriageHouseNoAndNameMl : ""
+    isEditMarriage ? formData?.marriageHouseNoAndNameMl : formData?.MarriageDetails?.marriageHouseNoAndNameMl
   );
 
   const [placeidEn, setplaceidEn] = useState(formData?.MarriageDetails?.placeidEn?.code ? formData?.MarriageDetails?.placeidEn : "");
   const [placeidMl, setplaceidMl] = useState(formData?.MarriageDetails?.placeidMl?.code ? formData?.MarriageDetails?.placeidMl : "");
   const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
-    formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
+    isEditMarriage ? formData?.marriagePlacenameEn : formData?.MarriageDetails?.marriagePlacenameEn
   );
   const [marriagePlacenameMl, setmarriagePlacenameMl] = useState(
-    formData?.MarriageDetails?.marriagePlacenameMl ? formData?.MarriageDetails?.marriagePlacenameMl : ""
+    isEditMarriage ? formData?.marriagePlacenameMl : formData?.MarriageDetails?.marriagePlacenameMl
   );
   // const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
   //   formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
@@ -266,19 +266,19 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
   const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-    formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
+    isEditMarriage ? formData?.marriageLocalityEn : formData?.MarriageDetails?.marriageLocalityEn
   );
   const [marriageLocalityMl, setmarriageLocalityMl] = useState(
-    formData?.MarriageDetails?.marriageLocalityMl ? formData?.MarriageDetails?.marriageLocalityMl : ""
+    isEditMarriage ? formData?.marriageLocalityMl : formData?.MarriageDetails?.marriageLocalityMl
   );
   const [marriageStreetEn, setmarriageStreetEn] = useState(
-    formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
+    isEditMarriage ? formData?.marriageStreetEn : formData?.MarriageDetails?.marriageStreetEn
   );
   const [marriageStreetMl, setmarriageStreetMl] = useState(
-    formData?.MarriageDetails?.marriageStreetMl ? formData?.MarriageDetails?.marriageStreetMl : ""
+    isEditMarriage ? formData?.marriageStreetMl : formData?.MarriageDetails?.marriageStreetMl
   );
   const [marriageLandmark, setmarriageLandmark] = useState(
-    formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
+    isEditMarriage ? formData?.marriageLandmark : formData?.MarriageDetails?.marriageLandmark
   );
   const [workFlowCode, setWorkFlowCode] = useState(formData?.MarriageDetails?.workFlowCode ? formData?.MarriageDetails?.workFlowCode : null);
   const [isPayment, setIsPayment] = useState(formData?.MarriageDetails?.isPayment);
@@ -334,7 +334,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //     }
   //   }
   // });
-  
+
   function setSelectmarriageDOM(value) {
     setDifferenceInTime(null);
     setmarriageDOM(value);
@@ -413,6 +413,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     if (value.code === "SUB_REGISTRAR_OFFICE") {
       const specialType = cmbTypeOfMarriage.filter((type) => type.code === "MARRIAGE_TYPE_SPECIAL_ACT");
       setmarriageType(specialType[0]);
+    } else {
+      setmarriageType("");
     }
     setplaceidEn("");
     setplaceidMl("");
@@ -490,7 +492,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         setMarriageTenantid(currentLB[0]);
         setfilterLBs(
-          cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0]?.city?.distCodeStr && cmbLB?.city?.lbtypecode === currentLB[0]?.city?.lbtypecode)
+          cmbLB.filter(
+            (cmbLB) => cmbLB.city.distCodeStr === currentLB[0]?.city?.distCodeStr && cmbLB?.city?.lbtypecode === currentLB[0]?.city?.lbtypecode
+          )
         );
         const currentDistrict = stateDist.filter((dist) => dist?.code === currentLB[0]?.city?.distCodeStr);
         setMarriageDistrictid(currentDistrict[0]);

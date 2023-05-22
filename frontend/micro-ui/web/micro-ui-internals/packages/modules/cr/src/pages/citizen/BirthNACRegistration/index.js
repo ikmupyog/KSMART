@@ -4,7 +4,7 @@ import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-reac
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
-import { convertToNACRegistration } from "../../../utils";
+//import { convertToNACRegistration } from "../../../utils";
 
 const CreateBirthNACRegistration = ({ data, parentUrl, isEditBirth }) => {
   const { t } = useTranslation();

@@ -109,12 +109,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   }
   function setSelectVehicleFromEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setvehicleFromEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromEn(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectVehicleToEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setvehicleToEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToEn(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectVehicleFromMl(e) {
@@ -124,12 +124,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleFromMl('');
     }
     else {
-      setvehicleFromMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromMl(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectVehicleHaltPlace(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleHaltPlace(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleHaltPlace(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   // function setSelectVehicleHaltPlaceMl(e) {
@@ -146,12 +146,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleToMl('');
     }
     else {
-      setvehicleToMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
-      setvehicleDesDetailsEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleDesDetailsEn(e.target.value.trim().length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }
   function selectadmittedHospitalEn(value) {
@@ -312,7 +312,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "name"}
+                optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "hospitalName"}
                 isMandatory={true}
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={setadmittedHospitalEn}

@@ -139,12 +139,12 @@ const DeathPlaceVehicle = ({
   }
   function setSelectVehicleFromplaceEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setVehicleFromplaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setVehicleFromplaceEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setSelectVehicleToPlaceEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setVehicleToPlaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setVehicleToPlaceEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setCheckMalayalamInputField(e) {
@@ -188,7 +188,7 @@ const DeathPlaceVehicle = ({
       e.preventDefault();
       setVehicleFromplaceMl("");
     } else {
-      setVehicleFromplaceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setVehicleFromplaceMl(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setSelectVehicleToPlaceMl(e) {
@@ -197,12 +197,12 @@ const DeathPlaceVehicle = ({
       e.preventDefault();
       setVehicleToPlaceMl("");
     } else {
-      setVehicleToPlaceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setVehicleToPlaceMl(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
   }
   function setSelectGeneralRemarks(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setGeneralRemarks(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGeneralRemarks(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   // function setSelectGeneralRemarks(e) {
