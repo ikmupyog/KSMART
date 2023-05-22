@@ -238,10 +238,8 @@ const GroomAddressBasePage = ({
   //############################################### Same As Above ##################################################################################################
 
   const [isPrsentAddress, setIsPrsentAddress] = useState(
-    formData?.BrideAddressDetails?.isPrsentAddress
-      ? formData?.BrideAddressDetails?.isPrsentAddress
-      : formData?.BrideAddressDetails?.isPermanentAddress
-      ? formData?.BrideAddressDetails?.isPermanentAddress
+    formData?.GroomAddressDetails?.isPrsentAddress
+      ? formData?.GroomAddressDetails?.isPrsentAddress
       : false
   );
 

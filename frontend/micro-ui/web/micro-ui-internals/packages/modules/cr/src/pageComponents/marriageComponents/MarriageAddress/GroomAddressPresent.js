@@ -269,6 +269,15 @@ const GroomAddressPresent = ({
         </div>
         <div className="row">
           <div className="col-md-12">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {`${t("CS_COMMON_COUNTRY")}`}

@@ -25,12 +25,9 @@ const BrideAddressPresent = ({
   Villagevalues,
   setLbsVillagevalue,
   isEditMarriage = false,
-  isEditDeath = false,
-  isEditAdoption,
-  isEditStillBirth = false,
-  isEditBirthNAC = false,
   presentOutsideKeralaDistrict,
   setoutsideKeralaDistrict,
+  isBridePresentAddressSameAsGroomPresentAddress,
 }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
@@ -45,7 +42,6 @@ const BrideAddressPresent = ({
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   // const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(false);
 
   let cmbLB = [];
@@ -79,89 +75,6 @@ const BrideAddressPresent = ({
   let cmbFilterCountry = [];
   let cmbFilterState = [];
   let cmbFilterVillage = [];
-  useEffect(() => {
-    if (
-      isInitialRender &&
-      countryvalue === "IND" &&
-      value === "kl" &&
-      isEditMarriage === false &&
-      isEditDeath === false &&
-      isEditAdoption === false &&
-      isEditBirthNAC === false &&
-      isEditStillBirth === false &&
-      (formData?.BrideAddressDetails?.presentaddressStateName === null ||
-        formData?.BrideAddressDetails?.presentaddressStateName === "" ||
-        formData?.BrideAddressDetails?.presentaddressStateName === undefined)
-    ) {
-      if (cmbLB.length > 0 && cmbCountry.length > 0) {
-        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-        //console.log(currentLB);
-        // setAdrsLBName(currentLB[0]);
-        if (cmbCountry.length > 0 && currentLB.length > 0) {
-          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-          setaddressCountry(cmbFilterCountry[0]);
-          if (isPrsentAddress) {
-            setpermtaddressCountry(cmbFilterCountry[0]);
-          }
-          setCountryValue(cmbFilterCountry[0]?.countrycode);
-        }
-        if (cmbState.length > 0 && currentLB.length > 0) {
-          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-          setaddressStateName(cmbFilterState[0]);
-          if (isPrsentAddress) {
-            setpermtaddressStateName(cmbFilterState[0]);
-          }
-          setValue(cmbFilterState[0]?.code);
-        }
-        // if (cmbVillage.length > 0 && currentLB.length > 0) {
-        //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-        //     setLbsVillagevalue(cmbFilterVillage);
-        // }
-        setIsInitialRender(false);
-      }
-    } else if (
-      isInitialRender &&
-      countryvalue === "IND" &&
-      value === "kl" &&
-      isEditMarriage === false &&
-      isEditDeath === false &&
-      isEditAdoption === false &&
-      isEditBirthNAC === false &&
-      isEditStillBirth === false &&
-      formData?.BrideAddressDetails?.presentaddressStateName != "" &&
-      formData?.BrideAddressDetails?.presentaddressStateName != null &&
-      formData?.BrideAddressDetails?.presentaddressStateName != undefined
-    ) {
-      if (cmbLB.length > 0) {
-        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-        //console.log(currentLB);
-        // setAdrsLBName(currentLB[0]);
-        if (cmbCountry.length > 0) {
-          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.BrideAddressDetails?.presentaddressCountry.code);
-          setaddressCountry(cmbFilterCountry[0]);
-          if (isPrsentAddress) {
-            setpermtaddressCountry(cmbFilterCountry[0]);
-          }
-          setCountryValue(cmbFilterCountry[0]?.countrycode);
-        }
-        if (cmbState.length > 0) {
-          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.presentaddressStateName.code);
-          setaddressStateName(cmbFilterState[0]);
-          if (isPrsentAddress) {
-            setpermtaddressStateName(cmbFilterState[0]);
-          }
-          setValue(cmbFilterState[0]?.code);
-        }
-        // if (cmbVillage.length > 0 && currentLB.length > 0) {
-        //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-        //     setLbsVillagevalue(cmbFilterVillage);
-        // }
-        setIsInitialRender(false);
-      }
-    } else {
-      setIsInitialRender(false);
-    }
-  }, [cmbLB.length, cmbCountry.length, isInitialRender]);
 
   if (isEditMarriage) {
     if (formData?.BrideAddressDetails?.presentaddressCountry != null) {
@@ -177,52 +90,6 @@ const BrideAddressPresent = ({
       if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
         setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.presentaddressStateName)[0]);
         setValue(formData?.BrideAddressDetails?.presentaddressStateName);
-      }
-    }
-  } else if (isEditAdoption !== false) {
-    if (formData?.AdoptionAddressBasePage?.presentaddressCountry != null) {
-      if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.AdoptionAddressBasePage?.presentaddressCountry);
-        setaddressCountry(cmbFilterCountry[0]);
-        setCountryValue(cmbFilterCountry[0]?.countrycode);
-      }
-    }
-    if (formData?.AdoptionAddressBasePage?.presentaddressStateName != null) {
-      if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
-        setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.AdoptionAddressBasePage?.presentaddressStateName)[0]);
-        setValue(formData?.AdoptionAddressBasePage?.presentaddressStateName);
-      }
-    }
-  } else if (isEditDeath) {
-    if (formData?.BrideAddressDetails?.presentaddressCountry != null) {
-      if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.BrideAddressDetails?.presentaddressCountry);
-        setaddressCountry(cmbFilterCountry[0]);
-        setCountryValue(cmbFilterCountry[0]?.countrycode);
-      }
-    }
-    if (formData?.BrideAddressDetails?.presentaddressStateName != null) {
-      if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
-        setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.presentaddressStateName)[0]);
-        setValue(formData?.BrideAddressDetails?.presentaddressStateName);
-      }
-    }
-  } else if (isEditStillBirth) {
-    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
-      if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-        cmbFilterCountry = cmbCountry.filter(
-          (cmbCountry) => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry
-        );
-        setaddressCountry(cmbFilterCountry[0]);
-        setCountryValue(cmbFilterCountry[0]?.countrycode);
-      }
-    }
-    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
-      if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
-        setaddressStateName(
-          cmbState.filter((cmbState) => cmbState.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]
-        );
-        setValue(formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName);
       }
     }
   }
@@ -251,6 +118,79 @@ const BrideAddressPresent = ({
     }
   }
 
+  console.log({tenantId})
+  console.log({cmbLB})
+
+  useEffect(() => {
+    if (
+      countryvalue === "IND" &&
+      value === "kl" &&
+      isEditMarriage === false &&
+      (formData?.BrideAddressDetails?.presentaddressStateName === null ||
+        formData?.BrideAddressDetails?.presentaddressStateName === "" ||
+        formData?.BrideAddressDetails?.presentaddressStateName === undefined)
+    ) {
+      if (cmbLB.length > 0 && cmbCountry.length > 0) {
+        currentLB = cmbLB?.filter((cmbLB) => cmbLB?.code === tenantId);
+        // setAdrsLBName(currentLB[0]);
+        if (cmbCountry.length > 0 && currentLB.length > 0) {
+          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+          setaddressCountry(cmbFilterCountry[0]);
+          if (isPrsentAddress) {
+            setpermtaddressCountry(cmbFilterCountry[0]);
+          }
+          setCountryValue(cmbFilterCountry[0]?.countrycode);
+        }
+        if (cmbState.length > 0 && currentLB.length > 0) {
+          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+          setaddressStateName(cmbFilterState[0]);
+          if (isPrsentAddress) {
+            setpermtaddressStateName(cmbFilterState[0]);
+          }
+          setValue(cmbFilterState[0]?.code);
+        }
+        // if (cmbVillage.length > 0 && currentLB.length > 0) {
+        //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+        //     setLbsVillagevalue(cmbFilterVillage);
+        // }
+      }
+    } else if (
+      countryvalue === "IND" &&
+      value === "kl" &&
+      isEditMarriage === false &&
+      formData?.BrideAddressDetails?.presentaddressStateName != "" &&
+      formData?.BrideAddressDetails?.presentaddressStateName != null &&
+      formData?.BrideAddressDetails?.presentaddressStateName != undefined
+    ) {
+      console.log("Else If");
+      if (cmbLB?.length > 0) {
+        currentLB = cmbLB?.filter((cmbLB) => cmbLB?.code === tenantId);
+        //console.log(currentLB);
+        // setAdrsLBName(currentLB[0]);
+        if (cmbCountry.length > 0) {
+          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.BrideAddressDetails?.presentaddressCountry.code);
+          setaddressCountry(cmbFilterCountry[0]);
+          if (isPrsentAddress) {
+            setpermtaddressCountry(cmbFilterCountry[0]);
+          }
+          setCountryValue(cmbFilterCountry[0]?.countrycode);
+        }
+        if (cmbState.length > 0) {
+          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.presentaddressStateName.code);
+          setaddressStateName(cmbFilterState[0]);
+          if (isPrsentAddress) {
+            setpermtaddressStateName(cmbFilterState[0]);
+          }
+          setValue(cmbFilterState[0]?.code);
+        }
+        // if (cmbVillage.length > 0 && currentLB.length > 0) {
+        //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+        //     setLbsVillagevalue(cmbFilterVillage);
+        // }
+      }
+    } 
+  }, [cmbLB.length, cmbCountry.length, isBridePresentAddressSameAsGroomPresentAddress]);
+
   const goNext = () => {};
   if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
     return <Loader></Loader>;
@@ -262,7 +202,7 @@ const BrideAddressPresent = ({
           <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
               </h1>
             </div>
           </div>
