@@ -556,7 +556,7 @@ const GroomAddressPermanentInsideKerala = ({
 
   function setSelectpermntInKeralaAdrPostOffice(value) {
     setpermntInKeralaAdrPostOffice(value);
-    setpermntInKeralaAdrPincode(value?.picode);
+    setpermntInKeralaAdrPincode(value.pincode);
   }
   function setSelectpermntInKeralaAdrPincode(e) {
     if (e.target.value?.length === 6) {
