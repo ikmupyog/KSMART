@@ -14,6 +14,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -126,6 +127,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
               </CardLabel>
               <Dropdown
                 t={t}
+                // optionKey={locale === "en_IN" ? "hospitalName" : "hospitalNamelocal"}
                 optionKey="hospitalName"
                 isMandatory={true}
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}

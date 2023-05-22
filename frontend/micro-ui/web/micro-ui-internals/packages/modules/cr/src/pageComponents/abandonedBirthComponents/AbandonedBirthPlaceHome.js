@@ -16,6 +16,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const locale = Digit.SessionStorage.get("locale");
   // const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   // console.log(tenantId);
   let tenantId = "";
@@ -63,7 +64,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
   });
-
+  const sortWardList = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
   useEffect(() => {
 
     if (isInitialRender) {
@@ -224,8 +225,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                // option={cmbWardNoFinal}
-                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+                // optionKey={locale === "en_IN" ? "namecmb" : locale === "ml_IN" ? "namelocal" : "name"}
+                option={sortWardList}
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
@@ -240,7 +241,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
               </CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [],"name",t)}
                 selected={adrsPostOffice}
                 select={setSelectAdrsPostOffice}

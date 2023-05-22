@@ -579,8 +579,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     if (SearchRegId) {
       SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)) : setChildDOB(null);
       SearchRegId?.gender ? selectGender(menu.filter((menu) => menu.code === SearchRegId?.gender)[0]) : selectGender("");
-      SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId.childAadharNo) : setChildAadharNo(null);
-      SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId.childFirstNameEn) : setChildFirstNameEn("");
+      SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId?.childAadharNo) : setChildAadharNo(null);
+      SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId?.childFirstNameEn) : setChildFirstNameEn("");
       SearchRegId?.childMiddleNameEn ? setChildMiddleNameEn(SearchRegId.childMiddleNameEn) : setChildMiddleNameEn("");
       SearchRegId?.childLastNameEn ? setChildLastNameEn(SearchRegId.childLastNameEn) : setChildLastNameEn("");
       SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl) : setChildFirstNameMl("");
@@ -994,21 +994,20 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   }
   let validFlag = true;
   const goNext = () => {
-    if (childAadharNo != null) {
-      let adharLength = childAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    } else {
-      setAadharError(false);
-    }
+    // if (childAadharNo != null) {
+    //   let adharLength = childAadharNo;
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setAadharError(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setAadharError(false);
+    //   }
+    // } else {
+    //   setAadharError(false);
+    // }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);

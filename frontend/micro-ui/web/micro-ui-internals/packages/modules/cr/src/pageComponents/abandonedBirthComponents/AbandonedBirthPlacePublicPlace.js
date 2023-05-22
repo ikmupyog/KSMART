@@ -16,6 +16,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   const { t } = useTranslation();
   let validation = {};
+  const locale = Digit.SessionStorage.get("locale");
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [tenantboundary, setTenantboundary] = useState(false);
@@ -29,6 +30,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
+
   let Zonal = [];
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
@@ -42,12 +44,12 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
         });
       }
     });
-
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
   });
+  const sortWardList = cmbWardNoFinal.sort((a, b) => a.wardno - b.wardno);
   if (isEditAbandonedBirth) { 
     if (formData?.AbandonedChildDetails?.publicPlaceType != null) {
       if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
@@ -133,7 +135,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               <CardLabel>{`${t("CR_PUBLIC_PLACE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                // optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(cmbOtherplace ? cmbOtherplace : [],"name",t)}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}
@@ -149,7 +152,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+                option={sortWardList}
                 selected={wardNo}
                 select={setSelectWard}
                 disable={isDisableEdit}

@@ -165,7 +165,7 @@ export const CRService = {
     }),
     deathCorrectionSearch: ({tenantId,filter}) =>
     Request({
-      url: Urls.crcorrection.birth_correction_search,
+      url: Urls.crcorrection.death_correction_search,
       // data: details,
       useCache: false,
       setTimeParam: false,

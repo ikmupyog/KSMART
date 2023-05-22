@@ -54,7 +54,6 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { ChildDetails, ParentsDetails, AddressBirthDetails, InitiatorinfoDetails, InformarHosInstDetails } = value;
-  // console.log(AddressBirthDetails);
   const uploadedImages = [ChildDetails.uploadedFile];
   useEffect(() => {
     if (uploadedImages?.length > 0) {
@@ -183,7 +182,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NOT_RECORDED"}
+                    {ChildDetails?.displaytime ? ChildDetails?.displaytime  + " " + ChildDetails?.displayAmPm : "NOT_RECORDED"}
+                    {/* {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NOT_RECORDED"} */}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -1677,7 +1677,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
-        {ChildDetails?.proceedNoRDO != null && ChildDetails?.regNoNAC != null && (
+        {ChildDetails?.UploadNACHIde === true && (
           <Accordion
             expanded={false}
             title={t("CR_DOCUMENTS")}
