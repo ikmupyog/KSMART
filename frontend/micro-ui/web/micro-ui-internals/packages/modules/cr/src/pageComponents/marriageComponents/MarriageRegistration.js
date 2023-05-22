@@ -28,7 +28,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
-  console.log({locale});
+  console.log({ locale });
   let validation = {};
   let tenantId = "";
   let districtid = null;
@@ -243,7 +243,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   // );
 
   const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
+    isEditMarriage ? formData?.marriageHouseNoAndNameEn : formData?.MarriageDetails?.marriageHouseNoAndNameEn
   );
   const [marriageHouseNoAndNameMl, setmarriageHouseNoAndNameMl] = useState(
     formData?.MarriageDetails?.marriageHouseNoAndNameMl ? formData?.MarriageDetails?.marriageHouseNoAndNameMl : ""
@@ -334,7 +334,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //     }
   //   }
   // });
-  
+
   function setSelectmarriageDOM(value) {
     setDifferenceInTime(null);
     setmarriageDOM(value);
@@ -490,7 +490,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         const currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         setMarriageTenantid(currentLB[0]);
         setfilterLBs(
-          cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === currentLB[0]?.city?.distCodeStr && cmbLB?.city?.lbtypecode === currentLB[0]?.city?.lbtypecode)
+          cmbLB.filter(
+            (cmbLB) => cmbLB.city.distCodeStr === currentLB[0]?.city?.distCodeStr && cmbLB?.city?.lbtypecode === currentLB[0]?.city?.lbtypecode
+          )
         );
         const currentDistrict = stateDist.filter((dist) => dist?.code === currentLB[0]?.city?.distCodeStr);
         setMarriageDistrictid(currentDistrict[0]);
