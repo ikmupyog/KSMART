@@ -193,7 +193,6 @@ const GroomAddressPresentInsideKerala = ({
       });
       // }
     });
-  console.log(boundaryList["egov-location"]);
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
