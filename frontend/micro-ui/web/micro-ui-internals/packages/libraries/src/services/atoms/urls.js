@@ -201,6 +201,7 @@ const Urls = {
     updatesubfunct: "/filemgmnt/v1/masterdata/subfunctions/_update",
     updatemajor: "/filemgmnt/v1/masterdata/majorfunctions/_update",
     deleteModule: "/filemgmnt/v1/masterdata/modules/_delete",
+    deleteService:"/filemgmnt/v1/masterdata/services/_delete",
     deleteSubFunct: "/filemgmnt/v1/masterdata/subfunctions/_delete",
     deleteMajor: "/filemgmnt/v1/masterdata/majorfunctions/_delete",
     submodulesearch: "/filemgmnt/v1/masterdata/subfunctions/_search",

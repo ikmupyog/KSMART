@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { SubmitBar, CardLabel, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
@@ -17,6 +17,8 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [mutationSuccess, setMutationSuccess] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const setsetModulecode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setModulecode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -40,8 +42,9 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     setModuleNameEn(row.moduleNameEnglish);
     setModuleNameMl(row.moduleNameMalayalam);
   }
-  const [toast, setToast] = useState(false);
-
+  function handleClick() {
+    updateDraft();
+  }
   const deleteClick = (moduleCode) => {
     console.log("Deleting module with code:", moduleCode);
     const formData = {
@@ -131,22 +134,53 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         },
       },
     };
-    if (edit === false) {
-      mutation.mutate(formData);
-    } else {
-      updatemutation.mutate(formData);
-    }
+    mutation.mutate(formData, {
+      onError: (error, variables) => {
+        console.log(error.message);
+        setTimeout(() => {
+          setErrorMessage(error.message);
+        }, 2000);
+      },
+    });
   };
- 
+  const updateDraft = () => {
+    const formData = {
+      ModuleDetails: {
+        id: null,
+        tenantId: tenantId,
+        moduleCode: moduleCode,
+        moduleNameEnglish: moduleNameEn,
+        moduleNameMalayalam: moduleNameMl,
+        status: null,
+        auditDetails: {
+          createdBy: null,
+          createdTime: "111111111",
+          lastModifiedBy: null,
+          lastModifiedTime: null,
+        },
+      },
+    };
+
+    updatemutation.mutate(formData);
+  };
+
   useEffect(() => {
     if (mutation.isSuccess) {
       setMutationSuccess(true);
       setTimeout(() => {
         setMutationSuccess(false);
+        window.location.reload();
       }, 2500);
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2500);
+    } else if (mutation.onError) {
+      setErrorMessage(true);
+      setTimeout(() => {
+        setErrorMessage(false);
+        console.log("Timeout 1 executed");
+      }, 2000);
+      setTimeout(() => {
+        console.log("Timeout 2 executed");
+        window.location.reload();
+      }, 2500);
     }
     if (updatemutation.isSuccess) {
       setUpdateSuccess(true);
@@ -157,9 +191,7 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         window.location.reload();
       }, 2500);
     }
-  }, [mutation.isSuccess ,updatemutation.isSuccess]);
-
-  
+  }, [mutation.isSuccess, updatemutation.isSuccess]);
 
   return (
     <React.Fragment>
@@ -216,8 +248,10 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
             </div>
           </div>
           <div className="btn-flex">
-            <SubmitBar label={t("NEW")} className="btn-row" />
             <SubmitBar onSubmit={saveModule} label={t("save")} className="btn-row" />
+            <button className="btn-row" onClick={handleClick}>
+              Update
+            </button>
             <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
         </div>
@@ -246,7 +280,8 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
 
       {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
 
-      {updateSuccess && <Toast label="Item updated" onClose={() => setUpdateSuccess(false)} />}
+      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
+      {errorMessage && <Toast label={errorMessage} onClose={() => setErrorMessage(null)} />}
       {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
     </React.Fragment>
   );

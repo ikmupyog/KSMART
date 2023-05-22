@@ -224,6 +224,17 @@ export const DFMService = {
       params: { tenantId },
       auth: true,
     }),
+    deleteService: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.deleteService,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
   deleteMajor: (details, tenantId) =>
     Request({
       url: Urls.dfm.deleteMajor,

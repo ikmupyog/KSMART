@@ -24,6 +24,7 @@ import {
   ActionBar,
   PopUp,
   Table,
+  Toast,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import SearchApplication from "./SearchApplication";
@@ -45,6 +46,10 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
   let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
   const mutation = Digit.Hooks.dfm.useServiceAdding(tenantId);
+  const deleteItem = Digit.Hooks.dfm.useDeleteService(tenantId);
+//   const updatemutation = Digit.Hooks.dfm.useUpdateService();
+
+
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
   const [majorFunction, setmajorFunction] = useState("");
   const [subFunction, setsubFunction] = useState("");
@@ -114,6 +119,8 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     setsubFunction(value);
   }
   const [edit, setIsEdit] = useState(false);
+  const [toast, setToast] = useState(false);
+
   function handleLinkClick(row) {
     setIsEdit(true);
     // moduleNameEnglish(moduleNameEnglish)
@@ -122,6 +129,27 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     setserviceNameEn(row.serviceNameEnglish);
     setserviceNameMl(row.serviceNameMalayalam);
   }
+  const deleteClick = (serviceCode, serviceNameEnglish, serviceNameMalayalam, subFunctionId) => {
+    const formData = {
+      ServiceDetails: {
+        id: null,
+        tenantId: tenantId,
+        serviceCode: serviceCode,
+        subFunctionId: subFunctionId,
+        serviceNameEnglish: serviceNameEnglish,
+        serviceNameMalayalam: serviceNameMalayalam,
+        status: "",
+      },
+    };
+    deleteItem.mutate(formData);
+    setToast(true);
+    setTimeout(() => {
+      setToast(false);
+    }, 2000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
+  };
   const GetCell = (value) => <span className="cell-text">{value}</span>;
 
   const columns = useMemo(
@@ -156,17 +184,13 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
         Header: t("DELETE_MODULE"),
         disableSortBy: true,
         Cell: ({ row }) => {
-          //   const majorFunctionCode = row.original.majorFunctionCode;
-          //   const moduleId = row.original.moduleId;
-          //   const majorFunctionNameEnglish = row.original.majorFunctionNameEnglish;
-          //   const majorFunctionNameMalayalam = row.original.majorFunctionNameMalayalam;
-
+          const serviceCode = row.original.serviceCode;
+          const serviceNameEnglish = row.original.serviceNameEnglish;
+          const serviceNameMalayalam = row.original.serviceNameMalayalam;
+          const subFunctionId = row.original.subFunctionId;
           return (
             <div>
-              <a
-              //   onClick={() =>
-              //    deleteClick(majorFunctionCode, moduleId, majorFunctionNameEnglish, majorFunctionNameMalayalam)}
-              >
+              <a onClick={() => deleteClick(serviceCode, serviceNameEnglish, serviceNameMalayalam, subFunctionId)}>
                 <button className="btn btn-delete">
                   <span className="mdi mdi-delete mdi-24px"></span>
                   <span className="mdi mdi-delete-empty mdi-24px"></span>
@@ -177,46 +201,10 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
           );
         },
       },
-
-      //   {
-      //     Header: t("SF_CODE"),
-      //     disableSortBy: true,
-      //     Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      //   },
-      //   {
-      //     Header: t("SERVICE_CODE"),
-      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-      //     disableSortBy: true,
-      //   },
-
-      //   {
-      //     Header: t("SERVICE_NAME_ENG"),
-      //     disableSortBy: true,
-      //     Cell: ({ row }) => GetCell(t(row.original.function) || ""),
-      //   },
-      //   {
-      //     Header: t("SERVICE_NAME_MAL"),
-      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-      //     disableSortBy: true,
-      //   },
-      //   {
-      //     Header: t("ATTACHMENTS"),
-      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-      //     disableSortBy: true,
-      //   },
-      //   {
-      //     Header: t("FEES"),
-      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-      //     disableSortBy: true,
-      //   },
-      //   {
-      //     Header: t("-"),
-      //     Cell: ({ row }) => GetCell(t(row?.original?.view || "NA")),
-      //     disableSortBy: true,
-      //   },
     ],
     []
   );
+
   const saveService = () => {
     const formData = {
       ServiceDetails: {
@@ -382,6 +370,7 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
           )}
         </div>
       </div>
+      {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />}
     </React.Fragment>
   );
 };

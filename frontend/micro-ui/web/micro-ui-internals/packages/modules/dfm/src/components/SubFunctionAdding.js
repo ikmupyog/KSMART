@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { SubmitBar, CardLabel, Dropdown, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
@@ -24,6 +24,9 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
   const [subid, setsubid] = useState("");
   const [majorFunctId, setmajorFunctId] = useState("");
+  const [mutationSuccess, setMutationSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   const Value = data?.ModuleDetails?.map((item) => ({
     label: item.id,
@@ -89,14 +92,6 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
         status: "",
       },
     };
-    deleteItem.mutate(formData);
-    setToast(true);
-    setTimeout(() => {
-      setToast(false);
-    }, 2000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2500);
   };
   // const textValue = searchsubfunct?.SubFunctionDetails;
   const textValue = searchsubfunct?.SubFunctionDetails.filter((item) => {
@@ -185,6 +180,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   };
 
   const updateDraft = () => {
+    
     const formData = {
       SubFunctionDetails: {
         id: subid,
@@ -198,6 +194,35 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     };
     updatemutation.mutate(formData);
   };
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setMutationSuccess(true);
+      setTimeout(() => {
+        setMutationSuccess(false);
+      }, 2500);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
+    }
+    if (updatemutation.isSuccess) {
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    if (deleteItem.isSuccess) {
+      setDeleteSuccess(true);
+      setTimeout(() => {
+        setDeleteSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess, updatemutation.isSuccess, deleteItem.isSuccess]);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -280,7 +305,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
               Update
             </button>
             <SubmitBar onSubmit={saveModule} disabled={edit} label={t("save")} className="btn-row" />
-            <SubmitBar label={t("CLOSE")}  className="btn-row" />
+            <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
         </div>
       </div>

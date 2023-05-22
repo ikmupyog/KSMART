@@ -11,15 +11,19 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
   const history = useHistory();
   const mutation = Digit.Hooks.dfm.useMajorFunctionAdd(tenantId);
   const deleteItem = Digit.Hooks.dfm.useDeleteMajorFunc(tenantId);
+  const updatemutation = Digit.Hooks.dfm.useUpdateMajorFunc();
+
   const [moduleIdvalue, setModuleidvalue] = useState("");
   const [majorFunctionCode, setMajorFunctionCode] = useState("");
   const [majorFunctionNameEnglish, setMajorFunctionNameEnglish] = useState("");
   const [majorFunctionNameMalayalam, setMajorFunctionNameMalayalam] = useState("");
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
+  const [mutationSuccess, setMutationSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   // console.log("datamodule", moduleNameEnglish.label);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   const { data: searchData, refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
-  const updatemutation = Digit.Hooks.dfm.useUpdateMajorFunc();
 
   const Value = data?.ModuleDetails?.map((item) => ({
     label: item.id,
@@ -57,10 +61,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
   }
   // const majorData = searchData?.MajorFunctionDetails;
   const majorData = searchData?.MajorFunctionDetails.filter((item) => {
-    return (
-      item.moduleId === moduleNameEnglish.label &&
-      item.status !== "0"
-    );
+    return item.moduleId === moduleNameEnglish.label && item.status !== "0";
   });
   console.log("majorData", majorData);
 
@@ -213,6 +214,26 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
     };
     updatemutation.mutate(formData);
   };
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setMutationSuccess(true);
+      setTimeout(() => {
+        setMutationSuccess(false);
+      }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    if (updatemutation.isSuccess) {
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess, updatemutation.isSuccess]);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -302,7 +323,9 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
           )}
         </div>
       </div>
-      {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />}
+      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}{" "}
     </React.Fragment>
   );
 };
