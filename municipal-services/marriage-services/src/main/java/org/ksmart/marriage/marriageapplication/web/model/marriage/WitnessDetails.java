@@ -46,7 +46,7 @@ public class WitnessDetails {
     @JsonProperty("witness1Age")
     private Integer witness1Age;
 
-    @Size(max = 500)
+    @Size(max = 1000)
     @JsonProperty("witness1AddresSEn")
     private String witness1AddresSEn;
 
@@ -81,7 +81,7 @@ public class WitnessDetails {
     @JsonProperty("witness2Age")
     private Integer witness2Age;
 
-    @Size(max = 200)
+    @Size(max = 1000)
     @JsonProperty("witness2AddresSEn")
     private String witness2AddresSEn;
 
