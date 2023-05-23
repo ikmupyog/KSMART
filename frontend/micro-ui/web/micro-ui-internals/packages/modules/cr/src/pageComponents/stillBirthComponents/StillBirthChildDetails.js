@@ -16,13 +16,13 @@ import _ from "lodash";
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   sessionStorage.removeItem("applicationNumber");
   // console.log(JSON.stringify(formData));
-  // console.log(formData);
+   console.log(formData);
   // console.log(isEditStillBirth);
 
   const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
-  const [workFlowCode, setWorkFlowCode] = useState(
-    formData?.StillBirthChildDetails?.workFlowCode ? formData?.StillBirthChildDetails?.workFlowCode : null
-  );
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.StillBirthChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.StillBirthChildDetails?.Amount);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -32,7 +32,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
   let validation = {};
-  //const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
@@ -109,11 +109,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   let cmbFoetalDeath = [];
   // let DifferenceInDaysRounded = "";
   // let workFlowCode = "STILLBIRTHHOSP";
-  // WorkFlowDetails &&
-  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-  //     workFlowData.push(ob);
-  //   });
+  WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+      workFlowData.push(ob);
+    });
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -555,40 +555,97 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   function setselectGender(value) {
     selectGender(value);
   }
+  // useEffect(() => {
+  //   if (birthPlace) {
+  //     if (birthPlace.code === "HOSPITAL") {
+  //       setWorkFlowCode("STILLBIRTHHOSP");
+  //       console.log(workFlowCode);
+  //     } else {
+  //       setWorkFlowCode("STILLBIRTHHOME");
+  //     }
+  //   }
+  // }, [birthPlace]);
   useEffect(() => {
-    if (birthPlace) {
-      if (birthPlace.code === "HOSPITAL") {
-        setWorkFlowCode("STILLBIRTHHOSP");
-        console.log(workFlowCode);
-      } else {
-        setWorkFlowCode("STILLBIRTHHOME");
+    if (birthPlace && DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
       }
     }
-  }, [birthPlace]);
+  }, [DifferenceInTime])
+
+  // function setselectChildDOB(value) {
+  //   setChildDOB(value);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const birthDate = new Date(value);
+  //   birthDate.setHours(0, 0, 0, 0);
+
+  //   if (birthDate.getTime() <= today.getTime()) {
+  //     setDOBError(false);
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - birthDate.getTime();
+  //     // console.log("Difference_In_Time" + Difference_In_Time);
+  //     setDifferenceInTime(today.getTime() - birthDate.getTime());
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+  //     setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+  //     // if (birthPlace) {
+  //     //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+  //     //   console.log("currentWorgFlowDOB" + currentWorgFlow);
+  //     //   if (currentWorgFlow.length > 0) {
+  //     //     // console.log(currentWorgFlow[0].WorkflowCode);
+  //     //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  //     //   }
+  //     // }
+  //   }
+  // }
 
   function setselectChildDOB(value) {
+    setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-
     if (birthDate.getTime() <= today.getTime()) {
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      // if (birthPlace) {
+      // if (birthPlace && DifferenceInTime != null) {
       //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-      //   console.log("currentWorgFlowDOB" + currentWorgFlow);
       //   if (currentWorgFlow.length > 0) {
-      //     // console.log(currentWorgFlow[0].WorkflowCode);
       //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //     setIsPayment(currentWorgFlow[0].payment);
+      //     setAmount(currentWorgFlow[0].amount);
       //   }
+      // }
+      // if (Difference_In_Days >= 365) {
+      //   setChildAadharHIde(true);
+      // } else {
+      //   setChildAadharHIde(false);
+      //   setChildAadharNo("");
+      // }
+      // if (Difference_In_Days > 365) {
+      //   // setUploadNACHIde(true);
+      //   setpopUpState(true);
+      // } else {
+      //   // setUploadNACHIde(false);
+      //   setpopUpState(false);
+      //   setUploadNACHIde(false);
+      //   setproceedNoRDO("");
+      //   setregNoNAC("");
+      //   setUploadedFile("");
+
       // }
     }
   }
@@ -851,18 +908,33 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       setSelectedadmittedHospitalEn("");
     }
   }
+  // function setselectBirthPlace(value) {
+  //   selectBirthPlace(value);
+  //   setValue(value.code);
+  //   //console.log(value);
+  //   if (value.code === "HOSPITAL") {
+  //     setWorkFlowCode("STILLBIRTHHOSP");
+  //     console.log(workFlowCode);
+  //     console.log(value);
+  //   } else {
+  //     setWorkFlowCode("STILLBIRTHHOME");
+  //   }
+  //   clearBirthPalce(value);
+  // }
+
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
-    //console.log(value);
-    if (value.code === "HOSPITAL") {
-      setWorkFlowCode("STILLBIRTHHOSP");
-      console.log(workFlowCode);
-      console.log(value);
-    } else {
-      setWorkFlowCode("STILLBIRTHHOME");
+    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+    // console.log(currentWorgFlow);
+    if (currentWorgFlow.length > 0) {
+      // console.log(currentWorgFlow[0].WorkflowCode);
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setAmount(currentWorgFlow[0].amount);
     }
     clearBirthPalce(value);
+
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
@@ -974,10 +1046,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
 
     if (birthPlace.code === "HOSPITAL") {
-      console.log(birthPlace.code, "code");
-      let wrkflowcode = "STILLBIRTHHOSP";
-      console.log(wrkflowcode, "wrkflowcode");
-      setWorkFlowCode(wrkflowcode);
+     // console.log(birthPlace.code, "code");
+   //   let wrkflowcode = "STILLBIRTHHOSP";
+     // console.log(wrkflowcode, "wrkflowcode");
+     // setWorkFlowCode(wrkflowcode);
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
         validFlag = false;
@@ -990,7 +1062,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
-      setWorkFlowCode("STILLBIRTHHOME");
+     // setWorkFlowCode("STILLBIRTHHOME");
       if (institution == null) {
         setInstitutionError(true);
         validFlag = false;
@@ -1014,7 +1086,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         }
       }
     } else if (birthPlace.code === "HOME") {
-      setWorkFlowCode("STILLBIRTHHOME");
+      //setWorkFlowCode("STILLBIRTHHOME");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -1143,7 +1215,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         }
       }
     } else if (birthPlace.code === "VEHICLE") {
-      setWorkFlowCode("STILLBIRTHHOME");
+      //setWorkFlowCode("STILLBIRTHHOME");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -1212,7 +1284,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setadmittedHospitalEnError(false);
       }
     } else if (birthPlace.code === "PUBLIC_PLACES") {
-      setWorkFlowCode("STILLBIRTHHOME");
+    //  setWorkFlowCode("STILLBIRTHHOME");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -1322,10 +1394,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         tenantId,
         workFlowCode,
         childDOB,
-        birthDateTime, checkbirthDateTime,
-        displaytime, displayAmPm,
+        birthDateTime,
+         checkbirthDateTime,
+        displaytime, 
+        displayAmPm,
         gender,
-
         birthPlace,
         hospitalCode,
         hospitalName,
@@ -1369,7 +1442,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         IsEditChangeScreen,
         uuid,
         DifferenceInTime,
-        isWorkflow,
+        isPayment,
+        Amount,
+       isWorkflow,
       });
     }
   };
@@ -1420,7 +1495,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
   }
 
-  if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading || isFoetalDeathListLoading) {
+  if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading || isFoetalDeathListLoading) {
     return <Loader></Loader>;
   } else {
     return (

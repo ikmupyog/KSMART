@@ -171,9 +171,16 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                 </div>
+
+
                 <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.displaytime ? StillBirthChildDetails?.displaytime + " " + StillBirthChildDetails?.displayAmPm : "NOT_RECORDED"}
+                     
+                    </CardText>
+                  </div>
+                {/* <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthChildDetails?.birthDateTime ? StillBirthChildDetails?.birthDateTime : "NOT_RECORDED"}</CardText>
-                </div>
+                </div> */}
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
                 </div>
