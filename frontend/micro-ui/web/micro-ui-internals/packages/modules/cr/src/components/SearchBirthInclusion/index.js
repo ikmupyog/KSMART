@@ -142,6 +142,7 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
           <SearchFields {...{ register, control, watch, reset, previousPage, t }} />
         </SearchForm>
       </div>
+      {isLoading && <Loader />}
       {data?.length > 0 && isSuccess ? (
         <React.Fragment>
           <Table
