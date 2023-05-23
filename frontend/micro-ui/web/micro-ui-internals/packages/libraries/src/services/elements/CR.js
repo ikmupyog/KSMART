@@ -187,7 +187,7 @@ export const CRService = {
     }),
     deathCorrectionUpdate: (details,tenantId) =>
     Request({
-      url: Urls.crcorrection.birth_correction_update,
+      url: Urls.crcorrection.death_correction_update,
       data: details,
       useCache: false,
       setTimeParam: false,

@@ -168,22 +168,22 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
 
   const onSkip = () => onSelect();
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.GroomDetails?.isParent != null) {
-        setIsInitialRender(false);
-        setIsParent(formData?.GroomDetails?.isParent);
-      }
-    }
-  }, [isInitialRender]);
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.GroomDetails?.isGuardian != null) {
-        setIsInitialRender(false);
-        setIsGuardian(formData?.GroomDetails?.isGuardian);
-      }
-    }
-  }, [isInitialRender]);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (formData?.GroomDetails?.isParent != null) {
+  //       setIsInitialRender(false);
+  //       setIsParent(formData?.GroomDetails?.isParent);
+  //     }
+  //   }
+  // }, [isInitialRender]);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (formData?.GroomDetails?.isGuardian != null) {
+  //       setIsInitialRender(false);
+  //       setIsGuardian(formData?.GroomDetails?.isGuardian);
+  //     }
+  //   }
+  // }, [isInitialRender]);
 
   const cmbSpouseLiving = [
     { i18nKey: "Yes", code: true },
@@ -562,16 +562,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     }
   }
 
-  useEffect(() => {
-    if (!isEditMarriage) {
-      if (gender.length > 0) {
-        const selectedGender = gender.filter((option) => option.code === "MALE");
-        console.log({ selectedGender });
-        selectGroomGender(selectedGender[0]);
-      }
-    }
-  }, [gender.length]);
-
+  
   console.log({ isEditMarriage });
 
   let validFlag = true;
@@ -971,18 +962,28 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     }
   };
 
+
+  useEffect(() => {
+    if (!isEditMarriage) {
+      if (gender.length > 0 && cmbMaritalStatus.length > 0) {
+        const selectedGender = gender.filter((option) => option.code === "MALE");
+        selectGroomGender(selectedGender[0]);
+        const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === "UNMARRIED");
+        setGroomMaritalstatusID(currentMarritalStatus[0]);
+      }
+    }
+  }, [gender.length, cmbMaritalStatus.length]);
+
+
   useEffect(() => {
     if (isEditMarriage) {
       if (cmbMaritalStatus.length > 0 && gender.length > 0) {
         const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.GroomDetails?.groomMaritalstatusID);
         setGroomMaritalstatusID(currentMarritalStatus[0]);
-        console.log({ currentMarritalStatus });
         const currentGender = gender?.filter((gender) => gender.code === formData?.GroomDetails?.groomGender);
         selectGroomGender(currentGender[0]);
-        console.log({ currentGender });
         const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.GroomDetails?.groomIsSpouseLiving);
         setGroomIsSpouseLiving(currentIsSpouseLiving[0]);
-        console.log({ currentIsSpouseLiving });
       }
     }
   }, [cmbMaritalStatus.length, gender.length]);

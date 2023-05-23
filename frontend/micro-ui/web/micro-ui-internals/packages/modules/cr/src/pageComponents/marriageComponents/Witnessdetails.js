@@ -528,7 +528,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
 
-
   let validFlag = true;
   const goNext = () => {
     if (witness1AadharNo.trim() == null || witness1AadharNo.trim() == "" || witness1AadharNo.trim() == undefined) {
@@ -762,9 +761,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     setPreviewGroomImage(previewGroomUrl);
   }, [groomImage]);
 
-
   console.log("Witness", formData);
-
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -1132,7 +1129,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                     <div className="col-md-12">
                       <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
                         <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
+                          <h2 style={{ textAlign: "center" }}>{`${t("CR_GROOM_IMAGE")}`}</h2>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
                             uploadedImages={groomFilestoreId}
@@ -1146,7 +1144,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                       </div>
                       <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
                         <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
+                          <h2 style={{ textAlign: "center" }}>{`${t("CR_BRIDE_IMAGE")}`}</h2>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
                             uploadedImages={brideFilestoreId}

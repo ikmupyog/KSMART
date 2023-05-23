@@ -39,7 +39,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     {
       details: {
         tenantId: Digit.ULBService.getStateId(),
-        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'birth-services')]" }] }],
+        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'death-services')]" }] }],
       },
     }
   );
@@ -94,18 +94,19 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     console.log("APPLICATION--DATA",applicationData);
     let applicationParams = {
-      id: applicationData?.id,
-      tenantid: applicationData?.tenantid,
-      applicationtype: applicationData?.applicationtype,
-      businessservice: applicationData?.businessservice,
+      id: applicationData?.InformationDeathCorrection?.Id,
+      tenantid: applicationData?.InformationDeathCorrection?.TenantId,
+      applicationtype: applicationData?.applicationType,
+      businessservice: applicationData?.businessService,
       workflowcode: applicationData?.workflowcode,
-      action: applicationData?.action,
-      applicationNumber: applicationData?.applicationNumber,
+      action: action?.action,
+      applicationNumber: applicationData?.InformationDeathCorrection?.DeathACKNo,
       registrationNo: applicationData?.registrationNo,
-      registerid: applicationData?.registerid,
-      registrationDate: applicationData?.registrationDate,
+      // registerid: applicationData?.registerid,
+      // registrationDate: applicationData?.registrationDate,
       applicationStatus: applicationData?.applicationStatus,
     };
+    console.log("applicationParams==",applicationParams);
     submitAction({
       CorrectionDetails: [{...applicationParams}],
     });
