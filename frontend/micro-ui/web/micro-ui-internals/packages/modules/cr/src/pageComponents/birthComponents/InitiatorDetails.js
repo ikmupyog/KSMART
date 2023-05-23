@@ -5,7 +5,7 @@ import Timeline from "../../components/CRTimeline";
 import { sortDropdownNames } from "../../utils";
 
 const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
-  //console.log(formData);
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
@@ -69,9 +69,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     IPOPListDetails["birth-death-service"].IPOPList.map((ob) => {
       cmbIpopList.push(ob);
     });
-    console.log(cmbInitiator);
-    console.log(cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0],"Test");
-    console.log(formData?.InitiatorinfoDetails?.initiator,"Initiator");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isGuardian, setIsGuardian] = useState(formData?.InitiatorinfoDetails?.isGuardian ? formData?.InitiatorinfoDetails?.isGuardian : formData?.ChildDetails?.InitiatorinfoDetails?.isGuardian ? formData?.ChildDetails?.InitiatorinfoDetails?.isGuardian : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
@@ -85,7 +82,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi?.code ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : null);
   const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
 
-  const [ipopList, setipopList] = useState(formData?.InitiatorinfoDetails?.ipopList?.code ? formData?.InitiatorinfoDetails?.ipopList : formData?.ChildDetails?.InitiatorinfoDetails?.ipopList ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.ipopList)[0] : "");
+  const [ipopList, setipopList] = useState(formData?.InitiatorinfoDetails?.ipopList?.code ? formData?.InitiatorinfoDetails?.ipopList : formData?.ChildDetails?.InitiatorinfoDetails?.ipopList ? cmbIpopList.filter(cmbIpopList => cmbIpopList.code === formData?.ChildDetails?.InitiatorinfoDetails?.ipopList)[0] : "");
   const [ipopNumber, setipopNumber] = useState(formData?.InitiatorinfoDetails?.ipopNumber ? formData?.InitiatorinfoDetails?.ipopNumber : formData?.ChildDetails?.InitiatorinfoDetails?.ipopNumber ? formData?.ChildDetails?.InitiatorinfoDetails?.ipopNumber : "");
   const [obstetricsNumber, setobstetricsNumber] = useState(formData?.InitiatorinfoDetails?.obstetricsNumber ? formData?.InitiatorinfoDetails?.obstetricsNumber : formData?.ChildDetails?.InitiatorinfoDetails?.obstetricsNumber ? formData?.ChildDetails?.InitiatorinfoDetails?.obstetricsNumber : "");
   const [isHospitalUser, setIsHospitalUser] = useState(false);
@@ -126,6 +123,18 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     }
   }, [userRoles]);
 
+  if (isEditBirth) {
+    if (formData?.ChildDetails?.InitiatorinfoDetails?.initiator != null) {
+      if (cmbInitiator.length > 0 && (initiator === undefined || initiator === "")) {
+        setInitiator(cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0]);
+      }
+    }
+    if (formData?.ChildDetails?.InitiatorinfoDetails?.ipopList != null) {
+      if (cmbIpopList.length > 0 && (ipopList === undefined || ipopList === "")) {
+        setipopList(cmbIpopList.filter(cmbIpopList => cmbIpopList.code === formData?.ChildDetails?.InitiatorinfoDetails?.ipopList)[0]);
+      }
+    }
+  }
   function setSelectInitiator(value) {
     setInitiator(value);
     if (value.code === "GUARDIAN") {
@@ -378,6 +387,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
         obstetricsNumber: (obstetricsNumber.toUpperCase()).trim()
       });
     }
+
   };
   return (
     <React.Fragment>
