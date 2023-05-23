@@ -121,8 +121,11 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           ]
           : null,
       };
+      
+      
       if ((action?.action != "APPROVE") && (action?.applicationStatus != "APPROVED") ) {
-        if((action?.action === "REJECT")&&(action?.applicationStatus === "REJECTED")){
+        if(((action?.action === "REJECT")&&(action?.applicationStatus === "REJECTED")) 
+        || ((action?.action === "SENDBACKTOCITIZEN")&&(action?.applicationStatus === "CITIZENACTIONREQUIRED"))){
           submitAction({
             Licenses: [applicationData],
           });
@@ -162,7 +165,8 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           : null,
       };
       if ((action?.action != "APPROVE") && (action?.applicationStatus != "APPROVED")) {
-        if((action?.action === "REJECT")&&(action?.applicationStatus === "REJECTED")){
+        if(((action?.action === "REJECT")&&(action?.applicationStatus === "REJECTED")) 
+        || ((action?.action === "SENDBACKTOCITIZEN")&&(action?.applicationStatus === "CITIZENACTIONREQUIRED"))){
           submitAction({
             Licenses: [applicationData],
           });
