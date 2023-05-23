@@ -29,15 +29,15 @@ public class CommonController {
         this.responseInfoFactory = responseInfoFactory;
     }
 
-    @PostMapping(value = {"/updatepaywf"})
-    public ResponseEntity<?> updatePaymentWorkflow(@RequestBody CommonPayRequest request) {
-        List<CommonPay> paymentDetails=commonService.updatePaymentWorkflow(request);
-        CommonPayResponse response= CommonPayResponse.builder()
-                .payments(paymentDetails)
-                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                        true))
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    // @PostMapping(value = {"/updatepaywf"})
+    // public ResponseEntity<?> updatePaymentWorkflow(@RequestBody CommonPayRequest request) {
+    //     List<CommonPay> paymentDetails=commonService.updatePaymentWorkflow(request);
+    //     CommonPayResponse response= CommonPayResponse.builder()
+    //             .payments(paymentDetails)
+    //             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+    //                     true))
+    //             .build();
+    //     return new ResponseEntity<>(response, HttpStatus.OK);
+    // }
 
 }

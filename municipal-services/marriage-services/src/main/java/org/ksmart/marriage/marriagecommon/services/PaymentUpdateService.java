@@ -114,9 +114,8 @@ public class PaymentUpdateService implements BaseEnrichment {
 			MarriageDetailsRequest updateRequest = MarriageDetailsRequest.builder().requestInfo(requestInfo)
 												   .marriageDetails(marriage).build();
 			//System.out.println(" payment detail updateRequest:"+updateRequest);
-			System.out.println(" payment detail updateRequest before calling workflow --------------:"+new Gson().toJson(updateRequest));
 			wfIntegrator.callWorkFlow(updateRequest);
-			System.out.println(" payment detail updateRequest after calling workflow ---------------:"+new Gson().toJson(updateRequest));
+			// System.out.println(" payment detail updateRequest after calling workflow ---------------:"+new Gson().toJson(updateRequest));
 
 			User userInfo = requestInfo.getUserInfo();
 			AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
@@ -124,8 +123,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 			// Update marriage table with status initiated
 			
 				List<CommonPay> commonPays =  new ArrayList<>();
-				CommonPay pay = new CommonPay();	
-				System.out.println("Action after wf1"+updateRequest.getMarriageDetails().get(0).getAction());	           
+				CommonPay pay = new CommonPay();		           
 				pay.setAction(updateRequest.getMarriageDetails().get(0).getAction());
 				pay.setApplicationStatus(updateRequest.getMarriageDetails().get(0).getStatus());
 				pay.setHasPayment(true);
@@ -135,8 +133,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 				pay.setApplicationNumber(paymentDetail.getBill().getConsumerCode());
 				pay.setAuditDetails(auditDetails);
 				commonPays.add(pay);	     
-				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();		
-				System.out.println("Action after wf2"+new Gson().toJson(paymentReq));	
+				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();			
 				repository.updatePaymentDetails(paymentReq);
 			}
 		}
