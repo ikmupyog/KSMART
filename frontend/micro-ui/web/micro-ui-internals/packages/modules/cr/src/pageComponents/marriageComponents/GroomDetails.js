@@ -11,6 +11,7 @@ import {
   LabelFieldPair,
   RadioButtons,
   Toast,
+  PopUp
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -143,6 +144,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   const [groomResidentShip, setGroomResidentShip] = useState(
     formData?.GroomDetails?.groomResidentShip ? formData?.GroomDetails?.groomResidentShip : "INDIAN"
   );
+  const [isPopup, setIsPopup] = useState(false);
+  const [genderValue, setGenderValue] = useState("");
   const [AadharError, setAadharError] = useState(false);
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const [groomPassportNoError, setSelectGroomPassportNoError] = useState(false);
@@ -211,8 +214,12 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
-    console.log({ value });
-    selectGroomGender(value);
+    setGenderValue(value);
+    if (value?.code === "FEMALE") {
+      setIsPopup(true);
+    } else {
+      selectGroomGender(value);
+    }
   }
   function setSelectGroomPassportNo(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z0-9 ]*$") != null) {
@@ -1649,6 +1656,43 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                 </div>
               </div>
             </div>
+          )}
+          {isPopup && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div style={{ fontSize: "18px", margin: "10px" }}>You selected gender as 'Female', Do you want to continue?</div>
+                  <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button
+                      style={{
+                        backgroundColor: "orange",
+                        padding: "4px 16px",
+                        color: "white",
+                        borderRadius: "8px",
+                      }}
+                      onClick={() => {
+                        selectGroomGender(genderValue);
+                        setIsPopup(false);
+                        setGenderValue("");
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                      onClick={() => {
+                        setIsPopup(false);
+                        const selectedGender = gender.filter((option) => option.code === "MALE");
+                        selectGroomGender(selectedGender[0]);
+                        setGenderValue("");
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
           )}
           {toast && (
             <Toast
