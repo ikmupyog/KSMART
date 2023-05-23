@@ -5,6 +5,7 @@ import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.*;
+import org.ksmart.marriage.marriagecommon.model.common.CommonPay;
 //import org.ksmart.marriage.common.model.AuditDetails;
 //import org.ksmart.marriage.common.model.Document;
 
@@ -158,6 +159,10 @@ public class MarriageApplicationDetails {
 
     @JsonProperty("WitnessDetails")
     private WitnessDetails witnessDetails;
+
+
+    @JsonProperty("CommonPay")
+    private CommonPay commonPay;
 
     // @JsonProperty("MarriageDocument")
     // private MarriageDocument marriageDocument;
