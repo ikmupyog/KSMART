@@ -32,7 +32,7 @@ public class MarriageNotificationService {
 
 	private NotificationUtil util;
 
-	public static final String businessService_MR = "CR";
+	public static final String businessService_MR = "MR";
 	@Value("${egov.mdms.host}")
 	private String mdmsHost;
 
@@ -51,12 +51,11 @@ public class MarriageNotificationService {
 
 	/**
 	 * Creates and send the sms based on the marriage application
-	 * @param record The Marriageapplication listenend on the kafka topic
+	 * @param request The Marriageapplication listenend on the kafka topic
 	 */
-	public void process(HashMap<String, Object> record) {
-		ObjectMapper mapper = new ObjectMapper();
+	public void process(MarriageDetailsRequest request) {
 		try {
-		MarriageDetailsRequest request = mapper.convertValue(record, MarriageDetailsRequest.class);
+
 		RequestInfo requestInfo = request.getRequestInfo();
 		Map<String, String> mobileNumberToOwner = new HashMap<>();
 		String tenantId = request.getMarriageDetails().get(0).getTenantid();

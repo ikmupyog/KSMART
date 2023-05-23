@@ -32,6 +32,7 @@ import org.ksmart.marriage.marriagecommon.repoisitory.CommonRepository;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriagecommon.services.notification.MarriageNotificationService;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 	private MarriageDetailsEnrichment enrichmentService;
 
 	private  final CommonRepository repository;
+	private MarriageNotificationService marriageNotificationService;
 
 //	@Autowired
 //	private objectMapper mapper;
@@ -71,7 +73,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 	
 	public PaymentUpdateService(MarriageApplicationService marriageService,MarriageApplicationConfiguration config, 
 					            WorkflowIntegrator wfIntegrator,MarriageDetailsEnrichment enrichmentService ,
-								CommonRepository repository)
+								CommonRepository repository,MarriageNotificationService marriageNotificationService)
 			//BirthUtils util, NewBirthRepository repository,) 
 			{
 				this.marriageService=marriageService;
@@ -79,6 +81,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 				this.wfIntegrator=wfIntegrator;
 				this.enrichmentService= enrichmentService;		
 				this.repository=repository;
+				this.marriageNotificationService=marriageNotificationService;
 	}
 	
 	final String tenantId = "tenantId";
@@ -86,11 +89,11 @@ public class PaymentUpdateService implements BaseEnrichment {
 	final String businessService = "businessService";
 
 	final String consumerCode = "consumerCode";
-	
-	
+
+
 	/**
 	 * Process the message from kafka and updates the status to paid
-	 * 
+	 *
 	 * @param record The incoming message from receipt create consumer
 	 */
 	public void process(HashMap<String, Object> record) {
@@ -120,24 +123,26 @@ public class PaymentUpdateService implements BaseEnrichment {
 
 			User userInfo = requestInfo.getUserInfo();
 			AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-			
+
 			// Update marriage table with status initiated
-			
+
 				List<CommonPay> commonPays =  new ArrayList<>();
-				CommonPay pay = new CommonPay();	
-				System.out.println("Action after wf1"+updateRequest.getMarriageDetails().get(0).getAction());	           
+				CommonPay pay = new CommonPay();
+				System.out.println("Action after wf1"+updateRequest.getMarriageDetails().get(0).getAction());
 				pay.setAction(updateRequest.getMarriageDetails().get(0).getAction());
 				pay.setApplicationStatus(updateRequest.getMarriageDetails().get(0).getStatus());
 				pay.setHasPayment(true);
 				pay.setAmount(paymentDetails.get(0).getBill().getBillDetails().get(0).getAmountPaid());
 				pay.setPaymentTransactionId(paymentRequest.getPayment().getTransactionNumber());
-				pay.setIsPaymentSuccess(true);    
+				pay.setIsPaymentSuccess(true);
 				pay.setApplicationNumber(paymentDetail.getBill().getConsumerCode());
 				pay.setAuditDetails(auditDetails);
-				commonPays.add(pay);	     
-				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();		
-				System.out.println("Action after wf2"+new Gson().toJson(paymentReq));	
+				commonPays.add(pay);
+				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();
+				System.out.println("Action after wf2"+new Gson().toJson(paymentReq));
 				repository.updatePaymentDetails(paymentReq);
+
+				marriageNotificationService.process(updateRequest);
 			}
 		}
 
