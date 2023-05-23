@@ -135,8 +135,9 @@ const formFielColumns = {
     const apiParam = {
       CorrectionDetails: [
         {
+          applicationType: "CRDRCN",
           id: userData?.id,
-          funcionUID: "CRDRCN",
+          // funcionUID: "CRDRCN",
           businessservice: "CR",
           workflowcode: "CORRECTIONDEATH",
           action: "INITIATE",
