@@ -15,8 +15,9 @@ serviceMaps:
           family_mobile_no ,family_email ,initiator_relation,initiator_name,initiator_aadhar_submitted,initiator_aadhar_no,initiator_mobile_no , assignee ,informant_address ,initiator_address,
           is_declaration_initiator,is_declaration_informant,
           death_date_unavailable,date_of_death_to,time_of_death_to,timeofdeath_unit_to,deceased_unidentified,
-          normal_regn,delayed_within_thirty,delayed_within_oneyear,delayed_after_oneyear,spouse_if_alive,spouse_age)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ? ,? ,? ,? ,?,? ,?);
+          normal_regn,delayed_within_thirty,delayed_within_oneyear,delayed_after_oneyear,spouse_if_alive,spouse_age,
+          initiator_designation,initiator_institution_name,initiator_iscaretaker,initiator_isguardian,ip_op_list,ip_op_no,reg_no_hospital,reg_no_institution,admission_no_institution)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ? ,? ,? ,? ,? ,? ,? ,? ,? , ? ,? ,? ,? ,? ,? ,?);
      
 
       basePath: deathCertificateDtls.*
@@ -248,6 +249,24 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.FamilyInformationDeath.spouseAgeIfAlive
 
       - jsonPath: $.deathCertificateDtls.*.FamilyInformationDeath.spouseAge
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.initiatorDesi
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.initiatorInstitutionName
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.isCaretaker
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.isGuardian
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.ipopList
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.ipopNumber
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.registrationNoHospital
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.registrationNoInstitution
+
+      - jsonPath: $.deathCertificateDtls.*.Initiator.admissionNoInstitution
 
 
 

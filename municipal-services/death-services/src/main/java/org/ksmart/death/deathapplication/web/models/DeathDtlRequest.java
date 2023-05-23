@@ -11,12 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-/**
-     * Creates request 
-     * Jasmine on 06.02.2023
-     * 
-     */
-
 @Validated
 @Getter
 @Setter
