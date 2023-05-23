@@ -322,6 +322,12 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       });
     return BusinessSubTypeMenu;
   }
+  function resetStructurePlace(){
+    setFeildsDoor([{
+      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
+      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
+    }]);
+  }
   const selectDistrict = ((value) => {
     setDistrictList(value);
     setIsInitialRender(true);
@@ -446,6 +452,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     setEmail(e.target.value);
   });
   const selectStructureType = (value => {
+    resetStructurePlace();
     setStructureType(value);
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
