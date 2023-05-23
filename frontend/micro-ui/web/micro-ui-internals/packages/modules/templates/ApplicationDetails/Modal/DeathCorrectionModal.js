@@ -93,18 +93,39 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     console.log("APPLICATION--DATA",applicationData);
-    let applicationParams = {
-      id: applicationData?.InformationDeathCorrection?.Id,
-      tenantid: applicationData?.InformationDeathCorrection?.TenantId,
-      applicationtype: applicationData?.applicationType,
-      businessservice: applicationData?.businessService,
-      workflowcode: applicationData?.workflowcode,
-      action: action?.action,
-      applicationNumber: applicationData?.InformationDeathCorrection?.DeathACKNo,
-      registrationNo: applicationData?.registrationNo,
-      // registerid: applicationData?.registerid,
-      // registrationDate: applicationData?.registrationDate,
-      applicationStatus: applicationData?.applicationStatus,
+    let applicationParams =
+    //  {
+    //   id: applicationData?.InformationDeathCorrection?.Id,
+    //   tenantid: applicationData?.InformationDeathCorrection?.TenantId,
+    //   applicationtype: applicationData?.applicationType,
+    //   businessservice: applicationData?.businessService,
+    //   workflowcode: applicationData?.workflowcode,
+    //   action: action?.action,
+    //   assignee: [],
+    //   applicationNumber: applicationData?.InformationDeathCorrection?.DeathACKNo,
+    //   registrationNo: applicationData?.registrationNo,
+    //   // registerid: applicationData?.registerid,
+    //   // registrationDate: applicationData?.registrationDate,
+    //   applicationStatus: applicationData?.applicationStatus,
+    // };
+    {
+      CorrectionDetails: [
+        {
+          applicationType: "CRDRCN",
+          id: applicationData?.InformationDeathCorrection?.Id,
+          businessService: "CR",
+          action: action?.action,
+          // registerid:  applicationData?.registerid,
+          registrationNo: applicationData?.registrationNo,
+          registrationDate: null,
+          InformationDeathCorrection: { 
+            tenantId: applicationData?.InformationDeathCorrection?.TenantId,
+            funcionUID: "CRDRCN",
+            DeathACKNo: applicationData?.InformationDeathCorrection?.DeathACKNo,
+            workflowcode: applicationData?.workflowcode
+        },
+        },
+      ],
     };
     console.log("applicationParams==",applicationParams);
     submitAction({
