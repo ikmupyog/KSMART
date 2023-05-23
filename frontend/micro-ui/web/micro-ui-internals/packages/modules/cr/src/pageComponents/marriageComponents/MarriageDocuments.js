@@ -504,10 +504,17 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
   );
 
   function setSelectGroomAgeDocument(value) {
+    setGroomBirthCertificate(null);
+    setGroomSchoolCertificate(null);
+    setGroomDrivingLicense(null)
     setGroomAgeDocument(value);
+    
   }
 
   function setSelectBrideAgeDocument(value) {
+    setBrideBirthCertificate(null);
+    setBrideSchoolCertificate(null);
+    setBrideDrivingLicense(null)
     setBrideAgeDocument(value);
   }
 
@@ -1079,7 +1086,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
             );
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setGroomSchoolCertificate(fileDetails);
+              setGroomBirthCertificate(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -1686,6 +1693,9 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
       },
     });
   };
+
+  console.log({groomBirthCertificate})
+
   const onSkip = () => onSelect();
   return (
     <React.Fragment>
@@ -2016,7 +2026,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                             </a>
                           </div>
                         )}
-                        {groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
+                         {groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
                           <div className="col-md-8">
                             <CardLabel>
                               {`${t(`CR_UPLOAD_YOUR_BIRTH_CERTIFICATE`)}`}

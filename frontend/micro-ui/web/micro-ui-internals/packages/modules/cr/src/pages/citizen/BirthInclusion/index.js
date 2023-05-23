@@ -18,6 +18,7 @@ import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from 
 import { useTranslation } from "react-i18next";
 import SearchBirthInclusion from "../../../components/SearchBirthInclusion";
 import BirthInclusionEditPage from "../../../pageComponents/birthComponents/BirthInclusionPage";
+import { convertUTCDateToEpoch } from "../../../utils";
 // import BirthCertificate from "./BirthCertificate";
 
 const BirthInclusion = () => {
@@ -31,7 +32,7 @@ const BirthInclusion = () => {
 
   function onSubmit(_data) {
     console.log("error data", _data);
-    if (!_data.gender && !_data.id) {    
+    if (!_data.gender && !_data.registrationNo) {    
       setToast({ show: true, message: t("CR_INVALID_GENDER") });
       return false;
     }
@@ -46,6 +47,15 @@ const BirthInclusion = () => {
       ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {}),
     };
 
+    // if (!_.isEmpty(data.birthDate)) {
+    //   _.set(data, "birthDate", convertUTCDateToEpoch(data.birthDate, "start"));
+    // }
+    // if (!_.isEmpty(data.fromDate)) {
+    //   _.set(data, "fromDate", convertDateToEpoch(data.fromDate, "start"))
+    // }
+    // if (!_.isEmpty(data.toDate)) {
+    //   _.set(data, "toDate", convertDateToEpoch(data.toDate, "start"))
+    // }
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])
@@ -61,7 +71,7 @@ const BirthInclusion = () => {
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess, status } = Digit.Hooks.cr.useRegistrySearchBirth({
-    filters: { ...payload, birthDate: payload.birthDate && moment(payload.birthDate).valueOf() },
+    filters: { ...payload,registrationNo: payload.registrationNo?.replace(/\s/g,''), birthDate: payload.birthDate && convertUTCDateToEpoch(payload.birthDate,"start") },
     config,
   });
 

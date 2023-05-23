@@ -28,8 +28,12 @@ const rowContainerStyle = {
 const BannerPicker = (props) => {
   const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
   if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
-    //console.log(JSON.stringify(props));
+    console.log(JSON.stringify(props));
     sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
+    sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
+    let temp={};
+    temp.ChildDetails=props.data?.ChildDetails[0];
+    Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
     window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
     return (
       <Banner
