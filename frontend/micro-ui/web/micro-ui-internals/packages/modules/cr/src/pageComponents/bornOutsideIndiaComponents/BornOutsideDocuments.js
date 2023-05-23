@@ -304,16 +304,27 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
     if (validFlag == true) {
             onSelect(config.key, {
               childBirthCertificateFile,
+              childBirthCertificate,
               childPassportFile,
+              childPassport,
               citizenshipFile,
+              citizenship,
               fatherPassportFile,
+              fatherPassport,
               motherPassportFile,
+              motherPassport,
               cancellingVisaFile,
+              cancellingVisa,
               addressProofFile,
+              addressProof,
               notaryFile,
+              notary,
               marriageCertificateFile,
+              marriageCertificate,
               nationalityFile,
+              nationality,
               magistrateFile,
+              magistrate,
             });
           }
   };
@@ -426,7 +437,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
                     height={120}
                     width={100}
                     data={_.head(childPassport)?.pdfUrl}
-                    alt="Child Birth Certificate Pdf"
+                    alt="Child Passport Pdf"
                   />
                 </React.Fragment>
               ) : (
@@ -435,7 +446,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
                   height={120}
                   width={100}
                   src={_.head(childPassport)?.small}
-                  alt="Child Birth Certificate Image"
+                  alt="Child Passport Image"
                 />
               )}
               <a
@@ -535,7 +546,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
                   height={120}
                   width={100}
                   src={_.head(fatherPassport)?.small}
-                  alt="Father Passport Pdf"
+                  alt="Father Passport Image"
                 />
               )}
               <a
