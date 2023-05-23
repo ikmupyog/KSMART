@@ -3937,7 +3937,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     optionKey="i18nKey"
                     isMandatory={false}
                     style={{
-                      backgroundColor: "#ea3d32",
+                      backgroundColor: "#ea3d32", 
                       borderRadius: "5px",
                       fontSize: "18px",
                       color: "#fff",
