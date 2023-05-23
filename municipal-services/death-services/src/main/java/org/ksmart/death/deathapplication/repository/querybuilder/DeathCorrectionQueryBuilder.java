@@ -212,7 +212,7 @@ public class DeathCorrectionQueryBuilder extends BaseQueryBuilder {
         addFilter("dt.death_place_ward_id", criteria.getDeathPlaceWardId(), query, preparedStmtValues);
         addFilter("dt.death_place_inst_type", criteria.getHospitalName(), query, preparedStmtValues);
         addFilter("dt.created_by", criteria.getCreatedBy(), query, preparedStmtValues);
-        addFilter("dt.funcion_uid", criteria.getFuncionUID(), query, preparedStmtValues);
+        addFilter("dt.appl_type", criteria.getApplicationType(), query, preparedStmtValues);
         addDateRangeFilter("dt.application_date", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
         addDateRangeFilter("dt.dateofdeath", criteria.getFromDate(), criteria.getToDate(), query, preparedStmtValues);
         if (criteria.getSortOrder() == null) {

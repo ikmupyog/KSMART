@@ -61,6 +61,7 @@ public class DeathCorrectionController {
         CorrectionResponse response=CorrectionResponse.builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
                 .deathCorrection(details)
+                .count(details.size())
                 .build();
         return ResponseEntity.ok(response);
     }
