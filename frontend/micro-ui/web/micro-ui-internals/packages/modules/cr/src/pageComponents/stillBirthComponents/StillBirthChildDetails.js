@@ -57,7 +57,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
   const [hospitalCode, sethospitalCode] = useState(formData?.StillBirthChildDetails?.hospitalCode);
-  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
+  const [userRole, setuserRole] = useState(formData?.StillBirthChildDetails?.userRole);
   const { roles: userRoles, uuid: uuid } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
   // const { uuid: uuid } = Digit.UserService.getUser().info;
@@ -191,7 +191,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [birthDateTime, setbirthDateTime] = useState(
     isEditStillBirth === false && formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : ""
   );
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  //const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.StillBirthChildDetails?.checkbirthDateTime?.hh ? formData?.StillBirthChildDetails?.checkbirthDateTime.hh : null, mm: formData?.StillBirthChildDetails?.checkbirthDateTime?.mm ? formData?.StillBirthChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.StillBirthChildDetails?.checkbirthDateTime?.amPm ? formData?.StillBirthChildDetails?.checkbirthDateTime.amPm : null });
+  const [displaytime, setDisplaytime] = useState(formData?.StillBirthChildDetails?.displaytime ? formData?.StillBirthChildDetails?.displaytime : null);
+  const [displayAmPm, setDisplayAmPm] = useState(formData?.StillBirthChildDetails?.displayAmPm ? formData?.StillBirthChildDetails?.displayAmPm : null);
   const [birthPlace, selectBirthPlace] = useState(
     formData?.StillBirthChildDetails?.birthPlace?.code
       ? formData?.StillBirthChildDetails?.birthPlace
@@ -625,18 +629,87 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-      //  console.log(value);
-      //  let time = value;
-      //    let timeParts = time.split(":");
-      //   console.log(+timeParts[0] * (60000 * 60) + +timeParts[1] * 60000);
-      // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
-      // // Usage
-      // const milliSecTime = milliseconds(24, 36,0);
-      // const time = value;
-      // // "34:26";
-      // const timeParts = time.split(":");
-      // const convrtmilliSecTime = milliseconds(timeParts[0], timeParts[1],0);
-      // console.log(convrtmilliSecTime);
+      let time = value;
+      let timeParts = time.split(":");
+
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
+        }
+      }
     }
   };
 
@@ -1249,7 +1322,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         tenantId,
         workFlowCode,
         childDOB,
-        birthDateTime,
+        birthDateTime, checkbirthDateTime,
+        displaytime, displayAmPm,
         gender,
 
         birthPlace,

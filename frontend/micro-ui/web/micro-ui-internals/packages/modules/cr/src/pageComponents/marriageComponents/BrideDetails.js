@@ -623,13 +623,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
 
   useEffect(() => {
     if (!isEditMarriage) {
-      if (gender.length > 0) {
-        const selectedGender = gender.filter((option) => option.code === "FEMALE");
-        console.log({ selectedGender });
+      if (gender.length > 0 && cmbMaritalStatus.length > 0) {
+        const selectedGender = gender.filter((option) => option.code === "MALE");
         setbrideGender(selectedGender[0]);
+        const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === "UNMARRIED");
+        setbrideMaritalstatusID(currentMarritalStatus[0]);
       }
     }
-  }, [gender.length]);
+  }, [gender.length, cmbMaritalStatus.length]);
 
   useEffect(() => {
     if (isEditMarriage) {
@@ -1014,7 +1015,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             !brideFirstnameEn ||
             !brideMobile ||
             !brideFirstnameMl ||
-            !brideEmailid ||
             !brideGender ||
             !brideDOB ||
             !brideMaritalstatusID ||
@@ -1307,7 +1307,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_BRIDE_EMAIL")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}

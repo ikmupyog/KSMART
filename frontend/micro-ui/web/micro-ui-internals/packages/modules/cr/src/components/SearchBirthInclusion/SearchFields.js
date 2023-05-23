@@ -38,12 +38,12 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
   let applicationStatuses = [];
 
   useEffect(() => {
-    if (watch().id?.length > 0) {
+    if (watch().registrationNo?.length > 0) {
       setCheckIsRequired(false);
     } else {
       setCheckIsRequired(true);
     }
-  console.log("getValues ===> ", watch());
+
   }, [watch()]);
 
   // statusData &&
@@ -62,7 +62,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
     <>
       <SearchField>
         <label>{t("REGISTRATION_NUMBER")}</label>
-        <TextInput name="id" inputRef={register({})} />
+        <TextInput name="registrationNo" inputRef={register({})} />
       </SearchField>
       <SearchField>
         <label>
@@ -173,7 +173,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
         <p
           onClick={() => {
             reset({
-              id: "",
+              registrationNo: "",
               fullName:"",
               dateofbirth:"",
               gender:"",

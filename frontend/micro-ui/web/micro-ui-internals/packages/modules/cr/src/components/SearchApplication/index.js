@@ -144,7 +144,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       {
           Header: t("CR_COMMON_COL_DOB"),
           disableSortBy: true,            
-          accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+          accessor: (row) => GetCell(row.dateOfBirth ? convertEpochToDateDMY(row.dateOfBirth) : ""),
       },
       // {
       //     Header: t("TL_APPLICATION_TYPE_LABEL"),
@@ -162,7 +162,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
           disableSortBy: true,
           accessor: (row) => GetCell(row.fatherFirstNameEn),
       },
-    ]), [] )
+    ]), [] );
+    
     const columns = useMemo( () => ([
         {
           Header: t("CR_COMMON_COL_APP_NO"),

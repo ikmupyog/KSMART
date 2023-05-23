@@ -727,7 +727,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                     <Dropdown
                       t={t}
                       // optionKey="nationalityname"
-                      optionKey={locale === "en_IN" ? "nationalityname" : "nationalitynamelocal"}
+                      optionKey={locale === "en_IN" ? "nationalityname" : locale === "ml_IN" ? "nationalitynamelocal" : "nationalityname"}
                       isMandatory={false}
                       option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
                       selected={motherNationality}
@@ -920,7 +920,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                     <Dropdown
                       t={t}
                       // optionKey="nationalityname"
-                      optionKey={locale === "en_IN" ? "nationalityname" : "nationalitynamelocal"}
+                      optionKey={locale === "en_IN" ? "nationalityname" : locale === "ml_IN" ? "nationalitynamelocal" : "nationalityname"}
                       isMandatory={false}
                       option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
                       selected={fatherNationality}
