@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { SubmitBar, CardLabel, Dropdown, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
@@ -28,14 +28,15 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
-  const Value = data?.ModuleDetails?.map((item) => ({
+
+  const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
   }));
 
   const { data: searchData } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
 
-  const majorData = searchData?.MajorFunctionDetails?.map((item) => ({
+  const majorData = searchData?.MajorFunctionDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.majorFunctionNameEnglish,
   }));
@@ -180,7 +181,6 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   };
 
   const updateDraft = () => {
-
     const formData = {
       SubFunctionDetails: {
         id: subid,
