@@ -67,14 +67,16 @@ public class NotificationUtil {
 		switch (ACTION_STATUS) {
 
 		case ACTION_STATUS_INITIATED:
+			System.out.println(" inside action pay status initiated");
 			messageTemplate = getMessageTemplate(NOTIFICATION_INITIATED, localizationMessage);
 			message = getInitiatedMsg(marriageApplication, messageTemplate);
 			break;
 
 			case ACTION_STATUS_APPLIED:
-			messageTemplate = getMessageTemplate(NOTIFICATION_APPLIED, localizationMessage);
-			message = getAppliedMsg(marriageApplication, messageTemplate);
-			break;
+				System.out.println(" inside action applied status applied");
+				messageTemplate = getMessageTemplate(NOTIFICATION_APPLIED, localizationMessage);
+				message = getAppliedMsg(marriageApplication, messageTemplate);
+				break;
 
 		/*
 		 * case ACTION_STATUS_PAID : messageTemplate =
@@ -83,10 +85,11 @@ public class NotificationUtil {
 		 */
 
 			case ACTION_STATUS_APPROVED:
-			BigDecimal amountToBePaid = BigDecimal.valueOf(0);//getAmountToBePaid(requestInfo, marriageApplication);
-			messageTemplate = getMessageTemplate(NOTIFICATION_APPROVED, localizationMessage);
-			message = getApprovedMsg(marriageApplication, amountToBePaid, messageTemplate);
-			break;
+				System.out.println(" inside action approve status approved");
+				BigDecimal amountToBePaid = BigDecimal.valueOf(0);//getAmountToBePaid(requestInfo, marriageApplication);
+				messageTemplate = getMessageTemplate(NOTIFICATION_APPROVED, localizationMessage);
+				message = getApprovedMsg(marriageApplication, amountToBePaid, messageTemplate);
+				break;
 
 		case ACTION_STATUS_REJECTED:
 			messageTemplate = getMessageTemplate(NOTIFICATION_REJECTED, localizationMessage);
@@ -201,7 +204,7 @@ public class NotificationUtil {
 				.append(config.getLocalizationSearchEndpoint()).append("?").append("locale=").append(locale)
 				.append("&tenantId=").append(tenantId).append("&module=").append(MODULE)
 				.append("&codes=").append(StringUtils.join(NOTIFICATION_CODES,','));
-
+		System.out.println("localization uri ====== "+uri);
 		return uri;
 	}
 
@@ -218,6 +221,7 @@ public class NotificationUtil {
 		LinkedHashMap responseMap = (LinkedHashMap) serviceRequestRepository.fetchResult(getUri(tenantId, requestInfo),
 				requestInfo);
 		String jsonString = new JSONObject(responseMap).toString();
+		System.out.println("getLocalizationMessages ===============>"+jsonString);
 		return jsonString;
 	}
 

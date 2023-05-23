@@ -225,9 +225,9 @@ public class MarriageConstants {
     public static final String CR_MDMS_PLACESUBREGISTARID_JSONPATH = "$.MdmsRes.birth-death-service.SubRegistar[*]";
     public static final String ACTION_PAY = "PAY";
 
-    public static final String ACTION_STATUS_INITIATED = "INITIATE_INITIATED";
+    public static final String ACTION_STATUS_INITIATED = "PAY_INITIATED";
 
-    public static final String ACTION_STATUS_APPROVED = "PAY_APPROVED";
+    public static final String ACTION_STATUS_APPROVED = "APPROVE_APPROVED";
 
     public static final String ACTION_STATUS_APPLIED = "APPLIED";
 
