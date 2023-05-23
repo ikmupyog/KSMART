@@ -220,15 +220,26 @@ public class MarriageNotificationService {
 				if (message == null) continue;
 
 				Map<String, String> mobileNumberToOwner = new HashMap<>();
-					String groomName = marriageApplicationDetails.getGroomDetails().getFirstnameEn();
-					if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getMiddlenameEn())){
-						groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getMiddlenameEn();
+					if (marriageApplicationDetails.getGroomDetails().getMobile() != null) {
+						String groomName = marriageApplicationDetails.getGroomDetails().getFirstnameEn();
+						if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getMiddlenameEn())){
+							groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getMiddlenameEn();
+						}
+						if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getLastnameEn())){
+							groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getLastnameEn();
+						}
+						mobileNumberToOwner.put(marriageApplicationDetails.getGroomDetails().getMobile().toString(), groomName);
 					}
-			if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getLastnameEn())){
-				groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getLastnameEn();
+			if (marriageApplicationDetails.getBrideDetails().getMobile() != null) {
+				String brideName = marriageApplicationDetails.getBrideDetails().getFirstnameEn();
+				if(StringUtils.isNotBlank(marriageApplicationDetails.getBrideDetails().getMiddlenameEn())){
+					brideName=brideName+" "+marriageApplicationDetails.getBrideDetails().getMiddlenameEn();
+				}
+				if(StringUtils.isNotBlank(marriageApplicationDetails.getBrideDetails().getLastnameEn())){
+					brideName=brideName+" "+marriageApplicationDetails.getBrideDetails().getLastnameEn();
+				}
+				mobileNumberToOwner.put(marriageApplicationDetails.getBrideDetails().getMobile().toString(), brideName);
 			}
-					if (marriageApplicationDetails.getGroomDetails().getMobile() != null)
-						mobileNumberToOwner.put(marriageApplicationDetails.getGroomDetails().getMobile().toString(),groomName);
 				smsRequests.addAll(util.createSMSRequest(message, mobileNumberToOwner));
 		}
 		System.out.println(" end of enrichSMSRequest ====");
