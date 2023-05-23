@@ -165,7 +165,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   const [groomMobileError, setGroomMobileError] = useState(false);
   const [groomGenderError, setselectGroomGenderError] = useState(false);
   const [groomMaritalstatusIDError, setGroomMaritalstatusIDError] = useState(false);
-  const [groomEmailidError, setGroomEmailidError] = useState(false);
+  
   // const [valueRad, setValueRad] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
   const [access, setAccess] = React.useState(true);
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
@@ -249,7 +249,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomEmailid(e.target.value);
+      setGroomEmailid(e.target.value.trim());
     }
   }
   function setSelectGroomNoOfSpouse(e) {
@@ -896,18 +896,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
         setGroomMaritalstatusIDError(false);
       }
     }
-    if (groomEmailid.trim() == null || groomEmailid.trim() == "" || groomEmailid.trim() == undefined) {
-      validFlag = false;
-      setGroomEmailid("");
-      setGroomEmailidError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setGroomEmailidError(false);
-    }
-
+   
     if (validFlag == true) {
       // sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
       // sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
@@ -948,7 +937,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
         groomLastnameEn: groomLastnameEn.trim(),
         groomLastnameMl: groomLastnameMl.trim(),
         groomMobile,
-        groomEmailid: groomEmailid.trim(),
+        groomEmailid,
         groomGender,
         groomDOB,
         groomAge,
@@ -1311,14 +1300,14 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"email"}
+                  type="email"
                   optionKey="i18nKey"
                   name="groomEmailid"
                   value={groomEmailid}
                   onChange={setSelectGroomEmailid}
                   placeholder={`${t("CR_GROOM_EMAIL")}`}
                   //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                  {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
+                  {...(validation = { isRequired: false, title: t("CR_EMAIL_ERROR") })}
                 />
               </div>
             </div>
@@ -1782,8 +1771,6 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                     ? t(`CR_INVALID_GENDER_CHOOSE`)
                     : groomMaritalstatusIDError
                     ? t(`CR_INVALID_MARITAL_STATUS_CHOOSE`)
-                    : groomEmailidError
-                    ? t(`CR_EMAIL_ERROR`)
                     : setToast(false)
                   : setToast(false)
               }
