@@ -24,6 +24,16 @@ console.log("api filters==",tenantId, filter);
   console.log("resp==",resp);
   return resp;
 };
+export const useDeathCorrectionApplicationSearch = ({ tenantId, filter,config={}}) => {
+console.log("api filters==",tenantId, filter);
+  const resp =  useQuery(
+    ["DEATH_CORRECTION_APPLICATION_SEARCH", "CRsearch", ...Object.keys(filter)?.map( e => filter?.[e])],
+    () => CRService.deathCorrectionSearch({tenantId,filter}),
+    config
+  );
+  console.log("resp==",resp);
+  return resp;
+};
 
 export const useMarriageCorrectionApplicationDetail = ({ tenantId, filter,config={}}) => {
   console.log("api filters==",tenantId, filter);

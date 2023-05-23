@@ -173,8 +173,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({ brideFilestoreId, groomFilestoreId });
-
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -195,36 +193,36 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     sendOtp({ otp: { ...data, ...{ type: "register" } } });
   };
 
-  const sendOtp = async (data) => {
-    console.log("sendOtp");
+  // const sendOtp = async (data) => {
+  //   console.log("sendOtp");
 
-    try {
-      console.log("try reached==", data);
+  //   try {
+  //     console.log("try reached==", data);
 
-      const res = await Digit.UserService.sendOtp(data, 32);
+  //     const res = await Digit.UserService.sendOtp(data, 32);
 
-      return [res, null];
-    } catch (err) {
-      console.log("catch reached==", err);
+  //     return [res, null];
+  //   } catch (err) {
+  //     console.log("catch reached==", err);
 
-      return [null, err];
-    }
-  };
+  //     return [null, err];
+  //   }
+  // };
 
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
   const [witness2NameEnError, setwitness2NameEnError] = useState(false);
-  const [witness1AgeError, setwitness1AgeError] = useState(formData?.WitnessDetails?.witness1Age ? false : false);
-  const [witness2AgeError, setwitness2AgeError] = useState(formData?.WitnessDetails?.witness2Age ? false : false);
+  const [witness1AgeError, setwitness1AgeError] = useState(false);
+  const [witness2AgeError, setwitness2AgeError] = useState(false);
   const [witness1AddressEnError, setwitness1AddressEnError] = useState(false);
   const [witness2AddressEnError, setwitness2AddressEnError] = useState(false);
   const [witness1MobileError, setwitness1MobileError] = useState(false);
   const [witness2MobileError, setwitness2MobileError] = useState(false);
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(e) {
-    console.log(e);
     if (e.target.checked === true) {
       setIsOpenHusbandModal(true);
     }
@@ -232,7 +230,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   function setSelectExpirationTypeWife(e) {
-    console.log(e);
     if (e.target.checked === true) {
       setIsOpenWifeModal(true);
     }
@@ -240,12 +237,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   function setSelectIsBackward(e) {
-    console.log(e);
     setIsBackward(e.target.checked);
   }
-
-  console.log({ isBackward });
-
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
   //   const today = new Date();
@@ -396,7 +389,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
             .substring(0, 2)
     );
     if (e.target.value < 18) {
-      console.log("agge", e.target.value);
       setAgeValidationMsg(true);
       setToast(true);
       setTimeout(() => {
@@ -404,7 +396,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
       }, 2000);
       setwitness1Age(null);
     } else {
-      console.log("aggeee", e.target.value);
       setAgeValidationMsg(false);
     }
     // if (e.target.value.length === 3) {
@@ -447,7 +438,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
   function setSelectwitness1AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
-      setwitness1AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness1AddressEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -463,7 +454,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
   function setSelectwitness2AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
-      setwitness2AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness2AddressEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -532,13 +523,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   async function handleUploadGroom(id) {
-    console.log({ id });
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
     setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
-
-  console.log({ groomURL, brideURL });
 
   let validFlag = true;
   const goNext = () => {
@@ -773,14 +761,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     setPreviewGroomImage(previewGroomUrl);
   }, [groomImage]);
 
-  // console.log({ groomImage });
-  // console.log({ brideImage })
-  // console.log({ previewGroomImage });
-  // console.log({ previewBrideImage })
-
   console.log("Witness", formData);
-  console.log({ isExpiredHusband, isExpiredWife });
-  console.log({ isOpenHusbandModal, isOpenWifeModal });
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -1148,7 +1129,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                     <div className="col-md-12">
                       <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
                         <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
+                          <h2 style={{ textAlign: "center" }}>{`${t("CR_GROOM_IMAGE")}`}</h2>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
                             uploadedImages={groomFilestoreId}
@@ -1156,12 +1138,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                             isMulti={false}
                             moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
                             extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
+                            type="groomImage"
                           />
                         </div>
                       </div>
                       <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
                         <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
+                          <h2 style={{ textAlign: "center" }}>{`${t("CR_BRIDE_IMAGE")}`}</h2>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
                             uploadedImages={brideFilestoreId}
@@ -1169,9 +1153,17 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                             isMulti={false}
                             moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
                             extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
+                            type="brideImage"
                           />
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BELONG_TO_BACKWARD_COMMUNITY")}`}</span>{" "}
+                      </h1>
                     </div>
                   </div>
                   <div className="row">

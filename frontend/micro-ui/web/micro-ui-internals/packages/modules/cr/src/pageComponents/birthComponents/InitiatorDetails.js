@@ -5,15 +5,15 @@ import Timeline from "../../components/CRTimeline";
 import { sortDropdownNames } from "../../utils";
 
 const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
-  //console.log(formData);
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
   let validation = {};
-  let cmbInitiator =[];
-  let cmbRelation =[];
-  let cmbCareTakerDesign =[];
-  let cmbIpopList =[];
+  let cmbInitiator = [];
+  let cmbRelation = [];
+  let cmbCareTakerDesign = [];
+  let cmbIpopList = [];
 
   // const cmbInitiator = [
   //   { i18nKey: "Father", code: "FATHER" },
@@ -48,23 +48,23 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   const { data: RelationDetails = {}, isRelationDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Relation");
   const { data: CareTakerDesigDetails = {}, isCareTakerDesigDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "CareTakerDesignation");
   const { data: IPOPListDetails = {}, isIPOPListDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IPOPList");
-  
+
   InitiatorDetails &&
-  InitiatorDetails["birth-death-service"] && InitiatorDetails["birth-death-service"].Initiator &&
-  InitiatorDetails["birth-death-service"].Initiator.map((ob) => {
-    cmbInitiator.push(ob);
+    InitiatorDetails["birth-death-service"] && InitiatorDetails["birth-death-service"].Initiator &&
+    InitiatorDetails["birth-death-service"].Initiator.map((ob) => {
+      cmbInitiator.push(ob);
     });
-    RelationDetails &&
+  RelationDetails &&
     RelationDetails["birth-death-service"] && RelationDetails["birth-death-service"].Relation &&
     RelationDetails["birth-death-service"].Relation.map((ob) => {
       cmbRelation.push(ob);
     });
-    CareTakerDesigDetails &&
+  CareTakerDesigDetails &&
     CareTakerDesigDetails["birth-death-service"] && CareTakerDesigDetails["birth-death-service"].CareTakerDesignation &&
     CareTakerDesigDetails["birth-death-service"].CareTakerDesignation.map((ob) => {
       cmbCareTakerDesign.push(ob);
     });
-    IPOPListDetails &&
+  IPOPListDetails &&
     IPOPListDetails["birth-death-service"] && IPOPListDetails["birth-death-service"].IPOPList &&
     IPOPListDetails["birth-death-service"].IPOPList.map((ob) => {
       cmbIpopList.push(ob);
@@ -72,7 +72,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isGuardian, setIsGuardian] = useState(formData?.InitiatorinfoDetails?.isGuardian ? formData?.InitiatorinfoDetails?.isGuardian : formData?.ChildDetails?.InitiatorinfoDetails?.isGuardian ? formData?.ChildDetails?.InitiatorinfoDetails?.isGuardian : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
-  const [initiator, setInitiator] = useState(formData?.InitiatorinfoDetails?.initiator?.code ? formData?.InitiatorinfoDetails?.initiator : formData?.ChildDetails?.InitiatorinfoDetails?.initiator ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0] : null);
+  const [initiator, setInitiator] = useState(formData?.InitiatorinfoDetails?.initiator?.code ? formData?.InitiatorinfoDetails?.initiator : formData?.ChildDetails?.InitiatorinfoDetails?.initiator ? cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0] : null);
   const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation?.code ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.relation)[0] : null);
   const [initiatorInstitutionName, setinitiatorInstitutionName] = useState(formData?.InitiatorinfoDetails?.initiatorInstitutionName ? formData?.InitiatorinfoDetails?.initiatorInstitutionName : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorInstitutionName ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorInstitutionName : name);
   const [isDisableEdit, setisDisableEdit] = useState(false);
@@ -82,7 +82,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
   const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi?.code ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : null);
   const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
 
-  const [ipopList, setipopList] = useState(formData?.InitiatorinfoDetails?.ipopList?.code ? formData?.InitiatorinfoDetails?.ipopList : formData?.ChildDetails?.InitiatorinfoDetails?.ipopList ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.ipopList)[0] : "");
+  const [ipopList, setipopList] = useState(formData?.InitiatorinfoDetails?.ipopList?.code ? formData?.InitiatorinfoDetails?.ipopList : formData?.ChildDetails?.InitiatorinfoDetails?.ipopList ? cmbIpopList.filter(cmbIpopList => cmbIpopList.code === formData?.ChildDetails?.InitiatorinfoDetails?.ipopList)[0] : "");
   const [ipopNumber, setipopNumber] = useState(formData?.InitiatorinfoDetails?.ipopNumber ? formData?.InitiatorinfoDetails?.ipopNumber : formData?.ChildDetails?.InitiatorinfoDetails?.ipopNumber ? formData?.ChildDetails?.InitiatorinfoDetails?.ipopNumber : "");
   const [obstetricsNumber, setobstetricsNumber] = useState(formData?.InitiatorinfoDetails?.obstetricsNumber ? formData?.InitiatorinfoDetails?.obstetricsNumber : formData?.ChildDetails?.InitiatorinfoDetails?.obstetricsNumber ? formData?.ChildDetails?.InitiatorinfoDetails?.obstetricsNumber : "");
   const [isHospitalUser, setIsHospitalUser] = useState(false);
@@ -109,28 +109,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
         setIsInitialRender(false);
         setIsCaretaker(formData?.InitiatorinfoDetails?.isCaretaker);
       }
-      if (formData?.AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && formData?.AddressBirthDetails?.permtaddressStateName?.code === "kl") {
-        let permAddress = formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn + " , " +
-          formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice.name + " , " +
-          formData?.AddressBirthDetails?.permntInKeralaAdrPincode + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrDistrict.name + " , " +
-          formData?.AddressBirthDetails?.permtaddressStateName.name + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
-        setinitiatorAddress(permAddress);
-        setIsInitialRender(false);
-      } else if (formData?.AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && formData?.AddressBirthDetails?.permtaddressStateName?.code != "kl") {
-        let permAddress = formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn + " , " +
-          formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn + " , " +
-          formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn + " , " +
-          formData?.AddressBirthDetails?.permntOutsideKeralaPincode + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaDistrict.name + " , " +
-          formData?.AddressBirthDetails?.permtaddressStateName.name + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
-        setinitiatorAddress(permAddress);
-        setIsInitialRender(false);
-      } else if (formData?.AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA") {
-        let permAddress = formData?.AddressBirthDetails?.permntOutsideIndiaLineoneEn + " , " + formData?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn + " , " +
-          formData?.AddressBirthDetails?.permntOutsideIndiaCityTown + " , " + formData?.AddressBirthDetails?.permntOutsideIndiaprovinceEn + " , " +
-          formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
-        setinitiatorAddress(permAddress);
-        setIsInitialRender(false);
-      }
+
     }
   }, [isInitialRender]);
 
@@ -144,6 +123,18 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     }
   }, [userRoles]);
 
+  if (isEditBirth) {
+    if (formData?.ChildDetails?.InitiatorinfoDetails?.initiator != null) {
+      if (cmbInitiator.length > 0 && (initiator === undefined || initiator === "")) {
+        setInitiator(cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.InitiatorinfoDetails?.initiator)[0]);
+      }
+    }
+    if (formData?.ChildDetails?.InitiatorinfoDetails?.ipopList != null) {
+      if (cmbIpopList.length > 0 && (ipopList === undefined || ipopList === "")) {
+        setipopList(cmbIpopList.filter(cmbIpopList => cmbIpopList.code === formData?.ChildDetails?.InitiatorinfoDetails?.ipopList)[0]);
+      }
+    }
+  }
   function setSelectInitiator(value) {
     setInitiator(value);
     if (value.code === "GUARDIAN") {
@@ -162,19 +153,42 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
       setrelation(null);
       setinitiatorInstitutionName("");
     }
+    if (value.code != "INST_CARE_TAKER") {
+      if (formData?.AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && formData?.AddressBirthDetails?.permtaddressStateName?.code === "kl") {
+        let permAddress = formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn + " , " +
+          formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice.name + " , " +
+          formData?.AddressBirthDetails?.permntInKeralaAdrPincode + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrDistrict.name + " , " +
+          formData?.AddressBirthDetails?.permtaddressStateName.name + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
+        setinitiatorAddress(permAddress);
+      } else if (formData?.AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && formData?.AddressBirthDetails?.permtaddressStateName?.code != "kl") {
+        let permAddress = formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideKeralaPincode + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaDistrict.name + " , " +
+          formData?.AddressBirthDetails?.permtaddressStateName.name + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
+        setinitiatorAddress(permAddress);
+      } else if (formData?.AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA") {
+        let permAddress = formData?.AddressBirthDetails?.permntOutsideIndiaLineoneEn + " , " + formData?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideIndiaCityTown + " , " + formData?.AddressBirthDetails?.permntOutsideIndiaprovinceEn + " , " +
+          formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
+        setinitiatorAddress(permAddress);
+      }
+    } else {
+      setinitiatorAddress("");
+    }
   }
   function setSelectrelation(value) {
     setrelation(value);
   }
   function setSelectinitiatorInstitutionName(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorInstitutionName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setinitiatorInstitutionName(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
 
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setinitiatorNameEn(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectinitiatorDesi(value) {
@@ -373,6 +387,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
         obstetricsNumber: (obstetricsNumber.toUpperCase()).trim()
       });
     }
+
   };
   return (
     <React.Fragment>
@@ -402,7 +417,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                 t={t}
                 optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 isMandatory={false}
-                option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "code", t)}
+                option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "name", t)}
                 selected={initiator}
                 select={setSelectInitiator}
                 disable={isDisableEdit}
@@ -550,7 +565,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
                 <div className="col-md-2">
                   <CardLabel>.
                     {/* {`${t("CR_IP_OP_NO")}`}<span className="mandatorycss">*</span> */}
-                    </CardLabel>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     type={"number"}
@@ -588,29 +603,29 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
             error={InitiatorError || relationnError || infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
               || ipopListError || ipopNumberError || obstetricsNumberError
             }
-            label={ InitiatorError || relationnError || 
+            label={InitiatorError || relationnError ||
               infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
-                || ipopListError || ipopNumberError || obstetricsNumberError
-                ? InitiatorError
+              || ipopListError || ipopNumberError || obstetricsNumberError
+              ? InitiatorError
                 ? t(`BIRTH_ERROR_INITIATOR_CHOOSE`)
                 : relationnError
-                ? t(`BIRTH_ERROR_RELATION_CHOOSE`)
-                : infomantFirstNmeEnError
-                  ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
-                  : initiatorAadharError
-                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                    : initiatorMobileError
-                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                      : initiatorDesiError
-                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                        : ipopListError
-                          ? t(`BIRTH_ERROR_HOSP_IPLIST_CHOOSE`)
-                          : ipopNumberError
-                            ? t(`BIRTH_ERROR_HOSP_IPNO_CHOOSE`)
-                            : obstetricsNumberError
-                              ? t(`BIRTH_ERROR_HOSP_GYN_REG_CHOOSE`)
-                              : setToast(false)
-                : setToast(false)
+                  ? t(`BIRTH_ERROR_RELATION_CHOOSE`)
+                  : infomantFirstNmeEnError
+                    ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
+                    : initiatorAadharError
+                      ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                      : initiatorMobileError
+                        ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                        : initiatorDesiError
+                          ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                          : ipopListError
+                            ? t(`BIRTH_ERROR_HOSP_IPLIST_CHOOSE`)
+                            : ipopNumberError
+                              ? t(`BIRTH_ERROR_HOSP_IPNO_CHOOSE`)
+                              : obstetricsNumberError
+                                ? t(`BIRTH_ERROR_HOSP_GYN_REG_CHOOSE`)
+                                : setToast(false)
+              : setToast(false)
             }
             onClose={() => setToast(false)}
           />

@@ -73,7 +73,7 @@ const Search = ({ path }) => {
         return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationDeathType={setApplicationDeathType} applicationDeathType={applicationDeathType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }
     else if (window.location.href.includes("/deathsearch") == true && applicationDeathType?.value == "deathcorrection") {
-        const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({ tenantId, filters: payload, config })
+        const { data: { deathCorrection: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useDeathCorrectionApplicationSearch({ tenantId, filter: payload, config })
         return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationDeathType={setApplicationDeathType} applicationDeathType={applicationDeathType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }else if (window.location.href.includes("/birthsearch") == true && applicationType?.value == "birthcorrection") {
         const { data: { CorrectionApplication: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useBirthCorrectionApplicationSearch({ tenantId, filter: payload })

@@ -15,6 +15,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
@@ -108,12 +109,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   }
   function setSelectVehicleFromEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setvehicleFromEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromEn(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectVehicleToEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setvehicleToEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToEn(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectVehicleFromMl(e) {
@@ -123,12 +124,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleFromMl('');
     }
     else {
-      setvehicleFromMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromMl(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   function setSelectVehicleHaltPlace(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleHaltPlace(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleHaltPlace(e.target.value.trim().length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
   // function setSelectVehicleHaltPlaceMl(e) {
@@ -145,12 +146,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleToMl('');
     }
     else {
-      setvehicleToMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToMl(e.target.value.trim().length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleDesDetailsEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
+      setvehicleDesDetailsEn(e.target.value.trim().length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }
   function selectadmittedHospitalEn(value) {
@@ -189,7 +190,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 isMandatory={true}
                 option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
                 selected={vehicleType}
@@ -311,7 +312,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="hospitalName"
+                optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "hospitalName"}
                 isMandatory={true}
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={setadmittedHospitalEn}
@@ -347,7 +348,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
                 onChange={setSelectVehicleOtherDetailsEn}
                 placeholder={`${t("CR_DESCRIPTION")}`}
                 disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
+                {...(validation = { pattern: "^[a-zA-Z,-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
               />
             </div>
           </div>

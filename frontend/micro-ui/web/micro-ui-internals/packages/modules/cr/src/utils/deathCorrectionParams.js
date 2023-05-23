@@ -135,11 +135,12 @@ const formFielColumns = {
     const apiParam = {
       CorrectionDetails: [
         {
+          applicationType: "CRDRCN",
           id: userData?.id,
-          funcionUID: "CRDRCN",
+          // funcionUID: "CRDRCN",
           businessservice: "CR",
           workflowcode: "CORRECTIONDEATH",
-          action: "",
+          action: "INITIATE",
           registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
           registrationNo: userData?.InformationDeath.registrationNo,
           registrationDate: null,
