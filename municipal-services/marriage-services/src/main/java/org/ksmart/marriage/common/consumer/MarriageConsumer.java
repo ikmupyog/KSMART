@@ -26,6 +26,7 @@ public class MarriageConsumer {
     public void listen(final HashMap<String, Object> record, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         ObjectMapper mapper = new ObjectMapper();
         MarriageDetailsRequest request = new MarriageDetailsRequest();
+        System.out.println("Inside kafka listner topic for notificaton..................");
         try {
             request = mapper.convertValue(record, MarriageDetailsRequest.class);
         } catch (final Exception e) {

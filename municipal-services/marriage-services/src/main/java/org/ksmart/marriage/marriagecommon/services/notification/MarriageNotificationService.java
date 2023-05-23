@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriagecommon.services.notification;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -32,7 +33,7 @@ public class MarriageNotificationService {
 
 	private NotificationUtil util;
 
-	public static final String businessService_MR = "MR";
+	public static final String businessService_MR = "CR";
 	@Value("${egov.mdms.host}")
 	private String mdmsHost;
 
@@ -55,11 +56,12 @@ public class MarriageNotificationService {
 	 */
 	public void process(MarriageDetailsRequest request) {
 		try {
-
+			System.out.println("Inside process for notificaton..................");
+			System.out.println(new Gson().toJson(request));
 		RequestInfo requestInfo = request.getRequestInfo();
-		Map<String, String> mobileNumberToOwner = new HashMap<>();
-		String tenantId = request.getMarriageDetails().get(0).getTenantid();
-		String action = request.getMarriageDetails().get(0).getAction();
+//		Map<String, String> mobileNumberToOwner = new HashMap<>();
+//		String tenantId = request.getMarriageDetails().get(0).getTenantid();
+//		String action = request.getMarriageDetails().get(0).getAction();
 		Map<Object, Object> configuredChannelList = new HashMap<>();
 //		List<String> configuredChannelNames = Arrays.asList(new String[]{"SMS","EVENT","EMAIL"});
 		Set<String> mobileNumbers = new HashSet<>();
@@ -73,13 +75,15 @@ public class MarriageNotificationService {
 		String businessService = request.getMarriageDetails().isEmpty() ? null : request.getMarriageDetails().get(0).getBusinessservice();
 		if (businessService == null)
 			businessService = businessService_MR;
-
+		System.out.println(businessService);
 //		switch (businessService) {
 //			case businessService_MR:
 				List<SMSRequest> smsRequestsTL = new LinkedList<>();
+				System.out.println("config.getIsMRSMSEnabled() ===="+config.getIsMRSMSEnabled());
 					if (null != config.getIsMRSMSEnabled()) {
 						if (config.getIsMRSMSEnabled()) {
 							enrichSMSRequest(request, smsRequestsTL,configuredChannelList);
+							System.out.println(" smsRequestsTL ===="+new Gson().toJson(smsRequestsTL));
 							if (!CollectionUtils.isEmpty(smsRequestsTL))
 								util.sendSMS(smsRequestsTL, true);
 						}
@@ -227,6 +231,7 @@ public class MarriageNotificationService {
 						mobileNumberToOwner.put(marriageApplicationDetails.getGroomDetails().getMobile().toString(),groomName);
 				smsRequests.addAll(util.createSMSRequest(message, mobileNumberToOwner));
 		}
+		System.out.println(" end of enrichSMSRequest ====");
     }
     
     /**
