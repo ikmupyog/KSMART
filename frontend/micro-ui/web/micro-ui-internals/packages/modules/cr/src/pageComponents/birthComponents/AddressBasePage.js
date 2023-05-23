@@ -123,12 +123,18 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
 
     const [Districtvalues, setDistrictvalue] = useState(null);
+    const [TalukDropDownvalues, setLbTalukDropDownvalues] = useState(null);
+    const [VillageDropDownvalues, setLbsVillageDropDownvalues] = useState(null);
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
+    const [PostOfficeDropDownvalues, setPostOfficeDropDownvalues] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
     const [DistrictPermvalues, setDistrictPermvalue] = useState(null);
+    const [TalukPermDropDownvalues, setLbTalukPermDropDownvalues] = useState(null);
+    const [VillagePermDropDownvalues, setLbsVillagePermDropDownvalues] = useState(null);
     const [TalukPermvalues, setLbsTalukPermvalue] = useState(null);
     const [VillagePermvalues, setLbsVillagePermvalue] = useState(null);
+    const [PostOfficePermDropDownvalues, setPostOfficePermDropDownvalues] = useState(null);
     const [PostOfficePermvalues, setPostOfficePermvalues] = useState(null);
 
     //################################# Present Outside Kerala ##########################################################################################################
@@ -1498,10 +1504,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setDistrictvalue={setDistrictvalue}
                             lbs={lbs}
                             setLbs={setLbs}
+                            TalukDropDownvalues={TalukDropDownvalues}
+                            setLbTalukDropDownvalues={setLbTalukDropDownvalues}
+                            VillageDropDownvalues={VillageDropDownvalues}
+                            setLbsVillageDropDownvalues={setLbsVillageDropDownvalues}
                             Talukvalues={Talukvalues}
                             setLbsTalukvalue={setLbsTalukvalue}
                             Villagevalues={Villagevalues}
                             setLbsVillagevalue={setLbsVillagevalue}
+                            PostOfficeDropDownvalues={PostOfficeDropDownvalues}
+                            setPostOfficeDropDownvalues={setPostOfficeDropDownvalues} 
                             PostOfficevalues={PostOfficevalues}
                             setPostOfficevalues={setPostOfficevalues}
                             isPrsentAddress={isPrsentAddress}
@@ -1925,10 +1937,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setPostOfficevalues={setPostOfficevalues}
                             DistrictPermvalues={DistrictPermvalues}
                             setDistrictPermvalue={setDistrictPermvalue}
+                            TalukPermDropDownvalues={TalukPermDropDownvalues}
+                            setLbTalukPermDropDownvalues={setLbTalukPermDropDownvalues}
+                            VillagePermDropDownvalues={VillagePermDropDownvalues}
+                            setLbsVillagePermDropDownvalues={setLbsVillagePermDropDownvalues}
                             TalukPermvalues={TalukPermvalues}
                             setLbsTalukPermvalue={setLbsTalukPermvalue}
                             VillagePermvalues={VillagePermvalues}
                             setLbsVillagePermvalue={setLbsVillagePermvalue}
+                            PostOfficePermDropDownvalues={PostOfficePermDropDownvalues}
+                            setPostOfficePermDropDownvalues={setPostOfficePermDropDownvalues}
                             PostOfficePermvalues={PostOfficePermvalues}
                             setPostOfficePermvalues={setPostOfficePermvalues}
                             isEditBirth={isEditBirth}
