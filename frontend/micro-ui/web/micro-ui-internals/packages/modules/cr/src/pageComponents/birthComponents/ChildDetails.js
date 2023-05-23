@@ -483,8 +483,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   useEffect(() => {
     if (birthPlace && DifferenceInTime != null) {
+      console.log("DifferenceInTime",DifferenceInTime);
       let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
       if (currentWorgFlow.length > 0) {
+        console.log("currentWorgFlowTime",currentWorgFlow[0].WorkflowCode);
         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
         setIsPayment(currentWorgFlow[0].payment);
         setAmount(currentWorgFlow[0].amount);
@@ -496,9 +498,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
+    today.setDate(today.getDate() + 1);
     today.setHours(0, 0, 0, 0);
+    // console.log(today,"today");
+    // console.log("todayepoch",Date.parse(today));
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
+    // console.log(birthDate,"birthDate");
+    // console.log("birthDateepoch",Date.parse(birthDate));
     if (birthDate.getTime() <= today.getTime()) {
       setDOBError(false);
       // To calculate the time difference of two dates
@@ -891,7 +898,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
     // console.log(currentWorgFlow);
     if (currentWorgFlow.length > 0) {
-      // console.log(currentWorgFlow[0].WorkflowCode);
+      console.log("currentWorgFlowPlace",currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
       setIsPayment(currentWorgFlow[0].payment);
       setAmount(currentWorgFlow[0].amount);
