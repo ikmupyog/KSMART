@@ -76,8 +76,8 @@ const getPermanantAddressDetails = (application, t) => {
       { title: "Country", value: application?.BornOutsideAddressBirthDetails?.presentOutSideCountry ? application?.BornOutsideAddressBirthDetails?.presentOutSideCountry : t("CR_NOT_RECORDED") },
       { title: "State/Province/Region", value:
       application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn : t("CR_NOT_RECORDED") },
-        { title: "Whether City/Town or Village", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown : t("CR_NOT_RECORDED") },
-        { title: "City/Town/Village Name ", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage : t("CR_NOT_RECORDED") },
+        { title: "City/Town/Village Name ", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown : t("CR_NOT_RECORDED") },
+        { title:  "Whether City/Town or Village", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage : t("CR_NOT_RECORDED") },
         { title: "Postal Code", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode : t("CR_NOT_RECORDED") },
         { title: "Address Line 1", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn : t("CR_NOT_RECORDED") },
         { title: "Address Line 2", value: application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB ? application?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB : t("CR_NOT_RECORDED") },

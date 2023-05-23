@@ -24,21 +24,21 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+  // const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  let cmbPostOffice = [];
+  // let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
 
-  PostOffice &&
-    PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
-    PostOffice["common-masters"].PostOffice.map((ob) => {
-      cmbPostOffice.push(ob);
-    });
+  // PostOffice &&
+  //   PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
+  //   PostOffice["common-masters"].PostOffice.map((ob) => {
+  //     cmbPostOffice.push(ob);
+  //   });
   localbodies &&
     localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
@@ -69,18 +69,22 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     if (isInitialRender) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-        setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-        setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-        setIsInitialRender(false);
+        //setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+        //setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+        if(currentLB.length>0){
+          setCmbFilterPostOffice(currentLB[0].poList);
+          setPostOfficevalues(currentLB[0].poList);
+          setIsInitialRender(false);
+        }        
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
   if (isEditBirth) {
     if (formData?.ChildDetails?.adrsPostOffice != null) {
-      if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
-        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0];
-        setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0]);
+      if (PostOfficevalues.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
+        let pin = PostOfficevalues.filter(PostOfficevalues => PostOfficevalues.code === formData?.ChildDetails?.adrsPostOffice)[0];
+        setAdrsPostOffice(PostOfficevalues.filter(PostOfficevalues => PostOfficevalues.code === formData?.ChildDetails?.adrsPostOffice)[0]);
         setAdrsPincode(pin.pincode);
       }
     }
@@ -198,8 +202,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
 
 
   };
-
-  if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {
+  // isPostOfficeLoading || 
+  if (isWardLoaded || islocalbodiesLoading) {
     return <Loader></Loader>;
   } else
     return (
