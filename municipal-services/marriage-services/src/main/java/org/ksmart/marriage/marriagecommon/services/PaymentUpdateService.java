@@ -97,7 +97,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			PaymentRequest paymentRequest = mapper.convertValue(record, PaymentRequest.class);
-			System.out.println(" payment records --------------:"+new Gson().toJson(record));
+//			System.out.println(" payment records --------------:"+new Gson().toJson(record));
 			RequestInfo requestInfo = paymentRequest.getRequestInfo();
 			List<PaymentDetail> paymentDetails = paymentRequest.getPayment().getPaymentDetails();
 			String tenantId = paymentRequest.getPayment().getTenantId();
@@ -146,5 +146,6 @@ public class PaymentUpdateService implements BaseEnrichment {
 		}
 
 	}
+
 
 }

@@ -343,6 +343,7 @@ public class MarriageRegistryRepository {
                     String marriageCertPath = StringUtils.replace(marriageApplicationConfiguration.getEgovPdfMarriageEndPoint(), "$tenantId", tenantId);
                     String pdfFinalPath = uiHost + marriageCertPath;
                     try {
+                        req.getMarriageCertificate().get(0).setMdmsBasePath(marriageApplicationConfiguration.getMarriageCertMDMSURL());
                         MarriageCertPdfResponse response = restTemplate.postForObject(pdfFinalPath, req, MarriageCertPdfResponse.class);//Creating PDF
                         if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
                             log.error("EMPTY_FILESTORE_IDS_FROM_PDF_SERVICE. Marriage Certificate , Error in generating PDF. No file store id found from pdf service!!!");

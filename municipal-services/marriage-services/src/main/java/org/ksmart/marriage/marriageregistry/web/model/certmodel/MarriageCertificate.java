@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -289,6 +290,10 @@ public class MarriageCertificate {
 
     @JsonProperty("modulecode")
     private String modulecode;
+
+//    @Value("${marriagecert.egov.mdms.url}")
+    @JsonProperty("mdmsBasePath")
+    private String mdmsBasePath;
 
 
 

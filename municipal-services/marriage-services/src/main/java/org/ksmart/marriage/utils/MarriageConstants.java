@@ -1,5 +1,9 @@
 package org.ksmart.marriage.utils;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class MarriageConstants {
     public static final String TENANTS = "tenants";
     public static final String TENANT_MODULE_NAME = "tenant";
@@ -220,4 +224,31 @@ public class MarriageConstants {
     public static final String CR_MDMS_PLACESUBREGISTARID_CODE_JSONPATH = "$.MdmsRes.birth-death-service.SubRegistar[*].code";
     public static final String CR_MDMS_PLACESUBREGISTARID_JSONPATH = "$.MdmsRes.birth-death-service.SubRegistar[*]";
     public static final String ACTION_PAY = "PAY";
+
+    public static final String ACTION_STATUS_INITIATED = "INITIATE_INITIATED";
+
+    public static final String ACTION_STATUS_APPROVED = "PAY_APPROVED";
+
+    public static final String ACTION_STATUS_APPLIED = "APPLIED";
+
+    public static final String ACTION_STATUS_REJECTED = "REJECT_REJECTED";
+
+    public static final String NOTIFICATION_INITIATED = "cr.en.counter.approved";
+    public static final String NOTIFICATION_APPLIED = "cr.en.counter.approved";
+
+    public static final String NOTIFICATION_APPROVED = "cr.en.counter.approved";
+
+    public static final String NOTIFICATION_REJECTED = "cr.en.counter.approved";
+    public static final String NOTIFICATION_LOCALE = "en_IN";
+
+    public static final String MODULE = "rainmaker-cr";
+
+    public static final List<String> NOTIFICATION_CODES = Collections.unmodifiableList(Arrays.asList(
+          NOTIFICATION_INITIATED,
+            NOTIFICATION_APPLIED,
+            NOTIFICATION_APPROVED, NOTIFICATION_REJECTED));
+    public static final String NOTIF_OWNER_NAME_KEY = "{OWNER_NAME}";
+
+
+
 }

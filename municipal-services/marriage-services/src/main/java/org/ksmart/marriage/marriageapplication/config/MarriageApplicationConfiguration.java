@@ -135,8 +135,32 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.demand.taxheadmastercode}")
     private String taxHeadMasterCode;
 
+    @Value("${egov.localization.statelevel}")
+    private Boolean isLocalizationStateLevel;
+
+    @Value("${kafka.topics.notification.sms}")
+    private String smsNotifTopic;
     // //Payment 
     // @Value("${persister.update.marriage.payment.topic}")
     // private String updateMarriagePaymentTopic;
+
+    @Value("${egov.localization.host}")
+    private String localizationHost;
+
+    @Value("${egov.localization.context.path}")
+    private String localizationContextPath;
+
+    @Value("${egov.localization.search.endpoint}")
+    private String localizationSearchEndpoint;
+
+    @Value("${notification.sms.enabled.forMR}")
+    private Boolean isMRSMSEnabled;
+
+    @Value("${egov.user.event.notification.enabledForMR}")
+    private Boolean isUserEventsNotificationEnabledForMR;
+
+    @Value("${marriagecert.egov.mdms.url}")
+    private String marriageCertMDMSURL;
+
 
 }

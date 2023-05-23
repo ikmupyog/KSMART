@@ -25,6 +25,7 @@ import org.ksmart.marriage.marriagecommon.services.PaymentUpdateService;
 //import org.ksmart.birth.death.certmodel.DeathCertificate;
 //import org.ksmart.birth.death.model.EgDeathDtl;
 //import org.ksmart.birth.death.repository.DeathRepository;
+import org.ksmart.marriage.marriagecommon.services.notification.MarriageNotificationService;
 import org.ksmart.marriage.utils.MarriageConstants;
 //import org.ksmart.marriage.utils.CommonUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -51,12 +52,14 @@ public class ReceiptConsumer {
     private PaymentUpdateService paymentUpdateService;
 
 //    private PaymentNotificationService paymentNotificationService;
+    private MarriageNotificationService marriageNotificationService;
 
 
     @Autowired
-    public ReceiptConsumer(PaymentUpdateService paymentUpdateService) {
+    public ReceiptConsumer(PaymentUpdateService paymentUpdateService,MarriageNotificationService marriageNotificationService) {
         this.paymentUpdateService = paymentUpdateService;
 //        this.paymentNotificationService = paymentNotificationService;
+        this.marriageNotificationService = marriageNotificationService;
     }
 
 
@@ -64,6 +67,7 @@ public class ReceiptConsumer {
     @KafkaListener(topics = {"${kafka.topics.receipt.create}"})
     public void listenPayments(final HashMap<String, Object> record) {
         paymentUpdateService.process(record);
+        marriageNotificationService.process(record);
 //        paymentNotificationService.process(record);
     }
     }
