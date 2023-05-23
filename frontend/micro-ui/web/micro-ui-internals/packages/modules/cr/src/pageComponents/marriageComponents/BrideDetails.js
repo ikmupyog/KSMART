@@ -1015,7 +1015,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             !brideFirstnameEn ||
             !brideMobile ||
             !brideFirstnameMl ||
-            !brideEmailid ||
             !brideGender ||
             !brideDOB ||
             !brideMaritalstatusID ||
@@ -1308,7 +1307,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_BRIDE_EMAIL")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}

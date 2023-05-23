@@ -211,8 +211,18 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
-    console.log({ value });
+    console.log({ value },"gender");
+    if(groomGender === "FEMALE"){
+      console.log({ value },"gender1");
+      setselectGroomGenderError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }else{
     selectGroomGender(value);
+    setselectGroomGenderError(false);
+    }
   }
   function setSelectGroomPassportNo(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z0-9 ]*$") != null) {
@@ -1006,7 +1016,6 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
             !groomFirstnameEn ||
             !groomMobile ||
             !groomFirstnameMl ||
-            !groomEmailid ||
             !groomGender ||
             !groomDOB ||
             !groomMaritalstatusID ||
@@ -1300,7 +1309,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_GROOM_EMAIL")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
