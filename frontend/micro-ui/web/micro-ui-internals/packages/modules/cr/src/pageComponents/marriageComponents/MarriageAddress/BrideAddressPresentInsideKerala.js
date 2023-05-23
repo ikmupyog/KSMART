@@ -193,7 +193,6 @@ const BrideAddressPresentInsideKerala = ({
       });
       // }
     });
-  console.log(boundaryList["egov-location"]);
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
@@ -721,15 +720,6 @@ const BrideAddressPresentInsideKerala = ({
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentInsideKeralaDistrict}> */}
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
-              </h1>
-            </div>
-          </div>
-        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">

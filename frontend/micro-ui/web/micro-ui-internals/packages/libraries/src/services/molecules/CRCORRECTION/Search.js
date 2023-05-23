@@ -68,7 +68,8 @@ export const CRCorrectionSearch = {
   },
   deathApplication: async (tenantId, filters = {}) => {
     const response = await CRService.CRDeathCorrectionSearch({ tenantId, filters });
-    return response;
+    console.log("death resp==",response);
+    return response?.deathCorrection[0];
   },
   marriageApplication: async (tenantId, filters = {}) => {
     const response = await CRService.CRMarriageCorrectionDeatils({ tenantId, filters });
@@ -82,7 +83,7 @@ export const CRCorrectionSearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, correctionType) => {
-    const filter = correctionType === "marriage" ? { applicationNo: applicationNumber } : { applicationNumber };
+    const filter = correctionType === "marriage" ? { applicationNo: applicationNumber } : correctionType === "death" ? {DeathACKNo:applicationNumber} :{ applicationNumber };
     let response = [];
     if (correctionType === "birth") {
       response = await CRCorrectionSearch.birthApplication(tenantId, filter);

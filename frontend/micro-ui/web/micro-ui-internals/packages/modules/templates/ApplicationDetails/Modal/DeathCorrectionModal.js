@@ -39,7 +39,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     {
       details: {
         tenantId: Digit.ULBService.getStateId(),
-        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'birth-services')]" }] }],
+        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'death-services')]" }] }],
       },
     }
   );
@@ -93,19 +93,41 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     console.log("APPLICATION--DATA",applicationData);
-    let applicationParams = {
-      id: applicationData?.id,
-      tenantid: applicationData?.tenantid,
-      applicationtype: applicationData?.applicationtype,
-      businessservice: applicationData?.businessservice,
-      workflowcode: applicationData?.workflowcode,
-      action: applicationData?.action,
-      applicationNumber: applicationData?.applicationNumber,
-      registrationNo: applicationData?.registrationNo,
-      registerid: applicationData?.registerid,
-      registrationDate: applicationData?.registrationDate,
-      applicationStatus: applicationData?.applicationStatus,
+    let applicationParams =
+    //  {
+    //   id: applicationData?.InformationDeathCorrection?.Id,
+    //   tenantid: applicationData?.InformationDeathCorrection?.TenantId,
+    //   applicationtype: applicationData?.applicationType,
+    //   businessservice: applicationData?.businessService,
+    //   workflowcode: applicationData?.workflowcode,
+    //   action: action?.action,
+    //   assignee: [],
+    //   applicationNumber: applicationData?.InformationDeathCorrection?.DeathACKNo,
+    //   registrationNo: applicationData?.registrationNo,
+    //   // registerid: applicationData?.registerid,
+    //   // registrationDate: applicationData?.registrationDate,
+    //   applicationStatus: applicationData?.applicationStatus,
+    // };
+    {
+      CorrectionDetails: [
+        {
+          applicationType: "CRDRCN",
+          id: applicationData?.InformationDeathCorrection?.Id,
+          businessService: "CR",
+          action: action?.action,
+          // registerid:  applicationData?.registerid,
+          registrationNo: applicationData?.registrationNo,
+          registrationDate: null,
+          InformationDeathCorrection: { 
+            tenantId: applicationData?.InformationDeathCorrection?.TenantId,
+            funcionUID: "CRDRCN",
+            DeathACKNo: applicationData?.InformationDeathCorrection?.DeathACKNo,
+            workflowcode: applicationData?.workflowcode
+        },
+        },
+      ],
     };
+    console.log("applicationParams==",applicationParams);
     submitAction({
       CorrectionDetails: [{...applicationParams}],
     });

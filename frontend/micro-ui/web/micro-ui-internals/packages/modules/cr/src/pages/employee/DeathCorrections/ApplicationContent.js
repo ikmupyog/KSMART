@@ -160,7 +160,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
 
 
   const renderCardDetail = (index, value, fieldName, documentData) => {
-      const type = fieldName === "CHILD_DOB" ? "date" : "text";
+      const type = fieldName === "DECEASED_DOB" ? "date" : "text";
       console.log("fieldvalues", value, type);
       return (
           <div className="row">
