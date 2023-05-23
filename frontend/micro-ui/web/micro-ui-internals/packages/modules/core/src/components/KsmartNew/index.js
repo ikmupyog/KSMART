@@ -5,9 +5,8 @@ import Footer from "./Footer";
 import Services from "./Services";
 import { Row } from "react-bootstrap";
 import Cards from "./Carousel/Cards";
-import { FaUserCircle } from "react-icons/fa";
 
-const KsmartHome = () => (<React.Fragment>
+const KsmartHome1 = () => (<React.Fragment>
     <Row>
         <MenuBar />
     </Row>
@@ -20,4 +19,4 @@ const KsmartHome = () => (<React.Fragment>
     {/* common footer */}
 </React.Fragment>);
 
-export default KsmartHome;
+export default KsmartHome1;

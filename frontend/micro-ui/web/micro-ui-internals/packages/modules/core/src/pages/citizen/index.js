@@ -14,7 +14,7 @@ import Dashboard from "./Dashboard";
 // import PDF from "../../assets/";
 import { useQueryClient } from "react-query";
 import Footer from "../Footer";
-import KsmartHome from "../../components/KsmartNew";
+import KsmartHome from "../../components/KsmartHome";
 
 const getTenants = (codes, tenants) => {
   return tenants.filter((tenant) => codes.map((item) => item.code).includes(tenant.code));
