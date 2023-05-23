@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { SubmitBar, CardLabel, Dropdown, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,11 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   const { data: searchData, refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
 
-  const Value = data?.ModuleDetails?.map((item) => ({
+  // const Value = data?.ModuleDetails?.map((item) => ({
+  //   label: item.id,
+  //   value: item.moduleNameEnglish,
+  // }));
+  const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
   }));
@@ -97,13 +101,13 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       },
     };
     deleteItem.mutate(formData);
-    setToast(true);
-    setTimeout(() => {
-      setToast(false);
-    }, 2000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2500);
+    // setToast(true);
+    // setTimeout(() => {
+    //   setToast(false);
+    // }, 2000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2500);
   };
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(
@@ -233,7 +237,16 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         window.location.reload();
       }, 2500);
     }
-  }, [mutation.isSuccess, updatemutation.isSuccess]);
+    if (deleteItem.isSuccess) {
+      setDeleteSuccess(true);
+      setTimeout(() => {
+        setDeleteSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess, updatemutation.isSuccess, deleteItem.isSuccess]);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -325,7 +338,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       </div>
       {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
       {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
-      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}{" "}
+      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
     </React.Fragment>
   );
 };

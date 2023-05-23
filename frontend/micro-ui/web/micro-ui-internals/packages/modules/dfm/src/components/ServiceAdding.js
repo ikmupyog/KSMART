@@ -47,8 +47,7 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
   const mutation = Digit.Hooks.dfm.useServiceAdding(tenantId);
   const deleteItem = Digit.Hooks.dfm.useDeleteService(tenantId);
-//   const updatemutation = Digit.Hooks.dfm.useUpdateService();
-
+  //   const updatemutation = Digit.Hooks.dfm.useUpdateService();
 
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
   const [majorFunction, setmajorFunction] = useState("");
@@ -57,6 +56,9 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [serviceNameEn, setserviceNameEn] = useState("");
   const [serviceNameMl, setserviceNameMl] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [mutationSuccess, setMutationSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   const Value = data?.ModuleDetails?.map((item) => ({
@@ -220,7 +222,35 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     mutation.mutate(formData);
     refetch;
   };
-
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setMutationSuccess(true);
+      setTimeout(() => {
+        setMutationSuccess(false);
+      }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    // if (updatemutation.isSuccess) {
+    //   setUpdateSuccess(true);
+    //   setTimeout(() => {
+    //     setUpdateSuccess(false);
+    //   }, 2000);
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 2500);
+    // }
+    if (deleteItem.isSuccess) {
+      setDeleteSuccess(true);
+      setTimeout(() => {
+        setDeleteSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess, deleteItem.isSuccess]);
   //   useEffect(() => {
   //     if (mutation.isSuccess == true) {
   //       history.push("/digit-ui/employee/dfm/note-drafting");
@@ -370,7 +400,9 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
           )}
         </div>
       </div>
-      {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />}
+      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {/* {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}    */}
     </React.Fragment>
   );
 };

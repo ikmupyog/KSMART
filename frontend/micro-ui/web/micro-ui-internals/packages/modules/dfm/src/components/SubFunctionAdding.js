@@ -180,7 +180,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   };
 
   const updateDraft = () => {
-    
+
     const formData = {
       SubFunctionDetails: {
         id: subid,
@@ -200,9 +200,9 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       setTimeout(() => {
         setMutationSuccess(false);
       }, 2500);
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     }
     if (updatemutation.isSuccess) {
       setUpdateSuccess(true);
@@ -329,7 +329,10 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
           )}
         </div>
       </div>
-      {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />}
+      {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
+      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
     </React.Fragment>
   );
 };
