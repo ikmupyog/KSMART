@@ -584,7 +584,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideEmailid(e.target.value);
+      setbrideEmailid(e.target.value.trim());
     }
   }
   function setSelectbrideSocialSecurityNo(e) {
@@ -1320,14 +1320,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"email"}
+                  type="email"
                   optionKey="i18nKey"
                   name="brideEmailid"
                   value={brideEmailid}
                   onChange={setSelectbrideEmailid}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
                   //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                  {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
+                  {...(validation = { isRequired: false, title: t("CR_EMAIL_ERROR") })}
                 />
               </div>
             </div>

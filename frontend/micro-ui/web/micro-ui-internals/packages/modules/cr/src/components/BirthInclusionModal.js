@@ -313,8 +313,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
     if ([BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS, BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS].includes(selectedConfig.docFlag)) {
       selectedStudentMenu = [
-        { i18nKey: "CR_COMMON_STUDENT", code: "WITH_OUT_CERTIFICATE" },
-        { i18nKey: "CR_COMMON_NONSTUDENT", code: "WITH_CERTIFICATE" },
+        { i18nKey: "CR_YES", code: "WITH_OUT_CERTIFICATE" },
+        { i18nKey: "CR_NO", code: "WITH_CERTIFICATE" },
       ];
       selectedChangeMenu = [
         { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION" },
@@ -324,7 +324,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
-          <h2>{t("CR_SELECT_ONE")}</h2>
+          <h2>{t("CR_ARE_YOU_STUDENT")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -332,6 +332,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             selectedOption={checkStudentCondition}
             onSelect={setCheckStudentCondition}
           />
+          <h2>{t("CR_WHICH_ACTION")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"

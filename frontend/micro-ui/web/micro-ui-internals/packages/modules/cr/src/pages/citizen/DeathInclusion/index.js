@@ -90,7 +90,7 @@ const DeathInclusion = () => {
         isSuccess={isSuccess}
         // filestoreId={storeId}
         // isSuccess={isSuccess}
-        // isLoading={isLoading}
+        isLoading={isLoading}
         count={count}
         toast={toast}
         setToast={setToast}

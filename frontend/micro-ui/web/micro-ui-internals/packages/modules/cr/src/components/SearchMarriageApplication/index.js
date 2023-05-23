@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SearchField, Dropdown } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SearchField, Loader, Dropdown } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -28,7 +28,7 @@ const selectedSearch = [
 ];
 let validation = "";
 
-const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType }) => {
+const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType,isLoading }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -215,7 +215,7 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applica
           <SearchFields {...{ register, control, reset, tenantId, t, applicationType }} />
         </SearchForm>
       </div>
-
+      {isLoading && <Loader />}
       {data?.display ? (
         <Card style={{ marginTop: 20 }}>
           {t(data.display)

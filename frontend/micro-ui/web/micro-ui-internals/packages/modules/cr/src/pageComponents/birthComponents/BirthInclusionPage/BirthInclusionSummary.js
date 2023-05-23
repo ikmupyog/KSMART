@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation , useHistory} from "react-router-dom";
 import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
 import moment from "moment";
+import { trimURL } from "../../../utils";
 
 function BirthInclusionSummary({
   applicationDetails,
@@ -54,7 +55,8 @@ function BirthInclusionSummary({
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
+      // return { large: fileType === "image" ? key.url.split(",")[1] : key.url, small: fileType === "image" ? key.url.split(",")[2] : key.url, key: key.id, type: fileType, pdfUrl: key.url };
+      return { large: fileType === "image" ? trimURL(key.url.split(",")[1]) : key.url, small: fileType === "image" ? trimURL(key.url.split(",")[2]) : key.url, key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
     });
    
     const formattedImageThumbs =
