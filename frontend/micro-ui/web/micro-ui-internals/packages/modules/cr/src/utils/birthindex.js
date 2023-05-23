@@ -604,7 +604,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn ? data?.ParentsDetails?.motherFirstNameEn : data?.ChildDetails?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl ? data?.ParentsDetails?.motherFirstNameMl : data?.ChildDetails?.ParentsDetails?.motherFirstNameMl,
           motherAadhar: data?.ParentsDetails?.motherAadhar ? data?.ParentsDetails?.motherAadhar : data?.ChildDetails?.ParentsDetails?.motherAadhar ? data?.ChildDetails?.ParentsDetails?.motherAadhar : null,
-          motherMarriageAge: data?.ParentsDetails?.motherMarriageAge ? data?.ParentsDetails?.motherMarriageAge : data?.ChildDetails?.ParentsDetails?.motherMarriageAge,
+          motherMarriageAge: data?.ParentsDetails?.motherMarriageAge === null ? null : data?.ParentsDetails?.motherMarriageAge!=null ? data?.ParentsDetails?.motherMarriageAge : data?.ChildDetails?.ParentsDetails?.motherMarriageAge ? data?.ChildDetails?.ParentsDetails?.motherMarriageAge : null,
           motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth ? data?.ParentsDetails?.motherMarriageBirth : data?.ChildDetails?.ParentsDetails?.motherMarriageBirth,
           motherMaritalStatus: data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code :
             data?.ChildDetails?.ParentsDetails?.motherMaritalStatus ? data?.ChildDetails?.ParentsDetails?.motherMaritalStatus : null,

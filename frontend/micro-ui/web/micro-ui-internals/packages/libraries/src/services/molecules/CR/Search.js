@@ -208,7 +208,12 @@ export const CRsearch = {
         { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },
         { title: "CR_NATIONALITY", value: response?.ParentsDetails?.motherNationalityEn + " / " + (response?.ParentsDetails?.motherNationalityMl != null ? response?.ParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
         { title: "CR_MOTHER_MARITAL_STATUS", value: response?.ParentsDetails?.motherMaritalStatusEn + " / " + (response?.ParentsDetails?.motherMaritalStatusMl != null ? response?.ParentsDetails?.motherMaritalStatusMl : "") || "NOT_RECORDED" },
-        { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.ParentsDetails?.motherMarriageAge || "NOT_RECORDED" },
+        {
+          title: "CR_MOTHER_AGE_MARRIAGE",
+          value: response?.ParentsDetails?.motherMaritalStatus === "MARRIED" ? response?.ParentsDetails?.motherMarriageAge :
+            response?.ParentsDetails?.motherMaritalStatus === "UNMARRIED" ? "Not applicable / ബാധകമല്ല" :
+              response?.ParentsDetails?.motherMaritalStatus === "NOT_APPLICABLE" ? "Not applicable / ബാധകമല്ല" : "Not applicable / ബാധകമല്ല"
+        },
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.ParentsDetails?.motherMarriageBirth || "NOT_RECORDED" },
         { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.ParentsDetails?.orderofChildren || "NOT_RECORDED" },
         { title: "CR_EDUCATION", value: response?.ParentsDetails?.motherEducationEn + " / " + response?.ParentsDetails?.motherEducationMl || "NOT_RECORDED" },
@@ -241,8 +246,18 @@ export const CRsearch = {
         { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
         { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },
         { title: "CR_NATIONALITY", value: response?.ParentsDetails?.motherNationalityEn + " / " + (response?.ParentsDetails?.motherNationalityMl != null ? response?.ParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
-        { title: "CR_MOTHER_MARITAL_STATUS", value: response?.ParentsDetails?.motherMaritalStatusEn + " / " + (response?.ParentsDetails?.motherMaritalStatusMl != null ? response?.ParentsDetails?.motherMaritalStatusMl : "") || "NOT_RECORDED" },
-        { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.ParentsDetails?.motherMarriageAge || "NOT_RECORDED" },
+        {
+          title: "CR_MOTHER_MARITAL_STATUS",
+          value: response?.ParentsDetails?.motherMaritalStatus === "MARRIED" ? "Married / വിവാഹിത" :
+            response?.ParentsDetails?.motherMaritalStatus === "UNMARRIED" ? "UnMarried / അവിവാഹിത" :
+              response?.ParentsDetails?.motherMaritalStatus === "NOT_APPLICABLE" ? "Not Disclosed / വെളിപ്പെടുത്തിയിട്ടില്ല" : "NOT_RECORDED"
+        },
+        {
+          title: "CR_MOTHER_AGE_MARRIAGE",
+          value: response?.ParentsDetails?.motherMaritalStatus === "MARRIED" ? response?.ParentsDetails?.motherMarriageAge :
+            response?.ParentsDetails?.motherMaritalStatus === "UNMARRIED" ? "Not applicable / ബാധകമല്ല" :
+              response?.ParentsDetails?.motherMaritalStatus === "NOT_APPLICABLE" ? "Not applicable / ബാധകമല്ല" : "Not applicable / ബാധകമല്ല"
+        },
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.ParentsDetails?.motherMarriageBirth || "NOT_RECORDED" },
         { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.ParentsDetails?.orderofChildren || "NOT_RECORDED" },
         { title: "CR_EDUCATION", value: response?.ParentsDetails?.motherEducationEn + " / " + response?.ParentsDetails?.motherEducationMl || "NOT_RECORDED" },

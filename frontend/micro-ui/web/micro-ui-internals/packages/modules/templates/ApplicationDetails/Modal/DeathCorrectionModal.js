@@ -94,18 +94,19 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     console.log("APPLICATION--DATA",applicationData);
     let applicationParams = {
-      id: applicationData?.id,
-      tenantid: applicationData?.tenantid,
-      applicationtype: applicationData?.applicationtype,
-      businessservice: applicationData?.businessservice,
+      id: applicationData?.InformationDeathCorrection?.Id,
+      tenantid: applicationData?.InformationDeathCorrection?.TenantId,
+      applicationtype: applicationData?.applicationType,
+      businessservice: applicationData?.businessService,
       workflowcode: applicationData?.workflowcode,
       action: action?.action,
-      applicationNumber: applicationData?.applicationNumber,
+      applicationNumber: applicationData?.InformationDeathCorrection?.DeathACKNo,
       registrationNo: applicationData?.registrationNo,
-      registerid: applicationData?.registerid,
-      registrationDate: applicationData?.registrationDate,
+      // registerid: applicationData?.registerid,
+      // registrationDate: applicationData?.registrationDate,
       applicationStatus: applicationData?.applicationStatus,
     };
+    console.log("applicationParams==",applicationParams);
     submitAction({
       CorrectionDetails: [{...applicationParams}],
     });
