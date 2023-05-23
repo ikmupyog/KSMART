@@ -44,6 +44,7 @@ import java.util.List;
 
  public List<CorrectionDetails> updateCorrection(CorrectionRequest request) {
   List<CorrectionDetails> application = repository.updateCorrectionBirthDetails(request);
+  workflowIntegrator.callWorkFlowCorrection(request);
   return application;
  }
 

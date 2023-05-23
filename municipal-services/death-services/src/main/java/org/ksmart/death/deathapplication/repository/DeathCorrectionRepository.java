@@ -56,6 +56,10 @@ public class DeathCorrectionRepository {
          List<Object> preparedStmtValues = new ArrayList<>();
          criteria.setApplicationType("CRDRCN");
          String query = queryBuilder.getDeathSearchQuery(criteria,  preparedStmtValues, Boolean.FALSE);
+         System.out.println(query);
+         System.out.println(preparedStmtValues.get(0));
+         System.out.println(preparedStmtValues.get(1));
+         System.out.println(preparedStmtValues.get(2));
          List<CorrectionDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);;
          return result;
      }
