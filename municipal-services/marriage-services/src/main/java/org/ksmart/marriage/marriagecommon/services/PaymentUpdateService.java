@@ -139,7 +139,7 @@ public class PaymentUpdateService implements BaseEnrichment {
 				CommonPayRequest paymentReq =CommonPayRequest.builder().requestInfo(requestInfo).commonPays(commonPays).build();			
 				repository.updatePaymentDetails(paymentReq);
 
-				marriageNotificationService.process(updateRequest);
+				marriageNotificationService.process(updateRequest.getRequestInfo(),updateRequest.getMarriageDetails());
 			}
 		}
 
