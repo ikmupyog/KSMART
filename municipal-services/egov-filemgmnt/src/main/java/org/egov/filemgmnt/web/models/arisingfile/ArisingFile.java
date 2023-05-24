@@ -146,6 +146,9 @@ public class ArisingFile {
     @JsonProperty("fileType")
     private String fileType;
 
+    @JsonProperty("fileCloseDate")
+    private Long fileCloseDate;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
