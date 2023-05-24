@@ -48,9 +48,9 @@ const getFilteredDocuments = (selectedData, inclusionData) => {
   let docFlag = "";
   const childAge = selectedData?.dateofbirth && moment().diff(moment(selectedData?.dateofbirth), "years");
   console.log("childAge--==",childAge);
-  if (childAge > 0 && childAge <= 6) {
+  if (childAge >= 0 && childAge <= 6) {
     filteredData =  inclusionData?.filter((item) => item.conditionCode === "NAME_LESS_THAN_SIX");
-  } else if (childAge === 0 )  {
+  } else if (childAge > 6 )  {
     filteredData = inclusionData?.filter((item) => {
       if(item.conditionCode === "NAME_GREATER_THAN_SIX_NON_STUDENT" 
       || item.conditionCode === "NAME_GREATER_THAN_SIX_STUDENT"
