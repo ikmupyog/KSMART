@@ -30,7 +30,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, toast, setToast, onCorrectionClick, isSuccess }) => {
+const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, isLoading, toast, setToast, onCorrectionClick, isSuccess }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
   const { register, control, handleSubmit, setValue, getValues, watch, reset } = useForm({
@@ -179,6 +179,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, toast, setToas
           <SearchFields {...{ register, watch, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
       </div>
+      {isLoading && <Loader />}
       {(data?.length > 0 && isSuccess) ? (
           <React.Fragment>
             <Table

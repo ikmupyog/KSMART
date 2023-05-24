@@ -16,16 +16,16 @@ const Filter = (props) => {
   const assignedToOptions = useMemo(
     () => [
       { code: "ASSIGNED_TO_ME", name: t("ASSIGNED_TO_ME") },
-      { code: "ASSIGNED_TO_ALL", name: t("ASSIGNED_TO_ALL") },
+      // { code: "ASSIGNED_TO_ALL", name: t("ASSIGNED_TO_ALL") },
     ],
     [t]
   );
 
-  const [selectAssigned, setSelectedAssigned] = useState(isAssignedToMe ? assignedToOptions[0] : assignedToOptions[1]);
+  const [selectAssigned, setSelectedAssigned] = useState(assignedToOptions[0]);
 
-  useEffect(() => setSelectedAssigned(isAssignedToMe ? assignedToOptions[0] : assignedToOptions[1]), [t]);
+  useEffect(() => setSelectedAssigned(assignedToOptions[0]), [t]);
 
-  const [selectedComplaintType, setSelectedComplaintType] = useState(null);
+  const [selectedComplaintType, setSelectedComplaintType] = useState({ i18nKey: "CR_NEW_BIRTH", code: "CRBRNR", value: "CRBRNR" });
   const [selectedLocality, setSelectedLocality] = useState(null);
   const [pgrfilters, setPgrFilters] = useState(
     searchParams?.filters?.pgrfilters || {
@@ -43,8 +43,21 @@ const Filter = (props) => {
 
   const tenantId = Digit.ULBService.getCurrentTenantId();
   // let localities = Digit.Hooks.pgr.useLocalities({ city: tenantId });
-  const { data: localities } = Digit.Hooks.useBoundaryLocalities(tenantId, "admin", {}, t);
-  let serviceDefs = Digit.Hooks.pgr.useServiceDefs(tenantId, "PGR");
+  // const { data: localities } = Digit.Hooks.useBoundaryLocalities(tenantId, "admin", {}, t);
+  // let serviceDefs = Digit.Hooks.pgr.useServiceDefs(tenantId, "CR");
+  const serviceDefsData = [
+    { i18nKey: "CR_NEW_BIRTH", code: "CRBRNR", value: "CRBRNR" },
+    { i18nKey: "CR_STILL_BIRTH", code: "CRBRSB", value: "CRBRSB", },
+    { i18nKey: "BORN_OUTSIDE_INDIA", code: "CRBRBO", value: "CRBRBO" },
+    { i18nKey: "CR_BIRTH_NAC", code: "CRBRNC", value: "CRBRNC" },
+    { i18nKey: "CR_BIRTH_NAME_INC_CORRECTION", code: "CRBRCN", value: "CRBRCN" },
+    { i18nKey: "CR_ABANDONED_BIRTH", code: "CRBRAB", code: "CRBRAB" },
+    { i18nKey: " CR_ADOPTION", code: "CRBRAD", code: "CRBRAD" },
+  ];
+
+  // useEffect(() => {
+  //   console.log("serviceDefs", serviceDefs);
+  // }, [serviceDefs])
 
   const onRadioChange = (value) => {
     setSelectedAssigned(value);
@@ -93,10 +106,11 @@ const Filter = (props) => {
     props.onClose();
   }
   function complaintType(_type) {
-    const type = { i18nKey: t("SERVICEDEFS." + _type.serviceCode.toUpperCase()), code: _type.serviceCode };
-    if (!ifExists(pgrfilters.serviceCode, type)) {
-      setPgrFilters({ ...pgrfilters, serviceCode: [...pgrfilters.serviceCode, type] });
-    }
+    // const type = { i18nKey: t("SERVICEDEFS." + _type.code.toUpperCase()), code: _type.code };
+    // if (!ifExists(pgrfilters.serviceCode, type)) {
+    //   setPgrFilters({ ...pgrfilters, serviceCode: [...pgrfilters.serviceCode, type] });
+    // }
+    return null;
   }
 
   function onSelectLocality(value, type) {
@@ -105,13 +119,13 @@ const Filter = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (pgrfilters.serviceCode.length > 1) {
-      setSelectedComplaintType({ i18nKey: `${pgrfilters.serviceCode.length} selected` });
-    } else {
-      setSelectedComplaintType(pgrfilters.serviceCode[0]);
-    }
-  }, [pgrfilters.serviceCode]);
+  // useEffect(() => {
+  //   if (pgrfilters.serviceCode.length > 1) {
+  //     setSelectedComplaintType({ i18nKey: `${pgrfilters.serviceCode.length} selected` });
+  //   } else {
+  //     setSelectedComplaintType(pgrfilters.serviceCode[0]);
+  //   }
+  // }, [pgrfilters.serviceCode]);
 
   useEffect(() => {
     if (pgrfilters.locality.length > 1) {
@@ -195,23 +209,25 @@ const Filter = (props) => {
           </div>
           <div>
             <RadioButtons onSelect={onRadioChange} selectedOption={selectAssigned} optionsKey="name" options={assignedToOptions} />
-            {/* <div>
-              {GetSelectOptions(
+            <div>
+              {/* {GetSelectOptions(
                 t("CS_COMPLAINT_DETAILS_COMPLAINT_SUBTYPE"),
-                serviceDefs,
+                serviceDefsData,
                 selectedComplaintType,
                 complaintType,
                 "i18nKey",
                 onRemove,
                 "serviceCode"
-              )}
+              )} */}
+              <div className="filter-label">{t("CS_COMPLAINT_DETAILS_COMPLAINT_SUBTYPE")}</div>
+              <Dropdown option={serviceDefsData} selected={selectedComplaintType} optionKey="i18nKey" />
             </div>
-            <div>{GetSelectOptions(t("CS_PGR_LOCALITY"), localities, selectedLocality, onSelectLocality, "i18nkey", onRemove, "locality")}</div>
-            {<Status complaints={props.complaints} onAssignmentChange={handleAssignmentChange} pgrfilters={pgrfilters} />} */}
+            {/* <div>{GetSelectOptions(t("CS_PGR_LOCALITY"), localities, selectedLocality, onSelectLocality, "i18nkey", onRemove, "locality")}</div> */}
+            {/* {<Status complaints={props.complaints} onAssignmentChange={handleAssignmentChange} pgrfilters={pgrfilters} />} */}
           </div>
         </div>
       </div>
-      <ActionBar>
+      {/* <ActionBar>
         {props.type === "mobile" && (
           <ApplyFilterBar
             labelLink={t("ES_COMMON_CLEAR_ALL")}
@@ -220,7 +236,7 @@ const Filter = (props) => {
             onSubmit={applyFiltersAndClose}
           />
         )}
-      </ActionBar>
+      </ActionBar> */}
     </React.Fragment>
   );
 };

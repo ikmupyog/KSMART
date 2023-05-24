@@ -11,6 +11,7 @@ import {
   LabelFieldPair,
   RadioButtons,
   Toast,
+  PopUp
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -143,6 +144,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   const [groomResidentShip, setGroomResidentShip] = useState(
     formData?.GroomDetails?.groomResidentShip ? formData?.GroomDetails?.groomResidentShip : "INDIAN"
   );
+  const [isPopup, setIsPopup] = useState(false);
+  const [genderValue, setGenderValue] = useState("");
   const [AadharError, setAadharError] = useState(false);
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const [groomPassportNoError, setSelectGroomPassportNoError] = useState(false);
@@ -162,28 +165,28 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
   const [groomMobileError, setGroomMobileError] = useState(false);
   const [groomGenderError, setselectGroomGenderError] = useState(false);
   const [groomMaritalstatusIDError, setGroomMaritalstatusIDError] = useState(false);
-  const [groomEmailidError, setGroomEmailidError] = useState(false);
+  
   // const [valueRad, setValueRad] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
   const [access, setAccess] = React.useState(true);
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
 
   const onSkip = () => onSelect();
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.GroomDetails?.isParent != null) {
-        setIsInitialRender(false);
-        setIsParent(formData?.GroomDetails?.isParent);
-      }
-    }
-  }, [isInitialRender]);
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.GroomDetails?.isGuardian != null) {
-        setIsInitialRender(false);
-        setIsGuardian(formData?.GroomDetails?.isGuardian);
-      }
-    }
-  }, [isInitialRender]);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (formData?.GroomDetails?.isParent != null) {
+  //       setIsInitialRender(false);
+  //       setIsParent(formData?.GroomDetails?.isParent);
+  //     }
+  //   }
+  // }, [isInitialRender]);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (formData?.GroomDetails?.isGuardian != null) {
+  //       setIsInitialRender(false);
+  //       setIsGuardian(formData?.GroomDetails?.isGuardian);
+  //     }
+  //   }
+  // }, [isInitialRender]);
 
   const cmbSpouseLiving = [
     { i18nKey: "Yes", code: true },
@@ -211,8 +214,12 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
-    console.log({ value });
-    selectGroomGender(value);
+    setGenderValue(value);
+    if (value?.code === "FEMALE") {
+      setIsPopup(true);
+    } else {
+      selectGroomGender(value);
+    }
   }
   function setSelectGroomPassportNo(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z0-9 ]*$") != null) {
@@ -242,7 +249,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomEmailid(e.target.value);
+      setGroomEmailid(e.target.value.trim());
     }
   }
   function setSelectGroomNoOfSpouse(e) {
@@ -562,16 +569,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     }
   }
 
-  useEffect(() => {
-    if (!isEditMarriage) {
-      if (gender.length > 0) {
-        const selectedGender = gender.filter((option) => option.code === "MALE");
-        console.log({ selectedGender });
-        selectGroomGender(selectedGender[0]);
-      }
-    }
-  }, [gender.length]);
-
+  
   console.log({ isEditMarriage });
 
   let validFlag = true;
@@ -898,18 +896,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
         setGroomMaritalstatusIDError(false);
       }
     }
-    if (groomEmailid.trim() == null || groomEmailid.trim() == "" || groomEmailid.trim() == undefined) {
-      validFlag = false;
-      setGroomEmailid("");
-      setGroomEmailidError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setGroomEmailidError(false);
-    }
-
+   
     if (validFlag == true) {
       // sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
       // sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
@@ -950,7 +937,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
         groomLastnameEn: groomLastnameEn.trim(),
         groomLastnameMl: groomLastnameMl.trim(),
         groomMobile,
-        groomEmailid: groomEmailid.trim(),
+        groomEmailid,
         groomGender,
         groomDOB,
         groomAge,
@@ -971,18 +958,28 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
     }
   };
 
+
+  useEffect(() => {
+    if (!isEditMarriage) {
+      if (gender.length > 0 && cmbMaritalStatus.length > 0) {
+        const selectedGender = gender.filter((option) => option.code === "MALE");
+        selectGroomGender(selectedGender[0]);
+        const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === "UNMARRIED");
+        setGroomMaritalstatusID(currentMarritalStatus[0]);
+      }
+    }
+  }, [gender.length, cmbMaritalStatus.length]);
+
+
   useEffect(() => {
     if (isEditMarriage) {
       if (cmbMaritalStatus.length > 0 && gender.length > 0) {
         const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === formData?.GroomDetails?.groomMaritalstatusID);
         setGroomMaritalstatusID(currentMarritalStatus[0]);
-        console.log({ currentMarritalStatus });
         const currentGender = gender?.filter((gender) => gender.code === formData?.GroomDetails?.groomGender);
         selectGroomGender(currentGender[0]);
-        console.log({ currentGender });
         const currentIsSpouseLiving = cmbSpouseLiving?.filter((value) => value.code === formData?.GroomDetails?.groomIsSpouseLiving);
         setGroomIsSpouseLiving(currentIsSpouseLiving[0]);
-        console.log({ currentIsSpouseLiving });
       }
     }
   }, [cmbMaritalStatus.length, gender.length]);
@@ -1005,7 +1002,6 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
             !groomFirstnameEn ||
             !groomMobile ||
             !groomFirstnameMl ||
-            !groomEmailid ||
             !groomGender ||
             !groomDOB ||
             !groomMaritalstatusID ||
@@ -1299,19 +1295,19 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_GROOM_EMAIL")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"email"}
+                  type="email"
                   optionKey="i18nKey"
                   name="groomEmailid"
                   value={groomEmailid}
                   onChange={setSelectGroomEmailid}
                   placeholder={`${t("CR_GROOM_EMAIL")}`}
                   //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                  {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
+                  {...(validation = { isRequired: false, title: t("CR_EMAIL_ERROR") })}
                 />
               </div>
             </div>
@@ -1649,6 +1645,43 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
               </div>
             </div>
           )}
+          {isPopup && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div style={{ fontSize: "18px", margin: "10px" }}>You selected gender as 'Female', Do you want to continue?</div>
+                  <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button
+                      style={{
+                        backgroundColor: "orange",
+                        padding: "4px 16px",
+                        color: "white",
+                        borderRadius: "8px",
+                      }}
+                      onClick={() => {
+                        selectGroomGender(genderValue);
+                        setIsPopup(false);
+                        setGenderValue("");
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                      onClick={() => {
+                        setIsPopup(false);
+                        const selectedGender = gender.filter((option) => option.code === "MALE");
+                        selectGroomGender(selectedGender[0]);
+                        setGenderValue("");
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
           {toast && (
             <Toast
               error={
@@ -1738,8 +1771,6 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                     ? t(`CR_INVALID_GENDER_CHOOSE`)
                     : groomMaritalstatusIDError
                     ? t(`CR_INVALID_MARITAL_STATUS_CHOOSE`)
-                    : groomEmailidError
-                    ? t(`CR_EMAIL_ERROR`)
                     : setToast(false)
                   : setToast(false)
               }

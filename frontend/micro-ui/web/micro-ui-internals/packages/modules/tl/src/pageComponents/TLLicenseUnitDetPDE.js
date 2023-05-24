@@ -6,7 +6,10 @@ import { sortDropdownNames, stringReplaceAll } from "../utils/index";
 import { useQueryClient } from "react-query";
 import { convertEpochToDate } from '../utils/index';
 
-const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) => {
+const TLLicenseUnitDetPDE = ({ t, config, onSelect, userType, formData }) => {
+
+console.log("form data"+JSON.stringify(formData));
+
   const [formditenable, setFormditenable] = Digit.Hooks.useSessionStorage("TL_RENEWAL_ENABLE_TRADE", {});
 
   let naturetype = null;
@@ -281,12 +284,6 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   //   return BusinessSubTypeMenu;
   // }
-  function resetStructurePlace(){
-    setFeildsDoor([{
-      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
-    }]);
-  }
   Data &&
     Data.TradeLicense &&
     Data.TradeLicense.TradeType.map((ob) => {
@@ -448,7 +445,6 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const selectStructureType = (value => {
-    resetStructurePlace();
     setStructureType(value);
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
@@ -740,7 +736,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setIsInitialRender(false);
       cmbLB.push(...LBs.filter((localbody) => ((localbody?.city?.districtid == DistrictList?.districtid) && (localbody?.city?.lbtypecode == LBTypeList?.code))));
       setFilterLocalbody(cmbLB);
-      let districtidtemp = LBs.filter(object => object.code === tenantId)[0].city.districtid;
+      let districtidtemp = LBs?.filter(object => object.code === tenantId)[0]?.city?.districtid;
       cmbPO = [];
       cmbPO.push(...cmbPostOffice.filter((po) => (po?.distid == districtidtemp)));
       setFilterPostoffice(cmbPO);
@@ -1375,4 +1371,4 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     </React.Fragment>
   );
 };
-export default TLLicenseUnitDetRenewal;
+export default TLLicenseUnitDetPDE;

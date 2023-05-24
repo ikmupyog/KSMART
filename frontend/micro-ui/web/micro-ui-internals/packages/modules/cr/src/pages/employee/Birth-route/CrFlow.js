@@ -22,56 +22,62 @@ const CrFlow = ({ path }) => {
     
     // HOSPITAL_OPERATOR START----------------------------------//
     {
-      title: "CR_BIRTH_REGISTRATION",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_BIRTH_REGISTRATION"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
-      role: "HOSPITAL_OPERATOR"
+      role: "HOSPITAL_OPERATOR",
+      code:"CR_BIRTH_REGISTRATION"
     },
     {
-      title: "CR_STILL_BIRTH_REG",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_STILL_BIRTH_REG"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-stillbirth/stillbirth-child-details`,
-      role: "HOSPITAL_OPERATOR"
+      role: "HOSPITAL_OPERATOR",
+      code:"CR_STILL_BIRTH_REG"
     },
     // HOSPITAL_OPERATOR END ----------------------------------------------------------//
 
     // HOSPITAL_APPROVER START--------------------------------------------------------//
     {
-      title: "CR_BIRTH_REGISTRATION",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_BIRTH_REGISTRATION"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
-      role: "HOSPITAL_APPROVER"
+      role: "HOSPITAL_APPROVER",
+      code:"CR_BIRTH_REGISTRATION"
     },
     {
-      title: "CR_STILL_BIRTH_REG",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_STILL_BIRTH_REG"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-stillbirth/stillbirth-child-details`,
-      role: "HOSPITAL_APPROVER"
+      role: "HOSPITAL_APPROVER",
+      code:"CR_STILL_BIRTH_REG"
     },
     // HOSPITAL_APPROVER END----------------------------------------------------------
 
     // BND_DISTRICT_REGISTRAR START----------------------------------------------------------
 
     {
-      title: "CR_ABANDONED_BIRTH_REGISTRATION",
-      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      title: t("CR_ABANDONED_BIRTH_REGISTRATION"),
+      subTitle: t("CR_ABANDONED_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_DISTRICT_REGISTRAR"
+      role: "BND_DISTRICT_REGISTRAR",
+      code:"CR_ABANDONED_BIRTH_REGISTRATION"
     },
 
     // BND_LOCAL_REGISTRAR START----------------------------------------------------------
 
     {
-      title: "CR_ABANDONED_BIRTH_REGISTRATION",
-      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      title: t("CR_ABANDONED_BIRTH_REGISTRATION"),
+      subTitle: t("CR_ABANDONED_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_LOCAL_REGISTRAR"
+      role: "BND_LOCAL_REGISTRAR",
+      code:"CR_ABANDONED_BIRTH_REGISTRATION"
     },
 
     // BND_LOCAL_REGISTRAR END----------------------------------------------------------
@@ -79,11 +85,12 @@ const CrFlow = ({ path }) => {
     // BND_SUB_REGISTRAR START----------------------------------------------------------
 
     {
-      title: "CR_ABANDONED_BIRTH_REGISTRATION",
-      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      title: t("CR_ABANDONED_BIRTH_REGISTRATION"),
+      subTitle: t("CR_ABANDONED_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_SUB_REGISTRAR"
+      role: "BND_SUB_REGISTRAR",
+      code:"CR_ABANDONED_BIRTH_REGISTRATION"
     },
 
     // BND_SUB_REGISTRAR END-----------------------------------------------------------
@@ -95,11 +102,12 @@ const CrFlow = ({ path }) => {
     // INSTITUTION_OPERATOR START-------------------------------------------------------------------------
 
     {
-      title: "CR_BIRTH_REGISTRATION",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_BIRTH_REGISTRATION"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
-      role: "INSTITUTION_OPERATOR"
+      role: "INSTITUTION_OPERATOR",
+      code:"CR_BIRTH_REGISTRATION"
     },
 
     // INSTITUTION_OPERATOR END-------------------------------------------------------------------------
@@ -107,11 +115,12 @@ const CrFlow = ({ path }) => {
     // INSTITUTION_APPROVER START-------------------------------------------------------------------------
 
     {
-      title: "CR_BIRTH_REGISTRATION",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_BIRTH_REGISTRATION"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
-      role: "INSTITUTION_APPROVER"
+      role: "INSTITUTION_APPROVER",
+      code:"CR_BIRTH_REGISTRATION"
     },
 
     // INSTITUTION_APPROVER END-------------------------------------------------------------------------
@@ -119,11 +128,12 @@ const CrFlow = ({ path }) => {
     // OFFICIAL_NOTIFIER START-------------------------------------------------------------------------
 
     {
-      title: "CR_ABANDONED_BIRTH_REGISTRATION",
-      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      title: t("CR_ABANDONED_BIRTH_REGISTRATION"),
+      subTitle: t("CR_ABANDONED_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "OFFICIAL_NOTIFIER"
+      role: "OFFICIAL_NOTIFIER",
+      code:"CR_ABANDONED_BIRTH_REGISTRATION"
     },
 
     // OFFICIAL_NOTIFIER END-------------------------------------------------------------------------
@@ -131,53 +141,60 @@ const CrFlow = ({ path }) => {
     // BND_CEMP START-----------------------------------------------------------------------------------
 
     {
-      title: "CR_BIRTH_REGISTRATION",
-      subTitle: "CR_BIRTH_NEW_REG",
+      title: t("CR_BIRTH_REGISTRATION"),
+      subTitle: t("CR_BIRTH_NEW_REG"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_BIRTH_REGISTRATION"
     },
     {
-      title: "CR_STILL_BIRTH_REG",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: t("CR_STILL_BIRTH_REG"),
+      subTitle: t("CR_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-stillbirth/stillbirth-child-details`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_BIRTH_NEW_REGISTRATION"
     },
     {
-      title: "CR_BIRTH_BORN_OUTSIDE",
-      subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
+      title: t("CR_BIRTH_BORN_OUTSIDE"),
+      subTitle: t("CR_BIRTH_BORN_OUTSIDE_DESC"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-bornoutsidebirth/born-outside-child-details`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_BIRTH_BORN_OUTSIDE"
     },
     {
-      title: "CR_ABANDONED_BIRTH_REGISTRATION",
-      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      title: t("CR_ABANDONED_BIRTH_REGISTRATION"),
+      subTitle: t("CR_ABANDONED_BIRTH_NEW_REGISTRATION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_ABANDONED_BIRTH_REGISTRATION"
     },
     {
-      title: "CR_NAC_BIRTH",
-      subTitle: "CR_NAC_BIRTH_REG",
+      title: t("CR_NAC_BIRTH"),
+      subTitle: t("CR_NAC_BIRTH_REG"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-nacbirthsearch/nac-download-details`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_NAC_BIRTH"
     },
     {
-      title: "CR_ADOPTION",
-      subTitle: "CR_BIRTH_REG_NEW_ADOPTION",
+      title: t("CR_ADOPTION"),
+      subTitle: t("CR_BIRTH_REG_NEW_ADOPTION"),
       img: <FileProtected />,
       link: `/digit-ui/employee/cr/create-adoption`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_ADOPTION"
     },
     {
-      title: "CR_BIRTH_NAME_INC_CORRECTION",
-      subTitle: "CR_BIRTH_NAME_INC_CORRECTION_DESC",
+      title: t("CR_BIRTH_NAME_INC_CORRECTION"),
+      subTitle: t("CR_BIRTH_NAME_INC_CORRECTION_DESC"),
       img: <FileProtected />,
       // link: `${path}/structure-type`,
-      role: "BND_CEMP"
+      role: "BND_CEMP",
+      code:"CR_BIRTH_NAME_INC_CORRECTION"
     },    
 
     // BND_CEMP END---------------------------------------------------------------------------------------
@@ -257,7 +274,7 @@ const CrFlow = ({ path }) => {
             item.link ? (
               <Link to={item.link} key={index}>
                 {/* <Link to='trade-lisense'> */}
-                <div className={ClassList[item.title]}>
+                <div className={ClassList[item.code]}>
                   <div className="contentMenu">
                     <div className="contentImg">{item.img}</div>
                     <div className="contentText">
@@ -268,7 +285,7 @@ const CrFlow = ({ path }) => {
                 </div>{" "}
               </Link>
             ) : (
-              <div className={ClassList[item.title]}>
+              <div className={ClassList[item.code]}>
                 <div className="contentMenu">
                   <div className="contentImg">{item.img}</div>
                   <div className="contentText">
