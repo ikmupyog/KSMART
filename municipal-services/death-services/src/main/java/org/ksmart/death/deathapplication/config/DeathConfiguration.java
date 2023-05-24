@@ -111,4 +111,27 @@ public class DeathConfiguration {
     
     @Value("${persister.update.death.payment.topic}")
     private String updateDeathPaymentTopic;
+
+    //SMS
+    @Value("${kafka.topics.notification.sms}")
+    private String smsNotifTopic;
+
+    @Value("${notification.sms.enabled.forDeath}")
+    private Boolean isDeathSMSEnabled;
+
+    @Value("${egov.user.event.notification.enabledForDeath}")
+    private Boolean isUserEventsNotificationEnabledForDeath;
+
+    //Localization
+    @Value("${egov.localization.host}")
+    private String localizationHost;
+
+    @Value("${egov.localization.context.path}")
+    private String localizationContextPath;
+
+    @Value("${egov.localization.search.endpoint}")
+    private String localizationSearchEndpoint;
+
+    @Value("${egov.localization.statelevel}")
+    private Boolean isLocalizationStateLevel;
 }

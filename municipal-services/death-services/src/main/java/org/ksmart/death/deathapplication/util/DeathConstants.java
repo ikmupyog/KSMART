@@ -1,4 +1,9 @@
 package org.ksmart.death.deathapplication.util;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
      * Creates DeathConstants
      * Rakhi S IKM
@@ -230,5 +235,39 @@ public class DeathConstants {
     public static final String BND_MDMS_VEHICLES = "VehicleType";
     public static final String CR_MDMS_DEATH_VEHICLES_CODE_JSONPATH = "$.MdmsRes.birth-death-service.VehicleType[*].code";
     public static final String CR_MDMS_DEATH_VEHICLES_JSONPATH = "$.MdmsRes.birth-death-service.VehicleType";
+
+    // ACTION_STATUS combinations for notification
+
+    public static final String ACTION_STATUS_INITIATED = "INITIATE_INITIATED";
+    
+    public static final String ACTION_STATUS_PAYMENT = "INITIATE_PENDINGPAYMENT";
+
+    public static final String ACTION_STATUS_APPLIED = "APPLY_APPLIED";
+    
+    public static final String ACTION_STATUS_APPROVED = "APPROVE_APPROVED";
+    
+    public static final String ACTION_STATUS_REJECTED = "REJECT_REJECTED";
+    
+    public static final String ACTION_STATUS_FIELDINSPECTION = "FORWARD_FIELDINSPECTION";
+    
+    public static final String ACTION_STATUS_PENDINGAPPROVAL = "FORWARD_PENDINGAPPROVAL";
+    
+    public static final String ACTION_SENDBACKTOCITIZEN_FIELDINSPECTION = "SENDBACKTOCITIZEN_CITIZENACTIONREQUIRED";
+    
+    public static final String ACTION_FORWARD_CITIZENACTIONREQUIRED = "FORWARDTOEMPLOYEE_FIELDINSPECTION";
+    
+    public static final String ACTION_CANCEL_CANCELLED = "CANCEL_CANCELLED";
+    
+    public static final String ACTION_STATUS_EXPIRED = "EXPIRE_EXPIRED";
+    
+    public static final String ACTION_STATUS_MANUAL_EXPIRED = "MANUALEXPIRE_MANUALEXPIRED";
+
+    public static final String NOTIFICATION_LOCALE = "en_IN";
+
+    public static final String NOTIFICATION_INITIATED_TEST = "cr.en.counter.approved";
+    public static final List<String> NOTIFICATION_CODES = Collections.unmodifiableList(Arrays.asList(
+    		NOTIFICATION_INITIATED_TEST
+           ));
+    public static final String MODULE = "rainmaker-cr";      
 
 }

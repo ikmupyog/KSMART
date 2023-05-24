@@ -1096,7 +1096,37 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
-      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId   
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId  
+
+    - query: INSERT INTO public.eg_death_document_dtls(id, tenantid, death_dtls_id, document_type, filestore_id, death_ackno, active, created_by, createdtime, lastmodifiedby, lastmodifiedtime, filename)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCertificateDtls.*.wfDocuments.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.Id
+      
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.DeathDtlId
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.documentType
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.fileStoreId
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.DeathACKNo
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.Active
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.AuditDetails.createdBy      
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.AuditDetails.lastModifiedBy
+      
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.wfDocuments.*.fileName
 
       #commented on 15/12/2023   
 

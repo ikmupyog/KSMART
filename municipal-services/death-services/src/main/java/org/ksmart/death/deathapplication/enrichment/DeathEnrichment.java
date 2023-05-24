@@ -31,6 +31,7 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDocument;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
+import org.ksmart.death.deathapplication.web.models.WorkFlowDocuments;
 import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.ksmart.death.deathapplication.web.models.Demand.DemandRequest;
 import org.ksmart.death.deathapplication.web.models.Demand.DemandResponse;
@@ -259,7 +260,20 @@ public class DeathEnrichment implements BaseEnrichment{
                         deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
                     }
                     deathDtls.setDeathAuditDetails(auditDetails);
-                } );        
+
+                    //Rakhi S ikm on 24.05.2023 Document Upload (Workflow) 
+                    List<WorkFlowDocuments> documentInfo = deathDtls.getWfDocuments();
+                    if (documentInfo!=null){                        
+                            documentInfo
+                                .forEach(document -> {
+                            document.setId(UUID.randomUUID().toString());
+                            document.setActive(true);
+                            document.setTenantId(deathDtls.getDeathBasicInfo().getTenantId());
+                            document.setDeathDtlId(deathDtls.getDeathBasicInfo().getId());
+                            document.setDeathDocAuditDetails(auditDetails);
+                        });                   
+                      }   
+                });        
         }//UPDATE END
 
 //Rakhi S on 16.02.2023

@@ -41,4 +41,10 @@ public class WorkFlowDocuments {
 
     @JsonProperty("fileName")
     private String fileName = null;
+
+    @JsonProperty("DeathACKNo")
+    private String deathACKNo = null;
+
+    @JsonProperty("AuditDetails")
+    private AuditDetails deathDocAuditDetails = null;
 }
