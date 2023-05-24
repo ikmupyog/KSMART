@@ -655,55 +655,124 @@ export const convertToEditTrade = (data = {}) => {
 
 //FinancialYear
 export const convertToResubmitTrade = (data) => {
-
-  let formdata = {
+  let address = {
+    "doorNo": data?.TradeDetails?.tradeLicenseDetail?.address?.doorNo,
+    "localityName": data?.TradeDetails?.tradeLicenseDetail?.address?.localityName,
+    "street": data?.TradeDetails?.tradeLicenseDetail?.address?.street,
+    "landmark": data?.TradeDetails?.tradeLicenseDetail?.address?.landmark,
+    "buildingName": data?.TradeDetails?.tradeLicenseDetail?.address?.buildingName,
+    "zonalId": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.address?.wardId) ? data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.zonecode : data?.TradeDetails?.tradeLicenseDetail?.address?.zonalId,
+    "wardId": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.address?.wardId) ? data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.code : data?.TradeDetails?.tradeLicenseDetail?.address?.wardId,
+    "wardNo": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.address?.wardId) ? data?.TradeDetails?.tradeLicenseDetail?.address?.wardId?.wardno : data?.TradeDetails?.tradeLicenseDetail?.address?.wardNo,
+    "postOffice": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice) ? data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name : data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice,
+    "pincode": data?.TradeDetails?.tradeLicenseDetail?.address?.pincode,
+    "contactNo": data?.TradeDetails?.tradeLicenseDetail?.address?.contactNo,
+    "email": data?.TradeDetails?.tradeLicenseDetail?.address?.email,
+    "waterbody": data?.TradeDetails?.tradeLicenseDetail?.address?.waterbody,
+    "serviceArea": data?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea,
+    "tenantId": Digit.ULBService.getCitizenCurrentTenant()
+  };
+ 
+  // address.postOffice = data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name;
+  // address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  let structurePlace = data?.TradeDetails?.tradeLicenseDetail?.structurePlace;
+  structurePlace?.map((structplace) => {
+    structplace.isResurveyed = structplace?.isResurveyed !== "" ? structplace?.isResurveyed?.code && structplace?.isResurveyed?.code === "YES" ? true : false : false;
+  });
+  //structurePlace.isResurveyed = data?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed?.code === "YES" ? true : false;
+  let tradeUnits = [{
+    "businessCategory": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory,
+    "businessType": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType,
+    "businessSubtype": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype
+  }];
+  const formdata = {
     Licenses: [
       {
-        id: data?.id,
-        tenantId: data?.address?.city?.code,
-        businessService: data?.businessService,
-        licenseType: data?.licenseType,
-        applicationType: data.applicationType,
-        workflowCode: data.workflowCode,
-        licenseNumber: data?.licenseNumber,
-        applicationNumber: data?.applicationNumber,
-        tradeName: data?.tradeName,
-        applicationDate: data?.applicationDate,
-        commencementDate: data?.commencementDate,
-        issuedDate: data?.issuedDate,
-        financialYear: data?.financialYear,
-        validFrom: data?.validFrom,
-        validTo: data?.validTo,
+        id: data?.TradeDetails?.id,
         action: "FORWARD",
-        wfDocuments: data?.wfDocuments,
-        status: data?.status,
+        commencementDate: Date.parse(data?.TradeDetails?.commencementDate),
+        tenantId: data?.TradeDetails?.tenantId,
         tradeLicenseDetail: {
-          address: data.tradeLicenseDetail.address,
-          applicationDocuments: getEditTradeDocumentUpdate(data),
-          //    accessories: gettradeupdateaccessories(data),
-          owners: gettradeownerarray(data),
-          structureType: (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
-          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
-          tradeUnits: gettradeupdateunits(data),
-          additionalDetail: data.tradeLicenseDetail.additionalDetail,
-          auditDetails: data.tradeLicenseDetail.auditDetails,
-          channel: data.tradeLicenseDetail.channel,
-          id: data.tradeLicenseDetail.id,
-          institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? {
-            designation: data?.owners?.owners?.[0]?.designation,
-            ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-            mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-            instituionName: data?.owners?.owners?.[0]?.institutionName,
-            name: data?.owners?.owners?.[0]?.name,
-          } : null,
+          id: data?.TradeDetails?.tradeLicenseDetail?.id,
+          channel: "CITIZEN",
+          businessSector: Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.businessSector) ? data?.TradeDetails?.tradeLicenseDetail?.businessSector?.code : data?.TradeDetails?.tradeLicenseDetail?.businessSector,
+          capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
+          enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,
+          structureType: Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.structureType) ? data?.TradeDetails?.tradeLicenseDetail?.structureType?.code : data?.TradeDetails?.tradeLicenseDetail?.structureType,
+          structurePlaceSubtype: Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype) ? data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code : data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype,
+          businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc?.trim(),
+          licenseeType: Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.licenseeType) ? data?.TradeDetails?.tradeLicenseDetail?.licenseeType?.code : data?.TradeDetails?.tradeLicenseDetail?.licenseeType,
+          noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
+          ownershipCategory: Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory) ? data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code : data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory,
+          address: address,//data?.TradeDetails?.tradeLicenseDetail?.address
+          applicationDocuments: null,
+          owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
+          institution: data?.TradeDetails?.tradeLicenseDetail?.institution,
+          tradeUnits: tradeUnits,
+          structurePlace: structurePlace, //data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
+          ownerspremise: data?.TradeDetails?.tradeLicenseDetail?.ownerspremise
         },
-        calculation: null,
-        auditDetails: data?.auditDetails,
-        accountId: data?.accountId,
+        auditDetails: data?.TradeDetails?.auditDetails,
+        accountId: data?.TradeDetails?.accountId,
+        licenseUnitName: data?.TradeDetails?.licenseUnitName,
+        licenseUnitNameLocal: data?.TradeDetails?.licenseUnitNameLocal,
+        desiredLicensePeriod: Array.isArray(data?.TradeDetails?.desiredLicensePeriod) ? data?.TradeDetails?.desiredLicensePeriod?.code : data?.TradeDetails?.desiredLicensePeriod,
+        wfDocuments: [],
+        applicationDocuments: [],
+        workflowCode: data?.TradeDetails?.workflowCode
       }
     ]
-  }
+  };
   return formdata;
+
+  // let formdata = {
+  //   Licenses: [
+  //     {
+  //       id: data?.id,
+  //       tenantId: data?.tenantId,
+  //       businessService: data?.businessService,
+  //       licenseType: data?.licenseType,
+  //       applicationType: data.applicationType,
+  //       workflowCode: data.workflowCode,
+  //       licenseNumber: data?.licenseNumber,
+  //       applicationNumber: data?.applicationNumber,
+  //       tradeName: data?.tradeName,
+  //       applicationDate: data?.applicationDate,
+  //       commencementDate: data?.commencementDate,
+  //       issuedDate: data?.issuedDate,
+  //       financialYear: data?.financialYear,
+  //       validFrom: data?.validFrom,
+  //       validTo: data?.validTo,
+  //       action: "FORWARD",
+  //       wfDocuments: data?.wfDocuments,
+  //       status: data?.status,
+  //       tradeLicenseDetail: {
+  //         address: data.tradeLicenseDetail.address,
+  //         applicationDocuments: getEditTradeDocumentUpdate(data),
+  //         //    accessories: gettradeupdateaccessories(data),
+  //         owners: gettradeownerarray(data),
+  //         structureType: (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
+  //         subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
+  //         tradeUnits: gettradeupdateunits(data),
+  //         additionalDetail: data.tradeLicenseDetail.additionalDetail,
+  //         auditDetails: data.tradeLicenseDetail.auditDetails,
+  //         channel: data.tradeLicenseDetail.channel,
+  //         id: data.tradeLicenseDetail.id,
+  //         institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? {
+  //           designation: data?.owners?.owners?.[0]?.designation,
+  //           ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+  //           mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+  //           instituionName: data?.owners?.owners?.[0]?.institutionName,
+  //           name: data?.owners?.owners?.[0]?.name,
+  //         } : null,
+  //       },
+  //       calculation: null,
+  //       auditDetails: data?.auditDetails,
+  //       accountId: data?.accountId,
+  //     }
+  //   ]
+  // }
+  // return formdata;
 }
 export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   let tradeUnitCorr = [];

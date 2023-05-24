@@ -3,11 +3,11 @@ import React, { useState, useReducer, useCallback } from "react";
 import Timeline from "../components/TLTimeline";
 
 
-const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
-  const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
+const TLLicenseApplicantDetEdit = ({ t, config, onSelect, userType, formData }) => {
+  const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails ? formData?.TradeDetails : formData );
+  const [tenantId, setTenantId] =  useState(formDatalocal?.tenantId); 
   const [valflag, setValflag] = useState(false);
   const [initialrender, setInitialrender] = useState(false);
-  const [flgOwn, setFlgOwn] = useState(false);
   const [toast, setToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   let validation = {};
@@ -40,16 +40,16 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
   /****  address */
 
-let ownerappmap ={
-  name: "ownerName",
-  houseName: "houseName",
-  street: "street",
-  locality: "locality",
-  postOffice: "postOffice",
-  pincode: "pincode",
-  aadhaarNumber: "owneraadhaarNo",
-  mobileNumber: "ownerContactNo"
-};
+  let ownerappmap ={
+    name: "ownerName",
+    houseName: "houseName",
+    street: "street",
+    locality: "locality",
+    postOffice: "postOffice",
+    pincode: "pincode",
+    aadhaarNumber: "owneraadhaarNo",
+    mobileNumber: "ownerContactNo"
+  };
   /** applicant */
 
   /** owner */
@@ -60,7 +60,7 @@ let ownerappmap ={
   ];
 
   const [LicenseeType, setLicenseeType] = useState(formDatalocal?.tradeLicenseDetail?.licenseeType ?
-    menu.filter(obj => obj.code === formDatalocal?.tradeLicenseDetail?.licenseeType.code)[0]
+    menu.filter(obj => obj.code === formDatalocal?.tradeLicenseDetail?.licenseeType)[0]
     : { i18nKey: "TL_COMMON_INDIVIDUAL", code: "INDIVIDUAL" });
 
   const comenu = [
@@ -183,7 +183,7 @@ let ownerappmap ={
 
   const [appState, dispatchapplicant] = formDatalocal?.tradeLicenseDetail?.owners?.length > 0 ? useReducer(reducer, storedAppData, initapplicantedit) : useReducer(reducer, storedAppData, initapplicant);
   const [ownerState, disptachowner] = formDatalocal?.tradeLicenseDetail?.ownerspremise?.length > 0 ? useReducer(reducerowner, storedOwnerData, initowneredit) : useReducer(reducerowner, storedOwnerData, initowner);
-    
+
   function selectLicenseeType(value) {
     if (value.code !== "JOINT_PARTNERSHIP" && appState.length > 1) {
       setErrorMessage("Multiple Applicant Found Remove....");
@@ -193,12 +193,10 @@ let ownerappmap ={
       }, 2000);
     } else
       setLicenseeType(value);
-      clearApplicant();
+      initapplicant();
+      initowner();
   }
-  function clearApplicant(){
-    initapplicant();
-    initowner();
-  }
+
   function selectLicensingInstitutionType(value) {
     setNatureOfInstitution(value);
   }
@@ -220,7 +218,7 @@ let ownerappmap ={
   const handleAppInputField = useCallback((index, e, key, length = 100) => {
     if(e.length===0){
       dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: "" } });
-      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]){
+      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory === "OWN" && LicenseeType === "INDIVIDUAL" && ownerappmap[key]){
         let jsonString = [];
         jsonString['index'] = index;
         jsonString['key'] = ownerappmap[key];
@@ -235,18 +233,17 @@ let ownerappmap ={
     }
     if (e.length <= length){
       dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: e } });
-      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]){
-         let jsonString = [];
-         jsonString['index'] = index;
-         jsonString['key'] = ownerappmap[key];
-         jsonString['value'] = e;
+      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory === "OWN" && LicenseeType === "INDIVIDUAL" && ownerappmap[key]){
+        let jsonString = [];
+        jsonString['index'] = index;
+        jsonString['key'] = ownerappmap[key];
+        jsonString['value'] = e;
 
-        let peyloadtemp= { index, key, value: e };
+       let peyloadtemp= { index, key, value: e };
 
-        disptachowner({ type: "EDIT_CURRENT_OWNER",payload : {...jsonString} });
+       disptachowner({ type: "EDIT_CURRENT_OWNER",payload : {...jsonString} });
       }
     }
-     
     else
       return;
   }, [dispatchapplicant,disptachowner]);
@@ -259,31 +256,35 @@ let ownerappmap ={
 
   const goNext = async () => {
 
+    console.log("form data"+JSON.stringify(formDatalocal));
     const result = await validateData();
     if (result) {
       let owners = appState;
-
-      let ownerspremise =  ownerState;
+      let ownerspremise = ownerState;
       let institution = LicenseeType.code === "INSTITUTION" ? {
         "institutionName": institutionName?.trim(), "contactNo": contactNo?.trim(),
         "organisationregistrationno": organisationregistrationno?.trim(), "address": insaddress?.trim(), "natureOfInstitution": natureOfInstitution.code,
         "email": email?.trim(), "licenseUnitId": licenseUnitId?.trim()
       } : null;
-      let licenseeType = LicenseeType;
-      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment?.trim();
+      let licenseeType = LicenseeType.code;
+      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;   //?.trim();
       let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
       let structurePlaceSubtype = formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype;
       let businessActivityDesc = formDatalocal?.tradeLicenseDetail?.businessActivityDesc?.trim();
-      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees?.trim();
+      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees;  //?.trim();
       let ownershipCategory = formDatalocal?.tradeLicenseDetail?.ownershipCategory;
-      let address = formDatalocal?.tradeLicenseDetail?.address;
+      let address = formDatalocal?.tradeLicenseDetail?.address;  
       let structurePlace = formDatalocal?.tradeLicenseDetail?.structurePlace;
       let tradeUnits = formDatalocal?.tradeLicenseDetail?.tradeUnits;
       let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
       let enterpriseType=formDatalocal?.tradeLicenseDetail?.enterpriseType;
-      let tradeLicenseDetail = {
-        licenseeType, owners, ownerspremise : (structureType.code !== "DESIGNATEDPLACE" ? ownerspremise : null), institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
+      // let applicationType=formDatalocal?.applicationType;
+      // let workflowCode=formDatalocal?.workflowCode;
+      // let oldApplicationNumber=formDatalocal?.oldApplicationNumber;
+      let tradeLicenseDetail = { tenantId,
+        licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
         , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
+       
       };
       onSelect(config.key, { tradeLicenseDetail });
     } else {
@@ -294,117 +295,11 @@ let ownerappmap ={
     }
 
   };
-  
+
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
     let aadharvalidation = /^[0-9]{12}$/;
     let validation = true;
-    if(!LicenseeType){
-      setErrorMessage(t("TL_INVALID_LICENSEE_TYPE"));
-      validation = false;
-    }
-    if(appState[0].name === "") {
-      setErrorMessage(t("TL_INVALID_NAME_APPLICANT"));
-      validation = false;
-    }
-    if(appState[0].applicantNameLocal === "") {
-      setErrorMessage(t("TL_INVALID_NAME_APPLICANT"));
-      validation = false;
-    }
-    if(appState[0].careOfName === "") {
-      setErrorMessage(t("TL_INVALID_CARE_NAME"));
-      validation = false;
-    }
-    if(appState[0].houseName === ""){
-      setErrorMessage(t("TL_INVALID_HOUSE_NAME"));
-      validation = false;
-    } 
-    if(LicenseeType?.code !== "INSTITUTION") {
-      if(appState[0].street === "") {
-        setErrorMessage(t("TL_INVALID_STREET_NAME"));
-        validation = false;
-      }
-      if(appState[0].locality === "") {
-        setErrorMessage(t("TL_INVALID_LOCALITY"));
-        validation = false;
-      } 
-      if(appState[0].postOffice === "") {
-        setErrorMessage(t("TL_INVALID_POSTOFFICE"));
-        validation = false;
-      }
-      if(appState[0].aadhaarNumber === ""){
-        setErrorMessage(t("TL_INVALID_ADHAAR_NO"));
-        validation = false;
-      }
-      if(appState[0].mobileNumber === "") {
-        setErrorMessage(t("TL_INVALID_MOBILE_NO"));
-        validation = false;
-      } 
-      if(appState[0].emailId === "") {
-        setErrorMessage(t("TL_INVALID_EMAIL_ID"));
-        validation = false;
-      }
-    }
-    if(LicenseeType?.code === "INSTITUTION"){
-      if(appState[0].designation === "") {
-        setErrorMessage(t("TL_INVALID_LICENSEE_DESIGNATION"));
-        validation = false;
-      }
-      if(appState[0].contactNo === "") {
-        setErrorMessage(t("TL_INVALID_CONTACT_NO"));
-        validation = false;
-      } 
-      if(email === "") {
-        setErrorMessage(t("TL_INVALID_EMAIL_ID"));
-        validation = false;
-      }
-      if(insaddress === "") {
-        setErrorMessage(t("TL_INVALID_LICENSING_INSTITUTION_ADDRESS"));
-        validation = false;
-      } 
-      if(institutionName === "") {
-        setErrorMessage(t("TL_LICENSING_INSTITUTION_NAME_INVALID"));
-        validation = false;
-      }
-      if(organisationregistrationno === "") {
-        setErrorMessage(t("TL_INVALID_LICENSING_INSTITUTION_ID"));
-        validation = false;
-      } 
-      if(licenseUnitId === "") {
-        setErrorMessage(t("TL_INVALID_LICENSING_INSTITUTION_ID"));
-        validation = false;
-      }
-    }
-  if(formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") {
-    if(ownerState[0].owneraadhaarNo == "") {
-      setErrorMessage(t("TL_INVALID_AADHAR_NO"));
-      validation = false;
-    }
-    if(ownerState[0].ownerName == "") {
-      setErrorMessage(t("TL_INVALID_OWNER_NAME"));
-      validation = false;
-    }
-    if(ownerState[0].houseName == "") {
-      setErrorMessage(t("TL_INVALID_HOUSE_NAME"));
-      validation = false;
-    }
-    if(ownerState[0].street == "") {
-      setErrorMessage(t("TL_INVALID_STREET_NAME"));
-      validation = false;
-    }
-    if(ownerState[0].locality == "") {
-      setErrorMessage(t("TL_INVALID_LOCALITY"));
-      validation = false;
-    }
-    if(ownerState[0].postOffice == "") {
-      setErrorMessage(t("TL_INVALID_POSTOFFICE"));
-      validation = false;
-    }
-    if(ownerState[0].ownerContactNo == "") {
-      setErrorMessage(t("TL_INVALID_CONTACT_NO"));
-      validation = false;
-    }
-  } 
     appState?.map((ob) => {
       if (!ob.mobileNumber.match(mobilevalidation)) {
         setErrorMessage(t("TL_INVALID_MOBILE_NO"));
@@ -414,22 +309,19 @@ let ownerappmap ={
         setErrorMessage(t("TL_INVALID_AADHAR_NO"));
         validation = false;
       }
+      
     });
-    if(formDatalocal?.tradeLicenseDetail?.structureType.code !== 'DESIGNATEDPLACE')
-    {
-      ownerState?.map((ob) => {
-        if (!ob.ownerContactNo.match(mobilevalidation)) {
-          setErrorMessage(t("TL_INVALID_MOBILE_NO"));
-          validation = false;
-        }
-        if(!ob.owneraadhaarNo.match(aadharvalidation)) {
-          setErrorMessage(t("TL_INVALID_AADHAR_NO"));
-          validation = false;
-        }
-      });
-    }
-    
-
+    if(formDatalocal?.tradeLicenseDetail?.structureType !== 'DESIGNATEDPLACE')    
+    ownerState?.map((ob) => {
+      if (!ob.ownerContactNo.match(mobilevalidation)) {
+        setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+        validation = false;
+      }
+      if(!ob.owneraadhaarNo.match(aadharvalidation)) {
+        setErrorMessage(t("TL_INVALID_AADHAR_NO"));
+        validation = false;
+      }
+    });
     if (!contactNo.match(mobilevalidation) && contactNo !== "") {
       setErrorMessage(t("TL_INVALID_MOBILE_NO"));
       validation = false;
@@ -446,25 +338,24 @@ let ownerappmap ={
     }
     return Promise.resolve(validation);
   }
-
   const onSkip = () => onSelect();
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}>
-       {/* isDisabled={!LicenseeType || appState[0].name === "" || appState[0].applicantNameLocal === "" || appState[0].careOfName === "" */}
-        {/* //   || appState[0].houseName === "" || (LicenseeType?.code !== "INSTITUTION" ? appState[0].street === "" : false) || appState[0].locality === "" || appState[0].postOffice === ""
-        //   || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
-        //   || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
-        //   || organisationregistrationno === "" || licenseUnitId === "") : false)
-        //   || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
-        //   || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} > */}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2}/> : null}
+      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}
+        isDisabled={!LicenseeType || appState[0].name === "" || appState[0].applicantNameLocal === "" || appState[0].careOfName === ""
+          || appState[0].houseName === "" ||(LicenseeType.code !== "INSTITUTION" ? appState[0].street === "" : false) || appState[0].locality === "" || appState[0].postOffice === ""
+          || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
+          || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
+            || organisationregistrationno === "" || licenseUnitId === "") : false)
+          || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
+          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} >
 
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>
           </div>
-        </div>
+        </div> */}
         {/* <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" > </h1>
           </div>
@@ -482,7 +373,7 @@ let ownerappmap ={
           <div className="col-md-12">
             <LabelFieldPair style={{ display: "flex", }}>
               <CardLabel style={{ fontSize: "17px", width: "none !important" }}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
-              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" ,justifyContent: "space-between", width: "48%" }} />
+              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" }} />
             </LabelFieldPair>
           </div>
         </div>
@@ -710,96 +601,96 @@ let ownerappmap ={
             }
           </div>
         )}
-        {(formDatalocal?.tradeLicenseDetail?.structureType.code !== "DESIGNATEDPLACE") && (
-          <div>
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_OWNER_ADDRESS_LABEL")}`}
-                  </span>{" "}
-                </h1>
-              </div>
+        {(formDatalocal?.tradeLicenseDetail?.structureType !== "DESIGNATEDPLACE") && (
+        <div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_OWNER_ADDRESS_LABEL")}`}
+                </span>{" "}
+              </h1>
             </div>
-            {ownerState.map((field, index) => {
-              return (
-                <div key={`${field}-${index}`}>
-                  <div style={{
-                    border: "solid",
-                    borderRadius: "10px",
-                    //  padding: "25px",
-                    //  paddingTop: "25px",
-                    marginTop: "5px",
-                    borderColor: "#f3f3f3",
-                    background: "#FAFAFA",
-                  }} className="col-md-12">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" value={field.owneraadhaarNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "owneraadhaarNo", 12)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })} />
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownername" value={field.ownerName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z ]/ig, ''), "ownerName")} />
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" value={field.ownerContactNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "ownerContactNo", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })} />
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALITY") })} />
-                      </div>
+          </div>
+          {ownerState.map((field, index) => {
+            return (
+              <div key={`${field}-${index}`}>
+                <div style={{
+                  border: "solid",
+                  borderRadius: "10px",
+                  //  padding: "25px",
+                  //  paddingTop: "25px",
+                  marginTop: "5px",
+                  borderColor: "#f3f3f3",
+                  background: "#FAFAFA",
+                }} className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" value={field.owneraadhaarNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "owneraadhaarNo", 12)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })} />
                     </div>
-                    <div className="row">
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_STREET_NAME") })} />
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName", 150)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })} />
-                      </div>
-
-                      <div className="col-md-3">
-                        <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerponame" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice", 50)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
-                      </div>
-                      <div className="col-md-1">
-                        <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerpincode" value={field.pincode} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
-                      </div>
-                      {ownerState.length === (index + 1) && (
-                        <div className="col-md-1">
-                          <CardLabel>Add More</CardLabel>
-                          <LinkButton
-                            label={
-                              <svg className="icon  icon--plus" viewBox="0 0 5 5" fill="green" width="50" height="50">
-                                <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
-                              </svg>
-                            }
-                            onClick={(e) => disptachowner({ type: "ADD_OWNER" })}
-                          />
-                        </div>
-                      )}
-                      {ownerState.length > 1 && (
-                        <div className="col-md-1">
-                          <CardLabel>Remove</CardLabel>
-                          <LinkButton
-                            label={
-                              <svg viewBox="0 0 24 24" fill="red" width="50" height="50"> <g> <path fill="none" d="M0 0h24v24H0z" /> <path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z" /> </g> </svg>
-                            }
-                            onClick={(e) => disptachowner({ type: "REMOVE_OWNER", payload: { index } })}
-                          />
-                        </div>
-                      )}
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownername" value={field.ownerName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z ]/ig, ''), "ownerName")} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" value={field.ownerContactNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "ownerContactNo", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALITY") })} />
                     </div>
                   </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_STREET_NAME") })} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName", 150)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })} />
+                    </div>
+
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerponame" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice", 50)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
+                    </div>
+                    <div className="col-md-1">
+                      <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerpincode" value={field.pincode} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
+                    </div>
+                    {ownerState.length === (index + 1) && (
+                      <div className="col-md-1">
+                        <CardLabel>Add More</CardLabel>
+                        <LinkButton
+                          label={
+                            <svg className="icon  icon--plus" viewBox="0 0 5 5" fill="green" width="50" height="50">
+                              <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                            </svg>
+                          }
+                          onClick={(e) => disptachowner({ type: "ADD_OWNER" })}
+                        />
+                      </div>
+                    )}
+                    {ownerState.length > 1 && (
+                      <div className="col-md-1">
+                        <CardLabel>Remove</CardLabel>
+                        <LinkButton
+                          label={
+                            <svg viewBox="0 0 24 24" fill="red" width="50" height="50"> <g> <path fill="none" d="M0 0h24v24H0z" /> <path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z" /> </g> </svg>
+                          }
+                          onClick={(e) => disptachowner({ type: "REMOVE_OWNER", payload: { index } })}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )
-            })
+              </div>
+            )
+          })
           }
-          </div>
-          )}
+        </div>
+        )}
         <div>
           {toast && (
             <Toast
@@ -814,4 +705,4 @@ let ownerappmap ={
     </React.Fragment>
   );
 };
-export default TLLicenseApplicantDet;
+export default TLLicenseApplicantDetEdit;
