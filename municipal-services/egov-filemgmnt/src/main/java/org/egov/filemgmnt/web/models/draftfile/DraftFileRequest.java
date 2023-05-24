@@ -30,7 +30,7 @@ public class DraftFileRequest {
 
     @Valid
     @NotNull(message = "Draft file is required")
-    @JsonProperty("draftFile")
+    @JsonProperty("DraftFile")
     private DraftFile draftFile;
 
 }
