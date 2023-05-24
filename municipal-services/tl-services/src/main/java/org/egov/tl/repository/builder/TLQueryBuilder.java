@@ -258,6 +258,7 @@ public class TLQueryBuilder {
 
             if (criteria.getApplicationType() != null
                     && criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_CORRECTION)) {
+                addClauseIfRequired(preparedStmtList, builder);
                 builder.append(" tl.status=? ");
                 preparedStmtList.add(TLConstants.STATUS_APPROVED);
             }
