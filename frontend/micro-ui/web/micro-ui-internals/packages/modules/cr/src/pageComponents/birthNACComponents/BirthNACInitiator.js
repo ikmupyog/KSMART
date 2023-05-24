@@ -17,6 +17,8 @@ import {
   RadioButtons,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
+import { trimURL } from "../../utils";
 
 const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -208,15 +210,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     },
     [disptachowner]
   );
-  // const fetchFile = async (fileId) => {
-  //   const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
-  //   const newThumbnails = fileStoreIds.map((key) => {
-  //     const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-  //     return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
-  //   });
-  //   console.log(newThumbnails, "newThumbnails");
-  //   return newThumbnails;
-  // };
+  const fetchFile = async (fileId) => {
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
+    });
+    console.log({ newThumbnails });
+    return newThumbnails;
+  };
+
   const onSkip = () => onSelect();
   Menu &&
     Menu.map((genderDetails) => {
@@ -310,8 +313,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             const response = await Digit.UploadServices.Filestorage("citizen-profile", aadressFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
-              // const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              // setDocPreview(fileDetails);
+              const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              setAadressFile(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -742,7 +745,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                         optionKey="i18nKey"
                         name="childNameEn"
                         value={field?.childNameEn}
-                        onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^a-zA-Z/]/gi, ""), "childNameEn")}
+                        onChange={(e) => handleOwnerInputField(index, e.target.value.replace("^[a-zA-Z-.`' ]*$", ""), "childNameEn")}
                         disable={isEdit}
                         placeholder="Name"
                         {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: "Name" })}
@@ -805,7 +808,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                       optionKey="i18nKey"
                       name="nacorderofChildren"
                       value={field?.nacorderofChildren}
-                      onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "nacorderofChildren")}
+                      //onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "nacorderofChildren")}
                     />
                   </div>
                   <div className="col-md-3">
@@ -911,20 +914,24 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
-                {/* {docPreview && (
+                {uploadedFile && (
                   <div className="col-md-2">
-                    {_.head(docPreview)?.type === "pdf" ? (
+                    {_.head(uploadedFile)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(uploadedFile)?.pdfUrl} alt="Citizenship Pdf" />
                       </React.Fragment>
                     ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
+                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(uploadedFile)?.small} alt="Citizenship Image" />
                     )}
-                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
+                    <a
+                      style={{ color: "blue" }}
+                      target="_blank"
+                      href={_.head(uploadedFile)?.type === "pdf" ? _.head(uploadedFile)?.pdfUrl : _.head(uploadedFile)?.large}
+                    >
                       Preview
                     </a>
                   </div>
-                )} */}
+                )}
               </div>
               <div className="row">
                 <div className="col-md-6">
