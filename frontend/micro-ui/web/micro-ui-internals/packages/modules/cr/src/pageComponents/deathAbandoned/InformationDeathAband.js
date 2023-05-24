@@ -258,10 +258,10 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
   );
 
   const [DeceasedGender, setselectedDeceasedGender] = useState(
-    formData?.InformationDeathAband?.DeceasedGender?.code
-      ? formData?.InformationDeathAband?.DeceasedGender
-      : formData?.InformationDeathAband?.DeceasedGender
-      ? menu.filter((menu) => menu.code === formData?.InformationDeathAband?.DeceasedGender)[0]
+    formData?.InformationDeathAbandoned?.DeceasedGender?.code
+      ? formData?.InformationDeathAbandoned?.DeceasedGender
+      : formData?.InformationDeathAbandoned?.DeceasedGender
+      ? menu.filter((menu) => menu.code === formData?.InformationDeathAbandoned?.DeceasedGender)[0]
       : ""
   );
   const [Occupation, setSelectedOccupation] = useState(

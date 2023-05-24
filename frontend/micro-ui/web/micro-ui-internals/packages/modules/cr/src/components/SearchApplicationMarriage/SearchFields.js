@@ -49,6 +49,15 @@ const SearchFields = ({
                            {...(validation = { isRequired: false, type: "text" })}
                            placeholder={`${searchType == 'application' ? t("Application No") : t("Registration No")}`} />
             </SearchField>
+           {searchType !== 'application'&& <SearchField>
+                <label> {t("APPLICATION NO")}</label>
+                <TextInput name= "applicationNo"
+                           inputRef={register({})}
+                           onChange={idOnChange}
+                           control={control}
+                           {...(validation = { isRequired: false, type: "text" })}
+                           placeholder={ t("Application No")} />
+            </SearchField>}
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("DATE OF MARRIAGE")}</label>
                 <Controller
