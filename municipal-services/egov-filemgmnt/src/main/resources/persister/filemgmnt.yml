@@ -772,36 +772,37 @@ serviceMaps:
     fromTopic: save-fm-draftfile
     isTransaction: true
     queryMaps:
-    - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      basePath: DraftFiles.*
+    - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: DraftFile
       jsonMaps:
-      - jsonPath: $.DraftFiles.*.uuid
+      - jsonPath: $.DraftFile.id
 
-      - jsonPath: $.DraftFiles.*.tenantId
+      - jsonPath: $.DraftFile.tenantId
 
-      - jsonPath: $.DraftFiles.*.businessService
+      - jsonPath: $.DraftFile.businessService
 
-      - jsonPath: $.DraftFiles.*.moduleName
+      - jsonPath: $.DraftFile.moduleName
 
-      - jsonPath: $.DraftFiles.*.fileCode
+      - jsonPath: $.DraftFile.fileCode
 
-      - jsonPath: $.DraftFiles.*.draftType
+      - jsonPath: $.DraftFile.draftType
 
-      - jsonPath: $.DraftFiles.*.draftText
+      - jsonPath: $.DraftFile.draftText
 
-      - jsonPath: $.DraftFiles.*.assigner
+      - jsonPath: $.DraftFile.assigner
 
-      - jsonPath: $.DraftFiles.*.fileStoreId
+      - jsonPath: $.DraftFile.fileStoreId
 
-      - jsonPath: $.DraftFiles.*.status
+      - jsonPath: $.DraftFile.status
 
-      - jsonPath: $.DraftFiles.*.auditDetails.createdy
+      - jsonPath: $.DraftFile.auditDetails.createdBy
 
-      - jsonPath: $.DraftFiles.*.auditDetails.createdTime
+      - jsonPath: $.DraftFile.auditDetails.createdTime
 
-      - jsonPath: $.DraftFiles.*.auditDetails.lastModifiedBy
+      - jsonPath: $.DraftFile.auditDetails.lastModifiedBy
 
-      - jsonPath: $.DraftFiles.*.auditDetails.lastModifiedTime
+      - jsonPath: $.DraftFile.auditDetails.lastModifiedTime
 
   - version: 1.0B
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
