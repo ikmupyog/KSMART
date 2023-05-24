@@ -236,8 +236,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       setShowDatePicker(false);
       docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
+
+    if(childAge < 6){
+      setShowDatePicker(false);
+      docCondition = `NAME_LESS_THAN_SIX`;
+      // setSelectedDocuments(filteredDocs);
+    } 
        
-    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
+    if (childAge < 6 || Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
       console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
@@ -257,10 +263,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
     let filteredDocs = [];
     const childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-    // if(childAge < 6){
-    //   filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == `NAME_LESS_THAN_SIX`);
-    //   setSelectedDocuments(filteredDocs);
-    // } else
+      if(childAge > 6){
      if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
       selectedStudentMenu = [
         { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT" },
@@ -306,6 +309,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     } else {
       return null;
     }
+  }
   };
 
   const renderConditionalPopupComponent = () => {

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SearchRegistryDeath from "../../../components/SearchRegistryDeath";
 import { STATE_CODE } from "../../../config/constants";
-import { convertDateToEpoch } from "../../../utils";
+import { convertDateToEpoch, convertUTCDateToEpoch } from "../../../utils";
 
 const DeathCertificateSearch = () => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const DeathCertificateSearch = () => {
 
   function onSubmit(data) {
     if (!_.isEmpty(data.DateOfDeath)) {
-      _.set(data, "DateOfDeath", convertDateToEpoch(data.DateOfDeath, "start"))
+      _.set(data, "DateOfDeath", convertUTCDateToEpoch(data.DateOfDeath, "start"))
     }
     if (!_.isEmpty(data.fromDate)) {
       _.set(data, "fromDate", convertDateToEpoch(data.fromDate, "start"))
