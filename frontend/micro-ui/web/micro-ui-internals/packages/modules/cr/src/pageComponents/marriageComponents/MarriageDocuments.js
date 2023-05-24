@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import { trimURL } from "../../utils";
 
+
 const DOCUMENT_TYPES = {
   AADHAAR: "Aadhar",
   PASSPORT: "Passport",
@@ -818,8 +819,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
       setError(null);
       if (groomAadharDocument) {
         if (groomAadharDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          alert(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else if(groomAadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomAadharLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -835,6 +836,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
             }
             setIsGroomAadharLoading(false);
           } catch (err) {}
+        } else {
+          alert(t("Invalid file type"))
         }
       }
     })();
@@ -1367,8 +1370,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
       setError(null);
       if (witness2AadharDocument) {
         if (witness2AadharDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          alert(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else if(witness2AadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsWitness2AadharLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1384,6 +1387,8 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
             }
             setIsWitness2AadharLoading(false);
           } catch (err) {}
+        } else {
+          alert("Invalid File Type")
         }
       }
     })();
