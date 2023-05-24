@@ -21,6 +21,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
 import { trimURL } from "../../utils";
 import _ from "lodash";
+// import { ImageUploadHandler } from "./ImageCropper/ImageUploadHandler";
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -1132,6 +1133,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                           <h2 style={{ textAlign: "center" }}>{`${t("CR_GROOM_IMAGE")}`}</h2>
                           <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
                           <ImageUploadHandler
+                            t={t}
                             tenantId={tenantId}
                             uploadedImages={groomFilestoreId}
                             onPhotoChange={handleUploadGroom}
@@ -1147,6 +1149,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                           <h2 style={{ textAlign: "center" }}>{`${t("CR_BRIDE_IMAGE")}`}</h2>
                           <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
                           <ImageUploadHandler
+                            t={t}
                             tenantId={tenantId}
                             uploadedImages={brideFilestoreId}
                             onPhotoChange={handleUploadBride}
