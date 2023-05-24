@@ -321,7 +321,7 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
                 onChange={setSelectInitiatorName}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
-                {...(validation = { pattern: "[a-zA-Z0-9_-]+", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+                {...(validation = { pattern: "[a-zA-Z0-9_- ]+", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
             </div>
             <div className="col-md-3">

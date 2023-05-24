@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, BackButton, CardLabel, UploadFile, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
+import { FormStep, BackButton, CardLabel, UploadFile, Dropdown, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
@@ -78,7 +78,10 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
     },
   ];
 
-  const [error, setError] = useState(null);
+  const [fileSizeError, setFileSizeError] = useState(false);
+  const [fileTypeError, setFileTypeError] = useState(false);
+  const [fileUploadError, setFileUploadError] = useState(false);
+  const [toast, setToast] = useState(false);
 
   const [isGroomAadharLoading, setIsGroomAadharLoading] = useState(false);
   const [isGroomPassportLoading, setIsGroomPassportLoading] = useState(false);
@@ -506,15 +509,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
   function setSelectGroomAgeDocument(value) {
     setGroomBirthCertificate(null);
     setGroomSchoolCertificate(null);
-    setGroomDrivingLicense(null)
+    setGroomDrivingLicense(null);
     setGroomAgeDocument(value);
-    
   }
 
   function setSelectBrideAgeDocument(value) {
     setBrideBirthCertificate(null);
     setBrideSchoolCertificate(null);
-    setBrideDrivingLicense(null)
+    setBrideDrivingLicense(null);
     setBrideAgeDocument(value);
   }
 
@@ -815,11 +817,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomAadharDocument) {
-        if (groomAadharDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomAadharDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomAadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomAadharLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -831,21 +836,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomAadhar(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomAadharLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomAadharDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideAadharDocument) {
-        if (brideAadharDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideAadharDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideAadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBrideAadharLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -857,10 +875,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideAadhar(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBrideAadharLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -868,11 +896,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomPassportDocument) {
-        if (groomPassportDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomPassportDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomPassportDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomPassportLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -884,21 +915,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomPassport(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomPassportLoading(false);
           } catch (err) {}
+        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomPassportDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (bridePassportDocument) {
-        if (bridePassportDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (bridePassportDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (bridePassportDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBridePassportLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -910,10 +954,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBridePassport(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBridePassportLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -921,11 +975,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomSSNDocument) {
-        if (groomSSNDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomSSNDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomSSNDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomSSNLoading(true);
             const response = await Digit.UploadServices.Filestorage(`crmarriage/${uniqueId}/bride/ssn/${currentYear}`, groomSSNDocument, tenantId);
@@ -933,21 +990,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomSSN(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomSSNLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomSSNDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideSSNDocument) {
-        if (brideSSNDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideSSNDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideSSNDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBrideSSNLoading(true);
             const response = await Digit.UploadServices.Filestorage(`crmarriage/${uniqueId}/bride/ssn/${currentYear}`, brideSSNDocument, tenantId);
@@ -955,10 +1025,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideSSN(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBrideSSNLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -966,11 +1046,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomDrivingLicenseDocument) {
-        if (groomDrivingLicenseDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomDrivingLicenseDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomDrivingLicenseDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomAgeDocumentsLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -982,21 +1065,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomDrivingLicense(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomAgeDocumentsLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomDrivingLicenseDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideDrivingLicenseDocument) {
-        if (brideDrivingLicenseDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideDrivingLicenseDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideDrivingLicenseDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBrideAgeDocumentsLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1008,10 +1104,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideDrivingLicense(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBrideAgeDocumentsLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1019,11 +1125,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomSchoolCertificateDocument) {
-        if (groomSchoolCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomSchoolCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomSchoolCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomAgeDocumentsLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1035,21 +1144,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomSchoolCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomAgeDocumentsLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomSchoolCertificateDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideSchoolCertificateDocument) {
-        if (brideSchoolCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideSchoolCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideSchoolCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBrideAgeDocumentsLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1061,10 +1183,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideSchoolCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBrideAgeDocumentsLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1072,11 +1204,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomBirthCertificateDocument) {
-        if (groomBirthCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomBirthCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomBirthCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomAgeDocumentsLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1088,21 +1223,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomBirthCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomAgeDocumentsLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomBirthCertificateDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideBirthCertificateDocument) {
-        if (brideBirthCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideBirthCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideBirthCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBrideAgeDocumentsLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1114,10 +1262,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideBirthCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBrideAgeDocumentsLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1125,11 +1283,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (instituitionCertificateDocument) {
-        if (instituitionCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (instituitionCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (instituitionCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsMarriageTypeLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1141,21 +1302,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setInstituitionCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsMarriageTypeLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [instituitionCertificateDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (marriageOfficerCertificateDocument) {
-        if (marriageOfficerCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (marriageOfficerCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (marriageOfficerCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsMarriageTypeLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1167,21 +1341,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setMarriageOfficerCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsMarriageTypeLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [marriageOfficerCertificateDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (otherMarriageCertificateDocument) {
-        if (otherMarriageCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (otherMarriageCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (otherMarriageCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsOtherDocumentLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1193,10 +1380,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setOtherMarriageCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsOtherDocumentLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1204,11 +1401,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (backwardCertificateDocument) {
-        if (backwardCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (backwardCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (backwardCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBackwardDocumentLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1220,10 +1420,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBackwardCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBackwardDocumentLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1231,11 +1441,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomDivorceAnnulledDecreeCertificateDocument) {
-        if (groomDivorceAnnulledDecreeCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomDivorceAnnulledDecreeCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomDivorceAnnulledDecreeCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsGroomMaritalStatusLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1247,21 +1460,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomDivorceAnnulledDecreeCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsGroomMaritalStatusLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomDivorceAnnulledDecreeCertificateDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideDivorceAnnulledDecreeCertificateDocument) {
-        if (brideDivorceAnnulledDecreeCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideDivorceAnnulledDecreeCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideDivorceAnnulledDecreeCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsBrideMaritalStatusLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1273,10 +1499,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideDivorceAnnulledDecreeCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsBrideMaritalStatusLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1284,11 +1520,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (groomExpirationCertificateDocument) {
-        if (groomExpirationCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (groomExpirationCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (groomExpirationCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsExpiredGroomLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1300,21 +1539,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setGroomExpirationCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsExpiredGroomLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [groomExpirationCertificateDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (brideExpirationCertificateDocument) {
-        if (brideExpirationCertificateDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (brideExpirationCertificateDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (brideExpirationCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsExpiredBrideLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1327,10 +1579,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setBrideExpirationCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsExpiredBrideLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1338,11 +1600,14 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (witness1AadharDocument) {
-        if (witness1AadharDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (witness1AadharDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (witness1AadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsWitness1AadharLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1354,21 +1619,34 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setWitness1Aadhar(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsWitness1AadharLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
   }, [witness1AadharDocument]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (witness2AadharDocument) {
-        if (witness2AadharDocument.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (witness2AadharDocument.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (witness2AadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
             setIsWitness2AadharLoading(true);
             const response = await Digit.UploadServices.Filestorage(
@@ -1380,10 +1658,20 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setWitness2Aadhar(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
             setIsWitness2AadharLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     })();
@@ -1694,7 +1982,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
     });
   };
 
-  console.log({groomBirthCertificate})
+  console.log({ groomBirthCertificate });
 
   const onSkip = () => onSelect();
   return (
@@ -1746,7 +2034,21 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                 </h1>
               </div>
             </div>
-
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GUIDELINES_HEADING")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <CardLabel>{`1. ${t(`CR_MAXIMUM_FILE_SIZE`)}`}</CardLabel>
+              </div>
+              <div className="col-md-12">
+                <CardLabel>{`2. ${t(`CR_SUPPORTED_FILE_TYPES`)}`}</CardLabel>
+              </div>
+            </div>
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -2026,7 +2328,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                             </a>
                           </div>
                         )}
-                         {groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
+                        {groomAgeDocument?.code === "BIRTH_CERTIFICATE" && (
                           <div className="col-md-8">
                             <CardLabel>
                               {`${t(`CR_UPLOAD_YOUR_BIRTH_CERTIFICATE`)}`}
@@ -3113,6 +3415,21 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
             </div>
           </div>
         </div>
+        {toast && (
+          <Toast
+            error={fileSizeError || fileTypeError}
+            label={
+              fileSizeError || fileTypeError
+                ? fileSizeError
+                  ? t("FILE_SIZE_VALIDATION_MESSAGE")
+                  : fileTypeError
+                  ? t("FILE_TYPE_VALIDATION_MESSAGE")
+                  : setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
+        )}
       </FormStep>
     </React.Fragment>
   );
