@@ -125,12 +125,13 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
 
   const [FatherAadharError, setFatherAadharError] = useState(formData?.BirthNACParentsDetails?.fatherAadhar ? false : false);
   const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
+  const [FatherFirstNameError, setFatherFirstNameError] = useState(false);
 
   const onSkip = () => onSelect();
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.trim().match("^[a-zA-Z]*$") != null) {
-      setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setMotherFirstNameEn(e.target.value.trim().length <= 100 ? e.target.value : e.target.value.substring(0, 100));
     }
   }
 
@@ -185,8 +186,8 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.trim().match("^[a-zA-Z]*$") != null) {
-      setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setFatherFirstNameEn(e.target.value.trim().length <= 100 ? e.target.value : e.target.value.substring(0, 100));
     }
   }
   function setSelectFatherFirstNameMl(e) {
@@ -205,7 +206,12 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
       e.preventDefault();
     }
   }
-
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!e.key.match(pattern) && e.code === "Space") {
+      e.preventDefault();
+    }
+  }
   let validFlag = true;
   const goNext = () => {
     if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
@@ -306,9 +312,15 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
                     optionKey="i18nKey"
                     name="motherFirstNameEn"
                     value={motherFirstNameEn}
+                    onKeyPress={setCheckSpecialCharSpace}
                     onChange={setSelectMotherFirstNameEn}
                     placeholder={`${t("CR_MOTHER_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
+                    {...(validation = {
+                      pattern: "^[a-zA-Z-.`' ]*$",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_ADOPTION_MOTHER_NAME_EN"),
+                    })}
                   />
                 </div>
 
@@ -384,7 +396,8 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
                     optionKey="i18nKey"
                     name="fatherFirstNameEn"
                     value={fatherFirstNameEn}
-                    disable={isEdit}
+                    onKeyPress={setCheckSpecialCharSpace}
+                    //disable={isEdit}
                     onChange={setSelectFatherFirstNameEn}
                     placeholder={`${t("CR_FATHER_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}

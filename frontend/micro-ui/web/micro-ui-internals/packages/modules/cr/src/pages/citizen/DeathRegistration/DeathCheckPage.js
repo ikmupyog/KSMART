@@ -8,22 +8,22 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/DRTimeline";
 
-// const ActionButton = ({ jumpTo }) => {
-//   const { t } = useTranslation();
-//   const history = useHistory();
-//   function routeTo() {
-//     sessionStorage.setItem("isDirectRenewal", false);
-//     history.push(jumpTo);
-//   }
-//   return (
-//     <LinkButton
-//       label={t("CS_COMMON_CHANGE")}
-//       className="check-page-link-button"
-//       style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
-//       onClick={routeTo}
-//     />
-//   );
-// };
+const ActionButton = ({ jumpTo }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  function routeTo() {
+    sessionStorage.setItem("isDirectRenewal", false);
+    history.push(jumpTo);
+  }
+  return (
+    <LinkButton
+      label={t("CS_COMMON_CHANGE")}
+      className="check-page-link-button"
+      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      onClick={routeTo}
+    />
+  );
+};
 
 const getPath = (path, params) => {
   params &&
@@ -51,6 +51,10 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
+
+   routeLink = `${getPath(match.path, match.params)}`;
+  
+   routeLink = routeLink.replace("/check", "");
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
   //   routeLink = `${getPath(match.path, match.params)}`;
@@ -172,7 +176,8 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_DEATH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(InformationDeath?.DateOfDeath)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    {convertEpochToDate(InformationDeath?.DateOfDeath)}</CardText>
                 </div>
                 {/* <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_DEATH")}`} :</CardText>
@@ -239,7 +244,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_DEATH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.TimeOfDeath ? InformationDeath?.TimeOfDeath : "NA"}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.TimeOfDeath ? InformationDeath?.TimeOfDeath : t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
@@ -308,14 +313,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                    {InformationDeath?.DeceasedMiddleNameEn?InformationDeath?.DeceasedMiddleNameEn:"CR_NOT_RECORDED"}</CardText>
+                    {InformationDeath?.DeceasedMiddleNameEn?InformationDeath?.DeceasedMiddleNameEn:t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_EN")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                    {InformationDeath?.DeceasedLastNameEn?InformationDeath?.DeceasedLastNameEn:"CR_NOT_RECORDED"}</CardText>
+                    {InformationDeath?.DeceasedLastNameEn?InformationDeath?.DeceasedLastNameEn:t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 {/* <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AADHAR")}`} :</CardText>
@@ -383,9 +388,10 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                    {InformationDeath?.Occupation?InformationDeath?.Occupation.name:"CR_NOT_RECORDED"}</CardText>
+                    {InformationDeath?.Occupation?InformationDeath?.Occupation.name:t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 </div>
+                 {<ActionButton jumpTo={`${routeLink}/information-death`} />}
                 </div>
           </StatusTable>}
         />
@@ -833,6 +839,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                 </div>
+                 {<ActionButton jumpTo={`${routeLink}/information-death`} />}
               </div>
             )}
 
@@ -860,21 +867,21 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaDistrict?AddressBirthDetails?.presentInsideKeralaDistrict.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaDistrict?AddressBirthDetails?.presentInsideKeralaDistrict.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaTaluk?AddressBirthDetails?.presentInsideKeralaTaluk.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaTaluk?AddressBirthDetails?.presentInsideKeralaTaluk.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaVillage?AddressBirthDetails?.presentInsideKeralaVillage.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaVillage?AddressBirthDetails?.presentInsideKeralaVillage.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -885,14 +892,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaLBName?AddressBirthDetails?.presentInsideKeralaLBName.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaLBName?AddressBirthDetails?.presentInsideKeralaLBName.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentWardNo?AddressBirthDetails?.presentWardNo.namecmb:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentWardNo?AddressBirthDetails?.presentWardNo.namecmb:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -903,14 +910,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaPostOffice?AddressBirthDetails?.presentInsideKeralaPostOffice.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaPostOffice?AddressBirthDetails?.presentInsideKeralaPostOffice.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaPincode?AddressBirthDetails?.presentInsideKeralaPincode:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaPincode?AddressBirthDetails?.presentInsideKeralaPincode:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -939,7 +946,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaStreetNameEn?AddressBirthDetails?.presentInsideKeralaStreetNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaStreetNameEn?AddressBirthDetails?.presentInsideKeralaStreetNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
@@ -957,7 +964,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentInsideKeralaHouseNameEn?AddressBirthDetails?.presentInsideKeralaHouseNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentInsideKeralaHouseNameEn?AddressBirthDetails?.presentInsideKeralaHouseNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
@@ -986,14 +993,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaDistrict?AddressBirthDetails?.presentOutsideKeralaDistrict.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaDistrict?AddressBirthDetails?.presentOutsideKeralaDistrict.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`} :</CardText>
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaTaluk?AddressBirthDetails?.presentOutsideKeralaTaluk:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaTaluk?AddressBirthDetails?.presentOutsideKeralaTaluk:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1005,14 +1012,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaVillage?AddressBirthDetails?.presentOutsideKeralaVillage.i18nKey:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaVillage?AddressBirthDetails?.presentOutsideKeralaVillage.i18nKey:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`} :</CardText>
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaCityVilgeEn?AddressBirthDetails?.presentOutsideKeralaCityVilgeEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaCityVilgeEn?AddressBirthDetails?.presentOutsideKeralaCityVilgeEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1023,7 +1030,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaPostOfficeEn?AddressBirthDetails?.presentOutsideKeralaPostOfficeEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaPostOfficeEn?AddressBirthDetails?.presentOutsideKeralaPostOfficeEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
@@ -1041,14 +1048,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaLocalityNameEn?AddressBirthDetails?.presentOutsideKeralaLocalityNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaLocalityNameEn?AddressBirthDetails?.presentOutsideKeralaLocalityNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaLocalityNameMl?AddressBirthDetails?.presentOutsideKeralaLocalityNameMl:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaLocalityNameMl?AddressBirthDetails?.presentOutsideKeralaLocalityNameMl:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1059,7 +1066,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaStreetNameEn?AddressBirthDetails?.presentOutsideKeralaStreetNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaStreetNameEn?AddressBirthDetails?.presentOutsideKeralaStreetNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
@@ -1077,7 +1084,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutsideKeralaHouseNameEn?AddressBirthDetails?.presentOutsideKeralaHouseNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutsideKeralaHouseNameEn?AddressBirthDetails?.presentOutsideKeralaHouseNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
@@ -1106,7 +1113,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaProvinceEn?AddressBirthDetails?.presentOutSideIndiaProvinceEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaProvinceEn?AddressBirthDetails?.presentOutSideIndiaProvinceEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_ML")}`} :</CardText>
@@ -1125,14 +1132,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaadrsVillage?AddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaadrsVillage?AddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaadrsCityTown?AddressBirthDetails?.presentOutSideIndiaadrsCityTown:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaadrsCityTown?AddressBirthDetails?.presentOutSideIndiaadrsCityTown:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1143,7 +1150,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaPostCode?AddressBirthDetails?.presentOutSideIndiaPostCode:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaPostCode?AddressBirthDetails?.presentOutSideIndiaPostCode:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1154,7 +1161,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaAdressEn?AddressBirthDetails?.presentOutSideIndiaAdressEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaAdressEn?AddressBirthDetails?.presentOutSideIndiaAdressEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`} :</CardText>
@@ -1172,14 +1179,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaAdressEnB?AddressBirthDetails?.presentOutSideIndiaAdressEnB:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaAdressEnB?AddressBirthDetails?.presentOutSideIndiaAdressEnB:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.presentOutSideIndiaAdressMlB?AddressBirthDetails?.presentOutSideIndiaAdressMlB:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.presentOutSideIndiaAdressMlB?AddressBirthDetails?.presentOutSideIndiaAdressMlB:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1202,21 +1209,21 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrDistrict?AddressBirthDetails?.permntInKeralaAdrDistrict.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrDistrict?AddressBirthDetails?.permntInKeralaAdrDistrict.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrTaluk?AddressBirthDetails?.permntInKeralaAdrTaluk.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrTaluk?AddressBirthDetails?.permntInKeralaAdrTaluk.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrVillage?AddressBirthDetails?.permntInKeralaAdrVillage?.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrVillage?AddressBirthDetails?.permntInKeralaAdrVillage?.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1227,14 +1234,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrLBName?AddressBirthDetails?.permntInKeralaAdrLBName?.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrLBName?AddressBirthDetails?.permntInKeralaAdrLBName?.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaWardNo?AddressBirthDetails?.permntInKeralaWardNo?.namecmb:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaWardNo?AddressBirthDetails?.permntInKeralaWardNo?.namecmb:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1245,14 +1252,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrPostOffice?.name?AddressBirthDetails?.permntInKeralaAdrPostOffice?.name:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrPostOffice?.name?AddressBirthDetails?.permntInKeralaAdrPostOffice?.name:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrPincode?AddressBirthDetails?.permntInKeralaAdrPincode:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrPincode?AddressBirthDetails?.permntInKeralaAdrPincode:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1263,7 +1270,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrLocalityNameEn?AddressBirthDetails?.permntInKeralaAdrLocalityNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrLocalityNameEn?AddressBirthDetails?.permntInKeralaAdrLocalityNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
@@ -1281,7 +1288,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrStreetNameEn?AddressBirthDetails?.permntInKeralaAdrStreetNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrStreetNameEn?AddressBirthDetails?.permntInKeralaAdrStreetNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
@@ -1299,7 +1306,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntInKeralaAdrHouseNameEn?AddressBirthDetails?.permntInKeralaAdrHouseNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntInKeralaAdrHouseNameEn?AddressBirthDetails?.permntInKeralaAdrHouseNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
@@ -1328,14 +1335,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaDistrict?.name?AddressBirthDetails?.permntOutsideKeralaDistrict:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaDistrict?.name?AddressBirthDetails?.permntOutsideKeralaDistrict:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`} :</CardText>
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaTaluk?AddressBirthDetails?.permntOutsideKeralaTaluk:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaTaluk?AddressBirthDetails?.permntOutsideKeralaTaluk:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1347,14 +1354,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaVillage?AddressBirthDetails?.permntOutsideKeralaVillage.i18nKey:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaVillage?AddressBirthDetails?.permntOutsideKeralaVillage.i18nKey:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`} :</CardText>
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaCityVilgeEn?AddressBirthDetails?.permntOutsideKeralaCityVilgeEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaCityVilgeEn?AddressBirthDetails?.permntOutsideKeralaCityVilgeEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1365,14 +1372,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaPostOfficeEn?AddressBirthDetails?.permntOutsideKeralaPostOfficeEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaPostOfficeEn?AddressBirthDetails?.permntOutsideKeralaPostOfficeEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaPincode?AddressBirthDetails?.permntOutsideKeralaPincode:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaPincode?AddressBirthDetails?.permntOutsideKeralaPincode:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1383,7 +1390,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaLocalityNameEn?AddressBirthDetails?.permntOutsideKeralaLocalityNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaLocalityNameEn?AddressBirthDetails?.permntOutsideKeralaLocalityNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
@@ -1401,7 +1408,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaStreetNameEn?AddressBirthDetails?.permntOutsideKeralaStreetNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaStreetNameEn?AddressBirthDetails?.permntOutsideKeralaStreetNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
@@ -1419,7 +1426,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideKeralaHouseNameEn?AddressBirthDetails?.permntOutsideKeralaHouseNameEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideKeralaHouseNameEn?AddressBirthDetails?.permntOutsideKeralaHouseNameEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
@@ -1448,7 +1455,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideIndiaprovinceEn?AddressBirthDetails?.permntOutsideIndiaprovinceEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideIndiaprovinceEn?AddressBirthDetails?.permntOutsideIndiaprovinceEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_ML")}`} :</CardText>
@@ -1467,14 +1474,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideIndiaVillage?AddressBirthDetails?.permntOutsideIndiaVillage.i18nKey:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideIndiaVillage?AddressBirthDetails?.permntOutsideIndiaVillage.i18nKey:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideIndiaCityTown?AddressBirthDetails?.permntOutsideIndiaCityTown:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideIndiaCityTown?AddressBirthDetails?.permntOutsideIndiaCityTown:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1485,7 +1492,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-4">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permanentOutsideIndiaPostCode?AddressBirthDetails?.permanentOutsideIndiaPostCode:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permanentOutsideIndiaPostCode?AddressBirthDetails?.permanentOutsideIndiaPostCode:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                   </div>
                 </div>
@@ -1496,7 +1503,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideIndiaLineoneEn?AddressBirthDetails?.permntOutsideIndiaLineoneEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideIndiaLineoneEn?AddressBirthDetails?.permntOutsideIndiaLineoneEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`} :</CardText>
@@ -1514,7 +1521,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {AddressBirthDetails?.permntOutsideIndiaLinetwoEn?AddressBirthDetails?.permntOutsideIndiaLinetwoEn:"CR_NOT_RECORDED"}</CardText>
+                        {AddressBirthDetails?.permntOutsideIndiaLinetwoEn?AddressBirthDetails?.permntOutsideIndiaLinetwoEn:t("CR_NOT_RECORDED")}</CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`} :</CardText>
@@ -1527,6 +1534,8 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               </div>
             )}
+             {<ActionButton jumpTo={`${routeLink}/address-death`} />}
+            
           </StatusTable>}
         />
 
@@ -1558,14 +1567,14 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.SpouseType?FamilyInformationDeath?.SpouseType.name:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.SpouseType?FamilyInformationDeath?.SpouseType.name:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME")}`} :</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.SpouseNameEn?FamilyInformationDeath?.SpouseNameEn:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.SpouseNameEn?FamilyInformationDeath?.SpouseNameEn:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME_ML")}`} :</CardText>
@@ -1579,7 +1588,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.SpouseAadhaar?FamilyInformationDeath?.SpouseAadhaar:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.SpouseAadhaar?FamilyInformationDeath?.SpouseAadhaar:t("CR_NOT_RECORDED")}</CardText>
           </div>
 
           <div className="col-md-2">
@@ -1587,7 +1596,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.spouseAge?FamilyInformationDeath?.spouseAge:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.spouseAge?FamilyInformationDeath?.spouseAge:t("CR_NOT_RECORDED")}</CardText>
           </div>
 
           
@@ -1625,7 +1634,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.FatherNameEn?FamilyInformationDeath?.FatherNameEn:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.FatherNameEn?FamilyInformationDeath?.FatherNameEn:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME_ML")}`} :</CardText>
@@ -1639,7 +1648,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.FatherAadharNo?FamilyInformationDeath?.FatherAadharNo:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.FatherAadharNo?FamilyInformationDeath?.FatherAadharNo:t("CR_NOT_RECORDED")}</CardText>
           </div>
         </div>
       </div>
@@ -1675,7 +1684,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.MotherNameEn?FamilyInformationDeath?.MotherNameEn:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.MotherNameEn?FamilyInformationDeath?.MotherNameEn:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME_ML")}`} :</CardText>
@@ -1689,7 +1698,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {FamilyInformationDeath?.MotherAadharNo?FamilyInformationDeath?.MotherAadharNo:"CR_NOT_RECORDED"}</CardText>
+              {FamilyInformationDeath?.MotherAadharNo?FamilyInformationDeath?.MotherAadharNo:t("CR_NOT_RECORDED")}</CardText>
           </div>
         </div>
       </div>
@@ -1718,10 +1727,11 @@ content={<StatusTable >
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                    {FamilyInformationDeath?.FamilyEmailId?FamilyInformationDeath?.FamilyEmailId:"CR_NOT_RECORDED"}</CardText>
+                    {FamilyInformationDeath?.FamilyEmailId?FamilyInformationDeath?.FamilyEmailId:t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 </div>
             </div>
+            {<ActionButton jumpTo={`${routeLink}/family-information`} />}
       </StatusTable>}
      />
 
@@ -1745,7 +1755,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.MedicalAttentionType?StatisticalInfo?.MedicalAttentionType.name:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.MedicalAttentionType?StatisticalInfo?.MedicalAttentionType.name:t("CR_NOT_RECORDED")}</CardText>
           </div>
 
           </div>
@@ -1765,7 +1775,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.IsAutopsyPerformed?StatisticalInfo?.IsAutopsyPerformed:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.IsAutopsyPerformed?StatisticalInfo?.IsAutopsyPerformed:t("CR_NOT_RECORDED")}</CardText>
           </div>
          
           <div className="col-md-2">
@@ -1773,7 +1783,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.IsAutopsyCompleted?StatisticalInfo?.IsAutopsyCompleted:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.IsAutopsyCompleted?StatisticalInfo?.IsAutopsyCompleted:t("CR_NOT_RECORDED")}</CardText>
           </div>
         </div>
       </div>
@@ -1795,7 +1805,7 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.MannerOfDeath?StatisticalInfo?.MannerOfDeath.name:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.MannerOfDeath?StatisticalInfo?.MannerOfDeath.name:t("CR_NOT_RECORDED")}</CardText>
           </div>
 
           </div>
@@ -1816,7 +1826,7 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathMedicallyCertified?StatisticalInfo?.DeathMedicallyCertified.i18nKey:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathMedicallyCertified?StatisticalInfo?.DeathMedicallyCertified.i18nKey:t("CR_NOT_RECORDED")}</CardText>
           </div>
           </div>
           </div>
@@ -1852,7 +1862,7 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseMainInterval?StatisticalInfo?.DeathCauseMainInterval:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseMainInterval?StatisticalInfo?.DeathCauseMainInterval:t("CR_NOT_RECORDED")}</CardText>
           </div>
         
           {/* </div> */}
@@ -1864,7 +1874,7 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseMainTimeUnit?StatisticalInfo?.DeathCauseMainTimeUnit.code:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseMainTimeUnit?StatisticalInfo?.DeathCauseMainTimeUnit.code:t("CR_NOT_RECORDED")}</CardText>
           </div>
             </div>
           </div>
@@ -1885,21 +1895,21 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSub?StatisticalInfo?.DeathCauseSub.name:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSub?StatisticalInfo?.DeathCauseSub.name:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`} :</CardText>
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSubCustom?StatisticalInfo?.DeathCauseSubCustom:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSubCustom?StatisticalInfo?.DeathCauseSubCustom:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_APROXIMATE")}`} :</CardText>
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSubInterval?StatisticalInfo?.DeathCauseSubInterval:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSubInterval?StatisticalInfo?.DeathCauseSubInterval:t("CR_NOT_RECORDED")}</CardText>
           </div>
          
           {/* </div> */}
@@ -1910,7 +1920,7 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSubTimeUnit?StatisticalInfo?.DeathCauseSubTimeUnit.code:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSubTimeUnit?StatisticalInfo?.DeathCauseSubTimeUnit.code:t("CR_NOT_RECORDED")}</CardText>
           </div>
           </div>
           <div className="col-md-12">
@@ -1919,14 +1929,14 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSub2?StatisticalInfo?.DeathCauseSub2.name:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSub2?StatisticalInfo?.DeathCauseSub2.name:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`} :</CardText>
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSubCustom2?StatisticalInfo?.DeathCauseSubCustom2:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSubCustom2?StatisticalInfo?.DeathCauseSubCustom2:t("CR_NOT_RECORDED")}</CardText>
           </div>
          
            
@@ -1938,14 +1948,14 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSubInterval2?StatisticalInfo?.DeathCauseSubInterval2:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSubInterval2?StatisticalInfo?.DeathCauseSubInterval2:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_UNIT")}`} :</CardText>
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSubTimeUnit2?StatisticalInfo?.DeathCauseSubTimeUnit2.code:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSubTimeUnit2?StatisticalInfo?.DeathCauseSubTimeUnit2.code:t("CR_NOT_RECORDED")}</CardText>
           </div>
           </div>
           <div className="row">
@@ -1965,7 +1975,7 @@ content={<StatusTable >
           </div>
             <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathCauseSub2?StatisticalInfo?.DeathCauseSub2.name:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathCauseSub2?StatisticalInfo?.DeathCauseSub2.name:t("CR_NOT_RECORDED")}</CardText>
           </div>
           {/* </div> */}
             </div>
@@ -1989,21 +1999,21 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.cmbbirthstatus?StatisticalInfo?.cmbbirthstatus:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.cmbbirthstatus?StatisticalInfo?.cmbbirthstatus:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_WAS_THERE_DELIVARY")}`} :</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.IsdeceasedPregnant?StatisticalInfo?.IsdeceasedPregnant:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.IsdeceasedPregnant?StatisticalInfo?.IsdeceasedPregnant:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DURING_DELIVERY")}`} :</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.DeathDuringDelivery?StatisticalInfo?.DeathDuringDelivery:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.DeathDuringDelivery?StatisticalInfo?.DeathDuringDelivery:t("CR_NOT_RECORDED")}</CardText>
           </div>
         </div>
       </div>
@@ -2019,7 +2029,7 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.SmokingType?StatisticalInfo?.SmokingType:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.SmokingType?StatisticalInfo?.SmokingType:t("CR_NOT_RECORDED")}</CardText>
           </div>
          
           <div className="col-md-2">
@@ -2027,20 +2037,21 @@ content={<StatusTable >
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.TobaccoType?StatisticalInfo?.TobaccoType:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.TobaccoType?StatisticalInfo?.TobaccoType:t("CR_NOT_RECORDED")}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HABITUALLY_DRINK_ALCOHOL")}`} :</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-              {StatisticalInfo?.AlcoholType?StatisticalInfo?.AlcoholType:"CR_NOT_RECORDED"}</CardText>
+              {StatisticalInfo?.AlcoholType?StatisticalInfo?.AlcoholType:t("CR_NOT_RECORDED")}</CardText>
           </div>
         </div>
       </div>
      
 
             </div>
+            {<ActionButton jumpTo={`${routeLink}/statistical-info`} />}
       </StatusTable>}
         />
 
@@ -2121,10 +2132,10 @@ content={<StatusTable >
                 </div>
               </div>
             </div>
-
+            {<ActionButton jumpTo={`${routeLink}/initiator`} />}
           </StatusTable>}
         />
-         {window.location.href.includes("/citizen") && (
+         {/* {window.location.href.includes("/citizen") && ( */}
           <div>
             <div className="row">
               <div className="col-md-12">
@@ -2162,7 +2173,7 @@ content={<StatusTable >
               </div>
             </div>
           </div>
-        )}
+        {/* )} */}
 
         {toast && (
           <Toast
