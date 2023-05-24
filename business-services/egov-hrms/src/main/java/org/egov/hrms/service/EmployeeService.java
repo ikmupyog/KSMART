@@ -373,7 +373,7 @@ public class EmployeeService {
 			enrichUpdateRequest(employee, requestInfo, existingEmployees);
 			updateUser(employee, requestInfo);
 		});
-		hrmsProducer.push(propertiesManager.getUpdateTopic(), employeeRequest);
+		hrmsProducer.push(propertiesManager.getUpdateEmployeeTopic(), employeeRequest);
 		//notificationService.sendReactivationNotification(employeeRequest);
 		return generateResponse(employeeRequest);
 	}
@@ -428,27 +428,47 @@ public class EmployeeService {
 						.filter(jurisdictionData ->jurisdictionData.getId().equals(jurisdiction.getId() ))
 						.findFirst().orElse(null)
 						.equals(jurisdiction)){
-//					jurisdiction.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
 
 					jurisdiction.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 					jurisdiction.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			}
+			 
 
 			jurisdiction.getJurisdictionChilds().forEach(child -> {
+				
 				if (child.getId() == null) {
 					child.setJurisdictionId(jurisdiction.getId());
 					child.setParentJurisdictionId(jurisdiction.getId());
 					child.setTenantId(jurisdiction.getTenantId());
 					child.setIsActive(true);
 					child.setId(UUID.randomUUID().toString());
-					child.setAuditDetails(auditDetails);
+					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
+					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+					
+ 
 				} else {
-
-
-//					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
-// 					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
-// 					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+					 
+					child.setId(UUID.randomUUID().toString());
+					child.setParentJurisdictionId(jurisdiction.getId());
+					child.setTenantId(jurisdiction.getTenantId());
+					child.setIsActive(true);
+					if(child.getAuditDetails() == null) {
+						AuditDetails updauditDetails = AuditDetails.builder()
+								.createdBy(requestInfo.getUserInfo().getUuid())
+								.createdDate(new Date().getTime())
+								.lastModifiedBy(requestInfo.getUserInfo().getUuid())
+								.lastModifiedDate(new Date().getTime())
+								.build();
+						
+						child.setAuditDetails(updauditDetails);
+						 
+					}
+					else {
+						child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
+						child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+					}
+		
 				}
 			});
 		});
@@ -460,8 +480,7 @@ public class EmployeeService {
 				if(!existingEmpData.getAssignments().stream()
 						.filter(assignmentData -> assignmentData.getId().equals(assignment.getId()))
 						.findFirst().orElse(null)
-						.equals(assignment)){
-//					assignment.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						.equals(assignment)){ 
 					assignment.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 					assignment.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
@@ -479,8 +498,7 @@ public class EmployeeService {
 					if(!existingEmpData.getServiceHistory().stream()
 							.filter(serviceHistoryData -> serviceHistoryData.getId().equals(serviceHistory.getId()))
 							.findFirst().orElse(null)
-							.equals(serviceHistory)){
-//						serviceHistory.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+							.equals(serviceHistory)){ 
 						serviceHistory.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						serviceHistory.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
@@ -501,8 +519,7 @@ public class EmployeeService {
 					if(!existingEmpData.getEducation().stream()
 							.filter(educationalQualificationData -> educationalQualificationData.getId().equals(educationalQualification.getId()))
 							.findFirst().orElse(null)
-							.equals(educationalQualification)){
-//						educationalQualification.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+							.equals(educationalQualification)){ 
 						educationalQualification.getAuditDetails()
 								.setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						educationalQualification.getAuditDetails().setLastModifiedDate(new Date().getTime());
@@ -525,7 +542,6 @@ public class EmployeeService {
 							.filter(departmentalTestData -> departmentalTestData.getId().equals(departmentalTest.getId()))
 							.findFirst().orElse(null)
 							.equals(departmentalTest)){
-//						departmentalTest.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
 						departmentalTest.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						departmentalTest.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
