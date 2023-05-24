@@ -132,8 +132,16 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
       accessor: "Action",
       disableSortBy: true,
       Cell: ({ row }) => {
-
         return ((row.original["correctionId"] !== null && row.original["correctionAppNumber"] !== null)?
+          row.original["correctionStatus"] === "CITIZENACTIONREQUIRED" ?
+          <div>
+            <span className="link">
+              <Link to={`/digit-ui/citizen/tl/tradelicence/application/${row.original["correctionAppNumber"]}/${row.original["tenantId"]}`}>
+              {t(row.original["status"]!= "PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY") }
+              </Link>
+            </span>
+          </div>
+          :
           <div>
             <span className="link">
               <Link to={`/digit-ui/citizen/tl/tradelicence/application/${row.original["correctionAppNumber"]}/${row.original["tenantId"]}`}>
@@ -142,6 +150,15 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
             </span>
           </div>
         :
+        row.original["status"] === "CITIZENACTIONREQUIRED" ?
+        <div>
+            <span className="link">
+              <Link to={`/digit-ui/citizen/tl/tradelicence/edit-application/${row.original["applicationNumber"]}/${row.original["tenantId"]}`}>
+              {t(row.original["status"]!= "PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY") }
+              </Link>
+            </span>
+          </div>
+          :
           <div>
             <span className="link">
               <Link to={`/digit-ui/citizen/tl/tradelicence/application/${row.original["applicationNumber"]}/${row.original["tenantId"]}`}>

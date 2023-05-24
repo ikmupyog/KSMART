@@ -79,11 +79,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                     }
                     setValue(cmbFilterState[0].code);
                 }
-                // if (cmbVillage.length > 0 && currentLB.length > 0) {
-                //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-                //     setLbsVillagevalue(cmbFilterVillage);
-                // }
-                setIsInitialRender(false);
+                if (cmbCountry.length > 0 && cmbState.length > 0 && currentLB.length > 0) {
+                    setIsInitialRender(false);
+                }
             }
         } else if (isInitialRender && countryvalue === "IND" && value === "kl" &&
             isEditBirth === false && isEditDeath === false && isEditAdoption === false && isEditBirthNAC === false && isEditStillBirth === false &&
@@ -110,11 +108,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                     }
                     setValue((cmbFilterState[0].code));
                 }
-                // if (cmbVillage.length > 0 && currentLB.length > 0) {
-                //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-                //     setLbsVillagevalue(cmbFilterVillage);
-                // }
-                setIsInitialRender(false);
+                if (cmbCountry.length > 0 && cmbState.length > 0) {
+                    setIsInitialRender(false);
+                }
             }
         } else {
             setIsInitialRender(false);
@@ -122,7 +118,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     }, [cmbLB, isInitialRender]);
 
     if (isEditBirth) {
-        
+
         if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
                 cmbFilterCountry = cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);

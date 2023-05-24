@@ -236,8 +236,14 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       setShowDatePicker(false);
       docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
+
+    if(childAge < 6){
+      setShowDatePicker(false);
+      docCondition = `NAME_LESS_THAN_SIX`;
+      // setSelectedDocuments(filteredDocs);
+    } 
        
-    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
+    if (childAge < 6 || Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
       console.log("selectedConfig--",selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
@@ -257,10 +263,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
     let filteredDocs = [];
     const childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-    // if(childAge < 6){
-    //   filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == `NAME_LESS_THAN_SIX`);
-    //   setSelectedDocuments(filteredDocs);
-    // } else
+      if(childAge > 6){
      if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
       selectedStudentMenu = [
         { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT" },
@@ -306,6 +309,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     } else {
       return null;
     }
+  }
   };
 
   const renderConditionalPopupComponent = () => {
@@ -313,8 +317,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
     if ([BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS, BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS].includes(selectedConfig.docFlag)) {
       selectedStudentMenu = [
-        { i18nKey: "CR_COMMON_STUDENT", code: "WITH_OUT_CERTIFICATE" },
-        { i18nKey: "CR_COMMON_NONSTUDENT", code: "WITH_CERTIFICATE" },
+        { i18nKey: "CR_YES", code: "WITH_OUT_CERTIFICATE" },
+        { i18nKey: "CR_NO", code: "WITH_CERTIFICATE" },
       ];
       selectedChangeMenu = [
         { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION" },
@@ -324,7 +328,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
-          <h2>{t("CR_SELECT_ONE")}</h2>
+          <h2>{t("CR_ARE_YOU_STUDENT")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -332,6 +336,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             selectedOption={checkStudentCondition}
             onSelect={setCheckStudentCondition}
           />
+          <h2>{t("CR_WHICH_ACTION")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"

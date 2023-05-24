@@ -1607,102 +1607,102 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
               <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
                 <div className="col-md-12">
                   <div className="col-md-2">
-                    {_.head(AdoptionDocuments?.uploadedFile)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile)?.pdfUrl} alt="" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile)?.pdfUrl} alt="" />
                       </React.Fragment>
                     )}
                     <a
                       target="_blank"
                       href={
-                        _.head(AdoptionDocuments?.uploadedFile)?.type === "pdf"
-                          ? _.head(AdoptionDocuments?.uploadedFile)?.pdfUrl
-                          : _.head(AdoptionDocuments?.uploadedFile)?.large
+                        _.head(BirthNACDocuments?.uploadedFile)?.type === "pdf"
+                          ? _.head(BirthNACDocuments?.uploadedFile)?.pdfUrl
+                          : _.head(BirthNACDocuments?.uploadedFile)?.large
                       }
                     >
                       Preview
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(AdoptionDocuments?.uploadedFile1)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile1)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile1)?.pdfUrl} alt="" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile1)?.pdfUrl} alt="" />
                       </React.Fragment>
                     )}
                     <a
                       target="_blank"
                       href={
-                        _.head(AdoptionDocuments?.uploadedFile1)?.type === "pdf"
-                          ? _.head(AdoptionDocuments?.uploadedFile1)?.pdfUrl
-                          : _.head(AdoptionDocuments?.uploadedFile1)?.large
+                        _.head(BirthNACDocuments?.uploadedFile1)?.type === "pdf"
+                          ? _.head(BirthNACDocuments?.uploadedFile1)?.pdfUrl
+                          : _.head(BirthNACDocuments?.uploadedFile1)?.large
                       }
                     >
                       Preview
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(AdoptionDocuments?.uploadedFile2)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile2)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile2)?.pdfUrl} alt="" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile2)?.pdfUrl} alt="" />
                       </React.Fragment>
                     )}
                     <a
                       target="_blank"
                       href={
-                        _.head(AdoptionDocuments?.uploadedFile2)?.type === "pdf"
-                          ? _.head(AdoptionDocuments?.uploadedFile2)?.pdfUrl
-                          : _.head(AdoptionDocuments?.uploadedFile2)?.large
+                        _.head(BirthNACDocuments?.uploadedFile2)?.type === "pdf"
+                          ? _.head(BirthNACDocuments?.uploadedFile2)?.pdfUrl
+                          : _.head(BirthNACDocuments?.uploadedFile2)?.large
                       }
                     >
                       Preview
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(AdoptionDocuments?.uploadedFile3)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile3)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile3)?.pdfUrl} alt="" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile3)?.pdfUrl} alt="" />
                       </React.Fragment>
                     )}
                     <a
                       target="_blank"
                       href={
-                        _.head(AdoptionDocuments?.uploadedFile3)?.type === "pdf"
-                          ? _.head(AdoptionDocuments?.uploadedFile3)?.pdfUrl
-                          : _.head(AdoptionDocuments?.uploadedFile3)?.large
+                        _.head(BirthNACDocuments?.uploadedFile3)?.type === "pdf"
+                          ? _.head(BirthNACDocuments?.uploadedFile3)?.pdfUrl
+                          : _.head(BirthNACDocuments?.uploadedFile3)?.large
                       }
                     >
                       Preview
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(AdoptionDocuments?.uploadedFile4)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile4)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile4)?.pdfUrl} alt="" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile4)?.pdfUrl} alt="" />
                       </React.Fragment>
                     )}
                     <a
                       target="_blank"
                       href={
-                        _.head(AdoptionDocuments?.uploadedFile4)?.type === "pdf"
-                          ? _.head(AdoptionDocuments?.uploadedFile4)?.pdfUrl
-                          : _.head(AdoptionDocuments?.uploadedFile4)?.large
+                        _.head(BirthNACDocuments?.uploadedFile4)?.type === "pdf"
+                          ? _.head(BirthNACDocuments?.uploadedFile4)?.pdfUrl
+                          : _.head(BirthNACDocuments?.uploadedFile4)?.large
                       }
                     >
                       Preview
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(AdoptionDocuments?.uploadedFile5)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile5)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile5)?.pdfUrl} alt="" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile5)?.pdfUrl} alt="" />
                       </React.Fragment>
                     )}
                     <a
                       target="_blank"
                       href={
-                        _.head(AdoptionDocuments?.uploadedFile5)?.type === "pdf"
-                          ? _.head(AdoptionDocuments?.uploadedFile5)?.pdfUrl
-                          : _.head(AdoptionDocuments?.uploadedFile5)?.large
+                        _.head(BirthNACDocuments?.uploadedFile5)?.type === "pdf"
+                          ? _.head(BirthNACDocuments?.uploadedFile5)?.pdfUrl
+                          : _.head(BirthNACDocuments?.uploadedFile5)?.large
                       }
                     >
                       Preview

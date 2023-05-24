@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card, Loader } from "@egovernments/digit-ui-react-components";
@@ -30,6 +30,11 @@ const DesktopInbox = ({
     return value < 0 ? <span className="sla-cell-error">{value || ""}</span> : <span className="sla-cell-success">{value || ""}</span>;
   };
 
+
+  useEffect(()=>{
+    console.log("data passed==",data);
+  },[data]);
+  
   const handleLinkClick = (finaldata) => {
 
     const applicationNumber = SearchInbox === "death" ? finaldata?.InformationDeath?.["DeathACKNo"] : finaldata.applicationNumber;
@@ -275,7 +280,7 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
-        console.log("row data birth==",row.original);
+        console.log("row data birth==inbox",row.original);
         return (
           <div>
             <span className="link">

@@ -9,23 +9,26 @@ const SearchFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "CR_BIRTH_INBOX",
-      subTitle: "CR_BIRTH_INBOX_APPLS",
+      title: t("CR_BIRTH_INBOX"),
+      subTitle: t("CR_BIRTH_INBOX_APPLS"),
       img: <FileProtected />,
       link: `${path}/birthinbox`,
+      code :"CR_BIRTH_INBOX"
     },
 
     {
-      title: "CR_DEATH_INBOX",
-      subTitle: "CR_DEATH_INBOX_APPS",
+      title: t("CR_DEATH_INBOX"),
+      subTitle: t("CR_DEATH_INBOX_APPS"),
       img: <FileProtected />,
       link: `${path}/deathinbox`,
+      code :"CR_DEATH_INBOX"
     },
     {
-      title: "CR_MARRIAGE_INBOX",
-      subTitle: "CR_MARRIAGE_INBOX_APPS",
+      title: t("CR_MARRIAGE_INBOX"),
+      subTitle: t("CR_MARRIAGE_INBOX_APPS"),
       img: <FileProtected />,
       link: `${path}/marriageinbox`,
+      code :"CR_MARRIAGE_INBOX"
     },
   ];
   const ClassList = 
@@ -47,7 +50,8 @@ const SearchFlow = ({ path }) => {
             item.link ? (
               <Link to={item.link}>
                 {/* <Link to='trade-lisense'> */}
-                <div className={ClassList[item.title]}>
+                {/* {ClassList[item.title]} */}
+                <div className={ClassList[item.code]}>
                   <div className="contentMenu">
                     <div className="contentImg">{item.img}</div>
                     <div className="contentText">
@@ -58,7 +62,7 @@ const SearchFlow = ({ path }) => {
                 </div>{" "}
               </Link>
             ) : (
-              <div className={ClassList[item.title]}>
+              <div className={ClassList[item.code]}>
                 <div className="contentMenu">
                   <div className="contentImg">{item.img}</div>
                   <div className="contentText">

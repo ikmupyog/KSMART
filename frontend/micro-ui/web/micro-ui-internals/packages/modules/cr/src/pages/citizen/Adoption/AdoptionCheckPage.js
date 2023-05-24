@@ -55,6 +55,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { AdoptionChildDetails, AdoptionParentsDetails, AddressBirthDetails, AdoptionDocuments } = value;
+  console.log(AdoptionChildDetails, "AdoptionChildDetails");
 
   // const uploadedImages = [
   //   AdoptionDocuments.uploadedFile,
@@ -260,8 +261,8 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
-              {AdoptionChildDetails?.adoptionAgency ? (
-                <>
+              {AdoptionChildDetails?.adoptionAgency === true && (
+                <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
@@ -302,8 +303,8 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </div>
                   </div>
-                </>
-              ) : null}
+                </React.Fragment>
+              )}
             </StatusTable>
           }
         />

@@ -244,8 +244,10 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   }
   function setSelectMotherMaritalStatus(value) {
     setMotherMaritalStatus(value);
+    if(value.code === "NOT_APPLICABLE" || value.code === "UNMARRIED"){
+      setMotherMarriageAge(null);
+    }
     setAgeMariageStatus(value.code);
-
   }
   function setSelectOrderofChildren(e) {
 
