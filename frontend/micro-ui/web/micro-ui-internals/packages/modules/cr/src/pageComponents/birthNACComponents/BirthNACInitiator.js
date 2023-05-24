@@ -53,7 +53,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   );
   const [isAlive, setisAlive] = useState(formData?.BirthNACInitiator?.isAlive ? formData?.BirthNACInitiator?.isAlive : "");
   const [slNo, setslNo] = useState();
-  const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(formData?.BirthNACInitiator?.uploadedFile);
   const [uploadedFile1, setUploadedFile1] = useState(formData?.BirthNACInitiator?.uploadedFile1);
   const [uploadedFile2, setUploadedFile2] = useState(formData?.BirthNACInitiator?.uploadedFile2);
@@ -66,7 +65,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [motherIdFile, setMotherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile3);
   const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
   const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
-  //const [docPreview, setDocPreview] = useState(formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null);
+  const [docPreview, setDocPreview] = useState(formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null);
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
   const [OrderofBirthMissmatchError, setOrderofBirthMissmatchError] = useState(false);
@@ -77,7 +76,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [AadharError, setAadharError] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? false : false);
-
+  const [error, setError] = useState(null);
+  const [proofError, setProofError] = useState(null);
+  const [certificateError, setCertificateError] = useState(null);
+  const [motherIdError, setMotherIdError] = useState(null);
+  const [fatherIderror, setFatherIdError] = useState(null);
+  const [medicalError, setMedicalError] = useState(null);
+  console.log(formData?.BirthNACDetails?.childFirstNameEn, "formData?.BirthNACDetails?.childFirstNameEn");
   const storedAppData = null;
   const storedOwnerData = null;
   let menu = [];
@@ -167,11 +172,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
       return [
         {
           slNo: "",
-          sex: "",
-          dob: null,
-          childNameEn: "",
-          childNameMl: "",
-          nacorderofChildren: "",
+          sex: formData?.BirthNACDetails?.gender,
+          dob: formData?.BirthNACDetails?.childDOB,
+          childNameEn: formData?.BirthNACDetails?.childFirstNameEn,
+          childNameMl: formData?.BirthNACDetails?.childFirstNameMl,
+          nacorderofChildren: formData?.BirthNACDetails?.nacorderofChildren,
           isAlive: false,
         },
       ];
@@ -182,7 +187,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     return [
       {
         slNo: "",
-        sex: "",
+        sex: formData?.BirthNACDetails?.gender,
         dob: "dob",
         childNameEn: "",
         childNameMl: "",
@@ -214,9 +219,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
     });
-    console.log({ newThumbnails });
     return newThumbnails;
   };
 
@@ -326,10 +330,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
   useEffect(() => {
     (async () => {
-      setError(null);
+      setProofError(null);
       if (proofFile) {
         if (proofFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setProofError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", proofFile, Digit.ULBService.getStateId());
@@ -345,10 +349,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }, [proofFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setCertificateError(null);
       if (certificateFile) {
         if (certificateFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setCertificateError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", certificateFile, Digit.ULBService.getStateId());
@@ -364,10 +368,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }, [certificateFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setMotherIdError(null);
       if (motherIdFile) {
         if (motherIdFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setMotherIdError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", motherIdFile, Digit.ULBService.getStateId());
@@ -383,10 +387,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }, [motherIdFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setFatherIdError(null);
       if (fatherIdFile) {
         if (fatherIdFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setFatherIdError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", fatherIdFile, Digit.ULBService.getStateId());
@@ -402,10 +406,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }, [fatherIdFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setMedicalError(null);
       if (medicalFile) {
         if (medicalFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setMedicalError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", medicalFile, Digit.ULBService.getStateId());
@@ -521,7 +525,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         motherIdFile,
         fatherIdFile,
         medicalFile,
-        //docPreview,
+        docPreview,
       });
     }
   };
@@ -903,7 +907,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -914,24 +918,23 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
-                {uploadedFile && (
-                  <div className="col-md-2">
-                    {_.head(uploadedFile)?.type === "pdf" ? (
+                <div className="col-md-3">
+                  {error ? <p style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{error}</p> : ""}
+                </div>
+                {/* {docPreview && (
+                  <div className="col-md-3">
+                    {_.head(docPreview)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(uploadedFile)?.pdfUrl} alt="Citizenship Pdf" />
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
                       </React.Fragment>
                     ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(uploadedFile)?.small} alt="Citizenship Image" />
+                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
                     )}
-                    <a
-                      style={{ color: "blue" }}
-                      target="_blank"
-                      href={_.head(uploadedFile)?.type === "pdf" ? _.head(uploadedFile)?.pdfUrl : _.head(uploadedFile)?.large}
-                    >
+                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
                       Preview
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -940,7 +943,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -951,12 +954,19 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                <div className="col-md-3">
+                  {proofError ? (
+                    <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{proofError}</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>{`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}</CardLabel>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -967,6 +977,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile2 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                <div className="col-md-3">
+                  {certificateError ? (
+                    <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{certificateError}</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -975,7 +992,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -986,6 +1003,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile3 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                <div className="col-md-3">
+                  {motherIdError ? (
+                    <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{motherIdError}</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -993,7 +1017,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     {`${t("CR_NAC_DONWLOAD_ID_PROOF_OF_FATHER")}`} <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -1004,12 +1028,19 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile4 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                <div className="col-md-3">
+                  {fatherIderror ? (
+                    <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{fatherIderror}</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>{`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}</CardLabel>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -1020,10 +1051,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile5 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                <div className="col-md-3">
+                  {medicalError ? (
+                    <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{medicalError}</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
           </div>
-
           {toast && (
             <Toast
               error={

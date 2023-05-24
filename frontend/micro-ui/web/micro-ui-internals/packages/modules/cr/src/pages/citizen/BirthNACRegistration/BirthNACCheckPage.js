@@ -1607,7 +1607,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
               <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
                 <div className="col-md-12">
                   <div className="col-md-2">
-                    {_.head(BirthNACDocuments?.uploadedFile)?.type === "pdf" ? (
+                    {_.head(BirthNACDocuments?.uploadedFile)?.type === "pdf" && (
                       <React.Fragment>
                         <object
                           style={{ margin: "5px 0" }}
@@ -1617,14 +1617,6 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                           alt="Other Certificate Pdf"
                         />
                       </React.Fragment>
-                    ) : (
-                      <img
-                        style={{ margin: "5px 0" }}
-                        height={120}
-                        width={100}
-                        src={_.head(BirthNACDocuments?.uploadedFile)?.small}
-                        alt="Other Certificate Image"
-                      />
                     )}
                     <a
                       target="_blank"
