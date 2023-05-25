@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { SubmitBar, CardLabel, Dropdown, TextInput, Table } from "@egovernments/digit-ui-react-components";
+import React, { useState, useMemo, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { SubmitBar, CardLabel, Dropdown, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
 
@@ -11,17 +11,25 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
   const history = useHistory();
   const mutation = Digit.Hooks.dfm.useMajorFunctionAdd(tenantId);
   const deleteItem = Digit.Hooks.dfm.useDeleteMajorFunc(tenantId);
-  const [moduleIdvalue, setModuleidvalue ] = useState("")
+  const updatemutation = Digit.Hooks.dfm.useUpdateMajorFunc();
+
+  const [moduleIdvalue, setModuleidvalue] = useState("");
   const [majorFunctionCode, setMajorFunctionCode] = useState("");
   const [majorFunctionNameEnglish, setMajorFunctionNameEnglish] = useState("");
   const [majorFunctionNameMalayalam, setMajorFunctionNameMalayalam] = useState("");
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
+  const [mutationSuccess, setMutationSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   // console.log("datamodule", moduleNameEnglish.label);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   const { data: searchData, refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
-  const updatemutation = Digit.Hooks.dfm.useUpdateMajorFunc();
 
-  const Value = data?.ModuleDetails?.map((item) => ({
+  // const Value = data?.ModuleDetails?.map((item) => ({
+  //   label: item.id,
+  //   value: item.moduleNameEnglish,
+  // }));
+  const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
   }));
@@ -55,35 +63,64 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
     setMajorFunctionNameEnglish(row.majorFunctionNameEnglish);
     setMajorFunctionNameMalayalam(row.majorFunctionNameMalayalam);
   }
-  const majorData = searchData?.MajorFunctionDetails;
+  // const majorData = searchData?.MajorFunctionDetails;
+  const majorData = searchData?.MajorFunctionDetails.filter((item) => {
+    return item.moduleId === moduleNameEnglish.label && item.status !== "0";
+  });
+  console.log("majorData", majorData);
+
   // const moduleId = searchData?.MajorFunctionDetails?.moduleId;
   // console.log("moduleIdsearch", moduleId);
-  const Delete = () => {
+  // const Delete = () => {
+  //   const formData = {
+  //     MajorFunctionDetails: {
+  //       id: "",
+  //       tenantId: tenantId,
+  //       majorFunctionCode: majorFunctionCode,
+  //       moduleId: moduleNameEnglish.label,
+  //       majorFunctionNameEnglish: majorFunctionNameEnglish,
+  //       majorFunctionNameMalayalam: majorFunctionNameMalayalam,
+  //       status: "",
+  //     },
+  //   };
+  //   deleteItem.mutate(formData);
+  // };\
+  const [toast, setToast] = useState(false);
+
+  const deleteClick = (majorFunctionCode, moduleId, majorFunctionNameEnglish, majorFunctionNameMalayalam) => {
+    // console.log("Deleting module with code:");
     const formData = {
       MajorFunctionDetails: {
-        id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        id: "",
         tenantId: tenantId,
         majorFunctionCode: majorFunctionCode,
-        moduleId: moduleNameEnglish.label,
+        moduleId: moduleId,
         majorFunctionNameEnglish: majorFunctionNameEnglish,
         majorFunctionNameMalayalam: majorFunctionNameMalayalam,
-        status: "string",
+        status: "",
       },
     };
     deleteItem.mutate(formData);
+    // setToast(true);
+    // setTimeout(() => {
+    //   setToast(false);
+    // }, 2000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2500);
   };
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(
     () => [
       {
-        Header: t("MF_CODE"),
+        Header: t("MODULE_NAME_ENGLISH"),
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
             <div>
               <span className="link">
                 <div>
-                  <a onClick={() => handleLinkClick(row.original)}> {row.original.majorFunctionCode}</a>
+                  <a onClick={() => handleLinkClick(row.original)}> {row.original.majorFunctionNameEnglish}</a>
                 </div>
               </span>
             </div>
@@ -92,9 +129,9 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         disableSortBy: true,
       },
       {
-        Header: t("MODULE_NAME"),
+        Header: t("MAJOR_FUNCTION_CODE"),
         disableSortBy: true,
-        Cell: ({ row }) => GetCell(t(row.original.majorFunctionNameMalayalam) || ""),
+        Cell: ({ row }) => GetCell(t(row.original.majorFunctionCode) || ""),
       },
       // {
       //   Header: t("MAJOR_FUNCT_EN"),
@@ -102,21 +139,33 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       //   Cell: ({ row }) => GetCell(t(row.original.moduleNameEnglish.label) || ""),
       // },
       {
-        Header: t("MAJOR_FUNCT_ML"),
+        Header: t("MAJOR_FUNCTION_EN"),
+        Cell: ({ row }) => GetCell(t(row?.original?.majorFunctionNameEnglish || "NA")),
+        disableSortBy: true,
+      },
+      {
+        Header: t("MAJOR_FUNCTION_ML"),
         Cell: ({ row }) => GetCell(t(row?.original?.majorFunctionNameMalayalam || "NA")),
         disableSortBy: true,
       },
       {
-        Header: t("Download Certificate"),
+        Header: t("DELETE_MODULE"),
         disableSortBy: true,
         Cell: ({ row }) => {
+          const majorFunctionCode = row.original.majorFunctionCode;
+          const moduleId = row.original.moduleId;
+          const majorFunctionNameEnglish = row.original.majorFunctionNameEnglish;
+          const majorFunctionNameMalayalam = row.original.majorFunctionNameMalayalam;
+
           return (
-            <div onClick={Delete}>
-              <button class="btn btn-delete">
-                <span class="mdi mdi-delete mdi-24px"></span>
-                <span class="mdi mdi-delete-empty mdi-24px"></span>
-                <span>Delete</span>
-              </button>
+            <div>
+              <a onClick={() => deleteClick(majorFunctionCode, moduleId, majorFunctionNameEnglish, majorFunctionNameMalayalam)}>
+                <button className="btn btn-delete">
+                  <span className="mdi mdi-delete mdi-24px"></span>
+                  <span className="mdi mdi-delete-empty mdi-24px"></span>
+                  <span>Delete</span>
+                </button>
+              </a>
             </div>
           );
         },
@@ -143,7 +192,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       },
     };
     mutation.mutate(formData);
-    refetch()
+    refetch();
   };
   function handleClick() {
     updateDraft();
@@ -169,6 +218,35 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
     };
     updatemutation.mutate(formData);
   };
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setMutationSuccess(true);
+      setTimeout(() => {
+        setMutationSuccess(false);
+      }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    if (updatemutation.isSuccess) {
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    if (deleteItem.isSuccess) {
+      setDeleteSuccess(true);
+      setTimeout(() => {
+        setDeleteSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess, updatemutation.isSuccess, deleteItem.isSuccess]);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -184,7 +262,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
                 <CardLabel>
-                  {t("MF_CODE")}
+                  {t("MAJOR_FUNCTION_CODE")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
@@ -230,7 +308,9 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
             </div>
           </div>
           <div className="btn-flex">
-            <button className="btn-row" onClick={handleClick} >Update</button>
+            <button className="btn-row" onClick={handleClick}>
+              Update
+            </button>
             <SubmitBar onSubmit={saveDraft} label={t("save")} className="btn-row" />
             <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
@@ -256,6 +336,9 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
           )}
         </div>
       </div>
+      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
     </React.Fragment>
   );
 };

@@ -1,18 +1,9 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useForm, Controller } from "react-hook-form";
-
-import { useNavigate } from "react-router-dom";
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { SubmitBar, CardLabel, Dropdown, TextInput, Table } from "@egovernments/digit-ui-react-components";
+import { SubmitBar, CardLabel, Dropdown, TextInput, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
-import viewToPlainText from "@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext";
 
 const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -26,7 +17,6 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const deleteItem = Digit.Hooks.dfm.useDeleteSubFunct(tenantId);
   const mutation = Digit.Hooks.dfm.useCreateSubModule(tenantId);
   const updatemutation = Digit.Hooks.dfm.useUpdateSubFunct();
-
   const [majorFunction, setmajorFunction] = useState("");
   const [sfCode, setSfcode] = useState("");
   const [subFuncNm, setsubFuncNm] = useState("");
@@ -34,20 +24,24 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
   const [subid, setsubid] = useState("");
   const [majorFunctId, setmajorFunctId] = useState("");
+  const [mutationSuccess, setMutationSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
-  const Value = data?.ModuleDetails?.map((item) => ({
+
+  const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
   }));
 
   const { data: searchData } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
-  const majorData = searchData?.MajorFunctionDetails?.map((item) => ({
+
+  const majorData = searchData?.MajorFunctionDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.majorFunctionNameEnglish,
   }));
 
   const { data: searchsubfunct, refetch } = Digit.Hooks.dfm.useSearchsubModule({ tenantId, majorFunctionId: majorFunction.label });
-  console.log("majorFunction", majorFunction.label);
 
   const setsetSfcode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -68,12 +62,14 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       setsubFuncNmMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   };
-
   function setsetmoduleNameEnglish(value) {
     setmoduleNameEnglish(value);
   }
   function selectMajorFunction(value) {
     setmajorFunction(value);
+  }
+  function handleClick() {
+    updateDraft();
   }
   const [edit, setIsEdit] = useState(false);
   function handleLinkClick(row) {
@@ -84,12 +80,28 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     setsubFuncNm(row.subFunctionNameEnglish);
     setsubFuncNmMl(row.subFunctionNameMalayalam);
   }
-  const textValue = searchsubfunct?.SubFunctionDetails;
-  console.log(textValue);
+  const [toast, setToast] = useState(false);
+  const deleteClick = (subFunctionCode, majorFunctionId, subFunctionNameEnglish, subFunctionNameMalayalam) => {
+    const formData = {
+      SubFunctionDetails: {
+        id: "",
+        tenantId: tenantId,
+        subFunctionCode: subFunctionCode,
+        majorFunctionId: majorFunctionId,
+        subFunctionNameEnglish: subFunctionNameEnglish,
+        subFunctionNameMalayalam: subFunctionNameMalayalam,
+        status: "",
+      },
+    };
+  };
+  // const textValue = searchsubfunct?.SubFunctionDetails;
+  const textValue = searchsubfunct?.SubFunctionDetails.filter((item) => {
+    return item.majorFunctionId === majorFunction.label && item.status !== "0";
+  });
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = [
     {
-      Header: t("MODULE_CODE"),
+      Header: t("MODULE_NAME_EN"),
       Cell: ({ row }) => {
         return (
           <div>
@@ -104,26 +116,43 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       disableSortBy: true,
     },
     {
-      Header: t("MODULE_NAME_ENG"),
+      Header: t("MAJOR_FUNCTION_NAME_EN"),
       Cell: ({ row }) => GetCell(t(row?.original.subFunctionNameEnglish || "NA")),
       disableSortBy: true,
     },
     {
-      Header: t("MODULE_NAME_MAL"),
+      Header: t("SUBFUNCTION_CODE"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.subFunctionCode) || ""),
+    },
+    {
+      Header: t("SUBFUNCTION_NAME_EN"),
+      disableSortBy: true,
+      Cell: ({ row }) => GetCell(t(row.original.subFunctionNameEnglish) || ""),
+    },
+    {
+      Header: t("SUBFUNCTION_NAME_ML"),
       disableSortBy: true,
       Cell: ({ row }) => GetCell(t(row.original.subFunctionNameMalayalam) || ""),
     },
     {
-      Header: t("Download Certificate"),
+      Header: t("DELETE_MODULE"),
       disableSortBy: true,
       Cell: ({ row }) => {
+        const subFunctionCode = row.original.subFunctionCode;
+        const majorFunctionId = row.original.majorFunctionId;
+        const subFunctionNameEnglish = row.original.subFunctionNameEnglish;
+        const subFunctionNameMalayalam = row.original.subFunctionNameMalayalam;
+
         return (
-          <div onClick={Delete}>
-            <button class="btn btn-delete">
-              <span class="mdi mdi-delete mdi-24px"></span>
-              <span class="mdi mdi-delete-empty mdi-24px"></span>
-              <span>Delete</span>
-            </button>
+          <div>
+            <a onClick={() => deleteClick(subFunctionCode, majorFunctionId, subFunctionNameEnglish, subFunctionNameMalayalam)}>
+              <button className="btn btn-delete">
+                <span className="mdi mdi-delete mdi-24px"></span>
+                <span className="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+              </button>
+            </a>
           </div>
         );
       },
@@ -150,23 +179,6 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     mutation.mutate(formData);
     refetch();
   };
-  const Delete = () => {
-    const formData = {
-      SubFunctionDetails: {
-        id: "",
-        tenantId: tenantId,
-        subFunctionCode: sfCode,
-        majorFunctionId: majorFunction.label,
-        subFunctionNameEnglish: subFuncNm,
-        subFunctionNameMalayalam: subFuncNmMl,
-        status: "",
-      },
-    };
-    deleteItem.mutate(formData);
-  };
-  function handleClick() {
-    updateDraft();
-  }
 
   const updateDraft = () => {
     const formData = {
@@ -182,6 +194,35 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
     };
     updatemutation.mutate(formData);
   };
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setMutationSuccess(true);
+      setTimeout(() => {
+        setMutationSuccess(false);
+      }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    if (updatemutation.isSuccess) {
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+    if (deleteItem.isSuccess) {
+      setDeleteSuccess(true);
+      setTimeout(() => {
+        setDeleteSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
+  }, [mutation.isSuccess, updatemutation.isSuccess, deleteItem.isSuccess]);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -211,7 +252,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
             <div className="col-md-3 col-sm-12 col-xs-12">
               <CardLabel>
                 {" "}
-                {t("SF_CODE")}
+                {t("SUB_FUNCTION_CODE")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -263,9 +304,8 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
             <button className="btn-row" onClick={handleClick}>
               Update
             </button>
-
             <SubmitBar onSubmit={saveModule} disabled={edit} label={t("save")} className="btn-row" />
-            <SubmitBar label={t("CLOSE")} disabled={!edit} className="btn-row" />
+            <SubmitBar label={t("CLOSE")} className="btn-row" />
           </div>
         </div>
       </div>
@@ -289,6 +329,10 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
           )}
         </div>
       </div>
+      {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
+      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
     </React.Fragment>
   );
 };
