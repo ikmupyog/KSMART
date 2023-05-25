@@ -148,7 +148,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
-        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_STILLBIRTH_REG_SUMMARY_HEADING")}</CardSubHeader>
         <Accordion expanded={true} title={t("CR_BIRTH_CHILD_DETAILS")}
           content={<StatusTable >
             <div className="row">
