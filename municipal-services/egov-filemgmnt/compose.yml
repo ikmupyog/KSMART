@@ -167,7 +167,7 @@ services:
       - DB_NAME=egov_filemgmnt
       - DB_PORT=5432
       - DB_USER=postgres
-      - DB_PASSWORD=123
+      - DB_PASSWORD=ikm
       - DATA_CONFIG_URLS=file:///pdfc/residential-certificate-config.json,file:///pdfc/draft-certificate-config.json,file:///pdfc/circular-certificate-config.json,file:///pdfc/notice-certificate-config.json,file:///pdfc/affidavit-certificate-config.json,file:///pdfc/memo-certificate-config.json
       - FORMAT_CONFIG_URLS=file:///pdfc/residential-certificate-format.json,file:///pdfc/draft-certificate-format.json,file:///pdfc/circular-certificate-format.json,file:///pdfc/notice-certificate-format.json,file:///pdfc/affidavit-certificate-format.json,file:///pdfc/memo-certificate-format.json
       - EGOV_FILESTORE_SERVICE_HOST=http://filestore:8083

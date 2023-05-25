@@ -93,6 +93,12 @@ public class DraftFile {
     @JsonProperty("status")
     private String status;
 
+    @Schema(type = "string", description = "Subject")
+    @NotBlank(message = "Subject is required")
+    @Size(max = 64, message = "Subject length cannot exceed 64 characters")
+    @JsonProperty("subject")
+    private String subject;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 

@@ -615,8 +615,8 @@ serviceMaps:
         INSERT INTO public.eg_fm_arisingfile(id, tenantid, filecode, filearisingmode, filearisingdate, 
         financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, 
         createdtime, lastmodifiedby, lastmodifiedtime, serviceid, subject, 
-        applicationdetails, pennumber, employeename, employeedesignation, filetype)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        applicationdetails, pennumber, employeename, employeedesignation, filetype, fileclosedate)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         
       basePath: ArisingFile
       jsonMaps:
@@ -663,6 +663,8 @@ serviceMaps:
       - jsonPath: $.ArisingFile.employeeDesignation
 
       - jsonPath: $.ArisingFile.fileType
+
+      - jsonPath: $.ArisingFile.fileCloseDate
 
     - query: >
         INSERT INTO public.eg_fm_arisingfileapplicantdetails(id, tenantid, arisingfileid, filecode, applicanttype, firstname, 
@@ -746,7 +748,7 @@ serviceMaps:
     fromTopic: update-fm-arisingfile
     isTransaction: true
     queryMaps:
-    - query: UPDATE public.eg_fm_arisingfile  SET  filearisingmode=?, filearisingdate=?, financialyear=?, workflowcode=?, businessservice=?, assignee=?, action=?, filestatus=? WHERE filecode = ?;
+    - query: UPDATE public.eg_fm_arisingfile  SET  filearisingmode=?, filearisingdate=?, financialyear=?, workflowcode=?, businessservice=?, assignee=?, action=?, filestatus=?  fileclosedate=? WHERE filecode = ?;
       basePath: arisingFile
       jsonMaps:
       - jsonPath: $.arisingFile.fileArisingMode
@@ -765,6 +767,8 @@ serviceMaps:
 
       - jsonPath: $.arisingFile.fileStatus
 
+      - jsonPath: $.arisingFile.fileCloseDate
+
       - jsonPath: $.arisingFile.fileCode
 
   - version: 1.0
@@ -772,8 +776,9 @@ serviceMaps:
     fromTopic: save-fm-draftfile
     isTransaction: true
     queryMaps:
-    - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+    - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime, subject) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: DraftFile
       jsonMaps:
       - jsonPath: $.DraftFile.id
@@ -804,21 +809,23 @@ serviceMaps:
 
       - jsonPath: $.DraftFile.auditDetails.lastModifiedTime
 
-  - version: 1.0B
+      - jsonPath: $.DraftFile.subject
+
+  - version: 1.0
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
     fromTopic: update-fm-draftfile
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_drafting  SET  drafttext=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
-      basePath: DraftFiles.*
+      basePath: DraftFile.
       jsonMaps:
-      - jsonPath: $.DraftFiles.*.draftText
+      - jsonPath: $.DraftFile.draftText
 
-      - jsonPath: $.DraftFiles.*.fileCode
+      - jsonPath: $.DraftFile.fileCode
 
-      - jsonPath: $.DraftFiles.*.draftType
+      - jsonPath: $.DraftFile.draftType
 
-      - jsonPath: $.DraftFiles.*.assigner
+      - jsonPath: $.DraftFile.assigner
 
   - version: 1.0
     description: Update drafting status  in egov_filemgmnt database, eg_fm_drafting
@@ -826,15 +833,15 @@ serviceMaps:
     isTransaction: true
     queryMaps:
     - query: UPDATE public.eg_fm_drafting  SET  status=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
-      basePath: DraftFiles.*
+      basePath: DraftFile.*
       jsonMaps:
-      - jsonPath: $.DraftFiles.*.status
+      - jsonPath: $.DraftFile.status
 
-      - jsonPath: $.DraftFiles.*.fileCode
+      - jsonPath: $.DraftFile.fileCode
 
-      - jsonPath: $.DraftFiles.*.draftType
+      - jsonPath: $.DraftFile.draftType
 
-      - jsonPath: $.DraftFiles.*.assigner
+      - jsonPath: $.DraftFile.assigner
           
   - version: 1.0
     description: Save Enquiry  in egov_filemgmnt database, eg_fm_enquiry
