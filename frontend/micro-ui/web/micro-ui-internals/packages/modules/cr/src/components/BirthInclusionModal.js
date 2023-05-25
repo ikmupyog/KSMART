@@ -44,7 +44,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [certificateDob, setCertificateDob] = useState("");
   const [hasError, setHasError] = useState(false);
   const [errorDocIds, setErrorDocIds] = useState([]);
-  
+
 
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   let conditionalComponent = "";
@@ -77,7 +77,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (removeindex === -1) {
       return false;
     }
-  
+
     docIdDetails.push(e);
     setUploadedFiles(!!uploadedFiles.splice(removeindex, 1));
   }
@@ -109,7 +109,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
 
   useEffect(() => {
     (async () => {
-     
+
       if (file && file?.type) {
         setIsLoading(true);
         if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
@@ -145,7 +145,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             setError({ message: t("PT_FILE_UPLOAD_ERROR"), fieldId: docuploadedId });
             setIsLoading(false);
           }
-      
+
         }
       }
     })();
@@ -181,45 +181,44 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       selectedConfig.docFlag === BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS
         ? `MOTER_DETAILS`
         : BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS
-        ? `FATER_DETAILS`
-        : "";
+          ? `FATER_DETAILS`
+          : "";
     if (Object.keys(checkCorrectionCondition)?.length > 0) {
       docCondition = `${docCondition}_${checkCorrectionCondition.code}`;
     }
     if (Object.keys(checkStudentCondition)?.length > 0) {
       docCondition = `${docCondition}_${checkStudentCondition.code}`;
     }
-    console.log("checkCorrectionCondition==",Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0);
+    console.log("checkCorrectionCondition==", Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0);
     if (Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0) {
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
-      console.log("filtered docss=",filteredDocs);
+      console.log("filtered docss=", filteredDocs);
       setSelectedDocuments(filteredDocs);
     }
   }, [checkStudentCondition, checkCorrectionCondition]);
 
   useEffect(() => {
     let filteredDocs = [];
-    let docCondition = "NAME_GREATER_THAN_SIX";
+    let docCondition = "NAME_GREATER_THAN_SIX";;
     let childAge = "";
-       console.log("checkStudentCondition==",inclusionStudentCondition,Object.keys(inclusionStudentCondition)?.length > 0 && inclusionStudentCondition.code === "STUDENT");
+    console.log("checkStudentCondition==", inclusionStudentCondition, Object.keys(inclusionStudentCondition)?.length > 0 && inclusionStudentCondition.code === "STUDENT");
     if ((Object.keys(inclusionStudentCondition)?.length > 0) && (inclusionStudentCondition.code === "STUDENT")) {
-      
       childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-      console.log("reached",childAge,inclusionStudentCondition);
-       if (childAge >= 6 && childAge < 15) {
+      console.log("reached", childAge, inclusionStudentCondition);
+      if (childAge >= 6 && childAge < 15) {
         docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
       } else if (childAge >= 18) {
         setShowDatePicker(true);
         const certificateDobDifference =
           certificateDob && selectedBirthData?.dateofbirth && moment(selectedBirthData?.dateofbirth).diff(moment(certificateDob), "months");
         const absDobDifference = certificateDobDifference && Math.abs(certificateDobDifference);
-          if (certificateDob && absDobDifference >= 10) {
-            docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
-          } else if(inclusionCorrectionCondition){
-            docCondition = `ADD_HUSBAND_NAME_FOR_FEMALE`;
-          } else {
-            docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE`;
-          }
+        if (certificateDob && absDobDifference >= 10) {
+          docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF`;
+        } else if (inclusionCorrectionCondition) {
+          docCondition = `ADD_HUSBAND_NAME_FOR_FEMALE`;
+        } else {
+          docCondition = `NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE`;
+        }
       } else if (childAge >= 15) {
         if (absDobDifference >= 10) {
           if (selectedBirthData?.fullName?.trim() === "") {
@@ -236,9 +235,15 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
       setShowDatePicker(false);
       docCondition = `${docCondition}_${inclusionStudentCondition.code}`;
     }
-       
-    if (Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
-      console.log("selectedConfig--",selectedConfig);
+
+    if (childAge < 6 && selectedConfig?.fieldName === "CHILD_NAME") {
+      setShowDatePicker(false);
+      docCondition = `NAME_LESS_THAN_SIX`;
+      // setSelectedDocuments(filteredDocs);
+    }
+
+    if ((childAge < 6 && selectedConfig?.fieldName === "CHILD_NAME") || Object.keys(inclusionCorrectionCondition)?.length > 0 || Object.keys(inclusionStudentCondition)?.length > 0) {
+      console.log("selectedConfig--", docCondition, selectedConfig);
       filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
       setSelectedDocuments(filteredDocs);
     }
@@ -257,54 +262,52 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
     let filteredDocs = [];
     const childAge = selectedBirthData?.dateofbirth && moment().diff(moment(selectedBirthData?.dateofbirth), "years");
-    // if(childAge < 6){
-    //   filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == `NAME_LESS_THAN_SIX`);
-    //   setSelectedDocuments(filteredDocs);
-    // } else
-     if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
-      selectedStudentMenu = [
-        { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT" },
-        { i18nKey: "CR_COMMON_NONSTUDENT", code: "NON_STUDENT" },
-      ];
-      selectedChangeMenu = [{ i18nKey: "CR_INCLUDE_HUSBAND_NAME", code: "INCLUDE_HUSBAND_NAME" }];
-    }
+    if (childAge > 6) {
+      if (BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag) {
+        selectedStudentMenu = [
+          { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT" },
+          { i18nKey: "CR_COMMON_NONSTUDENT", code: "NON_STUDENT" },
+        ];
+        selectedChangeMenu = [{ i18nKey: "CR_INCLUDE_HUSBAND_NAME", code: "INCLUDE_HUSBAND_NAME" }];
+      }
 
-    if (
-      selectedStudentMenu?.length > 0
-      // || selectedChangeMenu?.length > 0
-    ) {
-      return (
-        <div>
-          <h2>{t("CR_SELECT_ONE")}</h2>
-          <RadioButtons
-            t={t}
-            optionsKey="i18nKey"
-            // isMandatory={config.isMandatory}
-            options={selectedStudentMenu}
-            selectedOption={inclusionStudentCondition}
-            onSelect={setInclusionStudentCondition}
-          />
-          
-          {showDatePicker && (
-            <div>
-              <h2>{t("CR_SELECT_DOB")}</h2>
-              <DatePicker
-                date={certificateDob}
-                max={convertEpochToDate(new Date())}
-                min={convertEpochToDate("1900-01-01")}
-                onChange={onDobChange}
-                // formattingFn={formatDob}
-                placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+      if (
+        selectedStudentMenu?.length > 0
+        // || selectedChangeMenu?.length > 0
+      ) {
+        return (
+          <div>
+            <h2>{t("CR_SELECT_ONE")}</h2>
+            <RadioButtons
+              t={t}
+              optionsKey="i18nKey"
+              // isMandatory={config.isMandatory}
+              options={selectedStudentMenu}
+              selectedOption={inclusionStudentCondition}
+              onSelect={setInclusionStudentCondition}
+            />
+
+            {showDatePicker && (
+              <div>
+                <h2>{t("CR_SELECT_DOB")}</h2>
+                <DatePicker
+                  date={certificateDob}
+                  max={convertEpochToDate(new Date())}
+                  min={convertEpochToDate("1900-01-01")}
+                  onChange={onDobChange}
+                  // formattingFn={formatDob}
+                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                 // {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
-              />
-            
-              <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={()=> setCheckNameCorrectionCondition(!checkNameCorrectionCondition)} value={checkNameCorrectionCondition} checked={checkNameCorrectionCondition} />
-            </div>
-          )}
-        </div>
-      );
-    } else {
-      return null;
+                />
+
+                <CheckBox label={t("ADD_HUSBAND_NAME_FOR_FEMALE")} onChange={() => setCheckNameCorrectionCondition(!checkNameCorrectionCondition)} value={checkNameCorrectionCondition} checked={checkNameCorrectionCondition} />
+              </div>
+            )}
+          </div>
+        );
+      } else {
+        return null;
+      }
     }
   };
 
@@ -313,8 +316,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     let selectedChangeMenu = [];
     if ([BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS, BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS].includes(selectedConfig.docFlag)) {
       selectedStudentMenu = [
-        { i18nKey: "CR_COMMON_STUDENT", code: "WITH_OUT_CERTIFICATE" },
-        { i18nKey: "CR_COMMON_NONSTUDENT", code: "WITH_CERTIFICATE" },
+        { i18nKey: "CR_YES", code: "WITH_OUT_CERTIFICATE" },
+        { i18nKey: "CR_NO", code: "WITH_CERTIFICATE" },
       ];
       selectedChangeMenu = [
         { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION" },
@@ -324,7 +327,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     if (selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0) {
       return (
         <div>
-          <h2>{t("CR_SELECT_ONE")}</h2>
+          <h2>{t("CR_ARE_YOU_STUDENT")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"
@@ -332,6 +335,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
             selectedOption={checkStudentCondition}
             onSelect={setCheckStudentCondition}
           />
+          <h2>{t("CR_WHICH_ACTION")}</h2>
           <RadioButtons
             t={t}
             optionsKey="i18nKey"

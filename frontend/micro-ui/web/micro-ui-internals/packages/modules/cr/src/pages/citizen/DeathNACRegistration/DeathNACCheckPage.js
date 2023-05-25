@@ -900,6 +900,30 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {`${t("CS_COMMON_COUNTRY")}`}
+                        </CardLabel>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                         :{" "} {DeathNACAddressPage?.presentaddressCountry?.name}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {`${t("CS_COMMON_COUNTRY")}`}
+                        </CardLabel>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                         :{" "} {DeathNACAddressPage?.presentaddressCountry?.namelocal}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -930,7 +954,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaadrsVillage}
+                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaadrsVillage.code}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1277,6 +1301,30 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {`${t("CS_COMMON_COUNTRY")}`}
+                        </CardLabel>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                         :{" "} {DeathNACAddressPage?.permtaddressCountry?.name}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {`${t("CS_COMMON_COUNTRY")}`}
+                        </CardLabel>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                         :{" "} {DeathNACAddressPage?.permtaddressCountry?.namelocal}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
@@ -1307,7 +1355,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaVillage}
+                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaVillage?.code}
                         </CardText>
                       </div>
                       <div className="col-md-3">

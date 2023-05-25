@@ -12,9 +12,12 @@ const assetsProxy = createProxyMiddleware({
 });
 module.exports = function (app) {
   [
+    "/death-services/v1/deathdetails/updatedeathcorrection",
+    "/death-services/v1/deathdetails/searchdeathcorrection",
     "/birth-services/cr/updatebirthcorrection",
     "/birth-services/cr/searchbirthcorrection",
     "/marriage-services/v1/marriagedetails/_searchmarriagecorrection",
+    "/marriage-services/v1/marriagedetails/_updatemarriagecorrection",
     "/death-services/v1/deathregistry/_searchdeath",
     "/birth-services/cr/registry/_search",
     "/marriage-services/v1/marriagedetails/_searchmarriage",

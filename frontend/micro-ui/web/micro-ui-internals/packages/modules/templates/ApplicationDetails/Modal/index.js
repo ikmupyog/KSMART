@@ -18,6 +18,7 @@ import BPAActionModal from "./BPAActionModal";
 import NOCActionModal from "./NOCActionModal";
 import BirthCorrectionModal from "./BirthCorrectionModal";
 import MarriageCorrectionModal from "./MarriageCorrectionModal";
+import DeathCorrectionModal from "./DeathCorrectionModal";
 
 const ActionModal = (props) => {
   console.log("businessService" + props?.businessService);
@@ -39,16 +40,23 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("STILLBIRTHHOSP") || props?.businessService.includes("STILLBIRTHHOME")) {
     return <StillBirthActionModal {...props} />;
   }
+  if (props?.businessService.includes("CORRECTIONDEATH")) {
+    return <DeathCorrectionModal {...props} />;
+  }
   if (props?.businessService.includes("CORRECTIONBIRTH")) {
     return <BirthCorrectionModal {...props} />;
   }
-  if (props?.businessService.includes("MARRIAGECORRECTION")) {
+  if (props?.businessService.includes("CORRECTIONMARRIAGE")) {
     return <MarriageCorrectionModal {...props} />;
   }
   if (props?.businessService.includes("ADOPTIONHOME")) {
     return <AdoptionActionModal {...props} />;
   }
-  if (props?.businessService.includes("BORNOUTSIDENORMAL")) {
+  if (
+  props?.businessService.includes("BORNOUTSIDENORMAL") ||
+  props?.businessService.includes("BORNOUTSIDE60TO1YR")
+  
+  ) {
     return <BornOutsideActionModal {...props} />;
   }
   if (props?.businessService.includes("ABANDONEDBIRTH")) {
@@ -69,7 +77,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
     return <AbandonedActionModal {...props} />;
   }
-  if (props?.businessService.includes("NACAPP")) {
+  if (props?.businessService.includes("BIRTHNAC")) {
     return <BirthNACActionModal {...props} />;
   }
   if (

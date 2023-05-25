@@ -6,8 +6,6 @@ import { convertToAdoptionRegistration, convertToAdoptionUpdation } from "../../
 import getPDFData from "../../../utils/getCRAdoptionAcknowledgmentData";
 
 const GetActionMessage = (props) => {
-  // console.log(props,props.isLoading);
-  // console.log(props.isSuccess,props);
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
@@ -23,31 +21,28 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  const [editFlag, setEditFlag, clearParams1] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
-  if ((props.isError || props?.isSuccess) && editFlag !== false) {
+  if (props.isSuccess && sessionStorage.getItem("CR_EDIT_ADOPTION_FLAG")) {
+    sessionStorage.setItem("applicationNumber", props.data?.ChildDetailsAdoption[0]?.applicationNumber);
+    window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
     return (
       <Banner
         message={GetActionMessage(props)}
-        applicationNumber={props?.data?.ChildDetailsAdoption?.length > 0 ? props?.data?.ChildDetailsAdoption[0]?.applicationNumber : null}
+        applicationNumber={props.data?.ChildDetailsAdoption[0]?.applicationNumber}
         info={props.isSuccess ? props.applicationNumber : ""}
         successful={props.isSuccess}
-        error={props.isError}
       />
     );
   } else {
-    props?.setIsLoader(false);
     return (
       <Banner
         message={GetActionMessage(props)}
-        applicationNumber={props?.data?.ChildDetailsAdoption?.length > 0 ? props?.data?.ChildDetailsAdoption[0]?.applicationNumber : null}
+        applicationNumber={props.data?.ChildDetailsAdoption[0]?.applicationNumber}
         info={props.isSuccess ? props.applicationNumber : ""}
         successful={props.isSuccess}
-        error={props.isError}
       />
     );
   }
 };
-
 const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
@@ -55,6 +50,7 @@ const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade");
+  let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
   const mutation = Digit.Hooks.cr.useCvilRegistrationAdoptionApi(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     !editFlag
@@ -153,15 +149,23 @@ const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   //     }
   //   }
   // }, [mutation.isSuccess, mutation1.isSuccess]);
-
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      applicationNumber = mutation.data?.ChildDetailsAdoption[0].applicationNumber;
+      sessionStorage.setItem("applicationNumber", applicationNumber);
+    } else {
+      applicationNumber = null;
+    }
+  }, [mutation.isSuccess]);
   const handleDownloadPdf = async () => {
-    const { AdoptionDetails = [] } = mutation.data;
-    const License = (AdoptionDetails && AdoptionDetails[0]) || {};
+    const { ChildDetailsAdoption = [] } = mutation.data;
+    const License = (ChildDetailsAdoption && ChildDetailsAdoption[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
+
   // let enableLoader = !resubmit ? (!isEditBirth ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   // if(enableLoader)
   // {return (<Loader />)}
@@ -181,27 +185,47 @@ const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   // }
   // else
   // console.log(JSON.stringify(mutation));
-  let enableLoader = mutation.isIdle || mutation.isLoading || isLoader;
+  let enableLoader = mutation.isIdle || mutation.isLoading;
   if (enableLoader) {
-    return <Loader />;
+    if (
+      mutation?.isLoading === false &&
+      mutation?.isSuccess === false &&
+      mutation?.isError == false &&
+      mutation?.isIdle === true &&
+      applicationNumber != null
+    ) {
+      return (
+        <Card>
+          <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
+            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          </Link>
+        </Card>
+      );
+    } else if (mutation.isIdle || mutation.isLoading) {
+      return <Loader />;
+    }
   } else if (mutation?.isSuccess == false && mutation?.isIdle == false) {
     // if(mutation.isSuccess && mutation?.isError===null){
     return (
       <Card>
-        <BannerPicker
-          t={t}
-          data={mutation.data}
-          isSuccess={mutation.isSuccess}
-          isError={mutation?.isError}
-          isLoading={mutation.isIdle || mutation.isLoading}
-          setIsLoader={setIsLoader}
-          editData={editData}
-        />
-        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
-         */}
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation.isLoading} editData={editData} />
+        {
+          <CardText>
+            {t("COMMON_REASON")} : {mutation?.error?.response?.data?.Errors[0]?.message}
+          </CardText>
+        }
+
         <Link to={editFlag ? `/digit-ui/employee` : `/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
+      </Card>
+    );
+  } else if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
+    return (
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
+        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+         */}
         <LinkButton
           label={
             <div className="response-download-button">
@@ -216,11 +240,11 @@ const AdoptionAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
           //style={{ width: "100px" }}
           onClick={handleDownloadPdf}
         />
-        {mutation?.data?.AdoptionDetails[0]?.applicationStatus === "PENDINGPAYMENT" && (
+        {mutation?.data?.ChildDetailsAdoption[0]?.applicationStatus === "PENDINGPAYMENT" && (
           <Link
             to={{
-              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.AdoptionDetails[0].businessservice}/${mutation.data.AdoptionDetails[0].applicationNumber}`,
-              state: { tenantId: mutation.data.AdoptionDetails[0].tenantid },
+              pathname: `/digit-ui/citizen/payment/collect/${mutation.data.ChildDetailsAdoption[0].businessservice}/${mutation.data.ChildDetailsAdoption[0].applicationNumber}`,
+              state: { tenantId: mutation.data.ChildDetailsAdoption[0].tenantid },
             }}
           >
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />

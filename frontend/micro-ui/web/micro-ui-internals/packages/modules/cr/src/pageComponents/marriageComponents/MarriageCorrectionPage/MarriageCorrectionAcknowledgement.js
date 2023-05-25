@@ -91,7 +91,7 @@ const MarriageCorrectionAcknowledgement = () => {
           {mutationData?.data?.marriageCorrectionDetails[0]?.applicationStatus === "PENDINGPAYMENT" && (
           <Link
             to={{
-              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.marriageCorrectionDetails[0].businessservice}/${mutationData.data.marriageCorrectionDetails[0].applicationNumber}`,
+              pathname: `/digit-ui/citizen/payment/collect/${mutationData.data.marriageCorrectionDetails[0].businessService}/${mutationData.data.marriageCorrectionDetails[0].applicationNumber}`,
               state: { tenantId: mutationData.data.marriageCorrectionDetails[0].tenantid },
             }}
           >

@@ -193,8 +193,12 @@ let ownerappmap ={
       }, 2000);
     } else
       setLicenseeType(value);
+      clearApplicant();
   }
-
+  function clearApplicant(){
+    initapplicant();
+    initowner();
+  }
   function selectLicensingInstitutionType(value) {
     setNatureOfInstitution(value);
   }

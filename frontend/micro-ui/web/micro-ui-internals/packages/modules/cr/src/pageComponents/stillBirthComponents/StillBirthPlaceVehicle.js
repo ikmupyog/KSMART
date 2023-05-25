@@ -15,6 +15,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
@@ -108,12 +109,12 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
   }
   function setSelectVehicleFromEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleFromEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleToEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleToEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToEn(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleFromMl(e) {
@@ -123,12 +124,12 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleFromMl('');
     }
     else{
-      setvehicleFromMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   function setSelectVehicleHaltPlace(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleHaltPlace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleHaltPlace(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   
@@ -139,7 +140,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleToMl('');
     }
     else{
-      setvehicleToMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToMl(e.target.value.length <= 150 ? e.target.value : (e.target.value).substring(0, 150));
     }
   }
   // function setSelectVehicleOtherDetailsEn(e) {
@@ -189,7 +190,8 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
             <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
-              optionKey="name"
+              // optionKey="name"
+              optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
               isMandatory={true}
               option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
               selected={vehicleType}

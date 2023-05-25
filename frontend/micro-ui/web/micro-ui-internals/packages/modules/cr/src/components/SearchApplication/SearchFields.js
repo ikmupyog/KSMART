@@ -1,19 +1,19 @@
-import React, {Fragment} from "react"
+import React, { Fragment } from "react"
 import { Controller, useWatch } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
 
 //style
 const mystyle = {
-   display:"block"
-  };
+    display: "block"
+};
 
-const SearchFields = ({register, control, reset, tenantId, t,previousPage ,applicationType}) => {
+const SearchFields = ({ register, control, reset, tenantId, t, previousPage, applicationType }) => {
 
     // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes("kl")
-// console.log(applicationTypes);
+    // console.log(applicationTypes);
     // const applicationType = useWatch({ control, name: "applicationType" });
 
-    let businessServices=[];
+    let businessServices = [];
     // if(applicationType && applicationType?.code==="RENEWAL")
     // businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
     // else if(applicationType && applicationType?.code==="NEW")
@@ -25,7 +25,7 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
     // else if(applicationType && applicationType?.code==="NEW")
     // businessServices=["NewBirth"]
     // else
-    businessServices=["BIRTHHOSP21",]
+    businessServices = ["BIRTHHOSP21",]
 
     // const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
     // let applicationStatuses = []
@@ -41,14 +41,14 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
     // })
 
     return <>
-    {applicationType?.value &&(
-      <>
-       <SearchField>
-            <label>{t("CR_SEARCH_APP_NO_LABEL")}
-            <span className="mandatorycss">*</span></label>
-            <TextInput name="applicationNumber" inputRef={register({})} />
-        </SearchField>
-        {/* {applicationTypesLoading ? <Loader/> : <SearchField>
+        {applicationType?.value && (
+            <>
+                <SearchField>
+                    <label>{t("CR_SEARCH_APP_NO_LABEL")}
+                        <span className="mandatorycss">*</span></label>
+                    <TextInput name="applicationNumber" inputRef={register({})} />
+                </SearchField>
+                {/* {applicationTypesLoading ? <Loader/> : <SearchField>
             <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
             <Controller
            
@@ -66,28 +66,28 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
                     )}
                     />
         </SearchField>} */}
-        <SearchField>
-            <label  style={mystyle}>{t("CR_FROM_DATE")}</label>
-            <Controller
-           
-                render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
-                name="fromDate"
-                control={control}
-                />
-        </SearchField>
-        <SearchField>
-            <label style={mystyle}>{t("CR_TO_DATE")}</label>
-            <Controller
-                render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
-                name="toDate"
-                control={control}
-                />
-        </SearchField>
-        {/* <SearchField>
+                <SearchField>
+                    <label style={mystyle}>{t("CR_FROM_DATE")}</label>
+                    <Controller
+
+                        render={(props) => <DatePicker date={props.value} onChange={props.onChange} />}
+                        name="fromDate"
+                        control={control}
+                    />
+                </SearchField>
+                <SearchField>
+                    <label style={mystyle}>{t("CR_TO_DATE")}</label>
+                    <Controller
+                        render={(props) => <DatePicker date={props.value} onChange={props.onChange} />}
+                        name="toDate"
+                        control={control}
+                    />
+                </SearchField>
+                {/* <SearchField>
             <label>{t("TL_TRADE_LICENSE_LABEL")}</label>
             <TextInput  name="licenseNumbers" inputRef={register({})}/>
         </SearchField> */}
-        {/* { isLoading ? <Loader/> : <SearchField>
+                {/* { isLoading ? <Loader/> : <SearchField>
             <label>{t("CR_SEARCH_RESULTS_APP_STATUS_LABEL")}</label>
             <Controller
                     control={control}
@@ -104,31 +104,31 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
                     )}
             />
         </SearchField>} */}
-        <SearchField>
-            <label>{t("CR_BIRTH_MOTHERNAME_LABEL")}</label>
-            <TextInput  name="tradeName" inputRef={register({})}/>
-        </SearchField>
-        <SearchField className="submit">
-            <SubmitBar label={t("ES_COMMON_SEARCH")} submit disabled={ applicationType?.label?false:true}/>
-            <p onClick={() => {
-                reset({ 
-                    searchAppllication:[],
-                    applicationNumber: "", 
-                    fromDate: "", 
-                    toDate: "",
-                    licenseNumbers: "",
-                    status: "",
-                    tradeName: "",
-                    offset: 0,
-                    limit: 10,
-                    sortBy: "dateOfBirth",
-                    sortOrder: "DESC"
-                });
-                previousPage();
-            }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
-        </SearchField>
-      </>
-      )}   
+                <SearchField>
+                    <label>{t("CR_BIRTH_MOTHERNAME_LABEL")}</label>
+                    <TextInput name="nameOfMother" inputRef={register({})} />
+                </SearchField>
+                <SearchField className="submit">
+                    <SubmitBar label={t("ES_COMMON_SEARCH")} submit disabled={applicationType?.label ? false : true} />
+                    <p onClick={() => {
+                        reset({
+                            searchAppllication: [],
+                            applicationNumber: "",
+                            fromDate: "",
+                            toDate: "",
+                            licenseNumbers: "",
+                            status: "",
+                            mother: "",
+                            offset: 0,
+                            limit: 10,
+                            sortBy: "dateOfBirth",
+                            sortOrder: "DESC"
+                        });
+                        previousPage();
+                    }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
+                </SearchField>
+            </>
+        )}
     </>
 }
 export default SearchFields

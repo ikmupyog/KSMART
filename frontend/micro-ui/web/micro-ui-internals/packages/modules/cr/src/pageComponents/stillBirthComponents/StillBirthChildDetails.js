@@ -10,16 +10,19 @@ import StillBirthPlaceVehicle from "../../pageComponents/stillBirthComponents/St
 import StillBirthPlacePublicPlace from "../../pageComponents/stillBirthComponents/StillBirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 import { sortDropdownNames } from "../../utils";
+import moment from "react";
+import _ from "lodash";
 
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
-  console.log(JSON.stringify(formData));
-  console.log(formData);
-  console.log(isEditStillBirth);
   sessionStorage.removeItem("applicationNumber");
-  const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
-  //const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
-  const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
+  // console.log(JSON.stringify(formData));
+   console.log(formData);
+  // console.log(isEditStillBirth);
 
+  const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.StillBirthChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.StillBirthChildDetails?.Amount);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -27,8 +30,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
-  //const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
@@ -53,7 +57,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [isDisableEditRole, setisDisableEditRole] = useState(false);
   const [hospitalCode, sethospitalCode] = useState(formData?.StillBirthChildDetails?.hospitalCode);
-
+  const [userRole, setuserRole] = useState(formData?.StillBirthChildDetails?.userRole);
   const { roles: userRoles, uuid: uuid } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
   // const { uuid: uuid } = Digit.UserService.getUser().info;
@@ -105,11 +109,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   let cmbFoetalDeath = [];
   // let DifferenceInDaysRounded = "";
   // let workFlowCode = "STILLBIRTHHOSP";
-  // WorkFlowDetails &&
-  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-  //     workFlowData.push(ob);
-  //   });
+  WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+      workFlowData.push(ob);
+    });
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -187,7 +191,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [birthDateTime, setbirthDateTime] = useState(
     isEditStillBirth === false && formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : ""
   );
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  //const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.StillBirthChildDetails?.checkbirthDateTime?.hh ? formData?.StillBirthChildDetails?.checkbirthDateTime.hh : null, mm: formData?.StillBirthChildDetails?.checkbirthDateTime?.mm ? formData?.StillBirthChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.StillBirthChildDetails?.checkbirthDateTime?.amPm ? formData?.StillBirthChildDetails?.checkbirthDateTime.amPm : null });
+  const [displaytime, setDisplaytime] = useState(formData?.StillBirthChildDetails?.displaytime ? formData?.StillBirthChildDetails?.displaytime : null);
+  const [displayAmPm, setDisplayAmPm] = useState(formData?.StillBirthChildDetails?.displayAmPm ? formData?.StillBirthChildDetails?.displayAmPm : null);
   const [birthPlace, selectBirthPlace] = useState(
     formData?.StillBirthChildDetails?.birthPlace?.code
       ? formData?.StillBirthChildDetails?.birthPlace
@@ -547,42 +555,97 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   function setselectGender(value) {
     selectGender(value);
   }
+  // useEffect(() => {
+  //   if (birthPlace) {
+  //     if (birthPlace.code === "HOSPITAL") {
+  //       setWorkFlowCode("STILLBIRTHHOSP");
+  //       console.log(workFlowCode);
+  //     } else {
+  //       setWorkFlowCode("STILLBIRTHHOME");
+  //     }
+  //   }
+  // }, [birthPlace]);
+  useEffect(() => {
+    if (birthPlace && DifferenceInTime != null) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime])
+
+  // function setselectChildDOB(value) {
+  //   setChildDOB(value);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const birthDate = new Date(value);
+  //   birthDate.setHours(0, 0, 0, 0);
+
+  //   if (birthDate.getTime() <= today.getTime()) {
+  //     setDOBError(false);
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - birthDate.getTime();
+  //     // console.log("Difference_In_Time" + Difference_In_Time);
+  //     setDifferenceInTime(today.getTime() - birthDate.getTime());
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+  //     setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+  //     // if (birthPlace) {
+  //     //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+  //     //   console.log("currentWorgFlowDOB" + currentWorgFlow);
+  //     //   if (currentWorgFlow.length > 0) {
+  //     //     // console.log(currentWorgFlow[0].WorkflowCode);
+  //     //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  //     //   }
+  //     // }
+  //   }
+  // }
 
   function setselectChildDOB(value) {
+    setDifferenceInTime(null);
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-
     if (birthDate.getTime() <= today.getTime()) {
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      if (Difference_In_Time != null) {
+        setDifferenceInTime(Difference_In_Time);
+      }
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (birthPlace) {
-        let currentWorgFlow = workFlowData.filter(
-          (workFlowData) =>
-            workFlowData.BirtPlace === birthPlace.code &&
-            workFlowData.startdateperiod <= DifferenceInTime &&
-            workFlowData.enddateperiod >= DifferenceInTime
-        );
-        if (currentWorgFlow.length > 0) {
-          console.log(currentWorgFlow);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
-        }
-      }
+      // if (birthPlace && DifferenceInTime != null) {
+      //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      //   if (currentWorgFlow.length > 0) {
+      //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //     setIsPayment(currentWorgFlow[0].payment);
+      //     setAmount(currentWorgFlow[0].amount);
+      //   }
+      // }
       // if (Difference_In_Days >= 365) {
       //   setChildAadharHIde(true);
       // } else {
       //   setChildAadharHIde(false);
       //   setChildAadharNo("");
+      // }
+      // if (Difference_In_Days > 365) {
+      //   // setUploadNACHIde(true);
+      //   setpopUpState(true);
+      // } else {
+      //   // setUploadNACHIde(false);
+      //   setpopUpState(false);
+      //   setUploadNACHIde(false);
+      //   setproceedNoRDO("");
+      //   setregNoNAC("");
+      //   setUploadedFile("");
+
       // }
     }
   }
@@ -623,18 +686,87 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     if (typeof value === "string") {
       cb(value);
       setbirthDateTime(value);
-      console.log(value);
       let time = value;
       let timeParts = time.split(":");
-      console.log(+timeParts[0] * (60000 * 60) + +timeParts[1] * 60000);
-      // const milliseconds = (h, m, s) => ((h * 60 * 60 + m * 60 + s ) * 1000);
-      // // Usage
-      // const milliSecTime = milliseconds(24, 36,0);
-      // const time = value;
-      // // "34:26";
-      // const timeParts = time.split(":");
-      // const convrtmilliSecTime = milliseconds(timeParts[0], timeParts[1],0);
-      // console.log(convrtmilliSecTime);
+
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
+        }
+      }
     }
   };
 
@@ -776,16 +908,33 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       setSelectedadmittedHospitalEn("");
     }
   }
+  // function setselectBirthPlace(value) {
+  //   selectBirthPlace(value);
+  //   setValue(value.code);
+  //   //console.log(value);
+  //   if (value.code === "HOSPITAL") {
+  //     setWorkFlowCode("STILLBIRTHHOSP");
+  //     console.log(workFlowCode);
+  //     console.log(value);
+  //   } else {
+  //     setWorkFlowCode("STILLBIRTHHOME");
+  //   }
+  //   clearBirthPalce(value);
+  // }
+
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
-    if (value.code === "HOSPITAL") {
-      setWorkFlowCode("STILLBIRTHHOSP");
-      console.log(workFlowCode);
-    } else {
-      setWorkFlowCode("STILLBIRTHHOME");
+    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+    // console.log(currentWorgFlow);
+    if (currentWorgFlow.length > 0) {
+      // console.log(currentWorgFlow[0].WorkflowCode);
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setAmount(currentWorgFlow[0].amount);
     }
     clearBirthPalce(value);
+
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
@@ -897,7 +1046,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
 
     if (birthPlace.code === "HOSPITAL") {
-      setWorkFlowCode("STILLBIRTHHOSP");
+     // console.log(birthPlace.code, "code");
+   //   let wrkflowcode = "STILLBIRTHHOSP";
+     // console.log(wrkflowcode, "wrkflowcode");
+     // setWorkFlowCode(wrkflowcode);
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
         validFlag = false;
@@ -910,7 +1062,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
-      setWorkFlowCode("STILLBIRTHHOME");
+     // setWorkFlowCode("STILLBIRTHHOME");
       if (institution == null) {
         setInstitutionError(true);
         validFlag = false;
@@ -934,7 +1086,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         }
       }
     } else if (birthPlace.code === "HOME") {
-      setWorkFlowCode("STILLBIRTHHOME");
+      //setWorkFlowCode("STILLBIRTHHOME");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -1063,7 +1215,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         }
       }
     } else if (birthPlace.code === "VEHICLE") {
-      setWorkFlowCode("STILLBIRTHHOME");
+      //setWorkFlowCode("STILLBIRTHHOME");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -1132,7 +1284,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setadmittedHospitalEnError(false);
       }
     } else if (birthPlace.code === "PUBLIC_PLACES") {
-      setWorkFlowCode("STILLBIRTHHOME");
+    //  setWorkFlowCode("STILLBIRTHHOME");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -1201,7 +1353,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setToast(false);
       }, 2000);
     } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+      if (pregnancyDuration < 20 || pregnancyDuration > 53) {
         validFlag = false;
         setPregnancyDurationInvalidError(true);
         setToast(true);
@@ -1243,8 +1395,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         workFlowCode,
         childDOB,
         birthDateTime,
+         checkbirthDateTime,
+        displaytime, 
+        displayAmPm,
         gender,
-
         birthPlace,
         hospitalCode,
         hospitalName,
@@ -1288,7 +1442,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         IsEditChangeScreen,
         uuid,
         DifferenceInTime,
-        isWorkflow,
+        isPayment,
+        Amount,
+       isWorkflow,
       });
     }
   };
@@ -1339,7 +1495,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
   }
 
-  if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading || isFoetalDeathListLoading) {
+  if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading || isFoetalDeathListLoading) {
     return <Loader></Loader>;
   } else {
     return (
@@ -1456,11 +1612,13 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                  // optionKey="name"
                   isMandatory={false}
                   option={sortDropdownNames(cmbPlaceMaster ? cmbPlaceMaster : [], "name", t)}
                   selected={birthPlace}
-                  disable={isDisableEdit}
+                  disable={isDisableEditRole}
+                  // disable={isDisableEdit}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -1598,7 +1756,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  // optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbAttDeliverySub ? cmbAttDeliverySub : [], "name", t)}
                   selected={medicalAttensionSub}
@@ -1634,7 +1793,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  // optionKey="name"
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
                   option={sortDropdownNames(cmbDeliveryMethod ? cmbDeliveryMethod : [], "name", t)}
                   selected={deliveryMethods}
