@@ -58,7 +58,7 @@ public class ArisingFileApplicant {
     private String applicantType;
 
     @Schema(type = "string", description = "First name")
-    @NotBlank(message = "First name is required")
+//    @NotBlank(message = "First name is required")
     @Size(max = 64, message = "First name length cannot exceed 64 characters")
     @JsonProperty("firstName")
     private String firstName;
@@ -134,7 +134,7 @@ public class ArisingFileApplicant {
 
     @Schema(type = "string", description = "Pincode")
     @Size(min = 6, max = 6, message = "Invalid pincode")
-    @Pattern(regexp = FMConstants.PATTERN_PINCODE, message = "Invalid pincode")
+//    @Pattern(regexp = FMConstants.PATTERN_PINCODE, message = "Invalid pincode")
     @JsonProperty("pinCode")
     private String pinCode;
 

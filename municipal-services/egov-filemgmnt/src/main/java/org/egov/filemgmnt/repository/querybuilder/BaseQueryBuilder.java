@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.egov.filemgmnt.web.enums.TypeValue;
 
 class BaseQueryBuilder {
 
@@ -67,6 +68,20 @@ class BaseQueryBuilder {
     }
 
     void addFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                 .append("=? ");
+            paramValues.add(value);
+        }
+    }
+
+    void addFilter(final String column, final TypeValue ty, final StringBuilder query, final List<Object> paramValues) {
+
+        String value = (ty != null)
+                ? ty.getValue()
+                : StringUtils.EMPTY;
+
         if (StringUtils.isNotBlank(value)) {
             addWhereClause(paramValues, query);
             query.append(column)
