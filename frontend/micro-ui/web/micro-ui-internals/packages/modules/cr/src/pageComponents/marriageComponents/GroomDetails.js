@@ -569,8 +569,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
       e.preventDefault();
     }
   }
-
-  
+  console.log(formData?.MarriageDetails?.marriageDOM,"new");
+  console.log(moment().subtract(21, "year").format("YYYY-MM-DD"));
   console.log({ isEditMarriage });
 
   let validFlag = true;
@@ -1339,7 +1339,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                 <DatePicker
                   date={groomDOB}
                   name="groomDOB"
-                  max={moment().subtract(21, "year").format("YYYY-MM-DD")}
+                  max={moment(formData?.MarriageDetails?.marriageDOM).subtract(21, "year").format("YYYY-MM-DD")}
                   //max={convertEpochToDate(new Date())}
                   onChange={setselectGroomDOB}
                   placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
