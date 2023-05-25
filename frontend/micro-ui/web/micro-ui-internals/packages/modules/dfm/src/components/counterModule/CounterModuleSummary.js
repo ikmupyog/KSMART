@@ -43,6 +43,8 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
     let mainPlace = sessionStorage.getItem("mainPlace");
     let idNumber = sessionStorage.getItem("idNumber");
     let applicationType = sessionStorage.getItem("applicationType");
+    let MinorFunctionDet = JSON.parse(sessionStorage.getItem("MinorFunctionDet"));
+    const serviceId = MinorFunctionDet?.name;
     const [institutionShow, setInstitutionShow] = useState(false);
     const [individualShow, setIndividualShow] = useState(false);
     useEffect(() => {
@@ -88,108 +90,117 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
 
     const handleSubmit = () => {
 
-        if (declaration === true) {
-            const formData = {
-                RequestInfo: {
-                    apiId: "Rainmaker",
-                    authToken: "e5eac662-d0d8-4477-ab11-8c207bbb002f",
-                    userInfo: {
-                        id: 97,
-                        uuid: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
-                        userName: "GRO",
-                        name: "GRO",
-                        mobileNumber: "9999999999",
-                        emailId: null,
-                        locale: null,
-                        type: "EMPLOYEE",
-                        roles: [
-                            {
-                                name: "File Management Counter Employee",
-                                code: "CITIZEN",
-                                tenantId: "kl"
-                            }
-                        ]
-                    }
-                },
-                arisingFile: {
+        // if (declaration === true) {
+        const formData = {
+            RequestInfo: {
+                apiId: "Rainmaker",
+                authToken: "e5eac662-d0d8-4477-ab11-8c207bbb002f",
+                userInfo: {
+                    id: 97,
+                    uuid: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
+                    userName: "GRO",
+                    name: "GRO",
+                    mobileNumber: "9999999999",
+                    emailId: null,
+                    locale: null,
+                    type: "EMPLOYEE",
+                    roles: [
+                        {
+                            name: "File Management Counter Employee",
+                            code: "CITIZEN",
+                            tenantId: "kl"
+                        }
+                    ]
+                }
+            },
+            arisingFile: {
 
+                id: null,
+                tenantId: "kl.cochin",
+                fileCode: "Arising",
+                fileArisingMode: "1",
+                fileArisingDate: "18032023",
+                year: "2023",
+                workflowCode: "NewDFM",
+                businessService: "NewDFM",
+                employeeDesignation: "PM",
+                employeeName: "Krishna",
+                penNumber: "123456",
+                assignees: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
+                action: "APPLY",
+                wfDocuments: [],
+                comments: "ForSarath",
+                fileStatus: "running",
+                serviceId: serviceId || "",
+                title: title || "",
+                description: description || "",
+                auditDetails: {
+                    createdBy: null,
+                    createdTime: "111111111",
+                    lastModifiedBy: null,
+                    lastModifiedTime: null
+                },
+
+                arisingFileApplicant: {
                     id: null,
                     tenantId: "kl.cochin",
-                    fileCode: "Arising",
-                    fileArisingMode: "1",
-                    fileArisingDate: "18032023",
-                    year: "2023",
-                    workflowCode: "NewDFM",
-                    businessService: "NewDFM",
-                    employeeDesignation: "PM",
-                    employeeName: "Krishna",
-                    penNumber: "123456",
-                    assignees: "a7bc2ebd-793d-4c9c-9ada-b6d3db3d17d4",
-                    action: "APPLY",
-                    wfDocuments: [],
-                    comments: "ForSarath",
-                    fileStatus: "running",
-                    serviceId: service || "",
-                    title: title || "",
-                    description: description || "",
+                    arisingFileId: "1",
+                    fileCode: "131",
+                    applicantType: applicationType || "",
+                    firstName: firstName || "",
+                    middleName: middleName || "",
+                    lastName: lastName || "",
+                    mobileNo: mobile || "",
+                    whatsappNo: whatsapp || "",
+                    emailId: email || "",
+                    wardNo: wardNo || "",
+                    doorNo: doorNo || "",
+                    doorSubNo: subNo || "",
+                    streetName: streetName || "",
+                    localPlace: localPlace || "",
+                    mainPlace: mainPlace || "",
+                    cityName: "townCity",
+                    pinCode: pincode || "",
+                    // documentTypeId: documentTypeId || "",
+                    documentNumber: idNumber || "",
+                    documentFileStoreId: uploadedFile || "",
+                    institutionName: institutionName || "",
+                    officerName: officerName || "",
+                    designation: designation || "",
                     auditDetails: {
                         createdBy: null,
-                        createdTime: "111111111",
+                        createdTime: null,
                         lastModifiedBy: null,
                         lastModifiedTime: null
                     },
-
-                    arisingFileApplicant: {
-                        id: null,
-                        tenantId: "kl.cochin",
-                        arisingFileId: "1",
-                        fileCode: "131",
-                        applicantType: applicationType || "",
-                        firstName: firstName || "",
-                        middleName: middleName || "",
-                        lastName: lastName || "",
-                        mobileNo: mobile || "",
-                        whatsappNo: whatsapp || "",
-                        emailId: email || "",
-                        wardNo: wardNo || "",
-                        doorNo: doorNo || "",
-                        doorSubNo: subNo || "",
-                        streetName: streetName || "",
-                        localPlace: localPlace || "",
-                        mainPlace: mainPlace || "",
-                        cityName: "townCity",
-                        pinCode: pincode || "",
-                        // documentTypeId: documentTypeId || "",
-                        documentNumber: idNumber || "",
-                        documentFileStoreId: uploadedFile || "",
-                        institutionName: institutionName || "",
-                        officerName: officerName || "",
-                        designation: designation || "",
-                        auditDetails: {
-                            createdBy: null,
-                            createdTime: null,
-                            lastModifiedBy: null,
-                            lastModifiedTime: null
-                        },
-                        houseName: houseName || ""
-                    }
+                    houseName: houseName || ""
                 }
             }
-            mutation.mutate(formData)
-            // history.push(
-            //     'counter-module-acknowledgement',
-            //     { fileData: location?.state?.responseValue, fileStatus: location?.state?.responseStatus }
-            // )
         }
+        mutation.mutate(formData)
+        // history.push(
+        //     'counter-module-acknowledgement',
+        //     { fileData: location?.state?.responseValue, fileStatus: location?.state?.responseStatus }
+        // )
+        // }
     };
 
     useEffect(() => {
         if (mutation.isSuccess == true || mutation.isError == true) {
+            sessionStorage.removeItem("applicationType");
             history.push(
                 'counter-module-acknowledgement',
                 { fileData: mutation?.data, fileStatus: mutation?.status })
         }
     }, [mutation.isSuccess || mutation.isError])
+
+    const handleBack = () => {
+        history.push({
+            pathname: '/digit-ui/employee/dfm/counter-module',
+            state: { fromBack: true }
+        });
+
+    }
 
     let userType = "employee"
 
@@ -217,7 +228,7 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
                                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left", fontWeight: "bold" }}>{t("SERVICE")} :</CardText>
                                 </div>
                                 <div className="col-md-2">
-                                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{service || t("NOT_RECORDED")}</CardText>
+                                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{serviceId || t("NOT_RECORDED")}</CardText>
                                 </div>
                                 <div className="col-md-2">
                                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left", fontWeight: "bold" }}>{t("TITLE")} :</CardText>
@@ -376,13 +387,13 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="col-md-12" style={{ marginTop: "20px" }}>
-                            <CheckBox
+                            {/* <CheckBox
                                 style={{ marginTop: "3px" }}
                                 label="DFM_DECLARATION_STATEMENT"
                                 onChange={handleDeclaration}
                                 value={declaration}
                                 checked={declaration}
-                            />
+                            /> */}
                         </div>
                     </div>
 
@@ -390,8 +401,8 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
 
 
                 </div>
-
-                <SubmitBar label={t("SUBMIT")} onSubmit={handleSubmit} disabled={disabled} className="personal_register_view" />
+                <SubmitBar label={t("BACK")} onSubmit={handleBack} style={{ float: "left" }} />
+                <SubmitBar label={t("SUBMIT")} onSubmit={handleSubmit} className="personal_register_view" />
             </Card>
 
 

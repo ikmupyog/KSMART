@@ -28,59 +28,63 @@ import { sortDropdownNames } from "../../utils";
 
 const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) => {
 
-
+    let location = useLocation();
+    const fromBack = location?.state?.fromBack;
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     const history = useHistory();
     const state = useSelector((state) => state);
-    const [noteText, setNoteText] = useState("");
-    const [checkDraft, setCheckDraft] = useState(false);
-    const [checkNote, setCheckNote] = useState(true);
-    const [checkEnquiry, setCheckEnquiry] = useState(false);
-    const [showGeoLocation, setShowGeoLocation] = useState(false);
-    const [institution, setInstitution] = useState(false);
-    const [individual, setIndividual] = useState(false);
-    const [individualIndian, setIndividualIndian] = useState(false);
-    const [individualNonIndian, setIndividualNonIndian] = useState(false);
-    const [individualOutside, setIndividualOutside] = useState(false);
-    const [individualInside, setIndividualInside] = useState(false);
-    const [isActive, setIsactive] = useState({});
-    const [idNumber, setIdNumber] = useState();
-    const [firstName, setFirstName] = useState();
-    const [middleName, setMiddleName] = useState();
-    const [lastName, setLastName] = useState();
-    const [doorNo, setDoorNo] = useState();
-    const [subNo, setSubNo] = useState();
-    const [streetName, setStreetName] = useState();
-    const [localPlace, setLocalPlace] = useState();
-    const [mainPlace, setMainPlace] = useState();
-    const [houseName, setHouseName] = useState();
-    const [wardNo, setWardNo] = useState();
-    const [pincode, setPincode] = useState();
-    const [mobile, setMobile] = useState();
-    const [whatsapp, setWhatsapp] = useState();
-    const [email, setEmail] = useState();
+    // const [noteText, setNoteText] = useState("");
+    // const [checkDraft, setCheckDraft] = useState(false);
+    // const [checkNote, setCheckNote] = useState(true);
+    // const [checkEnquiry, setCheckEnquiry] = useState(false);
+    // const [showGeoLocation, setShowGeoLocation] = useState(false);
+    const [institution, setInstitution] = useState(sessionStorage.getItem("institution") || false);
+    const [individual, setIndividual] = useState(sessionStorage.getItem("individual") || false);
+    const [individualIndian, setIndividualIndian] = useState(sessionStorage.getItem("individualIndian") || false);
+    const [individualNonIndian, setIndividualNonIndian] = useState(sessionStorage.getItem("individualNonIndian") || false);
+    const [individualOutside, setIndividualOutside] = useState(sessionStorage.getItem("individualOutside") || false);
+    const [individualInside, setIndividualInside] = useState(sessionStorage.getItem("individualInside") || false);
+    const [isActive, setIsactive] = useState(sessionStorage.getItem("isActive") || true);
+    const [idNumber, setIdNumber] = useState(sessionStorage.getItem("idNumber") || "");
+    const [firstName, setFirstName] = useState(sessionStorage.getItem("firstName") || "");
+    const [middleName, setMiddleName] = useState(sessionStorage.getItem("middleName") || "");
+    const [lastName, setLastName] = useState(sessionStorage.getItem("lastName") || "");
+    const [doorNo, setDoorNo] = useState(sessionStorage.getItem("doorNo") || "");
+    const [subNo, setSubNo] = useState(sessionStorage.getItem("subNo") || "");
+    const [streetName, setStreetName] = useState(sessionStorage.getItem("streetName") || "");
+    const [localPlace, setLocalPlace] = useState(sessionStorage.getItem("localPlace") || "");
+    const [mainPlace, setMainPlace] = useState(sessionStorage.getItem("mainPlace") || "");
+    const [houseName, setHouseName] = useState(sessionStorage.getItem("houseName") || "");
+    const [wardNo, setWardNo] = useState(sessionStorage.getItem("wardNo") || "");
+    const [pincode, setPincode] = useState(sessionStorage.getItem("pincode") || "");
+    const [mobile, setMobile] = useState(sessionStorage.getItem("mobile") || "");
+    const [whatsapp, setWhatsapp] = useState(sessionStorage.getItem("whatsapp") || "");
+    const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
     const [toastError, setToastError] = useState(null);
-    const [documentTypeId, setDocumentTypeId] = useState();
+    // const [documentTypeId, setDocumentTypeId] = useState();
     const [toast, setToast] = useState(false);
-    const [officerName, setOfficerName] = useState();
-    const [institutionName, setInstitutionName] = useState();
-    const [designation, setDesignation] = useState();
-    const [PostOfficevalues, setPostOfficevalues] = useState();
+    const [officerName, setOfficerName] = useState(sessionStorage.getItem("officerName") || "");
+    const [institutionName, setInstitutionName] = useState(sessionStorage.getItem("institutionName") || "");
+    const [designation, setDesignation] = useState(sessionStorage.getItem("designation") || "");
+    const [PostOfficevalues, setPostOfficevalues] = useState("");
+    const [PostOfficeDet, setPostOfficeDet] = useState(sessionStorage.getItem("PostOfficeDet") ? JSON.parse(sessionStorage.getItem("PostOfficeDet")) : "");
     /////////////
 
-    const [MinorFunctionDet, setMinorFunctionDet] = useState();
-    const [MajorFunctionDet, setMajorFunctionDet] = useState();
-    const [SubFunctionDet, setSubFunctionDet] = useState();
-    const [title, setTitle] = useState();
-    const [description, setDescription] = useState();
-    const [postOffice, setPostOffice] = useState();
+    const [MinorFunctionDet, setMinorFunctionDet] = useState(JSON.parse(sessionStorage.getItem("MinorFunctionDet")) || "");
+    const [MajorFunctionDet, setMajorFunctionDet] = useState(JSON.parse(sessionStorage.getItem("MajorFunctionDet")) || "");
+    const [SubFunctionDet, setSubFunctionDet] = useState(JSON.parse(sessionStorage.getItem("SubFunctionDet")) || "");
+    const [title, setTitle] = useState(sessionStorage.getItem("title") || "");
+    const [description, setDescription] = useState(sessionStorage.getItem("title") || "");
+    const [postOffice, setPostOffice] = useState(sessionStorage.getItem("postOffice") || "");
     const [checkAdhar, setCheckAdhar] = useState(true);
     const [checkUDID, setCheckUDID] = useState(false);
     const [serviceId, setServiceId] = useState();
     const [serviceName, setServiceName] = useState();
+    const [province, setProvince] = useState(sessionStorage.getItem("province") || "");
+    const [wardDet, setWardDet] = useState(sessionStorage.getItem("wardDet") ? JSON.parse(sessionStorage.getItem("wardDet")) : "");
     const [applicationType, setApplicationType] = useState("IndianInsideIndividual");
-    const [country, setCountry] = useState({
+    const [country, setCountry] = useState(sessionStorage.getItem("country") ? JSON.parse(sessionStorage.getItem("country")) : {
 
         "name": "India",
         "namelocal": "ഇന്‍ഡ്യ",
@@ -93,7 +97,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         "nationalitynamelocal": "ഇന്ത്യൻ"
 
     });
-    const [stateVal, setStateVal] = useState({
+    const [stateVal, setStateVal] = useState(sessionStorage.getItem("stateVal") ? JSON.parse(sessionStorage.getItem("stateVal")) : {
         "name": "Kerala",
         "namelocal": "കേരളം",
         "statecode": "KL",
@@ -106,15 +110,11 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         "active": true,
         "type": "COMMON"
     });
-    const [district, setDistrict] = useState();
+    const [district, setDistrict] = useState(sessionStorage.getItem("district") ? JSON.parse(sessionStorage.getItem("district")) : "");
     const [cmbFilterDistrict, setCmbFilterDistrict] = useState();
     //////////////
-    const [isNonIndianActive, setIsNonIndianActive] = useState(() => {
-        return { isNonIndianActive: true };
-    });
-    const [isActiveCheck, setIsactiveCheck] = useState(() => {
-        return { isActiveCheck: true };
-    });
+    const [isNonIndianActive, setIsNonIndianActive] = useState(sessionStorage.getItem("isNonIndianActive") || false);
+    const [isActiveCheck, setIsactiveCheck] = useState(sessionStorage.getItem("isActiveCheck") || false);
     const [isIndianActiveCheck, setIsIndianActiveCheck] = useState(() => {
         return { isIndianActiveCheck: true };
     });
@@ -122,8 +122,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
     // fileupload
-
-    const [uploadedFile, setUploadedFile] = useState(null)
+    const [imagesThumbs, setImagesThumbs] = useState(null);
+    const [uploadedFile, setUploadedFile] = useState(sessionStorage.getItem("uploadedFile") || null)
     const [file, setFile] = useState("")
     const [error, setError] = useState(null)
     //fileupload end
@@ -141,6 +141,21 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         setTenantboundary(false);
     }
     let validation = {};
+    useEffect(() => {
+        if (uploadedFile) {
+            fetchImage()
+        }
+    }, [uploadedFile])
+
+    const fetchImage = async () => {
+        setImagesThumbs(null)
+        const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([uploadedFile], tenantId);
+        const newThumbnails = fileStoreIds.map((key) => {
+            const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url)
+            return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+        });
+        setImagesThumbs(newThumbnails);
+    }
     const [selected, setSelected] = useState({
         // state: "",
         district: "",
@@ -280,27 +295,149 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
     ];
     const institutionTypes = institutionTypeRadio.map((type) => type.code);
+
+
+    // useEffect(() => {
+    //     setIsactive(true)
+    //     setIndividual(true);
+    //     setIndividualOutside(false);
+    //     setIndividualInside(false);
+    //     setIndividualIndian(false)
+    // }, [isInitialRender])
     useEffect(() => {
-        setIsactive(indianInsideTypeRadio[0])
-        setIndividual(true);
-        setIndividualOutside(false);
-        setIndividualInside(true);
-        setIndividualIndian(true)
+        // window.addEventListener("beforeunload", function (e) {
+        //     // setIsactive(true)
+        //     // sessionStorage.removeItem("individualIndian");
+        //     // sessionStorage.removeItem("individualInside");
+        //     sessionStorage.removeItem("individualOutside");
+        //     sessionStorage.removeItem("institution");
+        //     // sessionStorage.removeItem("individual");
+        //     // sessionStorage.removeItem("individualInside");
+        //     sessionStorage.removeItem("individualNonIndian");
+        //     setIsactive(true)
+        //     setIndividual(true);
+        //     setIndividualOutside(false);
+        //     setIndividualInside(true);
+        //     setIndividualIndian(true)
+
+        // });
+        if (!fromBack) {
+            setIsactive(true)
+            setIndividual(true);
+            setIndividualOutside(false);
+            setIndividualInside(true);
+            setIndividualIndian(true)
+            setCountry({
+
+                "name": "India",
+                "namelocal": "ഇന്‍ഡ്യ",
+                "countrycode": "IND",
+                "code": "COUNTRY_INDIA",
+                "id": 77,
+                "active": true,
+                "type": "COMMON",
+                "nationalityname": "Indian",
+                "nationalitynamelocal": "ഇന്ത്യൻ"
+
+            })
+            setStateVal({
+                "name": "Kerala",
+                "namelocal": "കേരളം",
+                "statecode": "KL",
+                "statetype": "S",
+                "id": 32,
+                "countryid": 77,
+                "countrycode": "COUNTRY_INDIA",
+                "code": "kl",
+                "lgdid": 32,
+                "active": true,
+                "type": "COMMON"
+            })
+        }
+        // else if (!fromBack && sessionStorage.getItem("applicationType") == "IndianInsideIndividual") {
+        //     setIsactive(true)
+        //     setIndividual(true);
+        //     setIndividualOutside(false);
+        //     setIndividualInside(true);
+        //     setIndividualIndian(false)
+        //     setIndividualNonIndian(false)
+        // }
+        else if (fromBack && sessionStorage.getItem("applicationType") == "Institution") {
+            //setIsactive(true)
+            setIndividual(false);
+            setIndividualOutside(false);
+            setIndividualInside(false);
+            setIndividualIndian(false)
+            setIndividualNonIndian(false)
+        }
+        else if (fromBack && sessionStorage.getItem("applicationType") == "IndianOutsideIndividual") {
+            setIndividual(true);
+            setIndividualOutside(true);
+            setIndividualInside(false);
+            setIndividualIndian(true)
+            setIndividualNonIndian(false)
+            setInstitution(false)
+        }
+        else if (fromBack && sessionStorage.getItem("applicationType") == "IndianInsideIndividual") {
+            setIndividual(true);
+            setIndividualOutside(false);
+            setIndividualInside(true);
+            setIndividualIndian(true)
+            setIndividualNonIndian(false)
+            setInstitution(false)
+        }
+        else if (fromBack && sessionStorage.getItem("applicationType") == "OutsideNonIndian") {
+            setIndividual(true);
+            setIndividualOutside(true);
+            setIndividualInside(false);
+            setIndividualIndian(false)
+            setIndividualNonIndian(true)
+            setInstitution(false)
+        }
+        // setIsInitialRender(false);
     }, [])
 
-    const handleIndividual = (e) => {
-        setIndividualIndian(true)
-        setIndividualNonIndian(false)
-        setIsactiveCheck("")
-        setIsactive(e)
-        setIsNonIndianActive("")
-        setIndividual(true);
-        setInstitution(false);
-        setIndividualInside(true);
-        setIndividualOutside(false);
+    // const handleIndividual = (e) => {
+    //     setIndividualIndian(true)
+    //     setIndividualNonIndian(false)
+    //     setIsactiveCheck("")
+    //     setIsactive(e)
+    //     setIsNonIndianActive("")
+    //     setIndividual(true);
+    //     setInstitution(false);
+    //     setIndividualInside(true);
+    //     setIndividualOutside(false);
 
-    }
+    // }
     const handleInsideIndividual = (e) => {
+        setCountry({
+
+            "name": "India",
+            "namelocal": "ഇന്‍ഡ്യ",
+            "countrycode": "IND",
+            "code": "COUNTRY_INDIA",
+            "id": 77,
+            "active": true,
+            "type": "COMMON",
+            "nationalityname": "Indian",
+            "nationalitynamelocal": "ഇന്ത്യൻ"
+
+        })
+        setStateVal({
+            "name": "Kerala",
+            "namelocal": "കേരളം",
+            "statecode": "KL",
+            "statetype": "S",
+            "id": 32,
+            "countryid": 77,
+            "countrycode": "COUNTRY_INDIA",
+            "code": "kl",
+            "lgdid": 32,
+            "active": true,
+            "type": "COMMON"
+        })
+        setIsNonIndianActive("")
+        setIsactiveCheck("")
         setApplicationType("IndianInsideIndividual")
         setIsactive(true)
         setIndividualIndian(true)
@@ -312,6 +449,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
     }
     const handleOutsideIndividual = (e) => {
+        setIsNonIndianActive(true)
+        setIsactiveCheck("")
         setApplicationType("IndianOutsideIndividual")
         setIndividualIndian(true)
         setIndividualNonIndian(false)
@@ -321,32 +460,60 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         setIndividualOutside(true);
         setIndividualInside(false);
     }
-    const handleNonIndianIndividual = (e) => {
-        setApplicationType("NonIndianIndividual")
-        setIndividualIndian(false)
-        setIndividualNonIndian(true)
-        setIsactiveCheck("")
-        setIsactive("")
-        setIsNonIndianActive(e)
-        setIsIndianActiveCheck("")
-        if (e.code == "INSIDE_LOCAL_BODY") {
-            setIndividual(true);
-            setInstitution(false);
-            setIndividualInside(true);
-            setIndividualOutside(false);
-        } else {
-            setIndividual(true);
-            setInstitution(false);
-            setIndividualOutside(true);
-            setIndividualInside(false);
-        }
-    }
+    // const handleNonIndianIndividual = (e) => {
+    //     setApplicationType("NonIndianIndividual")
+    //     setIndividualIndian(false)
+    //     setIndividualNonIndian(true)
+    //     setIsactiveCheck("")
+    //     setIsactive("")
+    //     setIsNonIndianActive(e)
+    //     setIsIndianActiveCheck("")
+    //     if (e.code == "INSIDE_LOCAL_BODY") {
+    //         setIndividual(true);
+    //         setInstitution(false);
+    //         setIndividualInside(true);
+    //         setIndividualOutside(false);
+    //     } else {
+    //         setIndividual(true);
+    //         setInstitution(false);
+    //         setIndividualOutside(true);
+    //         setIndividualInside(false);
+    //     }
+    // }
     const handleInstitution = (e) => {
+        setIsNonIndianActive("")
+        setIsactiveCheck(true)
+        setCountry({
+
+            "name": "India",
+            "namelocal": "ഇന്‍ഡ്യ",
+            "countrycode": "IND",
+            "code": "COUNTRY_INDIA",
+            "id": 77,
+            "active": true,
+            "type": "COMMON",
+            "nationalityname": "Indian",
+            "nationalitynamelocal": "ഇന്ത്യൻ"
+
+        })
+        setStateVal({
+            "name": "Kerala",
+            "namelocal": "കേരളം",
+            "statecode": "KL",
+            "statetype": "S",
+            "id": 32,
+            "countryid": 77,
+            "countrycode": "COUNTRY_INDIA",
+            "code": "kl",
+            "lgdid": 32,
+            "active": true,
+            "type": "COMMON"
+        })
         setApplicationType("Institution")
         setIndividualIndian(false)
         setIndividualNonIndian(false)
         setIsactive("")
-        setIsactiveCheck(e)
+        // setIsactiveCheck(e)
         setIsIndianActiveCheck("")
         setIsNonIndianActive("")
         setIndividual(false);
@@ -379,7 +546,9 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             }
         })();
     }, [file]);
+
     //////////form validation/////////////
+
     let validFlag = true;
 
     const goNext = () => {
@@ -394,7 +563,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                     setToastError(false);
                 }, 2000);
             }
-            if (selected.postOffice == null || selected.postOffice == "" || selected.postOffice == undefined) {
+            if (PostOfficeDet == null || PostOfficeDet == "" || PostOfficeDet == undefined) {
                 validFlag = false;
                 setToastError(`${t("ERROR_POSTOFFICE_CHOOSE")}`);
                 setToast(true);
@@ -405,7 +574,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             }
 
 
-            if (selected.ward == null || selected.ward == "" || selected.ward == undefined) {
+            if (wardDet == null || wardDet == "" || wardDet == undefined) {
                 validFlag = false;
                 setToastError(`${t("ERROR_WARD_CHOOSE")}`);
                 setToast(true);
@@ -619,8 +788,28 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             }, 2000);
         }
 
+        // const fileManagement = {
+        //     individualIndian: individualIndian ? individualIndian : false,
+
+        // }
+
         if (validFlag == true) {
+
+            //Digit.sessionStorage.setItem("counterModule", fileManagement)
+
+            sessionStorage.setItem("individualIndian", individualIndian ? individualIndian : false)
+            sessionStorage.setItem("individualInside", individualInside ? individualInside : false)
+            sessionStorage.setItem("individualNonIndian", individualNonIndian ? individualNonIndian : false)
+            sessionStorage.setItem("individualOutside", individualOutside ? individualOutside : false)
+            sessionStorage.setItem("institution", institution ? institution : false)
+            sessionStorage.setItem("individual", individual ? individual : false)
+            sessionStorage.setItem("isNonIndianActive", isNonIndianActive ? isNonIndianActive : "")
+            sessionStorage.setItem("isActive", isActive ? isActive : "");
+            sessionStorage.setItem("isActiveCheck", isActiveCheck ? isActiveCheck : "");
             sessionStorage.setItem("title", title ? title : "");
+            sessionStorage.setItem("country", country ? JSON.stringify(country) : "");
+            sessionStorage.setItem("stateVal", stateVal ? JSON.stringify(stateVal) : "");
+            sessionStorage.setItem("district", district ? JSON.stringify(district) : "");
             sessionStorage.setItem("description", description ? description : "");
             sessionStorage.setItem("services", serviceName ? serviceName : "");
             sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "");
@@ -637,15 +826,20 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             sessionStorage.setItem("whatsapp", whatsapp ? whatsapp : "");
             sessionStorage.setItem("mainPlace", mainPlace ? mainPlace : "");
             sessionStorage.setItem("wardNo", wardNo ? wardNo : "");
+            sessionStorage.setItem("wardDet", wardDet ? JSON.stringify(wardDet) : "");
             sessionStorage.setItem("streetName", streetName ? streetName : "");
             sessionStorage.setItem("pincode", pincode ? pincode : "");
             sessionStorage.setItem("postOffice", postOffice ? postOffice : "");
+            sessionStorage.setItem("PostOfficeDet", PostOfficeDet ? JSON.stringify(PostOfficeDet) : "");
             sessionStorage.setItem("applicationType", applicationType ? applicationType : "");
             sessionStorage.setItem("doorNo", doorNo ? doorNo : "");
             sessionStorage.setItem("subNo", subNo ? subNo : "");
             sessionStorage.setItem("houseName", houseName ? houseName : "");
             sessionStorage.setItem("localPlace", localPlace ? localPlace : "");
-
+            sessionStorage.setItem("province", province ? province : "");
+            sessionStorage.setItem("MinorFunctionDet", MinorFunctionDet ? JSON.stringify(MinorFunctionDet) : "");
+            sessionStorage.setItem("SubFunctionDet", SubFunctionDet ? JSON.stringify(SubFunctionDet) : "");
+            sessionStorage.setItem("MajorFunctionDet", MajorFunctionDet ? JSON.stringify(MajorFunctionDet) : "");
             history.push("/digit-ui/employee/dfm/counter-module-summary");
 
 
@@ -713,11 +907,11 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     }
 
     const wardChange = (val) => {
+        setWardDet(val)
         setSelected({ ...selected, ward: val })
         setWardNo(val?.wardno)
     }
     const countryChange = (val) => {
-        console.log(val)
         if (val?.name == "India") {
             // individualOutside(true)
             setIndividualIndian(true)
@@ -725,6 +919,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         } else {
             setIndividualIndian(false)
             setIndividualNonIndian(true)
+            setApplicationType("OutsideNonIndian")
         }
         setCountry(val)
     }
@@ -735,7 +930,11 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const districtChange = (val) => {
         setDistrict(val)
     }
+    const setProvinceField = (e) => {
+        setProvince(e.target.value)
+    }
     const setPostOfficeField = (val) => {
+        setPostOfficeDet(val)
         setSelected({ ...selected, postOffice: val })
         setPostOffice(val?.name)
         setPincode(val?.pincode)
@@ -863,12 +1062,11 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     //         history.push("/digit-ui/employee/dfm/counter-module-summary", { responseValue: mutation?.data, responseStatus: mutation?.status })
     //     }
     // }, [mutation.isSuccess || mutation.isError])
-    useEffect(() => {
-        cmbState[0]
-    }, [])
+    // useEffect(() => {
+    //     cmbState[0]
+    // }, [])
     return (
         <React.Fragment>
-
 
             <div className="moduleLinkHomePageModuleLinks">
 
@@ -998,7 +1196,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
                         <div className="col-md-12 col-sm-12  col-xs-12">
                             <div className="col-md-2 col-sm-2 col-xs-2">
-                                <CardLabel className="indian" >{`${t("INDIAN")}`}</CardLabel>
+                                {/* <CardLabel className="indian" >{`${t("INDIAN")}`}</CardLabel> */}
 
                             </div>
 
@@ -1013,7 +1211,6 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
                                             onChange={handleInsideIndividual}
-
                                             checked={isActive}
                                         />
                                         <label class="form-check-label" for="flexRadioDefault1">
@@ -1029,7 +1226,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
                                             onChange={handleOutsideIndividual}
-
+                                            checked={isNonIndianActive}
                                         />
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             {type}
@@ -1039,7 +1236,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                             </div>
 
 
-                            <div className="col-md-3  col-sm-2  col-xs-12" >
+                            {/* <div className="col-md-3  col-sm-2  col-xs-12" >
                                 {nonIndianTypes.map((type, index) => (
                                     <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                                         <input
@@ -1057,7 +1254,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 ))}
 
 
-                            </div>
+                            </div> */}
                             <div className="col-md-3 col-sm-2 col-xs-4">
 
                                 {institutionTypes.map((type, index) => (
@@ -1068,7 +1265,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                             name="indian"
                                             style={{ height: "20px", width: "20px" }}
                                             onChange={handleInstitution}
-
+                                            checked={isActiveCheck}
                                         />
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             {type}
@@ -1100,7 +1297,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                         option={cmbCountry}
                                         selected={country}
                                         select={countryChange}
-
+                                        placeholder={t("COUNTRY")}
                                     />
                                 </div>
                             }
@@ -1117,7 +1314,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                         option={cmbState}
                                         selected={stateVal}
                                         select={stateChange}
-
+                                        placeholder={t("STATE")}
                                     />
 
                                 </div>
@@ -1136,7 +1333,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                         option={cmbDistrictFinal}
                                         selected={district}
                                         select={districtChange}
-
+                                        placeholder={t("DISTRICT")}
                                     />
 
                                 </div>
@@ -1164,10 +1361,12 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 </CardLabel>
                                 <TextInput
                                     type={"text"}
+                                    t={t}
                                     optionKey="i18nKey"
                                     name="institutionName"
-                                    placeholder={t("INSTITUTION_NAME")}
-
+                                    placeholder={t("PROVINCE")}
+                                    onChange={setProvinceField}
+                                    value={province}
                                 />
 
                             </div>}
@@ -1392,7 +1591,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                     optionKey="namecmb"
                                     option={arraySort(cmbWard || [], 'namecmb', t)}
                                     name="Ward"
-                                    selected={selected.ward}
+                                    // selected={selected.ward}
+                                    selected={wardDet}
                                     select={wardChange}
                                     placeholder={t("WARD_NAME")}
                                 />
@@ -1412,7 +1612,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                     optionKey="namecmb"
                                     option={arraySort(cmbWard || [], 'namecmb', t)}
                                     name="Ward"
-                                    selected={selected.ward}
+                                    //selected={selected.ward}
+                                    selected={wardDet}
                                     select={wardChange}
                                     placeholder={t("WARD_NAME")}
                                 />
@@ -1431,7 +1632,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                     optionKey="namecmb"
                                     option={arraySort(cmbWard || [], 'namecmb', t)}
                                     name="Ward"
-                                    selected={selected.ward}
+                                    // selected={selected.ward}
+                                    selected={wardDet}
                                     select={wardChange}
                                     placeholder={t("WARD_NAME")}
                                 />
@@ -1508,7 +1710,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 <Dropdown
                                     option={PostOfficevalues}
                                     optionKey="name"
-                                    selected={selected.postOffice}
+                                    selected={PostOfficeDet}
 
                                     select={setPostOfficeField}
                                     t={t}
@@ -1558,7 +1760,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 <Dropdown
                                     option={PostOfficevalues}
                                     optionKey="name"
-                                    selected={selected.postOffice}
+                                    selected={PostOfficeDet}
 
                                     select={setPostOfficeField}
                                     t={t}
@@ -1580,7 +1782,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 <Dropdown
                                     option={PostOfficevalues}
                                     optionKey="name"
-                                    selected={selected.postOffice}
+                                    selected={PostOfficeDet}
                                     select={setPostOfficeField}
                                     t={t}
                                     type={"text"}
@@ -1745,7 +1947,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
                             </div>} */}
 
-                            {individual && <div className="col-md-4 col-sm-4"  >
+                            {individual && <div className="col-md-4 col-sm-4" >
                                 <CardLabel>
                                     {t("EMAIL_ID")}
                                 </CardLabel>
@@ -1853,7 +2055,27 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 />
                             </div>
 
-
+                            <div className="col-md-4">
+                                {/* {uploadedFile.length > 0 && */}
+                                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                                    <div className="col-md-12" style={{ display: "flex", marginLeft: "15px" }}>
+                                        {imagesThumbs && imagesThumbs.map((thumbnail, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    {thumbnail.type == "pdf" ?
+                                                        <React.Fragment>
+                                                            <object style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} data={thumbnail.pdfUrl}
+                                                                alt={`upload-thumbnails-${index}`} />
+                                                        </React.Fragment> :
+                                                        <img style={{ height: "120px", cursor: "zoom-in", margin: "5px" }} height={120} src={thumbnail.small}
+                                                            alt={`upload-thumbnails-${index}`} onClick={() => setImageZoom(thumbnail.large)} />}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                                {/* } */}
+                            </div>
 
                         </div>
 
