@@ -32,7 +32,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
   console.log("MD", formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
-
+  const locale = Digit.SessionStorage.get("locale");
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -67,14 +67,17 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
     {
       name: "Driving License",
       code: "DRIVING_LICENSE",
+      nameLocal: "ഡ്രൈവിംഗ് ലൈസൻസ്"
     },
     {
       name: "School Certificate",
       code: "SCHOOL_CERTIFICATE",
+      nameLocal: "സ്കൂൾ സർട്ടിഫിക്കറ്റ് "
     },
     {
       name: "Birth Certificate",
       code: "BIRTH_CERTIFICATE",
+      nameLocal: "ജനന സർട്ടിഫിക്കറ്റ് "
     },
   ];
 
@@ -2215,7 +2218,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                           </CardLabel>
                           <Dropdown
                             t={t}
-                            optionKey="name"
+                            optionKey={locale === "ml_IN" ? "nameLocal" : "name"}
                             isMandatory={true}
                             placeholder={t("CR_SELECT_DOCUMENT")}
                             option={crAgeDocuments}
@@ -2693,7 +2696,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                           </CardLabel>
                           <Dropdown
                             t={t}
-                            optionKey="name"
+                            optionKey={locale === "ml_IN" ? "nameLocal" : "name"}
                             isMandatory={true}
                             placeholder={t("CR_SELECT_DOCUMENT")}
                             option={crAgeDocuments}

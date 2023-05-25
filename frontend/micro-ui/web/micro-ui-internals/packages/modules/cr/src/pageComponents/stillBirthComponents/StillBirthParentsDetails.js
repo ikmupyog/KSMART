@@ -210,9 +210,10 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   // }
 
 
+ 
   function setSelectMotherMarriageBirth(e) {
     if (e.target.value.trim().length >= 0) {
-      setMotherMarriageBirth(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setMotherMarriageBirth(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     }
   }
   function setSelectMotherEducation(value) {

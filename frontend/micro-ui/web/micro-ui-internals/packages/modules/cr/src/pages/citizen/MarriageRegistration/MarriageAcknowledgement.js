@@ -70,7 +70,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!isEditMarriage 
-          // && applicationNumber === null
+          && applicationNumber === null
           ) {
           setIsInitialRender(false);
           let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : convertToEditMarriageRegistration(data);

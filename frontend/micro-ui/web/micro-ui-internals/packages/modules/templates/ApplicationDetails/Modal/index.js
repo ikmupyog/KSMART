@@ -37,9 +37,21 @@ const ActionModal = (props) => {
   ) {
     return <BirthActionModal {...props} />;
   }
-  if (props?.businessService.includes("STILLBIRTHHOSP") || props?.businessService.includes("STILLBIRTHHOME")) {
-    return <StillBirthActionModal {...props} />;
+  if (
+    props?.businessService.includes("WFBIRTH21DAYS") ||
+    props?.businessService.includes("BIRTH30DAYS") ||
+    props?.businessService.includes("BIRTH30TO1YEAR") ||
+    props?.businessService.includes("ABOVE1YEARBIRTH") ||
+    props?.businessService.includes("WFBIRTH21DAYSHOME") ||
+    props?.businessService.includes("BIRTH30DAYSHOME") ||
+    props?.businessService.includes("BIRTH30TO1YRHOME") ||
+    props?.businessService.includes("ABOVE1YRBIRTHHOME")
+  ) {
+    return  <StillBirthActionModal {...props} />;
   }
+  // if (props?.businessService.includes("STILLBIRTHHOSP") || props?.businessService.includes("STILLBIRTHHOME")) {
+  //   return <StillBirthActionModal {...props} />;
+  // }
   if (props?.businessService.includes("CORRECTIONDEATH")) {
     return <DeathCorrectionModal {...props} />;
   }

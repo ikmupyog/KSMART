@@ -139,7 +139,7 @@ const GroomAddressPresentInsideKerala = ({
   // let cmbTaluk = [];
   // let cmbVillage = [];
   let cmbDistrict = [];
-  let cmbPostOffice = [];
+  // let cmbPostOffice = [];
   let districtid = null;
   let cmbLBType = [];
   let cmbFilterDistrict = [];
@@ -213,28 +213,22 @@ const GroomAddressPresentInsideKerala = ({
       if (
         cmbLB.length > 0 &&
         isEditMarriage === false &&
-        isEditDeath === false &&
-        isEditAdoption === false &&
-        isEditBirthNAC === false &&
-        isEditStillBirth === false &&
         countryvalue === "IND" &&
         value === "kl" &&
         (formData?.GroomAddressDetails?.presentInsideKeralaLBName === null ||
           formData?.GroomAddressDetails?.presentInsideKeralaLBName === "" ||
           formData?.GroomAddressDetails?.presentInsideKeralaLBName === undefined)
       ) {
+        console.log("Hi")
         loadPresentInsideKeralaData();
       } else if (
         cmbLB.length > 0 &&
         isEditMarriage === false &&
-        isEditDeath === false &&
-        isEditAdoption === false &&
-        isEditBirthNAC === false &&
-        isEditStillBirth === false &&
         countryvalue === "IND" &&
         value === "kl" &&
         formData?.GroomAddressDetails?.presentInsideKeralaLBName != null
       ) {
+        console.log("Hi else if");
         loadPresentInsideKeralaWithData();
       }
     }
@@ -243,6 +237,7 @@ const GroomAddressPresentInsideKerala = ({
 
   function loadPresentInsideKeralaData() {
     currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+    console.log({currentLB});
     if (currentLB.length > 0) {
       setinsideKeralaLBName(currentLB[0]);
       setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
@@ -282,7 +277,7 @@ const GroomAddressPresentInsideKerala = ({
       setPostOfficevalues(currentLB[0].poList);
       setPostOfficeDropDownvalues(currentLB[0].poList);
     }
-    if (cmbLB.length > 0 && cmbDistrict.length > 0 && cmbTaluk.length > 0 && cmbVillage.length > 0 && cmbPostOffice.length > 0) {
+    if (cmbLB.length > 0 && cmbDistrict.length > 0) {
       setIsInitialRender(false);
     }
   }
@@ -327,7 +322,7 @@ const GroomAddressPresentInsideKerala = ({
     //   console.log({filteredPOs})
     //   setPostOfficevalues(filteredPOs);
     // }
-    if (cmbLB.length > 0 && cmbDistrict.length > 0 && cmbTaluk.length > 0 && cmbVillage.length > 0 && cmbPostOffice.length > 0) {
+    if (cmbLB.length > 0 && cmbDistrict.length > 0 ) {
       setIsInitialRender(false);
     }
   }
@@ -350,7 +345,9 @@ const GroomAddressPresentInsideKerala = ({
       }
     }
     if (formData?.GroomAddressDetails?.presentInsideKeralaTaluk != null) {
-      if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
+      if (
+        // cmbTaluk.length > 0 && 
+        (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
         // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
         // setLbsTalukvalue(cmbFilterTaluk);
         // setinsideKeralaTaluk(
@@ -364,7 +361,9 @@ const GroomAddressPresentInsideKerala = ({
       }
     }
     if (formData?.GroomAddressDetails?.presentInsideKeralaVillage != null) {
-      if (cmbVillage.length > 0 && (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
+      if (
+        // cmbVillage.length > 0 && 
+        (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
         // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
         // setLbsVillagevalue(cmbFilterVillage);
         // setinsideKeralaVillage(
@@ -385,7 +384,9 @@ const GroomAddressPresentInsideKerala = ({
       }
     }
     if (formData?.GroomAddressDetails?.presentInsideKeralaPostOffice != null) {
-      if (cmbPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
+      if (
+        // cmbPostOffice.length > 0 && 
+        (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
         // setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         // setinsideKeralaPostOffice(
         //   cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.code === formData?.GroomAddressDetails?.presentInsideKeralaPostOffice)[0]
@@ -711,7 +712,7 @@ const GroomAddressPresentInsideKerala = ({
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={sortWardList}
+                option={sortedWards}
                 selected={presentWardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
