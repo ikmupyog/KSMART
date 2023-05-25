@@ -1511,10 +1511,10 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BirthNACInitiator?.initiatorMobile}</CardText>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BirthNACInitiator?.initiatorAddress}</CardText>
                     {<ActionButton jumpTo={`${routeLink}/nac-initiator-details`} />}
                   </div>
@@ -1609,7 +1609,13 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="col-md-2">
                     {_.head(BirthNACDocuments?.uploadedFile)?.type === "pdf" && (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile)?.pdfUrl} alt="" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(BirthNACDocuments?.uploadedFile)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
                     )}
                     <a
@@ -1624,10 +1630,24 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(BirthNACDocuments?.uploadedFile1)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile1)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile1)?.pdfUrl} alt="" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(BirthNACDocuments?.uploadedFile1)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
+                    ) : (
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(BirthNACDocuments?.uploadedFile1)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
                     <a
                       target="_blank"
@@ -1641,10 +1661,24 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(BirthNACDocuments?.uploadedFile2)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile2)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile2)?.pdfUrl} alt="" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(BirthNACDocuments?.uploadedFile2)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
+                    ) : (
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(BirthNACDocuments?.uploadedFile2)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
                     <a
                       target="_blank"
@@ -1658,10 +1692,24 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(BirthNACDocuments?.uploadedFile3)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile3)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile3)?.pdfUrl} alt="" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(BirthNACDocuments?.uploadedFile3)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
+                    ) : (
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(BirthNACDocuments?.uploadedFile3)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
                     <a
                       target="_blank"
@@ -1675,10 +1723,24 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(BirthNACDocuments?.uploadedFile4)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile4)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile4)?.pdfUrl} alt="" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(BirthNACDocuments?.uploadedFile4)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
+                    ) : (
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(BirthNACDocuments?.uploadedFile4)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
                     <a
                       target="_blank"
@@ -1692,10 +1754,24 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </a>
                   </div>
                   <div className="col-md-2">
-                    {_.head(BirthNACDocuments?.uploadedFile5)?.type === "pdf" && (
+                    {_.head(BirthNACDocuments?.uploadedFile5)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(BirthNACDocuments?.uploadedFile5)?.pdfUrl} alt="" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(BirthNACDocuments?.uploadedFile5)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
+                    ) : (
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(BirthNACDocuments?.uploadedFile5)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
                     <a
                       target="_blank"

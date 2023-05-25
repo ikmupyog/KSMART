@@ -151,12 +151,18 @@ const GroomAddressBasePage = ({
   );
 
   const [Districtvalues, setDistrictvalue] = useState(null);
+  const [TalukDropDownvalues, setLbTalukDropDownvalues] = useState(null);
+  const [VillageDropDownvalues, setLbsVillageDropDownvalues] = useState(null);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
+  const [PostOfficeDropDownvalues, setPostOfficeDropDownvalues] = useState(null);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [DistrictPermvalues, setDistrictPermvalue] = useState(null);
+  const [TalukPermDropDownvalues, setLbTalukPermDropDownvalues] = useState(null);
+  const [VillagePermDropDownvalues, setLbsVillagePermDropDownvalues] = useState(null);
   const [TalukPermvalues, setLbsTalukPermvalue] = useState(null);
   const [VillagePermvalues, setLbsVillagePermvalue] = useState(null);
+  const [PostOfficePermDropDownvalues, setPostOfficePermDropDownvalues] = useState(null);
   const [PostOfficePermvalues, setPostOfficePermvalues] = useState(null);
 
   //################################# Present Outside Kerala ##########################################################################################################
@@ -238,9 +244,7 @@ const GroomAddressBasePage = ({
   //############################################### Same As Above ##################################################################################################
 
   const [isPrsentAddress, setIsPrsentAddress] = useState(
-    formData?.GroomAddressDetails?.isPrsentAddress
-      ? formData?.GroomAddressDetails?.isPrsentAddress
-      : false
+    formData?.GroomAddressDetails?.isPrsentAddress ? formData?.GroomAddressDetails?.isPrsentAddress : false
   );
 
   //################################################### Country State Permanent ###########################################################################
@@ -291,7 +295,7 @@ const GroomAddressBasePage = ({
   const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(
     formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl : ""
   );
-  console.log(formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn, "PIKLNE")
+  console.log(formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn, "PIKLNE");
   const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] = useState(
     formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn : ""
   );
@@ -1737,10 +1741,16 @@ const GroomAddressBasePage = ({
               setDistrictvalue={setDistrictvalue}
               lbs={lbs}
               setLbs={setLbs}
+              TalukDropDownvalues={TalukDropDownvalues}
+              setLbTalukDropDownvalues={setLbTalukDropDownvalues}
+              VillageDropDownvalues={VillageDropDownvalues}
+              setLbsVillageDropDownvalues={setLbsVillageDropDownvalues}
               Talukvalues={Talukvalues}
               setLbsTalukvalue={setLbsTalukvalue}
               Villagevalues={Villagevalues}
               setLbsVillagevalue={setLbsVillagevalue}
+              PostOfficeDropDownvalues={PostOfficeDropDownvalues}
+              setPostOfficeDropDownvalues={setPostOfficeDropDownvalues} 
               PostOfficevalues={PostOfficevalues}
               setPostOfficevalues={setPostOfficevalues}
               isPrsentAddress={isPrsentAddress}
@@ -1839,8 +1849,8 @@ const GroomAddressBasePage = ({
               setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
               permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
               setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
-              setinsideKeralaDistrict={setinsideKeralaDistrict}
               setinsideKeralaLBName={setinsideKeralaLBName}
+              setinsideKeralaDistrict={setinsideKeralaDistrict}
               isEditMarriage={isEditMarriage}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
@@ -1873,9 +1883,6 @@ const GroomAddressBasePage = ({
               setPostCode={setPostCode}
               // presentOutSideCountry={presentOutSideCountry}
               // setOutSideCountry={setOutSideCountry}
-              setinsideKeralaDistrict={setinsideKeralaDistrict}
-              setinsideKeralaLBName={setinsideKeralaLBName}
-              setaddressStateName={setaddressStateName}
               countryvalue={countryvalue}
               setCountryValue={setCountryValue}
               isPrsentAddress={isPrsentAddress}
@@ -1898,6 +1905,10 @@ const GroomAddressBasePage = ({
               setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
               permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
               setPermantpostCode={setPermantpostCode}
+              presentInsideKeralaDistrict={presentInsideKeralaDistrict}
+              setinsideKeralaDistrict={setinsideKeralaDistrict}
+              setinsideKeralaLBName={setinsideKeralaLBName}
+              setaddressStateName={setaddressStateName}
               // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
               // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
               isEditMarriage={isEditMarriage}
@@ -1938,6 +1949,7 @@ const GroomAddressBasePage = ({
             isEditAdoption={isEditAdoption}
             isEditBirthNAC={isEditBirthNAC}
             formData={formData}
+
             presentaddressCountry={presentaddressCountry}
             setaddressCountry={setaddressCountry}
             presentaddressStateName={presentaddressStateName}
@@ -2167,10 +2179,16 @@ const GroomAddressBasePage = ({
               setPostOfficevalues={setPostOfficevalues}
               DistrictPermvalues={DistrictPermvalues}
               setDistrictPermvalue={setDistrictPermvalue}
+              TalukPermDropDownvalues={TalukPermDropDownvalues}
+              setLbTalukPermDropDownvalues={setLbTalukPermDropDownvalues}
+              VillagePermDropDownvalues={VillagePermDropDownvalues}
+              setLbsVillagePermDropDownvalues={setLbsVillagePermDropDownvalues}
               TalukPermvalues={TalukPermvalues}
               setLbsTalukPermvalue={setLbsTalukPermvalue}
               VillagePermvalues={VillagePermvalues}
               setLbsVillagePermvalue={setLbsVillagePermvalue}
+              PostOfficePermDropDownvalues={PostOfficePermDropDownvalues}
+              setPostOfficePermDropDownvalues={setPostOfficePermDropDownvalues}
               PostOfficePermvalues={PostOfficePermvalues}
               setPostOfficePermvalues={setPostOfficePermvalues}
               isEditMarriage={isEditMarriage}
@@ -2191,91 +2209,91 @@ const GroomAddressBasePage = ({
         {countryValuePermanent === "IND" && valuePermanent !== "kl" && isPrsentAddress === false && (
           <div>
             <GroomAddressPermanentOutsideKerala
-              permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
-              setpermntOutsideKeralaDistrict={setpermntOutsideKeralaDistrict}
-              permntOutsideKeralaTaluk={permntOutsideKeralaTaluk}
-              setpermntOutsideKeralaTaluk={setpermntOutsideKeralaTaluk}
-              permntOutsideKeralaCityVilgeEn={permntOutsideKeralaCityVilgeEn}
-              setpermntOutsideKeralaCityVilgeEn={setpermntOutsideKeralaCityVilgeEn}
-              permntOutsideKeralaVillage={permntOutsideKeralaVillage}
-              setpermntOutsideKeralaVillage={setpermntOutsideKeralaVillage}
-              permntOutsideKeralaPincode={permntOutsideKeralaPincode}
-              setpermntOutsideKeralaPincode={setpermntOutsideKeralaPincode}
-              permntOutsideKeralaHouseNameEn={permntOutsideKeralaHouseNameEn}
-              setpermntOutsideKeralaHouseNameEn={setpermntOutsideKeralaHouseNameEn}
-              permntOutsideKeralaHouseNameMl={permntOutsideKeralaHouseNameMl}
-              setpermntOutsideKeralaHouseNameMl={setpermntOutsideKeralaHouseNameMl}
-              permntOutsideKeralaLocalityNameEn={permntOutsideKeralaLocalityNameEn}
-              setpermntOutsideKeralaLocalityNameEn={setpermntOutsideKeralaLocalityNameEn}
-              permntOutsideKeralaLocalityNameMl={permntOutsideKeralaLocalityNameMl}
-              setpermntOutsideKeralaLocalityNameMl={setpermntOutsideKeralaLocalityNameMl}
-              permntOutsideKeralaStreetNameEn={permntOutsideKeralaStreetNameEn}
-              setpermntOutsideKeralaStreetNameEn={setpermntOutsideKeralaStreetNameEn}
-              permntOutsideKeralaStreetNameMl={permntOutsideKeralaStreetNameMl}
-              setpermntOutsideKeralaStreetNameMl={setpermntOutsideKeralaStreetNameMl}
-              permntOutsideKeralaPostOfficeEn={permntOutsideKeralaPostOfficeEn}
-              setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
-              permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
-              setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
-              setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
-              setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
-              value={value}
-              setValue={setValue}
-              isEditMarriage={isEditMarriage}
-              isEditDeath={isEditDeath}
-              isEditStillBirth={isEditStillBirth}
-              isEditAdoption={isEditAdoption}
-              isEditBirthNAC={isEditBirthNAC}
-              formData={formData}
-              countryValuePermanent={countryValuePermanent}
-              setCountryValuePermanent={setCountryValuePermanent}
-              valuePermanent={valuePermanent}
-              setValuePermanent={setValuePermanent}
-              isPrsentAddress={isPrsentAddress}
-              setIsPrsentAddress={setIsPrsentAddress}
+               permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
+               setpermntOutsideKeralaDistrict={setpermntOutsideKeralaDistrict}
+               permntOutsideKeralaTaluk={permntOutsideKeralaTaluk}
+               setpermntOutsideKeralaTaluk={setpermntOutsideKeralaTaluk}
+               permntOutsideKeralaCityVilgeEn={permntOutsideKeralaCityVilgeEn}
+               setpermntOutsideKeralaCityVilgeEn={setpermntOutsideKeralaCityVilgeEn}
+               permntOutsideKeralaVillage={permntOutsideKeralaVillage}
+               setpermntOutsideKeralaVillage={setpermntOutsideKeralaVillage}
+               permntOutsideKeralaPincode={permntOutsideKeralaPincode}
+               setpermntOutsideKeralaPincode={setpermntOutsideKeralaPincode}
+               permntOutsideKeralaHouseNameEn={permntOutsideKeralaHouseNameEn}
+               setpermntOutsideKeralaHouseNameEn={setpermntOutsideKeralaHouseNameEn}
+               permntOutsideKeralaHouseNameMl={permntOutsideKeralaHouseNameMl}
+               setpermntOutsideKeralaHouseNameMl={setpermntOutsideKeralaHouseNameMl}
+               permntOutsideKeralaLocalityNameEn={permntOutsideKeralaLocalityNameEn}
+               setpermntOutsideKeralaLocalityNameEn={setpermntOutsideKeralaLocalityNameEn}
+               permntOutsideKeralaLocalityNameMl={permntOutsideKeralaLocalityNameMl}
+               setpermntOutsideKeralaLocalityNameMl={setpermntOutsideKeralaLocalityNameMl}
+               permntOutsideKeralaStreetNameEn={permntOutsideKeralaStreetNameEn}
+               setpermntOutsideKeralaStreetNameEn={setpermntOutsideKeralaStreetNameEn}
+               permntOutsideKeralaStreetNameMl={permntOutsideKeralaStreetNameMl}
+               setpermntOutsideKeralaStreetNameMl={setpermntOutsideKeralaStreetNameMl}
+               permntOutsideKeralaPostOfficeEn={permntOutsideKeralaPostOfficeEn}
+               setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
+               permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
+               setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
+               value={value}
+               setValue={setValue}
+               setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
+               setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
+               isEditMarriage={isEditMarriage}
+               isEditDeath={isEditDeath}
+               isEditStillBirth={isEditStillBirth}
+               isEditAdoption={isEditAdoption}
+               isEditBirthNAC={isEditBirthNAC}
+               formData={formData}
+               countryValuePermanent={countryValuePermanent}
+               setCountryValuePermanent={setCountryValuePermanent}
+               valuePermanent={valuePermanent}
+               setValuePermanent={setValuePermanent}
+               isPrsentAddress={isPrsentAddress}
+               setIsPrsentAddress={setIsPrsentAddress}
             />
           </div>
         )}
         {countryValuePermanent != "IND" && isPrsentAddress === false && (
           <div>
             <GroomAddressPermanentOutsideIndia
-              permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
-              setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
-              permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
-              setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
-              permntOutsideIndiaLinetwoEn={permntOutsideIndiaLinetwoEn}
-              setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
-              permntOutsideIndiaLinetwoMl={permntOutsideIndiaLinetwoMl}
-              setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
-              permntOutsideIndiaprovinceEn={permntOutsideIndiaprovinceEn}
-              setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
-              permntOutsideIndiaVillage={permntOutsideIndiaVillage}
-              setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
-              permntOutsideIndiaCityTown={permntOutsideIndiaCityTown}
-              setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
-              permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
-              setPermantpostCode={setPermantpostCode}
-              permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
-              setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
-              // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-              // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
-              setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
-              setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
-              setpermtaddressStateName={setpermtaddressStateName}
-              countryvalue={countryvalue}
-              setCountryValue={setCountryValue}
-              isEditMarriage={isEditMarriage}
-              isEditDeath={isEditDeath}
-              isEditStillBirth={isEditStillBirth}
-              isEditAdoption={isEditAdoption}
-              isEditBirthNAC={isEditBirthNAC}
-              formData={formData}
-              countryValuePermanent={countryValuePermanent}
-              setCountryValuePermanent={setCountryValuePermanent}
-              valuePermanent={valuePermanent}
-              setValuePermanent={setValuePermanent}
-              isPrsentAddress={isPrsentAddress}
-              setIsPrsentAddress={setIsPrsentAddress}
+             permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
+             setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
+             permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
+             setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
+             permntOutsideIndiaLinetwoEn={permntOutsideIndiaLinetwoEn}
+             setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
+             permntOutsideIndiaLinetwoMl={permntOutsideIndiaLinetwoMl}
+             setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
+             permntOutsideIndiaprovinceEn={permntOutsideIndiaprovinceEn}
+             setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
+             permntOutsideIndiaVillage={permntOutsideIndiaVillage}
+             setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
+             permntOutsideIndiaCityTown={permntOutsideIndiaCityTown}
+             setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
+             permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
+             setPermantpostCode={setPermantpostCode}
+             permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
+             setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
+             setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
+             setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
+             setpermtaddressStateName={setpermtaddressStateName}
+             // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+             // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+             countryvalue={countryvalue}
+             setCountryValue={setCountryValue}
+             isEditMarriage={isEditMarriage}
+             isEditDeath={isEditDeath}
+             isEditStillBirth={isEditStillBirth}
+             isEditAdoption={isEditAdoption}
+             isEditBirthNAC={isEditBirthNAC}
+             formData={formData}
+             countryValuePermanent={countryValuePermanent}
+             setCountryValuePermanent={setCountryValuePermanent}
+             valuePermanent={valuePermanent}
+             setValuePermanent={setValuePermanent}
+             isPrsentAddress={isPrsentAddress}
+             setIsPrsentAddress={setIsPrsentAddress}
             />
           </div>
         )}
@@ -2421,7 +2439,7 @@ const GroomAddressBasePage = ({
                   : PresentOutSideIndiaLineOneMlError
                   ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_ML`)
                   : PresentOutSideIndiaLineTwoEnError
-                  ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`)
+                  ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_EN`)
                   : PresentOutSideIndiaLineTwoMlError
                   ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`)
                   : PresentInsideKeralaStreetNameEnError
@@ -2469,7 +2487,7 @@ const GroomAddressBasePage = ({
                   : PermanentOutSideIndiaLineOneMlError
                   ? t(`BIRTH_ERROR_PER_ADDRESS_LINE_ONE_ML`)
                   : PermanentOutSideIndiaLineTwoEnError
-                  ? t(`BIRTH_ERROR_PER_ADDRESS_LINE_TWO_ML`)
+                  ? t(`BIRTH_ERROR_PER_ADDRESS_LINE_TWO_EN`)
                   : PermanentOutSideIndiaLineTwoMlError
                   ? t(`BIRTH_ERROR_PER_ADDRESS_LINE_TWO_ML`)
                   : PermanentInsideKeralaStreetNameEnError

@@ -162,7 +162,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, previousPage 
       <SearchField>
         <label> {t("DC_BIRTH_AKNOWLEDGEMENT_NUMBER")}</label>
         <TextInput
-          name="deathACKNo"
+          name="applicationNumber"
           inputRef={register({})}
           placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
           // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}

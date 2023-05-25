@@ -12,7 +12,9 @@ const BirthInbox = () => {
   const [pageOffset, setPageOffset] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [searchParams, setSearchParams] = useState({ filters: { }, search: "", sort: {} });
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchParams, setSearchParams] = useState({ filters: { }, search: {uuid:[uuid]}, sort: {} });
+
 
   useEffect(() => {
     (async () => {
@@ -53,16 +55,18 @@ const BirthInbox = () => {
   let isMobile = Digit.Utils.browser.isMobile();
   // console.log("233", searchParams)
 
-  const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
-  // let { data: searchResult, isLoading, isSuccess,refetch } = Digit.Hooks.cr.useInbox({ tenantId,filters:{ ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} });
+  // const { data: { ChildDetails: searchResult = [], Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: { ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize, sortBy: 'dateOfBirth', sortOrder: 'DESC' } })
+  let { data, isLoading, isSuccess,refetch } = Digit.Hooks.cr.useInbox({ tenantId,filters:{ ...searchParams?.search, ...searchParams?.filters, offset: pageOffset, limit: pageSize} });
   // let birthData = searchParams?.search ? searchResult : searchParams?.filters?.assignee ? searchResult : []
   // useEffect(()=>{
   //   console.log("complaintsz", complaintsz)
   // },[complaintsz]); 
+  // const searchResult = data;
 
   useEffect(()=>{
-  console.log("searchResult==",searchResult);
-  },[searchResult])
+    setSearchResults(data?.table);
+  console.log("searchResult==",data?.table);
+  },[data])
  
 
   let Loading = isLoading;
@@ -70,15 +74,15 @@ const BirthInbox = () => {
   if (complaints?.length !== null) {
     if (isMobile) {
       return (
-        <MobileInbox data={searchResult} isLoading={Loading} onFilterChange={handleFilterChange} onSearch={onSearch} searchParams={searchParams} />
+        <MobileInbox data={searchResults} isLoading={Loading} onFilterChange={handleFilterChange} onSearch={onSearch} searchParams={searchParams} />
       );
     } else {
       return (
         <div>
           <Header>{t("ES_COMMON_INBOX")}</Header>
           <DesktopInbox
-            // data={searchResult?.table}
-            data={searchResult}
+            data={searchResults}
+            // data={searchResult}
             isLoading={Loading}
             onFilterChange={handleFilterChange}
             onSearch={onSearch}
