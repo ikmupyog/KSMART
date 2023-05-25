@@ -488,7 +488,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       return filteredSubRegistrarOfficeList;
     }
   }
-
+ console.log(marriageDOM,"date");
   useEffect(() => {
     if (!isEditMarriage) {
       if (cmbLB?.length > 0) {
