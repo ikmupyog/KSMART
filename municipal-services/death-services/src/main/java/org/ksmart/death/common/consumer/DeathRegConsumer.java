@@ -28,13 +28,13 @@ public class DeathRegConsumer {
 	        ObjectMapper mapper = new ObjectMapper();
 	        DeathDtlRequest request = new DeathDtlRequest();
 	        DeathNACRequest nacRequest= new DeathNACRequest();
-	        String nacTopic = "save-deathapplndetails-topic";
-	        String deathTopic = "save-deathnac-topic";
+	        String deathTopic = "save-deathapplndetails-topic";
+	        String nacTopic = "save-deathnac-topic";
 	        try {
 	        	 if( topic.equals(deathTopic)) {
 	        	request = mapper.convertValue(record, DeathDtlRequest.class);
 	        	 }
-	        	 else if( topic.equals(nacTopic)) {
+	        	 else if( topic.equals(nacTopic)) {	
 	        	nacRequest = mapper.convertValue(record, DeathNACRequest.class);
 	         }
 	        	 
