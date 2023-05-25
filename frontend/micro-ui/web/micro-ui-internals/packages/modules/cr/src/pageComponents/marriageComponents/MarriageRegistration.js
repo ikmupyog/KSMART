@@ -330,6 +330,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   // });
 
   function setSelectmarriageDOM(value) {
+    console.log({value})
     setDifferenceInTime(null);
     setmarriageDOM(value);
     const today = new Date();
