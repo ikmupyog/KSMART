@@ -319,7 +319,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
         applicationtype: "CRBRSB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.StillBirthChildDetails?.workFlowCode,
         StillBirthParentsDetails: {
           motherFirstNameEn: data?.StillBirthParentsDetails?.motherFirstNameEn,
@@ -477,6 +477,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.StillBirthInitiatorDetails?.isInitiatorDeclaration,
           isCaretaker: data?.StillBirthInitiatorDetails?.isCaretaker,
         },
+        
       },
     ],
   };
@@ -535,7 +536,7 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action: "APPLY",
         applicationtype: "CRBRSB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.StillBirthChildDetails.workflowcode,
         isWorkflow: data?.StillBirthChildDetails.isWorkflow,
         id: data?.StillBirthChildDetails?.id,

@@ -61,6 +61,7 @@ const App = () => {
            <PrivateRoute path={`${path}/tradelicence/license-correction`} component={() => <CorrectionTradeLicence  isRenewal={false}/>} /> 
            <PrivateRoute path={`${path}/tradelicence/license-cancellation-search`} component={()=><SearchRenewalTrade isProcessreq="CANCELLATION"/>}/>
            <PrivateRoute path={`${path}/tradelicence/license-cancellation`} component={() => <CancelTradeLicence  isRenewal={false}/>} /> 
+           <PrivateRoute path={`${path}/tradelicence/edit-application`} component={() => <EditTrade  isRenewal={false}/>} /> 
           {/* component={() => <CreateTradeLicence  isRenewal={true}/>} />	 */}
         </AppContainer>
       </Switch>

@@ -699,15 +699,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </h1>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {`${t("CR_MOTHER_INFORMATION_MISSING")}`} : {`${t("CR_NOT_RECORDED")}`}
-                    </CardText>
-                  </div>
-                </div>
-              </div>
               <div>
                 <div className="row">
                   <div className="col-md-12">

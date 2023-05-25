@@ -193,6 +193,11 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
       }, 2000);
     } else
       setLicenseeType(value);
+      clearApplicant();
+  }
+  function clearApplicant(){
+    initapplicant();
+    initowner();
   }
 
   function selectLicensingInstitutionType(value) {

@@ -118,8 +118,7 @@ const BrideAddressPresent = ({
     }
   }
 
-  console.log({tenantId})
-  console.log({cmbLB})
+  console.log({countryvalue, value, isEditMarriage, formData})
 
   useEffect(() => {
     if (
@@ -130,10 +129,14 @@ const BrideAddressPresent = ({
         formData?.BrideAddressDetails?.presentaddressStateName === "" ||
         formData?.BrideAddressDetails?.presentaddressStateName === undefined)
     ) {
+      console.log({lb: cmbLB, country: cmbCountry})
       if (cmbLB.length > 0 && cmbCountry.length > 0) {
+        console.log({tenantId})
         currentLB = cmbLB?.filter((cmbLB) => cmbLB?.code === tenantId);
         // setAdrsLBName(currentLB[0]);
+        console.log({currentLB});
         if (cmbCountry.length > 0 && currentLB.length > 0) {
+          console.log("Hi Country")
           cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
           setaddressCountry(cmbFilterCountry[0]);
           if (isPrsentAddress) {

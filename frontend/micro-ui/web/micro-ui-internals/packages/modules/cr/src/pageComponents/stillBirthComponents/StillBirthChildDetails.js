@@ -19,6 +19,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
    console.log(formData);
   // console.log(isEditStillBirth);
 
+
   const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
   const [isPayment, setIsPayment] = useState(formData?.StillBirthChildDetails?.isPayment);
@@ -32,13 +33,14 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
   let validation = {};
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowStillBirth");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
     "AttentionOfDelivery"
   );
+  console.log(WorkFlowDetails,"WorkFlowDetails");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -110,8 +112,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   // let DifferenceInDaysRounded = "";
   // let workFlowCode = "STILLBIRTHHOSP";
   WorkFlowDetails &&
-    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowStillBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowStillBirth.map((ob) => {
       workFlowData.push(ob);
     });
   Menu &&

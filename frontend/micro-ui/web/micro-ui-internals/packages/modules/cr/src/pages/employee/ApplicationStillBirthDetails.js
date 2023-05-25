@@ -13,7 +13,8 @@ const ApplicationStillBirthDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("STILLBIRTHHOSP"); //DIRECTRENEWAL BIRTHHOSP21
+  //const [businessService, setBusinessService] = useState("STILLBIRTHHOSP"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("WFBIRTH21DAYS");
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
