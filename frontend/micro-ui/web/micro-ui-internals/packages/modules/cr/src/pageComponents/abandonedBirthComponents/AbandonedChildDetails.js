@@ -141,7 +141,6 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   // const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   // const [birthDateTime, setbirthDateTime] = useState(""); 
   const [birthDateTime, setbirthDateTime] = useState(isEditAbandonedBirth === false && formData?.AbandonedChildDetails?.birthDateTime ? formData?.AbandonedChildDetails?.birthDateTime : "");
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
 
   const [birthPlace, selectBirthPlace] = useState(formData?.AbandonedChildDetails?.birthPlace?.code ? formData?.AbandonedChildDetails?.birthPlace : formData?.AbandonedChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]) : "");
@@ -193,8 +192,11 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.AbandonedChildDetails?.deliveryMethods?.code ? formData?.AbandonedChildDetails?.deliveryMethods : formData?.AbandonedChildDetails?.deliveryMethods ?
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]) : "");
   const [birthWeight, setBirthWeight] = useState(formData?.AbandonedChildDetails?.birthWeight ? formData?.AbandonedChildDetails?.birthWeight : null);
-  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.AbandonedChildDetails?.DifferenceInTime);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.AbandonedChildDetails?.checkbirthDateTime?.hh ? formData?.AbandonedChildDetails?.checkbirthDateTime.hh : null, mm: formData?.AbandonedChildDetails?.checkbirthDateTime?.mm ? formData?.AbandonedChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.AbandonedChildDetails?.checkbirthDateTime?.amPm ? formData?.AbandonedChildDetails?.checkbirthDateTime.amPm : null });
+  const [displaytime, setDisplaytime] = useState(formData?.AbandonedChildDetails?.displaytime ? formData?.AbandonedChildDetails?.displaytime : null);
+  const [displayAmPm, setDisplayAmPm] = useState(formData?.AbandonedChildDetails?.displayAmPm ? formData?.AbandonedChildDetails?.displayAmPm : null);
 
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.AbandonedChildDetails?.childDOB ? false : false);
@@ -401,12 +403,91 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
       cb(value);
       setbirthDateTime(value);
       // console.log(value);
-      // let time = value;
-      // let timeParts = time.split(":");
+      let time = value;
+      let timeParts = time.split(":");
       // let hour = value;
       // let period = hour > 12 ? "PM" : "AM";
       // console.log(period);
       // setbirthDateTime(value);
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
+
+        }
+      }   
     }
   };
 
@@ -980,7 +1061,10 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
          tenantId, 
          childDOB, 
          birthDateTime, 
-         gender,       
+         checkbirthDateTime,
+        displaytime,        
+        displayAmPm,
+        gender,       
         birthPlace, 
         hospitalCode, 
         hospitalName, 

@@ -41,7 +41,7 @@ const MyCRApplications = ({ view }) => {
       params: { businessService: "CR", tenantId, mobileNumber },
       config: { enabled: view === "bills" }
     }
-  ) : Digit.Hooks.cr.useCRSearchApplication({...payload,initiatorMobile:"9895921369"}, {
+  ) : Digit.Hooks.cr.useCRSearchApplication({...payload}, {
     enabled: view !== "bills"
   }, t);
   if (isLoading) {

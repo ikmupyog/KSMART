@@ -91,14 +91,11 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
           // let formdata = convertToAbandonedBirthRegistration(data);
             mutation.mutate(formdata, {
             onSuccess,
-            })
-         
-       
+            })          
         } else {
           let formdata = isEditBirth ? convertToAbandonedBirthRegistration(data) : [];
           mutation.mutate(formdata, {
-            onSuccess,
-    
+            onSuccess,    
         })
         setIsInitialRender(false);
       }
@@ -153,7 +150,7 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
       </Card>)
   } 
   else  
-  if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
+  if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false && isEditAbandonedBirth === false) {
     return (
         <Card>
           <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
@@ -173,7 +170,7 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
             onClick={handleDownloadPdf}
           />
      
-     {mutation?.data?.AbandonedDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+     {/* {mutation?.data?.AbandonedDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
             pathname: `/digit-ui/employee/payment/collect/${mutation.data.AbandonedDetails[0].businessservice}/${mutation.data.AbandonedDetails[0].applicationNumber}`,
             state: { tenantId: mutation.data.AbandonedDetails[0].tenantid },
           }}>
@@ -181,7 +178,9 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
           </Link>}
           <Link to={`/digit-ui/employee`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-          </Link>
+          </Link> */}
+
+
         </Card>
       );
     } else {
