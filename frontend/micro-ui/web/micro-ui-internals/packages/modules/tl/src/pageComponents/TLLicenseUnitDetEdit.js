@@ -795,7 +795,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       setLocalbody(tenantId ? LBs.filter(obj => obj.code === tenantId)[0] : "");
     }
   }
-  if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)&&(IsInitialRendercombo)) {
+  if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)&&(isInitialRendercombo)) {
     setZonalOffice(Zonal.filter(zone => parseInt(zone?.code) === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
     setisInitialRendercombo(false);
   }

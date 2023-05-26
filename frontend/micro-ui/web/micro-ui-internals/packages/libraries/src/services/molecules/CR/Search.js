@@ -283,8 +283,8 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaPostOfficeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NOT_RECORDED" },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || "NOT_RECORDED" },
@@ -471,7 +471,7 @@ export const CRsearch = {
       response && employeeResponse.push(InitiatorDetailsGuardian);
     } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === true &&
       response?.InitiatorinfoDetails?.isGuardian === false) {
-      response && employeeResponse.push(InitiatorDetailsGuardian);
+      response && employeeResponse.push(InitiatorDetailsCaretaker);
     }
     if (response?.InformarHosInstDetails?.infomantAadhar != null) {
       response && employeeResponse.push(InformarHospitalInstitution);
