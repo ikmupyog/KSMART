@@ -100,7 +100,6 @@ public class ServiceRequestRepository {
 		InputStream content = entity.getContent();
 		String xml = new String(content.readAllBytes(), StandardCharsets.UTF_8);
 		String XmlString = xml;
-		System.out.println(XmlString);
 		if (XmlString.contains("&lt;")) {
 			XmlString = XmlString.replace("&lt;", "<");
 		}
