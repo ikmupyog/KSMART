@@ -402,7 +402,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   </div>
                 </React.Fragment>
               )}
-              {(MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlaceType?.code === "PRIVATE_PLACE") && (
+              {(MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" || MarriageDetails?.marriagePlacetype?.code === "PRIVATE_PLACE") && (
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
