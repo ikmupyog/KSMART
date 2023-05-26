@@ -106,7 +106,7 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
         </SearchField>} */}
         <SearchField>
             <label>{t("CR_BIRTH_MOTHERNAME_LABEL")}</label>
-            <TextInput  name="mother" inputRef={register({})}/>
+            <TextInput  name="nameOfMother" inputRef={register({})}/>
         </SearchField>
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit disabled={ applicationType?.label?false:true}/>
@@ -118,7 +118,7 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
                     toDate: "",
                     licenseNumbers: "",
                     status: "",
-                    mother: "",
+                    nameOfMother: "",
                     offset: 0,
                     limit: 10,
                     sortBy: "dateOfBirth",
