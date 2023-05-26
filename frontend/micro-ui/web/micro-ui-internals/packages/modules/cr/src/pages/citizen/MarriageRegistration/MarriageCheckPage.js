@@ -261,11 +261,13 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`} :
+                        </CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : `${t("CR_NOT_RECORDED")}`}
+                          {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                     </div>
@@ -281,11 +283,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LANDMARK")}`} :</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : `${t("CR_NOT_RECORDED")}`}
+                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                     </div>
@@ -293,13 +295,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`} :
-                        </CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : `${t("CR_NOT_RECORDED")}`}
+                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -315,11 +315,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LANDMARK")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : `${t("CR_NOT_RECORDED")}`}
+                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                     </div>
@@ -331,26 +331,6 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : `${t("CR_NOT_RECORDED")}`}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : `${t("CR_NOT_RECORDED")}`}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NO_AND_NAME_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
@@ -359,11 +339,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LANDMARK")}`} :</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : `${t("CR_NOT_RECORDED")}`}
+                          {MarriageDetails?.marriageHouseNoAndNameMl ? MarriageDetails?.marriageHouseNoAndNameMl : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                     </div>
@@ -371,11 +351,31 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : `${t("CR_NOT_RECORDED")}`}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_MAL")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : `${t("CR_NOT_RECORDED")}`}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -391,11 +391,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`} :</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LANDMARK")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageHouseNoAndNameMl ? MarriageDetails?.marriageHouseNoAndNameMl : `${t("CR_NOT_RECORDED")}`}
+                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
                     </div>
@@ -434,15 +434,13 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                           {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : `${t("CR_NOT_RECORDED")}`}
                         </CardText>
                       </div>
-                      <div className="col-md-12">
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                        </div>
-                        <div className="col-md-3">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : `${t("CR_NOT_RECORDED")}`}
-                          </CardText>
-                        </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageLocalityMl ? MarriageDetails?.marriageLocalityMl : `${t("CR_NOT_RECORDED")}`}
+                        </CardText>
                       </div>
                     </div>
                   </div>
@@ -3685,44 +3683,92 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                       )}
                     </div>
                     <div className="col-md-3">
-                      <div className="row">
-                        <div className="col-md-12">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                            {`${t("CR_OTHER_DOCUMENTS_TO_PROVE_SOLEMNIZATION")}`} :
-                          </CardText>
-                        </div>
-                      </div>
-                      <div className="row">
-                        {_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.type === "pdf" ? (
-                          <React.Fragment>
-                            <object
-                              style={{ margin: "5px 0" }}
-                              height={120}
-                              width={100}
-                              data={_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.pdfUrl}
-                              alt="Other Certificate Pdf"
-                            />
-                          </React.Fragment>
-                        ) : (
-                          <img
-                            style={{ margin: "5px 0" }}
-                            height={120}
-                            width={100}
-                            src={_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.small}
-                            alt="Other Certificate Image"
-                          />
-                        )}
-                        <a
-                          target="_blank"
-                          href={
-                            _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.type === "pdf"
-                              ? _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.pdfUrl
-                              : _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.large
-                          }
-                        >
-                          Preview
-                        </a>
-                      </div>
+                      {MarriageDocuments?.OtherDetails && (
+                        <React.Fragment>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                                {`${t("CR_OTHER_DOCUMENTS_TO_PROVE_SOLEMNIZATION")}`} :
+                              </CardText>
+                            </div>
+                          </div>
+                          <div className="row">
+                            {_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.pdfUrl}
+                                  alt="Other Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                src={_.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.small}
+                                alt="Other Certificate Image"
+                              />
+                            )}
+                            <a
+                              target="_blank"
+                              href={
+                                _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.type === "pdf"
+                                  ? _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.pdfUrl
+                                  : _.head(MarriageDocuments?.OtherDetails?.otherMarriageCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        </React.Fragment>
+                      )}
+                    </div>
+                    <div className="col-md-3">
+                      {WitnessDetails?.isBackward && (
+                        <React.Fragment>
+                          <div className="row">
+                            <div className="col-md-12">
+                              <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                                {`${t("CR_PROOF_BELONG_TO_BACKWARD_COMMUNITY")}`} :
+                              </CardText>
+                            </div>
+                          </div>
+                          <div className="row">
+                            {_.head(MarriageDocuments?.OtherDetails?.backwardCertificate)?.type === "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ margin: "5px 0" }}
+                                  height={120}
+                                  width={100}
+                                  data={_.head(MarriageDocuments?.OtherDetails?.backwardCertificate)?.pdfUrl}
+                                  alt="Backward Certificate Pdf"
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ margin: "5px 0" }}
+                                height={120}
+                                width={100}
+                                src={_.head(MarriageDocuments?.OtherDetails?.backwardCertificate)?.small}
+                                alt="Backward Certificate Image"
+                              />
+                            )}
+                            <a
+                              target="_blank"
+                              href={
+                                _.head(MarriageDocuments?.OtherDetails?.backwardCertificate)?.type === "pdf"
+                                  ? _.head(MarriageDocuments?.OtherDetails?.backwardCertificate)?.pdfUrl
+                                  : _.head(MarriageDocuments?.OtherDetails?.backwardCertificate)?.large
+                              }
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        </React.Fragment>
+                      )}
                     </div>
                   </div>
                 </div>
