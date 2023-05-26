@@ -656,6 +656,7 @@ export const convertToEditTrade = (data = {}) => {
 //FinancialYear
 export const convertToResubmitTrade = (data) => {
   let address = {
+    "id": data?.TradeDetails?.tradeLicenseDetail?.address?.id, 
     "doorNo": data?.TradeDetails?.tradeLicenseDetail?.address?.doorNo,
     "localityName": data?.TradeDetails?.tradeLicenseDetail?.address?.localityName,
     "street": data?.TradeDetails?.tradeLicenseDetail?.address?.street,
@@ -681,14 +682,27 @@ export const convertToResubmitTrade = (data) => {
   });
   //structurePlace.isResurveyed = data?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed?.code === "YES" ? true : false;
   let tradeUnits = [{
-    "businessCategory": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory,
-    "businessType": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType,
-    "businessSubtype": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype
+    "id": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.id,
+    "businessCategory": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory,
+    "businessType": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType,
+    "businessSubtype": Array.isArray(data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype) ? data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype?.code : data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype,
+    "active": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.active
   }];
   const formdata = {
     Licenses: [
       {
         id: data?.TradeDetails?.id,
+        tenantId : data?.TradeDetails?.tenantId,
+        businessService: data?.TradeDetails?.businessService,
+        licenseType : data?.TradeDetails?.licenseType,
+        applicationType : data?.TradeDetails?.applicationType,
+        applicationNumber : data?.TradeDetails?.applicationNumber,
+        applicationDate : data?.TradeDetails?.applicationDate,
+        issuedDate: data?.TradeDetails?.issuedDate,
+        financialYear : data?.TradeDetails?.financialYear,
+        validFrom: data?.TradeDetails?.validFrom,
+        validTo: data?.TradeDetails?.validTo,
+        status : "CITIZENACTIONREQUIRED",
         action: "FORWARD",
         commencementDate: Date.parse(data?.TradeDetails?.commencementDate),
         tenantId: data?.TradeDetails?.tenantId,

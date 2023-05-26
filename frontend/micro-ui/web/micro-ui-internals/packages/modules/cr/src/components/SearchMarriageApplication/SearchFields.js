@@ -7,7 +7,7 @@ const mystyle = {
   display: "block",
 };
 
-const   SearchFields = ({ register, control, reset, tenantId, t, applicationType: marriageApplicationType }) => {
+const   SearchFields = ({ register, control, reset, tenantId, t, previousPage, applicationType: marriageApplicationType }) => {
   const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.tl.useMDMS.applicationTypes(tenantId);
 
   const applicationType = useWatch({ control, name: "applicationType" });
@@ -31,6 +31,7 @@ const   SearchFields = ({ register, control, reset, tenantId, t, applicationType
       let found = applicationStatuses.length > 0 ? applicationStatuses?.some((el) => el?.code === status.applicationStatus) : false;
       if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${status?.applicationStatus}` });
     });
+
 
   return (
     <>
