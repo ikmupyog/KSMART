@@ -415,43 +415,23 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "CR_NOT_RECORDED"}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "CR_NOT_RECORDED"}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LANDMARK")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "CR_NOT_RECORDED"}
-                        </CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PUBLIC_PRIVATE_PLACE_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {MarriageDetails?.marriagePlacenameMl ? MarriageDetails?.marriagePlacenameMl : "CR_NOT_RECORDED"}
+                        </CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageLocalityEn ? MarriageDetails?.marriageLocalityEn : "CR_NOT_RECORDED"}
                         </CardText>
                       </div>
                       <div className="col-md-12">
@@ -467,13 +447,35 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageStreetEn ? MarriageDetails?.marriageStreetEn : "CR_NOT_RECORDED"}
+                        </CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "CR_NOT_RECORDED"}
+                        </CardText>
+                      </div>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {MarriageDetails?.marriageStreetMl ? MarriageDetails?.marriageStreetMl : "CR_NOT_RECORDED"}
-                      </CardText>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LANDMARK")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          {MarriageDetails?.marriageLandmark ? MarriageDetails?.marriageLandmark : "CR_NOT_RECORDED"}
+                        </CardText>
+                      </div>
                     </div>
                   </div>
                 </React.Fragment>
@@ -669,7 +671,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {GroomDetails?.groomEmailid && GroomDetails?.groomEmailid }
+                        {GroomDetails?.groomEmailid && GroomDetails?.groomEmailid}
                       </CardText>
                     </div>
                   </div>
@@ -1724,7 +1726,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideFirstnameEn && BrideDetails?.brideFirstnameEn }
+                        {BrideDetails?.brideFirstnameEn && BrideDetails?.brideFirstnameEn}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1732,7 +1734,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideFirstnameMl && BrideDetails?.brideFirstnameMl }
+                        {BrideDetails?.brideFirstnameMl && BrideDetails?.brideFirstnameMl}
                       </CardText>
                     </div>
                   </div>
@@ -1744,7 +1746,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideMiddlenameEn && BrideDetails?.brideMiddlenameEn }
+                        {BrideDetails?.brideMiddlenameEn && BrideDetails?.brideMiddlenameEn}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1752,7 +1754,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideMiddlenameMl && BrideDetails?.brideMiddlenameMl }
+                        {BrideDetails?.brideMiddlenameMl && BrideDetails?.brideMiddlenameMl}
                       </CardText>
                     </div>
                   </div>
@@ -1764,7 +1766,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideLastnameEn && BrideDetails?.brideLastnameEn }
+                        {BrideDetails?.brideLastnameEn && BrideDetails?.brideLastnameEn}
                       </CardText>
                     </div>
                     <div className="col-md-3">
@@ -1772,7 +1774,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideLastnameMl && BrideDetails?.brideLastnameMl }
+                        {BrideDetails?.brideLastnameMl && BrideDetails?.brideLastnameMl}
                       </CardText>
                     </div>
                   </div>
@@ -1792,7 +1794,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {BrideDetails?.brideEmailid && BrideDetails?.brideEmailid }
+                        {BrideDetails?.brideEmailid && BrideDetails?.brideEmailid}
                       </CardText>
                     </div>
                   </div>
