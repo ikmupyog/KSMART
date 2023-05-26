@@ -123,7 +123,7 @@ export const DFMService = {
       method: "POST",
       auth: true,
       userService: true,
-      params: { fileCode },
+      params: { fileCode, tenantId },
     }),
   arising_file: (details, tenantId) =>
     Request({
