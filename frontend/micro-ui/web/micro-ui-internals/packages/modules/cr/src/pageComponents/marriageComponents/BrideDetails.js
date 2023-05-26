@@ -1358,7 +1358,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
                 <DatePicker
                   date={brideDOB}
                   name="brideDOB"
-                  max={moment().subtract(18, "year").format("YYYY-MM-DD")}
+                  max={moment(formData?.MarriageDetails?.marriageDOM).subtract(18, "year").format("YYYY-MM-DD")}
                   //max={convertEpochToDate(new Date())}
                   onChange={setSelectbrideDOB}
                   placeholder={`${t("CR_BRIDE_DATE_OF_BIRTH")}`}
@@ -1447,7 +1447,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
               </h1>
             </div>
           </div>

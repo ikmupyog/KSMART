@@ -49,7 +49,7 @@ const SearchRenewalTrade = ({searchdata,isProcessreq}) => {
         const data = isProcessreq === "CORRECTION" || isProcessreq === "CANCELLATION"  ?  {..._data,"applicationType":isProcessreq }
         :
         {
-            ..._data  ,"applicationType":"RENEWAL"
+            ..._data  //,"applicationType":"RENEWAL"
         };
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
     }

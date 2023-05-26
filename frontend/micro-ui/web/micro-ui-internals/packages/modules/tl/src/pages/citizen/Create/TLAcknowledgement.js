@@ -147,7 +147,6 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
     const TLack = await Digit.PaymentService.generatePdf(tenantId, { Licenses: Licensedata }, "tlacknowledgment");
     const fileStore = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLack.filestoreIds[0] });
     window.open(fileStore[TLack.filestoreIds[0]], "_blank");
-    setShowOptions(false);
   };
   function rearrangeAcknowledgment(application) {
     if (application.applicationNumber) {

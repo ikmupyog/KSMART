@@ -59,6 +59,12 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
     setValue("offset", getValues("offset") - getValues("limit"))
     handleSubmit(onSubmit)()
   }
+  let routepath1 = `/digit-ui/citizen/tl/tradelicence/edit-application`;
+ 
+  const handleLinkClick = (finaldata) => {
+    let tempdata = { "TradeDetails": finaldata }
+    Digit.SessionStorage.set("TL_EDIT_TRADE", tempdata);
+  }
 
   const isMobile = window.Digit.Utils.browser.isMobile();
 
@@ -153,7 +159,7 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
         row.original["status"] === "CITIZENACTIONREQUIRED" ?
         <div>
             <span className="link">
-              <Link to={`/digit-ui/citizen/tl/tradelicence/edit-application/${row.original["applicationNumber"]}/${row.original["tenantId"]}`}>
+              <Link onClick={event => handleLinkClick(row.original)} to={{ pathname: routepath1 }}>
               {t(row.original["status"]!= "PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY") }
               </Link>
             </span>

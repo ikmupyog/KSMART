@@ -13,10 +13,14 @@ export const ImageUploadHandler = ({
   isMulti = true,
   extraParams = {},
   type,
+  t,
 }) => {
   // const __initImageIds = Digit.SessionStorage.get("PGR_CREATE_IMAGES");
   // const __initThumbnails = Digit.SessionStorage.get("PGR_CREATE_THUMBNAILS");
   const [image, setImage] = useState(null);
+  const [toast, setToast] = useState(false);
+  const [imageSizeError, setImageSizeError] = useState(false);
+  const [imageTypeError, setImageTypeError] = useState(false);
   // const [singleImage, setSingleImage] = useState(null);
   const [uploadedImagesThumbs, setUploadedImagesThumbs] = useState(null);
   const [uploadedImagesIds, setUploadedImagesIds] = useState(uploadedImages);
@@ -56,22 +60,28 @@ export const ImageUploadHandler = ({
   }, [uploadedImagesIds]);
 
   useEffect(() => {
-    if (imageFile && imageFile.size > 2097152) {
-      setError("File is too large");
+    if(imageFile) {
+      if (imageFile.size > 2097152) {
+        setImageSizeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
+      // else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
+      //   setError("Can't upload multiple images");
+      // }
+      else if (imageFile?.name?.match(/\.(jpg|jpeg|png)$/)) {
+        setImage(imageFile);
+      } else {
+        setImageTypeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
     }
-    // else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
-    //   setError("Can't upload multiple images");
-    // }
-    else {
-      setImage(imageFile);
-    }
-    // if (module === "marriage") {
-    //   console.log("Hi module");
-    //   setSingleImage(imageFile);
-    // } else {
-    //   console.log("Hi module else");
-    // setImage(imageFile);
-    // }
+    
   }, [imageFile]);
 
   const addUploadedImageIds = useCallback(
@@ -107,13 +117,6 @@ export const ImageUploadHandler = ({
     const response = await Digit.UploadServices.Filestorage(moduleType, image, tenantId, extraParams);
     setUploadedImagesIds(addUploadedImageIds(response));
   }, [addUploadedImageIds, image]);
-
-  // const uploadSingleImage = useCallback(async () => {
-  //   console.log("Hi from UseEffect");
-  //   const response = await Digit.UploadServices.Filestorage("cr-marriage", image, tenantId);
-  //   console.log({ response });
-  //   setUploadedImagesIds(addUploadedImageIds(response));
-  // }, [addUploadedSingleImageIds, singleImage]);
 
   function addImageThumbnails(thumbnailsData) {
     var keys = Object.keys(thumbnailsData.data);
@@ -170,6 +173,21 @@ export const ImageUploadHandler = ({
           onUpload={getImage}
           onDelete={deleteImage}
           thumbnails={uploadedImagesThumbs ? uploadedImagesThumbs.map((o) => o.image) : []}
+        />
+      )}
+      {toast && (
+        <Toast
+          error={imageSizeError || imageTypeError}
+          label={
+            imageSizeError || imageTypeError
+              ? imageSizeError
+                ? t("IMAGE_SIZE_VALIDATION_MESSAGE")
+                : imageTypeError
+                ? t("IMAGE_TYPE_VALIDATION_MESSAGE")
+                : setToast(false)
+              : setToast(false)
+          }
+          onClose={() => setToast(false)}
         />
       )}
     </React.Fragment>
