@@ -28,14 +28,35 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
   const [fatherIdFile, setFatherIdFile] = useState(formData?.AdoptionDocuments?.fatherIdFile ? formData?.AdoptionDocuments?.fatherIdFile : null);
   const [medicalFile, setMedicalFile] = useState(formData?.AdoptionDocuments?.uploadedFile5 ? formData?.AdoptionDocuments?.uploadedFile5 : null);
   const onSkip = () => onSelect();
+  const [documentFileError, setDocumentFileError] = useState(null);
+  const [proofFileError, setProofFileError] = useState(null);
+  const [registeredFileError, setRegisteredFileError] = useState(null);
+  const [motherIdFileError, setMotherIdFileError] = useState(null);
+  const [fatherIdFileError, setFatherIdFileError] = useState(null);
+  const [medicalFileError, setMedicalFileError] = useState(null);
   const [error, setError] = useState(null);
+  const [docPreview, setDocPreview] = useState(formData?.AdoptionDocuments?.docPreview ? formData?.AdoptionDocuments?.docPreview : null);
+  const [proofFileDocPreview, setProofFileDocPreview] = useState(
+    formData?.AdoptionDocuments?.docPreview ? formData?.AdoptionDocuments?.docPreview : null
+  );
+  const [certificateFiledocPreview, setCertificateFileDocPreview] = useState(
+    formData?.AdoptionDocuments?.docPreview ? formData?.AdoptionDocuments?.docPreview : null
+  );
+  const [motherIdFiledocPreview, setMotherIdFileDocPreview] = useState(
+    formData?.AdoptionDocuments?.docPreview ? formData?.AdoptionDocuments?.docPreview : null
+  );
+  const [fatherIdFiledocPreview, setFatherIdFileDocPreview] = useState(
+    formData?.AdoptionDocuments?.docPreview ? formData?.AdoptionDocuments?.docPreview : null
+  );
+  const [medicalFiledocPreview, setMedicalFileDocPreview] = useState(
+    formData?.AdoptionDocuments?.docPreview ? formData?.AdoptionDocuments?.docPreview : null
+  );
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
     });
-    console.log({ newThumbnails });
     return newThumbnails;
   };
   function selectfile(e) {
@@ -59,16 +80,17 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
+      setDocumentFileError(null);
       if (documentFile) {
         if (documentFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setDocumentFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", documentFile, tenantId);
             if (response?.data?.files?.length > 0) {
+              setUploadedFile(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setUploadedFile(fileDetails);
+              setDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -79,16 +101,17 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
   }, [documentFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setProofFileError(null);
       if (proofFile) {
         if (proofFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setProofFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", proofFile, tenantId);
             if (response?.data?.files?.length > 0) {
+              setUploadedFile1(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setUploadedFile1(fileDetails);
+              setProofFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -99,16 +122,17 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
   }, [proofFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setRegisteredFileError(null);
       if (registeredFile) {
         if (registeredFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setRegisteredFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", registeredFile, tenantId);
             if (response?.data?.files?.length > 0) {
+              setUploadedFile2(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setUploadedFile2(fileDetails);
+              setCertificateFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -119,16 +143,17 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
   }, [registeredFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setMotherIdFileError(null);
       if (motherIdFile) {
         if (motherIdFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setMotherIdFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", motherIdFile, tenantId);
             if (response?.data?.files?.length > 0) {
+              setUploadedFile3(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setUploadedFile3(fileDetails);
+              setMotherIdFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -139,16 +164,17 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
   }, [motherIdFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setFatherIdFileError(null);
       if (fatherIdFile) {
         if (fatherIdFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setFatherIdFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", fatherIdFile, tenantId);
             if (response?.data?.files?.length > 0) {
+              setUploadedFile4(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setUploadedFile4(fileDetails);
+              setFatherIdFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -159,16 +185,17 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
   }, [fatherIdFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
+      setMedicalFileError(null);
       if (medicalFile) {
         if (medicalFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setMedicalFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", medicalFile, tenantId);
             if (response?.data?.files?.length > 0) {
+              setUploadedFile5(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setUploadedFile5(fileDetails);
+              setFatherIdFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -207,7 +234,7 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
         config={config}
         onSelect={goNext}
         onSkip={onSkip}
-        isDisabled={!documentFile || !proofFile || !registeredFile || !motherIdFile || !fatherIdFile || !medicalFile}
+        isDisabled={!documentFile || !proofFile || !registeredFile || !motherIdFile || !fatherIdFile}
       >
         <div className="row">
           <div className="col-md-12">
@@ -236,25 +263,32 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                   message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
-              {uploadedFile && (
+              <div className="col-md-3">
+                {documentFileError ? (
+                  <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{documentFileError}</div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {docPreview && (
                 <div className="col-md-3">
-                  {_.head(uploadedFile)?.type === "pdf" ? (
+                  {_.head(docPreview)?.type === "pdf" ? (
                     <React.Fragment>
                       <object
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(uploadedFile)?.pdfUrl}
+                        data={_.head(docPreview)?.pdfUrl}
                         alt="Child Birth Certificate Pdf"
                       />
                     </React.Fragment>
                   ) : (
-                    <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(uploadedFile)?.small} alt="Child Birth Certificate Image" />
+                    <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Child Birth Certificate Image" />
                   )}
                   <a
                     style={{ color: "blue" }}
                     target="_blank"
-                    href={_.head(uploadedFile)?.type === "pdf" ? _.head(uploadedFile)?.pdfUrl : _.head(uploadedFile)?.large}
+                    href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}
                   >
                     Preview
                   </a>
@@ -279,15 +313,22 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                   message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
-              {uploadedFile1 && (
+              <div className="col-md-3">
+                {proofFileError ? (
+                  <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{proofFileError}</div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {proofFileDocPreview && (
                 <div className="col-md-3">
-                  {_.head(uploadedFile1)?.type === "pdf" ? (
+                  {_.head(proofFileDocPreview)?.type === "pdf" ? (
                     <React.Fragment>
                       <object
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(uploadedFile1)?.pdfUrl}
+                        data={_.head(proofFileDocPreview)?.pdfUrl}
                         alt="Child Birth Certificate Pdf"
                       />
                     </React.Fragment>
@@ -296,14 +337,14 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                       style={{ margin: "5px 0" }}
                       height={120}
                       width={100}
-                      src={_.head(uploadedFile1)?.small}
+                      src={_.head(proofFileDocPreview)?.small}
                       alt="Child Birth Certificate Image"
                     />
                   )}
                   <a
                     style={{ color: "blue" }}
                     target="_blank"
-                    href={_.head(uploadedFile1)?.type === "pdf" ? _.head(uploadedFile1)?.pdfUrl : _.head(uploadedFile1)?.large}
+                    href={_.head(proofFileDocPreview)?.type === "pdf" ? _.head(proofFileDocPreview)?.pdfUrl : _.head(proofFileDocPreview)?.large}
                   >
                     Preview
                   </a>
@@ -328,15 +369,22 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                   message={uploadedFile2 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
-              {uploadedFile2 && (
+              <div className="col-md-3">
+                {registeredFileError ? (
+                  <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{registeredFileError}</div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {certificateFiledocPreview && (
                 <div className="col-md-3">
-                  {_.head(uploadedFile2)?.type === "pdf" ? (
+                  {_.head(certificateFiledocPreview)?.type === "pdf" ? (
                     <React.Fragment>
                       <object
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(uploadedFile2)?.pdfUrl}
+                        data={_.head(certificateFiledocPreview)?.pdfUrl}
                         alt="Child Birth Certificate Pdf"
                       />
                     </React.Fragment>
@@ -345,14 +393,18 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                       style={{ margin: "5px 0" }}
                       height={120}
                       width={100}
-                      src={_.head(uploadedFile2)?.small}
+                      src={_.head(certificateFiledocPreview)?.small}
                       alt="Child Birth Certificate Image"
                     />
                   )}
                   <a
                     style={{ color: "blue" }}
                     target="_blank"
-                    href={_.head(uploadedFile2)?.type === "pdf" ? _.head(uploadedFile2)?.pdfUrl : _.head(uploadedFile2)?.large}
+                    href={
+                      _.head(certificateFiledocPreview)?.type === "pdf"
+                        ? _.head(certificateFiledocPreview)?.pdfUrl
+                        : _.head(certificateFiledocPreview)?.large
+                    }
                   >
                     Preview
                   </a>
@@ -377,15 +429,22 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                   message={uploadedFile3 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
-              {uploadedFile3 && (
+              <div className="col-md-3">
+                {motherIdFileError ? (
+                  <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{motherIdFileError}</div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {motherIdFiledocPreview && (
                 <div className="col-md-3">
-                  {_.head(uploadedFile3)?.type === "pdf" ? (
+                  {_.head(motherIdFiledocPreview)?.type === "pdf" ? (
                     <React.Fragment>
                       <object
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(uploadedFile3)?.pdfUrl}
+                        data={_.head(motherIdFiledocPreview)?.pdfUrl}
                         alt="Child Birth Certificate Pdf"
                       />
                     </React.Fragment>
@@ -394,14 +453,16 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                       style={{ margin: "5px 0" }}
                       height={120}
                       width={100}
-                      src={_.head(uploadedFile3)?.small}
+                      src={_.head(motherIdFiledocPreview)?.small}
                       alt="Child Birth Certificate Image"
                     />
                   )}
                   <a
                     style={{ color: "blue" }}
                     target="_blank"
-                    href={_.head(uploadedFile3)?.type === "pdf" ? _.head(uploadedFile3)?.pdfUrl : _.head(uploadedFile3)?.large}
+                    href={
+                      _.head(motherIdFiledocPreview)?.type === "pdf" ? _.head(motherIdFiledocPreview)?.pdfUrl : _.head(motherIdFiledocPreview)?.large
+                    }
                   >
                     Preview
                   </a>
@@ -425,15 +486,22 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                   message={uploadedFile4 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
-              {uploadedFile4 && (
+              <div className="col-md-3">
+                {fatherIdFileError ? (
+                  <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{fatherIdFileError}</div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {fatherIdFiledocPreview && (
                 <div className="col-md-3">
-                  {_.head(uploadedFile4)?.type === "pdf" ? (
+                  {_.head(fatherIdFiledocPreview)?.type === "pdf" ? (
                     <React.Fragment>
                       <object
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(uploadedFile4)?.pdfUrl}
+                        data={_.head(fatherIdFiledocPreview)?.pdfUrl}
                         alt="Child Birth Certificate Pdf"
                       />
                     </React.Fragment>
@@ -442,14 +510,16 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                       style={{ margin: "5px 0" }}
                       height={120}
                       width={100}
-                      src={_.head(uploadedFile4)?.small}
+                      src={_.head(fatherIdFiledocPreview)?.small}
                       alt="Child Birth Certificate Image"
                     />
                   )}
                   <a
                     style={{ color: "blue" }}
                     target="_blank"
-                    href={_.head(uploadedFile4)?.type === "pdf" ? _.head(uploadedFile4)?.pdfUrl : _.head(uploadedFile4)?.large}
+                    href={
+                      _.head(fatherIdFiledocPreview)?.type === "pdf" ? _.head(fatherIdFiledocPreview)?.pdfUrl : _.head(fatherIdFiledocPreview)?.large
+                    }
                   >
                     Preview
                   </a>
@@ -458,10 +528,7 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <CardLabel>
-                  {`${t("CR_ADOPTION_CERTIFICATE_ISSUED_BY_SURGEON")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
+                <CardLabel>{`${t("CR_ADOPTION_CERTIFICATE_ISSUED_BY_SURGEON")}`}</CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -474,15 +541,22 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                   message={uploadedFile5 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
-              {uploadedFile5 && (
+              <div className="col-md-3">
+                {medicalFileError ? (
+                  <div style={{ height: "20px", width: "100%", fontSize: "15px", color: "red", paddingLeft: "50px" }}>{medicalFileError}</div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {medicalFiledocPreview && (
                 <div className="col-md-3">
-                  {_.head(uploadedFile5)?.type === "pdf" ? (
+                  {_.head(medicalFiledocPreview)?.type === "pdf" ? (
                     <React.Fragment>
                       <object
                         style={{ margin: "5px 0" }}
                         height={120}
                         width={100}
-                        data={_.head(uploadedFile5)?.pdfUrl}
+                        data={_.head(medicalFiledocPreview)?.pdfUrl}
                         alt="Child Birth Certificate Pdf"
                       />
                     </React.Fragment>
@@ -491,14 +565,16 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
                       style={{ margin: "5px 0" }}
                       height={120}
                       width={100}
-                      src={_.head(uploadedFile5)?.small}
+                      src={_.head(medicalFiledocPreview)?.small}
                       alt="Child Birth Certificate Image"
                     />
                   )}
                   <a
                     style={{ color: "blue" }}
                     target="_blank"
-                    href={_.head(uploadedFile5)?.type === "pdf" ? _.head(uploadedFile5)?.pdfUrl : _.head(uploadedFile5)?.large}
+                    href={
+                      _.head(medicalFiledocPreview)?.type === "pdf" ? _.head(medicalFiledocPreview)?.pdfUrl : _.head(medicalFiledocPreview)?.large
+                    }
                   >
                     Preview
                   </a>

@@ -71,6 +71,22 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [fatherIdFile, setFatherIdFile] = useState(formData?.BirthNACInitiator?.uploadedFile4);
   const [medicalFile, setMedicalFile] = useState(formData?.BirthNACInitiator?.uploadedFile5);
   const [docPreview, setDocPreview] = useState(formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null);
+  const [proofFileDocPreview, setProofFileDocPreview] = useState(
+    formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null
+  );
+  const [certificateFiledocPreview, setCertificateFileDocPreview] = useState(
+    formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null
+  );
+  const [motherIdFiledocPreview, setMotherIdFileDocPreview] = useState(
+    formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null
+  );
+  const [fatherIdFiledocPreview, setFatherIdFileDocPreview] = useState(
+    formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null
+  );
+  const [medicalFiledocPreview, setMedicalFileDocPreview] = useState(
+    formData?.BirthNACInitiator?.docPreview ? formData?.BirthNACInitiator?.docPreview : null
+  );
+
   const [toast, setToast] = useState(false);
   const [DobMissmatchError, setDOBMissmatchError] = useState(false);
   const [OrderofBirthMissmatchError, setOrderofBirthMissmatchError] = useState(false);
@@ -87,7 +103,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [motherIdError, setMotherIdError] = useState(null);
   const [fatherIderror, setFatherIdError] = useState(null);
   const [medicalError, setMedicalError] = useState(null);
-  console.log(formData?.BirthNACDetails?.childFirstNameEn, "formData?.BirthNACDetails?.childFirstNameEn");
   const storedAppData = null;
   const storedOwnerData = null;
   let menu = [];
@@ -222,7 +237,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   );
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
-    console.log(fileStoreIds, "fileStoreIds");
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
       return { large: trimURL(key.url.split(",")[1]), small: trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
@@ -346,7 +360,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             if (response?.data?.files?.length > 0) {
               setUploadedFile1(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setDocPreview(fileDetails);
+              setProofFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -367,7 +381,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             if (response?.data?.files?.length > 0) {
               setUploadedFile2(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setDocPreview(fileDetails);
+              setCertificateFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -388,7 +402,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             if (response?.data?.files?.length > 0) {
               setUploadedFile3(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setDocPreview(fileDetails);
+              setMotherIdFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -409,7 +423,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             if (response?.data?.files?.length > 0) {
               setUploadedFile4(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setDocPreview(fileDetails);
+              setFatherIdFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -430,7 +444,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
             if (response?.data?.files?.length > 0) {
               setUploadedFile5(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setDocPreview(fileDetails);
+              setMedicalFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }
@@ -828,7 +842,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                       optionKey="i18nKey"
                       name="nacorderofChildren"
                       value={field?.nacorderofChildren}
-                      //onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "nacorderofChildren")}
+                      onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "nacorderofChildren")}
                     />
                   </div>
                   <div className="col-md-3">
@@ -977,16 +991,31 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ""
                   )}
                 </div>
-                {docPreview && (
+                {proofFileDocPreview && (
                   <div className="col-md-2">
-                    {_.head(docPreview)?.type === "pdf" ? (
+                    {_.head(proofFileDocPreview)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(proofFileDocPreview)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
                     ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(proofFileDocPreview)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
-                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
+                    <a
+                      target="_blank"
+                      href={_.head(proofFileDocPreview)?.type === "pdf" ? _.head(proofFileDocPreview)?.pdfUrl : _.head(proofFileDocPreview)?.large}
+                    >
                       Preview
                     </a>
                   </div>
@@ -1014,6 +1043,39 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ""
                   )}
                 </div>
+                {certificateFiledocPreview && (
+                  <div className="col-md-2">
+                    {_.head(certificateFiledocPreview)?.type === "pdf" ? (
+                      <React.Fragment>
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(certificateFiledocPreview)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(certificateFiledocPreview)?.small}
+                        alt="Other Certificate Image"
+                      />
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(certificateFiledocPreview)?.type === "pdf"
+                          ? _.head(certificateFiledocPreview)?.pdfUrl
+                          : _.head(certificateFiledocPreview)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                )}
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -1040,16 +1102,35 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ""
                   )}
                 </div>
-                {docPreview && (
+                {motherIdFiledocPreview && (
                   <div className="col-md-2">
-                    {_.head(docPreview)?.type === "pdf" ? (
+                    {_.head(motherIdFiledocPreview)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(motherIdFiledocPreview)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
                     ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(motherIdFiledocPreview)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
-                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(motherIdFiledocPreview)?.type === "pdf"
+                          ? _.head(motherIdFiledocPreview)?.pdfUrl
+                          : _.head(motherIdFiledocPreview)?.large
+                      }
+                    >
                       Preview
                     </a>
                   </div>
@@ -1079,16 +1160,35 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ""
                   )}
                 </div>
-                {docPreview && (
+                {fatherIdFiledocPreview && (
                   <div className="col-md-2">
-                    {_.head(docPreview)?.type === "pdf" ? (
+                    {_.head(fatherIdFiledocPreview)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(fatherIdFiledocPreview)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
                     ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(fatherIdFiledocPreview)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
-                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(fatherIdFiledocPreview)?.type === "pdf"
+                          ? _.head(fatherIdFiledocPreview)?.pdfUrl
+                          : _.head(fatherIdFiledocPreview)?.large
+                      }
+                    >
                       Preview
                     </a>
                   </div>
@@ -1116,16 +1216,33 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ""
                   )}
                 </div>
-                {docPreview && (
+                {medicalFiledocPreview && (
                   <div className="col-md-2">
-                    {_.head(docPreview)?.type === "pdf" ? (
+                    {_.head(medicalFiledocPreview)?.type === "pdf" ? (
                       <React.Fragment>
-                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(docPreview)?.pdfUrl} alt="Other Certificate Pdf" />
+                        <object
+                          style={{ margin: "5px 0" }}
+                          height={120}
+                          width={100}
+                          data={_.head(medicalFiledocPreview)?.pdfUrl}
+                          alt="Other Certificate Pdf"
+                        />
                       </React.Fragment>
                     ) : (
-                      <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(docPreview)?.small} alt="Other Certificate Image" />
+                      <img
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        src={_.head(medicalFiledocPreview)?.small}
+                        alt="Other Certificate Image"
+                      />
                     )}
-                    <a target="_blank" href={_.head(docPreview)?.type === "pdf" ? _.head(docPreview)?.pdfUrl : _.head(docPreview)?.large}>
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(medicalFiledocPreview)?.type === "pdf" ? _.head(medicalFiledocPreview)?.pdfUrl : _.head(medicalFiledocPreview)?.large
+                      }
+                    >
                       Preview
                     </a>
                   </div>
