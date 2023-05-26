@@ -1,6 +1,5 @@
 import React from "react";
 import { Carousel } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const data = [{
   url: "https://ulb-logos.s3.ap-south-1.amazonaws.com/bannaer.png",

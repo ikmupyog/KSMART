@@ -1,23 +1,13 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Carousel from "./Carousel";
 import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const KsmartHome = () => {
     const history = useHistory();
 
     const onLoginClick = () => history.push('/digit-ui/citizen/login');
-
-    const toggleMobileMenu = () => {
-        let body = document.querySelector('body');
-        let menu = document.querySelector('.mobile-menu');
-
-        console.log({ body, menu })
-
-        menu.classList.toggle('active');
-        body.classList.toggle('no-scroll');
-    }
 
     return <React.Fragment>
         <div className="desktop_navbar-main d-none d-lg-block">
@@ -25,13 +15,13 @@ const KsmartHome = () => {
                 <div className="container">
                     <nav className="sm-navigatin-flex d-flex align-items-center justify-content-between">
                         <div className="ksmart-logo-fx d-flex align-items-center gap-5">
-                            <a href=""><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/logo_bule.png" alt="" className="k-logo1" /></a>
+                            <a href=""><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/k-smart-logo.png" alt="" className="k-logo1" /></a>
                             <div className="center-ln-logo"></div>
                             <a href=""><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Government_of_Kerala_Logo.png" alt="" className="k-logo2" /></a>
                         </div>
                         <ul className="login-regis-group d-flex align-items-center gap-4">
                             <li><Button className="h-login-btn"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Register</Button></li>
-                            <li><Button className="h-register-btn" onClick={onLoginClick} ><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Login</Button></li>
+                            <li><Button className="h-register-btn" onClick={onLoginClick}><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Login</Button></li>
                         </ul>
                     </nav>
                 </div>
@@ -63,7 +53,7 @@ const KsmartHome = () => {
         <div className="mobile-navbar d-block d-lg-none py-2">
             <nav className="navbar">
                 <div className="logo">
-                    <a href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/logo_bule.png" alt="Logo" /></a>
+                    <a href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/k-smart-logo.png" alt="Logo" /></a>
                 </div>
                 <div className="nav-mob-links mobile-menu">
                     <div className="mob-spacing-content">
@@ -76,12 +66,12 @@ const KsmartHome = () => {
                             <li><a href="#">Support</a></li>
                             <li><a href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/translate-icon.svg" alt="" /> Translate</a></li>
                             <li><a href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/search-icon.svg" alt="" /> Search</a></li>
-                            <li><Button className="h-login-btn"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Register</Button></li>
-                            <li><Button className="h-register-btn" onClick={onLoginClick}><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Login</Button></li>
+                            <li><a href="" className="h-login-btn"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Register</a></li>
+                            <li><a href="" className="h-register-btn"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Login</a></li>
                         </ul>
                     </div>
                 </div>
-                <div className="burger" onclick={toggleMobileMenu}>
+                <div className="burger" onclick="toggleMobileMenu()">
                     <span className="line"></span>
                     <span className="line"></span>
                     <span className="line"></span>
@@ -89,13 +79,47 @@ const KsmartHome = () => {
             </nav>
         </div>
         {/* <!-- end mobile menu  --> */}
+        {/* <nav className="navbar navbar-expand-lg navbar-light bg-light d-block d-lg-none ">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/k-smart-logo.png" alt="" /></a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
+                    <div className="mobile-navbar py-2">
+
+                        <div className="nav-mob-links mobile-menu active nav-active">
+                            <div className="mob-spacing-content">
+                                <ul className="">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About Ksmart</a></li>
+                                    <li><a href="#">E Bridge</a></li>
+                                    <li><a href="#">Quick Pay</a></li>
+                                    <li><a href="#">Certificates</a></li>
+                                    <li><a href="#">Support</a></li>
+                                    <li><a href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/translate-icon.svg" alt="" /> Translate</a></li>
+                                    <li><a href="#"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/search-icon.svg" alt="" /> Search</a></li>
+                                    <li><a href="" className="h-login-btn"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Register</a></li>
+                                    <li><a href="" className="h-register-btn"><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/login-icon.svg" alt="" /> Login</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </nav> */}
         {/* <!-- banner section start  --> */}
         <div className="header-banner-main position-relative">
             <div className="container">
-
-                <Carousel />
-
+                <div className="header-banner pt-4">
+                    <Carousel />
+                </div>
                 <div className="row py-5">
                     <div className="col-lg-2 col-md-6 mb-4 mb-lg-0 wow animated fadeInUp">
                         <div className="header-btm-search-box">
@@ -196,7 +220,7 @@ const KsmartHome = () => {
                                             src="https://ulb-logos.s3.ap-south-1.amazonaws.com/service5.svg" alt="" /></span> K-Doc Cloud</button>
                                 </div>
                             </nav>
-                            <lottie-player className="mt-5" src="images/55177.json" background="transparent" speed="1" loop=""
+                            <lottie-player className="mt-5" src="https://ulb-logos.s3.ap-south-1.amazonaws.com/55177.json" background="transparent" speed="1" loop=""
                                 autoplay=""></lottie-player>
                         </div>
                     </div>
@@ -324,7 +348,7 @@ const KsmartHome = () => {
                 <div className="row">
                     <div className="col-lg-4 col-md-6 mb-3 mb-lg-0 wow animated fadeInUp">
                         <div className="s-smark-ulBox">
-                            <lottie-player src="images/61565.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                            <lottie-player src="https://ulb-logos.s3.ap-south-1.amazonaws.com/61565.json" background="transparent" speed="1" loop autoplay></lottie-player>
                             <div className="ULB-text-content-b">
                                 <h3>Integrate Your Family</h3>
                                 <p>Lorem ipsum dolor sit amet consectetur. Maecenas pulvinar quis scelerisque id. A elit donec elit elit
@@ -335,7 +359,7 @@ const KsmartHome = () => {
                     </div>
                     <div className="col-lg-4 col-md-6 mb-3 mb-lg-0 wow animated fadeInUp">
                         <div className="s-smark-ulBox">
-                            <lottie-player src="images/93905.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                            <lottie-player src="https://ulb-logos.s3.ap-south-1.amazonaws.com/93905.json" background="transparent" speed="1" loop autoplay></lottie-player>
                             <div className="ULB-text-content-b">
                                 <h3>Integrate Your Properties & Buildings</h3>
                                 <p>Lorem ipsum dolor sit amet consectetur. Maecenas pulvinar quis scelerisque id. A elit donec elit elit
@@ -346,7 +370,7 @@ const KsmartHome = () => {
                     </div>
                     <div className="col-lg-4 col-md-6 mb-3 mb-lg-0 wow animated fadeInUp">
                         <div className="s-smark-ulBox">
-                            <lottie-player src="images/30304.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                            <lottie-player src="https://ulb-logos.s3.ap-south-1.amazonaws.com/30304.json" background="transparent" speed="1" loop autoplay></lottie-player>
                             <div className="ULB-text-content-b">
                                 <h3>Integrate Your Health & Education</h3>
                                 <p>Lorem ipsum dolor sit amet consectetur. Maecenas pulvinar quis scelerisque id. A elit donec elit elit
@@ -485,7 +509,7 @@ const KsmartHome = () => {
                         <div
                             className="app-download-icvd d-block d-lg-flex d-md-flex align-items-center gap-3 text-center text-lg-start text-md-start">
                             <div className="bg-app-icon bg-transparent">
-                                <a href=""><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/logo_bule.png" alt="" className="logo-here-f" /></a>
+                                <a href=""><img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/k-smart-logo.png" alt="" className="logo-here-f" /></a>
                             </div>
                             <div className="download-kkk-text">
                                 <h6>Channels</h6>
@@ -552,7 +576,7 @@ const KsmartHome = () => {
                 </div>
                 <div className="row logo-texet-spTop">
                     <div className="footer-logo-sm text-center wow animated fadeInUp">
-                        <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/logo_bule.png" alt="" />
+                        <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/k-smart-logo.png" alt="" />
                     </div>
                     <ul className="undifine-footer-vb wow animated fadeInUp">
                         <li><a href="">Accessibility</a></li>
