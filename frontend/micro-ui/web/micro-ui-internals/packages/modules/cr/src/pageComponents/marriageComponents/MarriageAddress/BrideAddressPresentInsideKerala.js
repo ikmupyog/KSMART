@@ -139,7 +139,7 @@ const BrideAddressPresentInsideKerala = ({
   // let cmbTaluk = [];
   // let cmbVillage = [];
   let cmbDistrict = [];
-  let cmbPostOffice = [];
+  // let cmbPostOffice = [];
   let districtid = null;
   let cmbLBType = [];
   let cmbFilterDistrict = [];
@@ -282,7 +282,7 @@ const BrideAddressPresentInsideKerala = ({
       setPostOfficevalues(currentLB[0].poList);
       setPostOfficeDropDownvalues(currentLB[0].poList);
     }
-    if (cmbLB.length > 0 && cmbDistrict.length > 0 && cmbTaluk.length > 0 && cmbVillage.length > 0 && cmbPostOffice.length > 0) {
+    if (cmbLB.length > 0 && cmbDistrict.length > 0) {
       setIsInitialRender(false);
     }
   }
@@ -327,7 +327,7 @@ const BrideAddressPresentInsideKerala = ({
     //   console.log({filteredPOs})
     //   setPostOfficevalues(filteredPOs);
     // }
-    if (cmbLB.length > 0 && cmbDistrict.length > 0 && cmbTaluk.length > 0 && cmbVillage.length > 0 && cmbPostOffice.length > 0) {
+    if (cmbLB.length > 0 && cmbDistrict.length > 0 ) {
       setIsInitialRender(false);
     }
   }
@@ -350,7 +350,9 @@ const BrideAddressPresentInsideKerala = ({
       }
     }
     if (formData?.BrideAddressDetails?.presentInsideKeralaTaluk != null) {
-      if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
+      if (
+        // cmbTaluk.length > 0 && 
+        (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
         // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
         // setLbsTalukvalue(cmbFilterTaluk);
         // setinsideKeralaTaluk(
@@ -364,7 +366,9 @@ const BrideAddressPresentInsideKerala = ({
       }
     }
     if (formData?.BrideAddressDetails?.presentInsideKeralaVillage != null) {
-      if (cmbVillage.length > 0 && (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
+      if (
+        // cmbVillage.length > 0 && 
+        (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
         // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
         // setLbsVillagevalue(cmbFilterVillage);
         // setinsideKeralaVillage(
@@ -385,7 +389,9 @@ const BrideAddressPresentInsideKerala = ({
       }
     }
     if (formData?.BrideAddressDetails?.presentInsideKeralaPostOffice != null) {
-      if (cmbPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
+      if (
+        // cmbPostOffice.length > 0 && 
+        (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
         // setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         // setinsideKeralaPostOffice(
         //   cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.code === formData?.BrideAddressDetails?.presentInsideKeralaPostOffice)[0]
@@ -711,7 +717,7 @@ const BrideAddressPresentInsideKerala = ({
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={sortWardList}
+                option={sortedWards}
                 selected={presentWardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
