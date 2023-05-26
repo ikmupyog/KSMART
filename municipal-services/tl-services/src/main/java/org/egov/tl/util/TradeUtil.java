@@ -3,6 +3,7 @@ package org.egov.tl.util;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.ClientProtocolException;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.mdms.model.MasterDetail;
 import org.egov.mdms.model.MdmsCriteria;
@@ -11,6 +12,7 @@ import org.egov.mdms.model.ModuleDetail;
 import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.repository.ServiceRequestRepository;
 import org.egov.tl.web.models.AuditDetails;
+import org.egov.tl.web.models.BuildingDet;
 import org.egov.tl.web.models.TradeLicense;
 import org.egov.tl.web.models.TradeLicenseRequest;
 import org.egov.tl.web.models.workflow.BusinessService;
@@ -18,8 +20,12 @@ import org.egov.tl.workflow.WorkflowService;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.util.*;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import static org.egov.tl.util.TLConstants.*;
 import static org.egov.tl.util.TLConstants.COMMON_MASTERS_MODULE;
@@ -376,5 +382,21 @@ public class TradeUtil {
 
         return tenantIdToReminderPeriod;
 
+    }
+
+    public StringBuilder getPtSearchUrl() {
+        return new StringBuilder().append(config.getPtHost()).append(config.getPtendPoint());
+    }
+
+    public BuildingDet pTBuildingCall(int lbId, String zonalId, String wardId, int doorNo, String doorNoSub) throws ClientProtocolException, IOException, ParserConfigurationException, SAXException {
+        // MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequest(requestInfo, tenantId);
+        Map<String, Object> searchCriteria = new HashMap<>();
+        searchCriteria.put("lbId", lbId);
+        searchCriteria.put("zonalId", zonalId);
+        searchCriteria.put("wardId", wardId);
+        searchCriteria.put("doorNo", doorNo);
+        searchCriteria.put("doorNoSub", doorNoSub);
+        BuildingDet result = serviceRequestRepository.fetchResultPT(getPtSearchUrl().toString(), searchCriteria);
+        return result;
     }
 }

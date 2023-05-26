@@ -332,4 +332,10 @@ public class TLConfiguration {
     @Value("${persister.updatewfpde.tradelicense.topic}")
     private String updateWfPdeTopic;
 
+    @Value("${ptax.building.search.url}")
+    private String ptHost;
+    @Value("${ptax.building.search.endpoint}")
+    private String ptendPoint;
+    
+
 }
