@@ -65,57 +65,24 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   const mutation = Digit.Hooks.cr.useCivilRegistrationMarriageAPI(tenantId, isEditMarriage ? false : true);
 
   useEffect(() => {
-    if (
-      isInitialRender
-      && applicationNumber === null
-    ) {
-      // const onSuccessedit = () => {
-      //   setMutationHappened(true);
-      // };
+    if (isInitialRender) {
       try {
-        setIsInitialRender(false);
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
-        if (!resubmit) {
+        if (!isEditMarriage 
+          && applicationNumber === null
+          ) {
+          setIsInitialRender(false);
           let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : convertToEditMarriageRegistration(data);
-          // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          // if (!isEditMarriage) {
-          //   mutation.mutate(formdata, {
-          //     onSuccess,
-          //   })
-          // } else {
           mutation.mutate(formdata, {
             onSuccess,
           });
-          // }
-          // else{
-          //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
-          //   {
-          //     mutation2.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          //   else
-          //   {
-          //     mutation1.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          // }
-
-          // !isEditMarriage ? mutation.mutate(formdata, {
-          //   onSuccess,
-          // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
-          //   onSuccess,
-          // }) :mutation1.mutate(formdata, {
-          //   onSuccess,
-          // }));
         } else {
-          // let formdata = convertToResubmitTrade(data);
-          // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
-          // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
-          //   onSuccessedit,
-          // })
+          let formdata = isEditMarriage ? convertToEditMarriageRegistration(data) : [];
+          mutation.mutate(formdata, {
+            onSuccess,
+          });
+          setIsInitialRender(false);
         }
       } catch (err) {}
     }

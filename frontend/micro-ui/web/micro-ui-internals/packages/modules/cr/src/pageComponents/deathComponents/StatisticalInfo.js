@@ -304,7 +304,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
       : ""
   );
 
-  const [IsDelivery, setIsDelivery] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ? formData?.StatisticalInfo?.IsdeceasedPregnant : null);
+  const [IsDelivery, setIsDelivery] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ?
+     formData?.StatisticalInfo?.IsdeceasedPregnant?.code : null);
   const [DeathDuringDelivery, setIsDeathDuringDelivery] = useState(
     formData?.StatisticalInfo?.DeathDuringDelivery ? formData?.StatisticalInfo?.DeathDuringDelivery : null
   );

@@ -52,11 +52,11 @@ const EmployeeModuleCard = ({ Icon, moduleHeader = "", moduleName, kpis = [], li
             <div className="links-wrapper" style={{ width: "80%" }}>
               {links.map(({ count, label, link }, index) => (
                 <span className="link" key={index}>
-                  {link ? <Link to={link}>{label}</Link> : null}
+                  {link ? <Link to={link} style={{ width: "100%" }}>{label}</Link> : null}
                   {count ? (
                     <>
-                      {FsmHideCount ? null : <span className={"inbox-total"}>{count || "-"}</span>}
                       <Link to={link}>
+                        {FsmHideCount ? null : <span style={{ marginLeft: "0px", width: "auto" }} className={"inbox-total"}>{count || "-"}</span>}
                         {/* <ArrowRightInbox /> */}
                       </Link>
                     </>

@@ -6,7 +6,8 @@ import { sortDropdownNames, stringReplaceAll } from "../utils/index";
 import { useQueryClient } from "react-query";
 import { convertEpochToDate } from '../utils/index';
 
-const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) => {
+const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
+
   const [formditenable, setFormditenable] = Digit.Hooks.useSessionStorage("TL_RENEWAL_ENABLE_TRADE", {});
 
   let naturetype = null;
@@ -132,7 +133,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [serviceArea, setServiceArea] = useState(formDataPage?.tradeLicenseDetail?.address?.serviceArea ? formDataPage?.tradeLicenseDetail?.address?.serviceArea : "");
   const [vesselNo, setVesselNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo : "");
   const [waterbody, setWaterbody] = useState(formDataPage?.tradeLicenseDetail?.address?.waterbody ? formDataPage?.tradeLicenseDetail?.address?.waterbody : "");
-  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null }]);
   const [fieldsDoor, setFeildsDoor] = useState(
     (formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
       blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
@@ -150,7 +151,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     queryClient.invalidateQueries("TL_CREATE_TRADE");
   };
 
-
+  const addressID = formDataPage?.tradeLicenseDetail?.address?.id ? formDataPage?.tradeLicenseDetail?.address?.id : null;
   sector &&
     sector["TradeLicense"] &&
     sector["TradeLicense"].EnterpriseType.map((ob) => {
@@ -219,7 +220,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   function handleAdd() {
     const values = [...fields];
-    values.push({ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null });
+    values.push({ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null , id : null});
     setFeilds(values);
   }
   function selectSector(value) {
@@ -281,12 +282,6 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   //   return BusinessSubTypeMenu;
   // }
-  function resetStructurePlace(){
-    setFeildsDoor([{
-      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
-    }]);
-  }
   Data &&
     Data.TradeLicense &&
     Data.TradeLicense.TradeType.map((ob) => {
@@ -321,6 +316,12 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
         }
       });
     return BusinessSubTypeMenu;
+  }
+  function resetStructurePlace(){
+    setFeildsDoor([{
+      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
+      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
+    }]);
   }
 
   const selectDistrict = ((value) => {
@@ -468,7 +469,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setOwnershipCategoryMenu(tempval);
     }
     
-    naturetypecmbvalue = value.code.substring(0, 4);
+    // naturetypecmbvalue = value.code.substring(0, 4);
     setValue2(naturetypecmbvalue);
     setIsInitialRender(true);
     SelectStructurePlaceSubtype(null);
@@ -740,7 +741,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setIsInitialRender(false);
       cmbLB.push(...LBs.filter((localbody) => ((localbody?.city?.districtid == DistrictList?.districtid) && (localbody?.city?.lbtypecode == LBTypeList?.code))));
       setFilterLocalbody(cmbLB);
-      let districtidtemp = (LBs.filter(object => object?.code === tenantId)[0])?.city?.districtid;
+      let districtidtemp = LBs?.filter(object => object.code === tenantId)[0]?.city?.districtid;
       cmbPO = [];
       cmbPO.push(...cmbPostOffice.filter((po) => (po?.distid == districtidtemp)));
       setFilterPostoffice(cmbPO);
@@ -794,8 +795,9 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setLocalbody(tenantId ? LBs.filter(obj => obj.code === tenantId)[0] : "");
     }
   }
-  if (formDataPage?.tradeLicenseDetail?.address?.zonalId && (zonalOffice === undefined || zonalOffice === "") && Zonal.length > 0) {
+  if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)&&(isInitialRendercombo)) {
     setZonalOffice(Zonal.filter(zone => parseInt(zone?.code) === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
+    setisInitialRendercombo(false);
   }
   if (formDataPage?.tradeLicenseDetail?.address?.wardId && (WardNo === undefined || WardNo === "") && cmbWardNoFinal.length > 0) {
     setWardNo(cmbWardNoFinal.filter(ward => parseInt(ward?.code) === formDataPage?.tradeLicenseDetail?.address?.wardId)[0]);
@@ -816,24 +818,24 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     setDesiredLicensePeriod(formDataPage?.desiredLicensePeriod ? LicensePeriod.filter((period) => period.code.includes(formDataPage?.desiredLicensePeriod))[0] : "");
   }
 
-
   if(formDataPage?.tradeLicenseDetail?.tradeUnits !== null)
-    if((formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory) && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
-    && (BusinessCategoryMenu.length > 0)) {
+    if (formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
+      && BusinessCategoryMenu.length > 0) {
       let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
       let bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
       let bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
+      let id = formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.id;
+
       setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
         {
           businessCategory: category,
           businessType: bustype,
-          businessSubtype: bussubtyp, unit: null, uom: null
+          businessSubtype: bussubtyp, unit: null, uom: null , id : id
         }
 
-      ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+      ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null}]);
     }
-  else  [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }];
-    
+    else  [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null }];
   if (formDataPage?.tradeLicenseDetail?.ownershipCategory && formDataPage?.tradeLicenseDetail?.ownershipCategory !== null && ownershipCategoryMenumain.length > 0
     && ownershipCategory === undefined && ownershipCategory !== "") {
     setOwnershipCategory(ownershipCategoryMenumain.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory))[0]);
@@ -872,7 +874,6 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       if (validation === false) setErrorMessage(t("TL_DOOR_ALREADY_SELECT"));
     }
 
-   
     if (!businessSector) {
       setErrorMessage(t("TL_INVALID_BUSINESS_SECTOR"));
       validation = false;
@@ -1029,6 +1030,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
       let units = fields;
       let address = {
+        "id" : addressID,
         "doorNo": combineddoorno?.trim(),
         "localityName": locality?.trim(),
         "street": street?.trim(),
@@ -1046,9 +1048,11 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       };
       let tradeUnits =[
         {
+          "id" : units[0]?.id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  units[0].businessType.code,
           "businessSubtype" :  units[0].businessSubtype.code,
+          "active" : true
         }
       ]
       let structurePlace = formStateDoor;
@@ -1059,7 +1063,8 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       let ownerspremise = formDataPage?.tradeLicenseDetail?.ownerspremise;
       let institution = formDataPage?.tradeLicenseDetail?.institution;
       let licenseeType = formDataPage?.tradeLicenseDetail?.licenseeType;
-      let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector :businessSector.code, capitalInvestment, enterpriseType,
+      let id = formDataPage?.tradeLicenseDetail?.id;
+      let tradeLicenseDetail = { id,tenantId, licenseeType, owners, ownerspremise, institution, businessSector :businessSector.code, capitalInvestment, enterpriseType,
          structureType:structureType.code ,
          structurePlaceSubtype:structurePlaceSubtype.code, businessActivityDesc, noOfEmployees,
           ownershipCategory:ownershipCategory.code, address, tradeUnits, structurePlace, }
@@ -1095,7 +1100,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
           //   || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code !== "MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
           //   || (value2 === "WATER" ? (formStateDoor[0].vesselNo === "" || waterbody === "" || serviceArea === "") : false)
           //   || (value2 === "DESIGNATEDPLACE" ? false : false)
-            // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)}
+            // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false) }
         >
 
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
@@ -1503,4 +1508,4 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     </React.Fragment>
   );
 };
-export default TLLicenseUnitDetRenewal;
+export default TLLicenseUnitDetEdit;
