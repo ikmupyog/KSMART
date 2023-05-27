@@ -202,6 +202,17 @@ export const DFMService = {
       params: {},
       auth: true,
     }),
+    updateservice: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.updateservice,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
+      auth: true,
+    }),
   deleteSubFunct: (details, tenantId) =>
     Request({
       url: Urls.dfm.deleteSubFunct,

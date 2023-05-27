@@ -28,6 +28,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
@@ -176,7 +177,15 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
         },
       },
     };
-    mutation.mutate(formData);
+    mutation.mutate(formData, {
+      onError: (error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
+      },
+    });
     refetch();
   };
 
@@ -333,6 +342,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
       {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
       {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
       {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
+      {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
     </React.Fragment>
   );
 };

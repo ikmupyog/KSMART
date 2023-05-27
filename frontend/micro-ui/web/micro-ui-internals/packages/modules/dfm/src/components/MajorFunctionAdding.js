@@ -21,14 +21,10 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
   const [mutationSuccess, setMutationSuccess] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  // console.log("datamodule", moduleNameEnglish.label);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
   const { data: searchData, refetch } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
-
-  // const Value = data?.ModuleDetails?.map((item) => ({
-  //   label: item.id,
-  //   value: item.moduleNameEnglish,
-  // }));
   const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
@@ -191,7 +187,15 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         },
       },
     };
-    mutation.mutate(formData);
+    mutation.mutate(formData, {
+      onError: (error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
+      },
+    });
     refetch();
   };
   function handleClick() {
@@ -339,6 +343,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
       {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
       {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
+      {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
     </React.Fragment>
   );
 };

@@ -1,54 +1,15 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {
-  BackButton,
-  PrivateRoute,
-  BreadCrumb,
-  CommonDashboard,
-  FormInputGroup,
-  SubmitBar,
-  CardLabel,
-  CardLabelError,
-  Dropdown,
-  CheckBox,
-  LinkButton,
-  SearchAction,
-  TextInput,
-  UploadFile,
-  SearchIconSvg,
-  TextArea,
-  CustomButton,
-  CardTextButton,
-  ActionBar,
-  PopUp,
-  Table,
-  Toast,
-} from "@egovernments/digit-ui-react-components";
+import { SubmitBar, CardLabel, Dropdown, CheckBox, TextInput, PopUp, Table, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import SearchApplication from "./SearchApplication";
-import Search from "../pages/employee/Search";
-import BirthSearchInbox from "../../../cr/src/components/inbox/search";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
-import viewToPlainText from "@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext";
 
 const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [draftText, setDraftText] = useState("");
   const { t } = useTranslation();
-  const history = useHistory();
-  const state = useSelector((state) => state);
-  const locale = Digit.SessionStorage.get("locale");
-  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
-  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
   const mutation = Digit.Hooks.dfm.useServiceAdding(tenantId);
   const deleteItem = Digit.Hooks.dfm.useDeleteService(tenantId);
-  //   const updatemutation = Digit.Hooks.dfm.useUpdateService();
-
+  const updatemutation = Digit.Hooks.dfm.useUpdateService();
   const [moduleNameEnglish, setmoduleNameEnglish] = useState("");
   const [majorFunction, setmajorFunction] = useState("");
   const [subFunction, setsubFunction] = useState("");
@@ -59,37 +20,48 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [mutationSuccess, setMutationSuccess] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [edit, setIsEdit] = useState(false);
+  const [ServiceId, setServiceId] = useState(false);
+  const [subFunctionId, setsubFunctionId] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const data1 = [
+    { label: "Checkbox 1", value: "checkbox1" },
+    { label: "Checkbox 2", value: "checkbox2" },
+    { label: "Checkbox 3", value: "checkbox3" },
+    { label: "Checkbox 4", value: "checkbox4" },
+    { label: "Checkbox 5", value: "checkbox5" },
+    { label: "Checkbox 1", value: "checkbox1" },
+    { label: "Checkbox 2", value: "checkbox2" },
+    { label: "Checkbox 3", value: "checkbox3" },
+    { label: "Checkbox 4", value: "checkbox4" },
+    { label: "Checkbox 5", value: "checkbox5" },
+  ];
   const { data, isLoading } = Digit.Hooks.dfm.useSearchmodule({ tenantId });
-  const Value = data?.ModuleDetails?.map((item) => ({
+  const Value = data?.ModuleDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.moduleNameEnglish,
   }));
   const { data: searchData } = Digit.Hooks.dfm.useSearchmajorFunction({ tenantId, moduleId: moduleNameEnglish.label });
-  const majorData = searchData?.MajorFunctionDetails?.map((item) => ({
+  const majorData = searchData?.MajorFunctionDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.majorFunctionNameEnglish,
   }));
   const { data: searchsubfunct } = Digit.Hooks.dfm.useSearchsubModule({ tenantId, majorFunctionId: majorFunction.label });
   console.log(searchsubfunct);
-  const subData = searchsubfunct?.SubFunctionDetails?.map((item) => ({
+  const subData = searchsubfunct?.SubFunctionDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.subFunctionNameEnglish,
   }));
-
   const { data: serviceData, refetch } = Digit.Hooks.dfm.useSearchservice({ tenantId, subFunctionId: subFunction.label });
-  console.log("serviceData:", serviceData);
-
   const serviceAddData = serviceData?.ServiceDetails.filter((item) => {
     return item.subFunctionId === subFunction.label && item.status !== "0";
   });
-
   const setsetserviceCode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setserviceCode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   };
-
   const setsetserviceNameEn = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setserviceNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -104,7 +76,6 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
       setserviceNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   };
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -120,17 +91,26 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   function selectsubFunction(value) {
     setsubFunction(value);
   }
-  const [edit, setIsEdit] = useState(false);
-  const [toast, setToast] = useState(false);
-
+  function handleClick() {
+    setIsEdit(true);
+    updateDraft();
+  }
   function handleLinkClick(row) {
     setIsEdit(true);
-    // moduleNameEnglish(moduleNameEnglish)
-    // setmoduleNameEnglish(row.moduleNameEnglish)
+    setsubFunctionId(row.subFunctionId);
+    setServiceId(row.id);
     setserviceCode(row.serviceCode);
     setserviceNameEn(row.serviceNameEnglish);
     setserviceNameMl(row.serviceNameMalayalam);
   }
+  const clearInput = () => {
+    setmoduleNameEnglish("");
+    setmajorFunction("");
+    setsubFunction("");
+    setserviceCode("");
+    setserviceNameMl("");
+    setserviceNameEn("");
+  };
   const deleteClick = (serviceCode, serviceNameEnglish, serviceNameMalayalam, subFunctionId) => {
     const formData = {
       ServiceDetails: {
@@ -143,17 +123,17 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
         status: "",
       },
     };
-    deleteItem.mutate(formData);
-    setToast(true);
-    setTimeout(() => {
-      setToast(false);
-    }, 2000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2500);
+    deleteItem.mutate(formData, {
+      onError: (error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
+      },
+    });
   };
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-
   const columns = useMemo(
     () => [
       {
@@ -171,7 +151,6 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
           );
         },
       },
-
       {
         Header: t("SERVICE_NAME_EN"),
         disableSortBy: true,
@@ -206,7 +185,6 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     ],
     []
   );
-
   const saveService = () => {
     const formData = {
       ServiceDetails: {
@@ -219,8 +197,38 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
         status: null,
       },
     };
-    mutation.mutate(formData);
+    mutation.mutate(formData, {
+      onError: (error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
+      },
+    });
     refetch;
+  };
+  const updateDraft = () => {
+    const formData = {
+      ServiceDetails: {
+        id: ServiceId,
+        tenantId: tenantId,
+        serviceCode: serviceCode,
+        subFunctionId: subFunctionId,
+        serviceNameEnglish: serviceNameEn,
+        serviceNameMalayalam: serviceNameMl,
+        status: null,
+      },
+    };
+    updatemutation.mutate(formData, {
+      onError: (error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
+      },
+    });
   };
   useEffect(() => {
     if (mutation.isSuccess) {
@@ -232,15 +240,15 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
         window.location.reload();
       }, 2500);
     }
-    // if (updatemutation.isSuccess) {
-    //   setUpdateSuccess(true);
-    //   setTimeout(() => {
-    //     setUpdateSuccess(false);
-    //   }, 2000);
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 2500);
-    // }
+    if (updatemutation.isSuccess) {
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 2000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
     if (deleteItem.isSuccess) {
       setDeleteSuccess(true);
       setTimeout(() => {
@@ -250,17 +258,12 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
         window.location.reload();
       }, 2500);
     }
-  }, [mutation.isSuccess, deleteItem.isSuccess]);
-  //   useEffect(() => {
-  //     if (mutation.isSuccess == true) {
-  //       history.push("/digit-ui/employee/dfm/note-drafting");
-  //     }
-  //   }, [mutation.isSuccess]);
+  }, [mutation.isSuccess, deleteItem.isSuccess, updatemutation.isSuccess]);
 
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
-        <div className="FileFlowWrapper service-wrapper">
+        <div className="FileFlowWrapper sub-wrapper">
           <div className="row wrapper-file">
             <div className="col-md-12 col-sm-12 col-xs-12">
               <div className="col-md-4 col-sm-12 col-xs-12">
@@ -312,6 +315,7 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
                   optionKey="i18nKey"
                   name="RegistrationNo"
                   placeholder={t("SERVICE_CODE")}
+                  disable={edit}
                 />
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
@@ -344,7 +348,7 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
                   placeholder={t("SERVICE_NAME_MAL")}
                 />
               </div>
-              <div className="col-md-3  col-sm-32  col-xs-12">
+              <div className="col-md-3  col-sm-32  col-xs-12" style={{ marginBottom: "25px" }}>
                 <CardLabel className="card-label-file">{`${t("MANDATORY_ATTACHMENTS")}`}</CardLabel>
                 <CheckBox t={t} optionKey="name" checked={isChecked} onChange={handleCheckboxChange} />
               </div>
@@ -352,10 +356,24 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
                 {isChecked && (
                   <PopUp>
                     <div className="popup-module" style={{ borderRadius: "8px" }}>
-                      <h1>hii am popup</h1>
-                      <button className="close-btn" onClick={handleClosePopup}>
-                        Close
-                      </button>
+                      <div className="modal-container">
+                        <div className="modal-header">
+                          <h2>{`${t("FUNCTIONAL_ATTACHMENT_ADDING")}`}</h2>
+                        </div>
+                        <div className="modal-box">
+                          <div className="modal-flex">
+                            {data1.map((option) => (
+                              <div className="checkbox-container">
+                                <CardLabel className="modal-label">{`${t(option.label)}`}</CardLabel>
+                                <CheckBox value={option.value} />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <button className="btn-row" onClick={handleClosePopup}>
+                          Close
+                        </button>
+                      </div>
                     </div>
                   </PopUp>
                 )}
@@ -366,17 +384,14 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
               </div>
             </div>
           </div>
-
           <div className="btn-flex">
-            <button
-              className="btn-row"
-              // onClick={handleClick}
-            >
-              Update
-            </button>
-
             <SubmitBar onSubmit={saveService} label={t("save")} className="btn-row" />
-            <SubmitBar label={t("CLOSE")} className="btn-row" />
+            <button className="btn-row" onClick={handleClick}>
+              {t("Update")}
+            </button>
+            <button onClick={clearInput} className="btn-row">
+              {t("Clear")}
+            </button>
           </div>
         </div>
       </div>
@@ -400,9 +415,10 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
           )}
         </div>
       </div>
-      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
-      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
-      {/* {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}    */}
+      {mutationSuccess && <Toast label="Service Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Service Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Service Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
+      {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
     </React.Fragment>
   );
 };

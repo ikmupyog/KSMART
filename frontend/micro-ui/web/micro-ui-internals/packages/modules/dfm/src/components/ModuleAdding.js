@@ -135,11 +135,12 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
       },
     };
     mutation.mutate(formData, {
-      onError: (error, variables) => {
+      onError: (error) => {
         console.log(error.message);
-        setTimeout(() => {
           setErrorMessage(error.message);
-        }, 2000);
+          setTimeout(() => {
+            setErrorMessage(false);
+          }, 2000);
       },
     });
   };
@@ -171,17 +172,18 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         setMutationSuccess(false);
         window.location.reload();
       }, 2500);
-    } else if (mutation.onError) {
-      setErrorMessage(true);
-      setTimeout(() => {
-        setErrorMessage(false);
-        console.log("Timeout 1 executed");
-      }, 2000);
-      setTimeout(() => {
-        console.log("Timeout 2 executed");
-        window.location.reload();
-      }, 2500);
     }
+    // } else if (mutation.onError) {
+    //   setErrorMessage(true);
+    //   setTimeout(() => {
+    //     setErrorMessage(false);
+    //     console.log("Timeout 1 executed");
+    //   }, 2000);
+    //   setTimeout(() => {
+    //     console.log("Timeout 2 executed");
+    //     window.location.reload();
+    //   }, 2500);
+    // }
     if (updatemutation.isSuccess) {
       setUpdateSuccess(true);
       setTimeout(() => {
@@ -281,7 +283,7 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
       {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
 
       {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
-      {errorMessage && <Toast label={errorMessage} onClose={() => setErrorMessage(null)} />}
+      {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
       {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
     </React.Fragment>
   );
