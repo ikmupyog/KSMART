@@ -12,7 +12,7 @@ const useCRInbox = ({ tenantId, filters = {}, config }) => {
             moduleName: "CR",
             businessService: [...businessServiceCodes],
             ...(applicationStatus?.length > 0 ? { status: applicationStatus } : {}),
-            assignee: USER_UUID ,
+            assigner: USER_UUID ,
         },
         moduleSearchCriteria: {
             ...(mobileNumber ? { mobileNumber } : {}),

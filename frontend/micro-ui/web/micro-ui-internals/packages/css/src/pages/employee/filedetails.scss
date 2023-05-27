@@ -441,42 +441,55 @@
         height: 3772px;
     }
 }
+
 .module-adding {
     margin-top: 40px;
+
     @media (max-width: 1020px) {
         margin-top: 10px;
     }
 }
+
 .module-wrapper {
     padding: 25px;
-   @media (max-width: 768px){
-    padding-bottom: 50%;
-   }
-   @media (max-width: 640px){
-    padding-bottom: 50%;
-   }
-   @media (max-width: 480px){
-    padding-bottom: 75%;
-   }
-   @media (max-width: 360px){
-    padding-bottom: 85%;
-   }
+
+    @media (max-width: 768px) {
+        padding-bottom: 50%;
+    }
+
+    @media (max-width: 640px) {
+        padding-bottom: 50%;
+    }
+
+    @media (max-width: 480px) {
+        padding-bottom: 75%;
+    }
+
+    @media (max-width: 360px) {
+        padding-bottom: 85%;
+    }
 }
+
 .major-wrapper {
     padding: 25px;
-    @media (max-width: 768px){
-     padding-bottom: 21%;
+
+    @media (max-width: 768px) {
+        padding-bottom: 21%;
     }
-    @media (max-width: 640px){
-     padding-bottom: 22%;
+
+    @media (max-width: 640px) {
+        padding-bottom: 22%;
     }
-    @media (max-width: 480px){
-     padding-bottom: 35%;
+
+    @media (max-width: 480px) {
+        padding-bottom: 35%;
     }
-    @media (max-width: 360px){
-     padding-bottom: 38%;
+
+    @media (max-width: 360px) {
+        padding-bottom: 38%;
     }
 }
+
 .customSubFunctionTable {
     @media (max-width: 1020px) {
         max-width: 645px;
@@ -543,7 +556,7 @@
 }
 
 .counter-filewrapper {
-    height: 1470px;
+    height: 1540px;
 
     @media (max-width: 1050px) {
         height: 1402px;

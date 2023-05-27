@@ -65,8 +65,8 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "TL_COMMON_TABLE_COL_APP_NO",
-      sortOrder: "",
+      // sortBy: "TL_COMMON_TABLE_COL_APP_NO",
+      // sortOrder: "",
     },
   });
 
@@ -121,8 +121,8 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
   // });
   const onSort = useCallback((args) => {
     if (args.length === 0) return;
-    setValue("sortBy", args.id);
-    setValue("sortOrder", "");
+    // setValue("sortBy", args.id);
+    // setValue("sortOrder", "");
   }, []);
 
   function onPageSizeChange(e) {

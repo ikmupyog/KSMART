@@ -463,6 +463,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           brideFileStoreId: data?.WitnessDetails?.brideFilestoreId ? data?.WitnessDetails?.brideFilestoreId[0] : null,
           groomUrl: data?.WitnessDetails?.groomURL ? data?.WitnessDetails?.groomURL : null,
           brideUrl: data?.WitnessDetails?.brideURL ? data?.WitnessDetails?.brideURL : null,
+          isBackward: data?.WitnessDetails?.isBackward && data?.WitnessDetails?.isBackward,
         },
         BrideAddressDetails: {
           presentaddressCountry: data?.BrideAddressDetails?.presentaddressCountry ? data?.BrideAddressDetails?.presentaddressCountry?.code : null,
@@ -927,7 +928,7 @@ export const convertToEditMarriageRegistration = (data = {}) => {
         businessService: "CR",
         workflowCode: data?.MarriageDetails?.workFlowCode ? data?.MarriageDetails?.workFlowCode : "",
         isWorkflow: true,
-        action: "INITIATE",
+        action: "PAY",
         registration_date: null,
         registrationNumber: null,
         status: "INITIATED",
@@ -1013,6 +1014,7 @@ export const convertToEditMarriageRegistration = (data = {}) => {
           brideFileStoreId: data?.WitnessDetails?.brideFilestoreId ? data?.WitnessDetails?.brideFilestoreId[0] : null,
           groomUrl: data?.WitnessDetails?.groomURL ? data?.WitnessDetails?.groomURL : null,
           brideUrl: data?.WitnessDetails?.brideURL ? data?.WitnessDetails?.brideURL : null,
+          isBackward: data?.WitnessDetails?.isBackward && data?.WitnessDetails?.isBackward,
         },
         BrideAddressDetails: {
           presentaddressCountry: data?.BrideAddressDetails?.presentaddressCountry ? data?.BrideAddressDetails?.presentaddressCountry?.code : null,

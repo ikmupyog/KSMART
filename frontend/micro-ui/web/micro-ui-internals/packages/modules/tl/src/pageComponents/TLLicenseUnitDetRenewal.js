@@ -281,6 +281,12 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   //   return BusinessSubTypeMenu;
   // }
+  function resetStructurePlace(){
+    setFeildsDoor([{
+      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
+      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
+    }]);
+  }
   Data &&
     Data.TradeLicense &&
     Data.TradeLicense.TradeType.map((ob) => {
@@ -442,6 +448,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const selectStructureType = (value => {
+    resetStructurePlace();
     setStructureType(value);
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);

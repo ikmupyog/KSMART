@@ -144,6 +144,7 @@ function ApplicationDetailsContent({
   const [isHospitalUser, setIsHospitalUser] = useState(false);
   useEffect(() => {
     console.log("userRoles", userRoles);
+    // console.log("userRoles",userRoles);
     if (userRoles.length > 0) {
       if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER" ||
         userRoles[0].code === "BND_LOCAL_REGISTRAR" || userRoles[0].code === "BND_SUB_REGISTRAR" || userRoles[0].code === "BND_DISTRICT_REGISTRAR") {

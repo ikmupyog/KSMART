@@ -21,91 +21,18 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
 import { trimURL } from "../../utils";
 import _ from "lodash";
+// import { ImageUploadHandler } from "./ImageCropper/ImageUploadHandler";
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
 
-  const { data: District = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: LBType = {}, isLBTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  // const cmbMaritalStatus = [
-  //   { i18nKey: "Married", code: "MARRIED" },
-  //   { i18nKey: "Un Married", code: "UNMARRIED" },
-  //   { i18nKey: "Not Applicable", code: "NOT Applicable" },
-  // ];
   const cmbExpirationType = [
     { i18nKey: "Alive", code: "ALIVE" },
     { i18nKey: "Expired", code: "EXPIRED" },
   ];
-
-  let cmbDistrict = [];
-  let cmbTaluk = [];
-  let cmbVillage = [];
-  let cmbLBType = [];
-  District &&
-    District["common-masters"] &&
-    District["common-masters"].District &&
-    District["common-masters"].District.map((ob) => {
-      cmbDistrict.push(ob);
-    });
-  Taluk &&
-    Taluk["common-masters"] &&
-    Taluk["common-masters"].Taluk &&
-    Taluk["common-masters"].Taluk.map((ob) => {
-      cmbTaluk.push(ob);
-    });
-  Village &&
-    Village["common-masters"] &&
-    Village["common-masters"].Village &&
-    Village["common-masters"].Village.map((ob) => {
-      cmbVillage.push(ob);
-    });
-  LBType &&
-    LBType["common-masters"] &&
-    LBType["common-masters"].LBType &&
-    LBType["common-masters"].LBType.map((ob) => {
-      cmbLBType.push(ob);
-    });
-  const [marraigeDOM, setmarraigeDOM] = useState(formData?.WitnessDetails?.marraigeDOM ? formData?.WitnessDetails?.marraigeDOM : "");
-  const [marriageDistrict, setmarriageDistrict] = useState(
-    formData?.WitnessDetails?.marriageDistrict ? formData?.WitnessDetails?.marriageDistrict : ""
-  );
-  const [marraigeTalukID, setmarraigeTalukID] = useState(formData?.WitnessDetails?.marraigeTalukID ? formData?.WitnessDetails?.marraigeTalukID : "");
-  const [marraigeVillageName, setmarraigeVillageName] = useState(
-    formData?.WitnessDetails?.marraigeVillageName ? formData?.WitnessDetails?.marraigeVillageName : ""
-  );
-  const [marraigeLBtype, setmarraigeLBtype] = useState(formData?.WitnessDetails?.marraigeLBtype ? formData?.WitnessDetails?.marraigeLBtype : "");
-  const [marraigePlacetype, setmarraigePlacetype] = useState(
-    formData?.WitnessDetails?.marraigePlacetype ? formData?.WitnessDetails?.marraigePlacetype : ""
-  );
-  const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-    formData?.WitnessDetails?.marriageLocalityEn ? formData?.WitnessDetails?.marriageLocalityEn : ""
-  );
-  const [marriageLocalityMal, setmarriageLocalityMal] = useState(
-    formData?.WitnessDetails?.marriageLocalityMal ? formData?.WitnessDetails?.marriageLocalityMal : ""
-  );
-  const [marriageStreetEn, setmarriageStreetEn] = useState(
-    formData?.WitnessDetails?.marriageStreetEn ? formData?.WitnessDetails?.marriageStreetEn : ""
-  );
-  const [marriageStreetMal, setmarriageStreetMal] = useState(
-    formData?.WitnessDetails?.marriageStreetMal ? formData?.WitnessDetails?.marriageStreetMal : ""
-  );
-  const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
-    formData?.WitnessDetails?.marriageHouseNoAndNameEn ? formData?.WitnessDetails?.marriageHouseNoAndNameEn : ""
-  );
-  const [marriageHouseNoAndNameMal, setmarriageHouseNoAndNameMal] = useState(
-    formData?.WitnessDetails?.marriageHouseNoAndNameMal ? formData?.WitnessDetails?.marriageHouseNoAndNameMal : ""
-  );
-  const [marriageLandmark, setmarriageLandmark] = useState(
-    formData?.WitnessDetails?.marriageLandmark ? formData?.WitnessDetails?.marriageLandmark : ""
-  );
-  const [marraigeOthersSpecify, setmarraigeOthersSpecify] = useState(
-    formData?.WitnessDetails?.marraigeOthersSpecify ? formData?.WitnessDetails?.marraigeOthersSpecify : ""
-  );
-  const [marraigeType, setmarraigeType] = useState(formData?.WitnessDetails?.marraigeType ? formData?.WitnessDetails?.marraigeType : "");
 
   const [witness1AadharNo, setwitness1AadharNo] = useState(
     formData?.WitnessDetails?.witness1AadharNo ? formData?.WitnessDetails?.witness1AadharNo : ""
@@ -173,8 +100,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
-  console.log({ brideFilestoreId, groomFilestoreId });
-
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -195,36 +120,36 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     sendOtp({ otp: { ...data, ...{ type: "register" } } });
   };
 
-  const sendOtp = async (data) => {
-    console.log("sendOtp");
+  // const sendOtp = async (data) => {
+  //   console.log("sendOtp");
 
-    try {
-      console.log("try reached==", data);
+  //   try {
+  //     console.log("try reached==", data);
 
-      const res = await Digit.UserService.sendOtp(data, 32);
+  //     const res = await Digit.UserService.sendOtp(data, 32);
 
-      return [res, null];
-    } catch (err) {
-      console.log("catch reached==", err);
+  //     return [res, null];
+  //   } catch (err) {
+  //     console.log("catch reached==", err);
 
-      return [null, err];
-    }
-  };
+  //     return [null, err];
+  //   }
+  // };
 
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [witness1NameEnError, setwitness1NameEnError] = useState(false);
   const [witness2NameEnError, setwitness2NameEnError] = useState(false);
-  const [witness1AgeError, setwitness1AgeError] = useState(formData?.WitnessDetails?.witness1Age ? false : false);
-  const [witness2AgeError, setwitness2AgeError] = useState(formData?.WitnessDetails?.witness2Age ? false : false);
+  const [witness1AgeError, setwitness1AgeError] = useState(false);
+  const [witness2AgeError, setwitness2AgeError] = useState(false);
   const [witness1AddressEnError, setwitness1AddressEnError] = useState(false);
   const [witness2AddressEnError, setwitness2AddressEnError] = useState(false);
   const [witness1MobileError, setwitness1MobileError] = useState(false);
   const [witness2MobileError, setwitness2MobileError] = useState(false);
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(e) {
-    console.log(e);
     if (e.target.checked === true) {
       setIsOpenHusbandModal(true);
     }
@@ -232,7 +157,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   function setSelectExpirationTypeWife(e) {
-    console.log(e);
     if (e.target.checked === true) {
       setIsOpenWifeModal(true);
     }
@@ -240,12 +164,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   function setSelectIsBackward(e) {
-    console.log(e);
     setIsBackward(e.target.checked);
   }
-
-  console.log({ isBackward });
-
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
   //   const today = new Date();
@@ -396,7 +316,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
             .substring(0, 2)
     );
     if (e.target.value < 18) {
-      console.log("agge", e.target.value);
       setAgeValidationMsg(true);
       setToast(true);
       setTimeout(() => {
@@ -404,7 +323,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
       }, 2000);
       setwitness1Age(null);
     } else {
-      console.log("aggeee", e.target.value);
       setAgeValidationMsg(false);
     }
     // if (e.target.value.length === 3) {
@@ -447,7 +365,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
   function setSelectwitness1AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
-      setwitness1AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness1AddressEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -463,7 +381,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
   function setSelectwitness2AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ,/]*$") != null) {
-      setwitness2AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness2AddressEn(e.target.value.length <= 150 ? e.target.value : e.target.value.substring(0, 150));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -532,13 +450,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   async function handleUploadGroom(id) {
-    console.log({ id });
     setUploadedGroomImageId(id);
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
     setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
   }
-
-  console.log({ groomURL, brideURL });
 
   let validFlag = true;
   const goNext = () => {
@@ -773,158 +688,147 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
     setPreviewGroomImage(previewGroomUrl);
   }, [groomImage]);
 
-  // console.log({ groomImage });
-  // console.log({ brideImage })
-  // console.log({ previewGroomImage });
-  // console.log({ previewBrideImage })
-
   console.log("Witness", formData);
-  console.log({ isExpiredHusband, isExpiredWife });
-  console.log({ isOpenHusbandModal, isOpenWifeModal });
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="col-md-12">
+          {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+          {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+          <FormStep
+            t={t}
+            config={config}
+            onSelect={goNext}
+            onSkip={onSkip}
+            isDisabled={
+              !witness1AadharNo ||
+              !witness1NameEn ||
+              !witness1Age ||
+              !witness1AddresSEn ||
+              !witness1Mobile ||
+              !witness2AadharNo ||
+              !witness2NameEn ||
+              !witness2Age ||
+              !witness2AddresSEn ||
+              !witness2Mobile ||
+              !groomFilestoreId ||
+              !brideFilestoreId
+            }
+          >
+            <div className="row">
+              <div className="col-md-12" style={{ marginBottom: "20px" }}>
+                <div className="row">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_TO_SOLEMNIZATION_OF_MARRIAGE")}`}</span>{" "}
+                    </h1>
+                  </div>
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_1_DETAILS")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS1_ADHAR_NO")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness1AadharNo"
+                    value={witness1AadharNo}
+                    onChange={setSelectwitness1AadharNo}
+                    onKeyPress={setCheckSpecialChar}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS1_NAME")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness1NameEn"
+                    value={witness1NameEn}
+                    onChange={setSelectwitness1NameEn}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS1_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
+                    //{...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS1_AGE")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness1Age"
+                    value={witness1Age}
+                    onChange={setSelectwitness1Age}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS1_AGE")}`}
+                    inputProps={{
+                      maxLength: 2,
+                    }}
+                    {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS1_ADDRESS")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextArea
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness1AddresSEn"
+                    value={witness1AddresSEn}
+                    onChange={setSelectwitness1AddressEn}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
+                  />
+                </div>
 
-  if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
-    return <Loader></Loader>;
-  } else
-    return (
-      <React.Fragment>
-        <div className="row">
-          <div className="col-md-12">
-            {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-            {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-            <FormStep
-              t={t}
-              config={config}
-              onSelect={goNext}
-              onSkip={onSkip}
-              isDisabled={
-                !witness1AadharNo ||
-                !witness1NameEn ||
-                !witness1Age ||
-                !witness1AddresSEn ||
-                !witness1Mobile ||
-                !witness2AadharNo ||
-                !witness2NameEn ||
-                !witness2Age ||
-                !witness2AddresSEn ||
-                !witness2Mobile ||
-                !groomFilestoreId ||
-                !brideFilestoreId
-              }
-            >
-              <div className="row">
-                <div className="col-md-12" style={{ marginBottom: "20px" }}>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_TO_SOLEMNIZATION_OF_MARRIAGE")}`}</span>{" "}
-                      </h1>
-                    </div>
-                    <div className="col-md-12">
-                      <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_1_DETAILS")}`}</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS1_ADHAR_NO")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness1AadharNo"
-                      value={witness1AadharNo}
-                      onChange={setSelectwitness1AadharNo}
-                      onKeyPress={setCheckSpecialChar}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
-                      inputProps={{
-                        maxLength: 12,
-                      }}
-                      {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS1_NAME")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness1NameEn"
-                      value={witness1NameEn}
-                      onChange={setSelectwitness1NameEn}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS1_NAME")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
-                      //{...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS1_AGE")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness1Age"
-                      value={witness1Age}
-                      onChange={setSelectwitness1Age}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS1_AGE")}`}
-                      inputProps={{
-                        maxLength: 2,
-                      }}
-                      {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS1_ADDRESS")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextArea
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness1AddresSEn"
-                      value={witness1AddresSEn}
-                      onChange={setSelectwitness1AddressEn}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
-                    />
-                  </div>
-
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS1_MOBILE_NO")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness1Mobile"
-                      value={witness1Mobile}
-                      onChange={setSelectwitness1Mobile}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
-                      {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
-                    />
-                  </div>
-                  {/* <div className="col-md-2">
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS1_MOBILE_NO")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness1Mobile"
+                    value={witness1Mobile}
+                    onChange={setSelectwitness1Mobile}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
+                    {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                  />
+                </div>
+                {/* <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -947,107 +851,107 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                     />
                   </div> */}
 
-                  <div className="col-md-12">
-                    <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_2_DETAILS")}`}</span>{" "}
-                    </h1>
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS2_ADHAR_NO")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"number"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness2AadharNo"
-                      value={witness2AadharNo}
-                      onChange={setSelectwitness2AadharNo}
-                      disable={isDisableEdit}
-                      onKeyPress={setCheckSpecialChar}
-                      placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
-                      inputProps={{
-                        maxLength: 12,
-                      }}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS2_NAME")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness2NameEn"
-                      value={witness2NameEn}
-                      onChange={setSelectwitness2NameEn}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS2_NAME")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS2_AGE")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      isMandatory={false}
-                      optionKey="i18nKey"
-                      name="witness2Age"
-                      value={witness2Age}
-                      onChange={setSelectwitness2Age}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS2_AGE")}`}
-                      {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS2_ADDRESS")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextArea
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness2AddresSEn"
-                      value={witness2AddresSEn}
-                      onChange={setSelectwitness2AddressEn}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
-                    />
-                  </div>
+                <div className="col-md-12">
+                  <h1 className="headingh1">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_2_DETAILS")}`}</span>{" "}
+                  </h1>
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS2_ADHAR_NO")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"number"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness2AadharNo"
+                    value={witness2AadharNo}
+                    onChange={setSelectwitness2AadharNo}
+                    disable={isDisableEdit}
+                    onKeyPress={setCheckSpecialChar}
+                    placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS2_NAME")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness2NameEn"
+                    value={witness2NameEn}
+                    onChange={setSelectwitness2NameEn}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS2_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS2_AGE")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    isMandatory={false}
+                    optionKey="i18nKey"
+                    name="witness2Age"
+                    value={witness2Age}
+                    onChange={setSelectwitness2Age}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS2_AGE")}`}
+                    {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS2_ADDRESS")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextArea
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness2AddresSEn"
+                    value={witness2AddresSEn}
+                    onChange={setSelectwitness2AddressEn}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ,/]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
+                  />
+                </div>
 
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_WITNESS2_MOBILE_NO")}`}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      name="witness2Mobile"
-                      value={witness2Mobile}
-                      onChange={setSelectwitness2Mobile}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
-                      {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
-                    />
-                  </div>
-                  {/* <div className="col-md-2">
+                <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("CR_WITNESS2_MOBILE_NO")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    name="witness2Mobile"
+                    value={witness2Mobile}
+                    onChange={setSelectwitness2Mobile}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
+                    {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                  />
+                </div>
+                {/* <div className="col-md-2">
                     <TextInput
                       t={t}
                       type={"button"}
@@ -1069,245 +973,262 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                       // {...(validation = { isRequired: true })}
                     />
                   </div> */}
-                  <div className="row">
-                    <div className="col-md-12">
-                      <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LIVE_STATUS_OF_OF_PARTIES_TO_LIVE")}`}</span>{" "}
-                      </h1>
-                    </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LIVE_STATUS_OF_OF_PARTIES_TO_LIVE")}`}</span>{" "}
+                    </h1>
                   </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-4">
-                        <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
-                        <TextInput
-                          t={t}
-                          isMandatory={false}
-                          type={"text"}
-                          optionKey="i18nKey"
-                          name="husbandname"
-                          value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
-                            formData?.GroomDetails?.groomLastnameEn || ""
-                          }`}
-                          placeholder={t("CR_HUSBAND_NAME")}
-                          {...(validation = { isRequired: true })}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <CardLabel>
-                          {`${t("CR_EXPIRATION")}`}
-                          {/* <span className="mandatorycss">*</span> */}
-                        </CardLabel>
-                        <CheckBox
-                          label={t("CR_EXPIRATION_TYPE")}
-                          onChange={setSelectExpirationTypeHusband}
-                          value={isExpiredHusband}
-                          checked={isExpiredHusband}
-                          disable={isDisableEdit}
-                          style={{ marginBottom: "40px" }}
-                        />
-                      </div>
-                      <div className="col-md-4">
-                        <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
-                        <TextInput
-                          t={t}
-                          isMandatory={false}
-                          type={"text"}
-                          optionKey="i18nKey"
-                          name="wifename"
-                          value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
-                            formData?.BrideDetails?.brideLastnameEn || ""
-                          }`}
-                          placeholder={t("CR_WIFE_NAME")}
-                          {...(validation = { isRequired: true })}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <CardLabel>
-                          {`${t("CR_EXPIRATION")}`}
-                          {/* <span className="mandatorycss">*</span> */}
-                        </CardLabel>
-                        <CheckBox
-                          label={t("CR_EXPIRATION_TYPE")}
-                          onChange={setSelectExpirationTypeWife}
-                          value={isExpiredWife}
-                          checked={isExpiredWife}
-                          disable={isDisableEdit}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PHOTOS")}`}</span>{" "}
-                      </h1>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
-                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
-                          <ImageUploadHandler
-                            tenantId={tenantId}
-                            uploadedImages={groomFilestoreId}
-                            onPhotoChange={handleUploadGroom}
-                            isMulti={false}
-                            moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
-                            extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="col-md-4">
+                          <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
+                          <TextInput
+                            t={t}
+                            isMandatory={false}
+                            type={"text"}
+                            optionKey="i18nKey"
+                            name="husbandname"
+                            value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                              formData?.GroomDetails?.groomLastnameEn || ""
+                            }`}
+                            placeholder={t("CR_HUSBAND_NAME")}
+                            {...(validation = { isRequired: true })}
+                          />
+                        </div>
+                        <div className="col-md-6" style={{ marginTop: "3rem", marginBottom: "1.5rem" }}>
+                          <CheckBox
+                            label={t("CR_EXPIRATION_TYPE_HUSBAND")}
+                            onChange={setSelectExpirationTypeHusband}
+                            value={isExpiredHusband}
+                            checked={isExpiredHusband}
+                            disable={isDisableEdit}
                           />
                         </div>
                       </div>
-                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
-                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
-                          <ImageUploadHandler
-                            tenantId={tenantId}
-                            uploadedImages={brideFilestoreId}
-                            onPhotoChange={handleUploadBride}
-                            isMulti={false}
-                            moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
-                            extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="col-md-4">
+                          <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
+                          <TextInput
+                            t={t}
+                            isMandatory={false}
+                            type={"text"}
+                            optionKey="i18nKey"
+                            name="wifename"
+                            value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                              formData?.BrideDetails?.brideLastnameEn || ""
+                            }`}
+                            placeholder={t("CR_WIFE_NAME")}
+                            {...(validation = { isRequired: true })}
+                          />
+                        </div>
+                        <div className="col-md-6" style={{ marginTop: "3rem", marginBottom: "1.5rem" }}>
+                          <CheckBox
+                            label={t("CR_EXPIRATION_TYPE_WIFE")}
+                            onChange={setSelectExpirationTypeWife}
+                            value={isExpiredWife}
+                            checked={isExpiredWife}
+                            disable={isDisableEdit}
                           />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <CheckBox
-                        label={`${t("CR_WHETHER_BACKWARD")}`}
-                        onChange={setSelectIsBackward}
-                        value={isBackward}
-                        checked={isBackward}
-                        style={{ marginBottom: "40px" }}
-                      />
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PHOTOS")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                        <h2 style={{ textAlign: "center" }}>{`${t("CR_GROOM_IMAGE")}`}</h2>
+                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
+                        <ImageUploadHandler
+                          t={t}
+                          tenantId={tenantId}
+                          uploadedImages={groomFilestoreId}
+                          onPhotoChange={handleUploadGroom}
+                          isMulti={false}
+                          moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
+                          extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
+                          type="groomImage"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                        <h2 style={{ textAlign: "center" }}>{`${t("CR_BRIDE_IMAGE")}`}</h2>
+                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>{`(${t("CR_FILE_SIZE_AND_SUPPORTS")})`}</h2>
+                        <ImageUploadHandler
+                          t={t}
+                          tenantId={tenantId}
+                          uploadedImages={brideFilestoreId}
+                          onPhotoChange={handleUploadBride}
+                          isMulti={false}
+                          moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
+                          extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
+                          type="brideImage"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              {toast && (
-                <Toast
-                  error={
-                    witness1AadharError ||
-                    AgeValidationMsg ||
-                    witness1NameEnError ||
-                    witness2AadharError ||
-                    witness2NameEnError ||
-                    witness1AgeError ||
-                    witness2AgeError ||
-                    witness1AddressEnError ||
-                    witness2AddressEnError ||
-                    witness1MobileError ||
-                    witness2MobileError ||
-                    AdhaarDuplicationError
-                  }
-                  label={
-                    witness1AadharError ||
-                    AgeValidationMsg ||
-                    witness1NameEnError ||
-                    witness2AadharError ||
-                    witness2NameEnError ||
-                    witness1AgeError ||
-                    witness2AgeError ||
-                    witness1AddressEnError ||
-                    witness2AddressEnError ||
-                    witness1MobileError ||
-                    witness2MobileError ||
-                    AdhaarDuplicationError
-                      ? witness1AadharError
-                        ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                        : AgeValidationMsg
-                        ? t(`CR_MOTHER_AGE_WARNING`)
-                        : witness1NameEnError
-                        ? t(`CR_INVALID_WITNESS1_NAME`)
-                        : witness2AadharError
-                        ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                        : witness2NameEnError
-                        ? t(`CR_INVALID_WITNESS2_NAME`)
-                        : witness1AgeError
-                        ? t(`CR_INVALID_WITNESS1_AGE`)
-                        : witness2AgeError
-                        ? t(`CR_INVALID_WITNESS2_AGE`)
-                        : witness1AddressEnError
-                        ? t(`CR_INVALID_WITNESS1_ADDRESS`)
-                        : witness2AddressEnError
-                        ? t(`CR_INVALID_WITNESS2_ADDRESS`)
-                        : witness1MobileError
-                        ? t(`CR_INVALID_WITNESS1_MOBILENO`)
-                        : witness2MobileError
-                        ? t(`CR_INVALID_WITNESS2_MOBILENO`)
-                        : AdhaarDuplicationError
-                        ? t(`DUPLICATE_AADHAR_NO`)
-                        : setToast(false)
-                      : setToast(false)
-                  }
-                  onClose={() => setToast(false)}
-                  // error={AadharError}
-                  // label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
-                  // onClose={() => setToast(false)}
-                />
-              )}
-            </FormStep>
-          </div>
-        </div>
-        {(isOpenHusbandModal || isOpenWifeModal) && (
-          <PopUp>
-            <div className="popup-module" style={{ borderRadius: "8px" }}>
-              <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
-                <div style={{ fontSize: "18px", margin: "10px" }}>
-                  You opted that{" "}
-                  {isOpenHusbandModal &&
-                    `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
-                      formData?.GroomDetails?.groomLastnameEn || ""
-                    } `}
-                  {isOpenWifeModal &&
-                    `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
-                      formData?.BrideDetails?.brideLastnameEn || ""
-                    } `}
-                  has Expired, Do you want to continue?
+                <div className="row">
+                  <div className="col-md-12">
+                    <h1 className="headingh1">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BELONG_TO_BACKWARD_COMMUNITY")}`}</span>{" "}
+                    </h1>
+                  </div>
                 </div>
-                <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
-                  <button
-                    style={{
-                      backgroundColor: "orange",
-                      padding: "4px 16px",
-                      color: "white",
-                      borderRadius: "8px",
-                    }}
-                    onClick={() => {
-                      if (isOpenHusbandModal) {
-                        setIsExpiredHusband(true);
-                        setIsOpenHusbandModal(false);
-                      } else if (isOpenWifeModal) {
-                        setIsExpiredWife(true);
-                        setIsOpenWifeModal(false);
-                      }
-                    }}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
-                    onClick={() => {
-                      if (isOpenHusbandModal) {
-                        setIsExpiredHusband(false);
-                        setIsOpenHusbandModal(false);
-                      } else if (isOpenWifeModal) {
-                        setIsExpiredWife(false);
-                        setIsOpenWifeModal(false);
-                      }
-                    }}
-                  >
-                    No
-                  </button>
+                <div className="row">
+                  <div className="col-md-12">
+                    <CheckBox
+                      label={`${t("CR_WHETHER_BACKWARD")}`}
+                      onChange={setSelectIsBackward}
+                      value={isBackward}
+                      checked={isBackward}
+                      style={{ marginBottom: "40px" }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </PopUp>
-        )}
-      </React.Fragment>
-    );
+            {toast && (
+              <Toast
+                error={
+                  witness1AadharError ||
+                  AgeValidationMsg ||
+                  witness1NameEnError ||
+                  witness2AadharError ||
+                  witness2NameEnError ||
+                  witness1AgeError ||
+                  witness2AgeError ||
+                  witness1AddressEnError ||
+                  witness2AddressEnError ||
+                  witness1MobileError ||
+                  witness2MobileError ||
+                  AdhaarDuplicationError
+                }
+                label={
+                  witness1AadharError ||
+                  AgeValidationMsg ||
+                  witness1NameEnError ||
+                  witness2AadharError ||
+                  witness2NameEnError ||
+                  witness1AgeError ||
+                  witness2AgeError ||
+                  witness1AddressEnError ||
+                  witness2AddressEnError ||
+                  witness1MobileError ||
+                  witness2MobileError ||
+                  AdhaarDuplicationError
+                    ? witness1AadharError
+                      ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                      : AgeValidationMsg
+                      ? t(`CR_MOTHER_AGE_WARNING`)
+                      : witness1NameEnError
+                      ? t(`CR_INVALID_WITNESS1_NAME`)
+                      : witness2AadharError
+                      ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                      : witness2NameEnError
+                      ? t(`CR_INVALID_WITNESS2_NAME`)
+                      : witness1AgeError
+                      ? t(`CR_INVALID_WITNESS1_AGE`)
+                      : witness2AgeError
+                      ? t(`CR_INVALID_WITNESS2_AGE`)
+                      : witness1AddressEnError
+                      ? t(`CR_INVALID_WITNESS1_ADDRESS`)
+                      : witness2AddressEnError
+                      ? t(`CR_INVALID_WITNESS2_ADDRESS`)
+                      : witness1MobileError
+                      ? t(`CR_INVALID_WITNESS1_MOBILENO`)
+                      : witness2MobileError
+                      ? t(`CR_INVALID_WITNESS2_MOBILENO`)
+                      : AdhaarDuplicationError
+                      ? t(`DUPLICATE_AADHAR_NO`)
+                      : setToast(false)
+                    : setToast(false)
+                }
+                onClose={() => setToast(false)}
+                // error={AadharError}
+                // label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
+                // onClose={() => setToast(false)}
+              />
+            )}
+          </FormStep>
+        </div>
+      </div>
+      {(isOpenHusbandModal || isOpenWifeModal) && (
+        <PopUp>
+          <div className="popup-module" style={{ borderRadius: "8px" }}>
+            <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+              <div style={{ fontSize: "18px", margin: "10px" }}>
+                t("CR_OPTED_THAT"){" "}
+                {isOpenHusbandModal && (locale === "ml_IN"
+                  ? `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                    formData?.GroomDetails?.groomLastnameEn || ""
+                  } `:`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                    formData?.GroomDetails?.groomLastnameEn || ""
+                  } `)}
+                {isOpenWifeModal && (locale === "ml_IN"
+                  ? `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                      formData?.BrideDetails?.brideLastnameEn || ""
+                    }`
+                  : `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                      formData?.BrideDetails?.brideLastnameEn || ""
+                    } `)}
+                t("CR_EXPIRED_CONTINUE")
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                <button
+                  style={{
+                    backgroundColor: "orange",
+                    padding: "4px 16px",
+                    color: "white",
+                    borderRadius: "8px",
+                  }}
+                  onClick={() => {
+                    if (isOpenHusbandModal) {
+                      setIsExpiredHusband(true);
+                      setIsOpenHusbandModal(false);
+                    } else if (isOpenWifeModal) {
+                      setIsExpiredWife(true);
+                      setIsOpenWifeModal(false);
+                    }
+                  }}
+                >
+                  Yes
+                </button>
+                <button
+                  style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                  onClick={() => {
+                    if (isOpenHusbandModal) {
+                      setIsExpiredHusband(false);
+                      setIsOpenHusbandModal(false);
+                    } else if (isOpenWifeModal) {
+                      setIsExpiredWife(false);
+                      setIsOpenWifeModal(false);
+                    }
+                  }}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </PopUp>
+      )}
+    </React.Fragment>
+  );
 };
 export default WitnessDetails;

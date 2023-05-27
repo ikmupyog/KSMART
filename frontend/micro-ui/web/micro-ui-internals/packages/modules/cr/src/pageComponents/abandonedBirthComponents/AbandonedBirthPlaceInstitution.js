@@ -11,6 +11,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
 }) => {
   const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
   const stateId = Digit.ULBService.getStateId();
+  const locale = Digit.SessionStorage.get("locale");
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -97,7 +98,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 option={sortDropdownNames(cmbInstitutionType ? cmbInstitutionType : [],"name",t)}
                 selected={institution}
                 select={setselectInstitution}

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header ,SearchField,Dropdown} from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header ,SearchField,Dropdown, Loader} from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from  "../../utils";
 import SearchFields from "./SearchFields";
@@ -33,7 +33,7 @@ const mystyle = {
 ]
 let  validation =''
 
-const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, setApplicationType }) => {
+const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType,setApplicationType, isLoading }) => {
 
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
@@ -144,7 +144,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       {
           Header: t("CR_COMMON_COL_DOB"),
           disableSortBy: true,            
-          accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+          accessor: (row) => GetCell(row.dateOfBirth ? convertEpochToDateDMY(row.dateOfBirth) : ""),
       },
       // {
       //     Header: t("TL_APPLICATION_TYPE_LABEL"),
@@ -162,7 +162,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
           disableSortBy: true,
           accessor: (row) => GetCell(row.fatherFirstNameEn),
       },
-    ]), [] )
+    ]), [] );
+    
     const columns = useMemo( () => ([
         {
           Header: t("CR_COMMON_COL_APP_NO"),
@@ -586,7 +587,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
             <SearchFields {...{ register, control, reset, tenantId, t, previousPage, applicationType }} />
           </SearchForm>
         </div>
-
+        {isLoading && <Loader />}
         {data?.display ? (
           <Card style={{ marginTop: 20 }}>
             {t(data.display)

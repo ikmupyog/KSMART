@@ -123,10 +123,10 @@ const Urls = {
   },
   crcorrection: {
     marriage_correction_search: "/marriage-services/v1/marriagedetails/_searchmarriage",
-    marriage_correction_details: "/marriage-services/v1/marriagedetails/_searchmarriagecorrection",
+    marriage_correction_details:"/marriage-services/v1/marriagedetails/_searchmarriagecorrection",
     birth_correction_search: "/birth-services/cr/searchbirthcorrection",
     birth_correction_update: "/birth-services/cr/updatebirthcorrection",
-    death_correction_search: "/birth-services/cr/searchbirthcorrection",
+    death_correction_search: "/birth-services/cr/searchbirthcorrection"
   },
   crcommonpayment: {
     update: "/birth-services/cr/common/updatepaywf",
@@ -192,9 +192,11 @@ const Urls = {
     search: "/filemgmnt/v1/applicantpersonals/_search",
     download_pdf: "/egov-pdf/download/dfm/",
     update: "/filemgmnt/v1/applicantpersonals/_update",
-    create_draft: "/filemgmnt/v1/applicantservices/_createDraftingMain",
+    create_draft: "/filemgmnt/v1/draftfiles/_create",
+    // create_draft: "/filemgmnt/v1/applicantservices/_createDraftingMain",
     create_note: "/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
-    fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
+    fetch_draft: "/filemgmnt/v1/draftfiles/_search",
+    // fetch_draft: "/filemgmnt/v1/applicantservices/_searchDrafting",
     arising_file: "/filemgmnt/v1/applicantservices/_createArisingFile",
     createmodule: "/filemgmnt/v1/masterdata/modules/_create",
     updatemodule: "/filemgmnt/v1/masterdata/modules/_update",

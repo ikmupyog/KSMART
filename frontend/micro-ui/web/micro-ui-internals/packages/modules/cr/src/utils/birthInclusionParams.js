@@ -142,7 +142,7 @@ export const formatApiParams = (formData,userData) => {
         registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
         registrationNo: userData?.registration_no,
         registrationDate: null,
-        applicationStatus: "INITIATED",
+        // applicationStatus: "INITIATED",
         CorrectionField: correctionFieldData,
       },
     ],

@@ -1,5 +1,5 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile } from "@egovernments/digit-ui-react-components";
-import { set } from "lodash";
+import { CardLabel, CardLabelDesc, FormStep, UploadFile, CloseSvg } from "@egovernments/digit-ui-react-components";
+import { find, set } from "lodash";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
@@ -54,7 +54,7 @@ const getStyle = () => {
     },
     closeIconStyles: {
       width: "20px",
-      cursor:"hand"
+      cursor: "hand"
     },
     uploadFile: {
       minHeight: "40px",
@@ -65,16 +65,25 @@ const getStyle = () => {
 }
 
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
-  //console.log(JSON.stringify(formData?.TradeDetails?.ownersdoc));
+
+  const [tradesubtype, setTradesubtype] = useState(formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code?.split(".")[2]);
   let extraStyles = {};
   extraStyles = getStyle();
-  let documentList = [
-    { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" , "label" : "Proof Of Identity" },
-    { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership","label" : "Proof Of Ownership" },
-    { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","label" : "Photo" }
+  const [documentList, setDocumentList] = useState([{ "code": "OWNERIDPROOF", "description": "ProofOfIdentity", "name": "Proof Of Identity" },
+  { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership", "name": "Proof Of Ownership" },
+  { "code": "OWNERPHOTO", "description": "OwnerPhotoProof", "name": "Photo" }]);
+  const [docflag, setDocflag] = useState(true);
+  //   { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" , "name" : "Proof Of Identity" },
+  //   { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership","name" : "Proof Of Ownership" },
+  //   { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","name" : "Photo" }
+  // ]);
+  let documentListtemp = [
+    { "code": "OWNERIDPROOF", "description": "ProofOfIdentity", "name": "Proof Of Identity" },
+    { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership", "name": "Proof Of Ownership" },
+    { "code": "OWNERPHOTO", "description": "OwnerPhotoProof", "name": "Photo" }
   ]
 
-  const [uploadedFiles, setUploadedFiles] = useState(formData?.TradeDetails?.ownersdoc? formData?.TradeDetails?.ownersdoc: []);
+  const [uploadedFiles, setUploadedFiles] = useState(formData?.TradeDetails?.ownersdoc ? formData?.TradeDetails?.ownersdoc : []);
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [uploadedFile, setUploadedFile] = useState(formData?.owners?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -86,9 +95,20 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
   const [dropdownValue, setDropdownValue] = useState(formData?.owners?.documents?.ProofOfIdentity?.documentType || null);
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
-  const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
-  const docs = Documentsob?.PropertyTax?.Documents;
-  const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
+  const { data: DocumentsProof = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "ApplicationDocuments"); //Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
+  if (DocumentsProof?.TradeLicense?.ApplicationDocuments && docflag) {
+    let temp = DocumentsProof?.TradeLicense?.ApplicationDocuments.filter((doclist) => doclist.code === tradesubtype);
+    if (temp?.length > 0) {
+      documentListtemp.push(...temp[0]?.DocumentList);
+      setDocumentList(documentListtemp);
+    }
+    setDocflag(false);
+  }
+  // if(DocumentsProof?TradeLicense?.DocumentList?.length>0){
+  //   documentList.push(...DocumentsProof?.DocumentList);
+  // }
+  //const docs = Documentsob?.PropertyTax?.Documents;
+  // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
   const handleSubmit = () => {
     let ownersdoc = formData?.ownersdoc;
     if (uploadedFiles.length > 0) {
@@ -126,7 +146,8 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
     if (removeindex === -1) {
       return false;
     };
-    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+    uploadedFiles.splice(removeindex, 1);
+    //setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
   }
 
   function handleDelete(e) {
@@ -136,7 +157,9 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
     if (removeindex === -1) {
       return false;
     };
-    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+    uploadedFiles.splice(removeindex, 1);
+    setUploadedFile(null);
+    //setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
   }
 
   useEffect(() => {
@@ -151,7 +174,14 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
-            if (response?.data?.files?.length > 0) {
+             if (response?.data?.files?.length > 0) {
+              const removeindex = uploadedFiles.findIndex(element => {
+                return element.documentType === docuploadedId
+              });
+              if (removeindex >= 0) {
+                uploadedFiles.splice(removeindex, 1)
+                //setUploadedFiles(!!uploadedFiles.splice(removeindex, 1));
+              }
               const temp = {
                 "documentType": docuploadedId, "description": docuploadedName,
                 "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
@@ -166,7 +196,9 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
               //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
               // }
               uploadedFiles.push(temp);
+
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              setFile(null);
             } else {
               setError(t("PT_FILE_UPLOAD_ERROR"));
             }
@@ -176,6 +208,7 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
       }
     })();
   }, [file, uploadedFiles]);
+
 
   return (
     <React.Fragment>
@@ -191,8 +224,8 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         <CardLabelDesc style={{ fontWeight: "unset" }}> {t(`TL_UPLOAD_RESTRICTIONS_SIZE`)}</CardLabelDesc>
 
         <div className="col-md-6">
-            <CardLabel>Document Type</CardLabel>
-          </div>
+          <CardLabel>Document Type</CardLabel>
+        </div>
 
         {/* <div>
           <div className="col-md-6">
@@ -204,40 +237,52 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         </div> */}
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
-              {
-                documentList.map((doc, index, arr) => (
-                  <div className="row" key={doc.code}>
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <span>
-                          {doc.label}
-                        </span>
+            <div className="col-md-8">
+              <table>
+                {
+                  documentList.map((doc, index, arr) => (
+
+
+                    <tr style={{ width: '100%', border: 'solid 1px' }}>
+                      <div className="row" key={doc.code}>
+                        <div className="col-md-12">
+                          <td style={{ width: "70%" }}>
+                            <div className="col-md-12">
+                              <span>
+                                {doc.name}
+                              </span>
+                            </div>
+                          </td>
+                          <td style={{ width: "30%" }}>
+                            <div className="col-md-3">
+                              <UploadFile
+                                id={doc.code}
+                                name={doc.description}
+                                extraStyleName={"propertyCreate"}
+                                accept=".jpg,.png,.pdf"
+                                onUpload={selectfile}
+                                onDelete={() => {
+                                  onDeleteown(doc.code);
+                                  setUploadedFile(null);
+                                }}
+
+                                message={uploadedFiles?.length > 0 ? (uploadedFiles.find(({ documentType }) => documentType === doc.code) ?
+                                  //   `1 ${t(`TL_ACTION_FILEUPLOADED`)}`+"  iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+                                  uploadedFiles?.find(({ documentType }) => documentType === doc.code)?.name
+                                  : t(`TL_ACTION_NO_FILEUPLOADED`)) : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                                // message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                                error={error}
+                              />
+                           </div>
+                          </td>
+                        </div>
                       </div>
-                      <div className="col-md-3">
-                        <UploadFile
-                          id={doc.code}
-                          name={doc.description}
-                          extraStyleName={"propertyCreate"}
-                          accept=".jpg,.png,.pdf"
-                          onUpload={selectfile}
-                          onDelete={() => {
-                            onDeleteown(doc.code);
-                            setUploadedFile(null);
-                          }}
+                    </tr>
+                  )
+                  )
 
-
-                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                          error={error}
-                        />
-                      </div>
-
-                    </div>
-                  </div>
-                )
-                )
-
-              }
+                }
+              </table>
             </div>
             {/* <div className="col-md-6" style={{ "border": "groove" }}>
               {uploadedFiles?.map((doc, index, arr) => (

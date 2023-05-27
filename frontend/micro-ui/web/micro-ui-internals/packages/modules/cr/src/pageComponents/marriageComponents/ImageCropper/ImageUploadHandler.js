@@ -113,9 +113,10 @@ async function imgPreview(image, crop, scale = 1, rotate = 0) {
   return previewUrl;
 }
 
-export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, moduleType = "property-upload", isMulti = true, extraParams = {} }) =>
+export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId,t, moduleType = "property-upload", isMulti = true, extraParams = {} }) =>
   // { uploadedImages, onPhotoChange, tenantId, moduleType = "property-upload", isMulti = true, extraParams = {} }
   {
+
     // const __initImageIds = Digit.SessionStorage.get("PGR_CREATE_IMAGES");
     // const __initThumbnails = Digit.SessionStorage.get("PGR_CREATE_THUMBNAILS");
     const [cropImage, setCropImage] = useState(null);
@@ -128,6 +129,9 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
 
     const [isDeleting, setIsDeleting] = useState(false);
 
+    const [toast, setToast] = useState(false);
+    const [imageSizeError, setImageSizeError] = useState(false);
+    const [imageTypeError, setImageTypeError] = useState(false);
     const [imgSrc, setImgSrc] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const previewCanvasRef = useRef(null);
@@ -140,7 +144,6 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
     const [rotate, setRotate] = useState(0);
     const [aspect, setAspect] = useState(3 / 4);
     const [error, setError] = useState("");
-
 
     // useEffect(() => {
     //   if (singleImage) {
@@ -170,12 +173,6 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
     //     } else {
     //       setImage(imageFile);
     //     }
-    // if (module === "marriage") {
-    //   console.log("Hi module");
-    //   setSingleImage(imageFile);
-    // } else {
-    //   console.log("Hi module else");
-    // setImage(imageFile);
     // }
     //   }, [imageFile]);
 
@@ -201,14 +198,24 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
 
     function getImage(e) {
       const file = e.target.files[0];
-      console.log({file});
+      console.log({ file });
       if (file) {
         if (file.size > 2097152) {
-          setError("File is too large");
-        } else {
+          setImageSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png)$/)) {
           setError(null);
           setImgSrc(window.URL.createObjectURL(file));
           setIsOpen(true);
+        } else {
+          setImageTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
       }
     }
@@ -227,8 +234,8 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
       previewCanvasRef.current.toBlob((blob) => {
         console.log({ blob });
         const file = new File([blob], "groom.jpg", { type: blob.type });
-        console.log({file});
-        setCropImage(file)
+        console.log({ file });
+        setCropImage(file);
         if (!blob) {
           throw new Error("Failed to create blob");
         }
@@ -306,11 +313,11 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
     //     onPhotoChange(newUploadedImagesIds);
     //     Digit.SessionStorage.set("PGR_CREATE_IMAGES", newUploadedImagesIds);
     //   }
-      useEffect(() => {
-        if (cropImage) {
-          uploadImage();
-        }
-      }, [cropImage]);
+    useEffect(() => {
+      if (cropImage) {
+        uploadImage();
+      }
+    }, [cropImage]);
 
     return (
       <React.Fragment>
@@ -380,6 +387,21 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
               )}
             </div>
           </PopUp>
+        )}
+        {toast && (
+          <Toast
+            error={imageSizeError || imageTypeError}
+            label={
+              imageSizeError || imageTypeError
+                ? imageSizeError
+                  ? t("IMAGE_SIZE_VALIDATION_MESSAGE")
+                  : imageTypeError
+                  ? t("IMAGE_TYPE_VALIDATION_MESSAGE")
+                  : setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
         )}
       </React.Fragment>
     );
