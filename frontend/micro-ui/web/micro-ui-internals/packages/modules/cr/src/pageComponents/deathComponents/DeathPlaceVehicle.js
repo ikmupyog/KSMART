@@ -201,7 +201,7 @@ const DeathPlaceVehicle = ({
     }
   }
   function setSelectGeneralRemarks(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9,. ]*$") != null)) {
       setGeneralRemarks(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -414,8 +414,8 @@ const DeathPlaceVehicle = ({
                 value={GeneralRemarks}
                 onChange={setSelectGeneralRemarks}
                 placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-0-9,. ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
                 disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
             </div>
           </div>

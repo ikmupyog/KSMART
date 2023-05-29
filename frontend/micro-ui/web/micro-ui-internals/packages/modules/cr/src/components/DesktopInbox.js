@@ -34,7 +34,7 @@ const DesktopInbox = ({
   useEffect(()=>{
     console.log("data passed==",data);
   },[data]);
-  
+
   const handleLinkClick = (finaldata) => {
 
     const applicationNumber = SearchInbox === "death" ? finaldata?.InformationDeath?.["DeathACKNo"] : finaldata.applicationNumber;
@@ -306,7 +306,7 @@ const DesktopInbox = ({
     {
       Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
       Cell: ({ row }) => {
-        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+        return GetCell(t(`CS_COMMON_${row.original.status}`));
       },
     }
   ]), []);

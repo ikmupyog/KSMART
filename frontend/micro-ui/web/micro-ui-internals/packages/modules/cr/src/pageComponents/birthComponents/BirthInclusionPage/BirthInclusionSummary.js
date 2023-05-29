@@ -230,6 +230,10 @@ function BirthInclusionSummary({
     );
   };
 
+  useEffect(()=>{
+    console.log(("imagesThumbs==",imagesThumbs));
+  },[])
+
   return (
     <>
       <div className="file-main">

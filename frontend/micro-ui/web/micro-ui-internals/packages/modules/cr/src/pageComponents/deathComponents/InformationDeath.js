@@ -10,7 +10,7 @@ import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { sortDropdownNames } from "../../utils";
-// import _ from "lodash";
+import _ from "lodash";
 // import { STATE_CODE } from "../../config/constants";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = false }) => {
@@ -232,7 +232,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       );
     } else if (Age > 23 && Age <= 29) {
       return cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS");
-    } else if (Age > 29 && Age <= 120) {
+    } else if (Age > 29 && Age <= 125) {
       return cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS");
     }
   };
@@ -707,6 +707,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   }, [NACFile]);
 
   function selectFromDate(value) {
+    if(value <= ToDate){
     setFromDate(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -743,9 +744,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // }
     }
   }
+  }
 
 
   function selectToDate(value) {
+    if(FromDate <= value){
     setToDate(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -779,6 +782,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
 
       }
     }
+  }
   }
   function selectDeathDate(value) {
     console.log("selectDeathDate(value)")
@@ -1073,8 +1077,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     }
   }
   function setSelectAge(e) {
+    let age = _.toSafeInteger(e.target.value||'0');
     if (e.target.value.trim().length >= 0) {
-      setAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setAge((e.target.value.length <= 3 && age<126)  ? 
+        e.target.value.replace(/[^0-9]/ig, '') :'');
       // getAgeUnitOptions(e.target.value);
     }
   }

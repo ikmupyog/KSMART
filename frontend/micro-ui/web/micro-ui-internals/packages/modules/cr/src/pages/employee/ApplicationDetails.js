@@ -20,8 +20,8 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {})
+  const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false)
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -43,8 +43,8 @@ const ApplicationDetails = () => {
     config: {},
   });
 
-  useEffect(()=>{
-  },[workflowDetails])
+  useEffect(() => {
+  }, [workflowDetails])
 
   const closeToast = () => {
     setShowToast(null);
@@ -71,6 +71,7 @@ const ApplicationDetails = () => {
   }, [workflowDetails.data]);
 
   if (workflowDetails?.data?.processInstances?.length > 0) {
+    console.log("applicationDetails", applicationDetails);
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter((item) => item.action != "ADHOC");
     let actions = orderBy(filteredActions, ["action"], ["desc"]);
@@ -80,12 +81,17 @@ const ApplicationDetails = () => {
       // console.log(data.action);
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
-          data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/create-birth/child-details`,
-            state: applicationDetails,
-          },
-            data.tenantId = stateId
-        
+        sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
+        let temp = {};
+        temp.ChildDetails = applicationDetails?.applicationData;
+        Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+
+        data.redirectionUrl = {
+          pathname: `/digit-ui/employee/cr/create-birth/child-details`,
+          state: applicationDetails,
+        },
+          data.tenantId = stateId
+
       }
     });
   }

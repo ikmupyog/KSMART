@@ -20,6 +20,7 @@ import { sortDropdownNames } from "../../utils";
 
 const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
+  console.log(moment(), "Moment")
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -568,8 +569,8 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
       e.preventDefault();
     }
   }
-
-  
+  console.log(formData?.MarriageDetails?.marriageDOM,"new");
+  console.log(moment().subtract(21, "year").format("YYYY-MM-DD"));
   console.log({ isEditMarriage });
 
   let validFlag = true;
@@ -1338,7 +1339,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
                 <DatePicker
                   date={groomDOB}
                   name="groomDOB"
-                  max={moment().subtract(21, "year").format("YYYY-MM-DD")}
+                  max={moment(formData?.MarriageDetails?.marriageDOM).subtract(21, "year").format("YYYY-MM-DD")}
                   //max={convertEpochToDate(new Date())}
                   onChange={setselectGroomDOB}
                   placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
@@ -1427,7 +1428,7 @@ const GroomDetails = ({ config, onSelect, userType, formData, isEditMarriage = f
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
               </h1>
             </div>
           </div>

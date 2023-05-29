@@ -170,14 +170,14 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId, cl
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link" style={{ color: "#626ad3" }}>
-                <Link
-                  onClick={() => {
-                    setSearchRegId(row.original), setBirthRegPopup(false);
-                  }}
-                >
-                  {row.original.registrationNo}
-                </Link>
+              <span
+                className="link"
+                style={{ color: "#626ad3" }}
+                onClick={() => {
+                  setSearchRegId(row.original), setBirthRegPopup(false);
+                }}
+              >
+                {row.original.registrationNo}
               </span>
             </div>
           );

@@ -689,7 +689,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-6">
-                <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_ML")}`}</CardLabel>
+                <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}</CardLabel>
                 <TextInput
                   t={t}
                   type={"text"}
@@ -699,7 +699,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   onKeyPress={setCheckMalayalamInputField}
                   onChange={(e) => onChangeMalayalam(e, "PRESENT_ADDRESS", "houseNameMl")}
                   onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
-                  placeholder={`${t("CR_HOUSE_NO_AND_NAME_ML")}`}
+                  placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
                     type: "text",
