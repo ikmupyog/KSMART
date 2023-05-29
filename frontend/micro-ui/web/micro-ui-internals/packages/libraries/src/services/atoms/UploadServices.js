@@ -49,7 +49,7 @@ export const UploadServices = {
         tenantId: tenantId,
         fileStoreIds: filesArray?.join(","),
       },
-      headers:{"content-security-policy" : { value: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'"} }
+      headers: { "content-security-policy": { value: "default-src 'none';  script-src 'self'; style-src 'self'; " } },
     };
     const res = await Axios(config);
     return res;
