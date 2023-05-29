@@ -274,6 +274,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
         birthDateTime: data?.StillBirthChildDetails?.birthDateTime,
+        am_pm: data?.ChildDetails?.displayAmPm,
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
@@ -490,7 +491,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
     StillBirthChildDetails: [
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
-        birthDateTime: data?.StillBirthChildDetails?.birthDateTime,        
+        birthDateTime: data?.StillBirthChildDetails?.birthDateTime, 
+        am_pm: data?.ChildDetails?.displayAmPm,       
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,        
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
