@@ -95,18 +95,24 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
       }
     })();
   }, [uploadFiles]);
+  useEffect(()=>{
+    if(applDetails?.applicationNumber){
+      refetch()
+    }
+  },[applDetails?.applicationNumber])
 
 
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
   const applicationNumber = applDetails?.applicationNumber ;
+  // console.log(applicationNumber,applDetails);
 //   const applicationNumber = "KL-Cochin-C-000125-CRBRNR-2023-APPL";
   // workflow
   const [businessService, setBusinessService] = useState("BIRTHHOSP21");
   const { data: DraftType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "DraftType");
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  const { data, Loading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: applicationDetails?.applicationData?.applicationNumber });
-  console.log(data?.Drafting);
+  const { data, Loading ,refetch} = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: applicationNumber });
+  // console.log('newdraft',data);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
@@ -391,10 +397,10 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                   );
                 })}
               </div>
-              <div className="col-md-5 col-sm-5 col-xs-5 ">
+              <div className="col-md-5 col-sm-5 col-xs-5 draftWrap">
               {data?.Drafting.map(item=>(
                 <div className="col-md-5 col-sm-5 col-xs-5 drafting-row">
-                <div className="col-md-3 col-sm-3 col-xs-6">
+                <div className="col-md-6 col-sm-6 col-xs-6">
                   <h3>{cmbDraftList?.filter(ele=>ele.id == item.draftType)[0]?.name} </h3>
                 </div>
                 <div className="col-md-2 col-sm-1 col-xs-2 link-file">
@@ -652,7 +658,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                   paddingLeft: "20px",
                 }}
               >
-                <DraftTemplate draftType ={selectedDraftName}>
+                <DraftTemplate draftType ={selectedDraftName} selectedDraft ={selectedDraft}>
                 <HtmlParser htmlString={selectedDraft?.draftText}/>
               
                

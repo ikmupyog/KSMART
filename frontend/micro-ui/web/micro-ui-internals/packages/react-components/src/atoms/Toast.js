@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { RoundedCheck, DeleteBtn, ErrorIcon } from "./svgindex";
+import { RoundedCheck, DeleteBtn, ErrorIcon,SuccessSvg } from "./svgindex";
 import ButtonSelector from "./ButtonSelector";
 
 const Toast = (props) => {
@@ -8,6 +8,15 @@ const Toast = (props) => {
     return (
       <div className="toast-success" style={{ backgroundColor: "red", ...props.style }}>
         <ErrorIcon />
+        <h2 style={{...props.labelstyle}}>{props.label}</h2>
+        { props.isDleteBtn ? <DeleteBtn fill="none" className="toast-close-btn" onClick={props.onClose} /> : null }
+      </div>
+    );
+  }
+  if (props.success) {
+    return (
+      <div className="toast-success" style={{ backgroundColor: "green", ...props.style }}>
+        <SuccessSvg />
         <h2 style={{...props.labelstyle}}>{props.label}</h2>
         { props.isDleteBtn ? <DeleteBtn fill="none" className="toast-close-btn" onClick={props.onClose} /> : null }
       </div>

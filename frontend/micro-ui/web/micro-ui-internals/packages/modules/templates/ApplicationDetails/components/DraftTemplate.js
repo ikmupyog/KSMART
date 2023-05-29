@@ -30,8 +30,27 @@ import { useTranslation } from "react-i18next";
 // import { CKEditor } from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import '@ckeditor/ckeditor5-build-classic/build/translations/de';
+const convertEpochToDateDMY = (dateEpoch) => {
+  if (dateEpoch == null || dateEpoch == undefined || dateEpoch == "") {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+    
+  }else{
+    const dateFromApi = new Date(dateEpoch);
+    let month = dateFromApi.getMonth() + 1;
+    let day = dateFromApi.getDate();
+    let year = dateFromApi.getFullYear();
+    month = (month > 9 ? "" : "0") + month;
+    day = (day > 9 ? "" : "0") + day;
+    return `${day}/${month}/${year}`;
+  }
+  
+};
 
-const DraftTemplate = ({ children,draftType }) => {
+const DraftTemplate = ({ children,draftType, selectedDraft, fileCode }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [draftText, setDraftText] = useState("");
@@ -42,7 +61,7 @@ const DraftTemplate = ({ children,draftType }) => {
 
   // const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
   // const draftTextValue = data?.Drafting[0]?.draftText;
-console.log('d',draftType);
+// console.log('d',selectedDraft);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -66,11 +85,13 @@ console.log('d',draftType);
           </div>
 
           <div className="row">
-            <div className="col-md-6">
-              <h1 style={{ textAlign: "center", margin: "auto", marginTop: "80px" }}>{t("CERTIFICATE_NUMBER")}</h1>
+            <div className="col-md-6 CertWrapper">
+              <h1 style={{ }}>{t("CERTIFICATE_NUMBER")}</h1>
+              <h3>{selectedDraft?.fileCode ? selectedDraft.fileCode:fileCode ? fileCode:''}</h3>
             </div>
-            <div className="col-md-6">
-              <h1 style={{ textAlign: "center", margin: "auto", marginTop: "80px" }}>{t("DATE")}</h1>
+            <div className="col-md-6 CertWrapper">
+              <h1 style={{ }}>{t("DATE")}</h1>
+              <h2>{convertEpochToDateDMY(selectedDraft?.auditDetails?.createdTime)}</h2>
             </div>
           </div>
           <div className="row">

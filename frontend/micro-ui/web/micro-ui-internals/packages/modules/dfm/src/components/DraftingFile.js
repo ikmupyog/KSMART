@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch, Link } from "react-router-dom";
 // import { useSelector } from "react-redux";
 import {
   BackButton,
@@ -27,6 +27,7 @@ import {
   Modal,
   Card,
   HtmlParser,
+  Toast,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 // import SearchApplication from "./SearchApplication";
@@ -46,7 +47,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
   const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
-  console.log("dash", location?.state?.fileCode);
+  // console.log("dash", location?.state?.fileCode);
   // const state = useSelector((state) => state);
   let authToken = Digit.UserService.getUser()?.access_token || null;
   const locale = Digit.SessionStorage.get("locale");
@@ -56,7 +57,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
   const payload = location?.state?.fileCode;
   // const payload = "KL-KOCHI-C-000017- FMARISING-2023-AR";
   const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
-  console.log(data, authToken);
+  // console.log(data, authToken);
   const { data: DraftType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "DraftType");
   let cmbDraftList = [];
   DraftType &&
@@ -65,109 +66,116 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
       cmbDraftList.push(ob);
     });
   const [popup, setPopup] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [draftErr, setDraftErr] = useState(false);
+  const [draftTypeErr, setDraftTypeErr] = useState(false);
   const [selectedDraftType, setSelectedDraftType] = useState("");
-  const [displayDraftPreviewPopup, setDisplayDraftPreviewPopup] = useState(false)
-  console.log(selectedDraftType);
+  const [displayDraftPreviewPopup, setDisplayDraftPreviewPopup] = useState(false);
+  const [successToastMsg, setSuccessToastMsg] = useState(false);
+  const [errorToastMsg, setErrorToastMsg] = useState(false);
 
   const draftTextValue = data?.Drafting[0]?.draftText;
 
   const onSubmit = () => {
-    const formData = {
-      // RequestInfo: {
-      //     apiId: "apiId",
-      //     ver: "1.0",
-      //     ts: null,
-      //     action: null,
-      //     did: null,
-      //     key: null,
-      //     msgId: null,
-      //     // authToken: authToken,
-      //     authToken: "9edb9e10-aa63-4ebc-a32f-b738af111996",
-      //     correlationId: null,
-      //     userInfo: {
-      //         id: null,
-      //         tenantId: "kl.cochin",
-      //         uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-      //         roles: [{
-      //             id: null,
-      //             name: null,
-      //             code: "EMPLOYEE",
-      //             tenantId: null
-      //         }]
-      //     }
-      // },
-      // DraftFile: {
-      //     uuid: null,
-      //     tenantId: "kl.cochin",
-      //     businessService: "DFM",
-      //     moduleName: "fm",
-      //     fileCode: location?.state?.fileCode,
-      //     draftType:selectedDraftType?.id.toString(),
-      //     // draftType: "Letter",
-      //     draftText: draftText,
-      //     assigner: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-      //     fileStoreId: null,
-      //     status: "created",
-      //     auditDetails: {
-      //         createdBy: null,
-      //         createdTime: null,
-      //         lastModifiedBy: null,
-      //         lastModifiedTime: null
-      //     }
-      // }
+    if (selectedDraftType == "") {
+      setDraftTypeErr(true);
+      // setDraftErr(true)
+      setToast(true);
+    } else if (draftText == "") {
+      setDraftTypeErr(false);
+      setDraftErr(true);
+    } else {
+      setToast(false);
+      setDraftTypeErr(false);
+      setDraftErr(false);
+      const formData = {
 
-      RequestInfo: {
-        apiId: "apiId",
-        ver: "1.0",
-        ts: null,
-        action: null,
-        did: null,
-        key: null,
-        msgId: null,
-        authToken: authToken,
-        //  authToken : "9edb9e10-aa63-4ebc-a32f-b738af111996",
-        correlationId: null,
-        userInfo: {
-          id: null,
+        RequestInfo: {
+          apiId: "apiId",
+          ver: "1.0",
+          ts: null,
+          action: null,
+          did: null,
+          key: null,
+          msgId: null,
+          authToken: authToken,
+          //  authToken : "9edb9e10-aa63-4ebc-a32f-b738af111996",
+          correlationId: null,
+          userInfo: {
+            id: null,
+            tenantId: "kl.cochin",
+            uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
+            roles: [
+              {
+                id: null,
+                name: null,
+                code: "EMPLOYEE",
+                tenantId: null,
+              },
+            ],
+          },
+        },
+        DraftFile: {
           tenantId: "kl.cochin",
-          uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-          roles: [
-            {
-              id: null,
-              name: null,
-              code: "EMPLOYEE",
-              tenantId: null,
-            },
-          ],
+          businessService: "DFM",
+          moduleName: "fm",
+          fileCode: location?.state?.fileCode,
+          draftType: selectedDraftType?.id.toString(),
+          //   draftType : "1",
+          draftText: draftText,
+          assigner: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
+          fileStoreId: null,
+          status: "created",
+          auditDetails: {
+            createdBy: null,
+            createdTime: null,
+            lastModifiedBy: null,
+            lastModifiedTime: null,
+          },
         },
-      },
-      DraftFile: {
-        tenantId: "kl.cochin",
-        businessService: "DFM",
-        moduleName: "fm",
-        fileCode: location?.state?.fileCode,
-        draftType: selectedDraftType?.id.toString(),
-        //   draftType : "1",
-        draftText: draftText,
-        assigner: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-        fileStoreId: null,
-        status: "created",
-        auditDetails: {
-          createdBy: null,
-          createdTime: null,
-          lastModifiedBy: null,
-          lastModifiedTime: null,
-        },
-      },
-    };
-    mutation.mutate(formData);
+      };
+      mutation.mutate(formData);
+    }
+  };
+
+  const onPreview = () => {
+    if (selectedDraftType == "") {
+      setDraftTypeErr(true);
+      // setDraftErr(true)
+      setToast(true);
+    } else if (draftText == "") {
+      setDraftTypeErr(false);
+      setDraftErr(true);
+    } else {
+      setToast(false);
+      setDraftTypeErr(false);
+      setDraftErr(false);
+      setDisplayDraftPreviewPopup(true);
+    }
   };
 
   useEffect(() => {
     if (mutation.isSuccess == true) {
-      history.push("/digit-ui/employee/dfm/note-drafting");
+      setSuccessToastMsg(true);
+      setToast(true);
+      // history.push(`/digit-ui/employee/cr/application-Adoptiondetails/${location?.state?.fileCode}`);
+      setTimeout(() => {
+        history.push(`/digit-ui/employee/cr/application-Adoptiondetails/${location?.state?.fileCode}`);
+        setToast(false);
+        setSuccessToastMsg(false);
+      }, 2000);
+
+      // history.push("/digit-ui/employee/dfm/note-drafting");
     }
   }, [mutation.isSuccess]);
+
+  useEffect(()=>{
+    if( mutation.isError ){
+      setErrorToastMsg(true);
+      setToast(true);
+    }
+
+  }, [mutation.isError])
 
   const sendSMS = () => {
     setPopup(true);
@@ -194,9 +202,9 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
   const setSelectedFunction = (value) => {
     setSelectedDraftType(value);
   };
-  const closeDraftPopup=()=>{
-    setDisplayDraftPreviewPopup(false)
-  }
+  const closeDraftPopup = () => {
+    setDisplayDraftPreviewPopup(false);
+  };
   // var link = "mailto:target@gmail.com";
   // In addition to this you can add subject or body as parameter .
   // For e.g.
@@ -351,7 +359,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
             <div className="col-md-12">
               <div className="button-div">
                 <FormBackButton>{t("CS_COMMON_BACK")}</FormBackButton>
-                <SubmitBar label={t("Preview")} onSubmit={()=>{setDisplayDraftPreviewPopup(true)}} />
+                <SubmitBar label={t("Preview")} onSubmit={onPreview} />
                 <SubmitBar label={t("SAVE")} onSubmit={onSubmit} />
               </div>
 
@@ -375,15 +383,17 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
             </div>
           </div>
         </div>
-        {displayDraftPreviewPopup &&(
-             <Modal
+        {displayDraftPreviewPopup && (
+          <Modal
             //  headerBarMain={<Heading t={t} heading={""} />}
-             headerBarEnd={<CloseBtn onClick={closeDraftPopup} />}
-             popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto", overflowY:"scroll" }}
-             formId="modal-action"
-             hideSubmit={true}
-           >
-             <div className="col-md-12 col-sm-12 col-xs-12 ">
+            headerBarEnd={<CloseBtn onClick={closeDraftPopup} />}
+            popupStyles={
+              mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto", overflowY: "scroll" }
+            }
+            formId="modal-action"
+            hideSubmit={true}
+          >
+            <div className="col-md-12 col-sm-12 col-xs-12 ">
               <div
                 className=""
                 style={{
@@ -395,17 +405,33 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
                   paddingLeft: "20px",
                 }}
               >
-                <DraftTemplate draftType ={selectedDraftType?.name}>
-                <HtmlParser htmlString={draftText}/>
-              
-               
-                  
+                <DraftTemplate draftType={selectedDraftType?.name} fileCode={location?.state?.fileCode}>
+                  <HtmlParser htmlString={draftText} />
                 </DraftTemplate>
               </div>
-              </div>
-           </Modal>
-          )}
+            </div>
+          </Modal>
+        )}
       </div>
+      {toast && (
+        <Toast
+          error={draftTypeErr || draftErr || errorToastMsg}
+          success={successToastMsg}
+          label={
+            draftTypeErr
+              ? t("DFM_INVALID_DRAFT_TYPE")
+              : draftErr
+              ? t("DFM_INVALID_DRAFT_TEXT")
+              : errorToastMsg
+              ? t("DFM_DRAFT_ERROR")
+              : successToastMsg
+              ? t("DFM_DRAFT_SUCCESS")
+              : setToast(false)
+          }
+          isDleteBtn={true}
+          onClose={() => setToast(false)}
+        />
+      )}
     </React.Fragment>
   );
 };
