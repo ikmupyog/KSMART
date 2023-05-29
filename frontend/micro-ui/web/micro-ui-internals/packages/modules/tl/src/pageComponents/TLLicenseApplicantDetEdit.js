@@ -281,7 +281,8 @@ const TLLicenseApplicantDetEdit = ({ t, config, onSelect, userType, formData }) 
       // let applicationType=formDatalocal?.applicationType;
       // let workflowCode=formDatalocal?.workflowCode;
       // let oldApplicationNumber=formDatalocal?.oldApplicationNumber;
-      let tradeLicenseDetail = { tenantId,
+      let id = formDatalocal?.tradeLicenseDetail?.id;
+      let tradeLicenseDetail = { id, tenantId,
         licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
         , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
        

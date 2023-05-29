@@ -26,7 +26,7 @@ import { convertEpochToDateDMY } from "../../utils";
 
 const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption = false, isEditFlag = false }) => {
   //const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(true);
-  //const [isDisableEdit, setisDisableEdit] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(true);
   const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
@@ -773,6 +773,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     }
     // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
   }
+  // function DisableEdit() {
+  //   if (value !== null) {
+  //     setisDisableEdit(value);
+  //   }
+  // }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
     if (!e.key.match(pattern)) {
@@ -1660,12 +1665,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
             ):
             ( */}
               <BirthReqSearch
-                BirthRegNo={BirthRegNo}
+                // BirthRegNo={BirthRegNo}
                 closePopup={() => {
                   setBirthRegPopup(false), setbirthRegistered(false);
                 }}
                 setBirthRegPopup={setBirthRegPopup}
-                setSelectSetBirthRegNo={setSelectSetBirthRegNo}
+                // setSelectSetBirthRegNo={setSelectSetBirthRegNo}
                 setSearchRegId={setSearchRegId}
               />
 
@@ -1894,9 +1899,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       name="childFirstNameEn"
                       value={childFirstNameEn}
                       onChange={setSelectChildFirstNameEn}
-                      //disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
-                      // disable={isChildName}
+                      //disable={childFirstNameEn === "" ? true : isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_FIRST_NAME_EN")}`}
                       {...(validation = {
                         pattern: "^[a-zA-Z-.`' ]*$",
@@ -2048,10 +2052,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     //disable={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
                     placeholder={`${t("CR_ADOPTION_DECREE")}`}
                     {...(validation = {
-                      // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: AdoptionDeedNo === "" ? true : false,
-                      pattern: "^[0-9`' ]*$",
-                      type: "number",
+                      pattern: "^[a-zA-Z0-9 ]+$",
+                      type: "text",
                       title: t("CR_INVALID_ADOPTION_DECREE"),
                     })}
                   />
@@ -2121,9 +2124,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     //disable={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
                     placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
                     {...(validation = {
-                      pattern: "^[0-9`' ]*$",
+                      pattern: "^[a-zA-Z0-9 ]+$",
                       isRequired: AdoptionDecreOrderNo == "" ? true : false,
-                      type: "number",
+                      type: "text",
                       title: t("CR_INVALID_ADOPTION_DEED_NO"),
                     })}
                   />

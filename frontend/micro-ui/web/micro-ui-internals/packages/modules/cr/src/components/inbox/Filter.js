@@ -175,7 +175,7 @@ const Filter = (props) => {
     return (
       <div>
         <div className="filter-label">{lable}</div>
-        {<Dropdown option={options} selected={selected} select={(value) => select(value, key)} optionKey={optionKey} />}
+        {<Dropdown option={options} selected={selected} select={(value) => select(value, key)} optionKey={optionKey} optionCardStyles={{ maxWidth: "fit-content" }} />}
 
         <div className="tag-container">
           {pgrfilters[key].length > 0 &&
