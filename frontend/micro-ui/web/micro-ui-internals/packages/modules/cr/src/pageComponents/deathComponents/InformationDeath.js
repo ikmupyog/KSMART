@@ -681,6 +681,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   }, [NACFile]);
 
   function selectFromDate(value) {
+    if(value <= ToDate){
     setFromDate(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -716,9 +717,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // }
     }
   }
+  }
 
 
   function selectToDate(value) {
+    if(FromDate <= value){
     setToDate(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -750,6 +753,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
 
       }
     }
+  }
   }
   function selectDeathDate(value) {
     setDateOfDeath(value);

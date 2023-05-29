@@ -11,7 +11,7 @@ import {
   BackButton,
   Accordion,
 } from "@egovernments/digit-ui-react-components";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -154,13 +154,13 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               </div> */}
               <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Name
+                <div className="col-md-10">
+                  <div className="col-md-5">
+                    <CardLabel style={{ lineHeight: "auto" }}>Name
                     </CardLabel>
                   </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                  <div className="col-md-5">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       : {t(DeathNACDetails.DeceasedFirstNameMl ? DeathNACDetails.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
                       {t(DeathNACDetails.DeceasedMiddleNameMl)}{" "}
                       {t(DeathNACDetails.DeceasedLastNameMl) +
@@ -169,25 +169,25 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       {t(DeathNACDetails.DeceasedMiddleNameEn)} {t(DeathNACDetails.DeceasedLastNameEn)}
                     </CardText>
                   </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}> {`${t("PDF_BIRTH_CHILD_SEX")}`} </CardLabel>
+                  <div className="col-md-5">
+                    <CardLabel style={{ lineHeight: "auto" }}> {`${t("PDF_BIRTH_CHILD_SEX")}`} </CardLabel>
                   </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                  <div className="col-md-5">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       : {t(DeathNACDetails.DeceasedGender.code + "_ML") + " / " + (DeathNACDetails.DeceasedGender.code)}
                     </CardText>
                   </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}> {`${t("PDF_CR_DEATH_OF_DATE")}`} </CardLabel>
+                  <div className="col-md-5">
+                    <CardLabel style={{ lineHeight: "auto" }}> {`${t("PDF_CR_DEATH_OF_DATE")}`} </CardLabel>
                   </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                  <div className="col-md-5">
+                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       : {t(convertEpochToDate(DeathNACDetails.DateOfDeath) ? convertEpochToDate(DeathNACDetails.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
                     </CardText>
                   </div>
-                  <div className="col-md-6">
+                </div>
+                <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
-                  </div>
                 </div>
               </div>
             </StatusTable>
@@ -199,238 +199,227 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           content={
             <StatusTable>
               <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Place of Death
+                <div className="col-md-10">
+                  <div className="col-md-5">
+                    <CardLabel style={{ lineHeight: "auto" }}>Place of Death
                     </CardLabel>
                   </div>
-                  <div className="col-md-6">
-                  {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    : {t(DeathNACDetails.DeathPlace.name)}
-                    </CardText>
-                  )}
-                  {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    :{" "} {t(DeathNACDetails.institution.name ? DeathNACDetails.institution.name : "CR_NOT_RECORDED") + "/" + " " + (DeathNACDetails.institution.namelocal ? DeathNACDetails.institution.namelocal : "CR_NOT_RECORDED")} 
-                    </CardText>
-                  )}
-                  {DeathNACDetails.DeathPlace.code === "HOME" && (
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    :{" "} {t(DeathNACDetails.DeathPlace.name ? DeathNACDetails.DeathPlace.name : "CR_NOT_RECORDED")} 
-                    </CardText>
-                  )}
-                  {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    :{" "} {t("PDF_CR_VEHICLE_STATEMENT_ONE")} 
-                    </CardText>
-                  )}
-                  {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
-                    <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                    :{" "} {t(DeathNACDetails.publicPlaceType.name ? DeathNACDetails.publicPlaceType.name : "CR_NOT_RECORDED")} 
-                    </CardText>
-                  )}
+                  <div className="col-md-5">
+                    {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        : {t(DeathNACDetails.DeathPlace.name)}
+                      </CardText>
+                    )}
+                    {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "} {t(DeathNACDetails.institution.name ? DeathNACDetails.institution.name : "CR_NOT_RECORDED") + "/" + " " + (DeathNACDetails.institution.namelocal ? DeathNACDetails.institution.namelocal : "CR_NOT_RECORDED")}
+                      </CardText>
+                    )}
+                    {DeathNACDetails.DeathPlace.code === "HOME" && (
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "} {t(DeathNACDetails.DeathPlace.name ? DeathNACDetails.DeathPlace.name : "CR_NOT_RECORDED")}
+                      </CardText>
+                    )}
+                    {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "} {t("PDF_CR_VEHICLE_STATEMENT_ONE")}
+                      </CardText>
+                    )}
+                    {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "} {t(DeathNACDetails.publicPlaceType.name ? DeathNACDetails.publicPlaceType.name : "CR_NOT_RECORDED")}
+                      </CardText>
+                    )}
                   </div>
                 </div>
               </div>
-                {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
+              {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
                 <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Hospital Name
-                    </CardLabel>
+                  <div className="col-md-10">
+                    <div className="col-md-5">
+                      <CardLabel style={{ lineHeight: "auto" }}>Hospital Name
+                      </CardLabel>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                       :{" "} {t(DeathNACDetails.hospitalNameEn.address) +
-                        " / " + (DeathNACDetails.HospitalNameMl.addressLocal)}
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "} {t(DeathNACDetails.hospitalNameEn.address) +
+                          " / " + (DeathNACDetails.HospitalNameMl.addressLocal)}
                       </CardText>
                     </div>
-                    
+                  </div>
+                  <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
                   </div>
                 </div>
               )}
-                {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
-                  <div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-6">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>INSTITUTION Type</CardLabel>
+              {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
+                <div>
+                  <div className="row">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>INSTITUTION Type</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                          :{" "} {t(DeathNACDetails.DeathPlaceInstId.institutionName) +
+                            " / " + (DeathNACDetails.DeathPlaceInstId.institutionNamelocal)}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Place</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                          :{" "}
+                          {t(DeathNACDetails.DeathPlaceInstId.mainPlace) +
+                            "/" + " " +
+                            (DeathNACDetails.DeathPlaceInstId.mainPlaceLocal)}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Address</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                          :{" "}
+                          {t(DeathNACDetails.DeathPlaceInstId.place) + "/" + " " + (DeathNACDetails.DeathPlaceInstId.placeLocal)}
+                        </CardText>
+                      </div>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        :{" "} {t(DeathNACDetails.DeathPlaceInstId.institutionName) +
-                        " / " + (DeathNACDetails.DeathPlaceInstId.institutionNamelocal)}
-                      </CardText>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
                     </div>
-                    </div>
+                  </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-6">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Place</CardLabel>
-                    </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        :{" "}
-                        {t(DeathNACDetails.DeathPlaceInstId.mainPlace) +
-                          "/" + " " +
-                          (DeathNACDetails.DeathPlaceInstId.mainPlaceLocal)}
-                      </CardText>
-                    </div>
-                    <div className="col-md-6">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Address</CardLabel>
-                    </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        :{" "}
-                        {t(DeathNACDetails.DeathPlaceInstId.place) + "/"  + " " + (DeathNACDetails.DeathPlaceInstId.placeLocal)}
-                      </CardText>
-                    </div>
-                    {/* <div className="col-md-6">
-                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
-                  </div> */}
-                    </div>
-                </div>
-                </div>
-                
+
               )}
-                {DeathNACDetails.DeathPlace.code === "HOME" && (
+              {DeathNACDetails.DeathPlace.code === "HOME" && (
                 <div className="row">
-                  <div className="col-md-12">
-                  <div className="col-md-6">
+                  <div className="col-md-10">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>House Name</CardLabel>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) + 
-                        "/" +
-                        (DeathNACDetails.DeathPlaceHomehoueNameMl) }
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeHoueNameEn) +
+                          "/" +
+                          (DeathNACDetails.DeathPlaceHomehoueNameMl)}
                       </CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Locality Name</CardLabel>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeLocalityEn) + 
-                        "/" +
-                        (DeathNACDetails.DeathPlaceHomeLocalityMl) }
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeLocalityEn) +
+                          "/" +
+                          (DeathNACDetails.DeathPlaceHomeLocalityMl)}
                       </CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Street</CardLabel>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomeStreetNameEn) + 
-                        "/" +
-                        (DeathNACDetails.DeathPlaceHomeStreetNameMl) }
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomeStreetNameEn) +
+                          "/" +
+                          (DeathNACDetails.DeathPlaceHomeStreetNameMl)}
                       </CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Post Office</CardLabel>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.name) }
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.name)}
                       </CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>PIN</CardLabel>
                     </div>
-                    <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      :{" "}
-                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.pincode) }
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        :{" "}
+                        {t(DeathNACDetails.DeathPlaceHomePostofficeId.pincode)}
                       </CardText>
                     </div>
-                    {/* <div className="col-md-6">
-                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
-                  </div> */}
+                  </div>
+                  <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
                   </div>
                 </div>
               )}
-                {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
+              {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
                 <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-3">
+                  <div className="col-md-10">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleType</CardLabel>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        : {t(DeathNACDetails.vehicleType.name) +" " + "/" + " " + (DeathNACDetails.vehicleType.namelocal) }
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        : {t(DeathNACDetails.vehicleType.name) + " " + "/" + " " + (DeathNACDetails.vehicleType.namelocal)}
 
                       </CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleNumber</CardLabel>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
                         : {t(DeathNACDetails.VehicleNumber)}
 
                       </CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleFromplace</CardLabel>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                        : {t(DeathNACDetails.VehicleFromplaceEn) +" " + "/" + " " + (DeathNACDetails.VehicleFromplaceMl)}
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        : {t(DeathNACDetails.VehicleFromplaceEn) + " " + "/" + " " + (DeathNACDetails.VehicleFromplaceMl)}
                       </CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleToPlace</CardLabel>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      : {t(DeathNACDetails.VehicleToPlaceEn) +" " + "/" + " " + (DeathNACDetails.VehicleToPlaceMl)}
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        : {t(DeathNACDetails.VehicleToPlaceEn) + " " + "/" + " " + (DeathNACDetails.VehicleToPlaceMl)}
                       </CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleFirstHalt</CardLabel>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      : {t(DeathNACDetails.VehicleFirstHaltEn)}
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        : {t(DeathNACDetails.VehicleFirstHaltEn)}
 
                       </CardText>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-5">
                       <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VehicleHospital</CardLabel>
                     </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      : {t(DeathNACDetails.VehicleHospitalEn.address) +" " + "/" + " " + (DeathNACDetails.VehicleHospitalEn.addressLocal)}
+                    <div className="col-md-5">
+                      <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                        : {t(DeathNACDetails.VehicleHospitalEn.address) + " " + "/" + " " + (DeathNACDetails.VehicleHospitalEn.addressLocal)}
                       </CardText>
                     </div>
-                    {/* <div className="col-md-3">
-                      <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Other Details</CardLabel>
-                    </div>
-                    <div className="col-md-3">
-                      <CardText style={{ fontSize: "15px", Colour: "black"}}>
-                      : {t(DeathNACDetails.VehicleHospitalEn.address) +" " + "/" + " " + (DeathNACDetails.VehicleHospitalEn.addressLocal)}
-                      </CardText>
-                    </div> */}
-                    {/* <div className="col-md-6">
-                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
-                  </div> */}
                   </div>
-                  
+                  <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
+                  </div>
                 </div>
               )}
-                {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
+              {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-6">
+                  <div className="col-md-10">
+                    <div className="col-md-5">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Place</CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceLocalityEn) + " " +
@@ -438,42 +427,36 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                           (DeathNACDetails.DeathPlaceLocalityMl)}
                       </CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Street</CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      :{" "}
+                        :{" "}
                         {t(DeathNACDetails.DeathPlaceStreetEn) + " " +
                           "/" +
                           (DeathNACDetails.DeathPlaceStreetMl)}
                       </CardText>
-                      
+
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Other</CardText>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      :{" "}
+                        :{" "}
                         {t(DeathNACDetails.DeathPlaceStreetEn) + " " +
                           "/" +
                           (DeathNACDetails.DeathPlaceStreetMl)}
                       </CardText>
-                      
+
                     </div>
-                    {/* <div className="col-md-6">
-                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
-                  </div> */}
+                  </div>
+                  <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
                   </div>
                 </div>
               )}
-              <div className="row">
-              <div className="col-md-6">
-                  {<ActionButton jumpTo={`${routeLink}/nac-death-details`} />}
-                  </div>
-              </div>
-              
             </StatusTable>
           }
         />
@@ -486,49 +469,52 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 DeathNACParentsDetails?.SpouseUnavailable === false && (
                   <div>
                     <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>Spouse Details</span>{" "}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto" }}>Name
-                    </CardLabel>
-                  </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                      :{" "}
-                      {t(DeathNACParentsDetails.SpouseNameMl ? DeathNACParentsDetails?.SpouseNameMl : "CR_NOT_RECORDED") +
-                        "/" +
-                        " " +
-                        (DeathNACParentsDetails.SpouseNameEN ? DeathNACParentsDetails?.SpouseNameEN : "CR_NOT_RECORDED")}
-                    </CardText>
-                  </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Relation
-                    </CardLabel>
-                  </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                      : {t(DeathNACParentsDetails.SpouseType.name ? DeathNACParentsDetails?.SpouseType?.name : "CR_NOT_RECORDED")}
-                    </CardText>
-                  </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Aadhar
-                    </CardLabel>
-                  </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                      : {t(DeathNACParentsDetails.SpouseAadhaar ? DeathNACParentsDetails?.SpouseAadhaar : "CR_NOT_RECORDED")}
-                    </CardText>
-                  </div>
-                </div>
-              </div>
+                      <div className="col-md-12">
+                        <div className="col-md-12">
+                          <h1 className="summaryheadingh">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>Spouse Details</span>{" "}
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-10">
+                        <div className="col-md-5">
+                          <CardLabel style={{ lineHeight: "auto" }}>Name
+                          </CardLabel>
+                        </div>
+                        <div className="col-md-5">
+                          <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                            :{" "}
+                            {t(DeathNACParentsDetails.SpouseNameMl ? DeathNACParentsDetails?.SpouseNameMl : "CR_NOT_RECORDED") +
+                              "/" +
+                              " " +
+                              (DeathNACParentsDetails.SpouseNameEN ? DeathNACParentsDetails?.SpouseNameEN : "CR_NOT_RECORDED")}
+                          </CardText>
+                        </div>
+                        <div className="col-md-5">
+                          <CardLabel style={{ lineHeight: "auto" }}>Relation
+                          </CardLabel>
+                        </div>
+                        <div className="col-md-5">
+                          <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                            : {t(DeathNACParentsDetails.SpouseType.name ? DeathNACParentsDetails?.SpouseType?.name : "CR_NOT_RECORDED")}
+                          </CardText>
+                        </div>
+                        <div className="col-md-5">
+                          <CardLabel style={{ lineHeight: "auto" }}>Aadhar
+                          </CardLabel>
+                        </div>
+                        <div className="col-md-5">
+                          <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                            : {t(DeathNACParentsDetails.SpouseAadhaar ? DeathNACParentsDetails?.SpouseAadhaar : "CR_NOT_RECORDED")}
+                          </CardText>
+                        </div>
+                      </div>
+                      <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        {<ActionButton jumpTo={`${routeLink}/nac-death-family-details`} />}
+                      </div>
+                    </div>
                   </div>
                 )
               }
@@ -542,12 +528,12 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
+                <div className="col-md-10">
+                  <div className="col-md-5">
                     <CardLabel style={{ lineHeight: "auto" }}>Name
                     </CardLabel>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       :{" "}
                       {t(DeathNACParentsDetails.fatherFirstNameMl ? DeathNACParentsDetails?.fatherFirstNameMl : "CR_NOT_RECORDED") +
@@ -556,15 +542,18 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         (DeathNACParentsDetails.fatherFirstNameEn ? DeathNACParentsDetails?.fatherFirstNameEn : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Aadhar
+                  <div className="col-md-5">
+                    <CardLabel style={{ lineHeight: "auto" }}>Aadhar
                     </CardLabel>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       : {t(DeathNACParentsDetails.fatherAadhar ? DeathNACParentsDetails?.fatherAadhar : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
+                </div>
+                <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-family-details`}/>}
                 </div>
               </div>
               <div className="row">
@@ -577,12 +566,12 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
+                <div className="col-md-10">
+                  <div className="col-md-5">
                     <CardLabel style={{ lineHeight: "auto" }}>Name
                     </CardLabel>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       :{" "}
                       {t(DeathNACParentsDetails.motherFirstNameMl ? DeathNACParentsDetails?.motherFirstNameMl : "CR_NOT_RECORDED") +
@@ -591,24 +580,20 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         (DeathNACParentsDetails.motherFirstNameEn ? DeathNACParentsDetails?.motherFirstNameEn : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto"}}>Aadhar
+                  <div className="col-md-5">
+                    <CardLabel style={{ lineHeight: "auto" }}>Aadhar
                     </CardLabel>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
                       : {t(DeathNACParentsDetails.motherAadhar ? DeathNACParentsDetails?.motherAadhar : "CR_NOT_RECORDED")}
                     </CardText>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-              <div className="col-md-6">
+                <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   {<ActionButton jumpTo={`${routeLink}/nac-death-family-details`} />}
-                  </div>
+                </div>
               </div>
-              
-              
             </StatusTable>
           }
         />
@@ -628,131 +613,114 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaDistrict.name}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaDistrict.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaTaluk.name}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaTaluk.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaVillage.name}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaVillage.name}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaLBName.name}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaLBName.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentWardNo.namecmb}
+                          :{" "} {DeathNACAddressPage?.presentWardNo.namecmb}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaPostOffice.name}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaPostOffice.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaPincode}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaPincode}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaLocalityNameEn}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaLocalityNameMl}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "} {DeathNACAddressPage?.presentInsideKeralaStreetNameEn}
+                          :{" "} {DeathNACAddressPage?.presentInsideKeralaStreetNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "} {DeathNACAddressPage?.presentInsideKeralaStreetNameMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "} {DeathNACAddressPage?.presentInsideKeralaHouseNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "} {DeathNACAddressPage?.presentInsideKeralaHouseNameMl}
                         </CardText>
                       </div>
+                    </div>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
                     </div>
                   </div>
                 </div>
@@ -768,123 +736,106 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaDistrict}
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaDistrict}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaTaluk}
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaTaluk}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "}  {DeathNACAddressPage?.presentOutsideKeralaVillage}
+                          :{" "}  {DeathNACAddressPage?.presentOutsideKeralaVillage}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaCityVilgeEn}
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaCityVilgeEn}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "}  {DeathNACAddressPage?.presentOutsideKeralaPostOfficeEn}
+                          :{" "}  {DeathNACAddressPage?.presentOutsideKeralaPostOfficeEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaPincode}
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaPincode}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaLocalityNameEn}
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaLocalityNameMl}
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "}  {DeathNACAddressPage?.presentOutsideKeralaStreetNameEn}
+                          :{" "}  {DeathNACAddressPage?.presentOutsideKeralaStreetNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        :{" "}  {DeathNACAddressPage?.presentOutsideKeralaStreetNameMl}
+                          :{" "}  {DeathNACAddressPage?.presentOutsideKeralaStreetNameMl}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.presentOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaHouseNameEn}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutsideKeralaHouseNameMl}
-                        </CardText>
-                      </div>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
                     </div>
                   </div>
                 </div>
@@ -900,123 +851,106 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-3">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CS_COMMON_COUNTRY")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentaddressCountry?.name}
+                          :{" "} {DeathNACAddressPage?.presentaddressCountry?.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CS_COMMON_COUNTRY")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentaddressCountry?.namelocal}
+                          :{" "} {DeathNACAddressPage?.presentaddressCountry?.namelocal}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaProvinceEn}
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaProvinceEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CR_STATE_REGION_PROVINCE_ML")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaProvinceMl}
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaProvinceMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaadrsVillage.code}
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaadrsVillage.code}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaadrsCityTown}
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaadrsCityTown}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           : {" "} {DeathNACAddressPage?.presentOutSideIndiaPostCode}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressEn}
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressMl}
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressMl}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressEnB}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressMlB}
                         </CardText>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressEnB}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.presentOutSideIndiaAdressMlB}
-                        </CardText>
-                      </div>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
                     </div>
                   </div>
                 </div>
@@ -1031,131 +965,114 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "}{DeathNACAddressPage?.permntInKeralaAdrDistrict.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "} {DeathNACAddressPage?.permntInKeralaAdrTaluk.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntInKeralaAdrVillage.name}
+                          :{" "} {DeathNACAddressPage?.permntInKeralaAdrVillage.name}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           : {" "} {DeathNACAddressPage?.permntInKeralaAdrLBName.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           : {""} {DeathNACAddressPage?.permntInKeralaWardNo.namecmb}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           : {" "} {DeathNACAddressPage?.permntInKeralaAdrPostOffice.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           : {" "} {DeathNACAddressPage?.permntInKeralaAdrPincode}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "} {DeathNACAddressPage?.permntInKeralaAdrLocalityNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{" "} {DeathNACAddressPage?.permntInKeralaAdrLocalityNameMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           :{""} {DeathNACAddressPage?.permntInKeralaAdrStreetNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntInKeralaAdrStreetNameMl}
+                          :{" "} {DeathNACAddressPage?.permntInKeralaAdrStreetNameMl}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.permntInKeralaAdrHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.permntInKeralaAdrHouseNameMl}
                         </CardText>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntInKeralaAdrHouseNameEn}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntInKeralaAdrHouseNameMl}
-                        </CardText>
-                      </div>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
                     </div>
                   </div>
                 </div>
@@ -1170,123 +1087,106 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaDistrict}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaDistrict}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaTaluk}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaTaluk}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaVillage}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaVillage}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaCityVilgeEn}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaCityVilgeEn}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaPostOfficeEn}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaPostOfficeEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaPincode}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaPincode}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaLocalityNameEn}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaLocalityNameMl}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaStreetNameEn}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaStreetNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaStreetNameMl}
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaStreetNameMl}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaHouseNameEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.permntOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaHouseNameEn}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideKeralaHouseNameMl}
-                        </CardText>
-                      </div>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
                     </div>
                   </div>
                 </div>
@@ -1301,132 +1201,110 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </div>
                   </div>
                   <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-3">
+                    <div className="col-md-10">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CS_COMMON_COUNTRY")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permtaddressCountry?.name}
+                          :{" "} {DeathNACAddressPage?.permtaddressCountry?.name}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CS_COMMON_COUNTRY")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permtaddressCountry?.namelocal}
+                          :{" "} {DeathNACAddressPage?.permtaddressCountry?.namelocal}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaprovinceEn}
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaprovinceEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {`${t("CR_STATE_REGION_PROVINCE_ML")}`} :
                         </CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaprovinceMl}
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaprovinceMl}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaVillage?.code}
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaVillage?.code}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaCityTown}
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaCityTown}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{""} {DeathNACAddressPage?.permanentOutsideIndiaPostCode}
+                          :{""} {DeathNACAddressPage?.permanentOutsideIndiaPostCode}
                         </CardText>
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_EN")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaLineoneEn}
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaLineoneEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`}</CardLabel>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaLineoneMl}
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaLineoneMl}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`} </CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaLinetwoEn}
+                        </CardText>
+                      </div>
+                      <div className="col-md-5">
+                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-5">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                          :{" "} {DeathNACAddressPage?.permntOutsideIndiaLinetwoMl}
                         </CardText>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                  <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`} </CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaLinetwoEn}
-                        </CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardLabel style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`}</CardLabel>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                         :{" "} {DeathNACAddressPage?.permntOutsideIndiaLinetwoMl}
-                        </CardText>
-                      </div>
-                      </div>
+                    <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                      {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
+                    </div>
                   </div>
                 </div>
               )}
-              <div className="row">
-              <div className="col-md-6">
-                  {<ActionButton jumpTo={`${routeLink}/nac-death-address-details`} />}
-                  </div>
-              </div>
             </StatusTable>
           }
         />
@@ -1436,7 +1314,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           content={
             <StatusTable>
               <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-10">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto" }}>Name
                     </CardLabel>
@@ -1452,7 +1330,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                    {DeathNACInitiator.initiatorAadhar }
+                      {DeathNACInitiator.initiatorAadhar}
                     </CardText>
                   </div>
                   <div className="col-md-6">
@@ -1460,7 +1338,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                    {DeathNACInitiator.initiatorMobile}
+                      {DeathNACInitiator.initiatorMobile}
                     </CardText>
                   </div>
                   <div className="col-md-6">
@@ -1468,7 +1346,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                    {DeathNACInitiator.initiatorAddress}
+                      {DeathNACInitiator.initiatorAddress}
                     </CardText>
                   </div>
                   <div className="col-md-6">
@@ -1476,12 +1354,12 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                    {DeathNACInitiator.RelationwithDeceased}
+                      {DeathNACInitiator.RelationwithDeceased}
                     </CardText>
                   </div>
-                  <div className="col-md-6">
+                </div>
+                <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   {<ActionButton jumpTo={`${routeLink}/nac-death-informant-details`} />}
-                  </div>
                 </div>
               </div>
             </StatusTable>
@@ -1503,47 +1381,54 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {uploadedImages.length > 0 && (
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
-                  <div
-                    className="col-md-12"
-                    style={{
-                      display: "flex",
-                      marginLeft: "15px",
-                      flexWrap: "wrap",
-                      justifyContent: "center",
-                      alignContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {imagesThumbs &&
-                      imagesThumbs.map((thumbnail, index) => {
-                        return (
-                          <div key={index}>
-                            {thumbnail.type == "pdf" ? (
-                              <React.Fragment>
-                                <object
-                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
-                                  height={120}
-                                  data={thumbnail.pdfUrl}
-                                  alt={`upload-thumbnails-${index}`}
-                                />
-                              </React.Fragment>
-                            ) : (
-                              <img
-                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
-                                height={120}
-                                src={thumbnail.small}
-                                alt={`upload-thumbnails-${index}`}
-                                onClick={() => setImageZoom(thumbnail.large)}
-                              />
-                            )}
-                          </div>
-                        );
-                      })}
-                  </div>
+              <div className="row">
+                <div className="col-md-10">
+                  {uploadedImages.length > 0 && (
+                    <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                      <div
+                        className="col-md-12"
+                        style={{
+                          display: "flex",
+                          marginLeft: "15px",
+                          flexWrap: "wrap",
+                          justifyContent: "center",
+                          alignContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {imagesThumbs &&
+                          imagesThumbs.map((thumbnail, index) => {
+                            return (
+                              <div key={index}>
+                                {thumbnail.type == "pdf" ? (
+                                  <React.Fragment>
+                                    <object
+                                      style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                      height={120}
+                                      data={thumbnail.pdfUrl}
+                                      alt={`upload-thumbnails-${index}`}
+                                    />
+                                  </React.Fragment>
+                                ) : (
+                                  <img
+                                    style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                    height={120}
+                                    src={thumbnail.small}
+                                    alt={`upload-thumbnails-${index}`}
+                                    onClick={() => setImageZoom(thumbnail.large)}
+                                  />
+                                )}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+                <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  {<ActionButton jumpTo={`${routeLink}/nac-death-informant-details`} />}
+                </div>
+              </div>
             </StatusTable>
           }
         />

@@ -2044,7 +2044,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                 </h1>
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{textAlign: "center"}}>
               <div className="col-md-12">
                 <CardLabel>{`1. ${t(`CR_MAXIMUM_FILE_SIZE`)}`}</CardLabel>
               </div>

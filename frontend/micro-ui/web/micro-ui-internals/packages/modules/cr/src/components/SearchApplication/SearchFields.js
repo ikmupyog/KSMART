@@ -104,31 +104,31 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage, app
                     )}
             />
         </SearchField>} */}
-                <SearchField>
-                    <label>{t("CR_BIRTH_MOTHERNAME_LABEL")}</label>
-                    <TextInput name="nameOfMother" inputRef={register({})} />
-                </SearchField>
-                <SearchField className="submit">
-                    <SubmitBar label={t("ES_COMMON_SEARCH")} submit disabled={applicationType?.label ? false : true} />
-                    <p onClick={() => {
-                        reset({
-                            searchAppllication: [],
-                            applicationNumber: "",
-                            fromDate: "",
-                            toDate: "",
-                            licenseNumbers: "",
-                            status: "",
-                            mother: "",
-                            offset: 0,
-                            limit: 10,
-                            sortBy: "dateOfBirth",
-                            sortOrder: "DESC"
-                        });
-                        previousPage();
-                    }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
-                </SearchField>
-            </>
-        )}
+        <SearchField>
+            <label>{t("CR_BIRTH_MOTHERNAME_LABEL")}</label>
+            <TextInput  name="nameOfMother" inputRef={register({})}/>
+        </SearchField>
+        <SearchField className="submit">
+            <SubmitBar label={t("ES_COMMON_SEARCH")} submit disabled={ applicationType?.label?false:true}/>
+            <p onClick={() => {
+                reset({ 
+                    searchAppllication:[],
+                    applicationNumber: "", 
+                    fromDate: "", 
+                    toDate: "",
+                    licenseNumbers: "",
+                    status: "",
+                    nameOfMother: "",
+                    offset: 0,
+                    limit: 10,
+                    sortBy: "dateOfBirth",
+                    sortOrder: "DESC"
+                });
+                previousPage();
+            }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
+        </SearchField>
+      </>
+      )}   
     </>
 }
 export default SearchFields

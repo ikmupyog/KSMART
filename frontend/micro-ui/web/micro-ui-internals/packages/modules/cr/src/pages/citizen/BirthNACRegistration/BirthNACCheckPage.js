@@ -1514,7 +1514,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BirthNACInitiator?.initiatorAddress}</CardText>
                     {<ActionButton jumpTo={`${routeLink}/nac-initiator-details`} />}
                   </div>
