@@ -24,21 +24,21 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+ // const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
-  let cmbPostOffice = [];
+ // let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
 
-  PostOffice &&
-    PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
-    PostOffice["common-masters"].PostOffice.map((ob) => {
-      cmbPostOffice.push(ob);
-    });
+  // PostOffice &&
+  //   PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
+  //   PostOffice["common-masters"].PostOffice.map((ob) => {
+  //     cmbPostOffice.push(ob);
+  //   });
   localbodies &&
     localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
@@ -69,9 +69,13 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
     if (isInitialRender) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-        setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-        setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+        //setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+       // setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+       if(currentLB.length>0){
+        setCmbFilterPostOffice(currentLB[0].poList);
+        setPostOfficevalues(currentLB[0].poList);
         setIsInitialRender(false);
+      }        
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
@@ -213,7 +217,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
 
   };
 
-  if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {
+  if ( isWardLoaded || islocalbodiesLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -247,45 +251,44 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>
-                {t("CS_COMMON_POST_OFFICE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                // optionKey="name"
-                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-                option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [],"name",t)}
-                selected={adrsPostOffice}
-                select={setSelectAdrsPostOffice}
-                disable={isDisableEdit}
-                placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CS_COMMON_PIN_CODE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="adrsPincode"
-                value={adrsPincode}
-                onChange={setSelectAdrsPincode}
-                disable={isDisableEdit}
-                placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-                {...(validation = {
-                  pattern: "^[0-9]{6}$",
-                  isRequired: true,
-                  type: "number",
-                  maxLength: 6,
-                  minLength: 6,
-                  title: t("CS_COMMON_INVALID_PIN_CODE"),
-                })}
-              />
-            </div>
+                <CardLabel>
+                  {t("CS_COMMON_POST_OFFICE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                  option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
+                  selected={adrsPostOffice}
+                  select={setSelectAdrsPostOffice}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_PIN_CODE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="adrsPincode"
+                  value={adrsPincode}
+                  onChange={setSelectAdrsPincode}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+                  {...(validation = {
+                    pattern: "^[0-9]{6}$",
+                    isRequired: true,
+                    type: "number",
+                    maxLength: 6,
+                    minLength: 6,
+                    title: t("CS_COMMON_INVALID_PIN_CODE"),
+                  })}
+                />
+              </div>
           </div>
           <div className="row">
             <div className="col-md-4">

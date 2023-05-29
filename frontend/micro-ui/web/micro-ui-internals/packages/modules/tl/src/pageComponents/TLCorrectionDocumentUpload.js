@@ -92,18 +92,16 @@ const TLCorrectionDocumentUpload = ({ t, config, onSelect, formData,onEditSelect
   // const docs = Documentsob?.PropertyTax?.Documents;
   // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
   const { data: Documentsob = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "ApplicationDocuments");
-
   let documentList =[];
-
   Documentsob &&
   Documentsob["TradeLicense"] &&
-  Documentsob["TradeLicense"].ApplicationDocuments.map((ob) => {
-    ob.DocumentList.map(obchild => {
-      if(ob.code === formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType){
-        documentList.push({ "code": obchild.code, "description": obchild.description , "label" : obchild.name });
+  Documentsob["TradeLicense"]?.ApplicationDocuments?.map((ob) => {
+    ob?.DocumentList?.map(obchild => {
+      if(ob?.code === formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType){
+        documentList.push({ "code": obchild?.code, "description": obchild?.description , "label" : obchild?.name });
       }
-      if(ob.code === formDataEdit?.TradeDetails?.tradeLicenseDetail?.structureType+ "." + formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory){
-        documentList.push({ "code": obchild.code, "description": obchild.description , "label" : obchild.name });
+      if(ob?.code === formDataEdit?.TradeDetails?.tradeLicenseDetail?.structureType+ "." + formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory){
+        documentList.push({ "code": obchild?.code, "description": obchild?.description , "label" : obchild?.name });
       }
     });
   });

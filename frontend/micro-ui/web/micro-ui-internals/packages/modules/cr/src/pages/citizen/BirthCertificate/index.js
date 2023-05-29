@@ -3,7 +3,7 @@ import { BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import BirthCertificate from "../../../components/SearchRegistryBirth";
 import _ from "lodash";
-import { convertUTCDateToEpoch } from "../../../utils";
+import { convertDateToEpoch, convertUTCDateToEpoch } from "../../../utils";
 
 const BirthCertificateSearch = ({ path }) => {
   const { t } = useTranslation();

@@ -205,7 +205,10 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType,formData }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AbandonedChildDetails?.birthDateTime ? AbandonedChildDetails?.birthDateTime :"NOT_RECORDED"}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                  {AbandonedChildDetails?.displaytime ? AbandonedChildDetails?.displaytime + " " + AbandonedChildDetails?.displayAmPm : "NOT_RECORDED"}
+                    {/* {AbandonedChildDetails?.birthDateTime ? AbandonedChildDetails?.birthDateTime :"NOT_RECORDED"} */}
+                    </CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
