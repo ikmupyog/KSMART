@@ -15,20 +15,20 @@ const getChildDetails = (application, t) => {
         value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CR_NOT_RECORDED"),
       },
       { title: t("Gender"), value: application?.gender ? application?.gender : t("CR_NOT_RECORDED") },
-      {
-        title: t("CR_FIRST_NAME_EN"),
-        value:
-          application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
-            ? application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
-            : t("CR_NOT_RECORDED"),
-      },
-      {
-        title: t("CR_FIRST_NAME_ML"),
-        value:
-          application?.childFirstNameMl + "" + application?.childMiddleNameMl + "" + application?.childLastNameMl
-            ? application?.childFirstNameMl + "" + application?.childMiddleNameMl + "" + application?.childLastNameMl
-            : t("CR_NOT_RECORDED"),
-      },
+      // {
+      //   title: t("CR_FIRST_NAME_EN"),
+      //   value:
+      //     application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
+      //       ? application?.childFirstNameEn + "" + application?.childMiddleNameEn + "" + application?.childLastNameEn
+      //       : t("CR_NOT_RECORDED"),
+      // },
+      // {
+      //   title: t("CR_FIRST_NAME_ML"),
+      //   value:
+      //     application?.childFirstNameMl + "" + application?.childMiddleNameMl + "" + application?.childLastNameMl
+      //       ? application?.childFirstNameMl + "" + application?.childMiddleNameMl + "" + application?.childLastNameMl
+      //       : t("CR_NOT_RECORDED"),
+      // },
       { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CR_NOT_RECORDED") },
       { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CR_NOT_RECORDED") },
     ],
@@ -137,19 +137,20 @@ const getAddressDetails = (application, t) => {
   return {
     title: "BIRTH_TIME_LINE_ADDRESS",
     values: [
-      { title: t("CS_COMMON_DISTRICT"), value: application?.AddressBirthDetails?.presentInsideKeralaDistrict.name || t("CR_NOT_RECORDED") },
-      { title: t("CS_COMMON_TALUK"), value: application?.AddressBirthDetails?.presentInsideKeralaTaluk.name || t("CR_NOT_RECORDED") },
-      { title: t("CS_COMMON_VILLAGE"), value: application?.AddressBirthDetails?.presentInsideKeralaVillage.name || t("CR_NOT_RECORDED") },
-      { title: t("CS_COMMON_LB_NAME"), value: application?.AddressBirthDetails?.presentInsideKeralaLBName.name || t("CR_NOT_RECORDED") },
-      { title: t("CS_COMMON_WARD"), value: application?.AddressBirthDetails?.presentWardNo.namecmb || t("CR_NOT_RECORDED") },
-      { title: t("CS_COMMON_POST_OFFICE"), value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice.name || t("CR_NOT_RECORDED") },
-      { title: t("CS_COMMON_PIN_CODE"), value: application?.AddressBirthDetails?.presentInsideKeralaPincode || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_DISTRICT"), value: application?.AddressBirthDetails?.presentInsideKeralaDistrict.name || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_TALUK"), value: application?.AddressBirthDetails?.presentInsideKeralaTaluk.name || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_VILLAGE"), value: application?.AddressBirthDetails?.presentInsideKeralaVillage.name || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_LB_NAME"), value: application?.AddressBirthDetails?.presentInsideKeralaLBName.name || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_WARD"), value: application?.AddressBirthDetails?.presentWardNo.namecmb || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_POST_OFFICE"), value: application?.AddressBirthDetails?.presentInsideKeralaPostOffice.name || t("CR_NOT_RECORDED") },
+      // { title: t("CS_COMMON_PIN_CODE"), value: application?.AddressBirthDetails?.presentInsideKeralaPincode || t("CR_NOT_RECORDED") },
       { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CR_NOT_RECORDED") },
-      { title: t("CR_LOCALITY_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || t("CR_NOT_RECORDED") },
-      { title: t("CR_STREET_NAME_EN"), value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || t("CR_NOT_RECORDED") },
-      { title: t("CR_STREET_NAME_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameMl || t("CR_NOT_RECORDED") },
       { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CR_NOT_RECORDED") },
-      { title: t("CR_HOUSE_NAME_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameMl || t("CR_NOT_RECORDED") },
+      // { title: t("CR_LOCALITY_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || t("CR_NOT_RECORDED") },
+      // { title: t("CR_STREET_NAME_EN"), value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || t("CR_NOT_RECORDED") },
+      // { title: t("CR_STREET_NAME_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaStreetNameMl || t("CR_NOT_RECORDED") },
+      //
+      // { title: t("CR_HOUSE_NAME_ML"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameMl || t("CR_NOT_RECORDED") },
     ],
   };
 };
