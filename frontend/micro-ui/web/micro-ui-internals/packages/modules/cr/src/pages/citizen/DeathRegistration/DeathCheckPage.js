@@ -90,6 +90,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       onSubmit();
     }
   }
+
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -104,6 +105,27 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
+
+  const convertTo12Hour = (oldFormatTime) => {
+  
+    console.log("oldFormatTime: " + oldFormatTime);
+    var oldFormatTimeArray = oldFormatTime.split(":");
+
+    var HH = parseInt(oldFormatTimeArray[0]);
+    var min = oldFormatTimeArray[1];
+
+    var AMPM = HH >= 12 ? "PM" : "AM";
+    var hours;
+    if(HH == 0){
+      hours = HH + 12;
+    } else if (HH > 12) {
+      hours = HH - 12;
+    } else {
+      hours = HH;
+    }
+    var newFormatTime = hours + ":" + min + " " + AMPM;
+    return `${hours + ":" + min + " " + AMPM}`
+}
 
   // useEffect(() => {
   //   if (isInitialRender) {
@@ -244,7 +266,10 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_DEATH")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.TimeOfDeath ? InformationDeath?.TimeOfDeath : t("CR_NOT_RECORDED")}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    {InformationDeath?.TimeOfDeath ?
+                     convertTo12Hour(InformationDeath?.TimeOfDeath) : 
+                     t("CR_NOT_RECORDED")}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
