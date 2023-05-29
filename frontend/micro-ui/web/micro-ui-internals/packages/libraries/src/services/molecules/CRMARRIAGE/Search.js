@@ -236,7 +236,7 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomMotherAadharNo || "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_GROOM_MOTHER_NAME_EN")} / ${t("CR_GROOM_MOTHER_NAME_EN")}`,
+          title: `${t("CR_GROOM_MOTHER_NAME_EN")} / ${t("CR_GROOM_MOTHER_NAME_ML")}`,
           value: `${response?.GroomDetails?.groomMothernameEn} / ${response?.GroomDetails?.groomMothernameMl}`,
         }
       );
@@ -621,7 +621,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideMotherAadharNo || "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_BRIDE_MOTHER_NAME_EN")} / ${t("CR_BRIDE_MOTHER_NAME_EN")}`,
+          title: `${t("CR_BRIDE_MOTHER_NAME_EN")} / ${t("CR_BRIDE_MOTHER_NAME_ML")}`,
           value: `${response?.BrideDetails?.brideMothernameEn} / ${response?.BrideDetails?.brideMothernameMl}`,
         }
       );
@@ -963,7 +963,7 @@ export const CRSearchMarriage = {
           value: response?.WitnessDetails?.witness2Age ? response?.WitnessDetails?.witness2Age : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS2_ADDRESS")}`,
+          title: `${t("CR_WITNESS2_ADDRESS_SEARCH")}`,
           value: response?.WitnessDetails?.witness2AddresSEn ? response?.WitnessDetails?.witness2AddresSEn : "CR_NOT_RECORDED",
         },
         {

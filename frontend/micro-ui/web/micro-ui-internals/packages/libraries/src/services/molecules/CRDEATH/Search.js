@@ -118,7 +118,7 @@ export const CRDeathsearch = {
               " " +
               response?.InformationDeath?.ageUnitMl || "CR_NOT_RECORDED",
         },
-        { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "CR_NOT_RECORDED" },
+        { title: "CR_GENDER", value: response?.InformationDeath?.DeceasedGender || "CR_NOT_RECORDED" },
 
         {
           title: "CR_NATIONALITY",
