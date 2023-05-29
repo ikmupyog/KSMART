@@ -212,7 +212,7 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applica
           />
         </SearchField>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, t, applicationType }} />
+          <SearchFields {...{ register, control, reset, previousPage, tenantId, t, applicationType }} />
         </SearchForm>
       </div>
       {isLoading && <Loader />}

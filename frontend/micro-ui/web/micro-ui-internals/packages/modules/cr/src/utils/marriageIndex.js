@@ -380,7 +380,7 @@ export const convertToMarriageRegistration = (data = {}) => {
         action: "INITIATE",
         registration_date: null,
         registrationNumber: null,
-        status: "INITIATED",
+        status: "PENDINGPAYMENT",
         moduleCode: "CRMRNR",
         GroomDetails: {
           groomResidentShip: data?.GroomDetails?.groomResidentShip ? data?.GroomDetails?.groomResidentShip : null,
