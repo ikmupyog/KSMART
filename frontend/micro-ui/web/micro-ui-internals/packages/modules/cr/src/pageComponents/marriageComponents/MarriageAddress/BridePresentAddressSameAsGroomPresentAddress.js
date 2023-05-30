@@ -100,11 +100,11 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
       setadrsCityTown(formData?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown);
       setPostCode(formData?.GroomAddressDetails?.presentOutSideIndiaPostCode);
     } else {
-      setaddressCountry("");
-      setaddressStateName("");
+      // setaddressCountry("");
+      // setaddressStateName("");
+      // setpermtaddressCountry("");
+      // setpermtaddressStateName("");
       setoutsideKeralaDistrict("");
-      setpermtaddressCountry("");
-      setpermtaddressStateName("");
       setPresentWardNo("");
       setinsideKeralaDistrict("");
       setinsideKeralaLBTypeName("");
