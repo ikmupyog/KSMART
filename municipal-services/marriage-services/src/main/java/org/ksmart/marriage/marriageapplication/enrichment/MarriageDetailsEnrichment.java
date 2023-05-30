@@ -71,6 +71,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             marriage.setId(UUID.randomUUID().toString());
             marriage.setAuditDetails(auditDetails);
             marriage.setUserId(String.valueOf(requestInfo.getUserInfo().getId()));
+//            marriage.setStatus("PENDINGPAYMENT");
 
             if(marriage.getBrideDetails()!=null){
                 marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
