@@ -1,5 +1,9 @@
 @media only screen and (max-device-width: 991px) {
 
+  .header-btm-search-box {
+    margin-bottom: 40px;
+  }
+
   /* mobile navbar  */
   .no-scroll {
     overflow: hidden;
@@ -227,7 +231,7 @@
   }
 
   .header-bottom-patti li {
-    display: inline-block;
+    display: inline-flex;
     width: 49%;
     text-align: center;
     padding: 14px;

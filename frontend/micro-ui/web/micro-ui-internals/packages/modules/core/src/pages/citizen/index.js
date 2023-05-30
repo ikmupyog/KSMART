@@ -499,19 +499,22 @@ const Home = ({
     );
   });
 
+  let parts = window.location.pathname.split('/').pop() || 'citizen';
+
   return (
     <div className={classname}>
-      {/* <TopBarSideBar
-        t={t}
-        stateInfo={stateInfo}
-        userDetails={userDetails}
-        CITIZEN={CITIZEN}
-        cityDetails={cityDetails}
-        mobileView={mobileView}
-        handleUserDropdownSelection={handleUserDropdownSelection}
-        logoUrl={logoUrl}
-        showSidebar={true}
-      /> */}
+      {parts !== 'citizen' &&
+        <TopBarSideBar
+          t={t}
+          stateInfo={stateInfo}
+          userDetails={userDetails}
+          CITIZEN={CITIZEN}
+          cityDetails={cityDetails}
+          mobileView={mobileView}
+          handleUserDropdownSelection={handleUserDropdownSelection}
+          logoUrl={logoUrl}
+          showSidebar={true}
+        />}
       {/* <TopBarSideBarKsmart 
        t={t}
        stateInfo={stateInfo}
@@ -527,13 +530,11 @@ const Home = ({
       <div className={`main center-container mb-25`}>
         <Switch>
           <Route exact path={path}>
-            <CitizenHome />
+            <KsmartHome />
           </Route>
 
-          <Route exact path={`${path}/ksmart-home`}>
-            <KsmartHome
-
-            />
+          <Route exact path={`${path}/home`}>
+            <CitizenHome />
           </Route>
 
           <Route exact path={`${path}/select-language`}>
@@ -566,7 +567,7 @@ const Home = ({
           </ErrorBoundary>
         </Switch>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

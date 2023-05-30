@@ -1,8 +1,8 @@
 import {
-  Calender, CardBasedOptions, CaseIcon, DropIcon, ComplaintIcon, InboxIcon, 
+  Calender, CardBasedOptions, CaseIcon, DropIcon, ComplaintIcon, InboxIcon,
   DocumentIcon, HomeIcon, Loader, EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
@@ -11,6 +11,7 @@ const Home = () => {
   const history = useHistory();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant(true);
   const { data: { stateInfo } = {}, isLoading } = Digit.Hooks.useStore.getInitData();
+
 
   const handleClick = () => {
     history.push('/my-component')
@@ -29,10 +30,13 @@ const Home = () => {
     },
   });
 
-  if (!tenantId) {
-    history.push(`/digit-ui/citizen/ksmart-home`);
-    // history.push(`/digit-ui/citizen/select-language`);
-  }
+  useEffect(() => {
+    if (!tenantId) {
+      // history.push(`/digit-ui/citizen/ksmart-home`);
+      history.push(`/digit-ui/citizen/select-location`);
+    }
+  }, [tenantId])
+
 
   const allCitizenServicesProps = {
     header: t("DASHBOARD_CITIZEN_SERVICES_LABEL"),

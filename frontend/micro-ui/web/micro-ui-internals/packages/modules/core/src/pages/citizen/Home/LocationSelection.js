@@ -27,8 +27,6 @@ const LocationSelection = () => {
     [t]
   );
 
-
-
   function selectCity(city) {
     setSelectedCity(city);
     setShowError(false);
@@ -69,10 +67,12 @@ const LocationSelection = () => {
   function onSubmit() {
     if (selectedDistrict) {
       Digit.SessionStorage.set("CITIZEN.COMMON.HOME.DISTRICT", selectedDistrict);
-      history.push("/digit-ui/citizen");
+      // history.push("/digit-ui/citizen");
+      history.push("/digit-ui/citizen/home");
       if (selectedCity) {
         Digit.SessionStorage.set("CITIZEN.COMMON.HOME.CITY", selectedCity);
-        history.push("/digit-ui/citizen");
+        // history.push("/digit-ui/citizen");
+        history.push("/digit-ui/citizen/home");
       }
       else {
         setShowError(true);

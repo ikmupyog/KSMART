@@ -1,4 +1,4 @@
-import { Dropdown, Hamburger, TopBar as TopBarComponent } from "@egovernments/digit-ui-react-components";
+import { Dropdown, Hamburger, TopBar as TopBarComponent, NotificationBell } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import ChangeCity from "../ChangeCity";
@@ -78,25 +78,54 @@ const TopBar = ({
       : ["/digit-ui/citizen/select-language", "/digit-ui/citizen/select-location"].includes(pathname);
 
   if (CITIZEN) {
+    const isMobile = true;
     return (
-      <TopBarComponent
-        img={stateInfo?.logoUrlWhite}
-        isMobile={true}
-        toggleSidebar={updateSidebar}
-        logoUrl={stateInfo?.logoUrlWhite}
-        onLogout={handleLogout}
-        userDetails={userDetails}
-        notificationCount={unreadNotificationCount < 99 ? unreadNotificationCount : 99}
-        notificationCountLoaded={notificationCountLoaded}
-        cityOfCitizenShownBesideLogo={t(CitizenHomePageTenantId)}
-        onNotificationIconClick={onNotificationIconClick}
-        hideNotificationIconOnSomeUrlsWhenNotLoggedIn={urlsToDisableNotificationIcon(pathname)}
-        cityDetails={cityDetails}
-        showLanguageChange={showLanguageChange}
-        t={t}
-      />
+      // <TopBarComponent
+      //   img={stateInfo?.logoUrlWhite}
+      //   isMobile={true}
+      //   toggleSidebar={updateSidebar}
+      //   logoUrl={stateInfo?.logoUrlWhite}
+      //   onLogout={handleLogout}
+      //   userDetails={userDetails}
+      //   notificationCount={unreadNotificationCount < 99 ? unreadNotificationCount : 99}
+      //   notificationCountLoaded={notificationCountLoaded}
+      //   cityOfCitizenShownBesideLogo={t(CitizenHomePageTenantId)}
+      //   onNotificationIconClick={onNotificationIconClick}
+      //   hideNotificationIconOnSomeUrlsWhenNotLoggedIn={urlsToDisableNotificationIcon(pathname)}
+      //   cityDetails={cityDetails}
+      //   showLanguageChange={showLanguageChange}
+      //   t={t}
+      // />
+      <div className="navbar">
+        <div className="mainNav">
+
+          <div className="center-container">
+            {isMobile && <Hamburger handleClick={updateSidebar} />}
+            <img className="city" id="topbar-logo" src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="K-SMART" />
+            <h3>{t(CitizenHomePageTenantId)}</h3>
+          </div>
+          <div className="leftContainerNav">
+            <div className="left" style={{ marginRight: "20px" }}>
+              <ChangeLanguage dropdown={true} />
+            </div>
+            <div className="RightMostTopBarOptions">
+              {!urlsToDisableNotificationIcon(pathname) ? (
+                <div className="EventNotificationWrapper" onClick={onNotificationIconClick}>
+                  {notificationCountLoaded && unreadNotificationCount ? (
+                    <span>
+                      <p>{unreadNotificationCount < 99 ? unreadNotificationCount : 99}</p>
+                    </span>
+                  ) : null}
+                  <NotificationBell />
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
+
   const loggedin = userDetails?.access_token ? true : false;
   const user = { name: userDetails?.info?.name }
   return (
@@ -133,7 +162,7 @@ const TopBar = ({
             {userDetails?.access_token && (
               <div className="">
                 <Dropdown
-                
+
                   option={userOptions}
                   optionKey={"name"}
                   select={handleUserDropdownSelection}

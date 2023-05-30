@@ -301,13 +301,13 @@ html {
 
 /* services section start  */
 .services-ksmart-main-bg {
-  padding-top: 112px;
-  padding-bottom: 93px;
+  padding-top: 70px;
+  padding-bottom: 50px;
   background: #eef1f8;
 }
 
 .services-heading-fx {
-  padding-bottom: 59px;
+  padding-bottom: 50px;
 }
 
 .services-heading-fx h2 {
@@ -433,7 +433,7 @@ html {
 
 /* Smart ULB section start  */
 .sulb-section-d {
-  padding-top: 103px;
+  padding-top: 80px;
   padding-bottom: 60px;
 }
 
@@ -618,7 +618,7 @@ html {
   color: #999999;
   font-size: 18px;
   font-family: "Lato-Bold";
-  padding: 6px 35px;
+  padding: 6px 20px;
   border-radius: 40px;
 }
 

@@ -8,7 +8,10 @@ const ChangeLanguage = (prop) => {
   const { languages, stateInfo } = storeData || {};
   const selectedLanguage = Digit.StoreData.getCurrentLanguage();
   const [selected, setselected] = useState(selectedLanguage);
+
   const handleChangeLanguage = (language) => {
+    console.log({ language })
+    console.log({ stateInfo })
     setselected(language.value);
     Digit.LocalizationService.changeLanguage(language.value, stateInfo.code);
   };

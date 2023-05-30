@@ -44,6 +44,20 @@ const Login = ({ stateCode, isUserRegistered = true }) => {
   const [errorTO, setErrorTO] = useState(null);
   const searchParams = Digit.Hooks.useQueryParams();
 
+  const userInfo = Digit.UserService.getUser()?.info || {};
+
+  useEffect(() => {
+    if (userInfo?.userName) {
+      history.push({
+        pathname: '/digit-ui/citizen/home',
+        state: {
+          from: '/digit-ui/citizen/login'
+        }
+      })
+    }
+
+  }, [userInfo])
+
   useEffect(() => {
     let errorTimeout;
     if (error) {
