@@ -75,9 +75,9 @@ import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideChec
 import BornOutsideAddressPage from "./pageComponents/bornOutsideIndiaComponents/BornOutsideAddressPage";
 import BornOutsidePresentOutsideIndia from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresentOutsideIndia";
 import BornoutsidePermanentInsideKerala from "./pageComponents/bornOutsideIndiaComponents/BornoutsidePermanentInsideKerala";
-import BornoutsideSameAsAbove from "./pageComponents/bornOutsideIndiaComponents/BornoutsideSameAsAbove";
 import BornOutsidePermanent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePermanent";
 import BornOutsidePresent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresent";
+import BornOutsideDocuments from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideDocuments";
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
 import AdoptiveParentsDetails from "../src/pageComponents/adoptionComponents/AdoptiveParentsDetails";
@@ -404,9 +404,9 @@ const componentsToRegister = {
   BornOutsideAddressPage,
   BornOutsidePresentOutsideIndia,
   BornoutsidePermanentInsideKerala,
-  BornoutsideSameAsAbove,
   BornOutsidePermanent,
   BornOutsidePresent,
+  BornOutsideDocuments,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,

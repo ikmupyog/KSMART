@@ -159,8 +159,8 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
 
 
 
-  const renderCardDetail = (value, fieldName, documentData) => {
-      const type = fieldName === "CHILD_DOB" ? "date" : "text";
+  const renderCardDetail = (index, value, fieldName, documentData) => {
+      const type = fieldName === "DECEASED_DOB" ? "date" : "text";
       console.log("fieldvalues", value, type);
       return (
           <div className="row">
@@ -179,7 +179,9 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                       </h4>
                   </div>
                   <div className="col-md-1">
+                    {index === 0 &&
                       <LinkButton label="View" onClick={() => setDocumentsView(documentData)} />
+                    }
                   </div>
               </div>
           </div>
@@ -214,7 +216,7 @@ function ApplicationContent({ applicationDetails, workflowDetails, isDataLoading
                                       </div>
                                   </div>
                               </div>
-                              {detail?.fieldValues?.map((value, index) => renderCardDetail(value, detail.title, detail.CorrectionDocument))}
+                              {detail?.fieldValues?.map((value, index) => renderCardDetail(index, value, detail.title, detail.CorrectionDocument))}
                           </StatusTable>
                       }
                   />

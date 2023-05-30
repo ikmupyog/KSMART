@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/CRTimeline";
+import _ from "lodash";
 
 const ActionButton = ({ jumpTo }) => {
   const { t } = useTranslation();
@@ -54,31 +55,32 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { AdoptionChildDetails, AdoptionParentsDetails, AddressBirthDetails, AdoptionDocuments } = value;
+  console.log(AdoptionChildDetails, "AdoptionChildDetails");
 
-  const uploadedImages = [
-    AdoptionDocuments.uploadedFile,
-    AdoptionDocuments.uploadedFile1,
-    AdoptionDocuments.uploadedFile2,
-    AdoptionDocuments.uploadedFile3,
-    AdoptionDocuments.uploadedFile4,
-    AdoptionDocuments.uploadedFile5,
-  ];
-  const [imagesThumbs, setImagesThumbs] = useState(null);
-  const [imageZoom, setImageZoom] = useState(null);
-  useEffect(() => {
-    if (uploadedImages?.length > 0) {
-      fetchImage();
-    }
-  }, []);
-  const fetchImage = async () => {
-    setImagesThumbs(null);
-    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
-    const newThumbnails = fileStoreIds.map((key) => {
-      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
-    });
-    setImagesThumbs(newThumbnails);
-  };
+  // const uploadedImages = [
+  //   AdoptionDocuments.uploadedFile,
+  //   AdoptionDocuments.uploadedFile1,
+  //   AdoptionDocuments.uploadedFile2,
+  //   AdoptionDocuments.uploadedFile3,
+  //   AdoptionDocuments.uploadedFile4,
+  //   AdoptionDocuments.uploadedFile5,
+  // ];
+  // const [imagesThumbs, setImagesThumbs] = useState(null);
+  // const [imageZoom, setImageZoom] = useState(null);
+  // useEffect(() => {
+  //   if (uploadedImages?.length > 0) {
+  //     fetchImage();
+  //   }
+  // }, []);
+  // const fetchImage = async () => {
+  //   setImagesThumbs(null);
+  //   const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
+  //   const newThumbnails = fileStoreIds.map((key) => {
+  //     const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+  //     return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+  //   });
+  //   setImagesThumbs(newThumbnails);
+  // };
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -89,11 +91,11 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
   let routeLink = "";
   routeLink = `${getPath(match.path, match.params)}`;
   routeLink = routeLink.replace("/check", "");
-  useEffect(() => {
-    if (uploadedImages?.length > 0) {
-      fetchImage();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (uploadedImages?.length > 0) {
+  //     fetchImage();
+  //   }
+  // }, []);
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
   //   routeLink = `${getPath(match.path, match.params)}`;
@@ -259,8 +261,8 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
-              {AdoptionChildDetails?.adoptionAgency ? (
-                <>
+              {AdoptionChildDetails?.adoptionAgency === true && (
+                <React.Fragment>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
@@ -301,8 +303,8 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </div>
                   </div>
-                </>
-              ) : null}
+                </React.Fragment>
+              )}
             </StatusTable>
           }
         />
@@ -462,53 +464,49 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.adrsLocalityNameEn}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                           {AdoptionChildDetails?.adrsLocalityNameMl}
                         </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-child-details`} />}
                       </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.adrsStreetNameEn}</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.adrsStreetNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.adrsStreetNameMl}</CardText>
+                      </div>
+
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.adrsHouseNameEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionChildDetails?.adrsHouseNameMl}</CardText>
                         {<ActionButton jumpTo={`${routeLink}/adoption-child-details`} />}
                       </div>
@@ -698,92 +696,81 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                   </h1>
                 </div>
               </div>
-              {AdoptionParentsDetails?.isMotherInfo === true && (
+              <div>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-6">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        {`${t("CR_MOTHER_INFORMATION_MISSING")}`} : {`${t("CR_NOT_RECORDED")}`}
+                        {AdoptionParentsDetails?.motherAadhar ? AdoptionParentsDetails?.motherAadhar : t("CR_NOT_RECORDED")}
+                      </CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {AdoptionParentsDetails?.motherFirstNameEn ? AdoptionParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED")}
+                      </CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {AdoptionParentsDetails?.motherFirstNameMl ? AdoptionParentsDetails?.motherFirstNameMl : t("CR_NOT_RECORDED")}
                       </CardText>
                     </div>
                   </div>
                 </div>
-              )}
-              {AdoptionParentsDetails?.isMotherInfo === false && (
-                <div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherAadhar ? AdoptionParentsDetails?.motherAadhar : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherFirstNameEn ? AdoptionParentsDetails?.motherFirstNameEn : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherFirstNameMl ? AdoptionParentsDetails?.motherFirstNameMl : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherNationality.nationalityname
-                            ? AdoptionParentsDetails?.motherNationality.nationalityname
-                            : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_MARITAL_STATUS")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherMaritalStatus.code ? AdoptionParentsDetails?.motherMaritalStatus.code : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherEducation.name ? AdoptionParentsDetails?.motherEducation.name : t("CR_NOT_RECORDED")}
-                        </CardText>
-                      </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN"
+                          ? AdoptionParentsDetails?.motherNationality?.nationalityname
+                          : AdoptionParentsDetails?.motherNationality?.nationalitynamelocal}
+                      </CardText>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
-                      </div>
-                      <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.motherProfession.name ? AdoptionParentsDetails?.motherProfession.name : t("CR_NOT_RECORDED")}
-                        </CardText>
-                        {<ActionButton jumpTo={`${routeLink}/adoption-parents-details`} />}
-                      </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_MARITAL_STATUS")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN"
+                          ? AdoptionParentsDetails?.motherMaritalStatus?.name
+                          : AdoptionParentsDetails?.motherMaritalStatus?.namelocal}
+                      </CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN" ? AdoptionParentsDetails?.motherEducation?.name : AdoptionParentsDetails?.motherEducation?.namelocal}
+                      </CardText>
                     </div>
                   </div>
                 </div>
-              )}
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
+                    </div>
+                    <div className="col-md-2">
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        {locale === "en_IN" ? AdoptionParentsDetails?.motherProfession?.name : AdoptionParentsDetails?.motherProfession?.namelocal}
+                      </CardText>
+                      {<ActionButton jumpTo={`${routeLink}/adoption-parents-details`} />}
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
@@ -839,9 +826,9 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherNationality.nationalityname
-                            ? AdoptionParentsDetails?.fatherNationality.nationalityname
-                            : t("CR_NOT_RECORDED")}
+                          {locale === "en_IN"
+                            ? AdoptionParentsDetails?.fatherNationality?.nationalityname
+                            : AdoptionParentsDetails?.fatherNationality?.nationalitynamelocal}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -849,7 +836,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherEducation.name ? AdoptionParentsDetails?.fatherEducation.name : t("CR_NOT_RECORDED")}
+                          {locale === "en_IN" ? AdoptionParentsDetails?.fatherEducation?.name : AdoptionParentsDetails?.fatherEducation?.namelocal}
                         </CardText>
                       </div>
                     </div>
@@ -861,7 +848,7 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AdoptionParentsDetails?.fatherProfession.name ? AdoptionParentsDetails?.fatherProfession.name : t("CR_NOT_RECORDED")}
+                          {locale === "en_IN" ? AdoptionParentsDetails?.fatherProfession?.name : AdoptionParentsDetails?.fatherProfession?.namelocal}
                         </CardText>
                         {<ActionButton jumpTo={`${routeLink}/adoption-parents-details`} />}
                       </div>
@@ -882,7 +869,10 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_RELIGION")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{AdoptionParentsDetails?.Religion.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {" "}
+                      {locale === "en_IN" ? AdoptionParentsDetails?.Religion?.name : AdoptionParentsDetails?.Religion?.namelocal}
+                    </CardText>
                   </div>
                   <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_CONTACT_NO")}`} :</CardText>
@@ -929,7 +919,6 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}{" "}
                           {locale === "en_IN"
                             ? AddressBirthDetails?.presentInsideKeralaDistrict?.name
                             : AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal}
@@ -1713,62 +1702,125 @@ const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
           title={t("CR_DOCUMENTS")}
           content={
             <StatusTable>
-              {uploadedImages.length > 0 && (
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+              <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                <div className="col-md-12">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
-              )}
-              {uploadedImages.length > 0 && (
-                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
-                  <div
-                    className="col-md-12"
-                    style={{
-                      display: "flex",
-                      marginLeft: "15px",
-                      flexWrap: "wrap",
-                      justifyContent: "center",
-                      alignContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {imagesThumbs &&
-                      imagesThumbs.map((thumbnail, index) => {
-                        return (
-                          <div key={index}>
-                            {thumbnail.type == "pdf" ? (
-                              <React.Fragment>
-                                <object
-                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
-                                  height={120}
-                                  data={thumbnail.pdfUrl}
-                                  alt={`upload-thumbnails-${index}`}
-                                />
-                              </React.Fragment>
-                            ) : (
-                              <img
-                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
-                                height={120}
-                                src={thumbnail.small}
-                                alt={`upload-thumbnails-${index}`}
-                                onClick={() => setImageZoom(thumbnail.large)}
-                              />
-                            )}
-                          </div>
-                        );
-                      })}
+              </div>
+              <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile1)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile1)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile1)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile1)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile1)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile2)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile2)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile2)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile2)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile2)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile3)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile3)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile3)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile3)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile3)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile4)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile4)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile4)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile4)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile4)?.large
+                      }
+                    >
+                      Preview
+                    </a>
+                  </div>
+                  <div className="col-md-2">
+                    {_.head(AdoptionDocuments?.uploadedFile5)?.type === "pdf" && (
+                      <React.Fragment>
+                        <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(AdoptionDocuments?.uploadedFile5)?.pdfUrl} alt="" />
+                      </React.Fragment>
+                    )}
+                    <a
+                      target="_blank"
+                      href={
+                        _.head(AdoptionDocuments?.uploadedFile5)?.type === "pdf"
+                          ? _.head(AdoptionDocuments?.uploadedFile5)?.pdfUrl
+                          : _.head(AdoptionDocuments?.uploadedFile5)?.large
+                      }
+                    >
+                      Preview
+                    </a>
                   </div>
                 </div>
-              )}
+              </div>
             </StatusTable>
           }
         />
-        {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null}
+        {/* {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={() => setImageZoom(null)} /> : null} */}
 
         <div className="row">
           <div className="col-md-12">

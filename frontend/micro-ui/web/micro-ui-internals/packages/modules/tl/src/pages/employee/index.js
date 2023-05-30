@@ -160,7 +160,8 @@ const EmployeeApp = ({ path, url, userType }) => {
   const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
   const PdeApplication = Digit?.ComponentRegistryService?.getComponent('TLCreatePdeApplication');
   const SearchPde = Digit?.ComponentRegistryService?.getComponent('TLSearchPde');
-  
+  const SearchMigrate=Digit?.ComponentRegistryService?.getComponent('SearchMigrate');
+  const MigrateApplication=Digit?.ComponentRegistryService?.getComponent('MigrateApplication');
 
   return (
     <Switch>
@@ -200,9 +201,12 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} isEdit={false} />} />
-          <PrivateRoute path={`${path}/pde-search`} component={() => <SearchPde parentUrl={url} />} />
+          {/* <PrivateRoute path={`${path}/pde-search`} component={() => <SearchPde parentUrl={url} />} /> */}
           <PrivateRoute path={`${path}/pde-editapplication`} component={() => <PdeApplication parentUrl={url} isEdit={true}/>} />	
           <PrivateRoute path={`${path}/applicationcorrection-details/:id`} component={() => <ApplicationDetailsCorrection parentRoute={path} />} />
+          <PrivateRoute path={`${path}/pde-search`} component={() => <SearchMigrate parentUrl={url} />} />
+          <PrivateRoute path={`${path}/migrate-editapplication`} component={() => <MigrateApplication parentUrl={url} isRenewal={true}/>} />	
+
         </div>
       </React.Fragment>
     </Switch>

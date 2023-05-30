@@ -15,6 +15,7 @@ import {
   SubmitBar,
   EditIcon,
   RefreshIcon,
+  FormBackButton
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import FormFieldContainer from "../../../components/FormFieldContainer";
@@ -27,6 +28,7 @@ import { convertEpochToDate } from "../../../utils";
 import MarriagePublicPlace from "../MarriagePublicPlace";
 import MarriageCorrectionModal from "../../../components/MarriageCorrectionModal";
 import { formatApiParams } from "../../../utils/marriageCorrectionParams";
+import MarriageCorrectionDocUpload from "../../../components/MarriageCorrectionDocUpload";
 
 const MarriageCorrectionEditPage = ({
   navigationData,
@@ -414,10 +416,12 @@ const MarriageCorrectionEditPage = ({
   };
 
   if (Object.keys(marriageCorrectionFormsObj)?.length > 0) {
-    const config = { texts: { submitBarLabel: "Next" } };
+    // const config = { texts: { submitBarLabel: "Next" } };
     return (
       <React.Fragment>
-        <FormStep config={config} onSelect={onSubmitMarriageCorrection}>
+         <div style={{display:'flex'}}>
+        <div style={{marginTop: "0.6rem", width: "100%"}}>
+        {/* <FormStep config={config} onSelect={onSubmitMarriageCorrection}> */}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1761,7 +1765,12 @@ const MarriageCorrectionEditPage = ({
                 )}
               </div>
             )}
+            
           </FormFieldContainer>
+          <div className="buttonContainerN" style={{ padding: "2rem"}}>
+        <FormBackButton>{t("CS_COMMON_BACK")}</FormBackButton>
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
+      </div>
           {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} /> */}
           <MarriageCorrectionModal
             showModal={showModal}
@@ -1771,7 +1780,17 @@ const MarriageCorrectionEditPage = ({
             hideModal={_hideModal}
             selectedDocData={selectedDocData}
           />
-        </FormStep>
+        {/* </FormStep> */}
+        
+        </div>
+        <MarriageCorrectionDocUpload
+       selectedConfig={selectedCorrectionItem}
+       onSubmit={onUploadDocSubmit}
+       selectedDocs={selectedDocs}
+       hideModal={_hideModal}
+       selectedDocData={selectedDocData}
+        />
+        </div>
       </React.Fragment>
     );
   } else {

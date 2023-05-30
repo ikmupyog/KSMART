@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SearchField, Dropdown } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SearchField, Loader, Dropdown } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -22,13 +22,13 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
-const selectedSearch=[
-  {label:"New Marriage", value:"marriagesearch"},
+const selectedSearch = [
+  { label: "New Marriage", value: "marriagesearch" },
   { label: "Correction", value: "marriagecorrection" },
-]
-let  validation ='';
+];
+let validation = "";
 
-const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType }) => {
+const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType,isLoading }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -40,29 +40,29 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applica
 
   const goto = (applicationNumber) => {
     let url = "";
-    if (["CRMRCR"].some(term => applicationNumber?.includes(term))) {
+    if (["CRMRCR"].some((term) => applicationNumber?.includes(term))) {
       url = `/digit-ui/employee/cr/marriage-correction-details/${applicationNumber}`;
     } else {
-      url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`
+      url = `/digit-ui/employee/cr/application-marriagedetails/${applicationNumber}`;
     }
     return url;
-  }
+  };
 
-  const setSelectSearch =(value)=>{
-    setApplicationType(value)
-    reset({ 
-      searchAppllication:[],
-      applicationNumber: "", 
-      fromDate: "", 
+  const setSelectSearch = (value) => {
+    setApplicationType(value);
+    reset({
+      searchAppllication: [],
+      applicationNumber: "",
+      fromDate: "",
       toDate: "",
       licenseNumbers: "",
       status: "",
       tradeName: "",
       offset: 0,
       limit: 10,
-  });
-  previousPage();
-  }
+    });
+    previousPage();
+  };
 
   useEffect(() => {
     register("offset", 0);
@@ -111,14 +111,11 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applica
         accessor: "applicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
-          console.log({data: GetCell(row)});
+          console.log({ data: GetCell(row) });
           return (
             <div>
               <span className="link">
-                <Link
-                  onClick={() => handleLinkClick(row.original)}
-                  to={() => goto(row.original.applicationNumber)}
-                >
+                <Link onClick={() => handleLinkClick(row.original)} to={() => goto(row.original.applicationNumber)}>
                   {/* {row.original.applicationNumber} */}
                   {row.original.applicationNumber}
                 </Link>
@@ -135,16 +132,22 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applica
       {
         Header: t("CR_GROOM_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(`${row?.GroomDetails?.groomFirstnameEn ? row?.GroomDetails?.groomFirstnameEn : ""} ${
-          row?.GroomDetails?.groomMiddlenameEn ? row?.GroomDetails?.groomMiddlenameEn : ""
-        } ${row?.GroomDetails?.groomLastnameEn ? row?.GroomDetails?.groomLastnameEn : ""}`),
+        accessor: (row) =>
+          GetCell(
+            `${row?.GroomDetails?.groomFirstnameEn ? row?.GroomDetails?.groomFirstnameEn : ""} ${
+              row?.GroomDetails?.groomMiddlenameEn ? row?.GroomDetails?.groomMiddlenameEn : ""
+            } ${row?.GroomDetails?.groomLastnameEn ? row?.GroomDetails?.groomLastnameEn : ""}`
+          ),
       },
       {
         Header: t("CR_BRIDE_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(`${row?.BrideDetails?.brideFirstnameEn ? row?.BrideDetails?.brideFirstnameEn : ""} ${
-          row?.BrideDetails?.brideMiddlenameEn ? row?.BrideDetails?.brideMiddlenameEn : ""
-        } ${row?.BrideDetails?.brideLastnameEn ? row?.BrideDetails?.brideLastnameEn : ""}`),
+        accessor: (row) =>
+          GetCell(
+            `${row?.BrideDetails?.brideFirstnameEn ? row?.BrideDetails?.brideFirstnameEn : ""} ${
+              row?.BrideDetails?.brideMiddlenameEn ? row?.BrideDetails?.brideMiddlenameEn : ""
+            } ${row?.BrideDetails?.brideLastnameEn ? row?.BrideDetails?.brideLastnameEn : ""}`
+          ),
       },
       {
         Header: t("CR_APPLICATION_STATUS"),
@@ -192,27 +195,27 @@ const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applica
       <div style={mystyle}>
         <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
         <SearchField>
-            <label>
-              {t("Application Type")}
-              <span className="mandatorycss">*</span>
-            </label>
-            <Dropdown
-              t={t}
-              optionKey="label"
-              isMandatory={true}
-              option={selectedSearch}
-              selected={applicationType}
-              select={setSelectSearch}
-              // disable={}
-              placeholder={`${t("applicationType")}`}
-              {...(validation = { isRequired: true, title: t("applicationType") })}
-            />
-          </SearchField>
+          <label>
+            {t("Application Type")}
+            <span className="mandatorycss">*</span>
+          </label>
+          <Dropdown
+            t={t}
+            optionKey="label"
+            isMandatory={true}
+            option={selectedSearch}
+            selected={applicationType}
+            select={setSelectSearch}
+            // disable={}
+            placeholder={`${t("applicationType")}`}
+            {...(validation = { isRequired: true, title: t("applicationType") })}
+          />
+        </SearchField>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, t, applicationType }} />
+          <SearchFields {...{ register, control, reset, previousPage, tenantId, t, applicationType }} />
         </SearchForm>
       </div>
-
+      {isLoading && <Loader />}
       {data?.display ? (
         <Card style={{ marginTop: 20 }}>
           {t(data.display)

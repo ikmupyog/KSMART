@@ -24,10 +24,9 @@ import AdoptionBirthReqSearch from "./AdoptionBirthReqSearch";
 import BirthReqSearch from "./BirthReqSearch";
 import { convertEpochToDateDMY } from "../../utils";
 
-const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption, isEditFlag = false }) => {
-  // console.log(JSON.stringify(formData));   isEditAdoption ? isEditAdoption :
-  const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(false);
+const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption = false, isEditFlag = false }) => {
+  //const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(true);
+  const [isDisableEdit, setisDisableEdit] = useState(true);
   const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
@@ -72,7 +71,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId, setSearchRegId] = useState();
   const [birthRegPopup, setBirthRegPopup] = useState(false);
-  // console.log('M',formData,isEditAdoption);
+  const [searchedApp, setSearchedApp] = useState(false);
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -233,7 +234,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   // menu?.length>0&&(menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : ""
   const [childDOB, setChildDOB] = useState(
     isEditAdoption &&
-      isEditBirthPageComponents === false &&
       (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)
       : convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)
@@ -577,10 +577,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   // },[formData])
   useEffect(() => {
     if (SearchRegId) {
+      setSearchedApp(true);
       SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)) : setChildDOB(null);
       SearchRegId?.gender ? selectGender(menu.filter((menu) => menu.code === SearchRegId?.gender)[0]) : selectGender("");
-      SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId.childAadharNo) : setChildAadharNo(null);
-      SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId.childFirstNameEn) : setChildFirstNameEn("");
+      SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId?.childAadharNo) : setChildAadharNo(null);
+      SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId?.childFirstNameEn) : setChildFirstNameEn("");
       SearchRegId?.childMiddleNameEn ? setChildMiddleNameEn(SearchRegId.childMiddleNameEn) : setChildMiddleNameEn("");
       SearchRegId?.childLastNameEn ? setChildLastNameEn(SearchRegId.childLastNameEn) : setChildLastNameEn("");
       SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl) : setChildFirstNameMl("");
@@ -648,69 +649,69 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   }, [SearchRegId]);
 
   React.useEffect(() => {
-    if (isInitialRenderPlace) {
-      if (birthPlace) {
-        setIsInitialRenderPlace(false);
-        placeOfBirth = birthPlace.code;
-        setValue(placeOfBirth);
-        // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
-        if (placeOfBirth === "HOSPITAL") {
-          <BirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl} />;
-        }
-        if (placeOfBirth === "INSTITUTION") {
-          setIsInitialRenderInstitutionList(true);
-          <BirthPlaceInstitution
-            institution={institution}
-            institutionIdMl={institutionIdMl}
-            institutionId={institutionId}
-            InstitutionFilterList={InstitutionFilterList}
-            isInitialRenderInstitutionList={isInitialRenderInstitutionList}
-          />;
-        }
-        if (placeOfBirth === "HOME") {
-          <BirthPlaceHome
-            adrsPincode={adrsPincode}
-            adrsHouseNameEn={adrsHouseNameEn}
-            adrsHouseNameMl={adrsHouseNameMl}
-            adrsLocalityNameEn={adrsLocalityNameEn}
-            adrsLocalityNameMl={adrsLocalityNameMl}
-            adrsStreetNameEn={adrsStreetNameEn}
-            adrsStreetNameMl={adrsStreetNameMl}
-            wardNo={wardNo}
-            adrsPostOffice={adrsPostOffice}
-            PostOfficevalues={PostOfficevalues}
-          />;
-        }
-        if (placeOfBirth === "VEHICLE") {
-          <BirthPlaceVehicle
-            vehicleType={vehicleType}
-            vehicleRegistrationNo={vehicleRegistrationNo}
-            vehicleFromEn={vehicleFromEn}
-            vehicleToEn={vehicleToEn}
-            vehicleFromMl={vehicleFromMl}
-            vehicleHaltPlace={vehicleHaltPlace}
-            // vehicleHaltPlaceMl={vehicleHaltPlaceMl}
-            vehicleToMl={vehicleToMl}
-            vehicleDesDetailsEn={vehicleDesDetailsEn}
-            setadmittedHospitalEn={setadmittedHospitalEn}
-            wardNo={wardNo}
-          />;
-        }
+    // if (isInitialRenderPlace) {
+    if (birthPlace) {
+      setIsInitialRenderPlace(false);
+      placeOfBirth = birthPlace.code;
+      setValue(placeOfBirth);
+      // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
+      if (placeOfBirth === "HOSPITAL") {
+        <BirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl} />;
+      }
+      if (placeOfBirth === "INSTITUTION") {
+        setIsInitialRenderInstitutionList(true);
+        <BirthPlaceInstitution
+          institution={institution}
+          institutionIdMl={institutionIdMl}
+          institutionId={institutionId}
+          InstitutionFilterList={InstitutionFilterList}
+          isInitialRenderInstitutionList={isInitialRenderInstitutionList}
+        />;
+      }
+      if (placeOfBirth === "HOME") {
+        <BirthPlaceHome
+          adrsPincode={adrsPincode}
+          adrsHouseNameEn={adrsHouseNameEn}
+          adrsHouseNameMl={adrsHouseNameMl}
+          adrsLocalityNameEn={adrsLocalityNameEn}
+          adrsLocalityNameMl={adrsLocalityNameMl}
+          adrsStreetNameEn={adrsStreetNameEn}
+          adrsStreetNameMl={adrsStreetNameMl}
+          wardNo={wardNo}
+          adrsPostOffice={adrsPostOffice}
+          PostOfficevalues={PostOfficevalues}
+        />;
+      }
+      if (placeOfBirth === "VEHICLE") {
+        <BirthPlaceVehicle
+          vehicleType={vehicleType}
+          vehicleRegistrationNo={vehicleRegistrationNo}
+          vehicleFromEn={vehicleFromEn}
+          vehicleToEn={vehicleToEn}
+          vehicleFromMl={vehicleFromMl}
+          vehicleHaltPlace={vehicleHaltPlace}
+          // vehicleHaltPlaceMl={vehicleHaltPlaceMl}
+          vehicleToMl={vehicleToMl}
+          vehicleDesDetailsEn={vehicleDesDetailsEn}
+          setadmittedHospitalEn={setadmittedHospitalEn}
+          wardNo={wardNo}
+        />;
+      }
 
-        if (placeOfBirth === "PUBLIC_PLACES") {
-          <BirthPlacePublicPlace
-            publicPlaceType={publicPlaceType}
-            wardNo={wardNo}
-            localityNameEn={localityNameEn}
-            localityNameMl={localityNameMl}
-            streetNameEn={streetNameEn}
-            streetNameMl={streetNameMl}
-            publicPlaceDecpEn={publicPlaceDecpEn}
-          />;
-        }
+      if (placeOfBirth === "PUBLIC_PLACES") {
+        <BirthPlacePublicPlace
+          publicPlaceType={publicPlaceType}
+          wardNo={wardNo}
+          localityNameEn={localityNameEn}
+          localityNameMl={localityNameMl}
+          streetNameEn={streetNameEn}
+          streetNameMl={streetNameMl}
+          publicPlaceDecpEn={publicPlaceDecpEn}
+        />;
       }
     }
-  }, [isInitialRenderPlace]);
+    // }
+  }, []);
 
   function setselectGender(value) {
     selectGender(value);
@@ -774,6 +775,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     }
     // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
   }
+  // function DisableEdit() {
+  //   if (value !== null) {
+  //     setisDisableEdit(value);
+  //   }
+  // }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
     if (!e.key.match(pattern)) {
@@ -961,6 +967,128 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
   }
+  function clearBirthPalce(value) {
+    if (value.code === "HOSPITAL") {
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "INSTITUTION") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "HOME") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "VEHICLE") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "PUBLIC_PLACES") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+    }
+  }
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
@@ -970,9 +1098,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         workFlowData.startdateperiod <= Difference_In_DaysRounded &&
         workFlowData.enddateperiod >= Difference_In_DaysRounded
     );
-    // console.log(currentWorgFlow[0].WorkflowCode);
-    // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    if (currentWorgFlow.length > 0) {
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      //setIsPayment(currentWorgFlow[0].payment);
+      //setAmount(currentWorgFlow[0].amount);
+    }
+    clearBirthPalce(value);
   }
   function setSelectBirthWeight(e) {
     if (e.target.value.length === 5) {
@@ -994,21 +1125,20 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   }
   let validFlag = true;
   const goNext = () => {
-    if (childAadharNo != null) {
-      let adharLength = childAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    } else {
-      setAadharError(false);
-    }
+    // if (childAadharNo != null) {
+    //   let adharLength = childAadharNo;
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setAadharError(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setAadharError(false);
+    //   }
+    // } else {
+    //   setAadharError(false);
+    // }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
@@ -1097,7 +1227,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
           }
         }
       }
-      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn.trim() === "" || adrsLocalityNameEn.trim() === undefined) {
         validFlag = false;
         setAdsHomeLocalityNameEnError(true);
         setToast(true);
@@ -1107,7 +1237,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
       } else {
         setAdsHomeLocalityNameEnError(false);
       }
-      if (adrsLocalityNameMl == null || adrsLocalityNameMl == "" || adrsLocalityNameMl == undefined) {
+      if (adrsLocalityNameMl == null || adrsLocalityNameMl.trim() == "" || adrsLocalityNameMl.trim() == undefined) {
         validFlag = false;
         setAdsHomeLocalityNameMlError(true);
         setToast(true);
@@ -1475,7 +1605,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   };
   if (
     isEditAdoption &&
-    isEditBirthPageComponents === false &&
     (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined)
   ) {
     if (formData?.AdoptionChildDetails?.gender != null) {
@@ -1520,38 +1649,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep
-          t={t}
-          config={config}
-          onSelect={goNext}
-          onSkip={onSkip}
-          isDisabled={
-            !childDOB ||
-            !gender ||
-            !birthPlace ||
-            (value === "HOSPITAL" ? !hospitalName || !hospitalNameMl : false) ||
-            (value === "INSTITUTION" ? !institution || !institutionId || !institutionIdMl : false) ||
-            (value === "HOME"
-              ? !wardNo ||
-                !adrsPostOffice ||
-                adrsPincode === "" ||
-                adrsLocalityNameEn === "" ||
-                adrsHouseNameEn === "" ||
-                adrsLocalityNameMl === "" ||
-                adrsHouseNameMl === ""
-              : false) ||
-            (value === "PUBLIC_PLACES" ? !publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "" : false) ||
-            (value === "VEHICLE"
-              ? !vehicleType ||
-                vehicleRegistrationNo === "" ||
-                vehicleHaltPlace === "" ||
-                !setadmittedHospitalEn ||
-                !wardNo ||
-                vehicleDesDetailsEn === ""
-              : false)
-            // || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""
-          }
-        >
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           {!editFlag && (
             <div className="row">
               <div className="col-md-12">
@@ -1562,19 +1660,19 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
             </div>
           )}
 
-          {!editFlag && birthRegPopup && birthRegistered == true && (
+          {birthRegPopup && birthRegistered == true && (
             <React.Fragment>
               {/* {isEditFlag?(
               <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
             ):
             ( */}
               <BirthReqSearch
-                BirthRegNo={BirthRegNo}
+                // BirthRegNo={BirthRegNo}
                 closePopup={() => {
                   setBirthRegPopup(false), setbirthRegistered(false);
                 }}
                 setBirthRegPopup={setBirthRegPopup}
-                setSelectSetBirthRegNo={setSelectSetBirthRegNo}
+                // setSelectSetBirthRegNo={setSelectSetBirthRegNo}
                 setSearchRegId={setSearchRegId}
               />
 
@@ -1704,7 +1802,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   optionKey="i18nKey"
                   name="childAadharNo"
                   value={childAadharNo}
-                  disable={isDisableEdit}
+                  //disable={childAadharNo === "" ? false : isDisableEdit}
                   onChange={setSelectChildAadharNo}
                   placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                   inputProps={{
@@ -1728,7 +1826,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   max={convertEpochToDate(new Date())}
                   //min={convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
-                  disable={isDisableEdit}
+                  disabled={searchedApp}
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -1740,7 +1838,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   name="birthDateTime"
                   onChange={(val) => handleTimeChange(val, setbirthDateTime)}
                   value={birthDateTime}
-                  disable={isDisableEdit}
+                  //disable={isDisableEdit}
                 />
               </div>
               <div className="col-md-3">
@@ -1755,7 +1853,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   option={menu}
                   selected={gender}
                   select={setselectGender}
-                  disable={isDisableEdit}
+                  disable={searchedApp}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1803,9 +1901,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       name="childFirstNameEn"
                       value={childFirstNameEn}
                       onChange={setSelectChildFirstNameEn}
-                      disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
-                      // disable={isChildName}
+                      //disable={childFirstNameEn === "" ? true : isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_FIRST_NAME_EN")}`}
                       {...(validation = {
                         pattern: "^[a-zA-Z-.`' ]*$",
@@ -1825,7 +1922,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       name="childMiddleNameEn"
                       value={childMiddleNameEn}
                       onChange={setSelectChildMiddleNameEn}
-                      disable={isDisableEdit}
+                      //disable={isDisableEdit}
                       placeholder={`${t("CR_MIDCR_ADOPTIVE_MIDDLE_NAME_EN LE_NAME_EN")}`}
                       {...(validation = {
                         pattern: "^[a-zA-Z-.`' ]*$",
@@ -1845,7 +1942,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       name="childLastNameEn"
                       value={childLastNameEn}
                       onChange={setSelectChildLastNameEn}
-                      disable={isDisableEdit}
+                      //disable={isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_LAST_NAME_EN")}`}
                       {...(validation = {
                         pattern: "^[a-zA-Z-.`' ]*$",
@@ -1873,7 +1970,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       value={childFirstNameMl}
                       onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectChildFirstNameMl}
-                      disable={isDisableEdit}
+                      //disable={isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_FIRST_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1894,7 +1991,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       value={childMiddleNameMl}
                       onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectChildMiddleNameMl}
-                      disable={isDisableEdit}
+                      //disable={isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_MIDDLE_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1915,7 +2012,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       value={childLastNameMl}
                       onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectChildLastNameMl}
-                      disable={isDisableEdit}
+                      //disable={isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_LAST_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1954,13 +2051,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     value={AdoptionDecreOrderNo}
                     // onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectDeeOrderNo}
-                    disable={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
+                    //disable={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
                     placeholder={`${t("CR_ADOPTION_DECREE")}`}
                     {...(validation = {
-                      // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: AdoptionDeedNo === "" ? true : false,
-                      pattern: "^[0-9`' ]*$",
-                      type: "number",
+                      pattern: "/[!@#$%^&*()_+-=[]{};':\\|,.<>/?]/",
+                      type: "text",
                       title: t("CR_INVALID_ADOPTION_DECREE"),
                     })}
                   />
@@ -1976,7 +2072,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     max={convertEpochToDate(new Date())}
                     min={convertEpochToDate(new Date(childDOB))}
                     onChange={setSelectDeeOrderDate}
-                    disabled={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
+                    //disabled={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
                     //  inputFormat="DD-MM-YYYY"
                     placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
                     {...(validation = { isRequired: AdoptionDeedNo === "" ? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
@@ -1996,7 +2092,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     value={IssuingAuthority}
                     // onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectIssuingAuthority}
-                    disable={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
+                    //disable={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
                     placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
                     {...(validation = {
                       // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -2027,12 +2123,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     value={AdoptionDeedNo}
                     // onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectDeedNo}
-                    disable={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
+                    //disable={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
                     placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
                     {...(validation = {
-                      pattern: "^[0-9`' ]*$",
+                      pattern: "/[!@#$%^&*()_+-=[]{};':\\|,.<>/?]/",
                       isRequired: AdoptionDecreOrderNo == "" ? true : false,
-                      type: "number",
+                      type: "text",
                       title: t("CR_INVALID_ADOPTION_DEED_NO"),
                     })}
                   />
@@ -2048,7 +2144,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     max={convertEpochToDate(new Date())}
                     min={convertEpochToDate(new Date(childDOB))}
                     onChange={setSelectDeedRegDate}
-                    disabled={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
+                    //disabled={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
                     //  inputFormat="DD-MM-YYYY"
                     placeholder={`${t("CR_DEED_REG_DATE")}`}
                     {...(validation = { isRequired: AdoptionDecreOrderNo == "" ? true : false, title: t("CR_INVALID_DEED_REG_DATE") })}
@@ -2068,7 +2164,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     value={RegistrationAuthority}
                     // onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectRegistrationAuthority}
-                    disable={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
+                    //disable={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
                     placeholder={`${t("CR_REG_AUTHORITY")}`}
                     {...(validation = {
                       pattern: "^[a-zA-Z-.`' ]*$",
@@ -2123,7 +2219,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
-                  disable={isDisableEdit}
+                  disable={searchedApp}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -2139,6 +2235,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2157,6 +2254,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2185,6 +2283,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2215,6 +2314,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setWardNo={setWardNo}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2237,6 +2337,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setWardNo={setWardNo}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}

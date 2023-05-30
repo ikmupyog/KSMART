@@ -236,7 +236,7 @@ export const CRSearchMarriage = {
           value: response?.GroomDetails?.groomMotherAadharNo || "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_GROOM_MOTHER_NAME_EN")} / ${t("CR_GROOM_MOTHER_NAME_EN")}`,
+          title: `${t("CR_GROOM_MOTHER_NAME_EN")} / ${t("CR_GROOM_MOTHER_NAME_ML")}`,
           value: `${response?.GroomDetails?.groomMothernameEn} / ${response?.GroomDetails?.groomMothernameMl}`,
         }
       );
@@ -621,7 +621,7 @@ export const CRSearchMarriage = {
           value: response?.BrideDetails?.brideMotherAadharNo || "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_BRIDE_MOTHER_NAME_EN")} / ${t("CR_BRIDE_MOTHER_NAME_EN")}`,
+          title: `${t("CR_BRIDE_MOTHER_NAME_EN")} / ${t("CR_BRIDE_MOTHER_NAME_ML")}`,
           value: `${response?.BrideDetails?.brideMothernameEn} / ${response?.BrideDetails?.brideMothernameMl}`,
         }
       );
@@ -931,43 +931,43 @@ export const CRSearchMarriage = {
       asSectionHeader: true,
       values: [
         {
-          title: `${t("CR_WITNESS1_ADHAR_NO")}`,
+          title: `${t("CR_WITNESS1_ADHAR_SEARCH")}`,
           value: response?.WitnessDetails?.witness1AadharNo ? response?.WitnessDetails?.witness1AadharNo : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS1_NAME")}`,
+          title: `${t("CR_WITNESS1_NAME_SEARCH")}`,
           value: response?.WitnessDetails?.witness1NameEn ? response?.WitnessDetails?.witness1NameEn : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS1_AGE")}`,
+          title: `${t("CR_WITNESS1_AGE_SEARCH")}`,
           value: response?.WitnessDetails?.witness1Age ? response?.WitnessDetails?.witness1Age : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS1_ADDRESS")}`,
+          title: `${t("CR_WITNESS1_ADDRESS_SEARCH")}`,
           value: response?.WitnessDetails?.witness1AddresSEn ? response?.WitnessDetails?.witness1AddresSEn : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS1_MOBILE_NO")}`,
+          title: `${t("CR_WITNESS1_MOBILE_SEARCH")}`,
           value: response?.WitnessDetails?.witness1Mobile ? response?.WitnessDetails?.witness1Mobile : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS2_ADHAR_NO")}`,
+          title: `${t("CR_WITNESS2_ADHAR_SEARCH")}`,
           value: response?.WitnessDetails?.witness2AadharNo ? response?.WitnessDetails?.witness2AadharNo : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS2_NAME")}`,
+          title: `${t("CR_WITNESS2_NAME_SEARCH")}`,
           value: response?.WitnessDetails?.witness2NameEn ? response?.WitnessDetails?.witness2NameEn : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS2_AGE")}`,
+          title: `${t("CR_WITNESS2_AGE_SEARCH")}`,
           value: response?.WitnessDetails?.witness2Age ? response?.WitnessDetails?.witness2Age : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS2_ADDRESS")}`,
+          title: `${t("CR_WITNESS2_ADDRESS_SEARCH")}`,
           value: response?.WitnessDetails?.witness2AddresSEn ? response?.WitnessDetails?.witness2AddresSEn : "CR_NOT_RECORDED",
         },
         {
-          title: `${t("CR_WITNESS2_MOBILE_NO")}`,
+          title: `${t("CR_WITNESS2_MOBILE_SEARCH")}`,
           value: response?.WitnessDetails?.witness2Mobile ? response?.WitnessDetails?.witness2Mobile : "CR_NOT_RECORDED",
         },
       ],

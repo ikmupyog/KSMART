@@ -98,7 +98,7 @@ const SearchFields = ({ register, control, reset, watch, tenantId, t,previousPag
                 {t("CR_GENDER")}</label>
             <Controller
                 control={control}
-                name="DeceasedGender"
+                name="deceasedGender"
                 render={(props) => (
                     <Dropdown
                         selected={props.value}

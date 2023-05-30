@@ -446,6 +446,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     setEmail(e.target.value);
   });
   const selectStructureType = (value => {
+    dispatchDoor({ type: "CLEAR_STATE" });
     setStructureType(value);
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
@@ -668,6 +669,21 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         });
         return [
           ...stateDoor
+        ];
+      case "CLEAR_STATE":
+        return [
+          {
+            blockNo: "",
+            surveyNo: "",
+            subDivisionNo: "",
+            partitionNo: "",
+            doorNo: "",
+            doorNoSub: "",
+            vehicleNo: "",
+            vesselNo: "",
+            isResurveyed: "",
+            stallNo: "",
+          }
         ];
     }
   };
@@ -997,7 +1013,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         validation = false;
       }
     }
-    if((value2 === "VEHICLE") && (structurePlaceSubtype.code === "MOTOR_VEHICLE") && (formStateDoor[0].vehicleNo === "")) {
+    if((value2 === "VEHICLE") && (structurePlaceSubtype?.code === "MOTOR_VEHICLE") && (formStateDoor[0]?.vehicleNo === "" || formStateDoor[0]?.vehicleNo === null)) {
       setErrorMessage(t("TL_INVALID_VECHICLE_NO"));
       validation = false;
     }

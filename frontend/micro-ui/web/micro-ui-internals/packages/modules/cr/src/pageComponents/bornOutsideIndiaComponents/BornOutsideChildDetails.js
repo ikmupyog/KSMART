@@ -290,6 +290,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       
     }
   }
+  console.log(workFlowData, 'work');
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));

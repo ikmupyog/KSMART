@@ -27,9 +27,26 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
+  const { roles: userRoles, } = Digit.UserService.getUser().info;
+  const [isHospitalUser, setIsHospitalUser] = useState(false);
+  useEffect(() => {
+    // console.log("userRoles", userRoles);
+    if (userRoles.length > 0) {
+      if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER") {
+        setIsHospitalUser(true);
+      } else {
+        setIsHospitalUser(false);
+      }
+    }
+  }, [userRoles]);
+
   if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
-    //console.log(JSON.stringify(props));
+    console.log(JSON.stringify(props));
     sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
+    sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
+    let temp = {};
+    temp.ChildDetails = props.data?.ChildDetails[0];
+    Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
     window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
     return (
       <Banner
@@ -39,7 +56,24 @@ const BannerPicker = (props) => {
         successful={props.isSuccess}
       />
     );
-  } else {
+  } 
+  // else if (props.isSuccess && isHospitalUser && !isEditBirth) {
+  //   sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
+  //   sessionStorage.removeItem("Digit.CR_CREATE_BIRTH_REG");
+  //   let temp = {};
+  //   temp.ChildDetails = props.data?.ChildDetails[0];
+  //   Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+  //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+  //   return (
+  //     <Banner
+  //       message={GetActionMessage(props)}
+  //       applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+  //       info={props.isSuccess ? props.applicationNumber : ""}
+  //       successful={props.isSuccess}
+  //     />
+  //   );
+  // }
+   else {
     return (
       <Banner
         message={GetActionMessage(props)}
@@ -141,57 +175,57 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   }
   else
     //console.log(JSON.stringify(mutation));
-  if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false && isEditBirth === false) {
-    return (
-      <Card>
-        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
-        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+    if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false && isEditBirth === false) {
+      return (
+        <Card>
+          <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+          {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
      */}
-        <LinkButton
-          label={
-            <div className="response-download-button">
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                </svg>
-              </span>
-              <span className="download-button">{t("Acknowledgment")}</span>
-            </div>
-          }
-          //style={{ width: "100px" }}
-          onClick={handleDownloadPdf}
-        />
+          <LinkButton
+            label={
+              <div className="response-download-button">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                  </svg>
+                </span>
+                <span className="download-button">{t("Acknowledgment")}</span>
+              </div>
+            }
+            //style={{ width: "100px" }}
+            onClick={handleDownloadPdf}
+          />
 
-        {mutation?.data?.ChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-          pathname: `/digit-ui/citizen/payment/collect/${mutation.data.ChildDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
-          state: { tenantId: mutation.data.ChildDetails[0].tenantid },
-        }}>
-          <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-        </Link>}
-        <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-        </Link>
-      </Card>
-    );
-  } else if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false && isEditBirth === true) {
-    return (
-      <Card>
-        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
-      </Card>
-    );
-  } else {
-    return (
+          {mutation?.data?.ChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.ChildDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
+            state: { tenantId: mutation.data.ChildDetails[0].tenantid },
+          }}>
+            <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+          </Link>}
+          <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
+            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          </Link>
+        </Card>
+      );
+    } else if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false && isEditBirth === true) {
+      return (
+        <Card>
+          <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+        </Card>
+      );
+    } else {
+      return (
 
-      <Card>
-        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
-        {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}        
-        <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-        </Link>
-      </Card>
+        <Card>
+          <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
+          {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+          <Link to={window.location.href.includes("/citizen") ? `/digit-ui/citizen` : `/digit-ui/employee`}>
+            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          </Link>
+        </Card>
 
-    );
-  }
+      );
+    }
 
 };
 

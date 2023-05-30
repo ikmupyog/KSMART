@@ -1,16 +1,32 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Loader } from "@egovernments/digit-ui-react-components";
 import Toast from "./Toast";
 import UploadImages from "./UploadImages";
 import _ from "lodash";
 
-export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, moduleType = "property-upload", isMulti = true, extraParams = {} }) => {
+export const ImageUploadHandler = ({
+  uploadedImages,
+  onPhotoChange,
+  tenantId,
+  moduleType = "property-upload",
+  isMulti = true,
+  extraParams = {},
+  type,
+  t,
+}) => {
   // const __initImageIds = Digit.SessionStorage.get("PGR_CREATE_IMAGES");
   // const __initThumbnails = Digit.SessionStorage.get("PGR_CREATE_THUMBNAILS");
   const [image, setImage] = useState(null);
+  const [toast, setToast] = useState(false);
+  const [imageSizeError, setImageSizeError] = useState(false);
+  const [imageTypeError, setImageTypeError] = useState(false);
   // const [singleImage, setSingleImage] = useState(null);
   const [uploadedImagesThumbs, setUploadedImagesThumbs] = useState(null);
   const [uploadedImagesIds, setUploadedImagesIds] = useState(uploadedImages);
+
+  const [isGroomImageLoading, setIsGroomImageLoading] = useState(false);
+  const [isBrideImageLoading, setIsBrideImageLoading] = useState(false);
 
   const [rerender, setRerender] = useState(1);
   const [imageFile, setImageFile] = useState(null);
@@ -44,22 +60,28 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
   }, [uploadedImagesIds]);
 
   useEffect(() => {
-    if (imageFile && imageFile.size > 2097152) {
-      setError("File is too large");
-    } 
-    // else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
-    //   setError("Can't upload multiple images");
-    // }
-     else {
-      setImage(imageFile);
+    if(imageFile) {
+      if (imageFile.size > 2097152) {
+        setImageSizeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
+      // else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
+      //   setError("Can't upload multiple images");
+      // }
+      else if (imageFile?.name?.match(/\.(jpg|jpeg|png)$/)) {
+        setImage(imageFile);
+      } else {
+        setImageTypeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      }
     }
-    // if (module === "marriage") {
-    //   console.log("Hi module");
-    //   setSingleImage(imageFile);
-    // } else {
-    //   console.log("Hi module else");
-    // setImage(imageFile);
-    // }
+    
   }, [imageFile]);
 
   const addUploadedImageIds = useCallback(
@@ -87,16 +109,14 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
   }
 
   const uploadImage = useCallback(async () => {
+    if (type === "groomImage") {
+      setIsGroomImageLoading(true);
+    } else if (type === "brideImage") {
+      setIsBrideImageLoading(true);
+    }
     const response = await Digit.UploadServices.Filestorage(moduleType, image, tenantId, extraParams);
     setUploadedImagesIds(addUploadedImageIds(response));
   }, [addUploadedImageIds, image]);
-
-  // const uploadSingleImage = useCallback(async () => {
-  //   console.log("Hi from UseEffect");
-  //   const response = await Digit.UploadServices.Filestorage("cr-marriage", image, tenantId);
-  //   console.log({ response });
-  //   setUploadedImagesIds(addUploadedImageIds(response));
-  // }, [addUploadedSingleImageIds, singleImage]);
 
   function addImageThumbnails(thumbnailsData) {
     var keys = Object.keys(thumbnailsData.data);
@@ -120,6 +140,11 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
     if (uploadedImagesIds !== null && uploadedImagesIds.length > 0) {
       const res = await Digit.UploadServices.Filefetch(uploadedImagesIds, tenantId);
       addImageThumbnails(res);
+      if (type === "groomImage") {
+        setIsGroomImageLoading(false);
+      } else if (type === "brideImage") {
+        setIsBrideImageLoading(false);
+      }
     }
   }, [uploadedImagesIds]);
 
@@ -140,12 +165,31 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
   return (
     <React.Fragment>
       {error && <Toast error={true} label={error} onClose={() => setError(null)} />}
-      <UploadImages
-        isMulti={isMulti}
-        onUpload={getImage}
-        onDelete={deleteImage}
-        thumbnails={uploadedImagesThumbs ? uploadedImagesThumbs.map((o) => o.image) : []}
-      />
+      {isBrideImageLoading || isGroomImageLoading ? (
+        <Loader></Loader>
+      ) : (
+        <UploadImages
+          isMulti={isMulti}
+          onUpload={getImage}
+          onDelete={deleteImage}
+          thumbnails={uploadedImagesThumbs ? uploadedImagesThumbs.map((o) => o.image) : []}
+        />
+      )}
+      {toast && (
+        <Toast
+          error={imageSizeError || imageTypeError}
+          label={
+            imageSizeError || imageTypeError
+              ? imageSizeError
+                ? t("IMAGE_SIZE_VALIDATION_MESSAGE")
+                : imageTypeError
+                ? t("IMAGE_TYPE_VALIDATION_MESSAGE")
+                : setToast(false)
+              : setToast(false)
+          }
+          onClose={() => setToast(false)}
+        />
+      )}
     </React.Fragment>
   );
 };

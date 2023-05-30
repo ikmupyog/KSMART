@@ -185,6 +185,13 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
   const [ownerState, disptachowner] = formDatalocal?.tradeLicenseDetail?.ownerspremise?.length > 0 ? useReducer(reducerowner, storedOwnerData, initowneredit) : useReducer(reducerowner, storedOwnerData, initowner);
 
   function selectLicenseeType(value) {
+    setOrganisationregistrationno("");  
+    selectLicensingInstitutionType(""); 
+    setInstitutionName(""); 
+    setLicenseUnitId(""); 
+    setContactNo(""); 
+    setEmail(""); 
+    setInsaddress("");
     if (value.code !== "JOINT_PARTNERSHIP" && appState.length > 1) {
       setErrorMessage("Multiple Applicant Found Remove....");
       setToast(true)
@@ -193,6 +200,11 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
       }, 2000);
     } else
       setLicenseeType(value);
+      clearApplicant();
+  }
+  function clearApplicant(){
+    initapplicant();
+    initowner();
   }
 
   function selectLicensingInstitutionType(value) {

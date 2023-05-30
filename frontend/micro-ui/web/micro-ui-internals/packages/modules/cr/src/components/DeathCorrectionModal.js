@@ -21,6 +21,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const [error, setError] = useState([]);
   const [isAlreadyUploaded,setIsAlreadyUploaded] = useState(false)
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
+  
 
   useEffect(() => {
     if (selectedConfig?.Documents?.length > 0) {
@@ -102,10 +103,10 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     });
 
     const documentName = documents.join(` ${t("CR_OR")} `);
-
     return documentName;
   };
 
+  
   useEffect(() => {
     (async () => {
       if (file && file?.type) {
@@ -186,6 +187,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
         {selectedConfig?.Documents?.map((item, index) => (
           <div>
             {!selectedDocs.includes(item.DocumentId?.toString()) && (
+            
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
                 <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
@@ -200,7 +202,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
                       onDeleteown(item.DocumentId);
                       setUploadedFile(null);
                     }}
-                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                    message={uploadedFile ? `${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                     iserror={getFileUploadFieldError(item)}
                   />
 

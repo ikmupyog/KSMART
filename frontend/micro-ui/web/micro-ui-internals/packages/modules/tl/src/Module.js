@@ -57,8 +57,13 @@ import SearchCitizenApplication from "./components/SearchCitizenApplication"
 import CancelTradeLicence from "./pages/citizen/Cancellation";
 import TLCancelTradeLicenceDetails from "./pageComponents/TLCancelTradeLicenceDetails"
 import TLCancellationAcknowledgement from "./pages/citizen/Cancellation/TLCancellationAcknowledgement"
-
-
+import SearchMigrate from "./pages/employee/SearchMigrate";
+import SearchLicenseMigration from "./components/SearchLicenseMigration";
+import TLLicenseUnitDetPDE from "./pageComponents/TLLicenseUnitDetPDE";
+import TLLicenseApplicantDetPDE from "./pageComponents/TLLicenseApplicantDetPDE";
+import MigrateApplication from "./pages/employee/MigrateApplication";
+import TLLicenseUnitDetEdit from "./pageComponents/TLLicenseUnitDetEdit";
+import TLLicenseApplicantDetEdit from "./pageComponents/TLLicenseApplicantDetEdit";
 
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -164,7 +169,14 @@ const componentsToRegister = {
   SearchCitizenApplication,
   CancelTradeLicence,
   TLCancelTradeLicenceDetails,
-  TLCancellationAcknowledgement
+  TLCancellationAcknowledgement,
+  SearchMigrate,
+  SearchLicenseMigration,
+  TLLicenseUnitDetPDE,
+  TLLicenseApplicantDetPDE,
+  MigrateApplication,
+  TLLicenseUnitDetEdit,
+  TLLicenseApplicantDetEdit
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card, Loader } from "@egovernments/digit-ui-react-components";
@@ -29,6 +29,11 @@ const DesktopInbox = ({
   const GetSlaCell = (value) => {
     return value < 0 ? <span className="sla-cell-error">{value || ""}</span> : <span className="sla-cell-success">{value || ""}</span>;
   };
+
+
+  useEffect(()=>{
+    console.log("data passed==",data);
+  },[data]);
 
   const handleLinkClick = (finaldata) => {
 
@@ -275,7 +280,7 @@ const DesktopInbox = ({
       accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
-        console.log("row data birth==",row.original);
+        console.log("row data birth==inbox",row.original);
         return (
           <div>
             <span className="link">
@@ -301,7 +306,7 @@ const DesktopInbox = ({
     {
       Header: t("CS_COMPLAINT_DETAILS_CURRENT_STATUS"),
       Cell: ({ row }) => {
-        return GetCell(t(`CS_COMMON_${row.original["applicationStatus"]}`));
+        return GetCell(t(`CS_COMMON_${row.original.status}`));
       },
     }
   ]), []);

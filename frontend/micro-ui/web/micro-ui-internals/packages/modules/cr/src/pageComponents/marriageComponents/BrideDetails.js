@@ -12,6 +12,7 @@ import {
   Loader,
   Toast,
   SubmitBar,
+  PopUp,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -153,6 +154,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
   const [selectedOption, setSelectedOption] = useState(
     formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
   );
+  const [isPopup, setIsPopup] = useState(false);
+  const [genderValue, setGenderValue] = useState("");
   const [AadharError, setAadharError] = useState(false);
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const [brideFirstnameEnError, setbrideFirstnameEnError] = useState(false);
@@ -301,8 +304,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
     }
   }
   function setSelectbrideGender(value) {
-    // console.log("gender" + value);
-    setbrideGender(value);
+    setGenderValue(value);
+    if (value?.code === "MALE") {
+      setIsPopup(true);
+    } else {
+      setbrideGender(value);
+    }
   }
 
   // let cmbProfession = [];
@@ -577,7 +584,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideEmailid(e.target.value);
+      setbrideEmailid(e.target.value.trim());
     }
   }
   function setSelectbrideSocialSecurityNo(e) {
@@ -623,13 +630,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
 
   useEffect(() => {
     if (!isEditMarriage) {
-      if (gender.length > 0) {
+      if (gender.length > 0 && cmbMaritalStatus.length > 0) {
         const selectedGender = gender.filter((option) => option.code === "FEMALE");
-        console.log({ selectedGender });
         setbrideGender(selectedGender[0]);
+        const currentMarritalStatus = cmbMaritalStatus?.filter((status) => status.code === "UNMARRIED");
+        setbrideMaritalstatusID(currentMarritalStatus[0]);
       }
     }
-  }, [gender.length]);
+  }, [gender.length, cmbMaritalStatus.length]);
 
   useEffect(() => {
     if (isEditMarriage) {
@@ -997,6 +1005,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
       });
     }
   };
+  console.log({ brideGender });
   console.log("Bride", formData);
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
@@ -1014,7 +1023,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             !brideFirstnameEn ||
             !brideMobile ||
             !brideFirstnameMl ||
-            !brideEmailid ||
             !brideGender ||
             !brideDOB ||
             !brideMaritalstatusID ||
@@ -1023,7 +1031,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
             (brideResidentShip === "FOREIGN" ? !brideSocialSecurityNo || !bridePassportNo : false) ||
             (brideParentGuardian === "PARENT" ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl : false) ||
             (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl : false) ||
-            (brideMaritalstatusID?.code === "MARRIED" ? !brideIsSpouseLiving : false) 
+            (brideMaritalstatusID?.code === "MARRIED" ? !brideIsSpouseLiving : false)
           }
         >
           <div className="row">
@@ -1307,19 +1315,19 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_BRIDE_EMAIL")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"email"}
+                  type="email"
                   optionKey="i18nKey"
                   name="brideEmailid"
                   value={brideEmailid}
                   onChange={setSelectbrideEmailid}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
                   //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                  {...(validation = { isRequired: true, title: t("CR_EMAIL_ERROR") })}
+                  {...(validation = { isRequired: false, title: t("CR_EMAIL_ERROR") })}
                 />
               </div>
             </div>
@@ -1350,7 +1358,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
                 <DatePicker
                   date={brideDOB}
                   name="brideDOB"
-                  max={moment().subtract(18, "year").format("YYYY-MM-DD")}
+                  max={moment(formData?.MarriageDetails?.marriageDOM).subtract(18, "year").format("YYYY-MM-DD")}
                   //max={convertEpochToDate(new Date())}
                   onChange={setSelectbrideDOB}
                   placeholder={`${t("CR_BRIDE_DATE_OF_BIRTH")}`}
@@ -1439,7 +1447,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
               </h1>
             </div>
           </div>
@@ -1657,6 +1665,43 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
               </div>
             </div>
           )}
+          {isPopup && (
+            <PopUp>
+              <div className="popup-module" style={{ borderRadius: "8px" }}>
+                <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                  <div style={{ fontSize: "18px", margin: "10px" }}>You selected gender as 'Male', Do you want to continue?</div>
+                  <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                    <button
+                      style={{
+                        backgroundColor: "orange",
+                        padding: "4px 16px",
+                        color: "white",
+                        borderRadius: "8px",
+                      }}
+                      onClick={() => {
+                        setbrideGender(genderValue);
+                        setIsPopup(false);
+                        setGenderValue("");
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                      onClick={() => {
+                        setIsPopup(false);
+                        const selectedGender = gender.filter((option) => option.code === "FEMALE");
+                        setbrideGender(selectedGender[0]);
+                        setGenderValue("");
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </PopUp>
+          )}
 
           {toast && (
             <Toast
@@ -1741,13 +1786,13 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride, isEdi
               onClose={() => setToast(false)}
             />
           )}
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <h1 className="">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
               </h1>
             </div>
-          </div>
+          </div> */}
         </FormStep>
       </React.Fragment>
     );

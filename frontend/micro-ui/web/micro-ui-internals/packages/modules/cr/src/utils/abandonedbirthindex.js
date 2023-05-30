@@ -326,6 +326,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
         birthDateTime: parseInt(data?.AbandonedChildDetails?.birthDateTime),
+        am_pm: data?.AbandonedChildDetails?.displayAmPm,
         gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
         tenantid: data?.AbandonedChildDetails?.tenantId,
         hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,
@@ -371,7 +372,7 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
         applicationtype: "CRBRAB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: "ABANDONEDBIRTH",
         ParentsDetails: {
           motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
@@ -425,6 +426,7 @@ export const convertToEditAbandonedBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
         birthDateTime:data?.AbandonedChildDetails?.birthDateTime,
+        am_pm: data?.AbandonedChildDetails?.displayAmPm,
         gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
         tenantid: data?.AbandonedChildDetails?.tenantId,
         hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,

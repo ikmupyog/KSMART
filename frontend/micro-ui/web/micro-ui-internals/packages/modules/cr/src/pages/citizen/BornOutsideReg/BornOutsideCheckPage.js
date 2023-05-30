@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/BOBRTimeline";
+import _ from "lodash";
 
 const ActionButton = ({ jumpTo }) => {
   const { t } = useTranslation();
@@ -26,8 +27,6 @@ const ActionButton = ({ jumpTo }) => {
     sessionStorage.setItem("isDirectRenewal", false);
     history.push(jumpTo);
   }
-
-
 
   return (
     <LinkButton
@@ -48,7 +47,7 @@ const getPath = (path, params) => {
 };
 
 const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
-  console.log({ value });
+  console.log(value, 'value');
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -64,6 +63,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
     BornOutsideAddressPage,
     InitiatorinfoDetails,
     BornOutsideStaticInfn,
+    BornOutsideDocuments,
     isEditProperty,
     cpt,
   } = value;
@@ -131,387 +131,443 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
-
-      <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
-        <Accordion expanded={true} title={t("CR_BIRTH_CHILD_DETAILS")}
-          content={<StatusTable >
-            <div className="row">
-              <div className="col-md-12">
+        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <Accordion
+          expanded={true}
+          title={t("CR_BIRTH_CHILD_DETAILS")}
+          content={
+            <StatusTable>
+              <div className="row">
                 <div className="col-md-12">
-                  <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
-                  </h1>
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                    </h1>
+                  </div>
                 </div>
               </div>
-            </div>
-           {/* ** Reg details ** */}
-            <div className="row">
-              <div className="col-md-12">
-              <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_CHILD_AADHAAR")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childAadharNo}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CHILD_PASSPORT_NO")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childPassportNo}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_ARRIVAL")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(BornOutsideChildDetails?.childArrivalDate)}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(BornOutsideChildDetails?.childDOB)}</CardText>
-                </div>
-                </div>
-                </div>
-                <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.gender.code}</CardText>
-                </div>
-              </div>
-            </div>
-          {/* ** child details ** */}
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.outsideBirthPlaceEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.outsideBirthPlaceMl}</CardText>
-                </div>
-                </div>
-                </div>
-            <div className="row">
-              <div className="col-md-12">
+              {/* ** Reg details ** */}
+              <div className="row">
                 <div className="col-md-12">
-                  <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
-                  </h1>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_CHILD_AADHAAR")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childAadharNo}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CHILD_PASSPORT_NO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childPassportNo}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_ARRIVAL")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {convertEpochToDate(BornOutsideChildDetails?.childArrivalDate)}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {convertEpochToDate(BornOutsideChildDetails?.childDOB)}
+                    </CardText>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childFirstNameEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childMiddleNameEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childLastNameEn}</CardText>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.gender.code}</CardText>
+                  </div>
                 </div>
               </div>
-            </div>
-
-
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childFirstNameMl}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childMiddleNameMl}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childLastNameMl}</CardText>
+              {/* ** child details ** */}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideChildDetails?.outsideBirthPlaceEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideChildDetails?.outsideBirthPlaceMl}
+                    </CardText>
+                  </div>
                 </div>
               </div>
-            </div>
-{/* ** birth place information ** */}
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_COUNTRY")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.country?.name}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.provinceEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.provinceMl}</CardText>
-                </div>
-                </div>
-                </div>
-                <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.cityTownEn}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_ML")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.cityTownMl}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.postCode}</CardText>
-                  {<ActionButton jumpTo={`${routeLink}/born-outside-child-details`} />}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
+                    </h1>
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childFirstNameEn}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childMiddleNameEn}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childLastNameEn}</CardText>
+                  </div>
+                </div>
+              </div>
 
-            </StatusTable>}
-          />
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childFirstNameMl}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childMiddleNameMl}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.childLastNameMl}</CardText>
+                  </div>
+                </div>
+              </div>
+              {/* ** birth place information ** */}
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_COUNTRY")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.country?.name}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.provinceEn}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.provinceMl}</CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.cityTownEn}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.cityTownMl}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.postCode}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/born-outside-child-details`} />}
+                  </div>
+                </div>
+              </div>
+            </StatusTable>
+          }
+        />
 
-<Accordion expanded={false} title={t("CR_PARENTS_DETAILS")}
-          content={<StatusTable >
-
-            <div className="row">
+        <Accordion
+          expanded={false}
+          title={t("CR_PARENTS_DETAILS")}
+          content={
+            <StatusTable>
+              <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
                     <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
                   </h1>
                 </div>
-            </div>
-            <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherFirstNameEn}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherFirstNameMl}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_PASSPORT_NO")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherPassportNo}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherNationality?.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherMarriageAge}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherMarriageBirth}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherEducation?.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.motherProfession?.name}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-              <div className="col-md-12">
-                <h1 className="summaryheadingh">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
-                </h1>
               </div>
-            </div>
-            <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherFirstNameEn}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_ML")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherFirstNameMl}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_PASSPORT_NO")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherPassportNo}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
+              <div className="row">
+                <div className="col-md-12">
                   <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherNationality?.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherEducation?.code}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherProfession?.code}</CardText>
-                    </div>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherFirstNameEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherFirstNameMl}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_PASSPORT_NO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherPassportNo}
+                    </CardText>
                   </div>
                 </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherNationality?.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherMarriageAge}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherMarriageBirth}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherEducation?.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.motherProfession?.name}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
+                  </h1>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.fatherFirstNameEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.fatherFirstNameMl}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_PASSPORT_NO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.fatherPassportNo}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.fatherNationality?.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.fatherEducation?.code}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideParentsDetails?.fatherProfession?.code}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
 
-                <div className="row">
-                  <div className="col-md-12">
+              <div className="row">
+                <div className="col-md-12">
                   <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_RELIGION")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.Religion?.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_CONTACT_NO")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherMobile}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_EMAIL")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherEmail} </CardText>
-                      {<ActionButton jumpTo={`${routeLink}/born-outside-parents-details`} />}
-                    </div>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_RELIGION")}`} :</CardText>
                   </div>
-                </div>
-                
-            </StatusTable>}
-          />
-          <Accordion expanded={false} title={t("BIRTH_TIME_LINE_ADDRESS")}
-          content={<StatusTable>
-            <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_FOREIGN_ADDRESS")}`}</span>
-                    </h1>
-                  </div>
-                </div>
-                
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_COUNTRY")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideCountry.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_ML")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
                   <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode}</CardText>
-                    </div>
-                    <div className="row">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.Religion?.name}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_CONTACT_NO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherMobile}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_EMAIL")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherEmail} </CardText>
+                    {<ActionButton jumpTo={`${routeLink}/born-outside-parents-details`} />}
+                  </div>
+                </div>
+              </div>
+            </StatusTable>
+          }
+        />
+        <Accordion
+          expanded={false}
+          title={t("BIRTH_TIME_LINE_ADDRESS")}
+          content={
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_FOREIGN_ADDRESS")}`}</span>
+                  </h1>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_COUNTRY")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.presentOutSideCountry.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STATE_REGION_PROVINCE_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage.code}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode}
+                    </CardText>
+                  </div>
+                  <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_EN")}`} :</CardText>
@@ -551,218 +607,706 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </div>
                   </div>
-                  </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
-                    </h1>
-                  </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
+                  </h1>
                 </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage.name}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaWardNo.namecmb}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl}</CardText>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl}</CardText>
-                      {<ActionButton jumpTo={`${routeLink}/born-outside-address`} />}
-                    </div>
-                  </div>
-                </div>
-          </StatusTable>}
-          />
-           <Accordion expanded={false} title={t("CR_STATSTICAL_INFORMATION_HEADER")}
-          content={<StatusTable>
-            <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>
-                    </h1>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.birthWeight}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PREGNANCY_DURATION")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.pregnancyDuration}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DELIVERY_METHOD")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.deliveryMethods?.name}</CardText>
-                    </div>
-                    </div>
-                    </div>
-                    <div className="row">
-                  <div className="col-md-12">
+              </div>
+              <div className="row">
+                <div className="col-md-12">
                   <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.medicalAttensionSub?.name}</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`} :</CardText>
-                    </div>
-                    <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.orderofChildren}</CardText>
-                    </div>
-                      </div>
-                      </div>
-                      <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMANT_DETAILS")}`}</span>
-                    </h1>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage.name}
+                    </CardText>
                   </div>
                 </div>
-                    <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaWardNo.namecmb}
+                    </CardText>
+                  </div>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.relation?.code}</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode}
+                    </CardText>
+                  </div>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME")}`} :</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl}
+                    </CardText>
+                  </div>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarNameEn}</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl}
+                    </CardText>
+                  </div>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl}
+                    </CardText>
+                    {<ActionButton jumpTo={`${routeLink}/born-outside-address`} />}
+                  </div>
                 </div>
-               
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAadhar}</CardText>
+              </div>
+            </StatusTable>
+          }
+        />
+        <Accordion
+          expanded={false}
+          title={t("CR_STATSTICAL_INFORMATION_HEADER")}
+          content={
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>
+                  </h1>
                 </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.birthWeight}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PREGNANCY_DURATION")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.pregnancyDuration}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DELIVERY_METHOD")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideStaticInfn?.deliveryMethods?.name}
+                    </CardText>
+                  </div>
                 </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {BornOutsideStaticInfn?.medicalAttensionSub?.name}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.orderofChildren}</CardText>
+                  </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMANT_DETAILS")}`}</span>
+                  </h1>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarMobile}</CardText>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.relation?.code}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMANT_NAME")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarNameEn}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                  </div>
+
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAadhar}</CardText>
+                  </div>
                 </div>
-                <div className="col-md-4">
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarMobile}</CardText>
+                  </div>
+                  <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                   </div>
                   <div className="col-md-4">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAddress}
-                  </CardText>
-                  {<ActionButton jumpTo={`${routeLink}/born-outside-static-infn`} />}
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAddress}</CardText>
+                    {<ActionButton jumpTo={`${routeLink}/born-outside-static-infn`} />}
+                  </div>
                 </div>
+              </div>
+            </StatusTable>
+          }
+        />
+        <Accordion
+          expanded={false}
+          title={t("CR_BORN_OUTSIDE_INDIA_DOCUMENTS")}
+          content={
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BORN_OUTSIDE_DOCUMENTS")}`}</span>
+                  </h1>
+                </div>
+              </div>
+
+              <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CHILD_BIRTH_CERTIFICATE")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.childBirthCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.childBirthCertificate)?.pdfUrl}
+                              alt="Child Birth Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.childBirthCertificate)?.small}
+                            alt="Child Birth Certificate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.childBirthCertificate)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.childBirthCertificate)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.childBirthCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CHILD'S_PASSPORT")}`} :</CardText>
+                        </div>
+                      </div>
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.childPassport)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.childPassport)?.pdfUrl}
+                              alt="Child Passport Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.childPassport)?.small}
+                            alt="Child Passport Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.childPassport)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.childPassport)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.childPassport)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CERTIFICATE_OF_INDIAN_CITIZENSHIP")}`} :</CardText>
+                        </div>
+                      </div>
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.citizenship)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.citizenship)?.pdfUrl}
+                              alt="Citizenship Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.citizenship)?.small}
+                            alt="Citizenship Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.citizenship)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.citizenship)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.citizenship)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER'S_PASSPORT")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.fatherPassport)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.fatherPassport)?.pdfUrl}
+                              alt="Father Passport Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.fatherPassport)?.small}
+                            alt="Father Passport Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.fatherPassport)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.fatherPassport)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.fatherPassport)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER'S_PASSPORT")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.motherPassport)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.motherPassport)?.pdfUrl}
+                              alt="Mother Passport Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.motherPassport)?.small}
+                            alt="Mother Passport Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.motherPassport)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.motherPassport)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.motherPassport)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DOCUMENT_ON_CANCELLING_VISA")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.cancellingVisa)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.cancellingVisa)?.pdfUrl}
+                              alt="Cancelling Visa Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.cancellingVisa)?.small}
+                            alt="Cancelling Visa Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.cancellingVisa)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.cancellingVisa)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.cancellingVisa)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRESS_PROOF")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.addressProof)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.addressProof)?.pdfUrl}
+                              alt="Address Proof Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.addressProof)?.small}
+                            alt="Address Proof Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.addressProof)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.addressProof)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.addressProof)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NOTARY_AFFIDAVIT_OF_PERMANENT_SETTLING_AND_RESIDENCY_IN_INDIA")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.notary)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.notary)?.pdfUrl}
+                              alt="Notary Affidavit Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.notary)?.small}
+                            alt="Notary Affidavit Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.notary)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.notary)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.notary)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MARRIAGE_CERTIFICATE_OF_PARENTS")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.marriageCertificate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.marriageCertificate)?.pdfUrl}
+                              alt="Marriage Certificate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.marriageCertificate)?.small}
+                            alt="Marriage Certificate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.marriageCertificate)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.marriageCertificate)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.marriageCertificate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROCEEDINGS_OF_SUB_DIVISIONAL_MAGISTRATE")}`} :</CardText>
+                        </div>
+                      </div>
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.magistrate)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.magistrate)?.pdfUrl}
+                              alt="Proceedings of sub divisional magistrate Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.magistrate)?.small}
+                            alt="Proceedings of sub divisional magistrate Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.magistrate)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.magistrate)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.magistrate)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CHECK_NATIONALITY")}`} :</CardText>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        {_.head(BornOutsideDocuments?.nationality)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(BornOutsideDocuments?.nationality)?.pdfUrl}
+                              alt="Check Nationality Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(BornOutsideDocuments?.nationality)?.small}
+                            alt="Check Nationality Image"
+                          />
+                        )}
+                        <a
+                          target="_blank"
+                          href={
+                            _.head(BornOutsideDocuments?.nationality)?.type === "pdf"
+                              ? _.head(BornOutsideDocuments?.nationality)?.pdfUrl
+                              : _.head(BornOutsideDocuments?.nationality)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
                     </div>
                   </div>
+                </div>
 
-          </StatusTable>}
-          />
+            </StatusTable>
+          }
+        />
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">
@@ -779,159 +1323,24 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                 onChange={setDeclarationInfo}
                 value={isInitiatorDeclaration}
                 checked={isInitiatorDeclaration}
-              // disable={isDisableEdit}
+                // disable={isDisableEdit}
               />
             </div>
           </div>
 
-
           {toast && (
             <Toast
               error={InitiatorDeclareError}
-              label={
-                InitiatorDeclareError
-                  ? InitiatorDeclareError
-                    ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
-                  : setToast(false)
-              }
+              label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
               onClose={() => setToast(false)}
             />
           )}
           {""}
           <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBornOutsideSubmit} />
         </div>
-
-    </Card>
+      </Card>
     </React.Fragment>
   );
 };
 
 export default BornOutsideCheckPage;
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-

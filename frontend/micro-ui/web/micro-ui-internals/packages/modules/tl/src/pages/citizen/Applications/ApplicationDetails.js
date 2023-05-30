@@ -32,6 +32,7 @@ const TLApplicationDetails = () => {
   const { tenantId } = useParams();
   const history = useHistory();
   const [bill, setBill] = useState(null);
+  const [correctiontag, setCorrectiontag] = useState(null);
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const { tenants } = storeData || {};
@@ -73,6 +74,7 @@ const TLApplicationDetails = () => {
 
   const { data: paymentsHistory } = Digit.Hooks.tl.useTLPaymentHistory(tenantId, id);
   if (application !== undefined && application_cert === undefined) {
+    setCorrectiontag(application[0]?.correction && application[0]?.correction !== undefined ?  JSON.parse(application[0]?.correction) : "");
     Digit.PaymentService.fetchBill(tenantId, {
       consumerCode: application[0]?.applicationNumber,
       businessService: application[0]?.businessService,
@@ -352,9 +354,11 @@ const TLApplicationDetails = () => {
         applicationDocuments += doc?.documentType === "" ? doc?.documentType : ", " + doc?.documentType
       });
       let fileStoreId = application?.fileStoreId;
+      let serviceV = application?.applicationType === "NEW" ? "IFTE & OS New License" : application?.applicationType === "RENEWAL" ? "IFTE & OS Renewal License" : "";
       let finalJson =
         [{
           tenantId: tenantIdV,
+          service : serviceV,
           applicationNumber: applicationNumberV,
           licenseUnitName: licenseUnitName,
           applicationDate: applicationDateV,
@@ -400,6 +404,7 @@ const TLApplicationDetails = () => {
       setShowOptions(false);
     }
   };
+  
 
    // const downloadTLcertificate = async () => {
   //   const TLcertificatefile = await Digit.PaymentService.generatePdf(tenantId, { Licenses: application_cert }, "tlcertificate");
@@ -437,8 +442,6 @@ const TLApplicationDetails = () => {
       //   values : []
       // }
       
-      
-
   return (
     <React.Fragment>
       <div className="cardHeaderWithOptions">
@@ -461,6 +464,15 @@ const TLApplicationDetails = () => {
                 text={application?.applicationNumber}
                 textStyle={{ whiteSpace: "pre-wrap", border: "none", width: "70%" }}
               />
+              {(application.licenseNumber !== null) && (
+              (
+                <Row
+                className="employee-data-table"
+                label={t("TL_LICENSE_NUMBERL_LABEL")}
+                text={application?.licenseNumber}
+                textStyle={{ whiteSpace: "pre-wrap", border: "none", width: "70%" }}
+              />
+              ))}
               <Row label={t("TL_APPLICATION_CATEGORY")} text={t("ACTION_TEST_TRADE_LICENSE")} textStyle={{ whiteSpace: "pre-wrap", width: "70%" }} />
               <Row
                 style={{ border: "none" }}
@@ -518,6 +530,78 @@ const TLApplicationDetails = () => {
                   </div>
                 );
               })}
+              { (application?.correctionId !== null && application?.correctionAppNumber !== null) && (
+                <div className="employee-data-table">
+                  <CardSectionHeader style={multiHeaderStyle}>{`${t("TL_CORRECTION_DETAILS")}`}</CardSectionHeader>
+                  {(correctiontag?.licenseUnitName)  && (
+                    <Row label={`${t("TL_COMMON_TABLE_COL_TRD_NAME")}`} text={t(correctiontag.licenseUnitName)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                   )}
+                  {(correctiontag?.licenseUnitNameLocal)  && (
+                    <Row label={`${t("TL_COMMON_TABLE_COL_TRD_NAME")}`+"(Malayalam)"} text={t(correctiontag.licenseUnitNameLocal)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                   )}
+                   {
+                    correctiontag?.tradeUnits?.map((unit) => {
+                      return(<div><Row label={`${t("TRADELICENSE_TRADECATEGORY_LABEL")}`} text={t(`${unit?.businessCategory}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TRADELICENSE_TRADETYPE_LABEL")}`} text={t(`${unit?.businessType}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_NEW_TRADE_SUB_TYPE_LABEL")}`} text={t(`${unit?.businessSubtype}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} /></div>)
+                    })
+                   }
+                   {
+                    correctiontag?.owners?.map((owner) => {
+                      return(<div><Row label={`${t("TL_LICENSEE_AADHAR_NO")}`} text={t(`${owner?.owneraadhaarNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_LICENSEE_NAME")}`} text={t(`${owner?.ownerName}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_CONTACT_NO")}`} text={t(`${owner?.ownerContactNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_LOCALITY")}`} text={t(`${owner?.locality}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_STREET_NAME")}`} text={t(`${owner?.street}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_HOUSE_NO_NAME")}`} text={t(`${owner?.houseName}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_POSTOFFICE")}`} text={t(`${owner?.postOffice}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      <Row label={`${t("TL_PIN")}`} text={t(`${owner?.pincode}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      </div>)
+                    })
+                   }
+                   {(application?.tradeLicenseDetail?.structureType?.includes("LAND")) && (
+                     application?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+                      return (
+                        <div>
+                          <Row label={`${t("TL_LOCALIZATION_BLOCK_NO")}`} text={t(`${structreplace?.blockNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                          <Row label={`${t("TL_LOCALIZATION_SURVEY_NO")}`} text={t(`${structreplace?.surveyNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                          <Row label={`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`} text={t(`${structreplace?.subDivisionNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                          <Row label={`${t("TL_LOCALIZATION_PARTITION_NO")}`} text={t(`${structreplace?.partitionNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                        </div>
+                      )
+                    }))
+                  }
+                  {(application?.tradeLicenseDetail?.structureType?.includes("BUILDING")) && (
+                    application?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+                    return (
+                      <div>
+                        <Row label={`${t("TL_LOCALIZATION_DOOR_NO")}`} text={t(`${structreplace?.doorNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                        <Row label={`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`} text={t(`${structreplace?.doorNoSub}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      </div>
+                      )
+                    }))
+                  }
+                  {(application?.tradeLicenseDetail?.structureType?.includes("VEHICLE")) && (
+                    application?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+                    return (
+                      <div>
+                        <Row label={`${t("TL_VECHICLE_NO")}`} text={t(`${structreplace?.vehicleNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      </div>
+                      )
+                    }))
+                  }
+                  {(application?.tradeLicenseDetail?.structureType?.includes("WATER")) && (
+                    application?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+                    return (
+                      <div>
+                        <Row label={`${t("TL_VESSEL_NO")}`} text={t(`${structreplace?.vesselNo}`)} textStyle={{ whiteSpace: "pre", width: "70%" }} />
+                      </div>
+                      )
+                    }))
+                  }
+                </div>
+                )
+              }
 
               {workflowDocs?.length > 0 && <div>
                 <CardSubHeader>{t("TL_TIMELINE_DOCS")}</CardSubHeader>

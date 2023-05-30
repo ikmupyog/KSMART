@@ -274,6 +274,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
         birthDateTime: data?.StillBirthChildDetails?.birthDateTime,
+        am_pm: data?.ChildDetails?.displayAmPm,
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
@@ -319,7 +320,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
         applicationtype: "CRBRSB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.StillBirthChildDetails?.workFlowCode,
         StillBirthParentsDetails: {
           motherFirstNameEn: data?.StillBirthParentsDetails?.motherFirstNameEn,
@@ -329,7 +330,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           motherEducation: data?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthParentsDetails?.motherEducation.code : null,
           motherProfession: data?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthParentsDetails?.motherProfession.code : null,
           motherNationality: data?.StillBirthParentsDetails?.motherNationality ? data?.StillBirthParentsDetails?.motherNationality.code : null,
-          orderofChildren: data?.StillBirthParentsDetails?.orderofChildren,
+          // orderofChildren: data?.StillBirthParentsDetails?.orderofChildren,
           fatherAadhar: data?.StillBirthParentsDetails?.fatherAadhar,
           ismotherInfo: data?.StillBirthParentsDetails?.isMotherInfo,
           isfatherInfo: data?.StillBirthParentsDetails?.isFatherInfo,
@@ -477,6 +478,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.StillBirthInitiatorDetails?.isInitiatorDeclaration,
           isCaretaker: data?.StillBirthInitiatorDetails?.isCaretaker,
         },
+        
       },
     ],
   };
@@ -489,7 +491,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
     StillBirthChildDetails: [
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
-        birthDateTime: data?.StillBirthChildDetails?.birthDateTime,        
+        birthDateTime: data?.StillBirthChildDetails?.birthDateTime, 
+        am_pm: data?.ChildDetails?.displayAmPm,       
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,        
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
@@ -535,7 +538,7 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action: "APPLY",
         applicationtype: "CRBRSB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.StillBirthChildDetails.workflowcode,
         isWorkflow: data?.StillBirthChildDetails.isWorkflow,
         id: data?.StillBirthChildDetails?.id,
@@ -549,7 +552,7 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           motherEducation: data?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthParentsDetails?.motherEducation.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation : null,
           motherProfession: data?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthParentsDetails?.motherProfession.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession : null,
           motherNationality: data?.StillBirthParentsDetails?.motherNationality ? data?.StillBirthParentsDetails?.motherNationality.code : data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality : null,
-          orderofChildren: data?.StillBirthParentsDetails?.orderofChildren ? data?.StillBirthParentsDetails?.orderofChildren : data?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren,
+        //  orderofChildren: data?.StillBirthParentsDetails?.orderofChildren ? data?.StillBirthParentsDetails?.orderofChildren : data?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren,
           fatherAadhar: data?.StillBirthParentsDetails?.fatherAadhar ? data?.StillBirthParentsDetails?.fatherAadhar : data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar,
           ismotherInfo: data?.StillBirthParentsDetails.ismotherInfo ? data?.StillBirthParentsDetails.ismotherInfo : data?.StillBirthChildDetails?.StillBirthParentsDetails.ismotherInfo,
           isfatherInfo: data?.StillBirthParentsDetails.isfatherInfo ? data?.StillBirthParentsDetails.isfatherInfo : data?.StillBirthChildDetails?.StillBirthParentsDetails.isfatherInfo,

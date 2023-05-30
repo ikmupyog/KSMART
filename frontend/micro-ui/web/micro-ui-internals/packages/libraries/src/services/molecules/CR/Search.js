@@ -45,7 +45,63 @@ const convertEpochToDate = (dateEpoch) => {
 //         }
 //       }
 // };
-
+function TimeDispaly(birthDateTime){
+  let time = birthDateTime;
+  let timeParts = time.split(":");
+  let displaytimeTemp = "";
+  let displayAmPmTemp = "";
+  if (timeParts.length > 0) {
+    if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+      timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+      timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+       displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+       displayAmPmTemp = "AM";    
+    }
+    else if (timeParts[0] === "00") {
+      displaytimeTemp = "12" + ":" + timeParts[1];
+      displayAmPmTemp = "AM";
+    } else if (timeParts[0] >= "13") {
+      if (timeParts[0] === "13") {
+        displaytimeTemp = "01" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "14") {
+        displaytimeTemp = "02" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "15") {
+        displaytimeTemp = "03" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "16") {
+        displaytimeTemp = "04" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "17") {
+        displaytimeTemp = "05" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "18") {
+        displaytimeTemp = "06" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "19") {
+        displaytimeTemp = "07" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "20") {
+        displaytimeTemp = "08" + ":" + timeParts[1];
+        displayAmPm = "PM";
+      } else if (timeParts[0] === "21") {
+        displaytimeTemp = "09" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "22") {
+        displaytimeTemp = "10" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "23") {
+        displaytimeTemp = "11" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "24") {
+        displaytimeTemp = "12" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      }
+    }
+  }
+  return `${displaytimeTemp} ${displayAmPmTemp}`
+}
 
 export const CRsearch = {
   all: async (tenantId, filters = {}) => {
@@ -102,13 +158,14 @@ export const CRsearch = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
       asSectionHeader: true,
     }
+    
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NOT_RECORDED" },
         { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NOT_RECORDED" },
-        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : "NOT_RECORDED" },
+        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? TimeDispaly(response?.birthDateTime) : "NOT_RECORDED",isNotTranslated:true },
         { title: "CR_GENDER", value: response?.gender ? response?.gender : "NOT_RECORDED" },
         { title: "CS_COMMON_CHILD_AADHAAR", value: response?.childAadharNo ? response?.childAadharNo : "NOT_RECORDED" },
         { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn || "NOT_RECORDED" },
@@ -190,7 +247,17 @@ export const CRsearch = {
         { title: "CR_BIRTH_WEIGHT", value: response?.birthWeight || "NOT_RECORDED" },
       ],
     };
-    const parentInfo = {
+    const parentInfoNotAvailable = {
+      title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+      values: [
+        { title: "CR_MOTHER_INFORMATION", value: "CR_MOTHER_INFORMATION_MISSING" },
+        { title: "CR_FATHER_INFORMATION", value: "CR_FATHER_INFORMATION_MISSING" },
+        { title: "CS_COMMON_RELIGION", value: response?.ParentsDetails?.ReligionEn + " / " + response?.ParentsDetails?.ReligionMl || "NOT_RECORDED" },
+        { title: "CR_PARENTS_CONTACT_NO", value: response?.ParentsDetails?.fatherMobile || "NOT_RECORDED" },
+        { title: "CR_PARENTS_EMAIL", value: response?.ParentsDetails?.fatherEmail || "NOT_RECORDED" },
+      ],
+    };
+    const parentInfMotherAvailable = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
         { title: "CS_COMMON_AADHAAR", value: response?.ParentsDetails?.motherAadhar || "NOT_RECORDED" },
@@ -198,7 +265,56 @@ export const CRsearch = {
         { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },
         { title: "CR_NATIONALITY", value: response?.ParentsDetails?.motherNationalityEn + " / " + (response?.ParentsDetails?.motherNationalityMl != null ? response?.ParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
         { title: "CR_MOTHER_MARITAL_STATUS", value: response?.ParentsDetails?.motherMaritalStatusEn + " / " + (response?.ParentsDetails?.motherMaritalStatusMl != null ? response?.ParentsDetails?.motherMaritalStatusMl : "") || "NOT_RECORDED" },
-        { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.ParentsDetails?.motherMarriageAge || "NOT_RECORDED" },
+        {
+          title: "CR_MOTHER_AGE_MARRIAGE",
+          value: response?.ParentsDetails?.motherMaritalStatus === "MARRIED" ? response?.ParentsDetails?.motherMarriageAge :
+            response?.ParentsDetails?.motherMaritalStatus === "UNMARRIED" ? "Not applicable / ബാധകമല്ല" :
+              response?.ParentsDetails?.motherMaritalStatus === "NOT_APPLICABLE" ? "Not applicable / ബാധകമല്ല" : "Not applicable / ബാധകമല്ല"
+        },
+        { title: "CR_MOTHER_AGE_BIRTH", value: response?.ParentsDetails?.motherMarriageBirth || "NOT_RECORDED" },
+        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.ParentsDetails?.orderofChildren || "NOT_RECORDED" },
+        { title: "CR_EDUCATION", value: response?.ParentsDetails?.motherEducationEn + " / " + response?.ParentsDetails?.motherEducationMl || "NOT_RECORDED" },
+        { title: "CR_PROFESSIONAL", value: response?.ParentsDetails?.motherProfessionEn + " / " + response?.ParentsDetails?.motherProfessionMl || "NOT_RECORDED" },
+        { title: "CR_FATHER_INFORMATION", value: "CR_FATHER_INFORMATION_MISSING" },
+        { title: "CS_COMMON_RELIGION", value: response?.ParentsDetails?.ReligionEn + " / " + response?.ParentsDetails?.ReligionMl || "NOT_RECORDED" },
+        { title: "CR_PARENTS_CONTACT_NO", value: response?.ParentsDetails?.fatherMobile || "NOT_RECORDED" },
+        { title: "CR_PARENTS_EMAIL", value: response?.ParentsDetails?.fatherEmail || "NOT_RECORDED" },
+      ],
+    };
+    const parentInfFatherAvailable = {
+      title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+      values: [
+        { title: "CR_MOTHER_INFORMATION", value: "CR_MOTHER_INFORMATION_MISSING" },
+        { title: "CS_COMMON_AADHAAR", value: response?.ParentsDetails?.fatherAadhar || "NOT_RECORDED" },
+        { title: "CR_FATHER_NAME_EN", value: response?.ParentsDetails.fatherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_FATHER_NAME_ML", value: response?.ParentsDetails.fatherFirstNameMl || "NOT_RECORDED" },
+        { title: "CR_NATIONALITY", value: response?.ParentsDetails?.fatherNationalityEn + " / " + (response?.ParentsDetails?.fatherNationalityMl != null ? response?.ParentsDetails?.fatherNationalityMl : "") || "NOT_RECORDED" },
+        { title: "CR_EDUCATION", value: response?.ParentsDetails?.fatherEducationEn + " / " + response?.ParentsDetails?.fatherEducationMl || "NOT_RECORDED" },
+        { title: "CR_PROFESSIONAL", value: response?.ParentsDetails?.fatherProfessionEn + " / " + response?.ParentsDetails?.fatherProfessionMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_RELIGION", value: response?.ParentsDetails?.ReligionEn + " / " + response?.ParentsDetails?.ReligionMl || "NOT_RECORDED" },
+        { title: "CR_PARENTS_CONTACT_NO", value: response?.ParentsDetails?.fatherMobile || "NOT_RECORDED" },
+        { title: "CR_PARENTS_EMAIL", value: response?.ParentsDetails?.fatherEmail || "NOT_RECORDED" },
+      ],
+    };
+    const parentInfo = {
+      title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+      values: [
+        { title: "CS_COMMON_AADHAAR", value: response?.ParentsDetails?.motherAadhar || "NOT_RECORDED" },
+        { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },
+        { title: "CR_NATIONALITY", value: response?.ParentsDetails?.motherNationalityEn + " / " + (response?.ParentsDetails?.motherNationalityMl != null ? response?.ParentsDetails?.motherNationalityMl : "") || "NOT_RECORDED" },
+        {
+          title: "CR_MOTHER_MARITAL_STATUS",
+          value: response?.ParentsDetails?.motherMaritalStatus === "MARRIED" ? "Married / വിവാഹിത" :
+            response?.ParentsDetails?.motherMaritalStatus === "UNMARRIED" ? "UnMarried / അവിവാഹിത" :
+              response?.ParentsDetails?.motherMaritalStatus === "NOT_APPLICABLE" ? "Not Disclosed / വെളിപ്പെടുത്തിയിട്ടില്ല" : "NOT_RECORDED"
+        },
+        {
+          title: "CR_MOTHER_AGE_MARRIAGE",
+          value: response?.ParentsDetails?.motherMaritalStatus === "MARRIED" ? response?.ParentsDetails?.motherMarriageAge :
+            response?.ParentsDetails?.motherMaritalStatus === "UNMARRIED" ? "Not applicable / ബാധകമല്ല" :
+              response?.ParentsDetails?.motherMaritalStatus === "NOT_APPLICABLE" ? "Not applicable / ബാധകമല്ല" : "Not applicable / ബാധകമല്ല"
+        },
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.ParentsDetails?.motherMarriageBirth || "NOT_RECORDED" },
         { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.ParentsDetails?.orderofChildren || "NOT_RECORDED" },
         { title: "CR_EDUCATION", value: response?.ParentsDetails?.motherEducationEn + " / " + response?.ParentsDetails?.motherEducationMl || "NOT_RECORDED" },
@@ -224,8 +340,8 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaPostOfficeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NOT_RECORDED" },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || "NOT_RECORDED" },
@@ -321,7 +437,7 @@ export const CRsearch = {
       values: [
         { title: "CR_INITIATOR", value: response?.InitiatorinfoDetails?.initiator || "NOT_RECORDED" },
         { title: "CS_COMMON_AADHAAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
-        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },        
+        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },
         { title: "CR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
         { title: "CR_INFORMER_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
       ],
@@ -333,7 +449,7 @@ export const CRsearch = {
         { title: "CR_INITIATOR", value: response?.InitiatorinfoDetails?.initiator || "NOT_RECORDED" },
         { title: "CR_RELATION", value: response?.InitiatorinfoDetails?.relation || "NOT_RECORDED" },
         { title: "CS_COMMON_AADHAAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
-        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },        
+        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },
         { title: "CR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
         { title: "CR_INFORMER_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
 
@@ -347,7 +463,7 @@ export const CRsearch = {
         { title: "CR_INSTITUTION_NAME", value: response?.InitiatorinfoDetails?.initiatorInstitutionName || "NOT_RECORDED" },
         { title: "CR_INSTITUTION_NAME_DESIGNATION", value: response?.InitiatorinfoDetails?.initiatorDesi || "NOT_RECORDED" },
         { title: "CS_COMMON_AADHAAR", value: response?.InitiatorinfoDetails?.initiatorAadhar || "NOT_RECORDED" },
-        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },        
+        { title: "CR_INITIATOR_NAME", value: response?.InitiatorinfoDetails?.initiatorNameEn || "NOT_RECORDED" },
         { title: "CR_MOBILE_NO", value: response?.InitiatorinfoDetails?.initiatorMobile || "NOT_RECORDED" },
         { title: "CR_CARE_TAKER_ADDRESS", value: response?.InitiatorinfoDetails?.initiatorAddress || "NOT_RECORDED" },
       ],
@@ -387,7 +503,15 @@ export const CRsearch = {
     } else if (response?.birthPlace === "PUBLIC_PLACES") {
       response && employeeResponse.push(birthPlacePUBLICPLACESDetails);
     }
-    response && employeeResponse.push(parentInfo);
+    if (response?.ParentsDetails?.isfatherInfo && response?.ParentsDetails?.ismotherInfo) {
+      response && employeeResponse.push(parentInfoNotAvailable);
+    } else if (response?.ParentsDetails?.ismotherInfo === false && response?.ParentsDetails?.isfatherInfo) {
+      response && employeeResponse.push(parentInfMotherAvailable);
+    } else if (response?.ParentsDetails?.ismotherInfo && response?.ParentsDetails?.isfatherInfo === false) {
+      response && employeeResponse.push(parentInfFatherAvailable);
+    } else {
+      response && employeeResponse.push(parentInfo);
+    }
     if (response?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.presentaddressStateName === "kl") {
       response && employeeResponse.push(AddressBirthDetailsPresentInfo);
     } else if (response?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA" && response?.AddressBirthDetails?.presentaddressStateName != "kl") {
@@ -396,21 +520,21 @@ export const CRsearch = {
       response && employeeResponse.push(AddressBirthDetailsPresentOutsideIndiaInfo);
     }
     response && employeeResponse.push(statisticalInfo);
-    if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === false && 
-      response?.InitiatorinfoDetails?.isGuardian === false ) {
+    if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === false &&
+      response?.InitiatorinfoDetails?.isGuardian === false) {
       response && employeeResponse.push(InitiatorDetails);
-    } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === false && 
-      response?.InitiatorinfoDetails?.isGuardian === true ) {
+    } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === false &&
+      response?.InitiatorinfoDetails?.isGuardian === true) {
       response && employeeResponse.push(InitiatorDetailsGuardian);
-    } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === true && 
-      response?.InitiatorinfoDetails?.isGuardian === false ) {
-      response && employeeResponse.push(InitiatorDetailsGuardian);
-    } 
+    } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === true &&
+      response?.InitiatorinfoDetails?.isGuardian === false) {
+      response && employeeResponse.push(InitiatorDetailsCaretaker);
+    }
     if (response?.InformarHosInstDetails?.infomantAadhar != null) {
       response && employeeResponse.push(InformarHospitalInstitution);
     }
     // else if (responseRoles[0].code === "HOSPITAL_OPERATOR" || responseRoles[0].code === "HOSPITAL_APPROVER") {
-      response && employeeResponse.push(HospitalAdmissionDetails);
+    response && employeeResponse.push(HospitalAdmissionDetails);
     // }
     return {
       tenantId: response.tenantId,

@@ -6,7 +6,7 @@ const SelectEmployeeCorrespondenceAddress = ({ t, config, onSelect, formData = {
   const { pathname: url } = useLocation();
   const inputs = [
     {
-      label: "HR_CORRESPONDENCE_ADDRESS_LABEL",
+      label: "HR_ADDRESS",
       type: "text",
       name: "correspondenceAddress",
       validation: {

@@ -1073,4 +1073,108 @@ export const newConfig = [
       }
     ]
   },
+  {
+    head: "New IFTE & OS License Application",
+    body: [
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "licensemigrate-unit-det",
+        isMandatory: true,
+        component: "TLLicenseUnitDetPDE",
+        texts: {
+          header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: 'licensemigrate-applicant-det',
+      },
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "licensemigrate-applicant-det",
+        isMandatory: true,
+        component: "TLLicenseApplicantDetPDE",
+        texts: {
+          header: "Name and Address of Applicant",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: 'licenserenewal-doc-det',
+      }, 
+      {
+        type: "component",
+        route: "licenserenewal-doc-det",
+        isMandatory: true,
+        component: "TLDocumentUpload",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep:null
+      }
+    ]
+  },
+  {
+    head: "New IFTE & OS License Application",
+    body: [
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "edit-application",
+        isMandatory: true,
+        component: "TLLicenseUnitDetEdit",
+        texts: {
+          header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: 'edit-license-applicant-det',
+      },
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "edit-license-applicant-det",
+        isMandatory: true,
+        component: "TLLicenseApplicantDetEdit",
+        texts: {
+          header: "Name and Address of Applicant",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: 'licenserenewal-doc-det',
+      }, 
+      {
+        type: "component",
+        route: "licenserenewal-doc-det",
+        isMandatory: true,
+        component: "TLDocumentUpload",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep:null
+      }
+    ]
+  },
 ];

@@ -551,7 +551,23 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
           InformantOfficeAddress: data?.InitiatorAbandoned?.InformantOfficeAddress,               
           InformantAadhaarNo: data?.InitiatorAbandoned?.InformantAadharNo,
           InformantMobileNo: parseInt(data?.InitiatorAbandoned?.InformantMobileNo),              
-          InformantAddress: data?.InitiatorAbandoned?.InformantAddress
+          InformantAddress: data?.InitiatorAbandoned?.InformantAddress,
+
+
+          initiator: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : null,
+          relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : null,
+          initiatorInstitutionName: data?.InitiatorinfoDetails?.initiatorInstitutionName,
+          initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn,
+          initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar,
+          initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi.code : null,
+          initiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress,
+          isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
+          isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
+          isGuardian: data?.InitiatorinfoDetails?.isGuardian,
+          ipopList: data?.InitiatorinfoDetails?.ipopList ? data?.InitiatorinfoDetails?.ipopList.code : null,
+          ipopNumber: data?.InitiatorinfoDetails?.ipopNumber ? data?.InitiatorinfoDetails?.ipopNumber : null,
+          obstetricsNumber: data?.InitiatorinfoDetails?.obstetricsNumber ? data?.InitiatorinfoDetails?.obstetricsNumber : null,
         },
         DeathAbandonedDocuments: [
           {
