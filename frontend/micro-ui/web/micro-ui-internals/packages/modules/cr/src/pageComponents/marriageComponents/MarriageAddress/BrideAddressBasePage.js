@@ -1759,6 +1759,7 @@ const BrideAddressBasePage = ({
               formData={formData}
               Districtvalues={Districtvalues}
               setDistrictvalue={setDistrictvalue}
+              isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
             />
           </div>
         )}
@@ -2193,6 +2194,7 @@ const BrideAddressBasePage = ({
              isEditAdoption={isEditAdoption}
              isEditBirthNAC={isEditBirthNAC}
              formData={formData}
+             isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
             />
           </div>
         )}
