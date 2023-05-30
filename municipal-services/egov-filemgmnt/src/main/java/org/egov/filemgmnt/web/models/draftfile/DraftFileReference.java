@@ -2,6 +2,7 @@ package org.egov.filemgmnt.web.models.draftfile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.AuditDetails;
 
@@ -9,6 +10,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class DraftFileReference {
     @Schema(type = "string", description = "Drafting Reference id")
     @Size(max = 64, message = "Drafting reference id length cannot exceed 64 characters")

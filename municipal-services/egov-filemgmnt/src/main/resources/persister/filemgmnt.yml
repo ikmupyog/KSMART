@@ -743,6 +743,7 @@ serviceMaps:
 
       - jsonPath: $.ArisingFile.arisingFileApplicant.postOffice
 
+
   - version: 1.0
     description: Update arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
     fromTopic: update-fm-arisingfile
@@ -776,8 +777,10 @@ serviceMaps:
     fromTopic: save-fm-draftfile
     isTransaction: true
     queryMaps:
-
-    - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime, subject) 
+    - query: >
+              INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, 
+              filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, 
+              createdtime, lastmodifiedby, lastmodifiedtime, subject) 
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: DraftFile
       jsonMaps:
@@ -810,6 +813,60 @@ serviceMaps:
       - jsonPath: $.DraftFile.auditDetails.lastModifiedTime
 
       - jsonPath: $.DraftFile.subject
+
+    - query: >
+            INSERT INTO public.eg_fm_draftreference(
+            id, tenantid, filecode, draftid, referencetext, status, createdby, createdtime, 
+            lastmodifiedby, lastmodifiedtime)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: DraftFile.draftFileReference
+      jsonMaps:
+      - jsonPath: $.DraftFile.draftFileReference.id
+
+      - jsonPath: $.DraftFile.draftFileReference.tenantId
+
+      - jsonPath: $.DraftFile.draftFileReference.fileCode
+
+      - jsonPath: $.DraftFile.draftFileReference.draftId
+
+      - jsonPath: $.DraftFile.draftFileReference.referenceText
+
+      - jsonPath: $.DraftFile.draftFileReference.status
+
+      - jsonPath: $.DraftFile.draftFileReference.auditDetails.createdBy
+
+      - jsonPath: $.DraftFile.draftFileReference.auditDetails.createdTime
+
+      - jsonPath: $.DraftFile.draftFileReference.auditDetails.lastModifiedBy
+
+      - jsonPath: $.DraftFile.draftFileReference.auditDetails.lastModifiedTime
+
+    - query: INSERT INTO public.eg_fm_draftingaddress(id, tenantid, filecode, draftid, salutation, name, address, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: DraftFile.draftFileAddress
+      jsonMaps:
+      - jsonPath: $.DraftFile.draftFileAddress.id
+
+      - jsonPath: $.DraftFile.draftFileAddress.tenantId
+
+      - jsonPath: $.DraftFile.draftFileAddress.fileCode
+
+      - jsonPath: $.DraftFile.draftFileAddress.draftId
+
+      - jsonPath: $.DraftFile.draftFileAddress.salutation
+
+      - jsonPath: $.DraftFile.draftFileAddress.name
+
+      - jsonPath: $.DraftFile.draftFileAddress.address
+
+      - jsonPath: $.DraftFile.draftFileAddress.status
+
+      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.createdBy
+
+      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.createdTime
+
+      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.lastModifiedBy
+
+      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.lastModifiedTime
 
   - version: 1.0
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting

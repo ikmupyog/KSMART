@@ -102,4 +102,9 @@ public class DraftFile {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
+    @JsonProperty("draftFileAddress")
+    private DraftFileAddress draftFileAddress;
+
+    @JsonProperty("draftFileReference")
+    private DraftFileReference draftFileReference;
 }
