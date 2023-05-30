@@ -928,8 +928,9 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
 
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getLocalityEnPermanent(), groomAddressBuilder, true);
 
-                            
-                            appendIfNotBlank(registryDetails.getGroomAddressDetails().getPoNoPermanent().concat(".PO"), groomAddressBuilder, true);
+                            if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPoNoPermanent())){
+                                appendIfNotBlank(getValueFromMap(MarriageConstants.POSTOFFICE.concat(" P O"), mdmsGroomAddressMap), groomAddressBuilder, true);
+                            }
                             if(StringUtils.isNotBlank(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrDistrict())){
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap), groomAddressBuilder, true);
                             }
@@ -1156,7 +1157,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             registryDetails.getBrideAddressDetails().setDistrictIdPermanent(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap));
                             registryDetails.getBrideAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap));
                             registryDetails.getBrideAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap));
-                            registryDetails.getBrideAddressDetails().setPoNoPermanent(null);
+                            registryDetails.getBrideAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsBrideAddressMap));
 //                        registryDetails.getBrideAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE,mdmsGroomAddressMap));
 //                        registryDetails.getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK,mdmsGroomAddressMap));
                             registryDetails.getBrideAddressDetails().setHouseNameNoEnPermanent(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrHouseNameEn());
@@ -1171,6 +1172,10 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             appendIfNotBlank(registryDetails.getBrideAddressDetails().getStreetNameEnPermanent(), brideAddressBuilder, true);
 
                             appendIfNotBlank(registryDetails.getBrideAddressDetails().getLocalityEnPermanent(), brideAddressBuilder, true);
+
+                            if(StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPoNoPermanent())){
+                                appendIfNotBlank(getValueFromMap(MarriageConstants.POSTOFFICE.concat(" P O"), mdmsBrideAddressMap), brideAddressBuilder, true);
+                            }
 
                             if (StringUtils.isNotBlank(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrDistrict())) {
                                 appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap), brideAddressBuilder, true);
@@ -1206,7 +1211,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                             registryDetails.getBrideAddressDetails().setDistrictIdPermanent(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap));
                             registryDetails.getBrideAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap));
                             registryDetails.getBrideAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap));
-                            registryDetails.getBrideAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsBrideAddressMap));
+                            registryDetails.getBrideAddressDetails().setPoNoPermanent(null);
                             registryDetails.getBrideAddressDetails().setHouseNameNoEnPermanent(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaHouseNameEn());
                             registryDetails.getBrideAddressDetails().setStreetNameEnPermanent(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaStreetNameEn());
                             registryDetails.getBrideAddressDetails().setLocalityEnPermanent(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameEn());
