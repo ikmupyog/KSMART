@@ -26,7 +26,7 @@ import { convertEpochToDateDMY } from "../../utils";
 
 const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption = false, isEditFlag = false }) => {
   //const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(true);
-  //const [isDisableEdit, setisDisableEdit] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(true);
   const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
@@ -71,6 +71,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId, setSearchRegId] = useState();
   const [birthRegPopup, setBirthRegPopup] = useState(false);
+  const [searchedApp, setSearchedApp] = useState(false);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   const convertEpochFormateToDate = (dateEpoch) => {
@@ -576,6 +577,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   // },[formData])
   useEffect(() => {
     if (SearchRegId) {
+      setSearchedApp(true);
       SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)) : setChildDOB(null);
       SearchRegId?.gender ? selectGender(menu.filter((menu) => menu.code === SearchRegId?.gender)[0]) : selectGender("");
       SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId?.childAadharNo) : setChildAadharNo(null);
@@ -773,6 +775,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     }
     // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
   }
+  // function DisableEdit() {
+  //   if (value !== null) {
+  //     setisDisableEdit(value);
+  //   }
+  // }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
     if (!e.key.match(pattern)) {
@@ -1660,12 +1667,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
             ):
             ( */}
               <BirthReqSearch
-                BirthRegNo={BirthRegNo}
+                // BirthRegNo={BirthRegNo}
                 closePopup={() => {
                   setBirthRegPopup(false), setbirthRegistered(false);
                 }}
                 setBirthRegPopup={setBirthRegPopup}
-                setSelectSetBirthRegNo={setSelectSetBirthRegNo}
+                // setSelectSetBirthRegNo={setSelectSetBirthRegNo}
                 setSearchRegId={setSearchRegId}
               />
 
@@ -1819,7 +1826,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   max={convertEpochToDate(new Date())}
                   //min={convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
-                  //disable={isDisableEdit}
+                  disabled={searchedApp}
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -1846,7 +1853,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   option={menu}
                   selected={gender}
                   select={setselectGender}
-                  //disable={isDisableEdit}
+                  disable={searchedApp}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1894,9 +1901,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       name="childFirstNameEn"
                       value={childFirstNameEn}
                       onChange={setSelectChildFirstNameEn}
-                      //disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
-                      // disable={isChildName}
+                      //disable={childFirstNameEn === "" ? true : isDisableEdit}
                       placeholder={`${t("CR_ADOPTIVE_FIRST_NAME_EN")}`}
                       {...(validation = {
                         pattern: "^[a-zA-Z-.`' ]*$",
@@ -2048,10 +2054,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     //disable={isDisableEdit || AdoptionDeedNo !== "" || RegistrationAuthority !== "" || AdoptionDeedRegDate !== ""}
                     placeholder={`${t("CR_ADOPTION_DECREE")}`}
                     {...(validation = {
-                      // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                       isRequired: AdoptionDeedNo === "" ? true : false,
-                      pattern: "^[0-9`' ]*$",
-                      type: "number",
+                      pattern: "/[!@#$%^&*()_+-=[]{};':\\|,.<>/?]/",
+                      type: "text",
                       title: t("CR_INVALID_ADOPTION_DECREE"),
                     })}
                   />
@@ -2121,9 +2126,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     //disable={isDisableEdit || AdoptionDecreOrderNo !== "" || IssuingAuthority !== "" || AdoptionDecreOrderDate !== ""}
                     placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
                     {...(validation = {
-                      pattern: "^[0-9`' ]*$",
+                      pattern: "/[!@#$%^&*()_+-=[]{};':\\|,.<>/?]/",
                       isRequired: AdoptionDecreOrderNo == "" ? true : false,
-                      type: "number",
+                      type: "text",
                       title: t("CR_INVALID_ADOPTION_DEED_NO"),
                     })}
                   />
@@ -2214,7 +2219,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
-                  //disable={isDisableEdit}
+                  disable={searchedApp}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -2230,6 +2235,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2248,6 +2254,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2276,6 +2283,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2306,6 +2314,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setWardNo={setWardNo}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}
@@ -2328,6 +2337,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 setWardNo={setWardNo}
                 formData={formData}
                 isEditAdoption={isEditAdoption}
+                searchedApp={searchedApp}
               />
             </div>
           )}

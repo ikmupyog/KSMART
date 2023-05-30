@@ -70,7 +70,7 @@ const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, isLoading, toa
   }
   function previousPage() {
     setValue("offset", getValues("offset") - getValues("limit"));
-    handleSubmit(onSubmit)();
+    // handleSubmit(onSubmit)();
   }
 
   const isMobile = window.Digit.Utils.browser.isMobile();

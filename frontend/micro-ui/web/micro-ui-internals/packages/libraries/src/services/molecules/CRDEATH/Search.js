@@ -70,15 +70,28 @@ export const CRDeathsearch = {
       title: "CR_DEATH_SUMMARY_DETAILS",
       asSectionHeader: true,
     };
+  
     const InformationDeath = {
       title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
-      values: [
+
+      values:
+      response?.InformationDeath?.DeathDateUnavailable === false ?
+       [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.InformationDeath?.DeathACKNo || "CR_NOT_RECORDED" },
+        // {
+        //   title: "PDF_CR_DEATH_OF_DATE",
+        //   value: response?.InformationDeath?.DateOfDeath ? convertEpochToDate(response?.InformationDeath?.DateOfDeath) : "CR_NOT_RECORDED",
+        // },
+       
         {
-          title: "PDF_CR_DEATH_OF_DATE",
-          value: response?.InformationDeath?.DateOfDeath ? convertEpochToDate(response?.InformationDeath?.DateOfDeath) : "CR_NOT_RECORDED",
+         
+          title: t("Date of Death"),
+          value:response?.InformationDeath?.DateOfDeath?
+          Digit.DateUtils.ConvertTimestampToDate(response?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") :
+           t("CS_NA"),
         },
+      
 
         // {
         //   title: "PDF_CR_PLACE_OF_DEATH",
@@ -118,7 +131,7 @@ export const CRDeathsearch = {
               " " +
               response?.InformationDeath?.ageUnitMl || "CR_NOT_RECORDED",
         },
-        { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "CR_NOT_RECORDED" },
+        { title: "CR_GENDER", value: response?.InformationDeath?.DeceasedGender || "CR_NOT_RECORDED" },
 
         {
           title: "CR_NATIONALITY",
@@ -139,7 +152,102 @@ export const CRDeathsearch = {
         },
 
         // }),
-      ],
+      ]
+      :
+
+      [
+       { title: "CR_SEARCH_APP_NO_LABEL", value: response?.InformationDeath?.DeathACKNo || "CR_NOT_RECORDED" },
+       // {
+       //   title: "PDF_CR_DEATH_OF_DATE",
+       //   value: response?.InformationDeath?.DateOfDeath ? convertEpochToDate(response?.InformationDeath?.DateOfDeath) : "CR_NOT_RECORDED",
+       // },
+      
+       {
+           
+
+             title: t("CR_FROM_DATE"),
+        
+             value:response?.InformationDeath?.DateOfDeath?
+        
+             Digit.DateUtils.ConvertTimestampToDate(response?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") :
+        
+             t("CS_NA"),
+        
+            },
+            {
+
+    
+
+                   title: t("CR_TO_DATE"),
+              
+                   value:response?.InformationDeath?.DateOfDeath1?
+              
+                   Digit.DateUtils.ConvertTimestampToDate(response?.InformationDeath?.DateOfDeath1, "dd/MM/yyyy") :
+              
+                   t("CS_NA"),
+              
+                  },
+
+       // {
+       //   title: "PDF_CR_PLACE_OF_DEATH",
+       //   value:
+       //     response?.InformationDeath?.DeathPlaceHospitalNameEn +
+       //       "/" +
+       //       response?.InformationDeath?.DeathPlaceHospitalNameMl?.response?.InformationDeath?.DeathPlaceInstitutionNameEn +
+       //       "/" +
+       //       response?.InformationDeath?.DeathPlaceInstitutionNameMl || "CR_NOT_RECORDED",
+       // },
+
+       {
+         title: "PDF_DECEASED_NAME",
+         value:
+           response?.InformationDeath?.DeceasedFirstNameEn +
+             " " +
+             response?.InformationDeath?.DeceasedMiddleNameEn +
+             " " +
+             response?.InformationDeath?.DeceasedLastNameEn +
+             " " +
+             " / " +
+             response?.InformationDeath?.DeceasedFirstNameMl +
+             " " +
+             response?.InformationDeath?.DeceasedMiddleNameMl +
+             " " +
+             response?.InformationDeath?.DeceasedLastNameMl || "CR_NOT_RECORDED",
+       },
+       { title: "CR_AADHAR", value: response?.InformationDeath?.DeceasedAadharNumber || "CR_NOT_RECORDED" },
+       {
+         title: "CR_AGE",
+         value:
+           response?.InformationDeath?.Age +
+             " " +
+             response?.InformationDeath?.ageUnitEn +
+             "/" +
+             response?.InformationDeath?.Age +
+             " " +
+             response?.InformationDeath?.ageUnitMl || "CR_NOT_RECORDED",
+       },
+       { title: "CR_GENDER", value: response?.InformationDeath?.DeceasedGender || "CR_NOT_RECORDED" },
+
+       {
+         title: "CR_NATIONALITY",
+         value: response?.InformationDeath?.nationalityEn + "/" + response?.InformationDeath?.nationalityMl || "CR_NOT_RECORDED",
+       },
+
+       {
+         title: "CS_COMMON_RELIGION",
+         value: response?.InformationDeath?.religionEn + "/" + response?.InformationDeath?.religionMl || "CR_NOT_RECORDED",
+       },
+       {
+         title: "CR_PROFESSIONAL",
+         value: response?.InformationDeath?.occupationEn
+           ? response?.InformationDeath?.occupationEn
+           : "CR_NOT_RECORDED" + "/" + response?.InformationDeath?.occupationMl
+           ? response?.InformationDeath?.occupationMl
+           : "CR_NOT_RECORDED",
+       },
+
+       // }),
+     ]
     };
     const deathPlaceHospDetails = {
       title: "CR_DEATH_PLACE_DETAILS",

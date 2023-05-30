@@ -45,7 +45,63 @@ const convertEpochToDate = (dateEpoch) => {
 //         }
 //       }
 // };
-
+function TimeDispaly(birthDateTime){
+  let time = birthDateTime;
+  let timeParts = time.split(":");
+  let displaytimeTemp = "";
+  let displayAmPmTemp = "";
+  if (timeParts.length > 0) {
+    if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+      timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+      timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+       displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+       displayAmPmTemp = "AM";    
+    }
+    else if (timeParts[0] === "00") {
+      displaytimeTemp = "12" + ":" + timeParts[1];
+      displayAmPmTemp = "AM";
+    } else if (timeParts[0] >= "13") {
+      if (timeParts[0] === "13") {
+        displaytimeTemp = "01" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "14") {
+        displaytimeTemp = "02" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "15") {
+        displaytimeTemp = "03" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "16") {
+        displaytimeTemp = "04" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "17") {
+        displaytimeTemp = "05" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "18") {
+        displaytimeTemp = "06" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "19") {
+        displaytimeTemp = "07" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "20") {
+        displaytimeTemp = "08" + ":" + timeParts[1];
+        displayAmPm = "PM";
+      } else if (timeParts[0] === "21") {
+        displaytimeTemp = "09" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "22") {
+        displaytimeTemp = "10" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "23") {
+        displaytimeTemp = "11" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "24") {
+        displaytimeTemp = "12" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      }
+    }
+  }
+  return `${displaytimeTemp} ${displayAmPmTemp}`
+}
 
 export const CRsearch = {
   all: async (tenantId, filters = {}) => {
@@ -102,13 +158,14 @@ export const CRsearch = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
       asSectionHeader: true,
     }
+    
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NOT_RECORDED" },
         { title: "CR_DATE_OF_BIRTH_TIME", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NOT_RECORDED" },
-        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? response?.birthDateTime : "NOT_RECORDED" },
+        { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? TimeDispaly(response?.birthDateTime) : "NOT_RECORDED",isNotTranslated:true },
         { title: "CR_GENDER", value: response?.gender ? response?.gender : "NOT_RECORDED" },
         { title: "CS_COMMON_CHILD_AADHAAR", value: response?.childAadharNo ? response?.childAadharNo : "NOT_RECORDED" },
         { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + " " + response?.childMiddleNameEn + " " + response?.childLastNameEn || "NOT_RECORDED" },
@@ -283,8 +340,8 @@ export const CRsearch = {
         { title: "CS_COMMON_TALUK", value: response?.AddressBirthDetails?.presentInsideKeralaTalukEn + " / " + response?.AddressBirthDetails.presentInsideKeralaTalukMl || "NOT_RECORDED" },
         { title: "CS_COMMON_VILLAGE", value: response?.AddressBirthDetails?.presentInsideKeralaVillageEn + " / " + response?.AddressBirthDetails.presentInsideKeralaVillageMl || "NOT_RECORDED" },
         { title: "CS_COMMON_LB_NAME", value: response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl || "NOT_RECORDED" },
-        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardText + " / " + response?.AddressBirthDetails?.presentWardNoEn + " / " + response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.AddressBirthDetails?.presentInsideKeralaPostOfficeEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaPostOfficeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NOT_RECORDED" },
         { title: "CR_LOCALITY_ML", value: response?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl || "NOT_RECORDED" },
@@ -471,7 +528,7 @@ export const CRsearch = {
       response && employeeResponse.push(InitiatorDetailsGuardian);
     } else if (response?.InitiatorinfoDetails?.initiatorAadhar != null && response?.InitiatorinfoDetails?.isCaretaker === true &&
       response?.InitiatorinfoDetails?.isGuardian === false) {
-      response && employeeResponse.push(InitiatorDetailsGuardian);
+      response && employeeResponse.push(InitiatorDetailsCaretaker);
     }
     if (response?.InformarHosInstDetails?.infomantAadhar != null) {
       response && employeeResponse.push(InformarHospitalInstitution);

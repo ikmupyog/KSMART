@@ -424,6 +424,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(false);
   const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(false);
   const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(false);
+  const [Amount, setAmount] = useState(formData?.InformationDeath?.Amount);
 
   // const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
   // const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
@@ -522,17 +523,42 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     }
   }
 
+  
+  useEffect(() => {
+    if (DeathPlace && DifferenceInTime != null) {
+      console.log("DifferenceInTime",DifferenceInTime);
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        console.log("currentWorgFlowTimecfff",currentWorgFlow[0].WorkflowCode);
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        // setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime])
 
   useEffect(() => {
     if (isInitialRenderRoles) {
       if (userRoles.length > 0) {
         if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+        
           if (cmbPlace.length > 0) {
             const operatorHospCode = getHospitalCode();
             if (operatorHospCode != null) {
               sethospitalCode(operatorHospCode);
             }
-            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0]);
+           console.log("cmbPlace",
+           cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code)
+            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
+            let currentWorgFlow = workFlowData.filter(workFlowData => 
+              workFlowData.DeathPlace ===cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
+             
+            if (currentWorgFlow.length > 0) {
+              console.log("HOSPITAL_OPERATOR",currentWorgFlow[0].WorkflowCode)
+              setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+              setIsPayment(currentWorgFlow[0].payment);
+              // setAmount(currentWorgFlow[0].amount);
+            }
             setValue(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
             setisDisableEditRole(true);
             setInitialRenderRoles(false);
@@ -699,11 +725,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace ===
+           DeathPlace)&& workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime;
         if (currentWorgFlow.length > 0) {
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
+          // setAmount(currentWorgFlow[0].amount);
         }
       }
 
@@ -737,11 +764,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+       
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace
+        && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime);
         if (currentWorgFlow.length > 0) {
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
+          // setAmount(currentWorgFlow[0].amount);
         }
       }
       if (Difference_In_Days > 365) {
@@ -756,6 +785,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   }
   }
   function selectDeathDate(value) {
+    console.log("selectDeathDate(value)")
     setDateOfDeath(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -763,17 +793,25 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     deathDate.setHours(0, 0, 0, 0);
 
     if (deathDate.getTime() <= today.getTime()) {
+      console.log("deathDate.getTime() <= today.getTime()",DeathPlace)
       setDOBError(false);
       // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - deathDate.getTime();
+      let Difference_In_Time = (today.getTime()+1) - deathDate.getTime();
       // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - deathDate.getTime());
+      setDifferenceInTime((today.getTime()+1) - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime);
+        console.log("DeathPlace",DeathPlace,Difference_In_Time)
+        console.log("TimeWorkflowCode",workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace 
+ 
+          && workFlowData.startdateperiod <= Difference_In_Time && workFlowData.enddateperiod >= Difference_In_Time))
+
+        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace
+        && workFlowData.startdateperiod <= Difference_In_Time && workFlowData.enddateperiod >= Difference_In_Time
+        );
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
           setWorkFlowAmount(currentWorgFlow[0].amount);
@@ -883,8 +921,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
 
 
   function selectDeathPlace(value) {
-    setselectDeathPlace(value);
-    setValue(value.code);
+   
+    setselectDeathPlace(value?.code?value?.code:value)
+    setValue(value?.code?value?.code:value)
     let currentWorgFlow = workFlowData.filter(
       (workFlowData) =>
         workFlowData.DeathPlace === value.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
@@ -2255,7 +2294,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
                       onClick={() => {
                         setUploadNACHIde(false);
                         setpopUpStateNac(false);
-                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-birth-nac/nac-download-details`);
+                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-death-nac/nac-download-details`);
                       }}
                     >
                       {`${t("COMMON_OK")}`}
