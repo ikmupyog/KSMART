@@ -70,6 +70,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         request.getMarriageDetails().forEach(marriage -> {
             marriage.setId(UUID.randomUUID().toString());
             marriage.setAuditDetails(auditDetails);
+            marriage.setUserId(String.valueOf(requestInfo.getUserInfo().getId()));
 
             if(marriage.getBrideDetails()!=null){
                 marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));

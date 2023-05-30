@@ -38,6 +38,9 @@ public class MarriageApplicationSearchCriteria {
     @JsonProperty("businessService")
     private String businessService;
 
+    @JsonProperty("uuid")
+    private String uuid;
+
     //Groom
     @JsonProperty("groomFirstnameEn")
     private String groomFirstnameEn;
