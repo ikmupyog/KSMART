@@ -29,8 +29,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -98,8 +101,16 @@ public class ServiceRequestRepository {
 		int statusCode = statusLine.getStatusCode();
 		HttpEntity entity = response.getEntity();
 		InputStream content = entity.getContent();
-		String xml = new String(content.readAllBytes(), StandardCharsets.UTF_8);
-		String XmlString = xml;
+		//DataInputStream dis=new DataInputStream(content); 
+		BufferedReader d
+          = new BufferedReader(new InputStreamReader(content));
+		StringBuilder xml=new StringBuilder();
+		String tmp; 
+		while ((tmp = d.readLine()) != null) {
+			xml.append(tmp);
+		}
+	//	String xml = new String(content.readAllBytes(), StandardCharsets.UTF_8);
+		String XmlString = xml.toString();
 		if (XmlString.contains("&lt;")) {
 			XmlString = XmlString.replace("&lt;", "<");
 		}
