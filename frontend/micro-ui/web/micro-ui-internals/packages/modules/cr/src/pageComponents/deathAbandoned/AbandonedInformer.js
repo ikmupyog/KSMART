@@ -486,7 +486,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                 value={InformantPENNo}
                 onChange={setSelectInformantPENNo}
                 placeholder={`${t("CR_PEN_NO)")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
 

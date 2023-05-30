@@ -118,7 +118,7 @@ const BrideAddressPresent = ({
     }
   }
 
-  console.log({countryvalue, value, isEditMarriage, formData})
+  console.log({isEditMarriage, formData });
 
   useEffect(() => {
     if (
@@ -129,14 +129,12 @@ const BrideAddressPresent = ({
         formData?.BrideAddressDetails?.presentaddressStateName === "" ||
         formData?.BrideAddressDetails?.presentaddressStateName === undefined)
     ) {
-      console.log({lb: cmbLB, country: cmbCountry})
+      console.log({ lb: cmbLB, country: cmbCountry });
       if (cmbLB.length > 0 && cmbCountry.length > 0) {
-        console.log({tenantId})
         currentLB = cmbLB?.filter((cmbLB) => cmbLB?.code === tenantId);
         // setAdrsLBName(currentLB[0]);
-        console.log({currentLB});
         if (cmbCountry.length > 0 && currentLB.length > 0) {
-          console.log("Hi Country")
+          console.log("Hi Country");
           cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
           setaddressCountry(cmbFilterCountry[0]);
           if (isPrsentAddress) {
@@ -191,7 +189,7 @@ const BrideAddressPresent = ({
         //     setLbsVillagevalue(cmbFilterVillage);
         // }
       }
-    } 
+    }
   }, [cmbLB.length, cmbCountry.length, isBridePresentAddressSameAsGroomPresentAddress]);
 
   const goNext = () => {};
@@ -205,7 +203,7 @@ const BrideAddressPresent = ({
           <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_PRESENT_ADDRESS")}`}</span>
               </h1>
             </div>
           </div>

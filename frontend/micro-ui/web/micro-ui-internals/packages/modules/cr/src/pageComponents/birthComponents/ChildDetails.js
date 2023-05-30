@@ -28,7 +28,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [popUpState, setpopUpState] = useState(false);
   const [popUpStateNac, setpopUpStateNac] = useState(false);
   const [UploadNACHIde, setUploadNACHIde] = useState(formData?.ChildDetails?.UploadNACHIde ? true : false);
- 
+
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -281,7 +281,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }, [isInitialRender]);
- 
+
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
     const newThumbnails = fileStoreIds.map((key) => {
@@ -324,7 +324,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         operatorHosward.push(...ob.jurisdictionChilds);
       });
       if (operatorHosward.length > 0) {
-        console.log("operatorHosward", operatorHosward[0].wardCode);
+        // console.log("operatorHosward", operatorHosward[0].wardCode);
         setWardNo(operatorHosward[0].wardCode);
       }
       const tempArray = operatorHospDet?.map((ob) => {
@@ -338,7 +338,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         appHosward.push(...ob.jurisdictionChilds);
       });
       if (appHosward.length > 0) {
-        console.log("operatorHosward", appHosward[0].wardCode);
+        // console.log("operatorHosward", appHosward[0].wardCode);
         setWardNo(appHosward[0].wardCode);
       }
       const tempArray = approverHospDet?.map((ob) => {
@@ -483,10 +483,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   useEffect(() => {
     if (birthPlace && DifferenceInTime != null) {
-      console.log("DifferenceInTime",DifferenceInTime);
+      // console.log("DifferenceInTime", DifferenceInTime);
       let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
       if (currentWorgFlow.length > 0) {
-        console.log("currentWorgFlowTime",currentWorgFlow[0].WorkflowCode);
+        // console.log("currentWorgFlowTime", currentWorgFlow[0].WorkflowCode);
         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
         setIsPayment(currentWorgFlow[0].payment);
         setAmount(currentWorgFlow[0].amount);
@@ -642,9 +642,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   //   setChildArrivalDate(e.target.value);
   // }
 
-  useEffect(() => {
-    //console.log("time while onchange", birthDateTime);
-  }, [birthDateTime])
 
 
   const handleTimeChange = (value, cb) => {
@@ -898,7 +895,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
     // console.log(currentWorgFlow);
     if (currentWorgFlow.length > 0) {
-      console.log("currentWorgFlowPlace",currentWorgFlow[0].WorkflowCode);
+      // console.log("currentWorgFlowPlace", currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
       setIsPayment(currentWorgFlow[0].payment);
       setAmount(currentWorgFlow[0].amount);
@@ -930,7 +927,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     // }
   }
   function setSelectproceedNoRDO(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null)) {
       setproceedNoRDO(e.target.value.trim().length <= 20 ? e.target.value : (e.target.value).substring(0, 20));
     }
   }
@@ -1024,10 +1021,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         } else if (childDateofBirth.getTime() === today.getTime()) {
           let todayDate = new Date();
           let currenthours = todayDate.getHours();
-          let currentMints = todayDate.getHours();
+          let currentMints = todayDate.getMinutes();
           currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
           currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
-          let currentDatetime = currenthours + ':' + currentMints;
+          let currentDatetime ="";
+          currentDatetime = currenthours + ':' + currentMints;
           if (birthDateTime > currentDatetime) {
             validFlag = false;
             setbirthDateTime("");
@@ -1555,8 +1553,17 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       });
     }
   };
-  if (isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined)) {
+  //&& isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined)
+  if (isEditBirth ) {
 
+    if (formData?.ChildDetails?.birthDateTime != null) {
+      if(birthDateTime === undefined || birthDateTime === "" || birthDateTime === null){
+        //console.log(formData?.ChildDetails?.birthDateTime);
+        //let time = formData?.ChildDetails?.birthDateTime;
+        setbirthDateTime(formData?.ChildDetails?.birthDateTime);
+        //let timeParts = time.split(":");
+      }      
+    }
     if (formData?.ChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
         selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
@@ -1705,7 +1712,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                       // disable={isChildName}
                       style={{ textTransform: "uppercase" }}
                       placeholder={`${t("CR_RDO_PROCEED_NO")}`}
-                      {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
+                      {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_RDO_PROCEED_NO") })}
                     />
                   </div>
                   <div className="col-md-3">
