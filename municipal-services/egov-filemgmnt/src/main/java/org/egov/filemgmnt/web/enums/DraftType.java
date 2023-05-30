@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum DraftType {
+public enum DraftType implements TypeValue {
     CIRCULAR("1"),
     AFFIDAVIT("2"),
     NOTICE("3"),

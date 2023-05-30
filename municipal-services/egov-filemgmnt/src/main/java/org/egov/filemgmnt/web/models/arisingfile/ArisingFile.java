@@ -118,7 +118,7 @@ public class ArisingFile {
     private String serviceId;
 
     @Schema(type = "string", description = "File title")
-    @NotBlank(message = "File title is required")
+//    @NotBlank(message = "File title is required")
     @Size(max = 64, message = "File title length cannot exceed 64 characters")
     @JsonProperty("title")
     private String title;
@@ -156,7 +156,5 @@ public class ArisingFile {
     @NotNull(message = "Arising file applicant detail is required")
     @JsonProperty("arisingFileApplicant")
     private ArisingFileApplicant arisingFileApplicant;
-
-
 
 }
