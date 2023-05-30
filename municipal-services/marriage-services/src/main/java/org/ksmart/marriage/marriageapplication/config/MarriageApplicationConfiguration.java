@@ -98,6 +98,9 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.pdf.marriagecert.createEndPoint}")
     private String egovPdfMarriageEndPoint;
 
+    @Value("${egov.pdf.marriagecerthindu.createEndPoint}")
+    private String egovPdfMarriageHinduEndPoint;
+
     @Value("${egov.pdf.marriagecert.postendpoint}")
     private String saveMarriageCertEndpoint;
 
@@ -161,6 +164,12 @@ public class MarriageApplicationConfiguration {
 
     @Value("${marriagecert.egov.mdms.url}")
     private String marriageCertMDMSURL;
+
+    @Value("${egov.user.host}")
+    private String userHost;
+    @Value("${egov.user.search.path}")
+    private String userSearchEndpoint;
+
 
 
 }

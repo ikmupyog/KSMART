@@ -249,6 +249,7 @@ public class MarriageConstants {
             NOTIFICATION_APPROVED, NOTIFICATION_REJECTED));
     public static final String NOTIF_OWNER_NAME_KEY = "{OWNER_NAME}";
 
+    public static final String MARRIAGE_TYPE_HINDU = "MARRIAGE_TYPE_HINDU";
 
 
 }

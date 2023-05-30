@@ -208,20 +208,20 @@ public class MarriageRegistryRepository {
                 if(null!=req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()) {
                     //Setting Marriage Place Address------------------------------------------------------------------------------------------
                     StringBuilder marriageAddr = new StringBuilder();
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype())) {
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype())) {
                         if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
                                 .equals(MarriageConstants.PLACE_TYPE_HOUSE)) {
-                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn() + ",");
+                            if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn() + ", ");
                             }
-                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en() + ",");
+                            if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en() + ", ");
                             }
-                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en() + ",");
+                            if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en() + ", ");
                             }
-                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark() + ",");
+                            if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark() + ", ");
                             }
                             Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
                             util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
@@ -264,22 +264,22 @@ public class MarriageRegistryRepository {
                                 MarriageConstants.PLACE_OTHER))) {
                             if (!StringUtils.isEmpty(
                                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn() + ",");
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn() + ", ");
                             }
                             if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en() + ",");
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en() + ", ");
                             }
                             if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en() + ",");
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en() + ", ");
                             }
                             if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
-                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark() + ",");
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark() + ", ");
                             }
                             Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
                             util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
 
                         }
-                        req.getMarriageCertificate().get(0).setMarriagePlaceFullAddr(StringUtils.isNotBlank(marriageAddr.toString())?marriageAddr.toString():MarriageConstants.NOT_RECORDED);
+                        req.getMarriageCertificate().get(0).setMarriagePlaceFullAddr(StringUtils.isNotBlank(marriageAddr.toString())?StringUtils.upperCase(marriageAddr.toString()):MarriageConstants.NOT_RECORDED);
                     }
                 }else{
                     log.info("PDF_ERROR. Marriage Certificate , Marriage Place Type is Empty.. Cannot Generate Certificate!!!");
@@ -288,46 +288,56 @@ public class MarriageRegistryRepository {
 
                 String groomAddr = marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
                 if (StringUtils.isNotBlank(groomAddr)){
-                    req.getMarriageCertificate().get(0).setGroomPermntFullAddr(groomAddr);
+                    req.getMarriageCertificate().get(0).setGroomPermntFullAddr(StringUtils.upperCase(groomAddr));
                 }else{
                     req.getMarriageCertificate().get(0).setGroomPermntFullAddr(MarriageConstants.NOT_RECORDED);
                 }
                 String brideAddr = marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
                 if (StringUtils.isNotBlank(brideAddr)) {
-                    req.getMarriageCertificate().get(0).setBridePermntFullAddr(brideAddr);
+                    req.getMarriageCertificate().get(0).setBridePermntFullAddr(StringUtils.upperCase(brideAddr));
                 }else{
                     req.getMarriageCertificate().get(0).setBridePermntFullAddr(MarriageConstants.NOT_RECORDED);
                 }
                 //Setting groom NRI address
-                if (StringUtils.isNotBlank(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
-                    req.getMarriageCertificate().get(0).setGroomNRIAddress(marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                String groomNRIAddr = marriageRegistryEnrichment.setGroomNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
+                if (StringUtils.isNotBlank(groomNRIAddr)){
+                    req.getMarriageCertificate().get(0).setGroomNRIAddress(StringUtils.upperCase(groomNRIAddr));
                 }else{
                     req.getMarriageCertificate().get(0).setGroomNRIAddress(MarriageConstants.NOT_RECORDED);
                 }
 
                 //Setting bride NRI address
-                if (StringUtils.isNotBlank(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()))){
-                    req.getMarriageCertificate().get(0).setBrideNRIAddress(marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                String brideNRIAddr =marriageRegistryEnrichment.setBrideNRIAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
+                if (StringUtils.isNotBlank(brideNRIAddr)){
+                    req.getMarriageCertificate().get(0).setBrideNRIAddress(StringUtils.upperCase(brideNRIAddr));
                 }else{
                     req.getMarriageCertificate().get(0).setBrideNRIAddress(MarriageConstants.NOT_RECORDED);
                 }
-
-            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
-                if(!isImageExists(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
+                Boolean isHinduMarriage;
+//                if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriage_type())&&req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriage_type().equals(MarriageConstants.MARRIAGE_TYPE_HINDU)){
+//                    isHinduMarriage = true;
+//                } else {
+                    isHinduMarriage = false; //TODO add field for hindumarriage then change the commented code
+//                }
+                if(!isHinduMarriage) {
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
+                        if (!isImageExists(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
 //                    req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl( req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
 //                }else{
-                    log.error("PDF_ERROR. Marriage Certificate , Invalid Groom Photo Path!!!");
-                    throw new CustomException("PDF_ERROR", "Invalid Groom Photo Path!!!" );
-                }
-            }
-            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
-                if(!isImageExists(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
+                            log.error("PDF_ERROR. Marriage Certificate , Invalid Groom Photo Path!!!");
+                            throw new CustomException("PDF_ERROR", "Invalid Groom Photo Path!!!");
+                        }
+                    }
+
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
+                        if (!isImageExists(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
 //            }else{
-                log.error("PDF_ERROR. Marriage Certificate , Invalid Bride Photo Path!!!");
-                throw new CustomException("PDF_ERROR", "Invalid Bride Photo Path!!!" );
-            }
-            }
+                            log.error("PDF_ERROR. Marriage Certificate , Invalid Bride Photo Path!!!");
+                            throw new CustomException("PDF_ERROR", "Invalid Bride Photo Path!!!");
+                        }
+                    }
+                }
                 setDefaultValuesIfNull(req.getMarriageCertificate().get(0));
 
                 marriageCertPDFRequest.getMarriageCertificate().forEach(cert->{
@@ -340,7 +350,7 @@ public class MarriageRegistryRepository {
                 marriageCertPDFRequest.getMarriageCertificate().forEach(cert -> {
                     String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
                     String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];
-                    String marriageCertPath = StringUtils.replace(marriageApplicationConfiguration.getEgovPdfMarriageEndPoint(), "$tenantId", tenantId);
+                    String marriageCertPath = StringUtils.replace(isHinduMarriage?marriageApplicationConfiguration.getEgovPdfMarriageHinduEndPoint():marriageApplicationConfiguration.getEgovPdfMarriageEndPoint(), "$tenantId", tenantId);
                     String pdfFinalPath = uiHost + marriageCertPath;
                     try {
                         req.getMarriageCertificate().get(0).setMdmsBasePath(marriageApplicationConfiguration.getMarriageCertMDMSURL());

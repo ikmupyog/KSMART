@@ -11,6 +11,7 @@ import org.ksmart.marriage.common.repository.ServiceRequestRepository;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriagecommon.model.Notification.*;
 import org.ksmart.marriage.marriagecommon.model.SMSRequest;
 import org.ksmart.marriage.utils.NotificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -255,7 +257,7 @@ public class MarriageNotificationService {
      * @param request
      * @return
      */
-//    private EventRequest getEventsForTL(MarriageDetailsRequest request) {
+//    private EventRequest getEventsForMR(MarriageDetailsRequest request) {
 //    	List<Event> events = new ArrayList<>();
 //        String tenantId = request.getMarriageDetails().get(0).getTenantid();
 //		String localizationMessages = util.getLocalizationMessages(tenantId,request.getRequestInfo());
@@ -296,20 +298,20 @@ public class MarriageNotificationService {
 //    			List<String> toUsers = new ArrayList<>();
 //    			toUsers.add(mapOfPhnoAndUUIDs.get(mobile));
 //    			Recepient recepient = Recepient.builder().toUsers(toUsers).toRoles(null).build();
-//    			List<String> payTriggerList = Arrays.asList(config.getPayTriggers().split("[,]"));
+//    			//List<String> payTriggerList = Arrays.asList(config.getPayTriggers().split("[,]"));
 //				List<String> viewTriggerList = Arrays.asList(config.getViewApplicationTriggers().split("[,]"));
 //	   			Action action = null;
-//    			if(payTriggerList.contains(marriageApplicationDetails.getStatus())) {
-//                    List<ActionItem> items = new ArrayList<>();
-//        			String actionLink = config.getPayLink().replace("$mobile", mobile)
-//        						.replace("$applicationNo", marriageApplicationDetails.getApplicationNumber())
-//        						.replace("$tenantId", marriageApplicationDetails.getTenantid())
-//        						.replace("$businessService", marriageApplicationDetails.getBusinessservice());
-//        			actionLink = config.getUiAppHost() + actionLink;
-//        			ActionItem item = ActionItem.builder().actionUrl(actionLink).code(config.getPayCode()).build();
-//        			items.add(item);
-//        			action = Action.builder().actionUrls(items).build();
-//    			}
+////    			if(payTriggerList.contains(marriageApplicationDetails.getStatus())) {
+////                    List<ActionItem> items = new ArrayList<>();
+////        			String actionLink = config.getPayLink().replace("$mobile", mobile)
+////        						.replace("$applicationNo", marriageApplicationDetails.getApplicationNumber())
+////        						.replace("$tenantId", marriageApplicationDetails.getTenantid())
+////        						.replace("$businessService", marriageApplicationDetails.getBusinessservice());
+////        			actionLink = config.getUiAppHost() + actionLink;
+////        			ActionItem item = ActionItem.builder().actionUrl(actionLink).code(config.getPayCode()).build();
+////        			items.add(item);
+////        			action = Action.builder().actionUrls(items).build();
+////    			}
 //    			if(viewTriggerList.contains(marriageApplicationDetails.getStatus())){
 //					List<ActionItem> items = new ArrayList<>();
 //					String actionLink = config.getViewApplicationLink().replace("$mobile", mobile)
