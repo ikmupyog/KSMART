@@ -750,7 +750,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         }
       }
 
-      if (marriageLandmark != "" && (marriageLandmark === null || marriageLandmark?.trim() == "" || marriageLandmark?.trim() == undefined)) {
+      if ((marriageLandmark != null && marriageLandmark != "") && (marriageLandmark === null || marriageLandmark?.trim() == "" || marriageLandmark?.trim() == undefined)) {
         validFlag = false;
         setmarriageLandmark("");
         setmarriageLandmarkError(true);
@@ -840,7 +840,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         }
       }
 
-      if (marriageLandmark != "" && (marriageLandmark === null || marriageLandmark?.trim() == "" || marriageLandmark?.trim() == undefined)) {
+      if ((marriageLandmark != null && marriageLandmark != "") && (marriageLandmark === null || marriageLandmark?.trim() == "" || marriageLandmark?.trim() == undefined)) {
         validFlag = false;
         setmarriageLandmark("");
         setmarriageLandmarkError(true);
@@ -929,7 +929,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           setmarriageStreetMlError(false);
         }
       }
-      if (marriageLandmark != "" && (marriageLandmark === null || marriageLandmark?.trim() == "" || marriageLandmark?.trim() == undefined)) {
+      if ((marriageLandmark != null && marriageLandmark != "") && (marriageLandmark === null || marriageLandmark?.trim() == "" || marriageLandmark?.trim() == undefined)) {
         validFlag = false;
         setmarriageLandmark("");
         setmarriageLandmarkError(true);
