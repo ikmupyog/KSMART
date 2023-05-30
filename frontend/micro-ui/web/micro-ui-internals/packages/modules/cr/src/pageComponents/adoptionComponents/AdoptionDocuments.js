@@ -195,7 +195,7 @@ const AdoptionDocuments = ({ config, onSelect, formData }) => {
             if (response?.data?.files?.length > 0) {
               setUploadedFile5(response?.data?.files[0]?.fileStoreId);
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
-              setFatherIdFileDocPreview(fileDetails);
+              setMedicalFileDocPreview(fileDetails);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
             }

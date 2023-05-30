@@ -180,9 +180,10 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
         application?.licenseUnitName ? application?.licenseUnitName : ""
           + application?.licenseUnitNameLocal ? " ( " + application?.licenseUnitNameLocal + " ) " : "";
       let applicationDocuments = "";
-      application?.tradeLicenseDetail?.applicationDocuments.map((doc)=>{
+      
+      ((application?.tradeLicenseDetail?.applicationDocuments !== [])||(application?.tradeLicenseDetail?.applicationDocuments !== null)) ? application?.tradeLicenseDetail?.applicationDocuments?.map((doc)=>{
         applicationDocuments += doc?.documentType === "" ? doc?.documentType : ", " + doc?.documentType
-      });
+      }) : [];
       let fileStoreId = application?.fileStoreId;
       let serviceV = application?.applicationType === "NEW" ? "IFTE & OS New License" : application?.applicationType === "RENEWAL" ? "IFTE & OS Renewal License" : "";
       let finalJson =
