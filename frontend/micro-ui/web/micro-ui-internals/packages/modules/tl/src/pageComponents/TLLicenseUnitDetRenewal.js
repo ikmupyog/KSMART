@@ -281,13 +281,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   //   return BusinessSubTypeMenu;
   // }
-  function resetStructurePlace(){
-    setFeildsDoor([{
-      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
-    }]);
-  }
-  Data &&
+   Data &&
     Data.TradeLicense &&
     Data.TradeLicense.TradeType.map((ob) => {
       if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
@@ -448,8 +442,18 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const selectStructureType = (value => {
-    resetStructurePlace();
+    dispatchDoor({ type: "CLEAR_STATE" });
     setStructureType(value);
+    setBuildingName(null);
+    setBusinessActivityDesc(null);
+    setLandmark(null);
+    setLocality(null);
+    setPincode(null);
+    setPostOffice(null);
+    setServiceArea(null);
+    setStreet(null);
+    setWaterbody(null);
+
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
     if (value?.code === "DESIGNATEDPLACE") {
@@ -674,6 +678,21 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
         return [
           ...stateDoor
         ];
+      case "CLEAR_STATE":
+          return [
+            {
+              blockNo: "",
+              surveyNo: "",
+              subDivisionNo: "",
+              partitionNo: "",
+              doorNo: "",
+              doorNoSub: "",
+              vehicleNo: "",
+              vesselNo: "",
+              isResurveyed: "",
+              stallNo: "",
+            }
+          ];
     }
   };
 

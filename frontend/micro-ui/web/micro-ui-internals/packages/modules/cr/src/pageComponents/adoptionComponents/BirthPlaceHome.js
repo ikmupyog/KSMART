@@ -31,6 +31,7 @@ const BirthPlaceHome = ({
   PostOfficevalues,
   setPostOfficevalues,
   isEditAdoption,
+  searchedApp,
 }) => {
   const [pofilter, setPofilter] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -246,7 +247,7 @@ const BirthPlaceHome = ({
                   selected={wardNo}
                   select={setSelectWard}
                   placeholder={`${t("CS_COMMON_WARD")}`}
-                  disable={isDisableEdit}
+                  disable={searchedApp}
                   {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
                 />
               </div>
@@ -261,7 +262,7 @@ const BirthPlaceHome = ({
                   option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
                   selected={adrsPostOffice}
                   select={setSelectAdrsPostOffice}
-                  disable={isDisableEdit}
+                  disable={searchedApp}
                   placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 />
               </div>
@@ -277,7 +278,7 @@ const BirthPlaceHome = ({
                   name="adrsPincode"
                   value={adrsPincode}
                   onChange={setSelectAdrsPincode}
-                  disable={isDisableEdit}
+                  disable={searchedApp}
                   placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                   {...(validation = {
                     pattern: "^[0-9]{6}$",
@@ -305,7 +306,7 @@ const BirthPlaceHome = ({
                   name="adrsLocalityNameEn"
                   value={adrsLocalityNameEn}
                   onChange={setSelectAdrsLocalityNameEn}
-                  disable={isDisableEdit}
+                  disable={searchedApp.adrsLocalityNameEn}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                 />
@@ -319,7 +320,7 @@ const BirthPlaceHome = ({
                   name="adrsStreetNameEn"
                   value={adrsStreetNameEn}
                   onChange={setSelectAdrsStreetNameEn}
-                  disable={isDisableEdit}
+                  disable={searchedApp.adrsStreetNameEn}
                   placeholder={`${t("CR_STREET_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                 />
@@ -336,7 +337,7 @@ const BirthPlaceHome = ({
                   name="adrsHouseNameEn"
                   value={adrsHouseNameEn}
                   onChange={setSelectAdrsHouseNameEn}
-                  disable={isDisableEdit}
+                  disable={searchedApp.adrsHouseNameEn}
                   placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                 />
@@ -359,7 +360,7 @@ const BirthPlaceHome = ({
                   value={adrsLocalityNameMl}
                   onKeyPress={setCheckMalayalamInputField}
                   onChange={setSelectAdrsLocalityNameMl}
-                  disable={isDisableEdit}
+                  disable={searchedApp.adrsLocalityNameMl}
                   placeholder={`${t("CR_LOCALITY_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -379,7 +380,7 @@ const BirthPlaceHome = ({
                   value={adrsStreetNameMl}
                   onKeyPress={setCheckMalayalamInputField}
                   onChange={setSelectAdrsStreetNameMl}
-                  disable={isDisableEdit}
+                  disable={searchedApp.adrsStreetNameMl}
                   placeholder={`${t("CR_STREET_NAME_ML")}`}
                 />
               </div>
@@ -396,7 +397,7 @@ const BirthPlaceHome = ({
                   value={adrsHouseNameMl}
                   onKeyPress={setCheckMalayalamInputSplChar}
                   onChange={setSelectAdrsHouseNameMl}
-                  disable={isDisableEdit}
+                  disable={searchedApp.adrsHouseNameMl}
                   placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 />
               </div>

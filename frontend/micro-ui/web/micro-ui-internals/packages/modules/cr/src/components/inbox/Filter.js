@@ -209,7 +209,7 @@ const Filter = (props) => {
           </div>
           <div>
             <RadioButtons onSelect={onRadioChange} selectedOption={selectAssigned} optionsKey="name" options={assignedToOptions} />
-            <div>
+            {/* <div> */}
               {/* {GetSelectOptions(
                 t("CS_COMPLAINT_DETAILS_COMPLAINT_SUBTYPE"),
                 serviceDefsData,
@@ -221,7 +221,7 @@ const Filter = (props) => {
               )} */}
               <div className="filter-label">{t("CS_COMPLAINT_DETAILS_COMPLAINT_SUBTYPE")}</div>
               <Dropdown option={serviceDefsData} selected={selectedComplaintType} optionKey="i18nKey" />
-            </div>
+            {/* </div> */}
             {/* <div>{GetSelectOptions(t("CS_PGR_LOCALITY"), localities, selectedLocality, onSelectLocality, "i18nkey", onRemove, "locality")}</div> */}
             {/* {<Status complaints={props.complaints} onAssignmentChange={handleAssignmentChange} pgrfilters={pgrfilters} />} */}
           </div>
