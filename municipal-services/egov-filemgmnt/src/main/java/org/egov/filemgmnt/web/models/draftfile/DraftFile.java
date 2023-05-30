@@ -19,6 +19,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Schema(description = "A Object holds the file data of draft file  submitted by the user")
 @Validated
 
@@ -103,8 +106,25 @@ public class DraftFile {
     private AuditDetails auditDetails;
 
     @JsonProperty("draftFileAddress")
-    private DraftFileAddress draftFileAddress;
+    private List <DraftFileAddress> draftFileAddress;
 
     @JsonProperty("draftFileReference")
-    private DraftFileReference draftFileReference;
+    private List <DraftFileReference> draftFileReference;
+
+    public void addAddress (final DraftFileAddress draftAddress)
+    {
+        if (draftFileAddress == null) {
+            draftFileAddress = new ArrayList<>();
+        }
+        draftFileAddress.add(draftAddress);
+    }
+
+    public void addReference (final DraftFileReference reference)
+    {
+        if (draftFileReference == null) {
+            draftFileReference = new ArrayList<>();
+    }
+        draftFileReference.add(reference);
+    }
+
 }

@@ -819,54 +819,54 @@ serviceMaps:
             id, tenantid, filecode, draftid, referencetext, status, createdby, createdtime, 
             lastmodifiedby, lastmodifiedtime)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      basePath: DraftFile.draftFileReference
+      basePath: DraftFile.draftFileReference.*
       jsonMaps:
-      - jsonPath: $.DraftFile.draftFileReference.id
+      - jsonPath: $.DraftFile.draftFileReference.*.id
 
-      - jsonPath: $.DraftFile.draftFileReference.tenantId
+      - jsonPath: $.DraftFile.draftFileReference.*.tenantId
 
-      - jsonPath: $.DraftFile.draftFileReference.fileCode
+      - jsonPath: $.DraftFile.draftFileReference.*.fileCode
 
-      - jsonPath: $.DraftFile.draftFileReference.draftId
+      - jsonPath: $.DraftFile.draftFileReference.*.draftId
 
-      - jsonPath: $.DraftFile.draftFileReference.referenceText
+      - jsonPath: $.DraftFile.draftFileReference.*.referenceText
 
-      - jsonPath: $.DraftFile.draftFileReference.status
+      - jsonPath: $.DraftFile.draftFileReference.*.status
 
-      - jsonPath: $.DraftFile.draftFileReference.auditDetails.createdBy
+      - jsonPath: $.DraftFile.draftFileReference.*.auditDetails.createdBy
 
-      - jsonPath: $.DraftFile.draftFileReference.auditDetails.createdTime
+      - jsonPath: $.DraftFile.draftFileReference.*.auditDetails.createdTime
 
-      - jsonPath: $.DraftFile.draftFileReference.auditDetails.lastModifiedBy
+      - jsonPath: $.DraftFile.draftFileReference.*.auditDetails.lastModifiedBy
 
-      - jsonPath: $.DraftFile.draftFileReference.auditDetails.lastModifiedTime
+      - jsonPath: $.DraftFile.draftFileReference.*.auditDetails.lastModifiedTime
 
     - query: INSERT INTO public.eg_fm_draftingaddress(id, tenantid, filecode, draftid, salutation, name, address, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      basePath: DraftFile.draftFileAddress
+      basePath: DraftFile.draftFileAddress.*
       jsonMaps:
-      - jsonPath: $.DraftFile.draftFileAddress.id
+      - jsonPath: $.DraftFile.draftFileAddress.*.id
 
-      - jsonPath: $.DraftFile.draftFileAddress.tenantId
+      - jsonPath: $.DraftFile.draftFileAddress.*.tenantId
 
-      - jsonPath: $.DraftFile.draftFileAddress.fileCode
+      - jsonPath: $.DraftFile.draftFileAddress.*.fileCode
 
-      - jsonPath: $.DraftFile.draftFileAddress.draftId
+      - jsonPath: $.DraftFile.draftFileAddress.*.draftId
 
-      - jsonPath: $.DraftFile.draftFileAddress.salutation
+      - jsonPath: $.DraftFile.draftFileAddress.*.salutation
 
-      - jsonPath: $.DraftFile.draftFileAddress.name
+      - jsonPath: $.DraftFile.draftFileAddress.*.name
 
-      - jsonPath: $.DraftFile.draftFileAddress.address
+      - jsonPath: $.DraftFile.draftFileAddress.*.address
 
-      - jsonPath: $.DraftFile.draftFileAddress.status
+      - jsonPath: $.DraftFile.draftFileAddress.*.status
 
-      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.createdBy
+      - jsonPath: $.DraftFile.draftFileAddress.*.auditDetails.createdBy
 
-      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.createdTime
+      - jsonPath: $.DraftFile.draftFileAddress.*.auditDetails.createdTime
 
-      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.lastModifiedBy
+      - jsonPath: $.DraftFile.draftFileAddress.*.auditDetails.lastModifiedBy
 
-      - jsonPath: $.DraftFile.draftFileAddress.auditDetails.lastModifiedTime
+      - jsonPath: $.DraftFile.draftFileAddress.*.auditDetails.lastModifiedTime
 
   - version: 1.0
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
