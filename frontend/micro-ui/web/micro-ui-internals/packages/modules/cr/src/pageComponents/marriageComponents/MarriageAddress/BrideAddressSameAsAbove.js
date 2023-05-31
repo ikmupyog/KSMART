@@ -228,8 +228,8 @@ const BrideAddressSameAsAbove = ({
     } else {
       // setpermtaddressCountry(presentaddressCountry);
       // setpermtaddressStateName(presentaddressStateName);
-      // setCountryValuePermanent("IND");
-      // setValuePermanent("kl");
+      setCountryValuePermanent("IND");
+      setValuePermanent("kl");
       setpermntInKeralaAdrDistrict("");
       setpermntInKeralaAdrLBName("");
       setpermntInKeralaAdrTaluk("");
