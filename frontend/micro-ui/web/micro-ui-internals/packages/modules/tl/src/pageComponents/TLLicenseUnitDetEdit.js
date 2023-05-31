@@ -7,7 +7,6 @@ import { useQueryClient } from "react-query";
 import { convertEpochToDate } from '../utils/index';
 
 const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
-
   const [formditenable, setFormditenable] = Digit.Hooks.useSessionStorage("TL_RENEWAL_ENABLE_TRADE", {});
 
   let naturetype = null;
@@ -317,13 +316,6 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       });
     return BusinessSubTypeMenu;
   }
-  function resetStructurePlace(){
-    setFeildsDoor([{
-      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
-    }]);
-  }
-
   const selectDistrict = ((value) => {
     setDistrictList(value);
     setIsInitialRender(true);
@@ -449,7 +441,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   });
 
   const selectStructureType = (value => {
-    resetStructurePlace();
+    dispatchDoor({ type: "CLEAR_STATE" });
     setStructureType(value);
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
@@ -675,6 +667,21 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
         return [
           ...stateDoor
         ];
+      case "CLEAR_STATE":
+        return [
+          {
+            blockNo: "",
+            surveyNo: "",
+            subDivisionNo: "",
+            partitionNo: "",
+            doorNo: "",
+            doorNoSub: "",
+            vehicleNo: "",
+            vesselNo: "",
+            isResurveyed: "",
+            stallNo: "",
+          }
+        ];
     }
   };
 
@@ -795,7 +802,11 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       setLocalbody(tenantId ? LBs.filter(obj => obj.code === tenantId)[0] : "");
     }
   }
-  if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)&&(isInitialRendercombo)) {
+  console.log(formDataPage?.tradeLicenseDetail?.address?.zonalId);
+  console.log(zonalOffice);
+  console.log(zonalOffice);
+
+  if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)) {
     setZonalOffice(Zonal.filter(zone => parseInt(zone?.code) === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
     setisInitialRendercombo(false);
   }
@@ -1070,7 +1081,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
           ownershipCategory:ownershipCategory.code, address, tradeUnits, structurePlace, }
       onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName,
          licenseUnitNameLocal,desiredLicensePeriod: desiredLicensePeriod.code,
-        applicationType:"RENEWAL" , workflowCode :"RenewalTL",oldApplicationNumber:formDataPage?.applicationNumber
+        applicationType:formDataPage?.applicationType , workflowCode :formDataPage?.workflowCode,oldApplicationNumber:formDataPage?.applicationNumber
          ,licenseNumber : formDataPage?.licenseNumber});
     }
     else {
@@ -1107,7 +1118,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
             {/* <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LB_DET_LABEL")}`}</span> </h1>
               </div>
-            </div> */}
+            </div> 
             <div className="row">
               <div className="col-md-7" >
                 <div className="row">
@@ -1146,7 +1157,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}</span> </h1>
               </div>
