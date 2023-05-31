@@ -20,6 +20,7 @@ import moment from "moment";
 import { convertEpochToDate } from "../../../utils";
 import { useForm } from "react-hook-form";
 import { formatApiParams } from "../../../utils/deathCorrectionParams";
+import DeathCorrectionDocUpload from "../../../components/DeathCorrectionDocUpload";
 
 function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navigationData, onSubmitAcknowledgement, navigateAcknowledgement }) {
   const { t } = useTranslation();
@@ -245,6 +246,8 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
     return (
       <React.Fragment>
+           <div style={{display:'flex',flexDirection:'row', width:'100%'}}>
+        <div style={{width:"70%"}}>
         <FormStep onSelect={onSubmitDeathCorrection} config={config}>
           <div className="row">
             <div className="col-md-12">
@@ -683,15 +686,25 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
             </FormFieldContainer>
-          <DeathCorrectionModal
+          {/* <DeathCorrectionModal
             showModal={showModal}
             selectedConfig={selectedCorrectionItem}
             onSubmit={onUploadDocSubmit}
             hideModal={_hideModal}
             selectedDocs={selectedDocs}
             selectedDocData={selectedDocData}
-          />
+          /> */}
         </FormStep>
+        </div>
+          <DeathCorrectionDocUpload
+            selectedConfig={selectedCorrectionItem}
+            showModal={showModal}
+            onSubmit={onUploadDocSubmit}
+            hideModal={_hideModal}
+            selectedDocs={selectedDocs}
+            selectedDocData={selectedDocData} 
+          />
+        </div>
         {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
       </React.Fragment>
     );

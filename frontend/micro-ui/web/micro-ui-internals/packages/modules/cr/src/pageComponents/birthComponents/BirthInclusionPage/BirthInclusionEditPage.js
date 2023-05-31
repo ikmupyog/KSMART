@@ -24,6 +24,7 @@ import { Controller, useForm } from "react-hook-form";
 import { convertEpochToDate } from "../../../utils";
 import moment from "moment";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
+import BirthCorrectionDocUpload from "../../../components/birthCorrectionDocUpload";
 
 const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocuments, navigationData, navigateAcknowledgement }) => {
   // let formData = {};
@@ -40,12 +41,13 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   const [selectedDocs, setSelectedDocs] = useState([]);
   const [selectedDocData, setSelectedDocData] = useState([]);
   const [selectedDob, setSelectedDob] = useState("");
-
+ 
   // const [value, setValue] = useState(0);
   const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
   // const [selectedBirthData, setSelectedBirthData] = useState({});
   const [selectedFieldType, setSelectedFieldType] = useState("");
   // const history = useHistory();
+  const fieldName = BIRTH_INCLUSION_FIELD_NAMES[selectedInclusionItem?.documentData?.[0]?.CorrectionField];
 
   const resetBirthInclusionData = () => {
     setParams({});
@@ -57,6 +59,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
       window.removeEventListener("popstate", resetBirthInclusionData);
     };
   }, []);
+
+  console.log(selectedInclusionItem, "items....");
 
   useEffect(async () => {
     if (Object.keys(params)?.length > 0) {
@@ -75,6 +79,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     setSelectedInclusionItem(selectedBirthInclusionData);
     setShowModal(true);
   };
+
+console.log(fieldName, "fieldname........");
 
   const FieldComponentContainer = ({ children }) => {
     return <div className="col-md-10">{children}</div>;
@@ -239,6 +245,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     const config = { texts: { submitBarLabel: "Next" } };
     return (
       <React.Fragment>
+        <div style={{display:'flex',flexDirection:'row', width:'100%'}}>
+        <div style={{width:"70%"}}>
         <FormStep onSelect={onSubmitBirthInclusion} config={config}>
           <div className="row">
             <div className="col-md-12">
@@ -762,6 +770,12 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             />
           )}
         </FormStep>
+        
+        </div>
+           <BirthCorrectionDocUpload
+               selectedConfig={selectedInclusionItem}
+                />
+        </div>
         {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
       </React.Fragment>
     );
