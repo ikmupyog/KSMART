@@ -132,6 +132,9 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         if(requestInfo.getUserInfo().getUuid() != null){
             addFilter("MD.createdby", criteria.getUuid(), query, preparedStmtValues);
         }
+        if(requestInfo.getUserInfo().getUuid() != null){
+            addFilter("MD.lastmodifiedby", criteria.getUuid(), query, preparedStmtValues);
+        }
         if (criteria.getBrideFirstnameEn() != null){
           //addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
           addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
