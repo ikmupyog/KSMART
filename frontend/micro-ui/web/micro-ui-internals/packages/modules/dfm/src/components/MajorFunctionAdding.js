@@ -340,9 +340,9 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
           )}
         </div>
       </div>
-      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
-      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
-      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
+      {mutationSuccess && <Toast label="Major Function Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Major Function Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Major Function Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
       {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
     </React.Fragment>
   );

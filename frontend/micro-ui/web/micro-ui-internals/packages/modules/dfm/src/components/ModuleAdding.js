@@ -63,7 +63,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     }, 2500);
   };
   const textValue = data?.ModuleDetails.filter((item) => item.status !== "0");
-  console.log(textValue);
   const GetCell = (value) => <span className="cell-text">{value}</span>;
 
   const columns = useMemo(
