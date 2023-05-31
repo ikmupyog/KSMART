@@ -175,14 +175,11 @@ const DeathCorrectionDocUpload = ({ title, showModal, onSubmit, hideModal, selec
   return (
     <React.Fragment>
     <div style={{width:"30%", height:"150%", backgroundColor:'white', borderRadius: "0.5rem", marginTop: "0.5rem"}}>
-    <fieldset style={{ border: "3px solid black"}}>
-      <legend style={{ margin: "5px"}}>Correction Procedures and Guidelines</legend>
+    {/* <fieldset style={{ border: "3px solid black"}}>
+      <legend style={{ margin: "5px"}}>Correction Procedures and Guidelines</legend> */}
       <div style={{ margin: "1rem"}}>
-      {/* <p>Date Of Birth</p> */}
-      <h1 style={{ marginBottom: "1rem", color: "red" }}>
-    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)}`}</span>{" "}
-     </h1>
-     <div style={{ margin: "1rem"}}>
+      <h2 style={{ marginBottom: "1rem", color: "#00377B", fontWeight: "600" }}>{`${t(`CR_${fieldName}`)}`}</h2>
+      <div style={{ margin: "1rem"}}>
       <p>Please ensure that the following documents need to attach for correcting {`${t(`CR_${fieldName}`)}`}.</p>
       </div>
       {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
@@ -222,7 +219,7 @@ const DeathCorrectionDocUpload = ({ title, showModal, onSubmit, hideModal, selec
             hideModal();
           }}
         />
-    </fieldset>
+    {/* </fieldset> */}
   
   </div>
  
