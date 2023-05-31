@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast,  UploadFile, } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea,Loader, Toast,  UploadFile, } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,7 +7,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  console.log("Informer",formData);
+
 
   const [IsDeclarationInformant, setIsDeclarationInformant] = useState(
     formData?.InitiatorAbandoned?.IsDeclarationInformant ? formData?.InitiatorAbandoned?.IsDeclarationInformant : false
@@ -41,6 +41,9 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   );
 
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [fileSizeError, setFileSizeError] = useState(false);
+  const [fileTypeError, setFileTypeError] = useState(false);
+  const [fileUploadError, setFileUploadError] = useState(false);
   const [toast, setToast] = useState(false);
   const [infomantNameError, setinfomantNameError] = useState(formData?.InitiatorAbandoned?.InformantNameEn ? false : false);
   const [infomantAadharError, setinfomantAadharError] = useState(formData?.InitiatorAbandoned?.infomantAadhar ? false : false);
@@ -60,6 +63,12 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const [file3, setFile3] = useState(formData?.InitiatorAbandoned?.uploadedFile3);
   const [file4, setFile4] = useState(formData?.InitiatorAbandoned?.uploadedFile4);
   const [file5, setFile5] = useState(formData?.InitiatorAbandoned?.uploadedFile5);
+  const [isFileLoading, setIsFileLoading] = useState(false);
+  const [isFile1Loading, setIsFile1Loading] = useState(false);
+  const [isFile2Loading, setIsFile2Loading] = useState(false);
+  const [isFile3Loading, setIsFile3Loading] = useState(false);
+  const [isFile4Loading, setIsFile4Loading] = useState(false);
+  const [isFile5Loading, setIsFile5Loading] = useState(false);
 
   function selectfile(e) {
     setFile(e.target.files[0]);
@@ -84,18 +93,36 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     (async () => {
       setError(null);
       if (file) {
-        if (file.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
+          setIsFileLoading(true);
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+            } 
+            else {
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
+            setIsFileLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
+        
       }
     })();
   }, [file]);
@@ -103,19 +130,36 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     (async () => {
       setError(null);
       if (file1) {
-        if (file1.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file1.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
+          setIsFile1Loading(true);
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file1, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
-
               setUploadedFile1(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+            } 
+            else {
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
+            setIsFile1Loading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
+        
       }
     })();
   }, [file1]);
@@ -123,18 +167,36 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     (async () => {
       setError(null);
       if (file2) {
-        if (file2.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file2.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
+          setIsFile2Loading(true);
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file2, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile2(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+            } 
+            else {
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
+            setIsFile2Loading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
+        
       }
     })();
   }, [file2]);
@@ -142,18 +204,36 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     (async () => {
       setError(null);
       if (file3) {
-        if (file3.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file3.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
+          setIsFile3Loading(true);
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file3, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile3(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+            } 
+            else {
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
+            setIsFile3Loading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
+        
       }
     })();
   }, [file3]);
@@ -161,18 +241,36 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     (async () => {
       setError(null);
       if (file4) {
-        if (file4.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file4.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
+          setIsFile4Loading(true);
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file4, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile4(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+            } 
+            else {
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
+            setIsFile4Loading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
+        
       }
     })();
   }, [file4]);
@@ -180,18 +278,36 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
     (async () => {
       setError(null);
       if (file5) {
-        if (file5.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file5.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
+          setIsFile5Loading(true);
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file5, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile5(response?.data?.files[0]?.fileStoreId);
-            } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+            } 
+            else {
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 3000);
             }
+            setIsFile5Loading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 3000);
         }
+        
       }
     })();
   }, [file5]);
@@ -573,8 +689,12 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
             </h1>
           </div>
         </div>
+       
         <div className="row">
             <div className="col-md-12">
+            {isFileLoading ? (
+                    <Loader></Loader>
+                  ) : (
               <div className="row">
                 <div className="col-md-5">
                   <CardLabel>
@@ -593,6 +713,10 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                   />
                 </div>
               </div>
+              )}
+              {isFile1Loading ? (
+                    <Loader></Loader>
+                  ) : (
               <div className="row">
                 <div className="col-md-5">
                   <CardLabel>
@@ -611,6 +735,10 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                   />
                 </div>
               </div>
+              )}
+              {isFile2Loading ? (
+                    <Loader></Loader>
+                  ) : (
               <div className="row">
                 <div className="col-md-5">
                   <CardLabel>
@@ -629,6 +757,10 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                   />
                 </div>
               </div>
+              )}
+              {isFile3Loading ? (
+                    <Loader></Loader>
+                  ) : (
               <div className="row">
                 <div className="col-md-5">
                   <CardLabel>
@@ -647,6 +779,10 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                   />
                 </div>
               </div>
+              )}
+              {isFile4Loading ? (
+                    <Loader></Loader>
+                  ) : (
               <div className="row">
                 <div className="col-md-5">
                   <CardLabel>
@@ -665,6 +801,10 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                   />
                 </div>
               </div>
+                  )}
+                   {isFile5Loading ? (
+                    <Loader></Loader>
+                  ) : (
               <div className="row">
                 <div className="col-md-5">
                   <CardLabel>
@@ -683,6 +823,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                   />
                 </div>
               </div>
+                  )}
             </div>
           </div>
 
@@ -691,7 +832,16 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
             error={infomantNameError || infomantAadharError || infomantMobileError || informerDesiError}
             label={
               infomantNameError || infomantAadharError || infomantMobileError || informerDesiError
-                ? infomantNameError
+                || fileSizeError || fileTypeError || fileUploadError
+                ? fileSizeError
+                ? t("FILE_SIZE_VALIDATION_MESSAGE")
+                : fileTypeError
+                ? t("FILE_TYPE_VALIDATION_MESSAGE")
+                : fileUploadError 
+                ?
+                t("FILE_UPLOAD_VALIDATION_MESSAGE")
+                :
+                infomantNameError
                   ? t(`CR_ERROR_INFORMANT_NAME_CHOOSE`)
                   : infomantAadharError
                   ? t(`CR_ERROR_INFORMANT_AADHAR_CHOOSE`)

@@ -110,7 +110,9 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
   };
 
   const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+    if(isEditMarriage === false){
+      clearParams();
+    }
     queryClient.invalidateQueries("CR_CREATE_MARRIAGE");
   };
   const handleSkip = () => {};
