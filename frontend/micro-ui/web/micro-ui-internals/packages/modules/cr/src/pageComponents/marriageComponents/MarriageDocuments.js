@@ -927,7 +927,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
             setIsGroomPassportLoading(false);
           } catch (err) {}
         } else {
-          setFileSizeError(true);
+          setFileTypeError(true);
           setToast(true);
           setTimeout(() => {
             setToast(false);
@@ -3420,13 +3420,15 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
         </div>
         {toast && (
           <Toast
-            error={fileSizeError || fileTypeError}
+            error={fileSizeError || fileTypeError || fileUploadError}
             label={
-              fileSizeError || fileTypeError
+              fileSizeError || fileTypeError || fileUploadError
                 ? fileSizeError
                   ? t("FILE_SIZE_VALIDATION_MESSAGE")
                   : fileTypeError
                   ? t("FILE_TYPE_VALIDATION_MESSAGE")
+                  : fileUploadError 
+                  ? t("FILE_UPLOAD_VALIDATION_MESSAGE")
                   : setToast(false)
                 : setToast(false)
             }
