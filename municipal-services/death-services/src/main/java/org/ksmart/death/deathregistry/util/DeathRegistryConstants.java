@@ -30,6 +30,7 @@ public class DeathRegistryConstants {
     public static final String COMMON_MASTERS_MODULE = "common-masters";
     public static final String STATE = "State";
     public static final String COUNTRY = "Country";
+    public static final String  DEATH_PLACE_OTHER = "OTHER";
      public static final String  DEATH_PLACE_HOME = "HOME";
      public static final String  DEATH_PLACE_HOSPITAL = "HOSPITAL";
      public static final String  DEATH_PLACE_INSTITUTION = "INSTITUTION";

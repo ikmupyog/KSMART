@@ -26,6 +26,9 @@ public class  DeathRegistryFamilyInfoRowMapper   implements ResultSetExtractor  
                             .familyEmailId(rs.getString("family_email"))
                             .spouseAgeIfAlive(rs.getString("spouse_if_alive"))
                             .spouseAge(rs.getInt("spouse_age"))
+                            .spouseAadhaar(rs.getString("spouse_aadhaar"))
+                            .fatherAadharNo(rs.getString("male_dependent_aadharno"))
+                            .motherAadharNo(rs.getString("female_dependent_aadharno"))
                             .build();
                     }
                 

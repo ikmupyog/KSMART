@@ -76,6 +76,9 @@ public class DeathApplnRepository {
     public List<DeathDtl> getDeathApplication(DeathSearchCriteria criteria,RequestInfo requestInfo) {
         
         List<Object> preparedStmtValues = new ArrayList<>();
+        if(criteria.getDeceasedFirstNameEn() != null){
+            criteria.setDeceasedFirstNameEn(criteria.getDeceasedFirstNameEn().toLowerCase());
+        }
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
         if(result != null) {
@@ -889,6 +892,9 @@ public class DeathApplnRepository {
     public List<DeathAbandonedDtls> getDeathAbandoned(DeathSearchCriteria criteria,RequestInfo requestInfo) {
         
         List<Object> preparedStmtValues = new ArrayList<>();
+        if(criteria.getDeceasedFirstNameEn() != null){
+            criteria.setDeceasedFirstNameEn(criteria.getDeceasedFirstNameEn().toLowerCase());
+        }
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathAbandonedDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), abandonedRowMapper);
         if(result != null) {
@@ -1589,6 +1595,9 @@ public class DeathApplnRepository {
     public List<DeathNACDtls> getDeathNACDetails(DeathSearchCriteria criteria,RequestInfo requestInfo) {
         
         List<Object> preparedStmtValues = new ArrayList<>();
+        if(criteria.getDeceasedFirstNameEn() != null){
+            criteria.setDeceasedFirstNameEn(criteria.getDeceasedFirstNameEn().toLowerCase());
+        }
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathNACDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathNACRowMapper);
         if(result != null) {

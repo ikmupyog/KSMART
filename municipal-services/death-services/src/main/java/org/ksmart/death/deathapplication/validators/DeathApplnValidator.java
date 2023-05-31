@@ -38,6 +38,8 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jayway.jsonpath.JsonPath;
 
 import org.apache.commons.lang3.StringUtils;
@@ -1538,7 +1540,7 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
     for (DeathDtl death : deathApplication) {
         dateOfDeath = death.getDeathBasicInfo().getDateOfDeath();
         deathPlace = death.getDeathBasicInfo().getDeathPlace();
-        wfCode = death.getWorkflowcode();
+        wfCode = death.getWorkflowcode();        
         applicationType = death.getDeathBasicInfo().getFuncionUID();
     }
     if (dateOfDeath == null) {
@@ -1583,13 +1585,12 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
 //RAkhi S on 10.04.2023 - VAlidate DAte of Death
 private void validateDoD(Long dateOfDeath, String deathPlace, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc) {
     Calendar calendar = Calendar.getInstance();
-    Long currentDate = calendar.getTimeInMillis();
-
+    Long currentDate = calendar.getTimeInMillis();    
     if (dateOfDeath > currentDate) {
         throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
                 "Date of death should be less than or same as  current date.");
     } else {
-        wfc = checkValidation(mdmsData, deathPlace, dateOfDeath, wfc);        
+        wfc = checkValidation(mdmsData, deathPlace, dateOfDeath, wfc);          
         if(!wfc.getWorkflowCode().equals(wfCode)) {
             throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
                     "Workflow code from the application request is wrong.");
@@ -1602,7 +1603,6 @@ private void validateDoD(Long dateOfDeath, String deathPlace, String wfCode, Str
 }
 //RAkhi S on 10.04.2023 - VAlidate DAte of Death MDMS data
 public WorkFlowCheck checkValidation(Object mdmsData, String deathPlace, Long dateOfDeath, WorkFlowCheck wfc) {
-    // WorkFlowCheck wfc = new WorkFlowCheck();
     Calendar calendar = Calendar.getInstance();
     Long currentDate = calendar.getTimeInMillis();
     List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_NEW_WF_JSONPATH + "[*]");

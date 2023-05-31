@@ -81,6 +81,9 @@ public class DeathRegistryRepository {
     }
     public List<DeathRegistryDtl> getDeathApplication(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
+        if(criteria.getDeceasedFirstNameEn() != null){
+            criteria.setDeceasedFirstNameEn(criteria.getDeceasedFirstNameEn().toLowerCase());
+        }
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
         //Rakhi S ikm on 18.04.2023
@@ -1288,6 +1291,55 @@ public class DeathRegistryRepository {
                                                         +cert.getDeathBasicInfo().getPlaceOfBurialEn()+")");
                 }
 
+                // place of death OTHER
+                if(DeathRegistryConstants.DEATH_PLACE_OTHER.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+                    
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeHoueNameEn(cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeHoueNameEn("");
+                    }
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeHoueNameMl(cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeHoueNameMl("");
+                    }
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeStreetNameEn(cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeStreetNameEn("");
+                    }
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeStreetNameMl(cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeStreetNameMl("");
+                    }
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeLocalityEn(cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeLocalityEn("");
+                    }
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl() != null){
+                        cert.getDeathBasicInfo().setDeathPlaceHomeLocalityMl(cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+", ");
+                    }
+                    else{
+                        cert.getDeathBasicInfo().setDeathPlaceHomeLocalityMl("");
+                    }                  
+                    cert.getDeathBasicInfo().setPlaceofDeath(                       
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+" / "+
+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn());
+                }
+
 
                 //Rakhi S on 11.02.2023
                if(cert.getDeathBasicInfo().getDeceasedGender().equals(DeathRegistryConstants.GENDER_MALE.toString())){
@@ -1304,6 +1356,34 @@ public class DeathRegistryRepository {
                 cert.getDeathBasicInfo().setRegistrationDate(cert.getDeathBasicInfo().getRegistrationDate());
                 cert.getDeathBasicInfo().setLocalBodyName(cert.getDeathBasicInfo().getLocalBodyName());
                 cert.getDeathBasicInfo().setEmbeddedUrl(getShortenedUrl(finalPath));
+
+                if (cert.getDeathBasicInfo().getDeceasedAadharNumber() != null){
+                    cert.getDeathBasicInfo().setDeceasedAadharNumber("XXXXXXXX"+cert.getDeathBasicInfo().getDeceasedAadharNumber().substring(8));
+                }
+                else {
+                    cert.getDeathBasicInfo().setDeceasedAadharNumber(DeathRegistryConstants.NOT_RECORDED_EN);
+                }
+                // Spouse Aadhaar
+                if (cert.getDeathFamilyInfo().getSpouseAadhaar() != null){
+                    cert.getDeathFamilyInfo().setSpouseAadhaar("XXXXXXXX"+cert.getDeathFamilyInfo().getSpouseAadhaar().substring(8));
+                }
+                else {
+                    cert.getDeathFamilyInfo().setSpouseAadhaar(DeathRegistryConstants.NOT_RECORDED_EN);
+                }
+                // Mother Aadhaar
+                if (cert.getDeathFamilyInfo().getMotherAadharNo() != null){
+                    cert.getDeathFamilyInfo().setMotherAadharNo("XXXXXXXX"+cert.getDeathFamilyInfo().getMotherAadharNo().substring(8));
+                }
+                else {
+                    cert.getDeathFamilyInfo().setMotherAadharNo(DeathRegistryConstants.NOT_RECORDED_EN);
+                }
+                // Father Aadhaar
+                if (cert.getDeathFamilyInfo().getFatherAadharNo() != null){
+                    cert.getDeathFamilyInfo().setFatherAadharNo("XXXXXXXX"+cert.getDeathFamilyInfo().getFatherAadharNo().substring(8));
+                }
+                else {
+                    cert.getDeathFamilyInfo().setFatherAadharNo(DeathRegistryConstants.NOT_RECORDED_EN);
+                }              
 
             });
             
@@ -1488,6 +1568,9 @@ public class DeathRegistryRepository {
     //Rakhi S ikm on 07.04.2023
   public List<DeathRegistryNACDtls> getDeathNACApplication(DeathNACCriteria criteria, RequestInfo requestInfo) {
     List<Object> preparedStmtValues = new ArrayList<>();
+    if(criteria.getDeceasedFirstNameEn() != null){
+        criteria.setDeceasedFirstNameEn(criteria.getDeceasedFirstNameEn().toLowerCase());
+    }
     String query = queryBuilder.getDeathNACSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
     List<DeathRegistryNACDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathRegistryNACRowMapper);
     
