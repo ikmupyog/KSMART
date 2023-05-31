@@ -92,7 +92,7 @@ public class EmployeeQueryBuilder {
 		// enter hospital code filteration here
 
 		if (!StringUtils.isEmpty(criteria.getHospitalcode())) {
-			builder.append(" jurisdiction.hospitalcode = ?");
+			builder.append(" and jurisdiction.hospitalcode = ?");
 			preparedStmtList.add(criteria.getHospitalcode());
 		}
 		//
