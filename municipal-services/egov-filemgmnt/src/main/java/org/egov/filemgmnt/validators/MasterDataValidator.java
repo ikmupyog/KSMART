@@ -22,12 +22,15 @@ public class MasterDataValidator {
     public void validateCreate(final ModuleDetailsRequest request, final ModuleDetails existing) {
         final String errorCode = INVALID_CREATE.getCode();
 
-
-        if (existing != null ) {
+        if (existing != null) {
             throw new CustomException(errorCode, "Duplicate module, module already exists.");
         }
 
-        if((existing != null ) && (existing.getModuleCode().toLowerCase().equals(request.getModuleDetails().getModuleCode()))){
+        if ((existing != null) && (existing.getModuleCode()
+                                           .toLowerCase()
+                                           .equals(request.getModuleDetails()
+                                                          .getModuleCode()))
+                && existing.getStatus() == "1") {
             throw new CustomException(errorCode, "Duplicate module, module already exists.");
         }
     }
@@ -39,7 +42,10 @@ public class MasterDataValidator {
             throw new CustomException(errorCode, "Duplicate major function, major function already exists.");
         }
 
-        if((existing != null ) && (existing.getMajorFunctionCode().equalsIgnoreCase(request.getMajorFunctionDetails().getMajorFunctionCode()))){
+        if ((existing != null) && (existing.getMajorFunctionCode()
+                                           .equalsIgnoreCase(request.getMajorFunctionDetails()
+                                                                    .getMajorFunctionCode()))
+                && existing.getStatus() == "1") {
             throw new CustomException(errorCode, "Duplicate major function, major function already exists.");
         }
     }
@@ -50,12 +56,24 @@ public class MasterDataValidator {
         if (existing != null) {
             throw new CustomException(errorCode, "Duplicate sub function, sub function already exists.");
         }
+        if ((existing != null) && (existing.getSubFunctionCode()
+                                           .equalsIgnoreCase(request.getSubFunctionDetails()
+                                                                    .getSubFunctionCode()))
+                && existing.getStatus() == "1") {
+            throw new CustomException(errorCode, "Duplicate sub function, sub function already exists.");
+        }
     }
 
     public void validateCreate(final ServiceDetailsRequest request, final ServiceDetails existing) {
         final String errorCode = INVALID_CREATE.getCode();
 
         if (existing != null) {
+            throw new CustomException(errorCode, "Duplicate service, service already exists.");
+        }
+        if ((existing != null) && (existing.getServiceCode()
+                                           .equalsIgnoreCase(request.getServiceDetails()
+                                                                    .getServiceCode()))
+                && existing.getStatus() == "1") {
             throw new CustomException(errorCode, "Duplicate service, service already exists.");
         }
     }

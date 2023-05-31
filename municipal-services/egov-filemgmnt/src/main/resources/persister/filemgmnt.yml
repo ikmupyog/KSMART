@@ -974,7 +974,7 @@ serviceMaps:
     queryMaps:
     - query: >
              UPDATE public.eg_fm_modulemaster SET modulenameeng=?, modulenamemal=? 
-             WHERE modulecode= ?;
+             WHERE modulecode= ? and status = ?;
       basePath: ModuleDetails
       jsonMaps:
       - jsonPath: $.ModuleDetails.moduleNameEnglish
@@ -982,6 +982,8 @@ serviceMaps:
       - jsonPath: $.ModuleDetails.moduleNameMalayalam
 
       - jsonPath: $.ModuleDetails.moduleCode
+      
+      - jsonPath: $.ModuleDetails.status
 
   - version: 1.0
     description: Delete Module Master in egov_filemgmnt database, eg_fm_modulemaster
@@ -1038,7 +1040,7 @@ serviceMaps:
     queryMaps:
     - query: >
           UPDATE public.eg_fm_majorfunctionmaster SET mfnameeng=?, mfnamemal=? 
-          WHERE mfcode= ?;
+          WHERE mfcode= ? and status = ?;
       basePath: MajorFunctionDetails
       jsonMaps:
       - jsonPath: $.MajorFunctionDetails.majorFunctionNameEnglish
@@ -1046,6 +1048,8 @@ serviceMaps:
       - jsonPath: $.MajorFunctionDetails.majorFunctionNameMalayalam
 
       - jsonPath: $.MajorFunctionDetails.majorFunctionCode
+      
+      - jsonPath: $.MajorFunctionDetails.status
 
   - version: 1.0
     description: Delete MajorFunction Master in egov_filemgmnt database, eg_fm_majorfunctionmaster
@@ -1101,7 +1105,7 @@ serviceMaps:
     queryMaps:
     - query: >
             UPDATE public.eg_fm_servicemaster SET servicenameeng=?, servicenamemal=?
-            WHERE servicecode= ?;
+            WHERE servicecode= ? and status= ?;
       basePath: ServiceDetails
       jsonMaps:
       - jsonPath: $.ServiceDetails.serviceNameEnglish
@@ -1109,6 +1113,8 @@ serviceMaps:
       - jsonPath: $.ServiceDetails.serviceNameMalayalam
 
       - jsonPath: $.ServiceDetails.serviceCode
+      
+      - jsonPath: $.ServiceDetails.status
 
   - version: 1.0
     description: Delete Service Master in egov_filemgmnt database, eg_fm_servicemaster
@@ -1163,7 +1169,7 @@ serviceMaps:
     queryMaps:
     - query: >
           UPDATE eg_fm_subfunctionmaster SET sfnameeng=?, sfnamemal=?
-          WHERE sfcode= ?;
+          WHERE sfcode= ? and status = ?;
       basePath: SubFunctionDetails
       jsonMaps:
       - jsonPath: $.SubFunctionDetails.subFunctionNameEnglish
@@ -1171,6 +1177,8 @@ serviceMaps:
       - jsonPath: $.SubFunctionDetails.subFunctionNameMalayalam
 
       - jsonPath: $.SubFunctionDetails.subFunctionCode
+      
+      - jsonPath: $.SubFunctionDetails.status
 
   - version: 1.0
     description: Delete Subfunction Master in egov_filemgmnt database, eg_fm_subfunctionmaster
