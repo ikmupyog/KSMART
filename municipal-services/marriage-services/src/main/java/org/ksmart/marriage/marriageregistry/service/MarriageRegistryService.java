@@ -107,7 +107,11 @@ public class MarriageRegistryService {
                 marriageCertificate.setYear(datestr);
             MarriageCertPDFRequest marriageCertPDFRequest = MarriageCertPDFRequest.builder().requestInfo(requestInfo).marriageCertificate(Arrays.asList(marriageCertificate)).build();
             long currentDate=System.currentTimeMillis();
-            marriageCertificate.setDateofissue(currentDate);
+            long dateOfIssue = 0l;
+            if(null!=marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails()&&null!=marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getAuditDetails()){
+                dateOfIssue=marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getAuditDetails().getLastModifiedTime()!=null?marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getAuditDetails().getLastModifiedTime() : marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getAuditDetails().getCreatedTime();
+            }
+            marriageCertificate.setDateofissue(dateOfIssue!=0l?dateOfIssue:currentDate);
             String strDate=null;
             String dodInWords = null;
             if(marriageCertificate.getDateofissue() != null){
