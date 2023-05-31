@@ -276,7 +276,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }
 
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null) {
       setinitiatorAddress(e.target.value.length <= 100 ? e.target.value : e.target.value.substring(0, 200));
     }
   }
@@ -710,7 +710,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                   onChange={setSelectinitiatorAddress}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                  {...(validation = { pattern: "^[a-zA-Z,-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
                 />
               </div>
             </div>

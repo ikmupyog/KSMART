@@ -105,7 +105,6 @@ const BrideAddressBasePage = ({
   const [value, setValue] = useState(
     formData?.BrideAddressDetails?.presentaddressStateName?.code ? formData?.BrideAddressDetails?.presentaddressStateName.code : "kl"
   );
-
   //################################# Present Inside Kerala #########################################################################################################
 
   const [presentWardNo, setPresentWardNo] = useState(
@@ -1729,6 +1728,8 @@ const BrideAddressBasePage = ({
           setadrsVillage={setadrsVillage}
           setadrsCityTown={setadrsCityTown}
           setPostCode={setPostCode}
+          countryvalue={countryvalue}
+          presentOutSideIndiaProvinceEn={presentOutSideIndiaProvinceEn}
         />
         {!isBridePresentAddressSameAsGroomPresentAddress && (
           <div className="accordion-wrapper">

@@ -10,6 +10,7 @@ import {
   Loader,
   Toast,
   SubmitBar,
+  FormBackButton,
 } from "@egovernments/digit-ui-react-components";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import { useTranslation } from "react-i18next";
@@ -20,6 +21,7 @@ import moment from "moment";
 import { convertEpochToDate } from "../../../utils";
 import { useForm } from "react-hook-form";
 import { formatApiParams } from "../../../utils/deathCorrectionParams";
+import DeathCorrectionDocUpload from "../../../components/DeathCorrectionDocUpload";
 
 function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navigationData, onSubmitAcknowledgement, navigateAcknowledgement }) {
   const { t } = useTranslation();
@@ -245,7 +247,11 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
     return (
       <React.Fragment>
-        <FormStep onSelect={onSubmitDeathCorrection} config={config}>
+           {/* <div style={{display:'flex',flexDirection:'row', width:'100%'}}>
+        <div style={{width:"70%"}}>
+        <FormStep onSelect={onSubmitDeathCorrection} config={config}> */}
+          <div style={{display:'flex'}}>
+        <div style={{marginTop: "0.6rem", width: "100%"}}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12 mystyle">
@@ -683,15 +689,29 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
             </FormFieldContainer>
-          <DeathCorrectionModal
+            <div className="buttonContainerN" style={{ padding: "2rem"}}>
+        <FormBackButton>{t("CS_COMMON_BACK")}</FormBackButton>
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
+      </div>
+          {/* <DeathCorrectionModal
             showModal={showModal}
             selectedConfig={selectedCorrectionItem}
             onSubmit={onUploadDocSubmit}
             hideModal={_hideModal}
             selectedDocs={selectedDocs}
             selectedDocData={selectedDocData}
+          /> */}
+        {/* </FormStep> */}
+        </div>
+          <DeathCorrectionDocUpload
+            selectedConfig={selectedCorrectionItem}
+            showModal={showModal}
+            onSubmit={onUploadDocSubmit}
+            hideModal={_hideModal}
+            selectedDocs={selectedDocs}
+            selectedDocData={selectedDocData} 
           />
-        </FormStep>
+        </div>
         {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
       </React.Fragment>
     );
