@@ -177,7 +177,7 @@ export const CRsearch = {
       title: "CR_BIRTH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlaceEn + " / " +  response?.birthPlaceMl : "NOT_RECORDED" },
         { title: "CR_HOSPITAL_EN", value: response?.hospitalName || "NOT_RECORDED" },
         { title: "CR_HOSPITAL_ML", value: response?.hospitalNameMl || "NOT_RECORDED" },
       ],
@@ -186,7 +186,7 @@ export const CRsearch = {
       title: "CR_BIRTH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlaceEn + " / " +  response?.birthPlaceMl : "NOT_RECORDED" },
         { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NOT_RECORDED" },
         { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
         { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NOT_RECORDED" },
@@ -196,7 +196,7 @@ export const CRsearch = {
       title: "CR_BIRTH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlaceEn + " / " +  response?.birthPlaceMl : "NOT_RECORDED" },
         { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NOT_RECORDED" },
         { title: "CS_COMMON_POST_OFFICE", value: response?.adrsPostOffice || "NOT_RECORDED" },
         { title: "CS_COMMON_PIN_CODE", value: response?.adrsPincode || "NOT_RECORDED" },
@@ -212,7 +212,7 @@ export const CRsearch = {
       title: "CR_BIRTH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlaceEn + " / " +  response?.birthPlaceMl : "NOT_RECORDED" },
         { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || "NOT_RECORDED" },
         { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "NOT_RECORDED" },
         { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.vehicleHaltPlace || "NOT_RECORDED" },
@@ -228,7 +228,7 @@ export const CRsearch = {
       title: "CR_BIRTH_PLACE_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlaceEn + " / " +  response?.birthPlaceMl : "NOT_RECORDED" },
         { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceTypeEn + " / " + response?.publicPlaceTypeMl || "NOT_RECORDED" },
         { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "NOT_RECORDED" },
         { title: "CR_LOCALITY_EN", value: response?.localityNameEn || "NOT_RECORDED" },

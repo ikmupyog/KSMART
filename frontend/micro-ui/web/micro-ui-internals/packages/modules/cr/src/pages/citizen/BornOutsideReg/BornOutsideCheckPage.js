@@ -186,7 +186,8 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")}
+                    {BornOutsideChildDetails?.displaytime ? BornOutsideChildDetails?.displaytime + " " + BornOutsideChildDetails?.displayAmPm : "NOT_RECORDED"}
+                      {/* {BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")} */}
                     </CardText>
                   </div>
                   <div className="col-md-2">
