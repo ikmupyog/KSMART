@@ -1021,10 +1021,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         } else if (childDateofBirth.getTime() === today.getTime()) {
           let todayDate = new Date();
           let currenthours = todayDate.getHours();
-          let currentMints = todayDate.getHours();
+          let currentMints = todayDate.getMinutes();
           currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
           currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
-          let currentDatetime = currenthours + ':' + currentMints;
+          let currentDatetime ="";
+          currentDatetime = currenthours + ':' + currentMints;
           if (birthDateTime > currentDatetime) {
             validFlag = false;
             setbirthDateTime("");

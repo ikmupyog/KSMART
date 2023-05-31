@@ -525,48 +525,48 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         BornOutsideDocuments: [
           {
             DocumentType: "Birth Certificate or Proof of Date of Birth of the Child",
-            filestoreId: data?.BornOutsideDocuments?.birthCertificateFile,
+            filestoreId: data?.BornOutsideDocuments?.childBirthCertificate?.[0]?.key,
           },
           {
             DocumentType: "Copy of Child's Passport",
-            filestoreId: data?.BornOutsideDocuments?.childPassportFile,
+            filestoreId: data?.BornOutsideDocuments?.childPassport?.[0]?.key,
           },
           {
             DocumentType: "A Copy of the certificate of Indian citizenship if acquired by registration/naturalization",
-            filestoreId: data?.BornOutsideDocuments?.citizenshipFile,
+            filestoreId: data?.BornOutsideDocuments?.citizenship?.[0]?.key,
           },
           {
             DocumentType: "Copy of Father's Passport",
-            filestoreId: data?.BornOutsideDocuments?.fatherPassportFile,
+            filestoreId: data?.BornOutsideDocuments?.fatherPassport?.[0]?.key,
           },
           {
             DocumentType: "Copy of Mother's Passport",
-            filestoreId: data?.BornOutsideDocuments?.motherPassportFile,
+            filestoreId: data?.BornOutsideDocuments?.motherPassport?.[0]?.key,
           },
           {
             DocumentType: "Document on Cancelling Visa",
-            filestoreId: data?.BornOutsideDocuments?.cancellingVisaFile,
+            filestoreId: data?.BornOutsideDocuments?.cancellingVisa?.[0]?.key,
           },
           {
             DocumentType: "Address Proof Residency in the Registering Local Body",
-            filestoreId: data?.BornOutsideDocuments?.addressProofFile,
+            filestoreId: data?.BornOutsideDocuments?.addressProof?.[0]?.key,
           },
           {
             DocumentType: "Notary Affidavit of Permanent Settling & Residency in India",
-            filestoreId: data?.BornOutsideDocuments?.notaryFile,
+            filestoreId: data?.BornOutsideDocuments?.notary?.[0]?.key,
           },
           {
             DocumentType: "A Copy of the Marriage certificate of the parents",
-            filestoreId: data?.BornOutsideDocuments?.marriageCertificateFile,
+            filestoreId: data?.BornOutsideDocuments?.marriageCertificate?.[0]?.key,
           },
           {
             DocumentType:
               "In case either of the parents is a foreign national, a documentary proof that the child has not obtained another nationality from the foreign parent(Check nationality)",
-            filestoreId: data?.BornOutsideDocuments?.nationalityFile,
+            filestoreId: data?.BornOutsideDocuments?.nationality?.[0]?.key,
           },
           {
             DocumentType: "Proceedings of Sub Divisional Magistrate(Optional in RDO cases)",
-            filestoreId: data?.BornOutsideDocuments?.magistrateFile,
+            filestoreId: data?.BornOutsideDocuments?.magistrate?.[0]?.key,
           },
         ],
         Demands: [

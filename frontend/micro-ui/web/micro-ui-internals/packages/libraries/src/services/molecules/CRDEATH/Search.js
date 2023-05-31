@@ -280,15 +280,14 @@ export const CRDeathsearch = {
       asSectionHeader: true,
       values: [
         //{ title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_TYPE", value: response?.hospitalName || "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.vehicleRegistrationNo || "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.VehicleFirstHaltEn + "/" + response?.VehicleFirstHaltMl || "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_FROM_EN", value: response?.VehicleFromplaceEn || "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_TO_EN", value: response?.VehicleToPlaceEn || "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_FROM_ML", value: response?.VehicleFromplaceMl || "CR_NOT_RECORDED" },
-        { title: "CR_VEHICLE_TO_ML", value: response?.VehicleToPlaceMl || "CR_NOT_RECORDED" },
-        { title: "CR_ADMITTED_HOSPITAL_EN", value: response?.VehicleHospitalEn || "CR_NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.wardNameEn + " / " + response?.wardNameMl || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_TYPE", value: response?.InformationDeath?.vehicleType || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_REGISTRATION_NO", value: response?.InformationDeath?.VehicleNumber || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_PLACE_FIRST_HALT_EN", value: response?.InformationDeath?.VehicleFirstHaltEn + "/" + response?.InformationDeath?.VehicleFirstHaltMl || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_FROM_EN", value: response?.InformationDeath?.VehicleFromplaceEn || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_TO_EN", value: response?.InformationDeath?.VehicleToPlaceEn || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_FROM_ML", value: response?.InformationDeath?.VehicleFromplaceMl || "CR_NOT_RECORDED" },
+        { title: "CR_VEHICLE_TO_ML", value: response?.InformationDeath?.VehicleToPlaceMl || "CR_NOT_RECORDED" },
+        { title: "CR_ADMITTED_HOSPITAL_EN", value: response?.InformationDeath?.VehicleHospitalEn || "CR_NOT_RECORDED" },
       ],
     };
     const deathPlacePUBLICPLACESDetails = {
