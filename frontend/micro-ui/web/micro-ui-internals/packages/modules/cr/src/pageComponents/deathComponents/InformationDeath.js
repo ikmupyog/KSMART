@@ -1114,6 +1114,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     const [displayAmPm, setDisplayAmPm] = useState(formData?.InformationDeath?.displayAmPm ? formData?.InformationDeath?.displayAmPm : null);
   
     const handleTimeChange = (value, cb) => {
+      console.log("value",value,cb)
   
     if (value?.target?.name === "hour12") {
       setCheckdeathDateTime({ ...checkdeathDateTime, hh: value?.target?.value ? value?.target?.value : null })
@@ -1223,7 +1224,40 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       setToast(false);
     }
   }
+  const [DateTimeError, setDateTimeError] = useState(false);
   const goNext = () => {
+    if (TimeOfDeath != null) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const DateofDeathTime = new Date(TimeOfDeath);
+      DateofDeathTime.setHours(0, 0, 0, 0);
+      if (DateofDeathTime.getTime() < today.getTime()) {
+        validFlag = false;
+        setDateTimeError(false);
+      } 
+      else if (DateofDeathTime.getTime() === today.getTime()) {
+        let todayDate = new Date();
+        let currenthours = todayDate.getHours();
+        let currentMints = todayDate.getMinutes();
+        currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+        currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+        let currentDatetime = "";
+        currentDatetime = currenthours + ":" + currentMints;
+        if (TimeOfDeath > currentDatetime) {
+          validFlag = false;
+          setDeathTime("");
+          setCheckdeathDateTime({ hh: "", mm: "", amPm: "" });
+          setDateTimeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setDateTimeError(false);
+          // alert("Right Time");
+        }
+      }
+    }
 
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
@@ -2403,13 +2437,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
           {toast && (
             <Toast
               error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
-                || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError || vehiDesDetailsEnError || AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError}
+               || DateTimeError || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError || vehiDesDetailsEnError || AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError}
               label={
+                DateTimeError||
                 DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError
                   || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
                   || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError || vehiDesDetailsEnError || AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
+                    : DateTimeError
+                    ? t(`CS_COMMON_DATE_TIME_ERROR`)
                     : sexError
                       ? t(`DEATH_ERROR_SEX_CHOOSE`)
                       : AadharError
