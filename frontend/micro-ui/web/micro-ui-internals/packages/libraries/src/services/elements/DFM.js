@@ -123,7 +123,7 @@ export const DFMService = {
       method: "POST",
       auth: true,
       userService: true,
-      params: { fileCode },
+      params: { fileCode, tenantId },
     }),
   arising_file: (details, tenantId) =>
     Request({
@@ -200,6 +200,17 @@ export const DFMService = {
       userService: true,
       method: "POST",
       params: {},
+      auth: true,
+    }),
+    updateservice: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.updateservice,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: { tenantId },
       auth: true,
     }),
   deleteSubFunct: (details, tenantId) =>

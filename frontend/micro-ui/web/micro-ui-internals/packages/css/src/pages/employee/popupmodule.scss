@@ -32,3 +32,29 @@
     }
   }
 }
+.modal-container{
+  padding: 20px;
+} 
+.modal-header{
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.checkbox-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 45%;
+}
+.modal-flex{
+  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.modal-box{
+  margin-bottom: 20px;
+}
+.modal-label{
+  margin-bottom: 10px;
+}

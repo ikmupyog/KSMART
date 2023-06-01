@@ -9,8 +9,17 @@
     margin: 10px !important;
     background: #fff;
 }
+.FileFlowWrapper .logoWrapper {
+    flex-direction: column;
+}
 .noteandDrafting{
     background: unset;
+}
+.CertWrapper{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 50px;
 }
 .cardWrapper{
     display: flex;

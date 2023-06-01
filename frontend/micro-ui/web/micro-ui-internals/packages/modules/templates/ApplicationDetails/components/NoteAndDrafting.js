@@ -27,12 +27,14 @@ import {
   DatePicker,
   RemoveableTag,
   Modal,
+  HtmlParser,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 // import SearchApplication from "./SearchApplication";
 // import Search from "../pages/employee/Search";
 // import BirthSearchInbox from "../../../cr/src/components/inbox/search";
 import { LocationSearchCard } from "@egovernments/digit-ui-react-components";
+import DraftTemplate from "./DraftTemplate";
 // import { cardStyle } from "../utils";
 
 const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDetails,noteText,setNoteText,  uploadFiles, setUploadFiles, uploadedFileStoreId, setUploadedFileStoreId ,noteTextErr,isValidate}) => {
@@ -55,6 +57,10 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   // const [uploadedFileStoreId, setUploadedFileStoreId] = useState()
   const [selectedAutoNote, setSelectedAutoNote] =useState()
   const [displayNotePopup, setDisplayNotePopup] =useState(false)
+  const [displayDraftPreviewPopup, setDisplayDraftPreviewPopup] =useState(false)
+  const [selectedDraft, setSelectedDraft] =useState('')
+  const [selectedDraftName, setSelectedDraftName] =useState('')
+  
   const setNoteTextField = (e) => {
     setNoteText(e.target.value);
   };
@@ -89,15 +95,24 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
       }
     })();
   }, [uploadFiles]);
+  useEffect(()=>{
+    if(applDetails?.applicationNumber){
+      refetch()
+    }
+  },[applDetails?.applicationNumber])
 
 
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
   const applicationNumber = applDetails?.applicationNumber ;
+  // console.log(applicationNumber,applDetails);
 //   const applicationNumber = "KL-Cochin-C-000125-CRBRNR-2023-APPL";
   // workflow
   const [businessService, setBusinessService] = useState("BIRTHHOSP21");
+  const { data: DraftType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "DraftType");
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const { data, Loading ,refetch} = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: applicationNumber });
+  // console.log('newdraft',data);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
@@ -116,6 +131,12 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
     // cmbautoNoteList.push(ob);
     if(ob.code == "OPERATOR") cmbautoNoteList.push(ob.Notes);
     });
+    let cmbDraftList = [];
+    DraftType &&
+    DraftType["FileManagement"] &&
+    DraftType["FileManagement"].DraftType.map((ob) => {
+        cmbDraftList.push(ob);
+    })
   //workflow end
 // console.log(cmbautoNoteList);
   const saveNote = () => {
@@ -202,7 +223,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   function handleDraftChange(e) {
     setCheckDraft(e.target.checked);
     if (e.target.checked == true) {
-      history.push("/digit-ui/employee/dfm/drafting");
+      history.push("/digit-ui/employee/dfm/drafting",{fileCode : applicationDetails?.applicationData?.applicationNumber});
     }
   }
   function handleNoteChange(e) {
@@ -276,6 +297,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
   };
   const closePopup =()=>{
     setDisplayNotePopup(false)
+  }
+  const closeDraftPopup =()=>{
+    setDisplayDraftPreviewPopup(false)
   }
   // console.log(isValidate,noteTextErr);
   return (
@@ -373,14 +397,15 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                   );
                 })}
               </div>
-              <div className="col-md-5 col-sm-5 col-xs-5 ">
-              {draft.map(item=>(
+              <div className="col-md-5 col-sm-5 col-xs-5 draftWrap">
+              {data?.Drafting.map(item=>(
                 <div className="col-md-5 col-sm-5 col-xs-5 drafting-row">
-                <div className="col-md-3 col-sm-3 col-xs-6">
-                  <h3>{item.label} </h3>
+                <div className="col-md-6 col-sm-6 col-xs-6">
+                  <h3>{cmbDraftList?.filter(ele=>ele.id == item.draftType)[0]?.name} </h3>
                 </div>
                 <div className="col-md-2 col-sm-1 col-xs-2 link-file">
-                  <LinkButton label={t("VIEW")} className="file-link-button" onClick={() => history.push("/digit-ui/employee/dfm/draft-template")} />
+                  <LinkButton label={t("VIEW")} className="file-link-button" onClick={() => {setDisplayDraftPreviewPopup(true),setSelectedDraft(item),setSelectedDraftName(cmbDraftList?.filter(ele=>ele.id == item.draftType)[0]?.name)}} />
+                  {/* <LinkButton label={t("VIEW")} className="file-link-button" onClick={() => history.push("/digit-ui/employee/dfm/draft-template")} /> */}
                 </div>
               </div>
               ))}
@@ -609,6 +634,36 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect,applDeta
                     </ol>
                   );
                 })}
+              </div>
+              </div>
+           </Modal>
+          )}
+             {displayDraftPreviewPopup &&(
+             <Modal
+             headerBarMain={<Heading t={t} heading={""} />}
+             headerBarEnd={<CloseBtn onClick={closeDraftPopup} />}
+             popupStyles={mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto", overflowY:"scroll" }}
+             formId="modal-action"
+             hideSubmit={true}
+           >
+             <div className="col-md-12 col-sm-12 col-xs-12 ">
+              <div
+                className=""
+                style={{
+                  maxHeight: "550px",
+                  minHeight: "200px",
+                  overflowY: "scroll",
+                  border: "1px solid rgb(69 69 69 / 18%)",
+                  padding: "10px",
+                  paddingLeft: "20px",
+                }}
+              >
+                <DraftTemplate draftType ={selectedDraftName} selectedDraft ={selectedDraft}>
+                <HtmlParser htmlString={selectedDraft?.draftText}/>
+              
+               
+                  
+                </DraftTemplate>
               </div>
               </div>
            </Modal>

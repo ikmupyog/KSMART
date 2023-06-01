@@ -42,6 +42,7 @@ import useMajorFunctionAdd from "./dfm/useMajorFunctionAdd";
 import useServiceAdding from "./dfm/useServiceAdding";
 import useSearchservice from "./dfm/useSearchservice";
 import useDeleteService from "./dfm/useDeleteService";
+import useUpdateService from "./dfm/useUpdateService";
 import useComplaintDetails from "./pgr/useComplaintDetails";
 import { useComplaintsList, useComplaintsListByMobile } from "./pgr/useComplaintList";
 import useComplaintStatus from "./pgr/useComplaintStatus";
@@ -514,6 +515,7 @@ const dfm = {
   useServiceAdding,
   useSearchservice,
   useDeleteService,
+  useUpdateService,
 };
 const receipts = {
   useReceiptsMDMS,

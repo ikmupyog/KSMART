@@ -248,6 +248,13 @@
     height: 50px;
     flex-direction: row;
 }
+.draftWrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-height: 220px;
+    overflow-y: scroll;
+}
 
 .geo-tag {
     margin-top: 20px;
