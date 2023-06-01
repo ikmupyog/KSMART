@@ -603,10 +603,6 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isChildBirthCertificateLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
               <div className="col-md-4">
                 <UploadFile
                   id={"born-ouside-docs"}
@@ -619,6 +615,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
                   message={childBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
+              {isChildBirthCertificateLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
               {childBirthCertificate && (
                 <div className="col-md-2">
                   {_.head(childBirthCertificate)?.type === "pdf" ? (
@@ -661,10 +661,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isChildPassportLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
 
               <div className="col-md-4">
                 <UploadFile
@@ -678,6 +675,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
                   message={childPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                 />
               </div>
+              {isChildPassportLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
               {childPassport && (
                 <div className="col-md-2">
                   {_.head(childPassport)?.type === "pdf" ? (
@@ -705,10 +706,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isCitizenshipLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -721,6 +719,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={citizenship ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isCitizenshipLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {citizenship && (
             <div className="col-md-2">
               {_.head(citizenship)?.type === "pdf" ? (
@@ -748,10 +750,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isFatherPassportLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -764,6 +763,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={fatherPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isFatherPassportLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {fatherPassport && (
             <div className="col-md-2">
               {_.head(fatherPassport)?.type === "pdf" ? (
@@ -791,10 +794,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isMotherPassportLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -807,6 +807,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={motherPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isMotherPassportLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {motherPassport && (
             <div className="col-md-2">
               {_.head(motherPassport)?.type === "pdf" ? (
@@ -834,10 +838,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isCancellingVisaLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -850,6 +851,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={cancellingVisa ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isCancellingVisaLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {cancellingVisa && (
             <div className="col-md-2">
               {_.head(cancellingVisa)?.type === "pdf" ? (
@@ -877,10 +882,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isAddressProofLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -893,6 +895,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={addressProof ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isAddressProofLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {addressProof && (
             <div className="col-md-2">
               {_.head(addressProof)?.type === "pdf" ? (
@@ -920,10 +926,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isNotaryLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -936,6 +939,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={notary ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isNotaryLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {notary && (
             <div className="col-md-2">
               {_.head(notary)?.type === "pdf" ? (
@@ -959,10 +966,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isMarriageCertificateLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -975,6 +979,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={marriageCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isMarriageCertificateLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {marriageCertificate && (
             <div className="col-md-2">
               {_.head(marriageCertificate)?.type === "pdf" ? (
@@ -1008,10 +1016,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isMagistrateLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+         
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -1024,6 +1029,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={magistrate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isMagistrateLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {magistrate && (
             <div className="col-md-2">
               {_.head(magistrate)?.type === "pdf" ? (
@@ -1063,10 +1072,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          {isNationalityLoading ? (
-            <Loader />
-          ) : (
-            <React.Fragment>
+         
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -1079,6 +1085,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={nationality ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isNationalityLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {nationality && (
             <div className="col-md-2">
               {_.head(nationality)?.type === "pdf" ? (
