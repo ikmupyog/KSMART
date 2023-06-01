@@ -199,6 +199,21 @@ const getWorkFlowBirthMasterList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getWorkFlowStillBirthMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowStillBirth",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getWorkFlowMarriageMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2602,6 +2617,9 @@ export const MdmsService = {
   },
   getWorkFlowBirthMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowBirthMasterList(tenantId, moduleCode), moduleCode);
+  },
+  getWorkFlowStillBirthMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowStillBirthMasterList(tenantId, moduleCode), moduleCode);
   },
   getWorkFlowMarriageMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowMarriageMasterList(tenantId, moduleCode), moduleCode);

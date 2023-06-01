@@ -32,7 +32,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
   console.log("MD", formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
-
+  const locale = Digit.SessionStorage.get("locale");
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -67,14 +67,17 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
     {
       name: "Driving License",
       code: "DRIVING_LICENSE",
+      nameLocal: "ഡ്രൈവിംഗ് ലൈസൻസ്",
     },
     {
       name: "School Certificate",
       code: "SCHOOL_CERTIFICATE",
+      nameLocal: "സ്കൂൾ സർട്ടിഫിക്കറ്റ് ",
     },
     {
       name: "Birth Certificate",
       code: "BIRTH_CERTIFICATE",
+      nameLocal: "ജനന സർട്ടിഫിക്കറ്റ് ",
     },
   ];
 
@@ -823,6 +826,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomAadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -840,6 +844,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomAadharLoading(false);
@@ -849,6 +854,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -862,6 +868,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideAadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -879,6 +886,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBrideAadharLoading(false);
@@ -888,6 +896,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -902,6 +911,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomPassportDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -919,15 +929,17 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomPassportLoading(false);
           } catch (err) {}
         } else {
-          setFileSizeError(true);
+          setFileTypeError(true);
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -941,6 +953,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (bridePassportDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -958,6 +971,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBridePassportLoading(false);
@@ -967,6 +981,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -981,6 +996,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomSSNDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -994,6 +1010,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomSSNLoading(false);
@@ -1003,6 +1020,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1016,6 +1034,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideSSNDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1029,6 +1048,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBrideSSNLoading(false);
@@ -1038,6 +1058,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1052,6 +1073,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomDrivingLicenseDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1069,6 +1091,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomAgeDocumentsLoading(false);
@@ -1078,6 +1101,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1091,6 +1115,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideDrivingLicenseDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1108,6 +1133,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBrideAgeDocumentsLoading(false);
@@ -1117,6 +1143,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1131,6 +1158,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomSchoolCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1148,6 +1176,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomAgeDocumentsLoading(false);
@@ -1157,6 +1186,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1170,6 +1200,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideSchoolCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1187,6 +1218,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBrideAgeDocumentsLoading(false);
@@ -1196,6 +1228,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1210,6 +1243,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomBirthCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1227,6 +1261,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomAgeDocumentsLoading(false);
@@ -1236,6 +1271,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1249,6 +1285,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideBirthCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1266,6 +1303,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBrideAgeDocumentsLoading(false);
@@ -1275,6 +1313,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1289,6 +1328,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (instituitionCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1306,6 +1346,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsMarriageTypeLoading(false);
@@ -1315,6 +1356,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1328,6 +1370,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (marriageOfficerCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1345,6 +1388,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsMarriageTypeLoading(false);
@@ -1354,6 +1398,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1367,6 +1412,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (otherMarriageCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1384,6 +1430,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsOtherDocumentLoading(false);
@@ -1393,6 +1440,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1407,6 +1455,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (backwardCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1424,6 +1473,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBackwardDocumentLoading(false);
@@ -1433,6 +1483,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1447,6 +1498,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomDivorceAnnulledDecreeCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1464,6 +1516,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsGroomMaritalStatusLoading(false);
@@ -1473,6 +1526,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1486,6 +1540,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideDivorceAnnulledDecreeCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1503,6 +1558,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsBrideMaritalStatusLoading(false);
@@ -1512,6 +1568,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1526,6 +1583,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (groomExpirationCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1543,6 +1601,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsExpiredGroomLoading(false);
@@ -1552,6 +1611,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1565,6 +1625,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (brideExpirationCertificateDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1583,6 +1644,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsExpiredBrideLoading(false);
@@ -1592,6 +1654,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1606,6 +1669,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (witness1AadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1623,6 +1687,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsWitness1AadharLoading(false);
@@ -1632,6 +1697,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -1645,6 +1711,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (witness2AadharDocument.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -1662,6 +1729,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsWitness2AadharLoading(false);
@@ -1671,6 +1739,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -2041,7 +2110,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                 </h1>
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ textAlign: "center" }}>
               <div className="col-md-12">
                 <CardLabel>{`1. ${t(`CR_MAXIMUM_FILE_SIZE`)}`}</CardLabel>
               </div>
@@ -2215,7 +2284,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                           </CardLabel>
                           <Dropdown
                             t={t}
-                            optionKey="name"
+                            optionKey={locale === "ml_IN" ? "nameLocal" : "name"}
                             isMandatory={true}
                             placeholder={t("CR_SELECT_DOCUMENT")}
                             option={crAgeDocuments}
@@ -2693,7 +2762,7 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
                           </CardLabel>
                           <Dropdown
                             t={t}
-                            optionKey="name"
+                            optionKey={locale === "ml_IN" ? "nameLocal" : "name"}
                             isMandatory={true}
                             placeholder={t("CR_SELECT_DOCUMENT")}
                             option={crAgeDocuments}
@@ -3417,13 +3486,15 @@ const MarriageDocuments = ({ formData, config, onSelect, isEditMarriage = false 
         </div>
         {toast && (
           <Toast
-            error={fileSizeError || fileTypeError}
+            error={fileSizeError || fileTypeError || fileUploadError}
             label={
-              fileSizeError || fileTypeError
+              fileSizeError || fileTypeError || fileUploadError
                 ? fileSizeError
                   ? t("FILE_SIZE_VALIDATION_MESSAGE")
                   : fileTypeError
                   ? t("FILE_TYPE_VALIDATION_MESSAGE")
+                  : fileUploadError
+                  ? t("FILE_UPLOAD_VALIDATION_MESSAGE")
                   : setToast(false)
                 : setToast(false)
             }

@@ -76,10 +76,13 @@ const getInformationDeath = (application, t) => {
     title: "",
     values: [
       {
+       
         title: t("Date of Death"),
-        value:application?.InformationDeath?.DateOfDeath?Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") : t("CS_NA"),
+        value:application?.InformationDeath?.DateOfDeath?
+        Digit.DateUtils.ConvertTimestampToDate(application?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") :
+         t("CS_NA"),
       },
-      { title: t("CR_GENDER"), value: application?.InformationDeath?.DeceasedGender ? application?.InformationDeath?.DeceasedGender : t("CS_NA") },
+      { title: t("Gender"), value: application?.InformationDeath?.DeceasedGender ? application?.InformationDeath?.DeceasedGender : t("CS_NA") },
       { title: t("CR_NATIONALITY"), value: application?.InformationDeath?.Nationality ? application?.InformationDeath?.Nationality : t("CS_NA") },
       { title: t("CS_COMMON_RELIGION"), value: application?.InformationDeath?.Religion ? application?.InformationDeath?.Religion : t("CS_NA") },
 

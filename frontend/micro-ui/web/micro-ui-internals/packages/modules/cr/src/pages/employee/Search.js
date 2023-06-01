@@ -76,7 +76,7 @@ const Search = ({ path }) => {
         const { data: { deathCorrection: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useDeathCorrectionApplicationSearch({ tenantId, filter: payload, config })
         return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationDeathType={setApplicationDeathType} applicationDeathType={applicationDeathType} isLoading={isLoading} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }else if (window.location.href.includes("/birthsearch") == true && applicationType?.value == "birthcorrection") {
-        const { data: { CorrectionApplication: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useBirthCorrectionApplicationSearch({ tenantId, filter: payload })
+        const { data: { CorrectionApplication: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useBirthCorrectionApplicationSearch({ tenantId, filter: payload, config })
         console.log("SDEARCH RESULTS==",searchResult);
         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} isLoading={isLoading} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }
@@ -93,7 +93,7 @@ const Search = ({ path }) => {
     } else if (window.location.href.includes("/marriagesearch") == true) {
         console.log("initial");
         const { data: { MarriageDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useMarriageSearch({ tenantId, filters: payload, config })
-        return <SearchMarriage t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+        return <SearchMarriage t={t} tenantId={tenantId} onSubmit={onSubmit} isLoading={isLoading} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     } 
 
 

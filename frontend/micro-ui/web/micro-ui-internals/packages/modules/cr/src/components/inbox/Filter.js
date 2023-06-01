@@ -175,7 +175,7 @@ const Filter = (props) => {
     return (
       <div>
         <div className="filter-label">{lable}</div>
-        {<Dropdown option={options} selected={selected} select={(value) => select(value, key)} optionKey={optionKey} />}
+        {<Dropdown option={options} selected={selected} select={(value) => select(value, key)} optionKey={optionKey} optionCardStyles={{ maxWidth: "fit-content" }} />}
 
         <div className="tag-container">
           {pgrfilters[key].length > 0 &&
@@ -209,7 +209,7 @@ const Filter = (props) => {
           </div>
           <div>
             <RadioButtons onSelect={onRadioChange} selectedOption={selectAssigned} optionsKey="name" options={assignedToOptions} />
-            <div>
+            {/* <div> */}
               {/* {GetSelectOptions(
                 t("CS_COMPLAINT_DETAILS_COMPLAINT_SUBTYPE"),
                 serviceDefsData,
@@ -221,7 +221,7 @@ const Filter = (props) => {
               )} */}
               <div className="filter-label">{t("CS_COMPLAINT_DETAILS_COMPLAINT_SUBTYPE")}</div>
               <Dropdown option={serviceDefsData} selected={selectedComplaintType} optionKey="i18nKey" />
-            </div>
+            {/* </div> */}
             {/* <div>{GetSelectOptions(t("CS_PGR_LOCALITY"), localities, selectedLocality, onSelectLocality, "i18nkey", onRemove, "locality")}</div> */}
             {/* {<Status complaints={props.complaints} onAssignmentChange={handleAssignmentChange} pgrfilters={pgrfilters} />} */}
           </div>

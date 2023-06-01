@@ -3,6 +3,7 @@ import { Loader, BackButton, } from "@egovernments/digit-ui-react-components";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SearchBirthApplication from "../../../components/SearchBirthApplication";
+import _ from "lodash";
 
 const MyCRApplications = ({ view }) => {
   const { variant } = useParams();
@@ -12,21 +13,13 @@ const MyCRApplications = ({ view }) => {
     limit: 10,
     sortBy: "applicationNumber",
     sortOrder: "DESC",
+    searchType: "MYAPP"
   });
 
-  const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
+  // const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
 
-  function onSubmit(_data) {
-    var fromDate = new Date(_data?.fromDate);
-    fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
-    var toDate = new Date(_data?.toDate);
-    toDate?.setSeconds(toDate?.getSeconds() + 86399 - 19800);
-    const data = {
-      ..._data,
-      ...(_data.toDate ? { toDate: toDate?.getTime() } : {}),
-      ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {}),
-    };
-
+  function onSubmit(data) {
+    _.set(data, 'searchType', 'MYAPP');
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])
@@ -41,7 +34,7 @@ const MyCRApplications = ({ view }) => {
       params: { businessService: "CR", tenantId, mobileNumber },
       config: { enabled: view === "bills" }
     }
-  ) : Digit.Hooks.cr.useCRSearchApplication({...payload,initiatorMobile:"9895921369"}, {
+  ) : Digit.Hooks.cr.useCRSearchApplication({ ...payload }, {
     enabled: view !== "bills"
   }, t);
   if (isLoading) {

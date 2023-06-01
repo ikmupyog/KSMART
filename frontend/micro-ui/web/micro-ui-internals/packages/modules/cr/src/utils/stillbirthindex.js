@@ -274,6 +274,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
         birthDateTime: data?.StillBirthChildDetails?.birthDateTime,
+        am_pm: data?.ChildDetails?.displayAmPm,
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
@@ -319,7 +320,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
         applicationtype: "CRBRSB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.StillBirthChildDetails?.workFlowCode,
         StillBirthParentsDetails: {
           motherFirstNameEn: data?.StillBirthParentsDetails?.motherFirstNameEn,
@@ -477,6 +478,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.StillBirthInitiatorDetails?.isInitiatorDeclaration,
           isCaretaker: data?.StillBirthInitiatorDetails?.isCaretaker,
         },
+        
       },
     ],
   };
@@ -489,7 +491,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
     StillBirthChildDetails: [
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
-        birthDateTime: data?.StillBirthChildDetails?.birthDateTime,        
+        birthDateTime: data?.StillBirthChildDetails?.birthDateTime, 
+        am_pm: data?.ChildDetails?.displayAmPm,       
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,        
         tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
@@ -535,7 +538,7 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action: "APPLY",
         applicationtype: "CRBRSB",
-        businessservice: "birth-services",
+        businessservice: "CR",
         workflowcode: data?.StillBirthChildDetails.workflowcode,
         isWorkflow: data?.StillBirthChildDetails.isWorkflow,
         id: data?.StillBirthChildDetails?.id,

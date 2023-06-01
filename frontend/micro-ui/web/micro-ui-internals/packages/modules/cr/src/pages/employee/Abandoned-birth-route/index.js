@@ -42,6 +42,9 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
     if (skipStep) {
       redirectWithHistory = history.replace;
     }
+     if (isAddMultiple) {
+      nextStep = key;
+    }
     if (nextStep === null) {
       return redirectWithHistory(`${match.path}/check`);
     }

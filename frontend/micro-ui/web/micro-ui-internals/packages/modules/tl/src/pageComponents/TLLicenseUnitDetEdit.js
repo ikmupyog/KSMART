@@ -7,7 +7,6 @@ import { useQueryClient } from "react-query";
 import { convertEpochToDate } from '../utils/index';
 
 const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
-
   const [formditenable, setFormditenable] = Digit.Hooks.useSessionStorage("TL_RENEWAL_ENABLE_TRADE", {});
 
   let naturetype = null;
@@ -133,7 +132,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   const [serviceArea, setServiceArea] = useState(formDataPage?.tradeLicenseDetail?.address?.serviceArea ? formDataPage?.tradeLicenseDetail?.address?.serviceArea : "");
   const [vesselNo, setVesselNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo : "");
   const [waterbody, setWaterbody] = useState(formDataPage?.tradeLicenseDetail?.address?.waterbody ? formDataPage?.tradeLicenseDetail?.address?.waterbody : "");
-  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null }]);
   const [fieldsDoor, setFeildsDoor] = useState(
     (formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
       blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
@@ -151,7 +150,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
     queryClient.invalidateQueries("TL_CREATE_TRADE");
   };
 
-
+  const addressID = formDataPage?.tradeLicenseDetail?.address?.id ? formDataPage?.tradeLicenseDetail?.address?.id : null;
   sector &&
     sector["TradeLicense"] &&
     sector["TradeLicense"].EnterpriseType.map((ob) => {
@@ -220,7 +219,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
 
   function handleAdd() {
     const values = [...fields];
-    values.push({ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null });
+    values.push({ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null , id : null});
     setFeilds(values);
   }
   function selectSector(value) {
@@ -317,13 +316,6 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       });
     return BusinessSubTypeMenu;
   }
-  function resetStructurePlace(){
-    setFeildsDoor([{
-      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
-    }]);
-  }
-
   const selectDistrict = ((value) => {
     setDistrictList(value);
     setIsInitialRender(true);
@@ -449,7 +441,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   });
 
   const selectStructureType = (value => {
-    resetStructurePlace();
+    dispatchDoor({ type: "CLEAR_STATE" });
     setStructureType(value);
     let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
@@ -469,7 +461,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       setOwnershipCategoryMenu(tempval);
     }
     
-    naturetypecmbvalue = value.code.substring(0, 4);
+    // naturetypecmbvalue = value.code.substring(0, 4);
     setValue2(naturetypecmbvalue);
     setIsInitialRender(true);
     SelectStructurePlaceSubtype(null);
@@ -675,6 +667,21 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
         return [
           ...stateDoor
         ];
+      case "CLEAR_STATE":
+        return [
+          {
+            blockNo: "",
+            surveyNo: "",
+            subDivisionNo: "",
+            partitionNo: "",
+            doorNo: "",
+            doorNoSub: "",
+            vehicleNo: "",
+            vesselNo: "",
+            isResurveyed: "",
+            stallNo: "",
+          }
+        ];
     }
   };
 
@@ -711,8 +718,8 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
     if (isInitialRender) {
       if (structureType) {
         setIsInitialRender(false);
-        naturetype = structureType;
-        setFilteredPlaceSubtype(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
+        naturetype = typeof structureType === 'object' ? structureType.code : structureType;
+        setFilteredPlaceSubtype(cmbStructure.filter((structure) => structure.maincode.includes(naturetype)));
         setValue2(naturetype);
         if (naturetype === "LAND") {
           setValue3(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed ? formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed : null);
@@ -795,8 +802,13 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       setLocalbody(tenantId ? LBs.filter(obj => obj.code === tenantId)[0] : "");
     }
   }
-  if (formDataPage?.tradeLicenseDetail?.address?.zonalId && (zonalOffice === undefined || zonalOffice === "") && Zonal.length > 0) {
+  console.log(formDataPage?.tradeLicenseDetail?.address?.zonalId);
+  console.log(zonalOffice);
+  console.log(zonalOffice);
+
+  if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)) {
     setZonalOffice(Zonal.filter(zone => parseInt(zone?.code) === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
+    setisInitialRendercombo(false);
   }
   if (formDataPage?.tradeLicenseDetail?.address?.wardId && (WardNo === undefined || WardNo === "") && cmbWardNoFinal.length > 0) {
     setWardNo(cmbWardNoFinal.filter(ward => parseInt(ward?.code) === formDataPage?.tradeLicenseDetail?.address?.wardId)[0]);
@@ -817,21 +829,24 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
     setDesiredLicensePeriod(formDataPage?.desiredLicensePeriod ? LicensePeriod.filter((period) => period.code.includes(formDataPage?.desiredLicensePeriod))[0] : "");
   }
 
+  if(formDataPage?.tradeLicenseDetail?.tradeUnits !== null)
+    if (formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
+      && BusinessCategoryMenu.length > 0) {
+      let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
+      let bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
+      let bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
+      let id = formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.id;
 
-  if (formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
-    && BusinessCategoryMenu.length > 0) {
-    let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
-    let bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
-    let bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
-    setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
-      {
-        businessCategory: category,
-        businessType: bustype,
-        businessSubtype: bussubtyp, unit: null, uom: null
-      }
+      setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
+        {
+          businessCategory: category,
+          businessType: bustype,
+          businessSubtype: bussubtyp, unit: null, uom: null , id : id
+        }
 
-    ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
-  }
+      ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null}]);
+    }
+    else  [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null }];
   if (formDataPage?.tradeLicenseDetail?.ownershipCategory && formDataPage?.tradeLicenseDetail?.ownershipCategory !== null && ownershipCategoryMenumain.length > 0
     && ownershipCategory === undefined && ownershipCategory !== "") {
     setOwnershipCategory(ownershipCategoryMenumain.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory))[0]);
@@ -870,18 +885,143 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       if (validation === false) setErrorMessage(t("TL_DOOR_ALREADY_SELECT"));
     }
 
-    if (!contactNo.match(mobilevalidation)) {
+    if (!businessSector) {
+      setErrorMessage(t("TL_INVALID_BUSINESS_SECTOR"));
+      validation = false;
+    }
+  
+    if (!fields[0].businessCategory) {
+      setErrorMessage(t("TL_INVALID_BUSINESS_CATEGORY"));
+      validation = false;
+    }
+    if (!fields[0].businessType) {
+      setErrorMessage(t("TL_INVALID_BUSINESS_TYPE"));
+      validation = false;
+    }
+    if (!fields[0].businessSubtype) {
+      setErrorMessage(t("TTL_INVALID_SUB_BUSINESS_TYPE"));
+      validation = false;
+    }
+    if(!commencementDate) {
+      setErrorMessage(t("TL_INVALID_COMMENCEMENT_DATE"));
+      validation = false;
+    }
+    if ((contactNo === "") || (!contactNo.match(mobilevalidation))) {
       setErrorMessage(t("TL_INVALID_MOBILE_NO"));
       validation = false;
     }
-    if (desiredLicensePeriod > 5) {
+    if ((!desiredLicensePeriod) || (desiredLicensePeriod > 5)) {
       setErrorMessage(t("TL_INVALID_License_PERIOD"));
       validation = false;
     }
-    if (capitalInvestment < 0) {
+    if ((capitalInvestment < 0) || (!capitalInvestment === "")){
       setErrorMessage(t("TL_INVALID_CAPITAL_AMOUNT"));
       validation = false;
     }
+    if(noOfEmployees === ""){
+      setErrorMessage(t("TL_INVALID_NO_EMPLOYEES"));
+      validation = false;
+    }
+    if(licenseUnitName === ""){
+      setErrorMessage(t("TL_INVALID_LICENSING_UNIT_NAME"));
+      validation = false;
+    }
+    if(licenseUnitNameLocal === ""){
+      setErrorMessage(t("TL_INVALID_LICENSING_UNIT_NAME"));
+      validation = false;
+    }
+    if(email === ""){
+      setErrorMessage(t("TL_INVALID_EMAIL_ID"));
+      validation = false;
+    }
+    if(!structureType) {
+      setErrorMessage(t("TL_INVALID_PLACE_STRUCTURE"));
+      validation = false;
+    }
+    if(!structurePlaceSubtype) {
+      setErrorMessage(t("TL_INVALID_SUB_PLACE_STRUCTURE"));
+      validation = false;
+    }
+    if(!ownershipCategory) {
+      setErrorMessage(t("TL_INVALID_OwnershipCategory"));
+      validation = false;
+    }
+    if(value2 === "LAND") {
+      if(value3 === "") {
+        setErrorMessage(t("TL_INVALID_RESURVEY"));
+        validation = false;
+      } 
+      if(formStateDoor[0].blockNo == "") {
+        setErrorMessage(t("TL_INVALID_BLOCK_NO"));
+        validation = false;
+      } 
+      if(formStateDoor[0].surveyNo == "") {
+        setErrorMessage(t("TL_INVALID_SURVEY_NO"));
+        validation = false;
+      } 
+      if(formStateDoor[0].subDivisionNo == "") {
+        setErrorMessage(t("TL_INVALID_SUBDIVISION_NO"));
+        validation = false;
+      }
+      if(value3 === "YES") {
+        if(formStateDoor[0].partitionNo == "") {
+          setErrorMessage(t("TL_INVALID_PARTITION_NO"));
+          validation = false;
+        }
+      }
+      if(locality === "") {
+        setErrorMessage(t("TL_INVALID_LOCALITY"));
+        validation = false;
+      } 
+      if(!postOffice) {
+        setErrorMessage(t("TL_INVALID_POSTOFFICE"));
+        validation = false;
+      } 
+      if(pincode === "") {
+        setErrorMessage(t("TL_INVALID_PIN"));
+        validation = false;
+      }
+    }
+    if(value2 === "BUILDING") {
+      if(formStateDoor[0].doorNo === "") {
+        setErrorMessage(t("TL_INVALID_DOOR_NO"));
+        validation = false;
+      }
+      if((ownershipCategory.code === "LBBUILDING") && (formStateDoor[0].stallNo === "")) {
+        setErrorMessage(t("TL_INVALID_STALL_NO"));
+        validation = false;
+      }
+      
+      if(locality === "") {
+        setErrorMessage(t("TL_INVALID_LOCALITY"));
+        validation = false;
+      } 
+      if(!postOffice) {
+        setErrorMessage(t("TL_INVALID_POSTOFFICE"));
+        validation = false;
+      } 
+      if(pincode === "") {
+        setErrorMessage(t("TL_INVALID_PIN"));
+        validation = false;
+      }
+    }
+    if((value2 === "VEHICLE") && (structurePlaceSubtype.code === "MOTOR_VEHICLE") && (formStateDoor[0].vehicleNo === "")) {
+      setErrorMessage(t("TL_INVALID_VECHICLE_NO"));
+      validation = false;
+    }
+    if((value2 === "WATER") && (formStateDoor[0].vesselNo === "")){
+      setErrorMessage(t("TL_INVALID_VESSEL_NO"));
+      validation = false;
+    }
+    if((value2 === "WATER") && (formStateDoor[0].waterbody === "")){
+      setErrorMessage(t("TL_INVALID_WATER_BODY"));
+      validation = false;
+    }
+    if((value2 === "WATER") && (formStateDoor[0].serviceArea === "")){
+      setErrorMessage(t("TL_INVALID_SERVICE_AREA"));
+      validation = false;
+    }
+
     return Promise.resolve(validation);
 
   }
@@ -901,6 +1041,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
 
       let units = fields;
       let address = {
+        "id" : addressID,
         "doorNo": combineddoorno?.trim(),
         "localityName": locality?.trim(),
         "street": street?.trim(),
@@ -918,9 +1059,11 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       };
       let tradeUnits =[
         {
+          "id" : units[0]?.id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  units[0].businessType.code,
           "businessSubtype" :  units[0].businessSubtype.code,
+          "active" : true
         }
       ]
       let structurePlace = formStateDoor;
@@ -931,13 +1074,14 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       let ownerspremise = formDataPage?.tradeLicenseDetail?.ownerspremise;
       let institution = formDataPage?.tradeLicenseDetail?.institution;
       let licenseeType = formDataPage?.tradeLicenseDetail?.licenseeType;
-      let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector :businessSector.code, capitalInvestment, enterpriseType,
+      let id = formDataPage?.tradeLicenseDetail?.id;
+      let tradeLicenseDetail = { id,tenantId, licenseeType, owners, ownerspremise, institution, businessSector :businessSector.code, capitalInvestment, enterpriseType,
          structureType:structureType.code ,
          structurePlaceSubtype:structurePlaceSubtype.code, businessActivityDesc, noOfEmployees,
           ownershipCategory:ownershipCategory.code, address, tradeUnits, structurePlace, }
       onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName,
          licenseUnitNameLocal,desiredLicensePeriod: desiredLicensePeriod.code,
-        applicationType:"RENEWAL" , workflowCode :"RenewalTL",oldApplicationNumber:formDataPage?.applicationNumber
+        applicationType:formDataPage?.applicationType , workflowCode :formDataPage?.workflowCode,oldApplicationNumber:formDataPage?.applicationNumber
          ,licenseNumber : formDataPage?.licenseNumber});
     }
     else {
@@ -955,27 +1099,26 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       {isLoading ? (<Loader />) : (
         <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}
-          isDisabled={!DistrictList || !LBTypeList || !Localbody || !zonalOffice || !WardNo || !businessSector
-            || !fields[0].businessCategory || !fields[0].businessType || !fields[0].businessSubtype || capitalInvestment === "" || !commencementDate
-            || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" || licenseUnitNameLocal === "" || contactNo === "" || email === ""
-            || !structureType || !structurePlaceSubtype || !ownershipCategory
-            || (value2 === "LAND" ? (value3 === "" || locality === "" || !postOffice || pincode === ""
-              || formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "") : false)
-            // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
-            || (value2 === "BUILDING" ? (formStateDoor[0].doorNo === "" || locality === "" || !postOffice || pincode === "") : false)
-            || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo === "") : false)
-            || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code !== "MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
-            || (value2 === "WATER" ? (formStateDoor[0].vesselNo === "" || waterbody === "" || serviceArea === "") : false)
-            || (value2 === "DESIGNATEDPLACE" ? false : false)
-            // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
-          }
+          // isDisabled={!DistrictList || !LBTypeList || !Localbody || !zonalOffice || !WardNo || !businessSector
+          //   || !fields[0].businessCategory || !fields[0].businessType || !fields[0].businessSubtype || capitalInvestment === "" || !commencementDate
+          //   || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" || licenseUnitNameLocal === "" || contactNo === "" || email === ""
+          //   || !structureType || !structurePlaceSubtype || !ownershipCategory
+          //   || (value2 === "LAND" ? (value3 === "" || locality === "" || !postOffice || pincode === ""
+          //     || formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "") : false)
+          //   // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
+          //   || (value2 === "BUILDING" ? (formStateDoor[0].doorNo === "" || locality === "" || !postOffice || pincode === "") : false)
+          //   || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo === "") : false)
+          //   || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code !== "MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
+          //   || (value2 === "WATER" ? (formStateDoor[0].vesselNo === "" || waterbody === "" || serviceArea === "") : false)
+          //   || (value2 === "DESIGNATEDPLACE" ? false : false)
+            // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false) }
         >
 
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
             {/* <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LB_DET_LABEL")}`}</span> </h1>
               </div>
-            </div> */}
+            </div> 
             <div className="row">
               <div className="col-md-7" >
                 <div className="row">
@@ -1014,7 +1157,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}</span> </h1>
               </div>

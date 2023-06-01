@@ -424,6 +424,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(false);
   const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(false);
   const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(false);
+  const [Amount, setAmount] = useState(formData?.InformationDeath?.Amount);
 
   // const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
   // const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
@@ -522,17 +523,42 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     }
   }
 
+  
+  useEffect(() => {
+    if (DeathPlace && DifferenceInTime != null) {
+      console.log("DifferenceInTime",DifferenceInTime);
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        console.log("currentWorgFlowTimecfff",currentWorgFlow[0].WorkflowCode);
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        // setAmount(currentWorgFlow[0].amount);
+      }
+    }
+  }, [DifferenceInTime])
 
   useEffect(() => {
     if (isInitialRenderRoles) {
       if (userRoles.length > 0) {
         if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+        
           if (cmbPlace.length > 0) {
             const operatorHospCode = getHospitalCode();
             if (operatorHospCode != null) {
               sethospitalCode(operatorHospCode);
             }
-            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0]);
+           console.log("cmbPlace",
+           cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code)
+            selectDeathPlace(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
+            let currentWorgFlow = workFlowData.filter(workFlowData => 
+              workFlowData.DeathPlace ===cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
+             
+            if (currentWorgFlow.length > 0) {
+              console.log("HOSPITAL_OPERATOR",currentWorgFlow[0].WorkflowCode)
+              setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+              setIsPayment(currentWorgFlow[0].payment);
+              // setAmount(currentWorgFlow[0].amount);
+            }
             setValue(cmbPlace.filter(cmbPlace => cmbPlace.code === "HOSPITAL")[0].code);
             setisDisableEditRole(true);
             setInitialRenderRoles(false);
@@ -681,6 +707,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   }, [NACFile]);
 
   function selectFromDate(value) {
+    if(value <= ToDate){
     setFromDate(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -698,11 +725,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace ===
+           DeathPlace)&& workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime;
         if (currentWorgFlow.length > 0) {
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
+          // setAmount(currentWorgFlow[0].amount);
         }
       }
 
@@ -716,9 +744,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // }
     }
   }
+  }
 
 
   function selectToDate(value) {
+    if(FromDate <= value){
     setToDate(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -734,11 +764,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+       
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace
+        && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime);
         if (currentWorgFlow.length > 0) {
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setAmount(currentWorgFlow[0].amount);
+          // setAmount(currentWorgFlow[0].amount);
         }
       }
       if (Difference_In_Days > 365) {
@@ -751,7 +783,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       }
     }
   }
+  }
   function selectDeathDate(value) {
+    console.log("selectDeathDate(value)")
     setDateOfDeath(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -759,17 +793,25 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     deathDate.setHours(0, 0, 0, 0);
 
     if (deathDate.getTime() <= today.getTime()) {
+      console.log("deathDate.getTime() <= today.getTime()",DeathPlace)
       setDOBError(false);
       // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - deathDate.getTime();
+      let Difference_In_Time = (today.getTime()+1) - deathDate.getTime();
       // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - deathDate.getTime());
+      setDifferenceInTime((today.getTime()+1) - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime);
+        console.log("DeathPlace",DeathPlace,Difference_In_Time)
+        console.log("TimeWorkflowCode",workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace 
+ 
+          && workFlowData.startdateperiod <= Difference_In_Time && workFlowData.enddateperiod >= Difference_In_Time))
+
+        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace
+        && workFlowData.startdateperiod <= Difference_In_Time && workFlowData.enddateperiod >= Difference_In_Time
+        );
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
           setWorkFlowAmount(currentWorgFlow[0].amount);
@@ -879,8 +921,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
 
 
   function selectDeathPlace(value) {
-    setselectDeathPlace(value);
-    setValue(value.code);
+   
+    setselectDeathPlace(value?.code?value?.code:value)
+    setValue(value?.code?value?.code:value)
     let currentWorgFlow = workFlowData.filter(
       (workFlowData) =>
         workFlowData.DeathPlace === value.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
@@ -1063,15 +1106,108 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     setNACFile(e.target.files[0]);
   }
 
-
-  const handleTimeChange = (value, cb) => {
+  const [checkdeathDateTime, setCheckdeathDateTime] = useState({
+    hh: formData?.InformationDeath?.checkdeathDateTime?.hh ? formData?.InformationDeath?.checkdeathDateTime.hh : null,
+    mm: formData?.InformationDeath?.checkdeathDateTime?.mm ? formData?.InformationDeath?.checkdeathDateTime.mm : null, 
+    amPm: formData?.InformationDeath?.checkdeathDateTime?.amPm ? formData?.InformationDeath?.checkdeathDateTime?.amPm : null });
+    const [displaytime, setDisplaytime] = useState(formData?.InformationDeath?.displaytime ? formData?.InformationDeath?.displaytime : null);
+    const [displayAmPm, setDisplayAmPm] = useState(formData?.InformationDeath?.displayAmPm ? formData?.InformationDeath?.displayAmPm : null);
+  
+    const handleTimeChange = (value, cb) => {
+  
+    if (value?.target?.name === "hour12") {
+      setCheckdeathDateTime({ ...checkdeathDateTime, hh: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "minute") {
+      setCheckdeathDateTime({ ...checkdeathDateTime, mm: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "amPm") {
+      setCheckdeathDateTime({ ...checkdeathDateTime, amPm: value?.target?.value ? value?.target?.value : null })
+    }
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
-      // let hour = value;
-      // let period = hour > 12 ? "PM" : "AM";
-      // console.log(period);
       setDeathTime(value);
+      let time = value;
+      let timeParts = time.split(":");
+
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
+
+        }
+      }
+
     }
   };
   function setCheckedAdhar(e) {
@@ -1490,7 +1626,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
         uploadedFile,
         UploadNACHIde,
         proceedNoRDO,
-        regNoNAC
+        regNoNAC,
+        checkdeathDateTime,
+        displaytime, 
+        displayAmPm,
       });
     }
   };
@@ -2251,7 +2390,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
                       onClick={() => {
                         setUploadNACHIde(false);
                         setpopUpStateNac(false);
-                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-birth-nac/nac-download-details`);
+                        window.location.assign(`${window.location.origin}/digit-ui/citizen/cr/cr-death-nac/nac-download-details`);
                       }}
                     >
                       {`${t("COMMON_OK")}`}

@@ -38,6 +38,7 @@ const BrideAddressPermanentOutsideKerala = ({
   setpermntoutsideKeralaPostOfficeMl,
   setpermntInKeralaAdrLBName,
   setpermntInKeralaAdrDistrict,
+  setinsideKeralaDistrict,
   value,
   setValue,
   isEditMarriage = false,

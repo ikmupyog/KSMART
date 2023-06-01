@@ -27,6 +27,7 @@ import TLTradeAccessories from "./TLTradeAccessories";
 import TLTradeUnits from "./TLTradeUnits";
 import DocumentsPreview from "./DocumentsPreview";
 import NoteAndDrafting from './NoteAndDrafting'
+// import getPDFData from "../../../cr/src/utils/getCRBirthAcknowledgementData";
 
 function ApplicationDetailsContent({
   applicationDetails,
@@ -154,6 +155,16 @@ function ApplicationDetailsContent({
       }
     }
   }, [userRoles]);
+
+  // const handleDownloadPdf = async () => {
+  //   const { ChildDetails = [] } = mutation.data
+  //   const ChildDet = (ChildDetails && ChildDetails[0]) || {};
+  //   const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantid);
+  //   let res = ChildDet;
+  //   const data = getPDFData({ ...res }, tenantInfo, t);
+  //   data.then((ress) => Digit.Utils.pdf.generate(ress));
+  // };
+
   return (
     <>
       <div className="file-main">

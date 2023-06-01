@@ -185,6 +185,13 @@ const TLLicenseApplicantDetEdit = ({ t, config, onSelect, userType, formData }) 
   const [ownerState, disptachowner] = formDatalocal?.tradeLicenseDetail?.ownerspremise?.length > 0 ? useReducer(reducerowner, storedOwnerData, initowneredit) : useReducer(reducerowner, storedOwnerData, initowner);
 
   function selectLicenseeType(value) {
+    setOrganisationregistrationno("");  
+    selectLicensingInstitutionType(""); 
+    setInstitutionName(""); 
+    setLicenseUnitId(""); 
+    setContactNo(""); 
+    setEmail(""); 
+    setInsaddress("");
     if (value.code !== "JOINT_PARTNERSHIP" && appState.length > 1) {
       setErrorMessage("Multiple Applicant Found Remove....");
       setToast(true)
@@ -281,7 +288,8 @@ const TLLicenseApplicantDetEdit = ({ t, config, onSelect, userType, formData }) 
       // let applicationType=formDatalocal?.applicationType;
       // let workflowCode=formDatalocal?.workflowCode;
       // let oldApplicationNumber=formDatalocal?.oldApplicationNumber;
-      let tradeLicenseDetail = { tenantId,
+      let id = formDatalocal?.tradeLicenseDetail?.id;
+      let tradeLicenseDetail = { id, tenantId,
         licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
         , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
        
