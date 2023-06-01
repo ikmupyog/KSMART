@@ -129,11 +129,6 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         disableSortBy: true,
         Cell: ({ row }) => GetCell(t(row.original.majorFunctionCode) || ""),
       },
-      // {
-      //   Header: t("MAJOR_FUNCT_EN"),
-      //   disableSortBy: true,
-      //   Cell: ({ row }) => GetCell(t(row.original.moduleNameEnglish.label) || ""),
-      // },
       {
         Header: t("MAJOR_FUNCTION_EN"),
         Cell: ({ row }) => GetCell(t(row?.original?.majorFunctionNameEnglish || "NA")),
@@ -178,7 +173,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         moduleId: moduleNameEnglish.label,
         majorFunctionNameEnglish: majorFunctionNameEnglish,
         majorFunctionNameMalayalam: majorFunctionNameMalayalam,
-        status: "",
+        status: 1,
         auditDetails: {
           createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           createdTime: 0,
@@ -211,7 +206,7 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         moduleId: moduleIdvalue,
         majorFunctionNameEnglish: majorFunctionNameEnglish,
         majorFunctionNameMalayalam: majorFunctionNameMalayalam,
-        status: "",
+        status: 1,
         auditDetails: {
           createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           createdTime: 0,
@@ -220,7 +215,15 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
         },
       },
     };
-    updatemutation.mutate(formData);
+    updatemutation.mutate(formData),{
+      onError: (error) => {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
+      },
+    }
   };
   useEffect(() => {
     if (mutation.isSuccess) {
@@ -237,9 +240,9 @@ const MajorFunctionAdding = ({ path, handleNext, formData, config, onSelect }) =
       setTimeout(() => {
         setUpdateSuccess(false);
       }, 2000);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
     }
     if (deleteItem.isSuccess) {
       setDeleteSuccess(true);

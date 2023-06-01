@@ -16,6 +16,8 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [serviceCode, setserviceCode] = useState("");
   const [serviceNameEn, setserviceNameEn] = useState("");
   const [serviceNameMl, setserviceNameMl] = useState("");
+  const [accountHead, setaccountHead] = useState("");
+
   const [isChecked, setIsChecked] = useState(false);
   const [mutationSuccess, setMutationSuccess] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
@@ -217,7 +219,7 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
         subFunctionId: subFunctionId,
         serviceNameEnglish: serviceNameEn,
         serviceNameMalayalam: serviceNameMl,
-        status: null,
+        status: 1,
       },
     };
     updatemutation.mutate(formData, {
@@ -382,6 +384,13 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
                 <CardLabel className="card-label-file">{`${t("FEES")}`}</CardLabel>
                 <CheckBox t={t} optionKey="name" />
               </div>
+              {/* <div className="col-md-3 col-sm-4 col-xs-12">
+                <CardLabel>
+                  {t("ACCOUNT_HEAD_MAPPED")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown t={t} optionKey="value" option={Value} selected={accountHead} select={setaccountHead} />
+              </div> */}
             </div>
           </div>
           <div className="btn-flex">

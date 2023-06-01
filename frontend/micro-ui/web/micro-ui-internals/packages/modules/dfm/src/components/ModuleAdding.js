@@ -3,7 +3,8 @@ import { SubmitBar, CardLabel, TextInput, Table, Toast } from "@egovernments/dig
 import { useTranslation } from "react-i18next";
 import "@ckeditor/ckeditor5-build-classic/build/translations/de";
 
-const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
+
+const ModuleAdding = () => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   const mutation = Digit.Hooks.dfm.useCreateModule(tenantId);
@@ -13,12 +14,10 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [moduleCode, setModulecode] = useState("");
   const [moduleNameEn, setModuleNameEn] = useState("");
   const [moduleNameMl, setModuleNameMl] = useState("");
-  const [selectedModuleCode, setSelectedModuleCode] = useState("");
   const [mutationSuccess, setMutationSuccess] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
   const setsetModulecode = (e) => {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setModulecode(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -97,7 +96,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         disableSortBy: true,
         Cell: ({ row }) => {
           const moduleCode = row.original.moduleCode;
-
           return (
             <div>
               <a onClick={() => deleteClick(moduleCode)}>
@@ -115,7 +113,6 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     ],
     []
   );
-
   const saveModule = () => {
     const formData = {
       ModuleDetails: {
@@ -136,10 +133,10 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
     mutation.mutate(formData, {
       onError: (error) => {
         console.log(error.message);
-          setErrorMessage(error.message);
-          setTimeout(() => {
-            setErrorMessage(false);
-          }, 2000);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
       },
     });
   };
@@ -151,19 +148,17 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         moduleCode: moduleCode,
         moduleNameEnglish: moduleNameEn,
         moduleNameMalayalam: moduleNameMl,
-        status: null,
+        status: 1,
         auditDetails: {
           createdBy: null,
-          createdTime: "111111111",
+          createdTime: null,
           lastModifiedBy: null,
           lastModifiedTime: null,
         },
       },
     };
-
     updatemutation.mutate(formData);
   };
-
   useEffect(() => {
     if (mutation.isSuccess) {
       setMutationSuccess(true);
@@ -278,12 +273,9 @@ const ModuleAdding = ({ path, handleNext, formData, config, onSelect }) => {
         </div>
       </div>
       {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
-
       {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
-
       {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
       {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
-      {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
     </React.Fragment>
   );
 };

@@ -198,7 +198,7 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
         majorFunctionId: majorFunctId,
         subFunctionNameEnglish: subFuncNm,
         subFunctionNameMalayalam: subFuncNmMl,
-        status: "",
+        status: 1,
       },
     };
     updatemutation.mutate(formData);
@@ -339,9 +339,9 @@ const SubFunctionAdding = ({ onSubmit, filestoreId, count }) => {
         </div>
       </div>
       {/* {toast && <Toast label={t(`Module deleted successfully`)} onClose={() => setToast(false)} />} */}
-      {mutationSuccess && <Toast label="Module Saved Successfully" onClose={() => setMutationSuccess(false)} />}
-      {deleteSuccess && <Toast label="Module Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
-      {updateSuccess && <Toast label="Module Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
+      {mutationSuccess && <Toast label="Sub Function Saved Successfully" onClose={() => setMutationSuccess(false)} />}
+      {deleteSuccess && <Toast label="Sub Function Deleted Successfully" onClose={() => setDeleteSuccess(false)} />}
+      {updateSuccess && <Toast label="Sub Function Updated Successfully" onClose={() => setUpdateSuccess(false)} />}
       {errorMessage && <Toast error={errorMessage} label={errorMessage} />}
     </React.Fragment>
   );
