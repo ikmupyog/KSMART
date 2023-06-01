@@ -8,6 +8,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const { t } = useTranslation();
   let validation = {};
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit1, setisDisableEdit1] = useState(false);
   const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isDeclaration, setDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
@@ -90,7 +91,23 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     }
   }
   const selectRelationwithDeceased = (value) => {
+    console.log("value", value.value);
     setRelationwithDeceased(value.value);
+    if (value.value === "FATHER") {
+      setinitiatorAadhar(formData?.DeathNACParentsDetails?.fatherAadhar);
+      setisDisableEdit1(true);
+    }
+    else if (value.value === "MOTHER") {
+      setinitiatorAadhar(formData?.DeathNACParentsDetails?.motherAadhar);
+      setisDisableEdit1(true);
+    }else if (value.value === "WIFE" || value.value === "HUSBAND") {
+      setinitiatorAadhar(formData?.DeathNACParentsDetails?.SpouseAadhaar);
+      setisDisableEdit1(true);
+    }
+    else {
+      setinitiatorAadhar("");
+      setisDisableEdit1(false);
+    }
   }
 
 
@@ -98,7 +115,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
 
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12);
     if (newValue.length === 12 && RelationwithDeceased === "FATHER") {
-      if (newValue === formData?.DeathNACParentsDetails?.fatherAadhar) {
+      if (newValue === formData?.DeathNACParentsDetails?.fatherAadhar || formData?.DeathNACParentsDetails?.fatherAadhar ) {
         setinitiatorAadhar(newValue);
       }
       else {
@@ -111,7 +128,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       }
     }
     else if (newValue.length === 12 && RelationwithDeceased === "MOTHER") {
-      if (newValue === formData?.DeathNACParentsDetails?.motherAadhar) {
+      if (newValue === formData?.DeathNACParentsDetails?.motherAadhar || formData?.DeathNACParentsDetails?.motherAadhar) {
         setinitiatorAadhar(newValue);
       }
       else {
@@ -124,7 +141,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       }
     }
     else if (newValue.length === 12 && RelationwithDeceased === "WIFE" || RelationwithDeceased === "HUSBAND") {
-      if (newValue === formData?.DeathNACParentsDetails?.SpouseAadhaar) {
+      if (newValue === formData?.DeathNACParentsDetails?.SpouseAadhaar || formData?.DeathNACParentsDetails?.SpouseAadhaar) {
         setinitiatorAadhar(newValue);
       }
       else {
@@ -503,7 +520,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
               name="initiatorAadhar"
               value={initiatorAadhar}
               onChange={setSelectinitiatorAadhar}
-              disable={isDisableEdit}
+              disable={isDisableEdit1}
               placeholder={`${t("CS_COMMON_AADHAAR")}`}
               {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />

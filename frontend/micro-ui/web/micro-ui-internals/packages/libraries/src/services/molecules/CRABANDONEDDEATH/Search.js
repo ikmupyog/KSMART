@@ -83,8 +83,30 @@ export const CRAbandonedDeathsearch = {
               response?.InformationDeathAbandoned?.DeceasedLastNameMl || "NA",
         },
 
-        { title: "PDF_BIRTH_CHILD_SEX", value: 
+        { title: "CR_GENDER", value: 
         response?.InformationDeathAbandoned?.DeceasedGender || "NA"
+       },
+       response?.InformationDeath?.DeathDateUnavailable === false &&
+       {
+        
+         title: t("Date of Death"),
+         value:response?.InformationDeath?.DateOfDeath?
+         Digit.DateUtils.ConvertTimestampToDate(response?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") :
+          t("CS_NA"),
+       },
+       response?.InformationDeath?.DeathDateUnavailable ===true &&   {
+        
+         title: t("CR_FROM_DATE"),
+         value:response?.InformationDeath?.DateOfDeath?
+         Digit.DateUtils.ConvertTimestampToDate(response?.InformationDeath?.DateOfDeath, "dd/MM/yyyy") :
+          t("CS_NA"),
+       },
+       response?.InformationDeath?.DeathDateUnavailable ===true &&  {
+        
+         title: t("CR_TO_DATE"),
+         value:response?.InformationDeath?.DateOfDeath1?
+         Digit.DateUtils.ConvertTimestampToDate(response?.InformationDeath?.DateOfDeath1, "dd/MM/yyyy") :
+          t("CS_NA"),
        },
         {
           title: "PDF_CR_DEATH_OF_DATE",
