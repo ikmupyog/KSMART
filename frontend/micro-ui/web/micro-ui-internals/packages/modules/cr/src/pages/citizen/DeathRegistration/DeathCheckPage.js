@@ -106,26 +106,26 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
     }
   };
 
-  const convertTo12Hour = (oldFormatTime) => {
+  // const convertTo12Hour = (oldFormatTime) => {
 
-    console.log("oldFormatTime: " + oldFormatTime);
-    var oldFormatTimeArray = oldFormatTime.split(":");
+  //   console.log("oldFormatTime: " + oldFormatTime);
+  //   var oldFormatTimeArray = oldFormatTime.split(":");
 
-    var HH = parseInt(oldFormatTimeArray[0]);
-    var min = oldFormatTimeArray[1];
+  //   var HH = parseInt(oldFormatTimeArray[0]);
+  //   var min = oldFormatTimeArray[1];
 
-    var AMPM = HH >= 12 ? "PM" : "AM";
-    var hours;
-    if (HH == 0) {
-      hours = HH + 12;
-    } else if (HH > 12) {
-      hours = HH - 12;
-    } else {
-      hours = HH;
-    }
-    var newFormatTime = hours + ":" + min + " " + AMPM;
-    return `${hours + ":" + min + " " + AMPM}`
-  }
+  //   var AMPM = HH >= 12 ? "PM" : "AM";
+  //   var hours;
+  //   if (HH == 0) {
+  //     hours = HH + 12;
+  //   } else if (HH > 12) {
+  //     hours = HH - 12;
+  //   } else {
+  //     hours = HH;
+  //   }
+  //   var newFormatTime = hours + ":" + min + " " + AMPM;
+  //   return `${hours + ":" + min + " " + AMPM}`
+  // }
 
   // useEffect(() => {
   //   if (isInitialRender) {
@@ -207,9 +207,12 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
                 <div className="col-md-5">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                    {InformationDeath?.TimeOfDeath ?
+                  {InformationDeath?.displaytime ? InformationDeath?.displaytime + " " +
+                   InformationDeath?.displayAmPm : "NOT_RECORDED"}
+                    {/* {InformationDeath?.TimeOfDeath ?
                       convertTo12Hour(InformationDeath?.TimeOfDeath) :
-                      t("CR_NOT_RECORDED")}</CardText>
+                      t("CR_NOT_RECORDED")} */}
+                      </CardText>
                 </div>
                 <div className="col-md-5">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
