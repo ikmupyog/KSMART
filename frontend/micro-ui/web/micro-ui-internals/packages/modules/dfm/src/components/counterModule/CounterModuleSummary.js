@@ -19,31 +19,36 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
     const [imagesThumbs, setImagesThumbs] = useState(null);
     const [imageZoom, setImageZoom] = useState(null);
     const [showDeclaration, setShowDeclaration] = useState();
-    let firstName = sessionStorage.getItem("firstName");
-    let middleName = sessionStorage.getItem("middleName");
-    let lastName = sessionStorage.getItem("lastName");
-    let email = sessionStorage.getItem("email");
-    let mobile = sessionStorage.getItem("mobile");
-    let whatsapp = sessionStorage.getItem("whatsapp");
-    let institutionName = sessionStorage.getItem("institutionName");
-    let officerName = sessionStorage.getItem("officerName");
-    let designation = sessionStorage.getItem("designation");
-    let uploadedFile = sessionStorage.getItem("uploadedFile");
-    let service = sessionStorage.getItem("services");
-    let title = sessionStorage.getItem("title");
-    let description = sessionStorage.getItem("description");
-    let wardNo = sessionStorage.getItem("wardNo");
-    let postOffice = sessionStorage.getItem("postOffice");
-    let pincode = sessionStorage.getItem("pincode");
-    let doorNo = sessionStorage.getItem("doorNo");
-    let subNo = sessionStorage.getItem("subNo");
-    let localPlace = sessionStorage.getItem("localPlace");
-    let houseName = sessionStorage.getItem("houseName");
-    let streetName = sessionStorage.getItem("streetName");
-    let mainPlace = sessionStorage.getItem("mainPlace");
-    let idNumber = sessionStorage.getItem("idNumber");
-    let applicationType = sessionStorage.getItem("applicationType");
-    let MinorFunctionDet = JSON.parse(sessionStorage.getItem("MinorFunctionDet"));
+    let sessionValues = JSON.parse(sessionStorage.getItem("counterModule"));
+    const { firstName, middleName, lastName, email, mobile, whatsapp, institutionName, officerName, designation, uploadedFile,
+        service, title, udIdNumber, description, wardNo, district, country, stateVal, province, postOffice, pincode, doorNo, subNo, localPlace, houseName, streetName, mainPlace, idNumber, applicationType, MinorFunctionDet } = sessionValues
+    console.log("counterModule", udIdNumber, firstName, middleName, lastName, email, mobile, whatsapp, institutionName, officerName, designation, uploadedFile,
+        service, title, description, wardNo, postOffice, pincode, doorNo, subNo, localPlace, houseName, streetName, mainPlace, idNumber, applicationType, MinorFunctionDet)
+    // let firstName = sessionStorage.getItem("firstName");
+    // let middleName = sessionStorage.getItem("middleName");
+    // let lastName = sessionStorage.getItem("lastName");
+    // let email = sessionStorage.getItem("email");
+    // let mobile = sessionStorage.getItem("mobile");
+    // let whatsapp = sessionStorage.getItem("whatsapp");
+    // let institutionName = sessionStorage.getItem("institutionName");
+    // let officerName = sessionStorage.getItem("officerName");
+    // let designation = sessionStorage.getItem("designation");
+    // let uploadedFile = sessionStorage.getItem("uploadedFile");
+    // let service = sessionStorage.getItem("services");
+    // let title = sessionStorage.getItem("title");
+    // let description = sessionStorage.getItem("description");
+    // let wardNo = sessionStorage.getItem("wardNo");
+    // let postOffice = sessionStorage.getItem("postOffice");
+    // let pincode = sessionStorage.getItem("pincode");
+    // let doorNo = sessionStorage.getItem("doorNo");
+    // let subNo = sessionStorage.getItem("subNo");
+    // let localPlace = sessionStorage.getItem("localPlace");
+    // let houseName = sessionStorage.getItem("houseName");
+    // let streetName = sessionStorage.getItem("streetName");
+    // let mainPlace = sessionStorage.getItem("mainPlace");
+    // let idNumber = sessionStorage.getItem("idNumber");
+    // let applicationType = sessionStorage.getItem("applicationType");
+    //let MinorFunctionDet = JSON.parse(sessionStorage.getItem("MinorFunctionDet"));
     const serviceId = MinorFunctionDet?.name;
     const [institutionShow, setInstitutionShow] = useState(false);
     const [individualShow, setIndividualShow] = useState(false);
@@ -162,11 +167,15 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
                     cityName: "townCity",
                     pinCode: pincode || "",
                     // documentTypeId: documentTypeId || "",
-                    documentNumber: idNumber || "",
+                    documentNumber: idNumber || udIdNumber || "",
                     documentFileStoreId: uploadedFile || "",
                     institutionName: institutionName || "",
                     officerName: officerName || "",
                     designation: designation || "",
+                    country: country || "",
+                    state: stateVal || "",
+                    district: district || "",
+                    province: province || "",
                     auditDetails: {
                         createdBy: null,
                         createdTime: null,
@@ -187,7 +196,7 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
 
     useEffect(() => {
         if (mutation.isSuccess == true || mutation.isError == true) {
-            sessionStorage.removeItem("applicationType");
+            sessionStorage.removeItem("counterModule");
             history.push(
                 'counter-module-acknowledgement',
                 { fileData: mutation?.data, fileStatus: mutation?.status })
@@ -204,13 +213,28 @@ const CounterModuleSummery = ({ config, onSelect, value }) => {
 
     let userType = "employee"
 
-    useEffect(() => {
-        if (window.location.href.includes("/employee")) {
-            userType = "employee"
-            setShowDeclaration(false)
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (window.location.href.includes("/employee")) {
+    //         userType = "employee"
+    //         setShowDeclaration(false)
+    //     }
+    // }, [])
+    /////////////////////browserback/////////////
+    const gotoHome = () => {
+        history.go("/digit-ui/employee");
+    }
 
+    useEffect(() => {
+        window.addEventListener("popstate", gotoHome);
+        window.addEventListener("load", gotoHome);
+        return () => {
+            window.removeEventListener("popstate", gotoHome);
+            window.removeEventListener("load", gotoHome);
+            // setIsactive(true) 
+            //sessionStorage.removeItem("counterModule");
+        };
+    }, []);
+    ////////////////////////////////////////////////
     return (
         <React.Fragment>
 

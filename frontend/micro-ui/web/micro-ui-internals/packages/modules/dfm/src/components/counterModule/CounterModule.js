@@ -39,52 +39,60 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     // const [checkNote, setCheckNote] = useState(true);
     // const [checkEnquiry, setCheckEnquiry] = useState(false);
     // const [showGeoLocation, setShowGeoLocation] = useState(false);
-    const [institution, setInstitution] = useState(sessionStorage.getItem("institution") || false);
-    const [individual, setIndividual] = useState(sessionStorage.getItem("individual") || false);
-    const [individualIndian, setIndividualIndian] = useState(sessionStorage.getItem("individualIndian") || false);
-    const [individualNonIndian, setIndividualNonIndian] = useState(sessionStorage.getItem("individualNonIndian") || false);
-    const [individualOutside, setIndividualOutside] = useState(sessionStorage.getItem("individualOutside") || false);
-    const [individualInside, setIndividualInside] = useState(sessionStorage.getItem("individualInside") || false);
-    const [isActive, setIsactive] = useState(sessionStorage.getItem("isActive") || true);
-    const [idNumber, setIdNumber] = useState(sessionStorage.getItem("idNumber") || "");
-    const [firstName, setFirstName] = useState(sessionStorage.getItem("firstName") || "");
-    const [middleName, setMiddleName] = useState(sessionStorage.getItem("middleName") || "");
-    const [lastName, setLastName] = useState(sessionStorage.getItem("lastName") || "");
-    const [doorNo, setDoorNo] = useState(sessionStorage.getItem("doorNo") || "");
-    const [subNo, setSubNo] = useState(sessionStorage.getItem("subNo") || "");
-    const [streetName, setStreetName] = useState(sessionStorage.getItem("streetName") || "");
-    const [localPlace, setLocalPlace] = useState(sessionStorage.getItem("localPlace") || "");
-    const [mainPlace, setMainPlace] = useState(sessionStorage.getItem("mainPlace") || "");
-    const [houseName, setHouseName] = useState(sessionStorage.getItem("houseName") || "");
-    const [wardNo, setWardNo] = useState(sessionStorage.getItem("wardNo") || "");
-    const [pincode, setPincode] = useState(sessionStorage.getItem("pincode") || "");
-    const [mobile, setMobile] = useState(sessionStorage.getItem("mobile") || "");
-    const [whatsapp, setWhatsapp] = useState(sessionStorage.getItem("whatsapp") || "");
-    const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
+    let sessionValues = JSON.parse(sessionStorage.getItem("counterModule")) || {};
+    const { institution: sessionInstitution, individual: sessionIndividual, individualIndian: sessionIndividualIndian,
+        individualNonIndian: sessionIndividualNonIndian, individualOutside: sessionIndividualOutside, individualInside: sessionIndividualInside,
+        MajorFunctionDet: sessionMajorFunction, SubFunctionDet: sessionSubFunction, firstName: sessionFirstName, applicationType: sessionApplicationType, middleName: sessionMiddleName, lastName: sessionLastName, email: sessionEmail, mobile: sessionMobile, whatsapp: sessionWhatsapp, institutionName: sessionInstitutionName, officerName: sessionOfficerName, designation: sessionDesignation, uploadedFile: sessionUploadedFile,
+        country: sessionCountry, stateVal: sessionStateVal, district: sessionDistrict, isNonIndianActive: sessionIsNonIndianActive, PostOfficeDet: sessionPostOfficeDet, service: sessionService, title: sessionTitle, description: sessionDescription, wardNo: sessionWardNo, postOffice: sessionPostOffice, pincode: sessionPincode, doorNo: sessionDoorNo, subNo: sessionSubNo, localPlace: sessionLocalPlace, houseName: sessionHouseName, streetName: sessionStreetName,
+        mainPlace: sessionMainPlace, usIdNumber: sessionUDIdNumber, isActiveCheck: sessionIsActiveCheck, isActive: sessionIsActive, province: sessionProvince, wardDet: sessionWardDet, idNumber: sessionIdNumber, MinorFunctionDet: sessionMinorfunction, checkAdhar: sessionCheckAdhar, checkUDID: sessionCheckUDID } = sessionValues;
+    const [institution, setInstitution] = useState(sessionInstitution || false);
+    const [individual, setIndividual] = useState(sessionIndividual || false);
+    const [individualIndian, setIndividualIndian] = useState(sessionIndividualIndian || false);
+    const [individualNonIndian, setIndividualNonIndian] = useState(sessionIndividualNonIndian || false);
+    const [individualOutside, setIndividualOutside] = useState(sessionIndividualOutside || false);
+    const [individualInside, setIndividualInside] = useState(sessionIndividualInside || false);
+    const [isActive, setIsactive] = useState(sessionIsActive);
+    const [idNumber, setIdNumber] = useState(sessionIdNumber || "");
+    const [udIdNumber, setUDIdNumber] = useState(sessionUDIdNumber || "");
+    const [firstName, setFirstName] = useState(sessionFirstName || "");
+    const [middleName, setMiddleName] = useState(sessionMiddleName || "");
+    const [lastName, setLastName] = useState(sessionLastName || "");
+    const [doorNo, setDoorNo] = useState(sessionDoorNo || "");
+    const [subNo, setSubNo] = useState(sessionSubNo || "");
+    const [streetName, setStreetName] = useState(sessionStreetName || "");
+    const [localPlace, setLocalPlace] = useState(sessionLocalPlace || "");
+    const [mainPlace, setMainPlace] = useState(sessionMainPlace || "");
+    const [houseName, setHouseName] = useState(sessionHouseName || "");
+    const [wardNo, setWardNo] = useState(sessionWardNo || "");
+    const [pincode, setPincode] = useState(sessionPincode || "");
+    const [mobile, setMobile] = useState(sessionMobile || "");
+    const [whatsapp, setWhatsapp] = useState(sessionWhatsapp || "");
+    const [email, setEmail] = useState(sessionEmail || "");
     const [toastError, setToastError] = useState(null);
     // const [documentTypeId, setDocumentTypeId] = useState();
     const [toast, setToast] = useState(false);
-    const [officerName, setOfficerName] = useState(sessionStorage.getItem("officerName") || "");
-    const [institutionName, setInstitutionName] = useState(sessionStorage.getItem("institutionName") || "");
-    const [designation, setDesignation] = useState(sessionStorage.getItem("designation") || "");
+    const [officerName, setOfficerName] = useState(sessionOfficerName || "");
+    const [institutionName, setInstitutionName] = useState(sessionInstitutionName || "");
+    const [designation, setDesignation] = useState(sessionDesignation || "");
     const [PostOfficevalues, setPostOfficevalues] = useState("");
-    const [PostOfficeDet, setPostOfficeDet] = useState(sessionStorage.getItem("PostOfficeDet") ? JSON.parse(sessionStorage.getItem("PostOfficeDet")) : "");
+    ///////////////////////////////////
+    const [PostOfficeDet, setPostOfficeDet] = useState(sessionPostOfficeDet ? sessionPostOfficeDet : "");
     /////////////
 
-    const [MinorFunctionDet, setMinorFunctionDet] = useState(JSON.parse(sessionStorage.getItem("MinorFunctionDet")) || "");
-    const [MajorFunctionDet, setMajorFunctionDet] = useState(JSON.parse(sessionStorage.getItem("MajorFunctionDet")) || "");
-    const [SubFunctionDet, setSubFunctionDet] = useState(JSON.parse(sessionStorage.getItem("SubFunctionDet")) || "");
-    const [title, setTitle] = useState(sessionStorage.getItem("title") || "");
-    const [description, setDescription] = useState(sessionStorage.getItem("title") || "");
-    const [postOffice, setPostOffice] = useState(sessionStorage.getItem("postOffice") || "");
-    const [checkAdhar, setCheckAdhar] = useState(true);
-    const [checkUDID, setCheckUDID] = useState(false);
+    const [MinorFunctionDet, setMinorFunctionDet] = useState(sessionMinorfunction || "");
+    const [MajorFunctionDet, setMajorFunctionDet] = useState(sessionMajorFunction || "");
+    const [SubFunctionDet, setSubFunctionDet] = useState(sessionSubFunction || "");
+    const [title, setTitle] = useState(sessionTitle || "");
+    const [description, setDescription] = useState(sessionTitle || "");
+    const [postOffice, setPostOffice] = useState(sessionPostOffice || "");
+    const [checkAdhar, setCheckAdhar] = useState(sessionCheckAdhar || true);
+    const [checkUDID, setCheckUDID] = useState(sessionCheckUDID || false);
     const [serviceId, setServiceId] = useState();
     const [serviceName, setServiceName] = useState();
-    const [province, setProvince] = useState(sessionStorage.getItem("province") || "");
-    const [wardDet, setWardDet] = useState(sessionStorage.getItem("wardDet") ? JSON.parse(sessionStorage.getItem("wardDet")) : "");
-    const [applicationType, setApplicationType] = useState("IndianInsideIndividual");
-    const [country, setCountry] = useState(sessionStorage.getItem("country") ? JSON.parse(sessionStorage.getItem("country")) : {
+    const [province, setProvince] = useState(sessionProvince || "");
+    const [wardDet, setWardDet] = useState(sessionWardDet ? sessionWardDet : "");
+    const [applicationType, setApplicationType] = useState(sessionApplicationType ? sessionApplicationType : "IndianInsideIndividual");
+    const [country, setCountry] = useState(sessionCountry ? sessionCountry : {
 
         "name": "India",
         "namelocal": "ഇന്‍ഡ്യ",
@@ -97,7 +105,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         "nationalitynamelocal": "ഇന്ത്യൻ"
 
     });
-    const [stateVal, setStateVal] = useState(sessionStorage.getItem("stateVal") ? JSON.parse(sessionStorage.getItem("stateVal")) : {
+    const [stateVal, setStateVal] = useState(sessionStateVal ? sessionStateVal : {
         "name": "Kerala",
         "namelocal": "കേരളം",
         "statecode": "KL",
@@ -110,11 +118,11 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         "active": true,
         "type": "COMMON"
     });
-    const [district, setDistrict] = useState(sessionStorage.getItem("district") ? JSON.parse(sessionStorage.getItem("district")) : "");
+    const [district, setDistrict] = useState(sessionDistrict ? sessionDistrict : "");
     const [cmbFilterDistrict, setCmbFilterDistrict] = useState();
     //////////////
-    const [isNonIndianActive, setIsNonIndianActive] = useState(sessionStorage.getItem("isNonIndianActive") || false);
-    const [isActiveCheck, setIsactiveCheck] = useState(sessionStorage.getItem("isActiveCheck") || false);
+    const [isNonIndianActive, setIsNonIndianActive] = useState(sessionIsNonIndianActive || false);
+    const [isActiveCheck, setIsactiveCheck] = useState(sessionIsActiveCheck || false);
     const [isIndianActiveCheck, setIsIndianActiveCheck] = useState(() => {
         return { isIndianActiveCheck: true };
     });
@@ -123,7 +131,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
     // fileupload
     const [imagesThumbs, setImagesThumbs] = useState(null);
-    const [uploadedFile, setUploadedFile] = useState(sessionStorage.getItem("uploadedFile") || null)
+    const [uploadedFile, setUploadedFile] = useState(sessionUploadedFile || null)
     const [file, setFile] = useState("")
     const [error, setError] = useState(null)
     //fileupload end
@@ -306,6 +314,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     // }, [isInitialRender])
     useEffect(() => {
         // window.addEventListener("beforeunload", function (e) {
+        // sessionStorage.removeItem("counterModule");
+        // history.go("/digit-ui/employee");
         //     // setIsactive(true)
         //     // sessionStorage.removeItem("individualIndian");
         //     // sessionStorage.removeItem("individualInside");
@@ -313,7 +323,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         //     sessionStorage.removeItem("institution");
         //     // sessionStorage.removeItem("individual");
         //     // sessionStorage.removeItem("individualInside");
-        //     sessionStorage.removeItem("individualNonIndian");
+        //     //     sessionStorage.removeItem("individualNonIndian");
         //     setIsactive(true)
         //     setIndividual(true);
         //     setIndividualOutside(false);
@@ -362,7 +372,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
         //     setIndividualIndian(false)
         //     setIndividualNonIndian(false)
         // }
-        else if (fromBack && sessionStorage.getItem("applicationType") == "Institution") {
+        else if (fromBack && sessionApplicationType == "Institution") {
             //setIsactive(true)
             setIndividual(false);
             setIndividualOutside(false);
@@ -370,7 +380,14 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             setIndividualIndian(false)
             setIndividualNonIndian(false)
         }
-        else if (fromBack && sessionStorage.getItem("applicationType") == "IndianOutsideIndividual") {
+        else if (fromBack && sessionApplicationType == "IndianOutsideIndividual") {
+            if (!sessionCheckAdhar) {
+                setCheckAdhar(false);
+                setCheckUDID(true);
+            } else {
+                setCheckAdhar(true);
+                setCheckUDID(false);
+            }
             setIndividual(true);
             setIndividualOutside(true);
             setIndividualInside(false);
@@ -378,7 +395,15 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             setIndividualNonIndian(false)
             setInstitution(false)
         }
-        else if (fromBack && sessionStorage.getItem("applicationType") == "IndianInsideIndividual") {
+        else if (fromBack && sessionApplicationType == "IndianInsideIndividual") {
+            if (!sessionCheckAdhar) {
+                setCheckAdhar(false);
+                setCheckUDID(true);
+            } else {
+                setCheckAdhar(true);
+                setCheckUDID(false);
+            }
+            // setIsactive(true);
             setIndividual(true);
             setIndividualOutside(false);
             setIndividualInside(true);
@@ -386,7 +411,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             setIndividualNonIndian(false)
             setInstitution(false)
         }
-        else if (fromBack && sessionStorage.getItem("applicationType") == "OutsideNonIndian") {
+        else if (fromBack && sessionApplicationType == "OutsideNonIndian") {
             setIndividual(true);
             setIndividualOutside(true);
             setIndividualInside(false);
@@ -410,6 +435,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
     // }
     const handleInsideIndividual = (e) => {
+        console.log("events", e)
         setCountry({
 
             "name": "India",
@@ -449,6 +475,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
     }
     const handleOutsideIndividual = (e) => {
+        console.log("events", e)
         setIsNonIndianActive(true)
         setIsactiveCheck("")
         setApplicationType("IndianOutsideIndividual")
@@ -481,6 +508,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     //     }
     // }
     const handleInstitution = (e) => {
+        console.log("events", e)
         setIsNonIndianActive("")
         setIsactiveCheck(true)
         setCountry({
@@ -637,6 +665,30 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
 
 
         if (individualOutside) {
+
+            if (applicationType == "IndianOutsideIndividual") {
+                if (district == null || district == "" || district == undefined) {
+                    validFlag = false;
+                    setToastError(`${t("ERROR_DISTRICT_CHOOSE")}`);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                        setToastError(false);
+                    }, 2000);
+                }
+            } else if (applicationType == "OutsideNonIndian") {
+                if (province == null || province == "" || province == undefined) {
+                    validFlag = false;
+                    setToastError(`${t("ERROR_PROVINCE_CHOOSE")}`);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                        setToastError(false);
+                    }, 2000);
+                }
+            }
+
+
             if (mainPlace == null || mainPlace == "" || mainPlace == undefined) {
                 validFlag = false;
                 setToastError(`${t("ERROR_MAINPLACE_CHOOSE")}`);
@@ -693,6 +745,7 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                     }, 2000);
                 }
             }
+
 
         }
 
@@ -788,58 +841,101 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
             }, 2000);
         }
 
-        // const fileManagement = {
-        //     individualIndian: individualIndian ? individualIndian : false,
+        const fileManagement = {
+            individualIndian: individualIndian ? individualIndian : false,
+            individualInside: individualInside ? individualInside : false,
+            individualNonIndian: individualNonIndian ? individualNonIndian : false,
+            individualOutside: individualOutside ? individualOutside : false,
+            institution: institution ? institution : false,
+            individual: individual ? individual : false,
+            isNonIndianActive: isNonIndianActive ? isNonIndianActive : "",
+            isActive: isActive ? isActive : "",
+            isActiveCheck: isActiveCheck ? isActiveCheck : "",
+            country: country ? country : "",
+            title: title ? title : "",
+            stateVal: stateVal ? stateVal : "",
+            district: district ? district : "",
+            description: description ? description : "",
+            services: serviceName ? serviceName : "",
+            uploadedFile: uploadedFile ? uploadedFile : "",
+            idNumber: idNumber ? idNumber : "",
+            udIdNumber: udIdNumber ? udIdNumber : "",
+            firstName: firstName ? firstName : "",
+            middleName: middleName ? middleName : "",
+            lastName: lastName ? lastName : "",
+            institutionName: institutionName ? institutionName : "",
+            officerName: officerName ? officerName : "",
+            designation: designation ? designation : "",
+            email: email ? email : "",
+            mobile: mobile ? mobile : "",
+            whatsapp: whatsapp ? whatsapp : "",
+            mainPlace: mainPlace ? mainPlace : "",
+            wardNo: wardNo ? wardNo : "",
+            wardDet: wardDet ? wardDet : "",
+            streetName: streetName ? streetName : "",
+            pincode: pincode ? pincode : "",
+            postOffice: postOffice ? postOffice : "",
+            PostOfficeDet: PostOfficeDet ? PostOfficeDet : "",
+            applicationType: applicationType ? applicationType : "",
+            doorNo: doorNo ? doorNo : "",
+            subNo: subNo ? subNo : "",
+            houseName: houseName ? houseName : "",
+            localPlace: localPlace ? localPlace : "",
+            province: province ? province : "",
+            MinorFunctionDet: MinorFunctionDet ? MinorFunctionDet : "",
+            SubFunctionDet: SubFunctionDet ? SubFunctionDet : "",
+            MajorFunctionDet: MajorFunctionDet ? MajorFunctionDet : "",
+            checkAdhar: checkAdhar ? checkAdhar : "",
+            checkUDID: checkUDID ? checkUDID : ""
 
-        // }
+        }
 
         if (validFlag == true) {
 
-            //Digit.sessionStorage.setItem("counterModule", fileManagement)
+            sessionStorage.setItem("counterModule", JSON.stringify(fileManagement))
 
-            sessionStorage.setItem("individualIndian", individualIndian ? individualIndian : false)
-            sessionStorage.setItem("individualInside", individualInside ? individualInside : false)
-            sessionStorage.setItem("individualNonIndian", individualNonIndian ? individualNonIndian : false)
-            sessionStorage.setItem("individualOutside", individualOutside ? individualOutside : false)
-            sessionStorage.setItem("institution", institution ? institution : false)
-            sessionStorage.setItem("individual", individual ? individual : false)
-            sessionStorage.setItem("isNonIndianActive", isNonIndianActive ? isNonIndianActive : "")
-            sessionStorage.setItem("isActive", isActive ? isActive : "");
-            sessionStorage.setItem("isActiveCheck", isActiveCheck ? isActiveCheck : "");
-            sessionStorage.setItem("title", title ? title : "");
-            sessionStorage.setItem("country", country ? JSON.stringify(country) : "");
-            sessionStorage.setItem("stateVal", stateVal ? JSON.stringify(stateVal) : "");
-            sessionStorage.setItem("district", district ? JSON.stringify(district) : "");
-            sessionStorage.setItem("description", description ? description : "");
-            sessionStorage.setItem("services", serviceName ? serviceName : "");
-            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "");
-            sessionStorage.setItem("idNumber", idNumber ? idNumber : "");
-            sessionStorage.setItem("firstName", firstName ? firstName : "");
-            sessionStorage.setItem("middleName", middleName ? middleName : "");
-            sessionStorage.setItem("lastName", lastName ? lastName : "");
-            sessionStorage.setItem("institutionName", institutionName ? institutionName : "");
-            sessionStorage.setItem("officerName", officerName ? officerName : "");
-            sessionStorage.setItem("designation", designation ? designation : "");
-            sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : '');
-            sessionStorage.setItem("email", email ? email : "");
-            sessionStorage.setItem("mobile", mobile ? mobile : "");
-            sessionStorage.setItem("whatsapp", whatsapp ? whatsapp : "");
-            sessionStorage.setItem("mainPlace", mainPlace ? mainPlace : "");
-            sessionStorage.setItem("wardNo", wardNo ? wardNo : "");
-            sessionStorage.setItem("wardDet", wardDet ? JSON.stringify(wardDet) : "");
-            sessionStorage.setItem("streetName", streetName ? streetName : "");
-            sessionStorage.setItem("pincode", pincode ? pincode : "");
-            sessionStorage.setItem("postOffice", postOffice ? postOffice : "");
-            sessionStorage.setItem("PostOfficeDet", PostOfficeDet ? JSON.stringify(PostOfficeDet) : "");
-            sessionStorage.setItem("applicationType", applicationType ? applicationType : "");
-            sessionStorage.setItem("doorNo", doorNo ? doorNo : "");
-            sessionStorage.setItem("subNo", subNo ? subNo : "");
-            sessionStorage.setItem("houseName", houseName ? houseName : "");
-            sessionStorage.setItem("localPlace", localPlace ? localPlace : "");
-            sessionStorage.setItem("province", province ? province : "");
-            sessionStorage.setItem("MinorFunctionDet", MinorFunctionDet ? JSON.stringify(MinorFunctionDet) : "");
-            sessionStorage.setItem("SubFunctionDet", SubFunctionDet ? JSON.stringify(SubFunctionDet) : "");
-            sessionStorage.setItem("MajorFunctionDet", MajorFunctionDet ? JSON.stringify(MajorFunctionDet) : "");
+            // sessionStorage.setItem("individualIndian", individualIndian ? individualIndian : false)
+            // sessionStorage.setItem("individualInside", individualInside ? individualInside : false)
+            // sessionStorage.setItem("individualNonIndian", individualNonIndian ? individualNonIndian : false)
+            // sessionStorage.setItem("individualOutside", individualOutside ? individualOutside : false)
+            // sessionStorage.setItem("institution", institution ? institution : false)
+            // sessionStorage.setItem("individual", individual ? individual : false)
+            // sessionStorage.setItem("isNonIndianActive", isNonIndianActive ? isNonIndianActive : "")
+            // sessionStorage.setItem("isActive", isActive ? isActive : "");
+            // sessionStorage.setItem("isActiveCheck", isActiveCheck ? isActiveCheck : "");
+            // sessionStorage.setItem("title", title ? title : "");
+            // sessionStorage.setItem("country", country ? JSON.stringify(country) : "");
+            // sessionStorage.setItem("stateVal", stateVal ? JSON.stringify(stateVal) : "");
+            // sessionStorage.setItem("district", district ? JSON.stringify(district) : "");
+            // sessionStorage.setItem("description", description ? description : "");
+            // sessionStorage.setItem("services", serviceName ? serviceName : "");
+            // sessionStorage.setItem("uploadedFile", uploadedFile ? uploadedFile : "");
+            // sessionStorage.setItem("idNumber", idNumber ? idNumber : "");
+            // sessionStorage.setItem("firstName", firstName ? firstName : "");
+            // sessionStorage.setItem("middleName", middleName ? middleName : "");
+            // sessionStorage.setItem("lastName", lastName ? lastName : "");
+            // sessionStorage.setItem("institutionName", institutionName ? institutionName : "");
+            // sessionStorage.setItem("officerName", officerName ? officerName : "");
+            // sessionStorage.setItem("designation", designation ? designation : "");
+            // sessionStorage.setItem("email", email ? email : "");
+            // sessionStorage.setItem("mobile", mobile ? mobile : "");
+            // sessionStorage.setItem("whatsapp", whatsapp ? whatsapp : "");
+            // sessionStorage.setItem("mainPlace", mainPlace ? mainPlace : "");
+            // sessionStorage.setItem("wardNo", wardNo ? wardNo : "");
+            // sessionStorage.setItem("wardDet", wardDet ? JSON.stringify(wardDet) : "");
+            // sessionStorage.setItem("streetName", streetName ? streetName : "");
+            // sessionStorage.setItem("pincode", pincode ? pincode : "");
+            // sessionStorage.setItem("postOffice", postOffice ? postOffice : "");
+            // sessionStorage.setItem("PostOfficeDet", PostOfficeDet ? JSON.stringify(PostOfficeDet) : "");
+            // sessionStorage.setItem("applicationType", applicationType ? applicationType : "");
+            // sessionStorage.setItem("doorNo", doorNo ? doorNo : "");
+            // sessionStorage.setItem("subNo", subNo ? subNo : "");
+            // sessionStorage.setItem("houseName", houseName ? houseName : "");
+            // sessionStorage.setItem("localPlace", localPlace ? localPlace : "");
+            // sessionStorage.setItem("province", province ? province : "");
+            // sessionStorage.setItem("MinorFunctionDet", MinorFunctionDet ? JSON.stringify(MinorFunctionDet) : "");
+            // sessionStorage.setItem("SubFunctionDet", SubFunctionDet ? JSON.stringify(SubFunctionDet) : "");
+            // sessionStorage.setItem("MajorFunctionDet", MajorFunctionDet ? JSON.stringify(MajorFunctionDet) : "");
             history.push("/digit-ui/employee/dfm/counter-module-summary");
 
 
@@ -946,6 +1042,14 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
     const setIdNumbertField = (e) => {
         if (e.target.value.trim().length >= 0) {
             setIdNumber(
+                e.target.value.length <= 10 ? e.target.value.replace(/[^0-9^/]/gi, "") : e.target.value.replace(/[^0-9^/]/gi, "").substring(0, 12)
+            );
+        }
+
+    }
+    const setUDIdNumbertField = (e) => {
+        if (e.target.value.trim().length >= 0) {
+            setUDIdNumber(
                 e.target.value.length <= 10 ? e.target.value.replace(/[^0-9^/]/gi, "") : e.target.value.replace(/[^0-9^/]/gi, "")
             );
         }
@@ -1485,8 +1589,8 @@ const CounterModule = ({ path, handleNext, formData, config, onSelect, value }) 
                                 </CardLabel>
                                     <TextInput
                                         isMandatory={false}
-                                        onChange={setIdNumbertField}
-                                        value={idNumber}
+                                        onChange={setUDIdNumbertField}
+                                        value={udIdNumber}
                                         t={t}
                                         type={"text"}
                                         optionKey="i18nKey"
