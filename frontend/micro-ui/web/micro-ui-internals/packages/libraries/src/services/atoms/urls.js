@@ -120,10 +120,11 @@ const Urls = {
     create_adoption: "/birth-services/cr/createadoption",
     correct_update: "/birth-services/cr/createbirthcorrection",
     registry_search_Adoption: "/birth-services/cr/registry/_searchAdoption",
+    commonSearch: "/birth-services/cr/common//searchbirthcommon",
   },
   crcorrection: {
     marriage_correction_search: "/marriage-services/v1/marriagedetails/_searchmarriage",
-    marriage_correction_details:"/marriage-services/v1/marriagedetails/_searchmarriagecorrection",
+    marriage_correction_details: "/marriage-services/v1/marriagedetails/_searchmarriagecorrection",
     marriage_correction_update: "/marriage-services/v1/marriagedetails/_updatemarriagecorrection",
     birth_correction_search: "/birth-services/cr/searchbirthcorrection",
     birth_correction_update: "/birth-services/cr/updatebirthcorrection",

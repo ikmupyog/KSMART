@@ -10,6 +10,7 @@ import {
   Loader,
   Toast,
   SubmitBar,
+  FormBackButton,
 } from "@egovernments/digit-ui-react-components";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import { useTranslation } from "react-i18next";
@@ -246,9 +247,11 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
   if (Object.keys(deathCorrectionFormsObj)?.length > 0) {
     return (
       <React.Fragment>
-           <div style={{display:'flex',flexDirection:'row', width:'100%'}}>
+           {/* <div style={{display:'flex',flexDirection:'row', width:'100%'}}>
         <div style={{width:"70%"}}>
-        <FormStep onSelect={onSubmitDeathCorrection} config={config}>
+        <FormStep onSelect={onSubmitDeathCorrection} config={config}> */}
+          <div style={{display:'flex'}}>
+        <div style={{marginTop: "0.6rem", width: "100%"}}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12 mystyle">
@@ -686,6 +689,10 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
                 </div>
               </FieldComponentContainer>
             </FormFieldContainer>
+            <div className="buttonContainerN" style={{ padding: "2rem"}}>
+        <FormBackButton>{t("CS_COMMON_BACK")}</FormBackButton>
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
+      </div>
           {/* <DeathCorrectionModal
             showModal={showModal}
             selectedConfig={selectedCorrectionItem}
@@ -694,7 +701,7 @@ function DeathCorrectionEditPage({ sex, cmbPlace, DeathCorrectionDocuments, navi
             selectedDocs={selectedDocs}
             selectedDocData={selectedDocData}
           /> */}
-        </FormStep>
+        {/* </FormStep> */}
         </div>
           <DeathCorrectionDocUpload
             selectedConfig={selectedCorrectionItem}

@@ -24,7 +24,7 @@ import { Controller, useForm } from "react-hook-form";
 import { convertEpochToDate } from "../../../utils";
 import moment from "moment";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
-import BirthCorrectionDocUpload from "../../../components/birthCorrectionDocUpload";
+// import BirthCorrectionDocUpload from "../../../components/birthCorrectionDocUpload";
 
 const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocuments, navigationData, navigateAcknowledgement }) => {
   // let formData = {};
@@ -772,9 +772,9 @@ console.log(fieldName, "fieldname........");
         </FormStep>
         
         </div>
-           <BirthCorrectionDocUpload
+           {/* <BirthCorrectionDocUpload
                selectedConfig={selectedInclusionItem}
-                />
+                /> */}
         </div>
         {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
       </React.Fragment>

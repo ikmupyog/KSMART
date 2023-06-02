@@ -31,6 +31,7 @@
 
   .card-label {
     @apply text-text-primary mb-md;
+    margin-top: 30px;
   }
 
   .card-label-error {
@@ -152,16 +153,16 @@
 }
 
 .submit-bar {
-  @apply h-10 bg-primary-main text-center w-full outline-none;
+  @apply h-10 bg-button-primary text-center w-full outline-none;
   float: right;
-
 
   &:focus {
     @apply outline-none;
   }
 
   header {
-    @apply font-rc font-medium text-legend text-white leading-10;
+    @apply font-rc bg-button-primary font-medium text-legend text-white leading-10;
+    border-radius: 30px;
     font-family: system-ui !important;
     font-weight: 400 !important;
     font-size: 15px !important;
@@ -170,8 +171,8 @@
 }
 
 .submit-bar-disabled {
-  @apply h-10 bg-primary-main text-center outline-none opacity-50;
-  width: 15%;
+  @apply h-10 bg-button-disabled text-center outline-none w-full  opacity-50;
+  border-radius: 30px;
   float: right;
 
   &:focus {
@@ -180,6 +181,7 @@
 
   header {
     @apply font-rc font-medium text-legend text-white leading-10;
+    border-radius: 30px;
   }
 }
 
@@ -187,6 +189,7 @@
   .submit-bar,
   .submit-bar-disabled {
     width: 15%;
+    border-radius: 30px;
   }
 
   .card {

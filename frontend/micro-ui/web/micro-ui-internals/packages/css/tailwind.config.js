@@ -19,6 +19,14 @@ module.exports = {
         primary: "#0B0C0C",
         secondary: "#505A5F",
       },
+      label: {
+        primary: "#00377B",
+      },
+      button:{
+        primary: "#EE3D7F",
+        secondary: "#D7E1F1",
+        disabled: "#d197ac",
+      },
       link: {
         normal: "#1D70B8",
         hover: "#003078",

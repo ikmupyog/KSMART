@@ -104,10 +104,12 @@
 }
 
 .select-wrap {
-  @apply mb-lg relative;
+  @apply mb-lg bg-white relative;
+  border-radius: 12px;
 
   .select {
-    @apply relative block w-full h-10 border border-solid border-input-border;
+    @apply relative block bg-white w-full h-10 border border-solid border-input-border;
+    margin-top: 15px;
     border-color: none!important;
     border: 1px solid #c9cccf!important;
     input[type="text"] {
@@ -133,6 +135,8 @@
 
   .select-active {
     @apply relative block w-full h-10 border-2 border-solid border-primary-main;
+    margin-top: 15px;
+    border-radius: 12px;
 
     input[type="text"] {
       width: calc(100% - 32px);
@@ -289,8 +293,8 @@
   @apply mb-lg relative;
 
   .select {
-    @apply relative block w-full h-10 border border-solid border-input-border;
-    border-radius: 4px;
+    @apply relative block bg-white w-full h-10 border border-solid border-input-border;
+    border-radius: 12px;
     input[type="text"] {
       width: calc(100% - 32px);
       background-color: transparent;
