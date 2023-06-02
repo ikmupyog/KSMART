@@ -58,7 +58,7 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
     setIsBridePresentAddressSameAsGroomPresentAddress(e.target.checked);
     if (e.target.checked) {
       setCountryValue(formData?.GroomAddressDetails?.presentaddressCountry?.countrycode);
-      setValue(formData?.GroomAddressDetails?.presentaddressStateName?.statecode);
+      setValue(formData?.GroomAddressDetails?.presentaddressStateName?.code);
       setaddressCountry(formData?.GroomAddressDetails?.presentaddressCountry);
       setaddressStateName(formData?.GroomAddressDetails?.presentaddressStateName);
       setoutsideKeralaDistrict(formData?.GroomAddressDetails?.presentOutsideKeralaDistrict);
