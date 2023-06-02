@@ -1,5 +1,7 @@
 .HomePageWrapper{
     margin-top: -25px;
+    padding-left: 7% !important;
+    padding-right: 7% !important;
     .BannerWithSearch{
         margin-bottom: 40px;
         @apply relative;
@@ -69,9 +71,7 @@
 @screen dt{
     .HomePageWrapper{
         .BannerWithSearch{
-            margin-bottom: 56px;
-            min-width: 100vw;
-            margin-left: calc( -15vw - 16px );
+            margin-bottom: 56px;            
             .Search{
                 width: calc(70% - 32px);
                 left: calc( 15% + 25px );
