@@ -17,7 +17,13 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
   const [serviceNameEn, setserviceNameEn] = useState("");
   const [serviceNameMl, setserviceNameMl] = useState("");
   const [accountHead, setaccountHead] = useState("");
-
+  const { data: DocumentType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "IdProof");
+  let cmbDocumentType = [];
+  DocumentType &&
+    DocumentType["common-masters"] &&
+    DocumentType["common-masters"].IdProof.map((ob) => {
+      cmbDocumentType.push(ob);
+    });
   const [isChecked, setIsChecked] = useState(false);
   const [mutationSuccess, setMutationSuccess] = useState(false);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
@@ -50,7 +56,6 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     value: item.majorFunctionNameEnglish,
   }));
   const { data: searchsubfunct } = Digit.Hooks.dfm.useSearchsubModule({ tenantId, majorFunctionId: majorFunction.label });
-  console.log(searchsubfunct);
   const subData = searchsubfunct?.SubFunctionDetails?.filter((item) => item.status !== "0")?.map((item) => ({
     label: item.id,
     value: item.subFunctionNameEnglish,
@@ -127,7 +132,6 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     };
     deleteItem.mutate(formData, {
       onError: (error) => {
-        console.log(error.message);
         setErrorMessage(error.message);
         setTimeout(() => {
           setErrorMessage(false);
@@ -224,7 +228,6 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
     };
     updatemutation.mutate(formData, {
       onError: (error) => {
-        console.log(error.message);
         setErrorMessage(error.message);
         setTimeout(() => {
           setErrorMessage(false);
@@ -384,13 +387,27 @@ const ServiceAdding = ({ path, handleNext, formData, config, onSelect }) => {
                 <CardLabel className="card-label-file">{`${t("FEES")}`}</CardLabel>
                 <CheckBox t={t} optionKey="name" />
               </div>
-              {/* <div className="col-md-3 col-sm-4 col-xs-12">
-                <CardLabel>
-                  {t("ACCOUNT_HEAD_MAPPED")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown t={t} optionKey="value" option={Value} selected={accountHead} select={setaccountHead} />
-              </div> */}
+              <div className="col-md-3  col-sm-32  col-xs-12" style={{ marginBottom: "25px" }}>
+                <CardLabel className="card-label-file">{`${t("SERVICE_DELIVERY_DAYS")}`}</CardLabel>
+                <TextInput
+                  onChange={setsetserviceCode}
+                  value={serviceCode}
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="RegistrationNo"
+                  placeholder={t("SERVICE_CODE")}
+                  disable={edit}
+                />              </div>
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="col-md-4 col-sm-6 col-xs-12">
+                  <CardLabel>
+                    {t("ACCOUNT_HEAD_MAPPED")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown t={t} optionKey="name" option={cmbDocumentType} selected={accountHead} select={setaccountHead} />
+                </div>
+              </div>
             </div>
           </div>
           <div className="btn-flex">
