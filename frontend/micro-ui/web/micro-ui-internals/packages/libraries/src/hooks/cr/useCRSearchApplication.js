@@ -30,21 +30,31 @@ const useCRSearch = (params, config) => {
   };
 };
 
+const useBirthCommonSearch = (params, config) => {
+  return async () => {
+    const data = await Digit.CRService.commonSearch(params, config);
+    const tenant = data?.ChildDetails?.[0]?.tenantId;
+    const businessIds = data?.ChildDetails.map((application) => application.applicationNumber);
+    const workflowRes = await Digit.WorkflowService.getAllApplication(tenant, { businessIds: businessIds.join() });
+    return combineResponse(data?.ChildDetails, workflowRes?.ProcessInstances, data?.Count);
+  };
+};
+
 export const useCRSearchApplication = (params, config = {}, t) => {
   const client = useQueryClient();
   let multiownername = "";
-  const result = useQuery(["TL_APPLICATIONS_LIST", params], useCRSearch(params, config), {
+  const result = useQuery(["TL_APPLICATIONS_LIST", params], useBirthCommonSearch(params, config), {
     staleTime: Infinity,
     select: (data) => {
-     return data.map((i) => ({
-       
+      return data.map((i) => ({
+
         TL_COMMON_TABLE_COL_APP_NO: i.applicationNumber,
         CR_FATHER_NAME: i.ParentsDetails?.fatherFirstNameEn,
         CR_MOTHER_NAME: i.ParentsDetails?.motherFirstNameEn,
-        CR_ADDRESS:i.AddressBirthDetails?.houseNameNoEnPresent,
+        CR_ADDRESS: i.AddressBirthDetails?.houseNameNoEnPresent,
         TL_COMMON_CITY_NAME: i.tenantid,
         TL_APPLICATION_STATUS: i.applicationStatus,
-        
+
       }));
     },
   });

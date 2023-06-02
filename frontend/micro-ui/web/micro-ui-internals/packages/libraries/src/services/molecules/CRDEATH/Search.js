@@ -295,13 +295,15 @@ export const CRDeathsearch = {
       asSectionHeader: true,
       values: [
         // { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "CR_NOT_RECORDED" },
-        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceEn + " / " + response?.publicPlaceMl || "CR_NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.DeathPlaceWardId + " / " + response?.DeathPlaceWardIdMl || "CR_NOT_RECORDED" },
-        { title: "CR_LOCALITY_EN", value: response?.DeathPlaceLocalityEn || "CR_NOT_RECORDED" },
-        { title: "CR_LOCALITY_ML", value: response?.DeathPlaceLocalityMl || "CR_NOT_RECORDED" },
-        { title: "CR_STREET_NAME_EN", value: response?.DeathPlaceStreetEn || "CR_NOT_RECORDED" },
-        { title: "CR_STREET_NAME_ML", value: response?.DeathPlaceStreetMl || "CR_NOT_RECORDED" },
-        { title: "CR_DESCRIPTION", value: response?.GeneralRemarks || "CR_NOT_RECORDED" },
+        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceEn ?response?.publicPlaceEn: t("CR_NOT_RECORDED")+
+         " / " + response?.publicPlaceMl?response?.publicPlaceMl:t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_WARD", value: response?.DeathPlaceWardId ?response?.DeathPlaceWardId:t("CR_NOT_RECORDED")
+        + " / " + response?.DeathPlaceWardIdMl?response?.DeathPlaceWardIdMl:t("CR_NOT_RECORDED") },
+        { title: "CR_LOCALITY_EN", value: response?.DeathPlaceLocalityEn || t("CR_NOT_RECORDED") },
+        { title: "CR_LOCALITY_ML", value: response?.DeathPlaceLocalityMl || t("CR_NOT_RECORDED") },
+        { title: "CR_STREET_NAME_EN", value: response?.DeathPlaceStreetEn || t("CR_NOT_RECORDED") },
+        { title: "CR_STREET_NAME_ML", value: response?.DeathPlaceStreetMl || t("CR_NOT_RECORDED") },
+        { title: "CR_DESCRIPTION", value: response?.GeneralRemarks || t("CR_NOT_RECORDED") },
       ],
     };
     const deathPlaceOUTSIDEJURISDICTIONDetails = {
@@ -478,6 +480,7 @@ export const CRDeathsearch = {
     };
     // } else if (response?.AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA") {
 
+
     const AddressBirthDetailsPresentOutsideIndiaInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
@@ -623,6 +626,8 @@ export const CRDeathsearch = {
         { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformantDetails?.informerAddress || "CR_NOT_RECORDED" },
       ],
     };
+
+   
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
     if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
@@ -651,7 +656,9 @@ export const CRDeathsearch = {
     response && employeeResponse.push(FamilyInformationDeath);
     response && employeeResponse.push(statisticalInfo);
     response && employeeResponse.push(InitiatorDetails);
+    if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
     response && employeeResponse.push(InformarHospitalInstitution);
+    }
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,

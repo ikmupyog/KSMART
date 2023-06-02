@@ -47,6 +47,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
   const [fatherPassport, setFatherPassport] = useState(
     formData?.BornOutsideDocuments?.fatherPassport ? formData?.BornOutsideDocuments?.fatherPassport : null
   );
+  const [isFatherPassportLoading, setIsFatherPassportLoading] = useState(false);
 
   const [motherPassportFile, setMotherPassportFile] = useState(
     formData?.BornOutsideDocuments?.motherPassportFile ? formData?.BornOutsideDocuments?.motherPassportFile : null
@@ -54,6 +55,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
   const [motherPassport, setMotherPassport] = useState(
     formData?.BornOutsideDocuments?.motherPassport ? formData?.BornOutsideDocuments?.motherPassport : null
   );
+  const [isMotherPassportLoading, setIsMotherPassportLoading] = useState(false);
 
   const [cancellingVisaFile, setCancellingVisaFile] = useState(
     formData?.BornOutsideDocuments?.cancellingVisaFile ? formData?.BornOutsideDocuments?.cancellingVisaFile : null
@@ -61,6 +63,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
   const [cancellingVisa, setCancellingVisa] = useState(
     formData?.BornOutsideDocuments?.cancellingVisa ? formData?.BornOutsideDocuments?.cancellingVisa : null
   );
+  const [isCancellingVisaLoading, setIsCancellingVisaLoading] = useState(false);
 
   const [addressProofFile, setAddressProofFile] = useState(
     formData?.BornOutsideDocuments?.addressProofFile ? formData?.BornOutsideDocuments?.addressProofFile : null
@@ -68,9 +71,11 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
   const [addressProof, setAddressProof] = useState(
     formData?.BornOutsideDocuments?.addressProof ? formData?.BornOutsideDocuments?.addressProof : null
   );
+  const [isAddressProofLoading, setIsAddressProofLoading] = useState(false);
 
   const [notaryFile, setNotaryFile] = useState(formData?.BornOutsideDocuments?.notaryFile ? formData?.BornOutsideDocuments?.notaryFile : null);
   const [notary, setNotary] = useState(formData?.BornOutsideDocuments?.notary ? formData?.BornOutsideDocuments?.notary : null);
+  const [isNotaryLoading, setIsNotaryLoading] = useState(false);
 
   const [marriageCertificateFile, setMarriageCertificateFile] = useState(
     formData?.BornOutsideDocuments?.marriageCertificateFile ? formData?.BornOutsideDocuments?.marriageCertificateFile : null
@@ -78,16 +83,19 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
   const [marriageCertificate, setMarriageCertificate] = useState(
     formData?.BornOutsideDocuments?.marriageCertificate ? formData?.BornOutsideDocuments?.marriageCertificate : null
   );
+  const [isMarriageCertificateLoading, setIsMarriageCertificateLoading] = useState(false);
 
   const [nationalityFile, setNationalityFile] = useState(
     formData?.BornOutsideDocuments?.nationalityFile ? formData?.BornOutsideDocuments?.nationalityFile : null
   );
   const [nationality, setNationality] = useState(formData?.BornOutsideDocuments?.nationality ? formData?.BornOutsideDocuments?.nationality : null);
+  const [isNationalityLoading, setIsNationalityLoading] = useState(false);
 
   const [magistrateFile, setMagistrateFile] = useState(
     formData?.BornOutsideDocuments?.magistrateFile ? formData?.BornOutsideDocuments?.magistrateFile : null
   );
   const [magistrate, setMagistrate] = useState(formData?.BornOutsideDocuments?.magistrate ? formData?.BornOutsideDocuments?.magistrate : null);
+  const [isMagistrateLoading, setIsMagistrateLoading] = useState(false);
 
   const fetchFile = async (fileId) => {
     const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], tenantId);
@@ -107,6 +115,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (childBirthCertificateFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
@@ -120,6 +129,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsChildBirthCertificateLoading(false);
@@ -129,6 +139,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
       }
@@ -137,20 +148,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (childPassportFile) {
         if (childPassportFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (childPassportFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsChildPassportLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/childPassport", childPassportFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setChildPassport(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsChildPassportLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -158,40 +187,76 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (citizenshipFile) {
         if (citizenshipFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (citizenshipFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsCitizenshipLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/citizenship", citizenshipFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setCitizenship(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsCitizenshipLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
   }, [citizenshipFile]);
   useEffect(() => {
     (async () => {
-      setError(null);
       if (fatherPassportFile) {
         if (fatherPassportFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (fatherPassportFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsFatherPassportLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/fatherPassport", fatherPassportFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setFatherPassport(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsFatherPassportLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -199,20 +264,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (motherPassportFile) {
         if (motherPassportFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (motherPassportFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsMotherPassportLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/motherPassport", motherPassportFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setMotherPassport(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsMotherPassportLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -220,20 +303,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (cancellingVisaFile) {
         if (cancellingVisaFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (cancellingVisaFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsCancellingVisaLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/cancellingVisa", cancellingVisaFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setCancellingVisa(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsCancellingVisaLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -241,20 +342,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (addressProofFile) {
         if (addressProofFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (addressProofFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsAddressProofLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/addressProof", addressProofFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setAddressProof(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsAddressProofLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -262,20 +381,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (notaryFile) {
         if (notaryFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (notaryFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsNotaryLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/notary", notaryFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setNotary(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsNotaryLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -283,20 +420,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (marriageCertificateFile) {
         if (marriageCertificateFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (marriageCertificateFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsMarriageCertificateLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/marriageCertificate", marriageCertificateFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setMarriageCertificate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsMarriageCertificateLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -304,20 +459,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (nationalityFile) {
         if (nationalityFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (nationalityFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsNationalityLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/nationality", nationalityFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setNationality(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsNationalityLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -325,20 +498,38 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (magistrateFile) {
         if (magistrateFile.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (magistrateFile.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsMagistrateLoading(true);
             const response = await Digit.UploadServices.Filestorage("bornoutside/magistrate", magistrateFile, tenantId);
             if (response?.data?.files?.length > 0) {
               const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               setMagistrate(fileDetails);
             } else {
-              setError(t("FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsMagistrateLoading(false);
           } catch (err) {}
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
@@ -412,47 +603,55 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-4">
-            <UploadFile
-              id={"born-ouside-docs"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              onUpload={(e) => setChildBirthCertificateFile(e.target.files[0])}
-              onDelete={() => {
-                setChildBirthCertificate(null);
-              }}
-              message={childBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-            />
-          </div>
-          {childBirthCertificate && (
-            <div className="col-md-2">
-              {_.head(childBirthCertificate)?.type === "pdf" ? (
-                <React.Fragment>
-                  <object
-                    style={{ margin: "5px 0" }}
-                    height={120}
-                    width={100}
-                    data={_.head(childBirthCertificate)?.pdfUrl}
-                    alt="Child Birth Certificate Pdf"
-                  />
-                </React.Fragment>
-              ) : (
-                <img
-                  style={{ margin: "5px 0" }}
-                  height={120}
-                  width={100}
-                  src={_.head(childBirthCertificate)?.small}
-                  alt="Child Birth Certificate Image"
+              <div className="col-md-4">
+                <UploadFile
+                  id={"born-ouside-docs"}
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={(e) => setChildBirthCertificateFile(e.target.files[0])}
+                  onDelete={() => {
+                    setChildBirthCertificate(null);
+                  }}
+                  message={childBirthCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                 />
+              </div>
+              {isChildBirthCertificateLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
+              {childBirthCertificate && (
+                <div className="col-md-2">
+                  {_.head(childBirthCertificate)?.type === "pdf" ? (
+                    <React.Fragment>
+                      <object
+                        style={{ margin: "5px 0" }}
+                        height={120}
+                        width={100}
+                        data={_.head(childBirthCertificate)?.pdfUrl}
+                        alt="Child Birth Certificate Pdf"
+                      />
+                    </React.Fragment>
+                  ) : (
+                    <img
+                      style={{ margin: "5px 0" }}
+                      height={120}
+                      width={100}
+                      src={_.head(childBirthCertificate)?.small}
+                      alt="Child Birth Certificate Image"
+                    />
+                  )}
+                  <a
+                    style={{ color: "blue" }}
+                    target="_blank"
+                    href={
+                      _.head(childBirthCertificate)?.type === "pdf" ? _.head(childBirthCertificate)?.pdfUrl : _.head(childBirthCertificate)?.large
+                    }
+                  >
+                    Preview
+                  </a>
+                </div>
               )}
-              <a
-                style={{ color: "blue" }}
-                target="_blank"
-                href={_.head(childBirthCertificate)?.type === "pdf" ? _.head(childBirthCertificate)?.pdfUrl : _.head(childBirthCertificate)?.large}
-              >
-                Preview
-              </a>
-            </div>
+            </React.Fragment>
           )}
         </div>
         <div className="row">
@@ -462,36 +661,43 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
-          <div className="col-md-4">
-            <UploadFile
-              id={"born-ouside-docs"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              onUpload={(e) => setChildPassportFile(e.target.files[0])}
-              onDelete={() => {
-                setChildPassport(null);
-              }}
-              message={childPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-            />
-          </div>
-          {childPassport && (
-            <div className="col-md-2">
-              {_.head(childPassport)?.type === "pdf" ? (
-                <React.Fragment>
-                  <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(childPassport)?.pdfUrl} alt="Child Passport Pdf" />
-                </React.Fragment>
-              ) : (
-                <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(childPassport)?.small} alt="Child Passport Image" />
+          
+
+              <div className="col-md-4">
+                <UploadFile
+                  id={"born-ouside-docs"}
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={(e) => setChildPassportFile(e.target.files[0])}
+                  onDelete={() => {
+                    setChildPassport(null);
+                  }}
+                  message={childPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                />
+              </div>
+              {isChildPassportLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
+              {childPassport && (
+                <div className="col-md-2">
+                  {_.head(childPassport)?.type === "pdf" ? (
+                    <React.Fragment>
+                      <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(childPassport)?.pdfUrl} alt="Child Passport Pdf" />
+                    </React.Fragment>
+                  ) : (
+                    <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(childPassport)?.small} alt="Child Passport Image" />
+                  )}
+                  <a
+                    style={{ color: "blue" }}
+                    target="_blank"
+                    href={_.head(childPassport)?.type === "pdf" ? _.head(childPassport)?.pdfUrl : _.head(childPassport)?.large}
+                  >
+                    Preview
+                  </a>
+                </div>
               )}
-              <a
-                style={{ color: "blue" }}
-                target="_blank"
-                href={_.head(childPassport)?.type === "pdf" ? _.head(childPassport)?.pdfUrl : _.head(childPassport)?.large}
-              >
-                Preview
-              </a>
-            </div>
-          )}
+            </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -500,6 +706,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -512,6 +719,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={citizenship ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isCitizenshipLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {citizenship && (
             <div className="col-md-2">
               {_.head(citizenship)?.type === "pdf" ? (
@@ -530,6 +741,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -538,6 +750,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -550,6 +763,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={fatherPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isFatherPassportLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {fatherPassport && (
             <div className="col-md-2">
               {_.head(fatherPassport)?.type === "pdf" ? (
@@ -568,6 +785,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -576,6 +794,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -588,6 +807,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={motherPassport ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isMotherPassportLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {motherPassport && (
             <div className="col-md-2">
               {_.head(motherPassport)?.type === "pdf" ? (
@@ -606,6 +829,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -614,6 +838,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -626,6 +851,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={cancellingVisa ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isCancellingVisaLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {cancellingVisa && (
             <div className="col-md-2">
               {_.head(cancellingVisa)?.type === "pdf" ? (
@@ -644,6 +873,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -652,6 +882,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -664,6 +895,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={addressProof ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isAddressProofLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {addressProof && (
             <div className="col-md-2">
               {_.head(addressProof)?.type === "pdf" ? (
@@ -682,6 +917,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -690,6 +926,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -702,6 +939,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={notary ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isNotaryLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {notary && (
             <div className="col-md-2">
               {_.head(notary)?.type === "pdf" ? (
@@ -716,6 +957,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -724,6 +966,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+          
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -736,6 +979,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={marriageCertificate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isMarriageCertificateLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {marriageCertificate && (
             <div className="col-md-2">
               {_.head(marriageCertificate)?.type === "pdf" ? (
@@ -760,6 +1007,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -768,6 +1016,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+         
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -780,6 +1029,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={magistrate ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isMagistrateLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {magistrate && (
             <div className="col-md-2">
               {_.head(magistrate)?.type === "pdf" ? (
@@ -810,6 +1063,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -818,6 +1072,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               <span className="mandatorycss">*</span>
             </CardLabel>
           </div>
+         
           <div className="col-md-4">
             <UploadFile
               id={"born-ouside-docs"}
@@ -830,6 +1085,10 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               message={nationality ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
             />
           </div>
+          {isNationalityLoading ? (
+            <Loader />
+          ) : (
+            <React.Fragment>
           {nationality && (
             <div className="col-md-2">
               {_.head(nationality)?.type === "pdf" ? (
@@ -848,6 +1107,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
               </a>
             </div>
           )}
+          </React.Fragment>)}
         </div>
         {toast && (
           <Toast
@@ -858,7 +1118,7 @@ const BornOutsideDocuments = ({ config, onSelect, formData }) => {
                   ? t("FILE_SIZE_VALIDATION_MESSAGE")
                   : fileTypeError
                   ? t("FILE_TYPE_VALIDATION_MESSAGE")
-                  : fileUploadError 
+                  : fileUploadError
                   ? t("FILE_UPLOAD_VALIDATION_MESSAGE")
                   : setToast(false)
                 : setToast(false)
