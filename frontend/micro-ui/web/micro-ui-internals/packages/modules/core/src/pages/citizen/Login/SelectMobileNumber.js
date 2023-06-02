@@ -32,7 +32,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
       {screenSize.dynamicWidth > 1250 && (
         <Card
           className="bannerCard removeBottomMargin hidden-md hidden-xs"
-          style={{ marginBottom: "20px", marginLeft: "50px", backgroundColor: "#00377B", height: "680px", width: "65%", borderRadius: "25px" }}
+          style={{ marginBottom: "20px", marginLeft: "60px", backgroundColor: "#00377B", height: "680px", width: "45%", borderRadius: "25px" }}
         >
           <div style={{ justifyContent: "space-around", padding: "0px 20px 200px 0px", width: "100%" }}>
             <div className="language-button-container hidden-md hidden-xs">
@@ -59,18 +59,16 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
       {/* </div>
       </div> */}
       {/* <Card> */}
-      <div style={{ justifyContent: "space-around", padding: "10px 100px 250px 40px", margin: "14px 100px 0px 0px" }}>
+      <div style={{ justifyContent: "space-around", padding: "10px 100px 300px 40px", margin: "14px 100px 0px 0px" }}>
         <div className="language-button-container">
-          <div style={{ textAlign: "center", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginTop: "250px" }}>
             <img
-              src="https://ulb-logos.s3.ap-south-1.amazonaws.com/scn.jpeg"
+              src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Mobile+application.png"
               alt="No Image"
               style={{ maxWidth: "100px", marginLeft: "10px", marginRight: "180px" }}
             />
-            <div style={{ paddingLeft: "40px" }}>
-              <label style={{ fontSize: "23px", color: "#00377B", fontWeight: "600", position: "absolute", left: "820px", top: "400px" }}>{`${t(
-                "CS_LOGIN_PROVIDE_MOBILE_NUMBER"
-              )}`}</label>
+            <div style={{ margin: "0px 200px 0px 0px" }}>
+              <label style={{ fontSize: "23px", color: "#00377B", fontWeight: "600" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label>
             </div>
             <br></br>
             <label
@@ -78,12 +76,11 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
                 fontSize: "14px",
                 color: "#3B669B",
                 fontWeight: "500",
-                marginTop: "100px",
               }}
             >{`${t("CS_LOGIN_TEXT")}`}</label>
           </div>
 
-          {/* <FormStep
+          <FormStep
             isDisabled={mobileNumber.length !== 10}
             onSelect={onSelect}
             config={config}
@@ -91,8 +88,8 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
             componentInFront="+91"
             onChange={onMobileChange}
             value={mobileNumber}
-            cardStyle={{ border: "none", marginRight: "10px", borderRadius: "12px", background: "#EDF2FA" }}
-          ></FormStep> */}
+            cardStyle={{ border: "none", marginRight: "10px", borderRadius: "12px" }}
+          ></FormStep>
         </div>
       </div>
       {/* </Card> */}
