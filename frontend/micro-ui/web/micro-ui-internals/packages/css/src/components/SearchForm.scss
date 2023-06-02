@@ -4,8 +4,13 @@
 
   .form-field {
     width: calc(25% - 16px);
-    margin-bottom: 25px;
     @apply inline-block mr-md align-middle;
+
+    label {
+    @apply text-label-primary ;
+    font-size: 18px;
+    font-weight: 400;
+    }
   }
   .SubmitAndClearAllContainer {
     @apply w-full;
@@ -22,7 +27,7 @@
         @apply inline-block !important;
       }
       p {
-        border: 1px solid #cfccc9;
+        border: 1px solid yellow;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -35,32 +40,34 @@
   }
   .submit {
     right: 36px;
+    margin-left: auto;
     margin-top: 22px;
     display: inline-flex;
+    gap: 28px;
     justify-content: space-evenly;
     @apply align-middle text-center !important;
     button {
-        margin-right: 20px;
-      border-radius: 0.25rem;
+      border-radius: 30px;
       width: 50%;
       @apply inline-block !important;
     }
     p {
-            border: 1px solid #cfccc9;
+            border: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            border-radius: 0.25rem;
+            border-radius: 30px;
             height: 41px;
       width: 50%;
-      @apply cursor-pointer text-link text-focus;
+      @apply cursor-pointer bg-button-secondary text-link text-focus;
     }
   }
   .pt-property-search {
     justify-content: unset;
   }
 }
+
 
 @media (min-width: 780px) {
   .search-form-wrapper {

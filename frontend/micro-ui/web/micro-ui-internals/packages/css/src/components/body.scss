@@ -72,10 +72,9 @@ body {
 }
 
 .back-btn-form {
-  height: 2.5rem;
+  border-radius: 30px;
   --bg-opacity: 1;
   text-align: center;
-  width: 15%;
   outline: 2px solid transparent;
   outline-offset: 2px;
   outline: 2px solid transparent;
@@ -85,7 +84,8 @@ body {
   color: white;
   justify-content: center;
   cursor: pointer;
-  @apply bg-primary-main;
+  padding: 10px 25px;
+  @apply bg-button-secondary h-10 ;
 }
 
 .back-btn2 {

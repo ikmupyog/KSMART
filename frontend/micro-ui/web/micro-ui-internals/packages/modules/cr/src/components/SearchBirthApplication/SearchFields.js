@@ -36,7 +36,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
 
   return (
     <>
-      <SearchField>
+      <SearchField >
         <label>{t("CR_SEARCH_ACK_NO")}</label>
         <TextInput name="applicationNumber" placeholder={`${t("CR_SEARCH_ACK_NO")}`} inputRef={register({})} />
       </SearchField>
@@ -143,9 +143,8 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
         />
       </SearchField>
-      <SearchField className="submit">
-        <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
-        <p
+      <SearchField className="submit" style={{ marginLeft: "100px"}}>
+      <p
           onClick={() => {
             reset({
               id: "",
@@ -160,6 +159,8 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
         >
           {t(`ES_COMMON_CLEAR_ALL`)}
         </p>
+        <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
+       
       </SearchField>
     </>
   );

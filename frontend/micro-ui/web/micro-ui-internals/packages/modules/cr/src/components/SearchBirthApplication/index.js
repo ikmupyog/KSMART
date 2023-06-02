@@ -8,18 +8,19 @@ import _ from "lodash";
 
 const mystyle = {
     bgOpacity: "1",
-    backgroundColor: "#fff",
-    backgroundColor: "rgba(255, 255, 255, var(--bg-opacity))",
+    backgroundColor: "red",
+    backgroundColor: "#EDF2FA",
     marginBottom: "24px",
-    padding: "1.5rem",
-    borderRadius: "1.6rem",
+    marginTop: "20px",
+    padding: "2.5rem",
+    borderRadius: "2.6rem",
 };
 const hstyle = {
     fontSize: "20px",
     fontWeight: "500",
-    color: "#2B2F3E",
-    marginBottom: ".5rem",
-    lineHeight: "1.5rem",
+    color: "#00377B",
+    marginBottom: "2.5rem",
+    lineHeight: "2.5rem",
 };
 
 const generateActions = (rowData) => {
