@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Background from "../../../components/Background";
 
 const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMobileChange, config }) => {
-
   // useEffect(() => {
   //   const windowWidth = useRef(window.innerWidth);
   //   console.log(windowWidth.current);
@@ -12,85 +11,91 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
   // }, [windowWidth]);
   const [screenSize, getDimension] = useState({
     dynamicWidth: window.innerWidth,
-    dynamicHeight: window.innerHeight
+    dynamicHeight: window.innerHeight,
   });
   const setDimension = () => {
     getDimension({
       dynamicWidth: window.innerWidth,
-      dynamicHeight: window.innerHeight
-    })
-  }
+      dynamicHeight: window.innerHeight,
+    });
+  };
 
   useEffect(() => {
-    window.addEventListener('resize', setDimension);
+    window.addEventListener("resize", setDimension);
 
-    return (() => {
-      window.removeEventListener('resize', setDimension);
-    })
-  }, [screenSize])
+    return () => {
+      window.removeEventListener("resize", setDimension);
+    };
+  }, [screenSize]);
   return (
     <Background>
-      {/* <div className="leftdiv">
-        <div className="leftflex" > */}
-      {/* style={{display: this.state.showStore ? 'block' : 'none' }} */}
       {screenSize.dynamicWidth > 1250 && (
-        <Card className="bannerCard removeBottomMargin hidden-md hidden-xs" style={{ margin: "0 auto", backgroundColor: "#6e80e5" }}>
-          <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", width: "100%" }}>
-
-            <div className="language-button-container hidden-md hidden-xs"  >
-              <h1 className="logostyle">
-                {/* <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} /> */}
-
-              </h1>
-              <div style={{ textAlign: "center", margin: "0 auto" }}>
-                <div>
-                  <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/citizenlogin.png" alt="No Image"
-                    style={{ maxWidth: "490px", marginLeft: "80px", marginRight: "80px" }} />
-                  <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label><br></br>
-                
-                </div>
+        <Card
+          className="bannerCard removeBottomMargin hidden-md hidden-xs"
+          style={{ marginBottom: "20px", marginLeft: "50px", backgroundColor: "#00377B", height: "680px", width: "65%", borderRadius: "25px" }}
+        >
+          <div style={{ justifyContent: "space-around", padding: "0px 20px 200px 0px", width: "100%" }}>
+            <div className="language-button-container hidden-md hidden-xs">
+              <div style={{ textAlign: "center", marginRight: "100px" }}>
+                <img
+                  className="loginImage"
+                  src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Group.png"
+                  alt="No Image"
+                  style={{
+                    maxWidth: "700px",
+                    marginLeft: "0px",
+                    marginRight: "70px",
+                    marginTop: "120px",
+                  }}
+                />
+                {/* <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label> */}
+                <br></br>
               </div>
-              <div style={{ justifyContent: "space-between !important" }} >
-
-                {/*<span style={{ marginRight: "60%" }} >2023&copy;K-Smart</span>&nbsp;
-            <span  >
-              <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
-              <a className="text-white text-link" href="#">Privacy</a>
-            </span> */}
-
-              </div>
+              <div style={{ justifyContent: "space-between !important" }}></div>
             </div>
           </div>
-        </Card>)}
+        </Card>
+      )}
       {/* </div>
       </div> */}
-      <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto" }}>
-        <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", width: "100%" }}>
-
-          <div className="language-button-container"  >
-            <div>
-              <div style={{ textAlign: "center", margin: "0 auto" }}>
-                <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/mob.png" alt="No Image"
-                  style={{ maxWidth: "100px", marginLeft: "180px", marginRight: "180px" }} />
-
-                <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label><br></br>
-                <label style={{ fontSize: "15px", marginTop: "20px !important" }}>{`${t("CS_LOGIN_TEXT")}`}</label>
-              </div>
+      {/* <Card> */}
+      <div style={{ justifyContent: "space-around", padding: "10px 100px 250px 40px", margin: "14px 100px 0px 0px" }}>
+        <div className="language-button-container">
+          <div style={{ textAlign: "center", margin: "0 auto" }}>
+            <img
+              src="https://ulb-logos.s3.ap-south-1.amazonaws.com/scn.jpeg"
+              alt="No Image"
+              style={{ maxWidth: "100px", marginLeft: "10px", marginRight: "180px" }}
+            />
+            <div style={{ paddingLeft: "40px" }}>
+              <label style={{ fontSize: "23px", color: "#00377B", fontWeight: "600", position: "absolute", left: "820px", top: "400px" }}>{`${t(
+                "CS_LOGIN_PROVIDE_MOBILE_NUMBER"
+              )}`}</label>
             </div>
-
-            <FormStep
-
-              isDisabled={mobileNumber.length !== 10}
-              onSelect={onSelect}
-              config={config}
-              t={t}
-              componentInFront="+91"
-              onChange={onMobileChange}
-              value={mobileNumber}
-            ></FormStep>
+            <br></br>
+            <label
+              style={{
+                fontSize: "14px",
+                color: "#3B669B",
+                fontWeight: "500",
+                marginTop: "100px",
+              }}
+            >{`${t("CS_LOGIN_TEXT")}`}</label>
           </div>
+
+          {/* <FormStep
+            isDisabled={mobileNumber.length !== 10}
+            onSelect={onSelect}
+            config={config}
+            t={t}
+            componentInFront="+91"
+            onChange={onMobileChange}
+            value={mobileNumber}
+            cardStyle={{ border: "none", marginRight: "10px", borderRadius: "12px", background: "#EDF2FA" }}
+          ></FormStep> */}
         </div>
-      </Card>
+      </div>
+      {/* </Card> */}
     </Background>
   );
 };

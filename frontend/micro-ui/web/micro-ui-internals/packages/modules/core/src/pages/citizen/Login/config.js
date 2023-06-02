@@ -8,7 +8,7 @@ export const loginSteps = [
     },
     inputs: [
       {
-        label: "CORE_COMMON_MOBILE_NUMBER",
+        label: "",
         type: "text",
         name: "mobileNumber",
         error: "ERR_HRMS_INVALID_MOB_NO",
@@ -44,7 +44,7 @@ export const loginSteps = [
         validation: {
           required: true,
           minLength: 1,
-          pattern: /^[^{0-9}^\$\"<>?\\\\~!@#$%^()+={}\[\]*,/_:;“”‘’]{1,50}$/i
+          pattern: /^[^{0-9}^\$\"<>?\\\\~!@#$%^()+={}\[\]*,/_:;“”‘’]{1,50}$/i,
         },
       },
     ],
