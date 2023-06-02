@@ -97,7 +97,8 @@ const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
   function setSelectInformantMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
       setInformantMobileNo(
-        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") :
+         e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
       );
     }
     // if (e.target.value.length != 0) {
