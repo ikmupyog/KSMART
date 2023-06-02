@@ -607,12 +607,12 @@ export const CRDeathsearch = {
       title: "CR_INITIATOR_DETAILS",
       // asSectionHeader: true,
       values: [
-        { title: "CR_RELATION", value: response?.Initiator?.InitiatorRelation || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_NAME", value: response?.Initiator?.InitiatorName || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_AADHAR", value: response?.Initiator?.InitiatorAadhaar || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.Initiator?.InitiatorMobile || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_DESIGNATION", value: response?.Initiator?.initiatorDesi || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_ADDRESS", value: response?.Initiator?.InitiatorAddress || "CR_NOT_RECORDED" },
+        { title: "CR_RELATION", value: response?.Initiator?.InitiatorRelation || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_NAME", value: response?.Initiator?.InitiatorName || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_AADHAR", value: response?.Initiator?.InitiatorAadhaar || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.Initiator?.InitiatorMobile || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_DESIGNATION", value: response?.Initiator?.initiatorDesi || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_ADDRESS", value: response?.Initiator?.InitiatorAddress || t("CR_NOT_RECORDED") },
       ],
     };
     const InformarHospitalInstitution = {
