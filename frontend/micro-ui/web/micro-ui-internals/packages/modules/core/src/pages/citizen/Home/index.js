@@ -5,6 +5,7 @@ import {
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import Carousel from '../Home/CarouselCitizen'
 
 const Home = () => {
   const { t } = useTranslation();
@@ -179,12 +180,24 @@ const Home = () => {
     //],
     styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
   };
+
+  
+
   return isLoading ? (
     <Loader />
   ) : (
     <div className="HomePageWrapper">
+
+      {/* <div class="otr-header-section">
+        <Carousel />
+      </div> */}
+
+
       <div className="BannerWithSearch">
-        <img src={stateInfo?.bannerUrl} />
+      <div class="otr-header-section">
+        <Carousel />
+      </div>
+        {/* <img src={stateInfo?.bannerUrl} /> */}
         <div className="Search">
           <StandaloneSearchBar placeholder={t("CS_COMMON_SEARCH_PLACEHOLDER")} />
         </div>
