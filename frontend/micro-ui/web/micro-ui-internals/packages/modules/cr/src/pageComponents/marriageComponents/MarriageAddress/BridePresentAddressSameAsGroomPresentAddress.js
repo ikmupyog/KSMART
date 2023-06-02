@@ -140,10 +140,10 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
       setadrsVillage("");
       setadrsCityTown("");
       setPostCode("");
-      // setCountryValue("IND");
-      // setCountryValuePermanent("IND");
-      // setValue("kl");
-      // setValuePermanent("kl");
+      setCountryValue("IND");
+      setCountryValuePermanent("IND");
+      setValue("kl");
+      setValuePermanent("kl");
     }
   };
   return (

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
@@ -10,15 +10,23 @@ const mystyle = {
 let validation = {};
 
 const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
+  const [hospitalList, setHospitalList] = React.useState([]);
   const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  let cmbhospital = [];
-  hospitalData &&
-    hospitalData["egov-location"] &&
-    hospitalData["egov-location"].hospitalList.map((ob) => {
-      cmbhospital.push(ob);
-    });
+  const citizentenantId = Digit.ULBService.getCitizenCurrentTenant();
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(citizentenantId, `${citizentenantId.replace("kl.", "")}/egov-location`, "hospital");
+  useEffect(() => {
+    let cmbhospital = [];
+    hospitalData &&
+      hospitalData["egov-location"] &&
+      hospitalData["egov-location"]?.hospitalList?.map((ob) => {
+        cmbhospital.push(ob);
+      });
+    if (cmbhospital.length > 0) {
+      setHospitalList(cmbhospital);
+    }
+  }, [hospitalData, citizentenantId])
+
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   let menu = [];
   Menu &&
@@ -42,8 +50,6 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("BC_CHILD_NAME")}
         </label>
         <TextInput
@@ -55,8 +61,6 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("CR_DATE_OF_BIRTH_TIME")}
         </label>
         <Controller
@@ -73,7 +77,6 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          <span className="mandatorycss">*</span>
           {t("DC_GENDER")}
         </label>
         <Controller
@@ -95,8 +98,6 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
       </SearchField>
       <SearchField>
         <label>
-          {" "}
-          <span className="mandatorycss">*</span>
           {t("BC_MOTHER_NAME")}
         </label>
         <TextInput
@@ -120,14 +121,14 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
         <label>{`${t("BC_HOSPITAL_NAME")}`}</label>
         <Controller
           control={control}
-          name="HospitalName"
+          name="HospitalId"
           render={(props) => (
             <Dropdown
               selected={props.value}
               select={props.onChange}
               onBlur={props.onBlur}
-              option={cmbhospital}
-              optionKey="code"
+              option={hospitalList}
+              optionKey="hospitalName"
               t={t}
               placeholder={`${t("CD_HOSPITAL")}`}
             />
@@ -148,11 +149,13 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           onClick={() => {
             reset({
               id: "",
-              // fullName:"",
-              // dateofbirth:"",
-              // gender:"",
-              // mother_fullname:"",
-              // hospitalid:"",
+              applicationNumber: "",
+              fullName: "",
+              dateofbirth: "",
+              Gender: "",
+              WifeorMotherName: '',
+              HusbandorfatherName: "",
+              HospitalId: ""
             });
             previousPage();
           }}

@@ -91,12 +91,10 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
     function nextPage() {
         setValue("offset", getValues("offset") + getValues("limit"));
         handleSubmit(onSubmit)();
-        console.log('next');
     }
     function previousPage() {
         setValue("offset", getValues("offset") - getValues("limit"));
         handleSubmit(onSubmit)();
-        console.log('prev');
     }
     const GetCell = (value) => <span className="cell-text">{value}</span>;
     const columns = useMemo(
