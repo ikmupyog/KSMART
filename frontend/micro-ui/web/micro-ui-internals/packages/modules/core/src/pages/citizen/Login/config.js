@@ -8,7 +8,8 @@ export const loginSteps = [
     },
     inputs: [
       {
-        label: "",
+        place_holder: "CR_ENTER_MOBILE_NUMBER",
+        label: "CORE_COMMON_MOBILE_NUMBER",
         type: "text",
         name: "mobileNumber",
         error: "ERR_HRMS_INVALID_MOB_NO",

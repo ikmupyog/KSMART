@@ -28,7 +28,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
     };
   }, [screenSize]);
   return (
-    <Background>
+    <Background style={{ background: "#edf2fa", borderRadius: "25px" }}>
       {screenSize.dynamicWidth > 1250 && (
         <Card
           className="bannerCard removeBottomMargin hidden-md hidden-xs"
@@ -67,29 +67,35 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
               alt="No Image"
               style={{ maxWidth: "100px", marginLeft: "10px", marginRight: "180px" }}
             />
-            <div style={{ margin: "0px 200px 0px 0px" }}>
+            <div style={{ margin: "20px 300px 0px 0px" }}>
               <label style={{ fontSize: "23px", color: "#00377B", fontWeight: "600" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label>
             </div>
-            <br></br>
             <label
               style={{
                 fontSize: "14px",
                 color: "#3B669B",
-                fontWeight: "500",
+                fontWeight: "450",
+                marginRight: "75px",
               }}
             >{`${t("CS_LOGIN_TEXT")}`}</label>
+            <FormStep
+              isDisabled={mobileNumber.length !== 10}
+              onSelect={onSelect}
+              config={config}
+              t={t}
+              componentInFront="+91"
+              onChange={onMobileChange}
+              value={mobileNumber}
+              cardStyle={{
+                border: "none",
+                marginRight: "20px",
+                borderRadius: "12px",
+                background: "#EDF2FA",
+                boxShadow: "none",
+                width: "600px",
+              }}
+            ></FormStep>{" "}
           </div>
-
-          <FormStep
-            isDisabled={mobileNumber.length !== 10}
-            onSelect={onSelect}
-            config={config}
-            t={t}
-            componentInFront="+91"
-            onChange={onMobileChange}
-            value={mobileNumber}
-            cardStyle={{ border: "none", marginRight: "10px", borderRadius: "12px" }}
-          ></FormStep>
         </div>
       </div>
       {/* </Card> */}
