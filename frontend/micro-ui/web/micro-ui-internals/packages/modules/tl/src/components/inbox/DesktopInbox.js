@@ -52,29 +52,31 @@ const DesktopInbox = ({ tableConfig, filterComponent,columns, isLoading, setSear
       Cell: ({ row }) => {
         return GetCell(t(row.original["businessService"]?`CS_COMMON_INBOX_${row.original["businessService"]?.toUpperCase()}`:"NA"));
       },
-    },{
-      Header: t("WF_INBOX_HEADER_LOCALITY"),
-      Cell: ({ row }) => {
-        return GetCell(t(Digit.Utils.locale.getRevenueLocalityCode(row.original["locality"], row.original["tenantId"])));
-      },
     },
+    // {
+    //   Header: t("WF_INBOX_HEADER_LOCALITY"),
+    //   Cell: ({ row }) => {
+    //     return GetCell(t(Digit.Utils.locale.getRevenueLocalityCode(row.original["locality"], row.original["tenantId"])));
+    //   },
+    // },
     {
       Header: t("WF_INBOX_HEADER_STATUS"),
       Cell: ({ row }) => {
         return GetCell(t(row.original["businessService"]?`WF_${row.original["businessService"]?.toUpperCase()}_${row.original?.["status"]}`:`NA`));
       },
     },
-    {
-      Header: t("WF_INBOX_HEADER_CURRENT_OWNER"),
-      Cell: ({ row }) => {
-        return GetCell(t(`${row.original?.owner}`));
-      }
-    },{
-    Header: t("WF_INBOX_HEADER_SLA_DAYS_REMAINING"),
-    Cell: ({ row }) => {
-      return GetSlaCell(row.original["sla"])
-    },
-  }
+    // {
+    //   Header: t("WF_INBOX_HEADER_CURRENT_OWNER"),
+    //   Cell: ({ row }) => {
+    //     return GetCell(t(`${row.original?.owner}`));
+    //   }
+    // }
+  //   ,{
+  //   Header: t("WF_INBOX_HEADER_SLA_DAYS_REMAINING"),
+  //   Cell: ({ row }) => {
+  //     return GetSlaCell(row.original["sla"])
+  //   },
+  // }
   ];
 
   let result;
