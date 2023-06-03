@@ -104,7 +104,7 @@ html {
 
 .login-regis-group .h-login-btn {
   font-size: 16px;
-  font-family: Lato-Regular;
+  /* font-family: Lato-Regular; */
   height: 43px;
   width: 150px;
   display: flex;
@@ -124,7 +124,7 @@ html {
 
 .login-regis-group .h-register-btn {
   font-size: 16px;
-  font-family: Lato-Regular;
+  /* font-family: Lato-Regular; */
   height: 43px;
   width: 127px;
   display: flex;
@@ -153,7 +153,7 @@ html {
 .main-flexnavaet .big-leftnavbarDrv li a {
   font-size: 16px;
   color: #1f1f1f;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
 }
 
 .main-flexnavaet .right_iconNavbar li {
@@ -163,7 +163,7 @@ html {
 .main-flexnavaet .right_iconNavbar li a {
   font-size: 16px;
   color: #1f1f1f;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
 }
 
 .right_iconNavbar .mid-line-nav {
@@ -197,7 +197,7 @@ html {
   font-size: 15px;
   text-align: center;
   color: #758da3;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   margin-top: 20px;
 }
 
@@ -242,7 +242,7 @@ html {
   border-radius: 53px;
   background: #cddae64f;
   font-size: 15px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   color: #758da3;
   outline: none;
   padding: 6px 158px 6px 23px;
@@ -256,7 +256,7 @@ html {
   background: #00b9f2;
   font-size: 16px;
   color: #fff;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   position: absolute;
   right: 6px;
   top: 6px;
@@ -281,7 +281,7 @@ html {
   gap: 8px;
   font-size: 15px;
   color: #fff;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   padding: 6px 0px;
   height: 48px;
   border-radius: 40px;
@@ -327,7 +327,7 @@ html {
   justify-content: center;
   color: #234877;
   font-size: 16px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   transition: all 0.7s;
 }
 
@@ -352,7 +352,7 @@ html {
   border: none;
   font-size: 19px;
   color: #758da3;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   display: flex;
   align-items: center;
   gap: 12px;
@@ -399,7 +399,7 @@ html {
 .services-box-depend .heading-serv h4 {
   font-size: 18px;
   color: #ee3d7f;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
   display: flex;
   align-items: center;
   gap: 7px;
@@ -408,14 +408,14 @@ html {
 .services-box-depend h5 {
   font-size: 15px;
   color: #767676;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   line-height: 25px;
 }
 
 .services-box-depend .service-details-btn {
   font-size: 15px;
   color: #758da3;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
 }
 
 .services-box-depend .service-start-btn {
@@ -428,7 +428,7 @@ html {
   justify-content: center;
   color: #fff;
   font-size: 15px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
 }
 
 /* Smart ULB section start  */
@@ -472,7 +472,7 @@ html {
 .ULB-text-content-b h3 {
   font-size: 22px;
   color: #00377b;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
   margin: auto;
 }
 
@@ -480,7 +480,7 @@ html {
   margin-top: 23px;
   color: #758da3;
   font-size: 14px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
 }
 
 .ULB-text-content-b .know-more-btn {
@@ -494,7 +494,7 @@ html {
   margin: auto;
   color: #fff;
   font-size: 16px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   margin-top: 22px;
 }
 
@@ -512,7 +512,7 @@ html {
   background: #eaeef7;
   border-radius: 40px;
   font-size: 16px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   color: #234877;
   margin: auto;
   margin-top: 73px;
@@ -533,7 +533,7 @@ html {
   text-align: center;
   font-size: 48px;
   color: #234877;
-  font-family: "Lato-Light";
+  /* font-family: "Lato-Light"; */
   margin-bottom: 69px;
 }
 
@@ -565,7 +565,7 @@ html {
   margin: 0;
   font-size: 23px;
   color: #ffffff;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
   margin-bottom: 24px;
   line-height: 33px;
 }
@@ -575,7 +575,7 @@ html {
   margin-top: 3px;
   color: #ffffff;
   font-size: 14px;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -596,7 +596,7 @@ html {
   border: 1px solid #01387b;
   font-size: 16px;
   color: #01387b;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   margin-top: 96px;
 }
 
@@ -617,7 +617,7 @@ html {
   background: transparent;
   color: #999999;
   font-size: 18px;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
   padding: 6px 20px;
   border-radius: 40px;
 }
@@ -656,13 +656,13 @@ html {
 .download-kkk-text h6 {
   font-size: 18px;
   color: #00377b;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
 }
 
 .download-kkk-text p {
   font-size: 14px;
   color: #767676;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   margin-top: 8px;
 }
 
@@ -701,7 +701,7 @@ html {
 .undifine-footer-vb li a {
   font-size: 14px;
   color: #3c4449;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   transition: all 0.5s;
 }
 
@@ -720,14 +720,14 @@ html {
 .counter-call0main h4 {
   font-size: 18px;
   color: #3c4449;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
 }
 
 .counter-call0main a {
   color: #767676;
   margin-top: 19px;
   display: inline-block;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
 }
 
 .social-media-kt {
@@ -737,7 +737,7 @@ html {
 .social-media-kt h4 {
   font-size: 18px;
   color: #3c4449;
-  font-family: "Lato-Bold";
+  /* font-family: "Lato-Bold"; */
 }
 
 .social-media-kt ul {
@@ -773,7 +773,7 @@ html {
   text-align: center;
   font-size: 14px;
   color: #ffffff;
-  font-family: "Lato-Regular";
+  /* font-family: "Lato-Regular"; */
   margin: 0px;
 }
 
