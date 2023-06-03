@@ -149,9 +149,12 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.ck-editor__editable_inline {
+    max-height: 200px !important;
+}
 
 .wrapper-file {
-    height: 50px;
+    height: auto;
     margin-top: 30px;
     margin-bottom: 30px;
 
@@ -348,7 +351,7 @@
 }
 
 .card-file-draft {
-    height: 551px;
+    height: auto;
 }
 
 .mLeft {

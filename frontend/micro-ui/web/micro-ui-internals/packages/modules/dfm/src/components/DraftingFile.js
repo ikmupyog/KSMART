@@ -69,10 +69,48 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
   const [toast, setToast] = useState(false);
   const [draftErr, setDraftErr] = useState(false);
   const [draftTypeErr, setDraftTypeErr] = useState(false);
+  const [subjectErr, setSubjectErr] = useState(false);
   const [selectedDraftType, setSelectedDraftType] = useState("");
   const [displayDraftPreviewPopup, setDisplayDraftPreviewPopup] = useState(false);
   const [successToastMsg, setSuccessToastMsg] = useState(false);
   const [errorToastMsg, setErrorToastMsg] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [refField, setRefFields] = useState([
+    {
+      id: "",
+      tenantId: tenantId,
+      fileCode: location?.state?.fileCode,
+      draftId: "",
+      referenceText: "",
+      status: "created",
+      auditDetails: {
+        createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        createdTime: 0,
+        lastModifiedBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        lastModifiedTime: 0,
+      },
+    },
+  ]);
+ 
+  const [refAddressField, setRefAddressFields] = useState([
+    {
+      id: "",
+      tenantId: tenantId,
+      fileCode: location?.state?.fileCode,
+      draftId: "",
+      salutation: "",
+      name: "",
+      address: "",
+      status: "created",
+      auditDetails: {
+        createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        createdTime: 0,
+        lastModifiedBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        lastModifiedTime: 0,
+      },
+    },
+  ]);
+  const [displayAddressPopup, setDisplayAddressPopup] = useState(false);
 
   const draftTextValue = data?.Drafting[0]?.draftText;
 
@@ -81,15 +119,19 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
       setDraftTypeErr(true);
       // setDraftErr(true)
       setToast(true);
+    } else if (subject == "") {
+      setDraftTypeErr(false);
+      setSubjectErr(true);
     } else if (draftText == "") {
       setDraftTypeErr(false);
+      setSubjectErr(false);
       setDraftErr(true);
     } else {
       setToast(false);
       setDraftTypeErr(false);
       setDraftErr(false);
+      setSubjectErr(false);
       const formData = {
-
         RequestInfo: {
           apiId: "apiId",
           ver: "1.0",
@@ -123,6 +165,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
           draftType: selectedDraftType?.id.toString(),
           //   draftType : "1",
           draftText: draftText,
+          subject: subject,
           assigner: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
           fileStoreId: null,
           status: "created",
@@ -132,6 +175,8 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
             lastModifiedBy: null,
             lastModifiedTime: null,
           },
+          draftFileAddress: refAddressField && refField[0].address === "" ? "" : refAddressField,
+          draftFileReference: refField && refField[0].referenceText === "" ? "" : refField,
         },
       };
       mutation.mutate(formData);
@@ -169,13 +214,12 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
     }
   }, [mutation.isSuccess]);
 
-  useEffect(()=>{
-    if( mutation.isError ){
+  useEffect(() => {
+    if (mutation.isError) {
       setErrorToastMsg(true);
       setToast(true);
     }
-
-  }, [mutation.isError])
+  }, [mutation.isError]);
 
   const sendSMS = () => {
     setPopup(true);
@@ -199,11 +243,36 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
       </div>
     );
   };
+  const Heading = (props) => {
+    return <h1 className="heading-m">{props.t(props.heading)}</h1>;
+  };
+  const handleSubjectChange = (value) => {
+    setSubject(value);
+  };
   const setSelectedFunction = (value) => {
     setSelectedDraftType(value);
   };
   const closeDraftPopup = () => {
     setDisplayDraftPreviewPopup(false);
+  };
+  const closeAddressPopup = () => {
+    setRefAddressFields([ {
+      id: "",
+      tenantId: tenantId,
+      fileCode: location?.state?.fileCode,
+      draftId: "",
+      salutation: "",
+      name: "",
+      address: "",
+      status: "created",
+      auditDetails: {
+        createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        createdTime: 0,
+        lastModifiedBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        lastModifiedTime: 0,
+      },
+    }])
+    setDisplayAddressPopup(false);
   };
   // var link = "mailto:target@gmail.com";
   // In addition to this you can add subject or body as parameter .
@@ -211,6 +280,72 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
   // "mailto:target@example.com?subject=test subject&body=my text"
   // window.location.href = link;
 
+  const addField = () => {
+    console.log("aa");
+    setRefFields([...refField, {
+      id: "",
+      tenantId: tenantId,
+      fileCode: location?.state?.fileCode,
+      draftId: "",
+      referenceText: "",
+      status: "created",
+      auditDetails: {
+        createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        createdTime: 0,
+        lastModifiedBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        lastModifiedTime: 0,
+      },
+    },]); // Add a new empty field to the list
+  };
+  const handleChange = (index, value) => {
+    console.log("handfle");
+    const updatedFields = [...refField];
+    updatedFields[index].referenceText = value; // Update the value of the field at the specified index
+    setRefFields(updatedFields);
+  };
+  const removeField = (index) => {
+    const updatedFields = [...refField];
+    updatedFields.splice(index, 1); // Remove the field at the specified index
+    setRefFields(updatedFields);
+  };
+  const handleAddressChange = (index, value,type) => {
+    console.log("handfle");
+    const updatedFields = [...refAddressField];
+    if( type == "salutation"){
+      updatedFields[index].salutation = value; 
+    }else if (type == "name"){
+      updatedFields[index].name = value; 
+    }else if (type == "address"){
+      updatedFields[index].address = value; 
+    }
+    // Update the value of the field at the specified index
+    setRefAddressFields(updatedFields);
+  };
+  const removeAddressField = (index) => {
+    const updatedFields = [...refAddressField];
+    updatedFields.splice(index, 1); // Remove the field at the specified index
+    setRefAddressFields(updatedFields);
+  };
+  const addAddressField = () => {
+    console.log("aa");
+    setRefAddressFields([...refAddressField,
+      {
+      id: "",
+      tenantId: tenantId,
+      fileCode: location?.state?.fileCode,
+      draftId: "",
+      salutation: "",
+      name: "",
+      address: "",
+      status: "created",
+      auditDetails: {
+        createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        createdTime: 0,
+        lastModifiedBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        lastModifiedTime: 0,
+      }}]); // Add a new empty field to the list
+  };
+  console.log(refAddressField);
   return (
     <React.Fragment>
       <div className="moduleLinkHomePageModuleLinks">
@@ -232,11 +367,11 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
             </Modal>
           )}
           <div className="row wrapper-file">
+            <div className="col-md-2 col-sm-12 col-xs-12" style={{marginLeft:"20px",marginTop:"10px"}}>
+              <h3 className="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
+            </div>
             <div className="col-md-12 col-sm-12 col-xs-12" style={{ display: "flex", alignItems: "center" }}>
-              <div className="col-md-2 col-sm-12 col-xs-12">
-                <h3 class="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
-              </div>
-              <div className="col-md-5 col-sm-12 col-xs-12">
+              <div className="col-md-6 col-sm-12 col-xs-12">
                 <Dropdown
                   t={t}
                   type={"text"}
@@ -271,7 +406,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
                   </svg>
                 </div>
                 <div style={{ width: "20px", height: "20px", cursor: "pointer", marginLeft: "20px", marginTop: "3px" }} onClick={sendSMS}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-chat-right-text" viewBox="0 0 16 16">
                     <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
                     <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
                   </svg>
@@ -288,22 +423,61 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
                             </div> */}
             </div>
           </div>
+          <div className="row wrapper-file ">
+            <div className="col-md-12">
+              <div className="col-md-6 search-file">
+                <CardLabel>{t("Subject")}</CardLabel>
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="subject"
+                  placeholder={t("subject")}
+                  onChange={(e) => handleSubjectChange(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="col-md-2 col-sm-12 col-xs-12" style={{marginLeft:"20px",marginTop:"10px"}}>
+              <h3 className="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
+            </div> */}
+          <div className="row wrapper-file " style={{ display: "flex", alignItems: "baseline", gap: "10px", flexWrap: "wrap", paddingLeft: "15px" ,flexDirection:"column"}}>
+         
+            {refField.map((field, index) => (<React.Fragment>
+              <CardLabel>{t(`reference ${index}`)}</CardLabel>
+              <div key={index} className="col-md-6 search-file" style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
+              
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="reference"
+                  value={field.referenceText}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                  placeholder={t("refrence")}
+                />
+                {refField.length > 1 && <SubmitBar label={t("Remove")} onSubmit={() => removeField(index)} />}
+              </div>
+              </React.Fragment>
+             
+            ))}
+
+            <SubmitBar label={t("Add")} onSubmit={addField} />
+          </div>
+          <div className="row  " style={{ display: "flex" }}>
+            <div className="col-md-12">
+              <SubmitBar label={t("Add Addresss")} onSubmit={() => setDisplayAddressPopup(true)} />
+            </div>
+          </div>
 
           <div className="row card-file-draft">
-            {/* <div className="col-md-12">
-                            <div className="col-md-6 search-file"  >
+            {/* <div className="col-md-12" style={{ display: "flex", justifyContent: "flex-end" }}>
+              <div className="col-md-10 search-file">
+                <SubmitBar label={t("Add Addresss")} />
+              </div>
+            </div> */}
 
-                                <TextInput
-
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
-                                />
-
-                            </div>
-                        </div> */}
             {/* <div class="link-file" >
 
                             <LinkButton
@@ -329,7 +503,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
 
                             />
                         </div> */}
-            <div class="textarea-draft">
+            <div className="textarea-draft">
               <CKEditor
                 editor={ClassicEditor}
                 data={draftText}
@@ -412,6 +586,72 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
             </div>
           </Modal>
         )}
+        {displayAddressPopup && (
+          <Modal
+            headerBarMain={<Heading t={t} heading={"Draft File Address"} />}
+            headerBarEnd={<CloseBtn onClick={closeAddressPopup} />}
+            popupStyles={
+              mobileView ? { height: "fit-content", minHeight: "100vh" } : { width: "1300px", height: "650px", margin: "auto", overflowY: "scroll" }
+            }
+            formId="modal-action"
+            hideSubmit={true}
+          >
+            <div className="col-md-12 col-sm-12 col-xs-12 ">
+              <div
+                className=""
+                style={{
+                  maxHeight: "550px",
+                  minHeight: "200px",
+                  overflowY: "scroll",
+                  border: "1px solid rgb(69 69 69 / 18%)",
+                  padding: "10px",
+                  paddingLeft: "20px",
+                }}
+              >
+                <div className="row wrapper-file " style={{ display: "flex", alignItems: "baseline", gap: "10px", flexWrap: "wrap" }}>
+                  {refAddressField.map((field, index) => (
+                    <div key={index} className="col-md-10 search-file" style={{display:"flex", gap:"10px",alignItems:"baseline"}}>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="salutation"
+                        value={field.salutation}
+                        onChange={(e) => handleAddressChange(index, e.target.value,"salutation")}
+                        placeholder={t("")}
+                      />{" "}
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="name"
+                        value={field.name}
+                        onChange={(e) => handleAddressChange(index, e.target.value,"name")}
+                        placeholder={t("Name")}
+                      />
+                      <TextArea
+                      style={{height:"40px"}}
+                        t={t}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="address"
+                        value={field.address}
+                        onChange={(e) => handleAddressChange(index, e.target.value,"address")}
+                        placeholder={t("address")}
+                      />
+                      {refAddressField.length > 1 && <SubmitBar label={t("Remove")} style ={{fontSize:"10px !important"}} onSubmit={() => removeAddressField(index)} />}
+                    </div>
+                  ))}
+
+                  <SubmitBar label={t("Add")} onSubmit={addAddressField} />
+                </div>
+               <div>
+               <SubmitBar label={t("Save")} onSubmit={ ()=> setDisplayDraftPreviewPopup(false)} />
+               </div>
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
       {toast && (
         <Toast
@@ -420,6 +660,8 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect, fileCode }
           label={
             draftTypeErr
               ? t("DFM_INVALID_DRAFT_TYPE")
+              : subjectErr
+              ? t("DFM_INVALID_SUBJECT")
               : draftErr
               ? t("DFM_INVALID_DRAFT_TEXT")
               : errorToastMsg
