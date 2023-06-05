@@ -104,7 +104,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation.isSuccess]);
 
-  console.log({ data: mutation.data });
+  console.log({ data });
 
   const handleDownloadPdf = async () => {
     const { MarriageDetails = [] } = mutation.data;
