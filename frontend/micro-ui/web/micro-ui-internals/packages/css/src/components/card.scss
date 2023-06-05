@@ -1,6 +1,6 @@
 .card {
-  @apply bg-white m-sm px-md pt-md pb-lg shadow-card;
-  border-radius: 8px;
+  @apply bg-card-background m-sm px-md pt-md pb-lg shadow-card;
+  border-radius: 25px;
   display: flow-root;
 
   .card-header {  }
@@ -30,8 +30,9 @@
   }
 
   .card-label {
-    @apply text-text-primary mb-md;
+    @apply text-label-primary mb-md;
     margin-top: 30px;
+    margin-left: 10px;
   }
 
   .card-label-error {
@@ -163,6 +164,7 @@
   header {
     @apply font-rc bg-button-primary font-medium text-legend text-white leading-10;
     border-radius: 30px;
+    padding: 0px 40px;
     font-family: system-ui !important;
     font-weight: 400 !important;
     font-size: 15px !important;
@@ -171,8 +173,9 @@
 }
 
 .submit-bar-disabled {
-  @apply h-10 bg-button-disabled text-center outline-none w-full  opacity-50;
+  @apply h-10 bg-button-disabled text-center outline-none opacity-50;
   border-radius: 30px;
+  width: max-content;
   float: right;
 
   &:focus {
@@ -180,16 +183,18 @@
   }
 
   header {
-    @apply font-rc font-medium text-legend text-white leading-10;
+    @apply font-rc font-medium text-legend text-white leading-10 ;
     border-radius: 30px;
+    padding: 0px 40px;
   }
 }
 
 @screen dt {
   .submit-bar,
   .submit-bar-disabled {
-    width: 15%;
+    width: max-content;
     border-radius: 30px;
+ 
   }
 
   .card {

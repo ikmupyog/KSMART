@@ -8,7 +8,6 @@ import _ from "lodash";
 
 const mystyle = {
     bgOpacity: "1",
-    backgroundColor: "red",
     backgroundColor: "#EDF2FA",
     marginBottom: "24px",
     marginTop: "20px",

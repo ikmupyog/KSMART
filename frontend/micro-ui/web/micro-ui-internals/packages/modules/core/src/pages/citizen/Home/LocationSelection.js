@@ -151,7 +151,7 @@ const LocationSelection = () => {
                 select={selectCity}
                 placeholder={`${t("CS_COMMON_LB")}`}
               />
-              <SubmitBar className="btnksmart" style={{ width: "35%", fonntF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
+              <SubmitBar style={{ fonntF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
                 label={t(`CORE_COMMON_CONTINUE`)} onSubmit={onSubmit} />
               {showError ? <CardLabelError>{t("CS_COMMON_LOCATION_SELECTION_ERROR")}</CardLabelError> : null}
               {/* </div> */}

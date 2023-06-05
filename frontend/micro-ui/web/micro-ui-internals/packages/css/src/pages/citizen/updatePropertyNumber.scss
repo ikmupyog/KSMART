@@ -17,7 +17,7 @@
     .submit-bar-disabled {
       position: absolute;
       bottom: 25px;
-      width: 90%;
+      width: max-content;
     }
   }
 }
@@ -39,7 +39,7 @@
       .submit-bar-disabled {
         position: absolute;
         bottom: 25px;
-        width: 90%;
+        width: max-content;
       }
     }
   }
