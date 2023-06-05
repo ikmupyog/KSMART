@@ -1,8 +1,8 @@
 package org.ksmart.marriage.marriageapplication.repository.querybuilder;
-
-
-//import org.ksmart.marriage.common.repository.builder.CommonQueryBuilder;
+import org.egov.common.contract.request.RequestInfo;
+import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -10,9 +10,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 @Component
 public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
-//    @Autowired
-//    CommonQueryBuilder commonQueryBuilder;
-
     private static final String QUERY = new StringBuilder()
             .append("SELECT MD.id as MD_id , MD.dateofmarriage as MD_dateofmarriage ,MD.dateofreporting as MD_dateofreporting , MD.districtid as MD_districtid , ")
             .append("MD.lbtype as MD_lbtype , MD.tenantid as MD_tenantid ,  MD.placetype as MD_placetype , MD.placeid as MD_placeid ,")
@@ -23,7 +20,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("MD.createdtime  as MD_createdtime ,   MD.createdby as MD_createdby ,  MD.lastmodifiedtime  as MD_lastmodifiedtime ,   MD.lastmodifiedby as MD_lastmodifiedby , MD.workflowcode as MD_workflowcode, ")
             .append("MD.applicationNumber as MD_applicationnumber ,MD.brideurl as MD_brideurl,MD.groomurl as MD_groomurl ,MD.imageuuid as MD_imageuuid ,MD.bride_filestoreid as MD_bride_filestoreid ,MD.groom_filestoreid as MD_groom_filestoreid ,")
             .append("MD.bride_expired as MD_bride_expired , MD.groom_expired as MD_groom_expired ,MD.is_backward as MD_is_backward,MD.module_code as MD_module_code, MD.zonal_office as MD_zonal_office,MD.action as MD_action, MD.status as MD_status,MD.villageid as MD_villageid, MD.taluk_name as MD_taluk_name,")
-            .append("MD.amount as MD_amount , MD.payment_transaction_id as MD_payment_transaction_id ,")
+            .append("MD.amount as MD_amount , MD.payment_transaction_id as MD_payment_transaction_id , MD.user_id as MD_user_id,")
 
             .append("GD.id  as  GD_id  , GD.residentship   as GD_residentship , GD.aadharno   as GD_aadharno ,  GD.passportno   as GD_passportno ,")
             .append("GD.socialsecurityno   as GD_socialsecurityno ,  GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en ,")
@@ -121,7 +118,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .toString();
 
     public String getMarriageApplicationSearchQuery(MarriageApplicationSearchCriteria criteria,
-                                                    @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+                                                    @NotNull List<Object> preparedStmtValues, Boolean isCount,RequestInfo requestInfo) {
 
         StringBuilder query = new StringBuilder(QUERY);
         StringBuilder orderBy = new StringBuilder();
@@ -132,6 +129,12 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
         addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
         addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
+        if(requestInfo.getUserInfo().getUuid() != null){
+            addFilter("MD.createdby", criteria.getUuid(), query, preparedStmtValues);
+        }
+        if(requestInfo.getUserInfo().getUuid() != null){
+            addFilter("MD.lastmodifiedby", criteria.getUuid(), query, preparedStmtValues);
+        }
         if (criteria.getBrideFirstnameEn() != null){
           //addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
           addLikeFilter("LOWER(BD.firstname_en)", criteria.getBrideFirstnameEn(), query, preparedStmtValues);

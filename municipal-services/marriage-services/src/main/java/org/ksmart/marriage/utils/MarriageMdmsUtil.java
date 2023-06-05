@@ -713,7 +713,7 @@ public class MarriageMdmsUtil {
         if(StringUtils.isNotBlank(v)){
             s.append(v);
             if(addSemicolon){
-                s.append(",");
+                s.append(", ");
             }
         }
         return  s;

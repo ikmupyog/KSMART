@@ -11,6 +11,7 @@ import org.ksmart.marriage.common.repository.ServiceRequestRepository;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriagecommon.model.Notification.*;
 import org.ksmart.marriage.marriagecommon.model.SMSRequest;
 import org.ksmart.marriage.utils.NotificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -52,13 +54,14 @@ public class MarriageNotificationService {
 
 	/**
 	 * Creates and send the sms based on the marriage application
-	 * @param request The Marriageapplication listenend on the kafka topic
+	 * @param requestInfo
+	 * @param  marriageDetails The Marriageapplication listenend on the kafka topic
 	 */
-	public void process(MarriageDetailsRequest request) {
+	public void process(RequestInfo requestInfo,List<MarriageApplicationDetails> marriageDetails) {
 		try {
 			System.out.println("Inside process for notificaton..................");
-			System.out.println(new Gson().toJson(request));
-		RequestInfo requestInfo = request.getRequestInfo();
+			System.out.println(new Gson().toJson(marriageDetails));
+//		RequestInfo requestInfo = request.getRequestInfo();
 //		Map<String, String> mobileNumberToOwner = new HashMap<>();
 //		String tenantId = request.getMarriageDetails().get(0).getTenantid();
 //		String action = request.getMarriageDetails().get(0).getAction();
@@ -66,13 +69,13 @@ public class MarriageNotificationService {
 //		List<String> configuredChannelNames = Arrays.asList(new String[]{"SMS","EVENT","EMAIL"});
 		Set<String> mobileNumbers = new HashSet<>();
 
-		for(MarriageApplicationDetails marriageApplicationDetails : request.getMarriageDetails()){
+		for(MarriageApplicationDetails marriageApplicationDetails : marriageDetails){
 			if(marriageApplicationDetails.getGroomDetails().getMobile()!=null){
 				mobileNumbers.add(marriageApplicationDetails.getGroomDetails().getMobile().toString());
 		}
 		}
 
-		String businessService = request.getMarriageDetails().isEmpty() ? null : request.getMarriageDetails().get(0).getBusinessservice();
+		String businessService = marriageDetails.isEmpty() ? null : marriageDetails.get(0).getBusinessservice();
 		if (businessService == null)
 			businessService = businessService_MR;
 		System.out.println(businessService);
@@ -82,7 +85,7 @@ public class MarriageNotificationService {
 				System.out.println("config.getIsMRSMSEnabled() ===="+config.getIsMRSMSEnabled());
 					if (null != config.getIsMRSMSEnabled()) {
 						if (config.getIsMRSMSEnabled()) {
-							enrichSMSRequest(request, smsRequestsTL,configuredChannelList);
+							enrichSMSRequest( requestInfo, marriageDetails, smsRequestsTL,configuredChannelList);
 							System.out.println(" smsRequestsTL ===="+new Gson().toJson(smsRequestsTL));
 							if (!CollectionUtils.isEmpty(smsRequestsTL))
 								util.sendSMS(smsRequestsTL, true);
@@ -183,13 +186,14 @@ public class MarriageNotificationService {
 
 		/**
          * Enriches the smsRequest with the customized messages
-         * @param request The MarriageDetailsRequest from kafka topic
+         * @param requestInfo
+		 * @param marriageDetails The MarriageDetailsRequest from kafka topic
          * @param smsRequests List of SMSRequests
 		 * @param configuredChannelList Map of actions mapped to configured channels for this business service for BPAREG flow
          */
-    private void enrichSMSRequest(MarriageDetailsRequest request,List<SMSRequest> smsRequests,Map<Object,Object> configuredChannelList){
-        String tenantId = request.getMarriageDetails().get(0).getTenantid();
-        for(MarriageApplicationDetails marriageApplicationDetails : request.getMarriageDetails()) {
+    private void enrichSMSRequest(RequestInfo requestInfo,List<MarriageApplicationDetails> marriageDetails,List<SMSRequest> smsRequests,Map<Object,Object> configuredChannelList){
+        String tenantId = marriageDetails.get(0).getTenantid();
+        for(MarriageApplicationDetails marriageApplicationDetails : marriageDetails) {
 			String businessService = marriageApplicationDetails.getBusinessservice();
 				if (businessService == null)
 					businessService = businessService_MR;
@@ -200,8 +204,8 @@ public class MarriageNotificationService {
 //						String localizationMessages = tlRenewalNotificationUtil.getLocalizationMessages(tenantId, request.getRequestInfo());
 //						message = tlRenewalNotificationUtil.getCustomizedMsg(request.getRequestInfo(), marriageApplicationDetails, localizationMessages);
 //					} else {
-						String localizationMessages = util.getLocalizationMessages(tenantId, request.getRequestInfo());
-						message = util.getCustomizedMsg(request.getRequestInfo(), marriageApplicationDetails, localizationMessages);
+						String localizationMessages = util.getLocalizationMessages(tenantId, requestInfo);
+						message = util.getCustomizedMsg(requestInfo, marriageApplicationDetails, localizationMessages);
 //					}
 
 				}
@@ -220,15 +224,26 @@ public class MarriageNotificationService {
 				if (message == null) continue;
 
 				Map<String, String> mobileNumberToOwner = new HashMap<>();
-					String groomName = marriageApplicationDetails.getGroomDetails().getFirstnameEn();
-					if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getMiddlenameEn())){
-						groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getMiddlenameEn();
+					if (marriageApplicationDetails.getGroomDetails().getMobile() != null) {
+						String groomName = marriageApplicationDetails.getGroomDetails().getFirstnameEn();
+						if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getMiddlenameEn())){
+							groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getMiddlenameEn();
+						}
+						if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getLastnameEn())){
+							groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getLastnameEn();
+						}
+						mobileNumberToOwner.put(marriageApplicationDetails.getGroomDetails().getMobile().toString(), groomName);
 					}
-			if(StringUtils.isNotBlank(marriageApplicationDetails.getGroomDetails().getLastnameEn())){
-				groomName=groomName+" "+marriageApplicationDetails.getGroomDetails().getLastnameEn();
+			if (marriageApplicationDetails.getBrideDetails().getMobile() != null) {
+				String brideName = marriageApplicationDetails.getBrideDetails().getFirstnameEn();
+				if(StringUtils.isNotBlank(marriageApplicationDetails.getBrideDetails().getMiddlenameEn())){
+					brideName=brideName+" "+marriageApplicationDetails.getBrideDetails().getMiddlenameEn();
+				}
+				if(StringUtils.isNotBlank(marriageApplicationDetails.getBrideDetails().getLastnameEn())){
+					brideName=brideName+" "+marriageApplicationDetails.getBrideDetails().getLastnameEn();
+				}
+				mobileNumberToOwner.put(marriageApplicationDetails.getBrideDetails().getMobile().toString(), brideName);
 			}
-					if (marriageApplicationDetails.getGroomDetails().getMobile() != null)
-						mobileNumberToOwner.put(marriageApplicationDetails.getGroomDetails().getMobile().toString(),groomName);
 				smsRequests.addAll(util.createSMSRequest(message, mobileNumberToOwner));
 		}
 		System.out.println(" end of enrichSMSRequest ====");
@@ -242,7 +257,7 @@ public class MarriageNotificationService {
      * @param request
      * @return
      */
-//    private EventRequest getEventsForTL(MarriageDetailsRequest request) {
+//    private EventRequest getEventsForMR(MarriageDetailsRequest request) {
 //    	List<Event> events = new ArrayList<>();
 //        String tenantId = request.getMarriageDetails().get(0).getTenantid();
 //		String localizationMessages = util.getLocalizationMessages(tenantId,request.getRequestInfo());
@@ -283,20 +298,20 @@ public class MarriageNotificationService {
 //    			List<String> toUsers = new ArrayList<>();
 //    			toUsers.add(mapOfPhnoAndUUIDs.get(mobile));
 //    			Recepient recepient = Recepient.builder().toUsers(toUsers).toRoles(null).build();
-//    			List<String> payTriggerList = Arrays.asList(config.getPayTriggers().split("[,]"));
+//    			//List<String> payTriggerList = Arrays.asList(config.getPayTriggers().split("[,]"));
 //				List<String> viewTriggerList = Arrays.asList(config.getViewApplicationTriggers().split("[,]"));
 //	   			Action action = null;
-//    			if(payTriggerList.contains(marriageApplicationDetails.getStatus())) {
-//                    List<ActionItem> items = new ArrayList<>();
-//        			String actionLink = config.getPayLink().replace("$mobile", mobile)
-//        						.replace("$applicationNo", marriageApplicationDetails.getApplicationNumber())
-//        						.replace("$tenantId", marriageApplicationDetails.getTenantid())
-//        						.replace("$businessService", marriageApplicationDetails.getBusinessservice());
-//        			actionLink = config.getUiAppHost() + actionLink;
-//        			ActionItem item = ActionItem.builder().actionUrl(actionLink).code(config.getPayCode()).build();
-//        			items.add(item);
-//        			action = Action.builder().actionUrls(items).build();
-//    			}
+////    			if(payTriggerList.contains(marriageApplicationDetails.getStatus())) {
+////                    List<ActionItem> items = new ArrayList<>();
+////        			String actionLink = config.getPayLink().replace("$mobile", mobile)
+////        						.replace("$applicationNo", marriageApplicationDetails.getApplicationNumber())
+////        						.replace("$tenantId", marriageApplicationDetails.getTenantid())
+////        						.replace("$businessService", marriageApplicationDetails.getBusinessservice());
+////        			actionLink = config.getUiAppHost() + actionLink;
+////        			ActionItem item = ActionItem.builder().actionUrl(actionLink).code(config.getPayCode()).build();
+////        			items.add(item);
+////        			action = Action.builder().actionUrls(items).build();
+////    			}
 //    			if(viewTriggerList.contains(marriageApplicationDetails.getStatus())){
 //					List<ActionItem> items = new ArrayList<>();
 //					String actionLink = config.getViewApplicationLink().replace("$mobile", mobile)

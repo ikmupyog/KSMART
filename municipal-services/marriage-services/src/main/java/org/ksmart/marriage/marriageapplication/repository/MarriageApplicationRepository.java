@@ -67,7 +67,7 @@ public class MarriageApplicationRepository {
 
     public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE,requestInfo);
         if (preparedStmtValues.size() == 0) {
             throw new CustomException(ErrorCodes.NOT_FOUND.getCode(), "No result found.");
         } else {
@@ -901,7 +901,7 @@ public class MarriageApplicationRepository {
 
         public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
             List<Object> preparedStmtValues = new ArrayList<>();
-            String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE,requestInfo);
             List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
             return result;
         }

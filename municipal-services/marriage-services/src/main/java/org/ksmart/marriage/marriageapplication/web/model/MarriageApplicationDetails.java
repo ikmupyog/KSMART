@@ -27,6 +27,10 @@ public class MarriageApplicationDetails {
     @JsonProperty("id")
     private String id;
 
+    @Size(max = 64)
+    @JsonProperty("userId")
+    private String userId;
+
     @JsonProperty("marriageDOM")
     private Long dateofmarriage;
 
