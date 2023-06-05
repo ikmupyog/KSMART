@@ -433,6 +433,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-3">
                             <CardLabel>
                                 {t("CS_COMMON_DISTRICT")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
@@ -459,6 +460,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-3">
                             <CardLabel>
                                 {t("CS_COMMON_TALUK")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
@@ -473,6 +475,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-3">
                             <CardLabel>
                                 {t("CS_COMMON_VILLAGE")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
@@ -487,6 +490,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-3">
                             <CardLabel>
                                 {t("CS_COMMON_LB_NAME")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
@@ -503,6 +507,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-4">
                             <CardLabel>
                                 {`${t("CS_COMMON_WARD")}`}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
@@ -512,12 +517,13 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 select={setSelectWard}
                                 placeholder={`${t("CS_COMMON_WARD")}`}
                                 disable={isDisableEdit}
-                                {...(validation = { isRequired: false,title: t("CS_COMMON_INVALID_WARD") })}
+                                {...(validation = { isRequired: true,title: t("CS_COMMON_INVALID_WARD") })}
                             />
                         </div>
                         <div className="col-md-4">
                             <CardLabel>
                                 {t("CS_COMMON_POST_OFFICE")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
@@ -532,6 +538,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-4">
                             <CardLabel>
                                 {t("CS_COMMON_PIN_CODE")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <TextInput
                                 t={t}
@@ -557,6 +564,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-4">
                             <CardLabel>
                                 {t("CR_LOCALITY_EN")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <TextInput
                                 t={t}
@@ -587,6 +595,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-4">
                             <CardLabel>
                                 {t("CR_HOUSE_NAME_EN")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <TextInput
                                 t={t}
@@ -598,7 +607,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 onChange={setSelectinsideKeralaHouseNameEn}
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                                {...(validation = { pattern: "^[a-zA-Z-0-9-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                                {...(validation = { pattern: "^[a-zA-Z-0-9-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                             />
                         </div>
 
@@ -608,6 +617,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-4">
                             <CardLabel>
                                 {t("CR_LOCALITY_ML")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <TextInput
                                 t={t}
@@ -621,7 +631,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 placeholder={`${t("CR_LOCALITY_ML")}`}
                                 {...(validation = {
                                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                                    isRequired: false,
+                                    isRequired: true,
                                     type: "text",
                                     title: t("CR_INVALID_LOCALITY_ML"),
                                 })}
@@ -650,6 +660,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         <div className="col-md-4">
                             <CardLabel>
                                 {t("CR_HOUSE_NAME_ML")}
+                                <span className="mandatorycss">*</span>
                             </CardLabel>
                             <TextInput
                                 t={t}
@@ -663,7 +674,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                                 {...(validation = {
                                     pattern: "^[\u0D00-\u0D7F\u200D\u200C 0-9.&'@' .`' ]*$",
-                                    isRequired: false,
+                                    isRequired: true,
                                     type: "text",
                                     title: t("CR_INVALID_HOUSE_NAME_ML"),
                                 })}

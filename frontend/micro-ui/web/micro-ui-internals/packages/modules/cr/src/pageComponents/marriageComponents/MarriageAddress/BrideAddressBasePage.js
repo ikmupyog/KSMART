@@ -1670,6 +1670,8 @@ const BrideAddressBasePage = ({
     }
   };
 
+  console.log({presentInsideKeralaTaluk, permntInKeralaAdrTaluk, countryvalue, value})
+
   // if (isCountryLoading || isStateLoading || islocalbodiesLoading  || isDistrictLoading  ) {
   //     return <Loader></Loader>;
   // } else
