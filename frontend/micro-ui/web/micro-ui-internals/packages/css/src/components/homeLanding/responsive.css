@@ -19,12 +19,12 @@
     transition: all 0.7s;
     font-size: 15px;
     color: #1f1f1f;
-    font-family: "Lato-Regular";
+    /* font-family: "Lato-Regular"; */
   }
 
   .mobile-navbar .nav-mob-links .mob-spacing-content ul li a.h-login-btn {
     font-size: 16px;
-    font-family: Lato-Regular;
+    /* font-family: Lato-Regular; */
     height: 43px;
     width: 80%;
     display: flex;
@@ -41,7 +41,7 @@
 
   .mobile-navbar .nav-mob-links .mob-spacing-content ul li a.h-register-btn {
     font-size: 16px;
-    font-family: Lato-Regular;
+    /* font-family: Lato-Regular; */
     height: 43px;
     width: 80%;
     display: flex;
