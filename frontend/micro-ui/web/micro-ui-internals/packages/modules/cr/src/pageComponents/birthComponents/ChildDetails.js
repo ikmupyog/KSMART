@@ -1792,7 +1792,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -1871,7 +1871,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 <div className="col-md-12">
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                      <span style={{  padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
@@ -1969,7 +1969,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -2111,7 +2111,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -2122,7 +2122,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               {/* <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_CHILD")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_NAME_OF_CHILD")}`}</span>{" "}
                 </h1>
               </div>
             </div> */}
@@ -2266,7 +2266,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             </div>
           </div>
           {/* <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{  padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>
         </div> */}
           {/* <div className="row">         
@@ -2279,7 +2279,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
                 </h1>
               </div>
             </div>

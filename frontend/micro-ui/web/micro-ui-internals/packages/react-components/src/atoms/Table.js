@@ -85,7 +85,7 @@ const Table = ({
   return (
     <React.Fragment>
     <span className={customTableWrapperClassName}>
-      <table className={className} {...getTableProps()} style={styles}>
+      <table className={`${className} customTable`} {...getTableProps()} style={styles}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
