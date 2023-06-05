@@ -21,7 +21,7 @@ public class MarriageRegistrySearchCriteria {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("applicationNumber")
+    @JsonProperty("applicationNo")
     private String applicationNumber;
 
     @JsonProperty("registrationNo")

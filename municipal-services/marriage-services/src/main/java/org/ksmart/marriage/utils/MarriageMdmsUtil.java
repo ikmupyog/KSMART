@@ -150,12 +150,11 @@ public class MarriageMdmsUtil {
         final String filterCodeReligion = "$.[?(@.active==true)].code";
         marriageMasterDetails
                  .add(MasterDetail.builder().name(MarriageConstants.RELIGION).filter(filterCodeReligion).build()); 
-        //Religion
+        //PostOffice
         final String filterCodePostOffice = "$.[?(@.active==true)].code";
         marriageMasterDetails
                  .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());  
                  
-
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.COMMON_MASTER_MODULE_NAME).build();
        
@@ -227,7 +226,7 @@ public class MarriageMdmsUtil {
                     .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());
         }
         if(null!=village) {
-            final String filterCodeVillage = "$.[?(@.code=='" + village + "')].name";
+            final String filterCodeVillage = "$.villageList.[?(@.code=='" + village + "')].name";
             marriageMasterDetails
                     .add(MasterDetail.builder().name(MarriageConstants.VILLAGE).filter(filterCodeVillage).build());
         }
