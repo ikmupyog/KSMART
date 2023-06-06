@@ -205,12 +205,3 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
 };
 
 export default MarriageAcknowledgement;
-
-
-formData: {
-  MarriageDetails:{
-    marriageDOM:{
-      
-    }
-  }
-}
