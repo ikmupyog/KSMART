@@ -81,10 +81,10 @@ body {
   outline-offset: 2px;
   display: flex;
   align-items: center;
-  color: white;
+  color: #4F6384;
   justify-content: center;
   cursor: pointer;
-  padding: 10px 25px;
+  padding: 0px 40px;
   @apply bg-button-secondary h-10 ;
 }
 
@@ -1091,15 +1091,14 @@ body {
 }
 
 h1.headingh1 {
-  color: #0e4685;
+  color: #00377B;
   font-weight: 700;
   text-transform: uppercase;
   width: 100%;
-  text-align: center;
-  border-bottom: 1px solid yellowgreen;
+  text-align: left;
   line-height: 0.1em;
-  margin: 10px 0 20px;
-  font-size: 14px;
+  margin-top: 20px;
+  font-size: 18px;
 }
 
 h2.span {

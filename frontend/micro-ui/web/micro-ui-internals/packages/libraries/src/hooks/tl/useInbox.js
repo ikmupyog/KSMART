@@ -2,17 +2,18 @@ import React from "react"
 import useInbox from "../useInbox"
 
 const useTLInbox = ({ tenantId, filters, config }) => {
-
+    const { roles: userRoles } = Digit.UserService.getUser().info;
+    const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_DOC_VERIFIER"));
+    const operatorlogin=roletempop?.length>0 ? false:true;
     const {applicationStatus, mobileNumber, applicationNumber, sortBy, sortOrder, locality, uuid, limit, offset } = filters
     const USER_UUID = Digit.UserService.getUser()?.info?.uuid;
-    
     const _filters = {
         tenantId,
 		processSearchCriteria: {
             moduleName: "tl-services",
-			businessService: ["NewTL", "DIRECTRENEWAL","EDITRENEWAL"],
+			businessService: ["NewTL"], //,"RenewalTL","CorrectionTL"
             ...(applicationStatus?.length > 0 ? {status: applicationStatus} : {}),
-            ...(uuid && Object.keys(uuid).length > 0 ? {assignee: uuid.code === "ASSIGNED_TO_ME" ? USER_UUID : ""} : {}),
+            ...((uuid && Object.keys(uuid).length > 0) || operatorlogin ? {assignee: uuid?.code === "ASSIGNED_TO_ME" || operatorlogin ? USER_UUID : ""} : {}),
         },
 		moduleSearchCriteria: {
             ...(mobileNumber ? {mobileNumber}: {}),

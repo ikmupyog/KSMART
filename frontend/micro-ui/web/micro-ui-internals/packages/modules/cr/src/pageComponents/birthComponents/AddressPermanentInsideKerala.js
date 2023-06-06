@@ -349,7 +349,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
         // setTenantWard(formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName);
         // setTenantboundary(true);
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
+        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === 
+          formData?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice != null) {

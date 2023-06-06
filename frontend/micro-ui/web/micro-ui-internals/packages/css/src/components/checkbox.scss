@@ -1,6 +1,10 @@
 .checkbox-wrap {
   @apply flex mb-md relative items-baseline;
 
+  div{
+    margin-top: 20px;
+  }
+
   input {
     width: 21px;
     height: 21px;
@@ -16,6 +20,10 @@
   .custom-checkbox {
     width: 21px;
     height: 21px;
+    margin-top: 20px;
+    background-color: white;
+    border: white;
+    border-radius: 0.3rem;
     @apply absolute top-0 left-0 border border-solid border-input-border z-0;
 
     img {
@@ -48,6 +56,7 @@
 
   .label {
     margin-left: 32px;
-    @apply text-form-field text-text-primary;
+    margin-top: 20px;
+    @apply text-form-field text-text-primary text-label-primary ;
   }
 }

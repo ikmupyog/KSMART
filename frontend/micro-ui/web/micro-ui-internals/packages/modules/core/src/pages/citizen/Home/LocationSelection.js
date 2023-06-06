@@ -163,8 +163,7 @@ const LocationSelection = () => {
                   placeholder={`${t("CS_COMMON_LB")}`}
                 />
                 <SubmitBar
-                  className="btnksmart"
-                  style={{ width: "35%", fonntF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
+                  style={{ fonntF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
                   label={t(`CORE_COMMON_CONTINUE`)}
                   onSubmit={onSubmit}
                 />
