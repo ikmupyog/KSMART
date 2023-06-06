@@ -58,8 +58,8 @@ public class DeathRegistryConstants {
      public static final String GENDER_MALE ="MALE";
      public static final String GENDER_FEMALE ="FEMALE";
      public static final String TRANSGENDER ="TRANSGENDER";
-     public static final String GENDER_MALE_CAPTION ="ആൺ/Male";
-     public static final String GENDER_FEMALE_CAPTION ="പെൺ/Female";
+     public static final String GENDER_MALE_CAPTION ="Male/ആൺ";
+     public static final String GENDER_FEMALE_CAPTION ="Female/പെൺ";
      public static final String TRANSGENDER_CAPTION ="Transgender";
      public static final String HUSBAND ="SPOUSE_TYPE_HUSBAND";
      public static final String WIFE ="SPOUSE_TYPE_WIFE";
@@ -94,6 +94,9 @@ public class DeathRegistryConstants {
      public static final String HOSPITAL_DATA="hospitalList";
      public static final String DEATH_PLACE_PUBLICPLACES = "PUBLIC_PLACES";
      public static final String DEATH_NAC="CRDRNA";
+
+     //newly added
+    public static final String MAIN_PLACE="mainPlace";
 
 
 }
