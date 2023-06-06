@@ -279,7 +279,7 @@
     span {
       top: -10px;
       right: -10px;
-      @apply absolute bg-error h-5 w-5 rounded-full text-center;
+      @apply absolute  h-5 w-5 rounded-full text-center;
 
       p {
         line-height: 20px;
