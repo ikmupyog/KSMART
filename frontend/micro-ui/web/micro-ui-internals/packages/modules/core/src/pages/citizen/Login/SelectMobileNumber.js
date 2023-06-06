@@ -28,27 +28,21 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
     };
   }, [screenSize]);
   return (
-    <Background style={{ background: "#edf2fa", borderRadius: "25px" }}>
+    <Background>
       {screenSize.dynamicWidth > 1250 && (
-        <Card
-          className="bannerCard removeBottomMargin hidden-md hidden-xs"
-          style={{ marginBottom: "20px", marginLeft: "60px", backgroundColor: "#00377B", height: "680px", width: "45%", borderRadius: "25px" }}
-        >
-          <div style={{ justifyContent: "space-around", padding: "0px 20px 200px 0px", width: "100%" }}>
+        <Card className=" loginCard  hidden-md hidden-xs w-7/12	">
+          <div style={{ justifyContent: "space-around" }}>
             <div className="language-button-container hidden-md hidden-xs">
-              <div style={{ textAlign: "center", marginRight: "100px" }}>
+              <div style={{ textAlign: "center" }}>
                 <img
                   className="loginImage"
                   src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Group.png"
                   alt="No Image"
                   style={{
                     maxWidth: "700px",
-                    marginLeft: "0px",
-                    marginRight: "70px",
-                    marginTop: "120px",
+                    marginTop: "70px",
                   }}
                 />
-                {/* <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label> */}
                 <br></br>
               </div>
               <div style={{ justifyContent: "space-between !important" }}></div>
@@ -56,28 +50,23 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
           </div>
         </Card>
       )}
-      {/* </div>
-      </div> */}
-      {/* <Card> */}
-      <div style={{ justifyContent: "space-around", padding: "10px 100px 300px 40px", margin: "14px 100px 0px 0px" }}>
-        <div className="language-button-container">
-          <div style={{ textAlign: "center", marginTop: "250px" }}>
-            <img
-              src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Mobile+application.png"
-              alt="No Image"
-              style={{ maxWidth: "100px", marginLeft: "10px", marginRight: "180px" }}
-            />
-            <div style={{ margin: "20px 300px 0px 0px" }}>
-              <label style={{ fontSize: "23px", color: "#00377B", fontWeight: "600" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label>
+      <div className="bannerCard removeBottomMargin" style={{ marginRight: "230px", backgroundColor: "#EDF2FA", border: "none", boxShadow: "none" }}>
+        <div style={{ justifyContent: "space-around" }}>
+          <div className="language-button-container">
+            <div>
+              <div style={{ textAlign: "center", margin: "0 auto" }}>
+                <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Mobile+application.png" alt="No Image" style={{ maxWidth: "100px" }} />
+
+                <label style={{ fontSize: "25px", marginBottom: "20px !important", color: "#00377b", fontWeight: "600", marginRight: "50px" }}>{`${t(
+                  "CS_LOGIN_PROVIDE_MOBILE_NUMBER"
+                )}`}</label>
+                <br></br>
+                <label style={{ fontSize: "15px", marginTop: "20px !important", color: "#3b669b", fontWeight: "450" }}>{`${t(
+                  "CS_LOGIN_TEXT"
+                )}`}</label>
+              </div>
             </div>
-            <label
-              style={{
-                fontSize: "14px",
-                color: "#3B669B",
-                fontWeight: "450",
-                marginRight: "75px",
-              }}
-            >{`${t("CS_LOGIN_TEXT")}`}</label>
+
             <FormStep
               isDisabled={mobileNumber.length !== 10}
               onSelect={onSelect}
@@ -88,17 +77,47 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
               value={mobileNumber}
               cardStyle={{
                 border: "none",
-                marginRight: "20px",
                 borderRadius: "12px",
                 background: "#EDF2FA",
                 boxShadow: "none",
-                width: "600px",
+                //width: "550px",
+              }}
+            ></FormStep>
+          </div>
+        </div>
+      </div>
+      {/* <div className="loginRegister">
+        <div className="language-button-container">
+          <div style={{ textAlign: "center", marginTop: "250px" }}>
+            <img
+              src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Mobile+application.png"
+              alt="No Image"
+              style={{ maxWidth: "100px", marginLeft: "40px", marginRight: "180px" }}
+            />
+            <div className="loginTitle">
+              <label className="loginLabel">{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label>
+            </div>
+            <label className="loginText">{`${t("CS_LOGIN_TEXT")}`}</label>
+            <FormStep
+              isDisabled={mobileNumber.length !== 10}
+              onSelect={onSelect}
+              config={config}
+              t={t}
+              componentInFront="+91"
+              onChange={onMobileChange}
+              value={mobileNumber}
+              cardStyle={{
+                border: "none",
+                marginLeft: "25px",
+                borderRadius: "12px",
+                background: "#EDF2FA",
+                boxShadow: "none",
+                width: "550px",
               }}
             ></FormStep>{" "}
           </div>
         </div>
-      </div>
-      {/* </Card> */}
+      </div> */}
     </Background>
   );
 };
