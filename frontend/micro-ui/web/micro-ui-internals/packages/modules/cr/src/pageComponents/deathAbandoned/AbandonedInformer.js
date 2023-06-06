@@ -98,6 +98,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
           setIsFileLoading(true);
@@ -110,6 +111,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
               setFileUploadError(true);
               setToast(true);
               setTimeout(() => {
+                setFileUploadError(false);
                 setToast(false);
               }, 3000);
             }
@@ -119,6 +121,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setFileTypeError(true);
           setToast(true);
           setTimeout(() => {
+          setFileTypeError(false);
             setToast(false);
           }, 3000);
         }
@@ -135,6 +138,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
           setIsFile1Loading(true);
@@ -148,6 +152,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsFile1Loading(false);
@@ -157,6 +162,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
         
@@ -172,6 +178,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
           setIsFile2Loading(true);
@@ -185,6 +192,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsFile2Loading(false);
@@ -194,6 +202,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
         
@@ -209,6 +218,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
           setIsFile3Loading(true);
@@ -222,6 +232,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsFile3Loading(false);
@@ -231,6 +242,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
         
@@ -246,6 +258,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
           setIsFile4Loading(true);
@@ -259,6 +272,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsFile4Loading(false);
@@ -268,6 +282,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
         
@@ -283,6 +298,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileSizeError(false);
           }, 3000);
         } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)){
           setIsFile5Loading(true);
@@ -296,6 +312,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
               setToast(true);
               setTimeout(() => {
                 setToast(false);
+                setFileUploadError(false);
               }, 3000);
             }
             setIsFile5Loading(false);
@@ -305,6 +322,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           setToast(true);
           setTimeout(() => {
             setToast(false);
+            setFileTypeError(false);
           }, 3000);
         }
         
@@ -829,7 +847,8 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
 
         {toast && (
           <Toast
-            error={infomantNameError || infomantAadharError || infomantMobileError || informerDesiError}
+            error={infomantNameError || infomantAadharError || infomantMobileError || informerDesiError
+              || fileSizeError || fileTypeError || fileUploadError}
             label={
               infomantNameError || infomantAadharError || infomantMobileError || informerDesiError
                 || fileSizeError || fileTypeError || fileUploadError
