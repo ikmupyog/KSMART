@@ -50,11 +50,11 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
           </div>
         </Card>
       )}
-      <div className="bannerCard removeBottomMargin" style={{ marginRight: "230px", backgroundColor: "#EDF2FA", border: "none", boxShadow: "none" }}>
+      <div className="bannerCard removeBottomMargin" style={{ backgroundColor: "#EDF2FA", border: "none", boxShadow: "none" }}>
         <div style={{ justifyContent: "space-around" }}>
           <div className="language-button-container">
             <div>
-              <div style={{ textAlign: "center", margin: "0 auto" }}>
+              <div style={{ margin: "0 auto" }}>
                 <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Mobile+application.png" alt="No Image" style={{ maxWidth: "100px" }} />
 
                 <label style={{ fontSize: "25px", marginBottom: "20px !important", color: "#00377b", fontWeight: "600", marginRight: "50px" }}>{`${t(
@@ -80,7 +80,10 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
                 borderRadius: "12px",
                 background: "#EDF2FA",
                 boxShadow: "none",
-                //width: "550px",
+                marginRight: "30px",
+                width: "100%",
+
+                right: "12px",
               }}
             ></FormStep>
           </div>

@@ -81,7 +81,7 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
           </div>
         </Card>
       )}
-      <div className="bannerCard removeBottomMargin" style={{ margin: "0 auto", width: "40%" }}>
+      <div className="bannerCard otpCard removeBottomMargin" style={{ margin: "0 auto", width: "40%" }}>
         <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%" }}>
           <div className="language-button-container">
             <div>
