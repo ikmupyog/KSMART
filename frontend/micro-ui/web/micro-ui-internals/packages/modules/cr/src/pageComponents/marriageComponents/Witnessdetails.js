@@ -13,7 +13,7 @@ import {
   SubmitBar,
   TextArea,
   PopUp,
-  ImageUploadHandler,
+  // ImageUploadHandler,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 import { v4 as uuidv4 } from "uuid";
 import { trimURL } from "../../utils";
 import _ from "lodash";
-// import { ImageUploadHandler } from "./ImageCropper/ImageUploadHandler";
+import { ImageUploadHandler } from "./ImageCropper/ImageUploadHandler";
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, isEditMarriage = false }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -1060,7 +1060,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                           onPhotoChange={handleUploadGroom}
                           isMulti={false}
                           moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
-                          extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
                           type="groomImage"
                         />
                       </div>
@@ -1076,7 +1075,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
                           onPhotoChange={handleUploadBride}
                           isMulti={false}
                           moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
-                          extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
                           type="brideImage"
                         />
                       </div>

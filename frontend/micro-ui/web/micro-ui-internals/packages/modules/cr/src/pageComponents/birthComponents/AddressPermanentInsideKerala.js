@@ -255,7 +255,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     }
   }
   if (isEditBirth) {
-    currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict);
+    // currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict);
+    currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName);
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent);
@@ -309,7 +310,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       }
     }
   } else if (isEditDeath) {
-    currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict);
+    // currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict);
+    currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.AddressBirthDetails?.permntInKeralaAdrLBName);
     if (formData?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent);
@@ -347,7 +349,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
         // setTenantWard(formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName);
         // setTenantboundary(true);
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
+        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === 
+          formData?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice != null) {
@@ -363,7 +366,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       }
     }
   } else if (isEditStillBirth) {
-    currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict);
+    // currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict);
+    currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName);
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent);
@@ -417,7 +421,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       }
     }
   } else if (isEditAdoption !== false) {
-    currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict);
+    // currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict);
+    currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName);
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent);

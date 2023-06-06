@@ -45,6 +45,7 @@ export const CRsearch = {
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
+    console.log(response, "response");
 
     let numOfApplications = [];
     if (response?.licenseNumber) {
@@ -68,6 +69,16 @@ export const CRsearch = {
         },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : t("CR_NOT_RECORDED") },
+      ],
+    };
+    const agencyDetails = {
+      title: "CR_ADOPTION_AGENCY_DETAILS",
+      asSectionHeader: true,
+      values: [
+        { title: "CR_ADOPTION_AGENT_NAME", value: response?.adoptagencyname ? response?.adoptagencyname : t("CR_NOT_RECORDED") },
+        { title: "CR_ADOPTION_CONTACT_PERSON", value: response?.adoptagencycontactperson || t("CR_NOT_RECORDED") },
+        { title: "CR_ADOPTION_AGENT_ADDRESS", value: response?.adoptagencyaddress || t("CR_NOT_RECORDED") },
+        { title: "CR_ADOPTION_CONTACT_NO", value: response?.adoptagencycontactpersonmobileno || t("CR_NOT_RECORDED") },
       ],
     };
     const birthPlaceHospDetails = {
@@ -155,8 +166,8 @@ export const CRsearch = {
         { title: "CR_PROFESSIONAL", value: response?.ParentsDetails?.fatherProfession || t("CR_NOT_RECORDED") },
         { title: "CS_COMMON_RELIGION", value: response?.ParentsDetails?.Religion || t("CR_NOT_RECORDED") },
 
-        { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.ParentsDetails?.fatherMobile || NA },
-        { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.ParentsDetails?.fatherEmail || NA },
+        { title: "CR_PARENTS_CONTACT_NO", value: response?.ParentsDetails?.fatherMobile || NA },
+        { title: "CR_PARENTS_EMAIL", value: response?.ParentsDetails?.fatherEmail || NA },
       ],
     };
     const AddressBirthDetailsPresentInfo = {
@@ -187,7 +198,15 @@ export const CRsearch = {
             response?.AddressBirthDetails?.presentInsideKeralaLBNameEn + " / " + response?.AddressBirthDetails?.presentInsideKeralaLBNameMl ||
             t("CR_NOT_RECORDED"),
         },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.presentWardNo || t("CR_NOT_RECORDED") },
+        {
+          title: "CS_COMMON_WARD",
+          value:
+            response?.AddressBirthDetails?.presentWardText +
+              " / " +
+              response?.AddressBirthDetails?.presentWardNoEn +
+              " / " +
+              response?.AddressBirthDetails?.presentWardNoMl || "NOT_RECORDED",
+        },
         {
           title: "CS_COMMON_POST_OFFICE",
           value:
@@ -238,7 +257,15 @@ export const CRsearch = {
             response?.AddressBirthDetails?.permntInKeralaAdrLBNameEn + " / " + response?.AddressBirthDetails?.permntInKeralaAdrLBNameMl ||
             t("CR_NOT_RECORDED"),
         },
-        { title: "CS_COMMON_WARD", value: response?.AddressBirthDetails?.permntInKeralaWardNo || t("CR_NOT_RECORDED") },
+        {
+          title: "CS_COMMON_WARD",
+          value:
+            response?.AddressBirthDetails?.permntInKeralaWardNoText +
+              " / " +
+              response?.AddressBirthDetails?.permntInKeralaWardNoEn +
+              " / " +
+              response?.AddressBirthDetails?.permntInKeralaWardNoMl || "NOT_RECORDED",
+        },
         {
           title: "CS_COMMON_POST_OFFICE",
           value:
@@ -325,6 +352,9 @@ export const CRsearch = {
 
     response && employeeResponse.push(AdoptionDetails);
     response && employeeResponse.push(childdetails);
+    if (response?.adopthasagency === true) {
+      response && employeeResponse.push(agencyDetails);
+    }
     if (response?.birthPlace === "HOSPITAL") {
       response && employeeResponse.push(birthPlaceHospDetails);
     } else if (response?.birthPlace === "INSTITUTION") {
