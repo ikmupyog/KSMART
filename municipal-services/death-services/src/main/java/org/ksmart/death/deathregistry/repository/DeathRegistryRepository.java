@@ -503,12 +503,19 @@ public class DeathRegistryRepository {
                     cert.getDeathBasicInfo().setDeceasedLastNameEn("");
                 }
                 cert.getDeathBasicInfo().setFullName(
-                                cert.getDeathBasicInfo().getDeceasedFirstNameMl() + " "+
-                                cert.getDeathBasicInfo().getDeceasedMiddleNameMl() + " "+
-                                cert.getDeathBasicInfo().getDeceasedLastNameMl() + " / " +
-                                cert.getDeathBasicInfo().getDeceasedFirstNameEn() +" "+
-                                cert.getDeathBasicInfo().getDeceasedMiddleNameEn() +" "+
-                                cert.getDeathBasicInfo().getDeceasedLastNameEn() );
+                                // cert.getDeathBasicInfo().getDeceasedFirstNameMl() + " "+
+                                // cert.getDeathBasicInfo().getDeceasedMiddleNameMl() + " "+
+                                // cert.getDeathBasicInfo().getDeceasedLastNameMl() + " / " +
+                                // cert.getDeathBasicInfo().getDeceasedFirstNameEn() +" "+
+                                // cert.getDeathBasicInfo().getDeceasedMiddleNameEn() +" "+
+                                // cert.getDeathBasicInfo().getDeceasedLastNameEn() );
+
+                                cert.getDeathBasicInfo().getDeceasedFirstNameEn() + " "+
+                                cert.getDeathBasicInfo().getDeceasedMiddleNameEn() + " "+
+                                cert.getDeathBasicInfo().getDeceasedLastNameEn() + " / " +
+                                cert.getDeathBasicInfo().getDeceasedFirstNameMl() +" "+
+                                cert.getDeathBasicInfo().getDeceasedMiddleNameMl() +" "+
+                                cert.getDeathBasicInfo().getDeceasedLastNameMl() );
 
                 cert.getDeathBasicInfo().setGender(cert.getDeathBasicInfo().getDeceasedGender());
                 String spouseMl = "";
@@ -524,8 +531,10 @@ public class DeathRegistryRepository {
                             spouseEn = DeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
                         }
                 
-                        cert.getDeathFamilyInfo().setSpouseName(cert.getDeathFamilyInfo().getSpouseNameML()+ spouseMl+" / "+
-                        cert.getDeathFamilyInfo().getSpouseNameEn()+ spouseEn);
+                        // cert.getDeathFamilyInfo().setSpouseName(cert.getDeathFamilyInfo().getSpouseNameML()+ spouseMl+" / "+
+                        // cert.getDeathFamilyInfo().getSpouseNameEn()+ spouseEn);
+                        cert.getDeathFamilyInfo().setSpouseName(cert.getDeathFamilyInfo().getSpouseNameEn()+ spouseEn+" / "+
+                        cert.getDeathFamilyInfo().getSpouseNameML()+ spouseMl);
                 }
                 else{
                     cert.getDeathFamilyInfo().setSpouseName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
@@ -533,16 +542,22 @@ public class DeathRegistryRepository {
                 }
                 if(cert.getDeathFamilyInfo().getMotherUnavailable() != true){
                         String motherpresent="";
-                        if(cert.getDeathFamilyInfo().getMotherNameMl() != null){
-                            motherpresent = cert.getDeathFamilyInfo().getMotherNameMl();
+                        // if(cert.getDeathFamilyInfo().getMotherNameMl() != null){
+                        //     motherpresent = cert.getDeathFamilyInfo().getMotherNameMl();
+                        // }
+                        if(cert.getDeathFamilyInfo().getMotherNameEn() != null){
+                            motherpresent = cert.getDeathFamilyInfo().getMotherNameEn();
                         }
 
-                        if(cert.getDeathFamilyInfo().getMotherNameEn() != null){
+                        // if(cert.getDeathFamilyInfo().getMotherNameEn() != null){
+                        if(cert.getDeathFamilyInfo().getMotherNameMl() != null){
                             if(motherpresent != ""){
-                                motherpresent = motherpresent+"/ "+cert.getDeathFamilyInfo().getMotherNameEn();
+                                // motherpresent = motherpresent+"/ "+cert.getDeathFamilyInfo().getMotherNameEn();
+                                motherpresent = motherpresent+"/ "+cert.getDeathFamilyInfo().getMotherNameMl();
                             }
                             else{
-                                motherpresent=cert.getDeathFamilyInfo().getMotherNameEn();
+                                // motherpresent=cert.getDeathFamilyInfo().getMotherNameEn();
+                                motherpresent=cert.getDeathFamilyInfo().getMotherNameMl();
                             }
                             
                         }                        
@@ -551,8 +566,10 @@ public class DeathRegistryRepository {
                         cert.getDeathFamilyInfo().setMotherName(motherpresent);
                 }
                 else{
-                        cert.getDeathFamilyInfo().setMotherName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
-                        DeathRegistryConstants.NOT_RECORDED_EN);
+                        // cert.getDeathFamilyInfo().setMotherName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
+                        // DeathRegistryConstants.NOT_RECORDED_EN);
+                        cert.getDeathFamilyInfo().setMotherName(DeathRegistryConstants.NOT_RECORDED_EN+" / "+
+                        DeathRegistryConstants.NOT_RECORDED_ML);
                 }
     
                 // String fatherNameMl = "";
@@ -563,19 +580,25 @@ public class DeathRegistryRepository {
 
                 if(cert.getDeathFamilyInfo().getFatherUnavailable() != true){
                     String fatherpresent="";
-                    if(cert.getDeathFamilyInfo().getFatherNameMl() != null){
-                        fatherpresent = cert.getDeathFamilyInfo().getFatherNameMl();
+                    // if(cert.getDeathFamilyInfo().getFatherNameMl() != null){
+                    //     fatherpresent = cert.getDeathFamilyInfo().getFatherNameMl();
+                    // }
+                    if(cert.getDeathFamilyInfo().getFatherNameEn() != null){
+                        fatherpresent = cert.getDeathFamilyInfo().getFatherNameEn();
                     }
                     else{
                         fatherpresent="";
                     }
 
-                    if(cert.getDeathFamilyInfo().getFatherNameEn() != null){
+                    // if(cert.getDeathFamilyInfo().getFatherNameEn() != null){
+                    if(cert.getDeathFamilyInfo().getFatherNameMl() != null){
                         if(fatherpresent!=""){
-                            fatherpresent = fatherpresent+"/ "+cert.getDeathFamilyInfo().getFatherNameEn();
+                            // fatherpresent = fatherpresent+"/ "+cert.getDeathFamilyInfo().getFatherNameEn();
+                            fatherpresent = fatherpresent+"/ "+cert.getDeathFamilyInfo().getFatherNameMl();
                         }
                         else{
-                            fatherpresent=cert.getDeathFamilyInfo().getFatherNameEn();
+                            // fatherpresent=cert.getDeathFamilyInfo().getFatherNameEn();
+                            fatherpresent=cert.getDeathFamilyInfo().getFatherNameMl();
                         }
                         
                     }                   
@@ -585,8 +608,11 @@ public class DeathRegistryRepository {
                     cert.getDeathFamilyInfo().setFatherName(fatherpresent);
                 }
                 else{
-                    cert.getDeathFamilyInfo().setFatherName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
-                      DeathRegistryConstants.NOT_RECORDED_EN);
+                    // cert.getDeathFamilyInfo().setFatherName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
+                    //   DeathRegistryConstants.NOT_RECORDED_EN);
+
+                      cert.getDeathFamilyInfo().setFatherName(DeathRegistryConstants.NOT_RECORDED_EN+" / "+
+                      DeathRegistryConstants.NOT_RECORDED_ML);
                 }
 
                 if(cert.getDeathAddressInfo().getPresentAddrResidenceAsscNo() != null){
@@ -1120,13 +1146,13 @@ public class DeathRegistryRepository {
 
                     //End
                     cert.getDeathBasicInfo().setPlaceofDeath(                       
-                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
-                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+ 
-                        cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeMl()+ 
-                        cert.getDeathBasicInfo().getDeathPlaceHomeDistrictMl ()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeStateMl()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeCountryMl()+" / "+
+                        // cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
+                        // cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
+                        // cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+ 
+                        // cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeMl()+ 
+                        // cert.getDeathBasicInfo().getDeathPlaceHomeDistrictMl ()+ " "+
+                        // cert.getDeathBasicInfo().getDeathPlaceHomeStateMl()+ " "+
+                        // cert.getDeathBasicInfo().getDeathPlaceHomeCountryMl()+" / "+
 
                         cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ 
                         cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+
@@ -1134,7 +1160,15 @@ public class DeathRegistryRepository {
                         cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeEn()+ 
                         cert.getDeathBasicInfo().getDeathPlaceHomeDistrictId()+ " "+
                         cert.getDeathBasicInfo().getDeathPlaceHomeStateId()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeCountryId());
+                        cert.getDeathBasicInfo().getDeathPlaceHomeCountryId()+" / "+
+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeMl()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeDistrictMl ()+ " "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStateMl()+ " "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeCountryMl());
                 }
                 
                 //Place of Death Hospital
@@ -1360,29 +1394,33 @@ public class DeathRegistryRepository {
                 if (cert.getDeathBasicInfo().getDeceasedAadharNumber() != null){
                     cert.getDeathBasicInfo().setDeceasedAadharNumber("XXXXXXXX"+cert.getDeathBasicInfo().getDeceasedAadharNumber().substring(8));
                 }
-                else {
-                    cert.getDeathBasicInfo().setDeceasedAadharNumber(DeathRegistryConstants.NOT_RECORDED_EN);
+                else {       
+                    cert.getDeathBasicInfo().setDeceasedAadharNumber(DeathRegistryConstants.NOT_RECORDED_EN+" / "+
+                            DeathRegistryConstants.NOT_RECORDED_ML);      
                 }
                 // Spouse Aadhaar
                 if (cert.getDeathFamilyInfo().getSpouseAadhaar() != null){
                     cert.getDeathFamilyInfo().setSpouseAadhaar("XXXXXXXX"+cert.getDeathFamilyInfo().getSpouseAadhaar().substring(8));
                 }
                 else {
-                    cert.getDeathFamilyInfo().setSpouseAadhaar(DeathRegistryConstants.NOT_RECORDED_EN);
+                    cert.getDeathFamilyInfo().setSpouseAadhaar(DeathRegistryConstants.NOT_RECORDED_EN+" / "+
+                            DeathRegistryConstants.NOT_RECORDED_ML);
                 }
                 // Mother Aadhaar
                 if (cert.getDeathFamilyInfo().getMotherAadharNo() != null){
                     cert.getDeathFamilyInfo().setMotherAadharNo("XXXXXXXX"+cert.getDeathFamilyInfo().getMotherAadharNo().substring(8));
                 }
                 else {
-                    cert.getDeathFamilyInfo().setMotherAadharNo(DeathRegistryConstants.NOT_RECORDED_EN);
+                    cert.getDeathFamilyInfo().setMotherAadharNo(DeathRegistryConstants.NOT_RECORDED_EN+" / "+
+                            DeathRegistryConstants.NOT_RECORDED_ML);
                 }
                 // Father Aadhaar
                 if (cert.getDeathFamilyInfo().getFatherAadharNo() != null){
                     cert.getDeathFamilyInfo().setFatherAadharNo("XXXXXXXX"+cert.getDeathFamilyInfo().getFatherAadharNo().substring(8));
                 }
                 else {
-                    cert.getDeathFamilyInfo().setFatherAadharNo(DeathRegistryConstants.NOT_RECORDED_EN);
+                    cert.getDeathFamilyInfo().setFatherAadharNo(DeathRegistryConstants.NOT_RECORDED_EN+" / "+
+                            DeathRegistryConstants.NOT_RECORDED_ML);
                 }              
 
             });
