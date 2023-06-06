@@ -161,9 +161,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       cmbState.push(ob);
     });
 
-  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath);
-  const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate);
-  const [ToDate, setToDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.ToDate) : formData?.InformationDeath?.ToDate);
+  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? 
+    convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath);
+  const [FromDate, setFromDate] = useState(isEditDeath ?
+     convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.FromDate);
+  const [ToDate, setToDate] = useState(isEditDeath ?
+     convertEpochToDate(formData?.InformationDeath?.DateOfDeath1) : formData?.InformationDeath?.ToDate);
 
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -1225,17 +1228,24 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     }
   }
   const [DateTimeError, setDateTimeError] = useState(false);
+
   const goNext = () => {
-    if (TimeOfDeath != null) {
+    console.log("goNext",DateOfDeath)
+    if (DateOfDeath != null) {
+
+      console.log("TimeOfDeath != null",DateOfDeath)
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const DateofDeathTime = new Date(TimeOfDeath);
+      const DateofDeathTime = new Date(DateOfDeath);
       DateofDeathTime.setHours(0, 0, 0, 0);
+      console.log("new Date(TimeOfDeath)",new Date(DateOfDeath))
       if (DateofDeathTime.getTime() < today.getTime()) {
-        validFlag = false;
+        console.log("DateofDeathTime.getTime() < today.getTime()")
+        validFlag = true;
         setDateTimeError(false);
       } 
       else if (DateofDeathTime.getTime() === today.getTime()) {
+        console.log("DateofDeathTime.getTime() === today.getTime()")
         let todayDate = new Date();
         let currenthours = todayDate.getHours();
         let currentMints = todayDate.getMinutes();
@@ -1244,6 +1254,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
         let currentDatetime = "";
         currentDatetime = currenthours + ":" + currentMints;
         if (TimeOfDeath > currentDatetime) {
+          console.log("TimeOfDeath > currentDatetime")
           validFlag = false;
           setDeathTime("");
           setCheckdeathDateTime({ hh: "", mm: "", amPm: "" });
@@ -1253,6 +1264,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
             setToast(false);
           }, 2000);
         } else {
+          console.log("else Time")
           setDateTimeError(false);
           // alert("Right Time");
         }

@@ -46,6 +46,7 @@ const BannerPicker = (props) => {
 };
 
 const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
+  console.log({data})
   const [toast, setToast] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
@@ -65,7 +66,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   const mutation = Digit.Hooks.cr.useCivilRegistrationMarriageAPI(tenantId, isEditMarriage ? false : true);
 
   useEffect(() => {
-    if (isInitialRender) {
+    if (isInitialRender && data?.MarriageDetails?.length > 0) {
       try {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
@@ -103,7 +104,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation.isSuccess]);
 
-  console.log({ data: mutation.data });
+  console.log({ data });
 
   const handleDownloadPdf = async () => {
     const { MarriageDetails = [] } = mutation.data;

@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from "react";
 import { Controller } from "react-hook-form";
-import {DatePicker, Dropdown, SearchField, SubmitBar, TextInput} from "@egovernments/digit-ui-react-components";
+import { DatePicker, Dropdown, SearchField, SubmitBar, TextInput } from "@egovernments/digit-ui-react-components";
 
 const SearchFields = ({
-                          t,
-                          register,
-                          control,
-                          reset,
-                          searchType,
-                          emptyRecords
-                      }) => {
+    t,
+    register,
+    control,
+    reset,
+    searchType,
+    emptyRecords
+}) => {
 
     let validation = {};
     const [isIdPresent, setIsIdPresent] = useState(false);
@@ -43,52 +43,52 @@ const SearchFields = ({
             <SearchField>
                 <label> {searchType == 'application' ? t("APPLICATION NO") : t("REGISTRATION NO")}</label>
                 <TextInput name={searchType == 'application' ? "applicationNo" : "registrationNo"}
-                           inputRef={register({})}
-                           onChange={idOnChange}
-                           control={control}
-                           {...(validation = { isRequired: false, type: "text" })}
-                           placeholder={`${searchType == 'application' ? t("Application No") : t("Registration No")}`} />
+                    inputRef={register({})}
+                    onChange={idOnChange}
+                    control={control}
+                    {...(validation = { isRequired: false, type: "text" })}
+                    placeholder={`${searchType == 'application' ? t("Application No") : t("Registration No")}`} />
             </SearchField>
-           {searchType !== 'application'&& <SearchField>
+            {searchType !== 'application' && <SearchField>
                 <label> {t("APPLICATION NO")}</label>
-                <TextInput name= "applicationNo"
-                           inputRef={register({})}
-                           onChange={idOnChange}
-                           control={control}
-                           {...(validation = { isRequired: false, type: "text" })}
-                           placeholder={ t("Application No")} />
+                <TextInput name="applicationNo"
+                    inputRef={register({})}
+                    onChange={idOnChange}
+                    control={control}
+                    {...(validation = { isRequired: false, type: "text" })}
+                    placeholder={t("Application No")} />
             </SearchField>}
             <SearchField>
-                <label><span className="mandatorycss">*</span> {t("DATE OF MARRIAGE")}</label>
+                <label>{((searchType !== 'application') && !isIdPresent) && <span className="mandatorycss">*</span>} {t("DATE OF MARRIAGE")}</label>
                 <Controller
                     render={(props) => <DatePicker
                         date={props.value}
-                        {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: !isIdPresent, title: t("CR_INVALID_DATE") })}
+                        {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: ((searchType !== 'application') && !isIdPresent), title: t("CR_INVALID_DATE") })}
                         onChange={props.onChange} />}
                     name="marriageDOM"
                     control={control}
                 />
             </SearchField>
             <SearchField>
-                <label><span className="mandatorycss">*</span> {t("FIRST NAME OF HUSBAND")}</label>
+                <label>{((searchType !== 'application') && !isIdPresent) && <span className="mandatorycss">*</span>} {t("FIRST NAME OF HUSBAND")}</label>
                 <TextInput name="groomFirstnameEn" inputRef={register({})}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: !isIdPresent, title: t("Invalid name of husband") })} placeholder={`${t("Invalid name of husband")}`}/>
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: ((searchType !== 'application') && !isIdPresent), title: t("Invalid name of husband") })} placeholder={`${t("Invalid name of husband")}`} />
             </SearchField>
             <SearchField>
-                <label><span className="mandatorycss">*</span> {t("FIRST NAME OF WIFE")}</label>
+                <label>{((searchType !== 'application') && !isIdPresent) && <span className="mandatorycss">*</span>} {t("FIRST NAME OF WIFE")}</label>
                 <TextInput name="brideFirstnameEn" inputRef={register({})}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: !isIdPresent, title: t("Invalid name of wife") })} placeholder={`${t("Name of Wife")}`} />
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: ((searchType !== 'application') && !isIdPresent), title: t("Invalid name of wife") })} placeholder={`${t("Name of Wife")}`} />
             </SearchField>
             {
                 searchType === "certificate" && (
                     <SearchField>
                         <label> {t("CERTIFICATE NO")}</label>
                         <TextInput name={"certificateNo"}
-                                   inputRef={register({})}
-                                   onChange={idOnChange}
-                                   control={control}
-                                   {...(validation = { isRequired: false, type: "text" })}
-                                   placeholder={"Certificate No"} />
+                            inputRef={register({})}
+                            onChange={idOnChange}
+                            control={control}
+                            {...(validation = { isRequired: false, type: "text" })}
+                            placeholder={"Certificate No"} />
                     </SearchField>
                 )
             }

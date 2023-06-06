@@ -12,10 +12,27 @@ const Inbox = ({
   filterComponent,
   isInbox
 }) => {
-
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [enableSarch, setEnableSearch] = useState(() => (isInbox ? {} : { enabled: false }));
+  // const { roles: userRoles,uuid: uuid } = Digit.UserService.getUser().info;
+  // const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_DOC_VERIFIER"));
+  // const rolecombine = [];
+  // roletempop?.map?.((e) => {
+  //   rolecombine.push(e.code);
+  // });
+  // const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+  //   tenantId,
+  //   {
+  //     roles: rolecombine?.map?.((e) => ({ code: e })),
+  //     isActive: true,
+  //     uuids: uuid,
+  //     rolecodes: rolecombine?.map?.((e) => (e)).join(",")
+  //   }
+  //   // { enabled: !action?.isTerminateState }
+  // );
 
+  // const operatorwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("TL_DOC_VERIFIER"));
+  
+  const [enableSarch, setEnableSearch] = useState(() => (isInbox ? {} : { enabled: false }));
   const { t } = useTranslation();
   const [pageOffset, setPageOffset] = useState(initialStates?.pageOffset || 0);
   const [pageSize, setPageSize] = useState(initialStates?.pageSize || 10);
@@ -90,11 +107,11 @@ const Inbox = ({
 
         pattern: Digit.Utils.getPattern("MobileNo"),
 
-        type: "mobileNumber",
+      //  type: "mobileNumber",
    
 
         title: t("ES_SEARCH_APPLICATION_MOBILE_INVALID"),
-        componentInFront: "+91",
+      //  componentInFront: "+91",
       },
     ];
   };
