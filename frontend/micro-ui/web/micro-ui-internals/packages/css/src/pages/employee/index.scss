@@ -72,9 +72,7 @@
   }
 
   .react-time-picker {
-
     width: auto;
-
   }
 
   .react-time-picker__wrapper {
@@ -114,7 +112,6 @@
 .citizen,
 .employee {
   .sidebar {
-
     transition: all 0.2s ease;
     position: fixed;
     left: 0;
@@ -123,7 +120,6 @@
     color: black;
     margin-top: 0px;
     z-index: 10000;
-   
 
     .actions {
       cursor: pointer;
@@ -132,7 +128,6 @@
 
       &.active {
         padding-right: 16px;
-
       }
     }
 
@@ -143,7 +138,6 @@
       position: relative;
       left: 70px;
     }
-
   }
 
   .display {
@@ -171,7 +165,7 @@
     padding-top: 10px;
 
     .containerStyles {
-      border: 1px solid #505A5F;
+      border: 1px solid #505a5f;
       padding: 16px;
       margin-bottom: 20px;
     }
@@ -186,7 +180,7 @@
   }
 
   .tableContainerStyles {
-    border: 1px solid #505A5F;
+    border: 1px solid #505a5f;
     padding: 16px;
     margin-bottom: 20px;
   }
@@ -226,7 +220,6 @@
     text-align: left;
     display: inline-block;
     padding-top: 5px;
-
   }
 
   .bottomMargin {
@@ -247,7 +240,7 @@
     background-color: rgba(0, 0, 0, 0.12);
     width: auto;
     height: 2px;
-    margin-left: 16px
+    margin-left: 16px;
   }
 
   .smallText {
@@ -286,7 +279,7 @@
     span {
       top: -10px;
       right: -10px;
-      @apply absolute bg-error h-5 w-5 rounded-full text-center;
+      @apply absolute  h-5 w-5 rounded-full text-center;
 
       p {
         line-height: 20px;
@@ -367,7 +360,6 @@
     row-gap: 2px;
     margin-left: -12px;
   }
-
 }
 
 .m-auto {
@@ -380,4 +372,16 @@
 
 .mb-25 {
   margin-bottom: 25px;
+}
+img.loginImage {
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+}
+@-webkit-keyframes mover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
 }

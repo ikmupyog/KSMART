@@ -162,7 +162,7 @@ const Dropdown = (props) => {
       style={{ ...props.style }}
     >
       {hasCustomSelector && (
-        <div className={props.showArrow ? "cp flex-right column-gap-5" : "cp"} onClick={dropdownSwitch}>
+        <div className={props.showArrow ? "cp flex-right" : "cp"} onClick={dropdownSwitch}>
           {props.customSelector}
           {props.showArrow && <ArrowDown onClick={dropdownSwitch} className={props.disable && "disabled"} />}
         </div>

@@ -104,9 +104,8 @@
 }
 
 .select-wrap {
-  @apply mb-lg bg-white relative;
+  @apply bg-white relative;
   border-radius: 12px;
-
   .select {
     @apply relative block bg-white w-full h-10 border border-solid border-input-border;
     margin-top: 15px;
@@ -161,8 +160,13 @@
       @apply absolute right-0 float-right h-6 w-6 mt-sm mr-sm;
     }
   }
-
+  
   .options-card {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 12px;
+    margin-right: 70px;
+    font-size: 14px;
     width: 26%;
     max-height: 185px;
     overflow-y: auto;
@@ -170,7 +174,6 @@
     border: 1px solid #ddd;   
      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
     @apply absolute z-20 mt-xs bg-white;
-
     p {
       padding-top: 14px;
       @apply w-full h-12 pl-sm text-text-primary text-form-field;
@@ -181,7 +184,6 @@
     }
   }
 }
-
 @screen dt {
 }
 /*.select {
@@ -290,7 +292,7 @@
 }
 
 .select-wrap {
-  @apply mb-lg relative;
+  @apply  relative;
 
   .select {
     @apply relative block bg-white w-full h-10 border border-solid border-input-border;

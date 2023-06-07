@@ -8,10 +8,25 @@ import TextInput from "../atoms/TextInput";
 import InputCard from "./InputCard";
 
 const FormStep = ({
-  t, children, config, onSelect, onSkip, value, onChange, isDisabled, _defaultValues = {}, forcedError, componentInFront, onAdd,
-  cardStyle = {}, isMultipleAllow = false, showErrorBelowChildren = false, childrenAtTheBottom = true, textInputStyle, isSkip = true
+  t,
+  children,
+  config,
+  onSelect,
+  onSkip,
+  value,
+  onChange,
+  isDisabled,
+  _defaultValues = {},
+  forcedError,
+  componentInFront,
+  onAdd,
+  cardStyle = {},
+  isMultipleAllow = false,
+  showErrorBelowChildren = false,
+  childrenAtTheBottom = true,
+  textInputStyle,
+  isSkip = true,
 }) => {
-
   const { register, watch, errors, handleSubmit } = useForm({
     defaultValues: _defaultValues,
   });
@@ -23,18 +38,19 @@ const FormStep = ({
   var isDisable = isDisabled ? true : config.canDisable && Object.keys(errors).filter((i) => errors[i]).length;
 
   const mystyle = {
-    marginBottom: "24px"
+    marginBottom: "24px",
   };
 
   const inputs = config.inputs?.map((input, index) => {
     if (input.type === "text") {
       return (
         <React.Fragment key={index}>
-          <CardLabel>{t(input.label)}</CardLabel>
+          {/* <CardLabel>{t(input.label)}</CardLabel> */}
           {errors[input.name] && <CardLabelError>{t(input.error)}</CardLabelError>}
           <div className="field-container">
             {/* {componentInFront ? <span className="citizen-card-input citizen-card-input--front">{componentInFront}</span> : null} */}
             <TextInput
+              placeholder={input.place_holder}
               style={mystyle}
               key={index}
               name={input.name}

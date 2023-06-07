@@ -1,3 +1,8 @@
+.topnavbar{
+  --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+}
+
 .topbar {
   position: fixed;
   top: 0;
@@ -84,11 +89,9 @@
   .column-gap-15 {
     column-gap: 15px;
   }
-
   .column-gap-5 {
-    column-gap: 5px;
-  }
 
+  }
   .select-wrap,
   .employee-select-wrap {
     .profile-dropdown--item {
@@ -98,7 +101,6 @@
     }
   }
 }
-
 .cp {
   cursor: pointer;
 }
@@ -128,23 +130,58 @@
     @apply bg-grey-mid;
   }
 }
-
 .flex-right {
   @apply flex items-center justify-end;
   min-width: 85px;
+  color: #00377B;
 }
 
 .leftContainerNav {
   display: flex;
+  align-items: center;
+}
+.mainNav {
+  @media (min-width: 1400px){
+    max-width: 1320px;
+  }
+ 
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+.bg-nav{
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 
-.mainNav {
-  display: flex;
-  width: 100%;
-  align-items: center;
+.center-nav{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
 }
 
 .leftlangauage {
   margin-right: 20px;
   justify-content: end;
 }
+.top-container{
+ 
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem !important;
+}
+.tenant-id{
+  color: #00377B;
+
+}
+.line-nav{
+  height: 36px;
+    width: 2px;
+    background: #e4e4e4;
+}
+

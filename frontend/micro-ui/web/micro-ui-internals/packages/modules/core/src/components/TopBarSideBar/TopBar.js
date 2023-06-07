@@ -96,29 +96,44 @@ const TopBar = ({
       //   showLanguageChange={showLanguageChange}
       //   t={t}
       // />
-      <div className="navbar">
+      <div className="topnavbar">
         <div className="mainNav">
-
-          <div className="center-container">
-            {isMobile && <Hamburger handleClick={updateSidebar} />}
-            <img className="city" id="topbar-logo" src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="K-SMART" />
-            <h3>{t(CitizenHomePageTenantId)}</h3>
-          </div>
-          <div className="leftContainerNav">
-            <div className="left" style={{ marginRight: "20px" }}>
-              <ChangeLanguage dropdown={true} />
-            </div>
-            <div className="RightMostTopBarOptions">
-              {!urlsToDisableNotificationIcon(pathname) ? (
-                <div className="EventNotificationWrapper" onClick={onNotificationIconClick}>
-                  {notificationCountLoaded && unreadNotificationCount ? (
-                    <span>
-                      <p>{unreadNotificationCount < 99 ? unreadNotificationCount : 99}</p>
-                    </span>
-                  ) : null}
-                  <NotificationBell />
+          <div className="bg-nav">
+            <div className="center-nav">
+              <div className="top-container">
+                {isMobile && (
+                  <span style={{ marginRight: "10px" }} className="cp" onClick={updateSidebar}>
+                    {/* <HamburgerIcon styles={{ display: "inline" }} color={color} /> */}
+                    <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/bars.svg" alt="" />
+                  </span>
+                )}
+                <img className="city" id="topbar-logo" src="https://ulb-logos.s3.ap-south-1.amazonaws.com/k-smart-logo.png" alt="K-SMART" />
+                <hr className="line-nav" />
+                <h3 className="tenant-id">{t(CitizenHomePageTenantId)}</h3>
+              </div>
+              <div className="leftContainerNav">
+                <span style={{ marginRight: "5px"}}>
+                  <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/new-translate.svg" alt="image" />
+                </span>
+                <div className="left" style={{ marginRight: "20px" }}>
+                  <ChangeLanguage dropdown={true} />
                 </div>
-              ) : null}
+                <div className="RightMostTopBarOptions">
+                  {!urlsToDisableNotificationIcon(pathname) ? (
+                    <div className="EventNotificationWrapper" onClick={onNotificationIconClick}>
+                      {notificationCountLoaded && unreadNotificationCount ? (
+                        <span>
+                          <p>{unreadNotificationCount < 99 ? unreadNotificationCount : 99}</p>
+                        </span>
+                      ) : null}
+                      {/* <NotificationBell /> */}
+                      <span>
+                        <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/notification-icons.svg" alt="" />
+                      </span>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -127,9 +142,8 @@ const TopBar = ({
   }
 
   const loggedin = userDetails?.access_token ? true : false;
-  const user = { name: userDetails?.info?.name }
+  const user = { name: userDetails?.info?.name };
   return (
-
     <div className="topbar">
       {mobileView ? <Hamburger handleClick={toggleSidebar} color="#9E9E9E" /> : null}
       <div style={{ borderRight: "1px solid #edf2f9", width: "3%" }}>
@@ -162,7 +176,6 @@ const TopBar = ({
             {userDetails?.access_token && (
               <div className="">
                 <Dropdown
-
                   option={userOptions}
                   optionKey={"name"}
                   select={handleUserDropdownSelection}
@@ -172,13 +185,17 @@ const TopBar = ({
                   style={mobileView ? { right: 0 } : {}}
                   optionCardStyles={{ overflow: "revert" }}
                   customSelector={
-                    profilePic == null ? (<React.Fragment>
-                      <TextToImg name={userDetails?.info?.name || userDetails?.info?.userInfo?.name || "Employee"} />
-                      <div style={{ display: "block" }}>
-                        <p>{userDetails?.info?.name}</p>
-                        <p><small>{userDetails?.info?.roles[0]?.name}</small></p>
-                      </div>
-                    </React.Fragment>) : (
+                    profilePic == null ? (
+                      <React.Fragment>
+                        <TextToImg name={userDetails?.info?.name || userDetails?.info?.userInfo?.name || "Employee"} />
+                        <div style={{ display: "block" }}>
+                          <p>{userDetails?.info?.name}</p>
+                          <p>
+                            <small>{userDetails?.info?.roles[0]?.name}</small>
+                          </p>
+                        </div>
+                      </React.Fragment>
+                    ) : (
                       <img src={profilePic} style={{ height: "48px", width: "48px", borderRadius: "50%" }} />
                     )
                   }
