@@ -48,7 +48,7 @@ const Home = () => {
     options: [
       {
         name: t("ES_PGR_HEADER_COMPLAINT"),
-        Icon: <ComplaintIcon />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg",
         onClick: () => history.push("/digit-ui/citizen/pgr-home"),
       },
       //{
@@ -58,7 +58,7 @@ const Home = () => {
       // },
       {
         name: t("TL_TRADE_LICENSE"),
-        Icon: <CaseIcon className="fill-path-primary-main" />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg",
         onClick: () => history.push("/digit-ui/citizen/tl-home"),
       },
       // {
@@ -68,7 +68,7 @@ const Home = () => {
       // },
       {
         name: t("CIVIL_REGISTRATION"),
-        Icon: <OBPSIcon className="fill-path-primary-main" />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg",
         onClick: () => history.push("/digit-ui/citizen/cr-home"),
         // onClick: () => history.push({
         //   pathname: '/digit-ui/citizen/cr-home',
@@ -113,21 +113,21 @@ const Home = () => {
     options: [
       {
         name: t("CS_HEADER_MYCITY"),
-        Icon: <HomeIcon />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg"
       },
       {
         name: t("EVENTS_EVENTS_HEADER"),
-        Icon: <Calender />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg",
         onClick: () => history.push("/digit-ui/citizen/engagement/events"),
       },
       {
         name: t("CS_COMMON_DOCUMENTS"),
-        Icon: <DocumentIcon />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg",
         onClick: () => history.push("/digit-ui/citizen/engagement/docs"),
       },
       {
         name: t("CS_COMMON_SURVEYS"),
-        Icon: <DocumentIcon />,
+        Icon: "https://ulb-logos.s3.ap-south-1.amazonaws.com/k-icon1.svg",
         onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
       },
       // {
@@ -181,22 +181,22 @@ const Home = () => {
     styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
   };
 
-  
+
 
   return isLoading ? (
     <Loader />
   ) : (
     <div className="HomePageWrapper">
 
-      {/* <div class="otr-header-section">
+      {/* <div className="otr-header-section">
         <Carousel />
       </div> */}
 
 
       <div className="BannerWithSearch">
-      <div class="otr-header-section">
-        <Carousel />
-      </div>
+        <div className="otr-header-section">
+          <Carousel />
+        </div>
         {/* <img src={stateInfo?.bannerUrl} /> */}
         <div className="Search">
           <StandaloneSearchBar placeholder={t("CS_COMMON_SEARCH_PLACEHOLDER")} />
@@ -206,10 +206,10 @@ const Home = () => {
       <div className="ServicesSection">
         <CardBasedOptions {...allCitizenServicesProps} />
         <CardBasedOptions {...allInfoAndUpdatesProps} />
-        {/* <CardBasedOptions {...allInfoMyProfileProps} /> */}
+        {/* <CardBasedOptions {...allInfoMyProfileProps} /> */}        
       </div>
 
-      {conditionsToDisableNotificationCountTrigger() ? (
+      {/* {conditionsToDisableNotificationCountTrigger() ? (
         EventsDataLoading ? (
           <Loader />
         ) : (
@@ -221,7 +221,7 @@ const Home = () => {
             <WhatsNewCard {...EventsData?.[0]} />
           </div>
         )
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
