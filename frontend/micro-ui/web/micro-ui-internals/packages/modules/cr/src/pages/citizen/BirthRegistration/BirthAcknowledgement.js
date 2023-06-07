@@ -133,7 +133,9 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
     if (mutation.isSuccess) {
       applicationNumber = mutation.data?.ChildDetails[0].applicationNumber;
       sessionStorage.setItem("applicationNumber", applicationNumber);
-      if(!isEditBirth && isHospitalUser){
+      console.log("isEditBirth",isEditBirth);
+      console.log(window.location.href.includes("/employee"));
+      if(!isEditBirth && window.location.href.includes("/employee")){
         sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
       }
     } else {
