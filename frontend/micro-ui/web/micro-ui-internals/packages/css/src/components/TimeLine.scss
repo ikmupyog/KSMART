@@ -16,7 +16,7 @@
     }
 
     .secondary-color {
-      color: #0B0C0C;
+      color:  #9EAFBF;
       padding: 5px;
       font-size: small;
     }
@@ -38,12 +38,17 @@
     border-radius: 50%;
     text-align: center;
   }
-
+  
   .active {
-    background-color: #EE3D7F;
+    @apply  bg-button-primary  text-label-primary ;
     border-color: #EE3D7F;
   }
 } 
+
+.label-active {
+   color: #00377b !important;
+  }
+
 
 .TLComments{
   max-width: 360px;

@@ -2223,7 +2223,7 @@ content={
                 </div>
                 
 
-               <div className="col-md-8">
+               <div className="col-md-4">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "right", }}>
                 {<ActionButton jumpTo={`${routeLink}/stillbirth-initiator-details`} />}</CardText>
                   </div>  

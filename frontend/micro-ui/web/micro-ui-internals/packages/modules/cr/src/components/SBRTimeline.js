@@ -16,8 +16,8 @@ const getAction = (flow) => {
       'BIRTH_TIME_LINE_SUMMARY',
       // 'BIRTH_TIME_LINE_ADDRESS',      
       // 'BIRTH_TIME_LINE_STATSTICAL',
-     // 'STILL_BIRTH_BIRTH_INITIATOR_DETAILS',      
-     // 'STILL_BIRTH_BIRTH_TIME_LINE_SUMMARY',
+      // 'STILL_BIRTH_BIRTH_INITIATOR_DETAILS',      
+      // 'STILL_BIRTH_BIRTH_TIME_LINE_SUMMARY',
     ]
   }
 }
@@ -31,7 +31,7 @@ const Timeline = ({ currentStep = 1, flow = "" }) => {
         <div className="timeline-checkpoint" key={index}>
           <div className="timeline-content">
             <span className={`circle ${index <= currentStep - 1 && 'active'}`}>{index < currentStep - 1 ? <TickMark /> : index + 1}</span>
-            <span className="secondary-color">{t(action)}</span>
+            <span className={`secondary-color ${index <= currentStep - 1 && 'label-active'}`}>{t(action)}</span>
           </div>
           {index < arr.length - 1 && <span className={`line ${index < currentStep - 1 && 'active'}`}></span>}
         </div>

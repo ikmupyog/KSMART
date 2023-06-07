@@ -8,6 +8,7 @@ export const loginSteps = [
     },
     inputs: [
       {
+        place_holder: "CR_ENTER_MOBILE_NUMBER",
         label: "CORE_COMMON_MOBILE_NUMBER",
         type: "text",
         name: "mobileNumber",
@@ -44,7 +45,7 @@ export const loginSteps = [
         validation: {
           required: true,
           minLength: 1,
-          pattern: /^[^{0-9}^\$\"<>?\\\\~!@#$%^()+={}\[\]*,/_:;“”‘’]{1,50}$/i
+          pattern: /^[^{0-9}^\$\"<>?\\\\~!@#$%^()+={}\[\]*,/_:;“”‘’]{1,50}$/i,
         },
       },
     ],

@@ -30,7 +30,7 @@ const ActionButton = ({ jumpTo }) => {
     <LinkButton
       label={t("CS_COMMON_CHANGE")}
       className="check-page-link-button"
-      style={jumpTo.includes("proof-of-identity") ? { background: "#D7E1F1", borderRadius: "30px"} : {}}
+      style={jumpTo.includes("proof-of-identity") ? { background: "#D7E1F1", borderRadius: "30px" } : { background: "#D7E1F1", borderRadius: "30px" }}
       onClick={routeTo}
     />
   );
@@ -149,12 +149,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   }, [userRoles]);
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
-        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px", color: "#00377B" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <CardSubHeader style={{ marginLeft: "18px", marginBottom: "16px", fontSize: "16px", color: "#00377B" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
         <Accordion
           expanded={true}
           title={t("CR_BIRTH_CHILD_DETAILS")}
@@ -162,11 +161,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             <StatusTable>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
-                    </h1>
-                  </div>
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                  </h1>
                 </div>
               </div>
               <div className="row">
@@ -214,11 +211,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
-                    </h1>
-                  </div>
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
+                  </h1>
                 </div>
               </div>
               <div className="row">
@@ -231,7 +226,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       + " " + ChildDetails?.childLastNameEn + " / " + ChildDetails?.childFirstNameMl + " " + ChildDetails?.childMiddleNameMl + " " +
                       ChildDetails?.childLastNameMl : "NOT_RECORDED"}</CardText>
                   </div>
-                
+
                   {/* <div className="col-md-2">
                     <CardText className="summaryHeading">{`${t("CR_MIDDLE_NAME_EN")}`} :</CardText>
                   </div>
@@ -248,11 +243,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                </div>
+              </div>
               {/* <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
@@ -287,55 +280,45 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               {ChildDetails?.birthPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
               )}
               {ChildDetails?.birthPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
               )}
               {ChildDetails?.birthPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_PLACE_HOME")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff" }}>{`${t("CR_BIRTH_PLACE_HOME")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
               )}
               {ChildDetails?.birthPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_VEHICLE")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff" }}>{`${t("CR_BIRTH_VEHICLE")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
               )}
               {ChildDetails?.birthPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff" }}>{`${t("CR_PUBLIC_PLACE")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
               )}
@@ -371,17 +354,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {ChildDetails?.hospitalName.hospitalNamelocal}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/child-details`} />}
-                      </div> */}
                     </div>
                   </div>
                   <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                    </div>
                   </div>
                 </div>
               )}
@@ -419,17 +397,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {ChildDetails?.institutionId.institutionNamelocal}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                      </div> */}
                     </div>
                   </div>
                   <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                    </div>
                   </div>
                 </div>
               )}
@@ -437,81 +410,100 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-2">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.wardNo.namecmb}</CardText>
                       </div>
-                      <div className="col-md-2">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsPostOffice.name}</CardText>
                       </div>
-                      <div className="col-md-2">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsPincode}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsLocalityNameEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsLocalityNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsStreetNameEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsStreetNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsHouseNameEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.adrsHouseNameMl}</CardText>
                         {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                    </div>
                   </div>
                 </div>
               )}
@@ -519,107 +511,119 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-2">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_VEHICLE_TYPE")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleType.name}</CardText>
                       </div>
-                      <div className="col-md-2">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_VEHICLE_REGISTRATION_NO")}`} :</CardText>
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleRegistrationNo}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">
                           {`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`} :
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleHaltPlace}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_VEHICLE_FROM_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleFromEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_VEHICLE_TO_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleToEn}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_VEHICLE_FROM_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleFromMl}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_VEHICLE_TO_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleToMl}</CardText>
                         {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_ADMITTED_HOSPITAL_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">
                           {ChildDetails?.setadmittedHospitalEn.hospitalName}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.wardNo.namecmb}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_DESCRIPTION")}`} :</CardText>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.vehicleDesDetailsEn}</CardText>
                         {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                    </div>
                   </div>
                 </div>
               )}
@@ -627,69 +631,79 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_PUBLIC_PLACE_TYPE")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.publicPlaceType.name}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.wardNo.namecmb}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.localityNameEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.localityNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.streetNameEn}</CardText>
                       </div>
-                      <div className="col-md-3">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`} :</CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.streetNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">{`${t("CR_DESCRIPTION")}`} :</CardText>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">{ChildDetails?.publicPlaceDecpEn}</CardText>
                         {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                    </div>
                   </div>
                 </div>
               )}
@@ -703,11 +717,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             <StatusTable>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-12">
-                    <h1 className="summaryheadingh">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
-                    </h1>
-                  </div>
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
+                  </h1>
                 </div>
               </div>
               <div className="row">
@@ -757,11 +769,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -773,7 +783,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
+                    <span style={{ background: "#fff" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -790,7 +800,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     </div> */}
                   </div>
                 </div>
-                
+
               )}
               {ParentsDetails?.isMotherInfo === false && (
                 <div>
@@ -899,25 +909,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {locale === "en_IN" ? ParentsDetails?.motherProfession?.name : locale === "ml_IN" ? ParentsDetails?.motherProfession?.namelocal : ParentsDetails?.motherProfession?.name}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                      </div> */}
                     </div>
                   </div>
-               
+
                 </div>
               )}
-                 <div className="row">
+              <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
+                </div>
+              </div>
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
+                    <span style={{ background: "#fff" }}>{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -929,9 +934,6 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         {`${t("CR_FATHER_INFORMATION_MISSING")}`} :
                       </CardText>
                     </div>
-                    {/* <div className="col-md-2">
-                      {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                    </div> */}
                   </div>
                 </div>
               )}
@@ -1001,24 +1003,19 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {locale === "en_IN" ? ParentsDetails?.fatherProfession?.name : locale === "ml_IN" ? ParentsDetails?.fatherProfession?.namelocal : ParentsDetails?.fatherProfession?.name}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
-               <div className="row">
+              <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
+                </div>
+              </div>
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_FAMILY_INFORMATION")}`}</span>{" "}
+                    <span style={{ background: "#fff" }}>{`${t("CR_ADDIONAL_FAMILY_INFORMATION")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -1059,11 +1056,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -1077,7 +1072,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
+                        <span style={{ background: "#fff" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1235,20 +1230,17 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
-              
+
               {AddressBirthDetails?.presentaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.presentaddressStateName?.code != "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_ADDRESS")}`}</span>
+                        <span style={{ background: "#fff" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_ADDRESS")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1394,20 +1386,17 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
-              
+
               {AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESE_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
+                        <span style={{ background: "#fff" }}>{`${t("CR_PRESE_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1521,26 +1510,21 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
-               <div className="row">
+              <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
+                </div>
+              </div>
               {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code === "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
+                        <span style={{ background: "#fff" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1698,20 +1682,17 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
-              
+
               {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code != "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>
+                        <span style={{ background: "#fff" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1858,19 +1839,16 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         </CardText>
                       </div>
                     </div>
-                    {/* <div className="col-md-2">
-                      {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                    </div> */}
                   </div>
                 </div>
               )}
-              
+
               {AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PER_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
+                        <span style={{ background: "#fff" }}>{`${t("CR_PER_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
                       </h1>
                     </div>
                   </div>
@@ -1984,20 +1962,15 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           : {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
                         </CardText>
                       </div>
-                      {/* <div className="col-md-2">
-                        {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
-               <div className="row">
+              <div className="row">
                 <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                  </div>
-                  </div>
-                  </div>
+                  {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
+                </div>
+              </div>
             </StatusTable>
           }
         />
@@ -2032,11 +2005,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 {uploadedImages.length > 0 && (
                   <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
                     <div className="col-md-12">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
-                        </h1>
-                      </div>
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                      </h1>
                     </div>
                   </div>
                 )}
@@ -2097,11 +2068,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <StatusTable>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
-                        </h1>
-                      </div>
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                      </h1>
                     </div>
                   </div>
                   {InitiatorinfoDetails?.isGuardian === false && InitiatorinfoDetails?.isCaretaker === false && (
@@ -2156,14 +2125,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           <div className="col-md-6">
                             <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAddress}</CardText>
                           </div>
-                          {/* <div className="col-md-2">
-                            {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                          </div> */}
                         </div>
                       </div>
                     </div>
                   )}
-                
+
                   {InitiatorinfoDetails?.isGuardian === true && InitiatorinfoDetails?.isCaretaker === false && (
                     <div>
                       <div className="row">
@@ -2228,14 +2194,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           <div className="col-md-6">
                             <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAddress}</CardText>
                           </div>
-                          {/* <div className="col-md-2">
-                            {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                          </div> */}
                         </div>
                       </div>
                     </div>
                   )}
-                  
+
                   {InitiatorinfoDetails?.isGuardian === false && InitiatorinfoDetails?.isCaretaker === true && (
                     <div>
                       <div className="row">
@@ -2310,14 +2273,15 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                           <div className="col-md-6">
                             <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAddress}</CardText>
                           </div>
-                          {/* <div className="col-md-2">
-                            {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                          </div> */}
                         </div>
                       </div>
                     </div>
                   )}
-                
+                  <div className="row">
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                    </div>
+                  </div>
                 </StatusTable>
               }
             />
@@ -2334,11 +2298,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <StatusTable>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-12">
-                        <h1 className="summaryheadingh">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
-                        </h1>
-                      </div>
+                      <h1 className="summaryheadingh">
+                        <span style={{ background: "#fff" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+                      </h1>
                     </div>
                   </div>
                   <div className="row">
@@ -2378,19 +2340,19 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="col-md-2">
                         <CardText className="summaryHeading">{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                       </div>
-                      {/* <div className="col-md-4">
-                        <CardText className="summarySubHeading">{InformarHosInstDetails?.informerAddress}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                      </div> */}
                     </div>
                   </div>
-                 
+                  <div className="row">
+                    <div className="col-md-12">
+                      {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                    </div>
+                  </div>
                 </StatusTable>
               }
             />
           </div>
         )}
-        
+
         {isHospitalUser === true && (
           <Accordion
             expanded={false}
@@ -2399,11 +2361,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <StatusTable>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-12">
-                      <h1 className="summaryheadingh">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}</span>{" "}
-                      </h1>
-                    </div>
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff" }}>{`${t("CR_HOSP_ADMISSION_DETAILS")}`}</span>{" "}
+                    </h1>
                   </div>
                 </div>
                 <div className="row">
@@ -2436,28 +2396,24 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-6">
                       <CardText className="summarySubHeading">: {InitiatorinfoDetails?.obstetricsNumber}</CardText>
                     </div>
-                    {/* <div className="col-md-2">
-                      {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                    </div> */}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
                   </div>
                 </div>
               </StatusTable>
             }
           />
         )}
-         <div className="row">
-                <div className="col-md-12">
-              <div className="col-md-4">
-                    {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                  </div>
-                  </div>
-                  </div>
+
         {/* {window.location.href.includes("/citizen") && ( */}
         <div>
           <div className="row">
             <div className="col-md-12">
               <h1 className="summaryheadingh">
-                <span style={{  adding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+                <span style={{ marginLeft: "10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
               </h1>
             </div>
           </div>

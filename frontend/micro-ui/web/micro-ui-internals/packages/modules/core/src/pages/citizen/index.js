@@ -13,7 +13,7 @@ import UserProfile from "./Home/UserProfile";
 import Dashboard from "./Dashboard";
 // import PDF from "../../assets/";
 import { useQueryClient } from "react-query";
-import Footer from "../Footer";
+import CommonFooter from "../../components/TopBarSideBar/CommonFooter";
 import KsmartHome from "../../components/KsmartHome";
 
 const getTenants = (codes, tenants) => {
@@ -499,11 +499,11 @@ const Home = ({
     );
   });
 
-  let parts = window.location.pathname.split('/').pop() || 'citizen';
+  let parts = window.location.pathname.split("/").pop() || "citizen";
 
   return (
     <div className={classname}>
-      {parts !== 'citizen' &&
+      {parts !== "citizen" && (
         <TopBarSideBar
           t={t}
           stateInfo={stateInfo}
@@ -514,7 +514,8 @@ const Home = ({
           handleUserDropdownSelection={handleUserDropdownSelection}
           logoUrl={logoUrl}
           showSidebar={true}
-        />}
+        />
+      )}
       {/* <TopBarSideBarKsmart 
        t={t}
        stateInfo={stateInfo}
@@ -527,7 +528,7 @@ const Home = ({
        showSidebar={true}
       /> */}
 
-      <div className={`main center-container mb-25`}>
+      <div className={`center-container`} style={{ paddingTop: "26px" }}>
         <Switch>
           <Route exact path={path}>
             <KsmartHome />
@@ -567,7 +568,7 @@ const Home = ({
           </ErrorBoundary>
         </Switch>
       </div>
-      {/* <Footer /> */}
+      <CommonFooter />
     </div>
   );
 };

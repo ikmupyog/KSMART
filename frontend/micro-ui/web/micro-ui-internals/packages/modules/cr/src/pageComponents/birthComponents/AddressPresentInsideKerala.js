@@ -329,7 +329,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
         if (formData?.AddressBirthDetails?.presentWardNo != null && cmbWardNo.length > 0) {
             if (cmbWardNo.length > 0 && (presentWardNo === undefined || presentWardNo === "")) {
-                setPresentWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AddressBirthDetails?.presentWardNo)[0]);
+                setPresentWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === 
+                    formData?.AddressBirthDetails?.presentWardNo)[0]);
             }
         }
         if (formData?.AddressBirthDetails?.presentInsideKeralaPostOffice != null) {
