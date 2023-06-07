@@ -3,6 +3,18 @@
   border-radius: 25px;
   display: flow-root;
 
+  .summaryHeading {
+   color: #00377B !important;
+    font-weight: 500 !important;
+    font-size: 15px !important;  
+    text-align: left !important;
+  }
+  .summarySubHeading {
+    color: #547195 !important;
+    font-size: 15px !important;  
+    text-align: left !important;
+  }
+  
   .card-header {  }
 
   .card-sub-header {

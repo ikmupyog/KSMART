@@ -30,7 +30,7 @@ const ActionButton = ({ jumpTo }) => {
     <LinkButton
       label={t("CS_COMMON_CHANGE")}
       className="check-page-link-button"
-      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+      style={jumpTo.includes("proof-of-identity") ? { background: "#D7E1F1", borderRadius: "30px"} : {}}
       onClick={routeTo}
     />
   );
@@ -154,7 +154,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
-        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px", color: "#00377B" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
         <Accordion
           expanded={true}
           title={t("CR_BIRTH_CHILD_DETAILS")}
@@ -172,20 +172,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`} </CardText>
+                    <CardText className="summaryHeading" >{`${t("CR_DATE_OF_BIRTH_TIME")}`} </CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {convertEpochToDate(ChildDetails?.childDOB)}</CardText>
+                    <CardText className="summarySubHeading">: {convertEpochToDate(ChildDetails?.childDOB)}</CardText>
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_TIME_OF_BIRTH")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    <CardText className="summarySubHeading">
                       : {ChildDetails?.displaytime ? ChildDetails?.displaytime + " " + ChildDetails?.displayAmPm : "NOT_RECORDED"}
                       {/* {ChildDetails?.birthDateTime ? ChildDetails?.birthDateTime : "NOT_RECORDED"} */}
                     </CardText>
@@ -195,20 +195,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} </CardText>
+                    <CardText className="summaryHeading">{`${t("CR_GENDER")}`} </CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.gender.code}</CardText>
+                    <CardText className="summarySubHeading">: {ChildDetails?.gender.code}</CardText>
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.childAadharNo ? ChildDetails?.childAadharNo : "NOT_RECORDED"}</CardText>
+                    <CardText className="summarySubHeading">: {ChildDetails?.childAadharNo ? ChildDetails?.childAadharNo : "NOT_RECORDED"}</CardText>
                   </div>
                 </div>
               </div>
@@ -224,49 +224,54 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CHILD_NAME")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_CHILD_NAME")}`}</CardText>
                   </div>
                   <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.childFirstNameEn ? ChildDetails?.childFirstNameEn + " " + ChildDetails?.childMiddleNameEn
+                    <CardText className="summarySubHeading">: {ChildDetails?.childFirstNameEn ? ChildDetails?.childFirstNameEn + " " + ChildDetails?.childMiddleNameEn
                       + " " + ChildDetails?.childLastNameEn + " / " + ChildDetails?.childFirstNameMl + " " + ChildDetails?.childMiddleNameMl + " " +
                       ChildDetails?.childLastNameMl : "NOT_RECORDED"}</CardText>
                   </div>
-                  <div className="col-md-2">
-                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
+                
                   {/* <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_EN")}`} :</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_MIDDLE_NAME_EN")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childMiddleNameEn}</CardText>
+                    <CardText className="summaryHeading">{ChildDetails?.childMiddleNameEn}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_EN")}`} :</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_LAST_NAME_EN")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameEn}</CardText>
+                    <CardText className="summaryHeading">{ChildDetails?.childLastNameEn}</CardText>
                   </div> */}
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
+                  </div>
               {/* <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FIRST_NAME_ML")}`} :</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_FIRST_NAME_ML")}`} :</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childFirstNameMl}</CardText>
+                    <CardText className="summaryHeading">{ChildDetails?.childFirstNameMl}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MIDDLE_NAME_ML")}`} :</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_MIDDLE_NAME_ML")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childMiddleNameMl}</CardText>
+                    <CardText className="summaryHeading">{ChildDetails?.childMiddleNameMl}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LAST_NAME_ML")}`} :</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_LAST_NAME_ML")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.childLastNameMl}</CardText>
+                    <CardText className="summaryHeading">{ChildDetails?.childLastNameMl}</CardText>
                     {<ActionButton jumpTo={`${routeLink}/child-details`} />}
                   </div>
                 </div>
@@ -337,10 +342,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_PLACE_OF_BIRTH")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.birthPlace.name}</CardText>
+                    <CardText className="summarySubHeading">: {ChildDetails?.birthPlace.name}</CardText>
                   </div>
                 </div>
               </div>
@@ -349,27 +354,34 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOSPITAL_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOSPITAL_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.hospitalName.hospitalName}</CardText>
+                        <CardText className="summarySubHeading">: {ChildDetails?.hospitalName.hospitalName}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOSPITAL_ML")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOSPITAL_ML")}`} </CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {ChildDetails?.hospitalName.hospitalNamelocal}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton style={{ Colour: "red !important" }} jumpTo={`${routeLink}/child-details`} />}
-                      </div>
+                      </div> */}
                     </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
                   </div>
                 </div>
               )}
@@ -378,20 +390,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_TYPE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_INSTITUTION_TYPE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.institution.name}</CardText>
+                        <CardText className="summarySubHeading">: {ChildDetails?.institution.name}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_INSTITUTION_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {ChildDetails?.institutionId.institutionName}
                         </CardText>
                       </div>
@@ -400,17 +412,24 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_INSTITUTION_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {ChildDetails?.institutionId.institutionNamelocal}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                      </div>
+                      </div> */}
                     </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
                   </div>
                 </div>
               )}
@@ -419,73 +438,80 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.wardNo.namecmb}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.wardNo.namecmb}</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsPostOffice.name}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsPostOffice.name}</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsPincode}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsPincode}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsLocalityNameEn}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsLocalityNameEn}</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsLocalityNameMl}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsLocalityNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsStreetNameEn}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsStreetNameEn}</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsStreetNameMl}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsStreetNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsHouseNameEn}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsHouseNameEn}</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.adrsHouseNameMl}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                        <CardText className="summarySubHeading">{ChildDetails?.adrsHouseNameMl}</CardText>
+                        {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
                   </div>
                 </div>
               )}
@@ -494,92 +520,106 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_VEHICLE_TYPE")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_VEHICLE_TYPE")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleType.name}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleType.name}</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_VEHICLE_REGISTRATION_NO")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_VEHICLE_REGISTRATION_NO")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleRegistrationNo}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleRegistrationNo}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summaryHeading">
                           {`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`} :
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleHaltPlace}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleHaltPlace}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_VEHICLE_FROM_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_VEHICLE_FROM_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleFromEn}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleFromEn}</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_VEHICLE_TO_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_VEHICLE_TO_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleToEn}</CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_VEHICLE_FROM_ML")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleFromMl}</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_VEHICLE_TO_ML")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleToMl}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleToEn}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADMITTED_HOSPITAL_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_VEHICLE_FROM_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleFromMl}</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText className="summaryHeading">{`${t("CR_VEHICLE_TO_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleToMl}</CardText>
+                        {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText className="summaryHeading">{`${t("CR_ADMITTED_HOSPITAL_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText className="summarySubHeading">
                           {ChildDetails?.setadmittedHospitalEn.hospitalName}
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.wardNo.namecmb}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.wardNo.namecmb}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DESCRIPTION")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_DESCRIPTION")}`} :</CardText>
                       </div>
                       <div className="col-md-9">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.vehicleDesDetailsEn}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                        <CardText className="summarySubHeading">{ChildDetails?.vehicleDesDetailsEn}</CardText>
+                        {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
                   </div>
                 </div>
               )}
@@ -588,61 +628,68 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PUBLIC_PLACE_TYPE")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_PUBLIC_PLACE_TYPE")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.publicPlaceType.name}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.publicPlaceType.name}</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.wardNo.namecmb}</CardText>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.localityNameEn}</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`} :</CardText>
-                      </div>
-                      <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.localityNameMl}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.wardNo.namecmb}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.streetNameEn}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.localityNameEn}</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.streetNameMl}</CardText>
+                        <CardText className="summarySubHeading">{ChildDetails?.localityNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DESCRIPTION")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText className="summarySubHeading">{ChildDetails?.streetNameEn}</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`} :</CardText>
+                      </div>
+                      <div className="col-md-3">
+                        <CardText className="summarySubHeading">{ChildDetails?.streetNameMl}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <CardText className="summaryHeading">{`${t("CR_DESCRIPTION")}`} :</CardText>
                       </div>
                       <div className="col-md-9">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{ChildDetails?.publicPlaceDecpEn}</CardText>
-                        {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                        <CardText className="summarySubHeading">{ChildDetails?.publicPlaceDecpEn}</CardText>
+                        {/* {<ActionButton jumpTo={`${routeLink}/child-details`} />} */}
                       </div>
                     </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
                   </div>
                 </div>
               )}
@@ -666,10 +713,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    <CardText className="summarySubHeading">
                       : {locale === "en_IN" ? ChildDetails?.medicalAttensionSub?.name : locale === "ml_IN" ? ChildDetails?.medicalAttensionSub?.namelocal : ChildDetails?.medicalAttensionSub?.name}</CardText>
                   </div>
                 </div>
@@ -677,20 +724,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PREGNANCY_DURATION")}`} </CardText>
+                    <CardText className="summaryHeading">{`${t("CR_PREGNANCY_DURATION")}`} </CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.pregnancyDuration}</CardText>
+                    <CardText className="summarySubHeading">: {ChildDetails?.pregnancyDuration}</CardText>
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DELIVERY_METHOD")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_DELIVERY_METHOD")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    <CardText className="summarySubHeading">
                       : {locale === "en_IN" ? ChildDetails?.deliveryMethods?.name : locale === "ml_IN" ? ChildDetails?.deliveryMethods?.namelocal : ChildDetails?.deliveryMethods?.name}</CardText>
                   </div>
                 </div>
@@ -698,16 +745,23 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_BIRTH_WEIGHT")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_BIRTH_WEIGHT")}`}</CardText>
                   </div>
                   <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.birthWeight}</CardText>
+                    <CardText className="summarySubHeading">: {ChildDetails?.birthWeight}</CardText>
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     {<ActionButton jumpTo={`${routeLink}/child-details`} />}
-                  </div>
+                  </div> */}
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/child-details`} />}
+                  </div>
+                  </div>
+                  </div>
             </StatusTable>
           }
         />
@@ -727,55 +781,56 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-10">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      <CardText className="summaryHeading">
                         {`${t("CR_MOTHER_INFORMATION_MISSING")}`} :
                       </CardText>
                     </div>
-                    <div className="col-md-2">
+                    {/* <div className="col-md-2">
                       {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
+                
               )}
               {ParentsDetails?.isMotherInfo === false && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_AADHAAR")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.motherAadhar}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.motherAadhar}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_EN")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CR_MOTHER_NAME_EN")}`} </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.motherFirstNameEn}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.motherFirstNameEn}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_MOTHER_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.motherFirstNameMl}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.motherFirstNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_NATIONALITY")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.motherNationality?.nationalityname : locale === "ml_IN" ? ParentsDetails?.motherNationality?.nationalitynamelocal : ParentsDetails?.motherNationality?.nationalityname}</CardText>
                       </div>
                     </div>
@@ -783,10 +838,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_MARITAL_STATUS")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_MOTHER_MARITAL_STATUS")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.motherMaritalStatus?.name : locale === "ml_IN" ? ParentsDetails?.motherMaritalStatus?.namelocal : ParentsDetails?.motherMaritalStatus?.name}
                         </CardText>
                       </div>
@@ -795,40 +850,40 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CR_MOTHER_AGE_MARRIAGE")}`} </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.motherMarriageAge}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.motherMarriageAge}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_MOTHER_AGE_BIRTH")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.motherMarriageBirth}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.motherMarriageBirth}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ORDER_CURRENT_DELIVERY")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.orderofChildren}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.orderofChildren}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_EDUCATION")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.motherEducation?.name : locale === "ml_IN" ? ParentsDetails?.motherEducation?.namelocal : ParentsDetails?.motherEducation?.name}
                         </CardText>
                       </div>
@@ -837,20 +892,28 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_PROFESSIONAL")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.motherProfession?.name : locale === "ml_IN" ? ParentsDetails?.motherProfession?.namelocal : ParentsDetails?.motherProfession?.name}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
+               
                 </div>
               )}
+                 <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
+                  </div>
+                  </div>
+                  </div>
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
@@ -862,13 +925,13 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-10">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      <CardText className="summaryHeading">
                         {`${t("CR_FATHER_INFORMATION_MISSING")}`} :
                       </CardText>
                     </div>
-                    <div className="col-md-2">
+                    {/* <div className="col-md-2">
                       {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )}
@@ -877,40 +940,40 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_AADHAAR")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.fatherAadhar}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.fatherAadhar}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_FATHER_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.fatherFirstNameEn}</CardText>
+                        <CardText className="summarySubHeading">: {ParentsDetails?.fatherFirstNameEn}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FATHER_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_FATHER_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}> : {ParentsDetails?.fatherFirstNameMl}</CardText>
+                        <CardText className="summarySubHeading"> : {ParentsDetails?.fatherFirstNameMl}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_NATIONALITY")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.fatherNationality?.nationalityname : locale === "ml_IN" ? ParentsDetails?.fatherNationality?.nationalitynamelocal : ParentsDetails?.fatherNationality?.nationalityname}
                         </CardText>
                       </div>
@@ -919,10 +982,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_EDUCATION")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_EDUCATION")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.fatherEducation?.name : locale === "ml_IN" ? ParentsDetails?.fatherEducation?.namelocal : ParentsDetails?.fatherEducation?.name}
                         </CardText>
                       </div>
@@ -931,20 +994,27 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PROFESSIONAL")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_PROFESSIONAL")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? ParentsDetails?.fatherProfession?.name : locale === "ml_IN" ? ParentsDetails?.fatherProfession?.namelocal : ParentsDetails?.fatherProfession?.name}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+               <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
+                  </div>
+                  </div>
+                  </div>
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
@@ -955,10 +1025,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_RELIGION")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CS_COMMON_RELIGION")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                    <CardText className="summarySubHeading">
                       : {locale === "en_IN" ? ParentsDetails?.Religion?.name : locale === "ml_IN" ? ParentsDetails?.Religion?.namelocal : ParentsDetails?.Religion?.name}
                     </CardText>
                   </div>
@@ -967,26 +1037,33 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_CONTACT_NO")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_PARENTS_CONTACT_NO")}`}</CardText>
                   </div>
                   <div className="col-md-8">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.fatherMobile}</CardText>
+                    <CardText className="summarySubHeading">: {ParentsDetails?.fatherMobile}</CardText>
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_PARENTS_EMAIL")}`}</CardText>
+                    <CardText className="summaryHeading">{`${t("CR_PARENTS_EMAIL")}`}</CardText>
                   </div>
                   <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ParentsDetails?.fatherEmail}</CardText>
+                    <CardText className="summarySubHeading">: {ParentsDetails?.fatherEmail}</CardText>
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
-                  </div>
+                  </div> */}
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/parents-details`} />}
+                  </div>
+                  </div>
+                  </div>
             </StatusTable>
           }
         />
@@ -1007,10 +1084,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_DISTRICT")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaDistrict?.name : locale === "ml_IN" ? AddressBirthDetails?.presentInsideKeralaDistrict?.namelocal : AddressBirthDetails?.presentInsideKeralaDistrict?.name}
                         </CardText>
                       </div>
@@ -1019,10 +1096,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_TALUK")}`} </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaTaluk?.name : locale === "ml_IN" ? AddressBirthDetails?.presentInsideKeralaTaluk?.namelocal : AddressBirthDetails?.presentInsideKeralaTaluk?.name}
                         </CardText>
                       </div>
@@ -1031,10 +1108,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_VILLAGE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaVillage?.name : locale === "ml_IN" ? AddressBirthDetails?.presentInsideKeralaVillage?.namelocal : AddressBirthDetails?.presentInsideKeralaVillage?.name}
                         </CardText>
                       </div>
@@ -1043,10 +1120,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_LB_NAME")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaLBName?.name : locale === "ml_IN" ? AddressBirthDetails?.presentInsideKeralaLBName?.namelocal : AddressBirthDetails?.presentInsideKeralaLBName?.name}
                         </CardText>
                       </div>
@@ -1055,10 +1132,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentWardNo.namecmb}
                         </CardText>
                       </div>
@@ -1067,10 +1144,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentInsideKeralaPostOffice?.name : locale === "ml_IN" ? AddressBirthDetails?.presentInsideKeralaPostOffice?.namelocal : AddressBirthDetails?.presentInsideKeralaPostOffice?.name}
                         </CardText>
                       </div>
@@ -1079,10 +1156,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_PIN_CODE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaPincode}
                         </CardText>
                       </div>
@@ -1091,10 +1168,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
@@ -1103,10 +1180,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
@@ -1115,10 +1192,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaStreetNameEn ? AddressBirthDetails?.presentInsideKeralaStreetNameEn : "NOT_RECORDED"}
                         </CardText>
                       </div>
@@ -1127,10 +1204,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaStreetNameMl ? AddressBirthDetails?.presentInsideKeralaStreetNameMl : "NOT_RECORDED"}
                         </CardText>
                       </div>
@@ -1139,10 +1216,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaHouseNameEn}
                         </CardText>
                       </div>
@@ -1151,20 +1228,21 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+              
               {AddressBirthDetails?.presentaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.presentaddressStateName?.code != "kl" && (
                 <div>
                   <div className="row">
@@ -1177,10 +1255,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_DISTRICT")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentOutsideKeralaDistrict?.name : locale === "ml_IN" ? AddressBirthDetails?.presentOutsideKeralaDistrict?.namelocal : AddressBirthDetails?.presentOutsideKeralaDistrict?.name}
                         </CardText>
                       </div>
@@ -1189,10 +1267,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_TALUK_TEHSIL")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaTaluk}
                         </CardText>
                       </div>
@@ -1201,10 +1279,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentOutsideKeralaVillage?.name : locale === "ml_IN" ? AddressBirthDetails?.presentOutsideKeralaVillage?.namelocal : AddressBirthDetails?.presentOutsideKeralaVillage?.name}
                         </CardText>
                       </div>
@@ -1213,10 +1291,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_CITY_VILLAGE_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaCityVilgeEn}
                         </CardText>
                       </div>
@@ -1225,10 +1303,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaPostOfficeEn}
                         </CardText>
                       </div>
@@ -1237,10 +1315,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_PIN_CODE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaPincode}
                         </CardText>
                       </div>
@@ -1249,10 +1327,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`} </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
@@ -1261,10 +1339,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
@@ -1273,10 +1351,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaStreetNameEn}
                         </CardText>
                       </div>
@@ -1285,10 +1363,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaStreetNameMl}
                         </CardText>
                       </div>
@@ -1297,10 +1375,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaHouseNameEn}
                         </CardText>
                       </div>
@@ -1309,20 +1387,21 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+              
               {AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
@@ -1335,12 +1414,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summaryHeading">
                           {`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                         </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutSideIndiaProvinceEn}
                         </CardText>
                       </div>
@@ -1349,12 +1428,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summaryHeading">
                           {`${t("CR_STATE_REGION_PROVINCE_ML")}`}
                         </CardText>
                       </div>
                       <div className="col-md-3">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutSideIndiaProvinceMl}
                         </CardText>
                       </div>
@@ -1363,10 +1442,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.presentOutSideIndiaadrsVillage?.name : locale === "ml_IN" ? AddressBirthDetails?.presentOutSideIndiaadrsVillage?.namelocal : AddressBirthDetails?.presentOutSideIndiaadrsVillage?.name}
                         </CardText>
                       </div>
@@ -1375,10 +1454,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_CITY_TOWN_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.presentOutSideIndiaadrsCityTown}
                         </CardText>
                       </div>
@@ -1387,10 +1466,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ZIP_CODE")}`} :</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.presentOutSideIndiaPostCode}
                         </CardText>
                       </div>
@@ -1399,10 +1478,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_ONE_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.presentOutSideIndiaAdressEn}
                         </CardText>
                       </div>
@@ -1411,10 +1490,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_ONE_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.presentOutSideIndiaAdressMl}
                         </CardText>
                       </div>
@@ -1423,10 +1502,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_TWO_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.presentOutSideIndiaAdressEnB}
                         </CardText>
                       </div>
@@ -1435,20 +1514,27 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_TWO_ML")}`} :</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+               <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
+                  </div>
+                  </div>
+                  </div>
               {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code === "kl" && (
                 <div>
                   <div className="row">
@@ -1461,10 +1547,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_DISTRICT")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrDistrict?.name : locale === "ml_IN" ? AddressBirthDetails?.permntInKeralaAdrDistrict?.namelocal : AddressBirthDetails?.permntInKeralaAdrDistrict?.name}
                         </CardText>
                       </div>
@@ -1473,10 +1559,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_TALUK")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrTaluk?.name : locale === "ml_IN" ? AddressBirthDetails?.permntInKeralaAdrTaluk?.namelocal : AddressBirthDetails?.permntInKeralaAdrTaluk?.name}
                         </CardText>
                       </div>
@@ -1485,10 +1571,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_VILLAGE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrVillage?.name : locale === "ml_IN" ? AddressBirthDetails?.permntInKeralaAdrVillage?.namelocal : AddressBirthDetails?.permntInKeralaAdrVillage?.name}
                         </CardText>
                       </div>
@@ -1497,10 +1583,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_LB_NAME")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_LB_NAME")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrLBName?.name : locale === "ml_IN" ? AddressBirthDetails?.permntInKeralaAdrLBName?.namelocal : AddressBirthDetails?.permntInKeralaAdrLBName?.name}
                         </CardText>
                       </div>
@@ -1509,10 +1595,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_WARD")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaWardNo.namecmb}
                         </CardText>
                       </div>
@@ -1521,10 +1607,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntInKeralaAdrPostOffice?.name : locale === "ml_IN" ? AddressBirthDetails?.permntInKeralaAdrPostOffice?.namelocal : AddressBirthDetails?.permntInKeralaAdrPostOffice?.name}
                         </CardText>
                       </div>
@@ -1533,10 +1619,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_PIN_CODE")}`} </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaAdrPincode}
                         </CardText>
                       </div>
@@ -1545,10 +1631,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`} :</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           {AddressBirthDetails?.permntInKeralaAdrLocalityNameEn}
                         </CardText>
                       </div>
@@ -1557,10 +1643,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaAdrLocalityNameMl}
                         </CardText>
                       </div>
@@ -1569,10 +1655,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaAdrStreetNameEn}
                         </CardText>
                       </div>
@@ -1581,10 +1667,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaAdrStreetNameMl}
                         </CardText>
                       </div>
@@ -1593,10 +1679,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaAdrHouseNameEn}
                         </CardText>
                       </div>
@@ -1605,20 +1691,21 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+              
               {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code != "kl" && (
                 <div>
                   <div className="row">
@@ -1631,10 +1718,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_DISTRICT")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntOutsideKeralaDistrict?.name : AddressBirthDetails?.permntOutsideKeralaDistrict?.namelocal}
                         </CardText>
                       </div>
@@ -1643,10 +1730,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TALUK_TEHSIL")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_TALUK_TEHSIL")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaTaluk}
                         </CardText>
                       </div>
@@ -1655,10 +1742,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntOutsideKeralaVillage?.name : locale === "ml_IN" ? AddressBirthDetails?.permntOutsideKeralaVillage?.namelocal : AddressBirthDetails?.permntOutsideKeralaVillage?.name}
                         </CardText>
                       </div>
@@ -1667,10 +1754,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_VILLAGE_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_CITY_VILLAGE_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaCityVilgeEn}
                         </CardText>
                       </div>
@@ -1679,10 +1766,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_POST_OFFICE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaPostOfficeEn}
                         </CardText>
                       </div>
@@ -1691,10 +1778,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_PIN_CODE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaPincode}
                         </CardText>
                       </div>
@@ -1703,10 +1790,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
@@ -1715,10 +1802,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_LOCALITY_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_LOCALITY_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
@@ -1727,10 +1814,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaStreetNameEn}
                         </CardText>
                       </div>
@@ -1739,10 +1826,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_STREET_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_STREET_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaStreetNameMl}
                         </CardText>
                       </div>
@@ -1751,10 +1838,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaHouseNameEn}
                         </CardText>
                       </div>
@@ -1763,20 +1850,21 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_HOUSE_NAME_ML")}`}</CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
                     </div>
-                    <div className="col-md-2">
+                    {/* <div className="col-md-2">
                       {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )}
+              
               {AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
@@ -1789,12 +1877,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summaryHeading">
                           {`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                         </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaprovinceEn}
                         </CardText>
                       </div>
@@ -1803,12 +1891,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summaryHeading">
                           {`${t("CR_STATE_REGION_PROVINCE_ML")}`}
                         </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaprovinceMl}
                         </CardText>
                       </div>
@@ -1817,10 +1905,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_TOWN_VILLAGE_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {locale === "en_IN" ? AddressBirthDetails?.permntOutsideIndiaVillage?.name : locale === "ml_IN" ? AddressBirthDetails?.permntOutsideIndiaVillage?.namelocal : AddressBirthDetails?.permntOutsideIndiaVillage?.name}
                         </CardText>
                       </div>
@@ -1829,10 +1917,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_CITY_TOWN_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_CITY_TOWN_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaCityTown}
                         </CardText>
                       </div>
@@ -1841,10 +1929,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ZIP_CODE")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ZIP_CODE")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permanentOutsideIndiaPostCode}
                         </CardText>
                       </div>
@@ -1853,10 +1941,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_EN")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_ONE_EN")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaLineoneEn}
                         </CardText>
                       </div>
@@ -1865,10 +1953,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_ONE_ML")}`}</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_ONE_ML")}`}</CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaLineoneMl}
                         </CardText>
                       </div>
@@ -1877,10 +1965,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_EN")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_TWO_EN")}`} </CardText>
                       </div>
                       <div className="col-md-8">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaLinetwoEn}
                         </CardText>
                       </div>
@@ -1889,20 +1977,27 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ADDRES_LINE_TWO_ML")}`} </CardText>
+                        <CardText className="summaryHeading">{`${t("CR_ADDRES_LINE_TWO_ML")}`} </CardText>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                        <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
                         </CardText>
                       </div>
-                      <div className="col-md-2">
+                      {/* <div className="col-md-2">
                         {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+               <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/address-birth`} />}
+                  </div>
+                  </div>
+                  </div>
             </StatusTable>
           }
         />
@@ -1916,20 +2011,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-4">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RDO_PROCEED_NO")}`}</CardText>
+                      <CardText className="summaryHeading">{`${t("CR_RDO_PROCEED_NO")}`}</CardText>
                     </div>
                     <div className="col-md-8">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.proceedNoRDO}</CardText>
+                      <CardText className="summarySubHeading">: {ChildDetails?.proceedNoRDO}</CardText>
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-4">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAC_REG_NO")}`} </CardText>
+                      <CardText className="summaryHeading">{`${t("CR_NAC_REG_NO")}`} </CardText>
                     </div>
                     <div className="col-md-8">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {ChildDetails?.regNoNAC}</CardText>
+                      <CardText className="summarySubHeading">: {ChildDetails?.regNoNAC}</CardText>
                     </div>
                   </div>
                 </div>
@@ -2014,10 +2109,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INITIATOR")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            <CardText className="summarySubHeading">
                               : {locale === "en_IN" ? InitiatorinfoDetails?.initiator?.name : locale === "ml_IN" ? InitiatorinfoDetails?.initiator?.namelocal : InitiatorinfoDetails?.initiator?.name}
                             </CardText>
                           </div>
@@ -2026,57 +2121,58 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CS_COMMON_AADHAAR")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAadhar}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} </CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INITIATOR_NAME")}`} </CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorNameEn}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_MOBILE_NO")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorMobile}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorMobile}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INFORMER_ADDRESS")}`}</CardText>
                           </div>
                           <div className="col-md-6">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorAddress}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAddress}</CardText>
                           </div>
-                          <div className="col-md-2">
+                          {/* <div className="col-md-2">
                             {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
                   )}
+                
                   {InitiatorinfoDetails?.isGuardian === true && InitiatorinfoDetails?.isCaretaker === false && (
                     <div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INITIATOR")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            <CardText className="summarySubHeading">
                               : {locale === "en_IN" ? InitiatorinfoDetails?.initiator?.name : locale === "ml_IN" ? InitiatorinfoDetails?.initiator?.namelocal : InitiatorinfoDetails?.initiator?.name}
                             </CardText>
                           </div>
@@ -2085,10 +2181,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_RELATION")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            <CardText className="summarySubHeading">
                               : {locale === "en_IN" ? InitiatorinfoDetails?.relation?.name : locale === "ml_IN" ? InitiatorinfoDetails?.relation?.namelocal : InitiatorinfoDetails?.relation?.name}
                             </CardText>
                           </div>
@@ -2097,57 +2193,58 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CS_COMMON_AADHAAR")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAadhar}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INITIATOR_NAME")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorNameEn}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_MOBILE_NO")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorMobile}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorMobile}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INFORMER_ADDRESS")}`}</CardText>
                           </div>
                           <div className="col-md-6">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorAddress}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAddress}</CardText>
                           </div>
-                          <div className="col-md-2">
+                          {/* <div className="col-md-2">
                             {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
                   )}
+                  
                   {InitiatorinfoDetails?.isGuardian === false && InitiatorinfoDetails?.isCaretaker === true && (
                     <div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INITIATOR")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            <CardText className="summarySubHeading">
                               : {locale === "en_IN" ? InitiatorinfoDetails?.initiator?.name : locale === "ml_IN" ? InitiatorinfoDetails?.initiator?.namelocal : InitiatorinfoDetails?.initiator?.name}
                             </CardText>
                           </div>
@@ -2156,20 +2253,20 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INSTITUTION_NAME")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorInstitutionName}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorInstitutionName}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} </CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`} </CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                            <CardText className="summarySubHeading">
                               : {locale === "en_IN" ? InitiatorinfoDetails?.initiatorDesi?.name : locale === "ml_IN" ? InitiatorinfoDetails?.initiatorDesi?.namelocal : InitiatorinfoDetails?.initiatorDesi?.name}
                             </CardText>
                           </div>
@@ -2178,48 +2275,49 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CS_COMMON_AADHAAR")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorAadhar}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAadhar}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INITIATOR_NAME")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorNameEn}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorNameEn}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_MOBILE_NO")}`}</CardText>
                           </div>
                           <div className="col-md-8">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorMobile}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorMobile}</CardText>
                           </div>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="col-md-4">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`}</CardText>
+                            <CardText className="summaryHeading">{`${t("CR_INFORMER_ADDRESS")}`}</CardText>
                           </div>
                           <div className="col-md-6">
-                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.initiatorAddress}</CardText>
+                            <CardText className="summarySubHeading">: {InitiatorinfoDetails?.initiatorAddress}</CardText>
                           </div>
-                          <div className="col-md-2">
+                          {/* <div className="col-md-2">
                             {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
                   )}
+                
                 </StatusTable>
               }
             />
@@ -2246,51 +2344,53 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantAadhar}</CardText>
+                        <CardText className="summarySubHeading">{InformarHosInstDetails?.infomantAadhar}</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_INITIATOR_NAME")}`} :</CardText>
                       </div>
                       <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantFirstNameEn}</CardText>
+                        <CardText className="summarySubHeading">{InformarHosInstDetails?.infomantFirstNameEn}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_DESIGNATION")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_INFORMER_DESIGNATION")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.informerDesi}</CardText>
+                        <CardText className="summarySubHeading">{InformarHosInstDetails?.informerDesi}</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_MOBILE_NO")}`} :</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.infomantMobile}</CardText>
+                        <CardText className="summarySubHeading">{InformarHosInstDetails?.infomantMobile}</CardText>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
+                        <CardText className="summaryHeading">{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                       </div>
-                      <div className="col-md-4">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformarHosInstDetails?.informerAddress}</CardText>
+                      {/* <div className="col-md-4">
+                        <CardText className="summarySubHeading">{InformarHosInstDetails?.informerAddress}</CardText>
                         {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
+                 
                 </StatusTable>
               }
             />
           </div>
         )}
+        
         {isHospitalUser === true && (
           <Accordion
             expanded={false}
@@ -2309,10 +2409,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-4">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP")}`}</CardText>
+                      <CardText className="summaryHeading">{`${t("CR_IP_OP")}`}</CardText>
                     </div>
                     <div className="col-md-8">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      <CardText className="summarySubHeading">
                         : {locale === "en_IN" ? InitiatorinfoDetails?.ipopList?.name : locale === "ml_IN" ? InitiatorinfoDetails?.ipopList?.namelocal : InitiatorinfoDetails?.ipopList?.name}
                       </CardText>
                     </div>
@@ -2321,36 +2421,43 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-4">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_IP_OP_NO")}`}</CardText>
+                      <CardText className="summaryHeading">{`${t("CR_IP_OP_NO")}`}</CardText>
                     </div>
                     <div className="col-md-8">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.ipopNumber}</CardText>
+                      <CardText className="summarySubHeading">: {InitiatorinfoDetails?.ipopNumber}</CardText>
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="col-md-4">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GYNC_REG_NO")}`}</CardText>
+                      <CardText className="summaryHeading">{`${t("CR_GYNC_REG_NO")}`}</CardText>
                     </div>
                     <div className="col-md-6">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>: {InitiatorinfoDetails?.obstetricsNumber}</CardText>
+                      <CardText className="summarySubHeading">: {InitiatorinfoDetails?.obstetricsNumber}</CardText>
                     </div>
-                    <div className="col-md-2">
+                    {/* <div className="col-md-2">
                       {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </StatusTable>
             }
           />
         )}
+         <div className="row">
+                <div className="col-md-12">
+              <div className="col-md-4">
+                    {<ActionButton jumpTo={`${routeLink}/initiator-details`} />}
+                  </div>
+                  </div>
+                  </div>
         {/* {window.location.href.includes("/citizen") && ( */}
         <div>
           <div className="row">
             <div className="col-md-12">
               <h1 className="summaryheadingh">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+                <span style={{  adding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
               </h1>
             </div>
           </div>

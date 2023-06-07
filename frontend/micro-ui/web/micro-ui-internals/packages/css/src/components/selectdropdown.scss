@@ -105,7 +105,7 @@
 
 .select-wrap {
   @apply mb-lg bg-white relative;
-  border-radius: 12px;
+  border-radius: 8px;
 
   .select {
     @apply relative block bg-white w-full h-10 border border-solid border-input-border;
@@ -294,7 +294,7 @@
 
   .select {
     @apply relative block bg-white w-full h-10 border border-solid border-input-border;
-    border-radius: 12px;
+    border-radius: 8px;
     input[type="text"] {
       width: calc(100% - 32px);
       background-color: transparent;

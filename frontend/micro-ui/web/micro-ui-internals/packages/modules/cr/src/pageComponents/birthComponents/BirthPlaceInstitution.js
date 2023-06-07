@@ -89,7 +89,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
+                <span style={{ padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
               </h1>
             </div>
           </div>

@@ -9,17 +9,21 @@ const staticStyles = {
     flexDirection: "row",
     justifyContent: "space-between",
     cursor: "pointer",
-    color: "white",
+    color: "#00377B",
     padding: "10px",
     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
     borderTopLeftRadius: "10px",
-    borderTopRightRadius: "10px"
+    borderTopRightRadius: "10px",
+   fontWeight: "700",
+   fontSize: "16px",
+   borderBottom: "1px solid  #E9EEF6",
   },
   body: {
-    backgroundColor: "#e9e4e1",
+    backgroundColor: "#fff",
     padding: "10px",
+    fontSize: "14px",
     borderBottomLeftRadius: "10px",
-    borderBottomRightRadius: "10px"
+    borderBottomRightRadius: "10px",
   }
 }
 

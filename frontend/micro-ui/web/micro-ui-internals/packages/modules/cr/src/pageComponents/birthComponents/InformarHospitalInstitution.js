@@ -131,7 +131,7 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
       } >
         <div className="row">
           <div className="col-md-12" >
-            <h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
+            <h1 className="headingh1" ><span style={{ padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
           </div>
         </div>
         <div className="row">
