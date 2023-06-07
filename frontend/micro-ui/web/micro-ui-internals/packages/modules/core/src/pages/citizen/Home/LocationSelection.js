@@ -144,7 +144,7 @@ const LocationSelection = () => {
           </div>
         )}
         {/* <BackButton /> */}
-        <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto", border: "none", boxShadow: "none" }}>
+        <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto", border: "none", boxShadow: "none", padding: "0px" }}>
           <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", width: "100%" }}>
             <div className="language-button-container">
               <p style={{ color: "#00377b", fontWeight: "500", fontSize: "30px" }}>{t("CS_COMMON_CHOOSE_LOCATION")}</p>
