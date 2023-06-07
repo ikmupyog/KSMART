@@ -1,10 +1,10 @@
-
 .CardBasedOptions {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.16);
     @apply bg-white mb-md px-sm py-md mx-sm rounded w-full;
+    height: fit-content;
 
     .headContent {
-        
+
         position: relative;
         top: -57px;
         left: -30px;
@@ -16,15 +16,16 @@
         font-size: 21px;
 
         h2 {
-            @apply text-heading-s font-bold text-text-primary;
+
+            font-size: 21px !important;
+            line-height: 24px;
+            --text-opacity: 1;
+            color: #00377B !important;
+            font-weight: 500 !important;
         }
 
         p {
-            
-            font-size: 21px;
-            line-height: 24px;
-            --text-opacity: 1;
-            color: #00377B;
+            @apply text-link text-primary-main font-medium cursor-pointer;
 
         }
     }
@@ -68,3 +69,57 @@
         padding: 39px 30px 24px 30px;
     }
 }
+
+.header-btm-search-box .icon-btm-sre {
+    height: 76px;
+    width: 70px;
+    background: #e8ecf1;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 0px 60px 60px;
+}
+
+.header-btm-search-box:hover {
+    background: #ee3d7f;
+}
+
+.header-btm-search-box:hover .inner-box-v h4 {
+    color: #fff;
+}
+
+.header-btm-search-box:hover .icon-btm-sre {
+    background: #fff;
+}
+
+.header-btm-search-box:hover .icon-btm-sre-new {
+    background: #fff;
+}
+.header-btm-search-box .icon-btm-sre-new {
+    height: 62px;
+    width: 56px;
+    background: #e8ecf1;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 0px 60px 60px;
+  }
+  .header-btm-search-box{
+    width: 132px;
+    padding: 0px 22px;
+    height: 125px;
+  }
+
+  @media only screen and (max-device-width: 778px) {
+    .header-btm-search-box{
+        width: 132px;
+        padding: 0px 22px;
+        height: 125px;
+      }
+
+      .CardBasedOptions{
+        
+      }
+  }

@@ -499,11 +499,11 @@ const Home = ({
     );
   });
 
-  let parts = window.location.pathname.split('/').pop() || 'citizen';
+  let parts = window.location.pathname.split("/").pop() || "citizen";
 
   return (
     <div className={classname}>
-      {parts !== 'citizen' &&
+      {parts !== "citizen" && (
         <TopBarSideBar
           t={t}
           stateInfo={stateInfo}
@@ -514,7 +514,8 @@ const Home = ({
           handleUserDropdownSelection={handleUserDropdownSelection}
           logoUrl={logoUrl}
           showSidebar={true}
-        />}
+        />
+      )}
       {/* <TopBarSideBarKsmart 
        t={t}
        stateInfo={stateInfo}
@@ -527,7 +528,7 @@ const Home = ({
        showSidebar={true}
       /> */}
 
-      <div className={`main center-container mb-25`}>
+      <div className={`center-container`} style={{ paddingTop: "26px" }}>
         <Switch>
           <Route exact path={path}>
             <KsmartHome />
