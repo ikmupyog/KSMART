@@ -112,6 +112,7 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
                 borderRadius: "12px",
                 background: "#EDF2FA",
                 boxShadow: "none",
+                width: "320px",
               }}
             >
               <OTPInput length={6} onChange={onOtpChange} value={otp} />
