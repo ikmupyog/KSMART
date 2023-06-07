@@ -62,7 +62,8 @@
   },
   "dependencies": {
     "lodash": "4.17.21",
+    "microbundle-crl": "0.13.11",
     "pdfmake": "^0.2.6",
-    "microbundle-crl": "0.13.11"
+    "react-image-file-resizer": "^0.4.8"
   }
 }

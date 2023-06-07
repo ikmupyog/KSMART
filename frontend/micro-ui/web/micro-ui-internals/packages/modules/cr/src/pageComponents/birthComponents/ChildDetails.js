@@ -28,7 +28,7 @@ import _ from "lodash";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));
   // console.log(formData);
-  // console.log(isEditBirth);
+  // console.log(isEditBirth,"isEditBirth");
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
@@ -1705,7 +1705,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   };
   //&& isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined)
   if (isEditBirth) {
-    if (formData?.ChildDetails?.birthDateTime != null) {
+    // console.log(formData?.ChildDetails?.birthDateTime);
+    if (formData?.ChildDetails?.birthDateTime != null && formData?.ChildDetails?.birthDateTime != "") {
       if (birthDateTime === undefined || birthDateTime === "" || birthDateTime === null) {
         //console.log(formData?.ChildDetails?.birthDateTime);
         //let time = formData?.ChildDetails?.birthDateTime;

@@ -6,6 +6,7 @@ import { convertToBirthRegistration, convertToEditBirthRegistration } from "../.
 import { convertToEditMarriageRegistration, convertToMarriageRegistration } from "../../../utils/marriageIndex";
 import getPDFData from "../../../utils/getCRMarriageAcknowledgementData";
 import { useHistory } from "react-router-dom";
+import _ from "lodash";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -46,7 +47,7 @@ const BannerPicker = (props) => {
 };
 
 const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
-  console.log({data})
+  console.log({ data });
   const [toast, setToast] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
@@ -58,7 +59,9 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   //console.log(sessionStorage.getItem("CR_MARRIAGE_EDIT_FLAG"));
-  const [isEditMarriage, setIsEditBirth] = useState(sessionStorage.getItem("CR_MARRIAGE_EDIT_FLAG") ? true : false);
+  const [isEditMarriage, setIsEditMarriage] = useState(sessionStorage.getItem("CR_MARRIAGE_EDIT_FLAG") ? true : false);
+
+  console.log({ isEditMarriage });
 
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
   // console.log(applicationNumber);
@@ -66,13 +69,11 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   const mutation = Digit.Hooks.cr.useCivilRegistrationMarriageAPI(tenantId, isEditMarriage ? false : true);
 
   useEffect(() => {
-    if (isInitialRender && data?.MarriageDetails?.length > 0) {
+    if (isInitialRender) {
       try {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
-        if (!isEditMarriage 
-          && applicationNumber === null
-          ) {
+        if (!isEditMarriage && applicationNumber === null) {
           setIsInitialRender(false);
           let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : convertToEditMarriageRegistration(data);
           mutation.mutate(formdata, {
@@ -80,15 +81,17 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
           });
         } else {
           let formdata = isEditMarriage ? convertToEditMarriageRegistration(data) : [];
-          mutation.mutate(formdata, {
-            onSuccess,
-          });
+          if (!_.isEmpty(formdata)) {
+            mutation.mutate(formdata, {
+              onSuccess,
+            });
+          }
           setIsInitialRender(false);
         }
       } catch (err) {}
     }
     // else {
-    //   history.push(`/digit-ui/citizen`)
+    // history.push(`/digit-ui/citizen`)
     // }
   }, [mutation]);
 
@@ -104,7 +107,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
     }
   }, [mutation.isSuccess]);
 
-  console.log({ data: mutation.data });
+  console.log({ data });
 
   const handleDownloadPdf = async () => {
     const { MarriageDetails = [] } = mutation.data;
