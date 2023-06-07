@@ -30,7 +30,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
   return (
     <Background>
       {screenSize.dynamicWidth > 1250 && (
-        <Card className=" loginCard  hidden-md hidden-xs w-7/12	">
+        <div className=" loginCard  hidden-md hidden-xs">
           <div style={{ justifyContent: "space-around" }}>
             <div className="language-button-container hidden-md hidden-xs">
               <div style={{ textAlign: "center" }}>
@@ -48,7 +48,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
               <div style={{ justifyContent: "space-between !important" }}></div>
             </div>
           </div>
-        </Card>
+        </div>
       )}
       <div className="bannerCard removeBottomMargin" style={{ backgroundColor: "#EDF2FA", border: "none", boxShadow: "none" }}>
         <div style={{ justifyContent: "space-around" }}>
@@ -61,7 +61,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
                   "CS_LOGIN_PROVIDE_MOBILE_NUMBER"
                 )}`}</label>
                 <br></br>
-                <label style={{ fontSize: "15px", marginTop: "20px !important", color: "#3b669b", fontWeight: "450" }}>{`${t(
+                <label style={{ fontSize: "15px", marginTop: "20px !important", color: "#3b669b", fontWeight: "490" }}>{`${t(
                   "CS_LOGIN_TEXT"
                 )}`}</label>
               </div>
@@ -80,10 +80,8 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
                 borderRadius: "12px",
                 background: "#EDF2FA",
                 boxShadow: "none",
-                marginRight: "30px",
+                right: "52px",
                 width: "100%",
-
-                right: "12px",
               }}
             ></FormStep>
           </div>

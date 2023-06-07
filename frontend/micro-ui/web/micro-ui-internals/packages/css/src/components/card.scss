@@ -3,7 +3,8 @@
   border-radius: 25px;
   display: flow-root;
 
-  .card-header {  }
+  .card-header {
+  }
 
   .card-sub-header {
     @apply text-text-primary text-caption-xl font-bold align-middle text-left mb-sm;
@@ -48,13 +49,13 @@
   }
 }
 
-.validation-error{
+.validation-error {
   @apply block text-body-s text-error;
 }
 
 .docsDescription {
-  color: #0B0C0C !important;
-} 
+  color: #0b0c0c !important;
+}
 
 .field-container {
   @apply flex  items-center;
@@ -68,8 +69,8 @@
   margin-bottom: 21px;
   .card-header {
     @apply text-text-primary text-heading-xl font-bold font-rc align-middle text-left mb-md;
-    font-size: 25px!important;
-    line-height: 15px!important;
+    font-size: 25px !important;
+    line-height: 15px !important;
   }
 
   .card-sub-header,
@@ -117,7 +118,7 @@
     @apply block text-center text-link text-link-normal mt-md;
   }
 
-  .card-search-heading{
+  .card-search-heading {
     margin-right: 0px !important;
     margin-left: 0px !important;
     margin-bottom: 0px !important;
@@ -128,8 +129,9 @@
 .employeeCard.fsm {
   margin-bottom: 16px !important;
   margin-left: 0px !important;
-  margin-right: 16px !important; }
-  
+  margin-right: 16px !important;
+}
+
 .header-wrap {
   @apply flex mb-md;
 
@@ -153,6 +155,13 @@
   @apply bg-white m-sm;
 }
 
+@media only screen and (max-width: 600px) {
+  .card {
+    margin-right: 100px;
+    margin-left: 52px;
+  }
+}
+
 .submit-bar {
   @apply h-10 bg-button-primary text-center w-full outline-none;
   float: right;
@@ -168,7 +177,6 @@
     font-family: system-ui !important;
     font-weight: 400 !important;
     font-size: 15px !important;
-  
   }
 }
 
@@ -183,7 +191,7 @@
   }
 
   header {
-    @apply font-rc font-medium text-legend text-white leading-10 ;
+    @apply font-rc font-medium text-legend text-white leading-10;
     border-radius: 30px;
     padding: 0px 40px;
   }
@@ -194,7 +202,6 @@
   .submit-bar-disabled {
     width: max-content;
     border-radius: 30px;
- 
   }
 
   .card {
@@ -204,11 +211,11 @@
     max-width: auto;
     min-width: auto;
     margin-left: 7%;
-    max-height:auto;
+    max-height: auto;
 
     .card-header {
       @apply text-heading-xl-dt;
-      font-size: 25px!important;
+      font-size: 25px !important;
     }
 
     .card-sub-header {
@@ -230,8 +237,6 @@
   }
 
   .employeeCard {
-  ;
-
     &.filter {
       margin-left: auto;
       margin-right: auto;
@@ -239,7 +244,7 @@
 
     .card-header {
       @apply text-heading-xl-dt;
-      font-size: 25px!important;
+      font-size: 25px !important;
     }
 
     .card-sub-header {
@@ -256,7 +261,7 @@
       @apply text-heading-m-dt;
     }
 
-    .card-search-heading{
+    .card-search-heading {
       margin-right: 0px !important;
       margin-left: 0px !important;
       margin-bottom: 0px !important;
@@ -295,7 +300,7 @@
 
     .field-container {
       span {
-        border: 1px solid #c9cccf;        ;
+        border: 1px solid #c9cccf;
         background: rgb(247, 247, 247);
         width: 40px;
         height: 40px;
@@ -304,7 +309,7 @@
         align-items: center;
         margin-top: -23px;
         border-right: none;
-        border-radius:5px;
+        border-radius: 5px;
       }
     }
   }
@@ -329,7 +334,7 @@
   @apply text-text-primary text-heading-m font-bold;
 }
 
-.card-search-heading{
+.card-search-heading {
   margin-right: 0px !important;
   margin-left: 0px !important;
   margin-bottom: 0px !important;
@@ -358,11 +363,11 @@
   }
   .info-banner-wrap-citizen-override {
     min-width: 640px;
-    max-width: 960px
+    max-width: 960px;
   }
   .oc-aknowledgement-screen {
     width: auto;
-    min-width: 240px; 
+    min-width: 240px;
     max-width: 100%;
     padding: 0px 10px;
   }
@@ -376,7 +381,6 @@
   margin-left: 0px !important;
 }
 
-
 .BPAemployeeCard {
   margin-left: 0px !important;
   margin-right: 0px !important;
@@ -387,14 +391,14 @@
   display: flex !important;
   justify-content: space-between !important;
   max-height: 60px !important;
-  height: 60px !important
+  height: 60px !important;
 }
 .employee-main-application-details {
   padding: 10px !important;
 }
 
 .employee-mulitlink-main-div {
-  z-index: 10 !important; 
+  z-index: 10 !important;
   max-width: 41% !important;
 }
 
