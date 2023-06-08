@@ -152,7 +152,7 @@ const ApplicationDetails = () => {
                 {
                   action: data.action,
                   redirectionUrll: {
-                    pathname: `TL/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
+                    pathname: `CR/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
                     state: tenantId,
                   },
                   tenantId: tenantId,

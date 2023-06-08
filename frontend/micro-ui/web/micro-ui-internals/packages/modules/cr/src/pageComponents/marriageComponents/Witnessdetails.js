@@ -97,6 +97,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
         : [formData?.WitnessDetails?.groomFilestoreId]
       : null
   );
+  console.log({ groomFilestoreId });
   const [groomURL, setGroomURL] = useState(formData?.WitnessDetails?.groomURL ? formData?.WitnessDetails?.groomURL : null);
   const [brideURL, setBrideURL] = useState(formData?.WitnessDetails?.brideURL ? formData?.WitnessDetails?.brideURL : null);
 
@@ -444,15 +445,20 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
   }
 
   async function handleUploadBride(id) {
+    console.log({ id });
     setUploadedBrideImageId(id);
-    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setBrideURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
+    if (id) {
+      const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
+      setBrideURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
+    }
   }
 
   async function handleUploadGroom(id) {
     setUploadedGroomImageId(id);
-    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
-    setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
+    if (id) {
+      const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
+      setGroomURL(fileStoreIds && trimURL(fileStoreIds[0]?.url));
+    }
   }
 
   let validFlag = true;
@@ -1172,19 +1178,22 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness, i
             <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
               <div style={{ fontSize: "18px", margin: "10px" }}>
                 t("CR_OPTED_THAT"){" "}
-                {isOpenHusbandModal && (locale === "ml_IN"
-                  ? `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
-                    formData?.GroomDetails?.groomLastnameEn || ""
-                  } `:`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
-                    formData?.GroomDetails?.groomLastnameEn || ""
-                  } `)}
-                {isOpenWifeModal && (locale === "ml_IN"
-                  ? `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
-                      formData?.BrideDetails?.brideLastnameEn || ""
-                    }`
-                  : `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
-                      formData?.BrideDetails?.brideLastnameEn || ""
-                    } `)}
+                {isOpenHusbandModal &&
+                  (locale === "ml_IN"
+                    ? `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                        formData?.GroomDetails?.groomLastnameEn || ""
+                      } `
+                    : `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn || ""} ${
+                        formData?.GroomDetails?.groomLastnameEn || ""
+                      } `)}
+                {isOpenWifeModal &&
+                  (locale === "ml_IN"
+                    ? `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                        formData?.BrideDetails?.brideLastnameEn || ""
+                      }`
+                    : `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn || ""} ${
+                        formData?.BrideDetails?.brideLastnameEn || ""
+                      } `)}
                 t("CR_EXPIRED_CONTINUE")
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>

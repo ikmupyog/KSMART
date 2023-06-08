@@ -1,8 +1,9 @@
-import { Loader, Modal, FormComposer } from "@egovernments/digit-ui-react-components";
+import { Loader, Modal, FormComposer, Toast } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect } from "react";
 
 import { configBirthApproverApplication } from "../config";
 import * as predefinedConfig from "../config";
+import { trimURL } from "../../../cr/src/utils";
 
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
@@ -51,9 +52,30 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
   const [selectedApprover, setSelectedApprover] = useState({});
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFileDetails, setUploadedFileDetails] = useState(null);
   const [error, setError] = useState(null);
   const [financialYears, setFinancialYears] = useState([]);
   const [selectedFinancialYear, setSelectedFinancialYear] = useState(null);
+
+  const [fileSizeError, setFileSizeError] = useState(false);
+  const [fileTypeError, setFileTypeError] = useState(false);
+  const [fileUploadError, setFileUploadError] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [toast, setToast] = useState(false);
+
+  const fetchFile = async (fileId) => {
+    console.log({ fileId });
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch([fileId], Digit.ULBService.getStateId());
+    console.log({ fileStoreIds });
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: trimURL(key.url.split(",")[1]), small: trimURL=(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
+    });
+    console.log({ newThumbnails });
+    return newThumbnails;
+  };
 
   useEffect(() => {
     if (financialYearsData && financialYearsData["egf-master"]) {
@@ -71,25 +93,84 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
 
   useEffect(() => {
     (async () => {
-      setError(null);
       if (file) {
-        if (file.size >= 5242880) {
-          setError(t("CS_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
+        if (file.size >= 2097152) {
+          setFileSizeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileSizeError(false);
+          }, 3000);
+        } else if (file.name.match(/\.(jpg|jpeg|png|pdf)$/)) {
           try {
+            setIsLoading(true);
             const response = await Digit.UploadServices.Filestorage("PT", file, Digit.ULBService.getStateId());
+            console.log({ response });
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
+              setUploadedFileDetails(fileDetails);
             } else {
-              setError(t("CS_FILE_UPLOAD_ERROR"));
+              setFileUploadError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+                setFileUploadError(false);
+              }, 3000);
             }
+            setIsLoading(false);
           } catch (err) {
-            setError(t("CS_FILE_UPLOAD_ERROR"));
+            setIsLoading(false);
+          } finally {
+            setIsLoading(false);
           }
+        } else {
+          setFileTypeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+            setFileTypeError(false);
+          }, 3000);
         }
       }
     })();
   }, [file]);
+
+  useEffect(() => {
+    if (action) {
+      setConfig(
+        configBirthApproverApplication({
+          t,
+          action,
+          approvers,
+          selectedApprover,
+          setSelectedApprover,
+          selectFile,
+          uploadedFile,
+          setUploadedFile,
+          businessService,
+          isLoading,
+          uploadedFileDetails,
+          toast,
+          fileUploadError,
+          fileTypeError,
+          fileSizeError,
+        })
+      );
+    }
+  }, [
+    action,
+    approvers,
+    financialYears,
+    selectedFinancialYear,
+    uploadedFile,
+    isLoading,
+    uploadedFileDetails,
+    toast,
+    fileUploadError,
+    fileTypeError,
+    fileSizeError,
+  ]);
 
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
@@ -113,24 +194,6 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
       ChildDetails: [applicationData],
     });
   }
-
-  useEffect(() => {
-    if (action) {
-      setConfig(
-        configBirthApproverApplication({
-          t,
-          action,
-          approvers,
-          selectedApprover,
-          setSelectedApprover,
-          selectFile,
-          uploadedFile,
-          setUploadedFile,
-          businessService,
-        })
-      );
-    }
-  }, [action, approvers, financialYears, selectedFinancialYear, uploadedFile]);
 
   return action && config.form ? (
     <Modal
