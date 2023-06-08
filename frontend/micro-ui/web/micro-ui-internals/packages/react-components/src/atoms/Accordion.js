@@ -17,7 +17,6 @@ const staticStyles = {
     borderBottom: "1px solid  #E9EEF6",
   },
   body: {
-    margin: "28px",
     backgroundColor: "#fff",
     padding: "10px",
     fontSize: "14px",
