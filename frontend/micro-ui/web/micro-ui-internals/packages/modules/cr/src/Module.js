@@ -55,6 +55,8 @@ import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents
 import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
 import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
 import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
+// InformarHospital
+import  InformarHospital from "../src/pageComponents/deathComponents/InformarHospital";
 import InitiatorDetails from "../src/pageComponents/birthComponents/InitiatorDetails";
 
 import StillBirthChildDetails from "../src/pageComponents/stillBirthComponents/StillBirthChildDetails";
@@ -384,6 +386,7 @@ const componentsToRegister = {
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
   InitiatorDetails,
+  InformarHospital,
   //////////////////
   StillBirthChildDetails,
   StillBirthParentsDetails,

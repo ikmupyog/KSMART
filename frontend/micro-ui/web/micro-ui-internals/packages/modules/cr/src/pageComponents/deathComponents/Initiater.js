@@ -1,114 +1,227 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast, LanguageIcon } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-
-import Timeline from "../../components/DRTimeline";
+import Timeline from "../../components/CRTimeline";
 import { sortDropdownNames } from "../../utils";
 
 const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
-//  console.log(isEditDeath);
   const { t } = useTranslation();
+  const locale = Digit.SessionStorage.get("locale");
   let validation = {};
-  const cmbInitiatorRelation = [
-    { i18nKey: "Father", code: "FATHER" },
-    { i18nKey: "Mother", code: "MOTHER" },
-    { i18nKey: "Others", code: "OTHERS" },
-  ];  
-  // console.log(Digit.UserService.getUser().info);
+  let cmbInitiator = [];
+  let cmbRelation = [];
+  let cmbCareTakerDesign = [];
+  let cmbIpopList = [];
+
+  // const cmbInitiator = [
+  //   { i18nKey: "Father", code: "FATHER" },
+  //   { i18nKey: "Mother", code: "MOTHER" },
+  //   { i18nKey: "Grandparent’s", code: "GRAND_PARENTS" },
+  //   { i18nKey: "Self", code: "SELF" },
+  //   { i18nKey: "Siblings", code: "SIBLINGS" },
+  //   { i18nKey: "Guardian", code: "GUARDIAN" },
+  //   { i18nKey: "Institutional Care Taker", code: "INST_CARE_TAKER" },
+  // ];
+  // const cmbRelation = [
+  //   { i18nKey: "Grand Parent", code: "GRAND_PARENT" },
+  //   { i18nKey: "Uncle", code: "UNCLE" },
+  //   { i18nKey: "Aunt", code: "AUNT" },
+  //   { i18nKey: "Other Relatives", code: "OTHER_RELATIVES" },
+  //   { i18nKey: "Non–Related", code: "NON_RELATED" },
+  // ];
+  // const cmbCareTakerDesign = [
+  //   { i18nKey: "Manager", code: "MANAGER" },
+  //   { i18nKey: "Secretary", code: "SECRETARY" },
+  //   { i18nKey: "Administrator", code: "ADMINISTRATOR" },
+  //   { i18nKey: "Executive Officer", code: "EXECUTIVE_OFFICER" },
+  //   { i18nKey: "Warden", code: "WARDEN" },
+  // ];
+  // const cmbIpopList = [
+  //   { i18nKey: "IP", code: "IP" },
+  //   { i18nKey: "OP", code: "OP" },
+  // ];
+  // console.log(Digit.UserService.getUser().info);  
+  const { name: name, mobileNumber: mobileNumber, roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  const { data: InitiatorDetails = {}, isInitiatorDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Initiator");
+  const { data: RelationDetails = {}, isRelationDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Relation");
+  const { data: CareTakerDesigDetails = {}, isCareTakerDesigDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "CareTakerDesignation");
+  const { data: IPOPListDetails = {}, isIPOPListDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IPOPList");
+
+  InitiatorDetails &&
+    InitiatorDetails["birth-death-service"] && InitiatorDetails["birth-death-service"].Initiator &&
+    InitiatorDetails["birth-death-service"].Initiator.map((ob) => {
+      cmbInitiator.push(ob);
+    });
+  RelationDetails &&
+    RelationDetails["birth-death-service"] && RelationDetails["birth-death-service"].Relation &&
+    RelationDetails["birth-death-service"].Relation.map((ob) => {
+      cmbRelation.push(ob);
+    });
+  CareTakerDesigDetails &&
+    CareTakerDesigDetails["birth-death-service"] && CareTakerDesigDetails["birth-death-service"].CareTakerDesignation &&
+    CareTakerDesigDetails["birth-death-service"].CareTakerDesignation.map((ob) => {
+      cmbCareTakerDesign.push(ob);
+    });
+  IPOPListDetails &&
+    IPOPListDetails["birth-death-service"] && IPOPListDetails["birth-death-service"].IPOPList &&
+    IPOPListDetails["birth-death-service"].IPOPList.map((ob) => {
+      cmbIpopList.push(ob);
+    });
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.Initiator?.isInitiatorDeclaration ? formData?.Initiator?.isInitiatorDeclaration : formData?.ChildDetails?.Initiator?.isInitiatorDeclaration ? formData?.ChildDetails?.Initiator?.isInitiatorDeclaration : false);
+  const [isGuardian, setIsGuardian] = useState(formData?.Initiator?.isGuardian ? formData?.Initiator?.isGuardian : formData?.ChildDetails?.Initiator?.isGuardian ? formData?.ChildDetails?.Initiator?.isGuardian : false);
+  const [isCaretaker, setIsCaretaker] = useState(formData?.Initiator?.isCaretaker ? formData?.Initiator?.isCaretaker : formData?.ChildDetails?.Initiator?.isCaretaker ? formData?.ChildDetails?.Initiator?.isCaretaker : false);
+  const [initiator, setInitiator] = useState(formData?.Initiator?.initiator?.code ? formData?.Initiator?.initiator : formData?.ChildDetails?.Initiator?.initiator ? cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.Initiator?.initiator)[0] : null);
+  const [relation, setrelation] = useState(formData?.Initiator?.InitiatorRelation?.code ? formData?.Initiator?.InitiatorRelation : formData?.ChildDetails?.Initiator?.InitiatorRelation ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.Initiator?.relation)[0] : null);
+  const [initiatorInstitutionName, setinitiatorInstitutionName] = useState(formData?.Initiator?.initiatorInstitutionName ? formData?.Initiator?.initiatorInstitutionName : formData?.ChildDetails?.Initiator?.initiatorInstitutionName ? formData?.ChildDetails?.Initiator?.initiatorInstitutionName : name);
   const [isDisableEdit, setisDisableEdit] = useState(false);
-  const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
-  const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
-  const [IsDeclarationInitiator, setisInitiatorDeclaration] = useState(formData?.Initiator?.IsDeclarationInitiator ? formData?.Initiator?.IsDeclarationInitiator : formData?.InformationDeath?.Initiator?.IsDeclarationInitiator ? formData?.InformationDeath?.Initiator?.IsDeclarationInitiator : false);
-  const [isCaretaker, setIsCaretaker] = useState(formData?.Initiator?.isCaretaker ? formData?.Initiator?.isCaretaker : formData?.InformationDeath?.Initiator?.isCaretaker ? formData?.InformationDeath?.Initiator?.isCaretaker : false);
-  //const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation.code ? formData?.Initiator?.InitiatorRelation : formData?.InformationDeath?.Initiator?.InitiatorRelation ? cmbInitiatorRelation.filter(cmbInitiatorRelation => cmbInitiatorRelation.code === formData?.InformationDeath?.Initiator?.InitiatorRelation)[0] : "");
-  const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation.code ? formData?.Initiator?.InitiatorRelation : formData?.InformationDeath?.Initiator?.InitiatorRelation ? cmbInitiatorRelation.filter(cmbInitiatorRelation => cmbInitiatorRelation.code === formData?.InformationDeath?.Initiator?.relation)[0] : "");
- 
-  const [InitiatorName, setInitiatorName] = useState(formData?.Initiator?.InitiatorName ? formData?.Initiator?.InitiatorName : formData?.InformationDeath?.Initiator?.InitiatorName ? formData?.InformationDeath?.Initiator?.InitiatorName : name);
-  const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiator?.InitiatorAadhaar ? formData?.Initiator?.InitiatorAadhaar : formData?.InformationDeath?.Initiator?.InitiatorAadhaar ? formData?.InformationDeath?.Initiator?.InitiatorAadhaar : "");
-  const [InitiatorMobile, setInitiatorMobile] = useState(formData?.Initiator?.InitiatorMobile ? formData?.Initiator?.InitiatorMobile : formData?.InformationDeath?.Initiator?.InitiatorMobile ? formData?.InformationDeath?.Initiator?.InitiatorMobile : mobileNumber);
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.Initiator?.initiatorDesi ? formData?.Initiator?.initiatorDesi : formData?.InformationDeath?.Initiator?.initiatorDesi ? formData?.InformationDeath?.Initiator?.initiatorDesi : "");
-  const [InitiatorAddress, setInitiatorAddress] = useState(formData?.Initiator?.InitiatorAddress ? formData?.Initiator?.InitiatorAddress : formData?.InformationDeath?.Initiator?.InitiatorAddress ? formData?.InformationDeath?.Initiator?.InitiatorAddress : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.Initiator?.initiatorNameEn ? formData?.Initiator?.initiatorNameEn : formData?.ChildDetails?.Initiator?.initiatorNameEn ? formData?.ChildDetails?.Initiator?.initiatorNameEn : name);
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.Initiator?.initiatorAadhar ? formData?.Initiator?.initiatorAadhar : formData?.ChildDetails?.Initiator?.initiatorAadhar ? formData?.ChildDetails?.Initiator?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.Initiator?.initiatorMobile ? formData?.Initiator?.initiatorMobile : formData?.ChildDetails?.Initiator?.initiatorMobile ? formData?.ChildDetails?.Initiator?.initiatorMobile : mobileNumber);
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.Initiator?.initiatorDesi?.code ? formData?.Initiator?.initiatorDesi : formData?.ChildDetails?.Initiator?.initiatorDesi ? formData?.ChildDetails?.Initiator?.initiatorDesi : null);
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.Initiator?.initiatorAddress ? formData?.Initiator?.initiatorAddress : formData?.ChildDetails?.Initiator?.initiatorAddress ? formData?.ChildDetails?.Initiator?.initiatorAddress : "");
+
+  const [ipopList, setipopList] = useState(formData?.Initiator?.ipopList?.code ? formData?.Initiator?.ipopList : formData?.ChildDetails?.Initiator?.ipopList ? cmbIpopList.filter(cmbIpopList => cmbIpopList.code === formData?.ChildDetails?.Initiator?.ipopList)[0] : "");
+  const [ipopNumber, setipopNumber] = useState(formData?.Initiator?.ipopNumber ? formData?.Initiator?.ipopNumber : formData?.ChildDetails?.Initiator?.ipopNumber ? formData?.ChildDetails?.Initiator?.ipopNumber : "");
+  const [obstetricsNumber, setobstetricsNumber] = useState(formData?.Initiator?.obstetricsNumber ? formData?.Initiator?.obstetricsNumber : formData?.ChildDetails?.Initiator?.obstetricsNumber ? formData?.ChildDetails?.Initiator?.obstetricsNumber : "");
+  const [isHospitalUser, setIsHospitalUser] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-
   const [toast, setToast] = useState(false);
-  const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiator?.InitiatorName ? false : false);
-  const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiator?.InitiatorAadhaar ? false : false);
-  const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiator?.InitiatorMobile ? false : false);
-  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.Initiator?.initiatorDesi ? false : false);
-
+  const [InitiatorError, setInitiatorError] = useState(false);
+  const [relationnError, setrelationnError] = useState(false);
+  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(false);
+  const [initiatorAadharError, setinitiatorAadharError] = useState(false);
+  const [initiatorMobileError, setinitiatorMobileError] = useState(false);
+  const [initiatorDesiError, setinitiatorDesiError] = useState(false);
+  const [ipopListError, setipopListError] = useState(false);
+  const [ipopNumberError, setipopNumberError] = useState(false);
+  const [obstetricsNumberError, setobstetricsNumberError] = useState(false);
   const onSkip = () => onSelect();
-  
+
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Initiator?.IsDeclarationInitiator != null) {
+      if (formData?.Initiator?.isInitiatorDeclaration != null) {
         setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.Initiator?.IsDeclarationInitiator);
+        setisInitiatorDeclaration(formData?.Initiator?.isInitiatorDeclaration);
       }
       if (formData?.Initiator?.isCaretaker != null) {
         setIsInitialRender(false);
         setIsCaretaker(formData?.Initiator?.isCaretaker);
       }
+
     }
   }, [isInitialRender]);
 
-  function setSelectInitiatorRelation(value) {
-    setInitiatorRelation(value);
+  useEffect(() => {
+    if (userRoles.length > 0) {
+      if (userRoles[0].code === "HOSPITAL_OPERATOR" || userRoles[0].code === "HOSPITAL_APPROVER") {
+        setIsHospitalUser(true);
+      } else {
+        setIsHospitalUser(false);
+      }
+    }
+  }, [userRoles]);
+
+  if (isEditDeath) {
+    if (formData?.ChildDetails?.Initiator?.initiator != null) {
+      if (cmbInitiator.length > 0 && (initiator === undefined || initiator === "")) {
+        setInitiator(cmbInitiator.filter(cmbInitiator => cmbInitiator.code === formData?.ChildDetails?.Initiator?.initiator)[0]);
+      }
+    }
+    if (formData?.ChildDetails?.Initiator?.ipopList != null) {
+      if (cmbIpopList.length > 0 && (ipopList === undefined || ipopList === "")) {
+        setipopList(cmbIpopList.filter(cmbIpopList => cmbIpopList.code === formData?.ChildDetails?.Initiator?.ipopList)[0]);
+      }
+    }
   }
-
-  // function setSelectInitiatorRelation(e) {
-  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-  //     setInitiatorRelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-  //   }
-  // }
-
-  function setSelectInitiatorName(e) {
+  function setSelectInitiator(value) {
+    setInitiator(value);
+    if (value.code === "GUARDIAN") {
+      setIsGuardian(true);
+      setIsCaretaker(false);
+      setinitiatorDesi(null);
+      setinitiatorInstitutionName("");
+    } else if (value.code === "INST_CARE_TAKER") {
+      setIsGuardian(false);
+      setIsCaretaker(true);
+      setrelation(null);
+    } else {
+      setIsGuardian(false);
+      setIsCaretaker(false);
+      setinitiatorDesi(null);
+      setrelation(null);
+      setinitiatorInstitutionName("");
+    }
+    if (value.code != "INST_CARE_TAKER") {
+      if (formData?.AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && formData?.AddressBirthDetails?.permtaddressStateName?.code === "kl") {
+        let permAddress = formData?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn + " , " +
+          formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice.name + " , " +
+          formData?.AddressBirthDetails?.permntInKeralaAdrPincode + " , " + formData?.AddressBirthDetails?.permntInKeralaAdrDistrict.name + " , " +
+          formData?.AddressBirthDetails?.permtaddressStateName.name + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
+        setinitiatorAddress(permAddress);
+      } else if (formData?.AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && formData?.AddressBirthDetails?.permtaddressStateName?.code != "kl") {
+        let permAddress = formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideKeralaPincode + " , " + formData?.AddressBirthDetails?.permntOutsideKeralaDistrict.name + " , " +
+          formData?.AddressBirthDetails?.permtaddressStateName.name + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
+        setinitiatorAddress(permAddress);
+      } else if (formData?.AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA") {
+        let permAddress = formData?.AddressBirthDetails?.permntOutsideIndiaLineoneEn + " , " + formData?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn + " , " +
+          formData?.AddressBirthDetails?.permntOutsideIndiaCityTown + " , " + formData?.AddressBirthDetails?.permntOutsideIndiaprovinceEn + " , " +
+          formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode + " , " + formData?.AddressBirthDetails?.permtaddressCountry.name;
+        setinitiatorAddress(permAddress);
+      }
+    } else {
+      setinitiatorAddress("");
+    }
+  }
+  function setSelectrelation(value) {
+    setrelation(value);
+  }
+  function setSelectinitiatorInstitutionName(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setInitiatorName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setinitiatorInstitutionName(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
-  function setSelectinitiatorDesi(e) {
+
+  function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorDesi(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setinitiatorNameEn(e.target.value.length <= 100 ? e.target.value : (e.target.value).substring(0, 100));
     }
   }
-  function setSelectInitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
-      setInitiatorAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
+  function setSelectinitiatorDesi(value) {
+    setinitiatorDesi(value);
+  }
+  function setSelectinitiatorAddress(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z,-0-9, ]*$") != null)) {
+      setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }
-
-
-  // function setSelectInitiatorAadhaar(e) {
-  //   if (e.target.value.trim().length >= 0) {
-  //     setInitiatorAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-  //   }
-  // }
-
-  function setSelectInitiatorAadhaar(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-    if ( newValue === formData?.InformationDeath?.DeceasedAadharNumber) {
-      // If so, clear the Father's Aadhar number field
-      setInitiatorAadhaar("");
-      setInitiaterAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }else
-    {
-      setInitiatorAadhaar(newValue);
-    }      
-  }
-
-  function setSelectInitiatorMobile(e) {
+  function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setInitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
- 
-
+  function setSelectinitiatorMobile(e) {
+    if (e.target.value.trim().length >= 0) {
+      setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }
+  }
+  function setSelectipopNumber(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null)) {
+      setipopNumber(e.target.value.trim().length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
+    }
+  }
+  function setSelectipop(value) {
+    setipopList(value);
+  }
+  function setSelectobstetricsNumber(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9/ ]*$") != null)) {
+      setobstetricsNumber(e.target.value.trim().length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
+    }
+  }
   function setDeclarationInfo(e) {
     if (e.target.checked == false) {
       setisInitiatorDeclaration(e.target.checked);
@@ -120,9 +233,7 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
   function setCaretaker(e) {
     if (e.target.checked == true) {
       setIsCaretaker(e.target.checked);
-
       setinitiatorDesi("");
-
     } else {
       setIsCaretaker(e.target.checked);
     }
@@ -130,28 +241,27 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
 
   let validFlag = true;
   const goNext = () => {
-    // if (InitiatorRelation == null || InitiatorRelation == "" || InitiatorRelation == undefined) {
-    //   validFlag = false;
-    //   setInitiatorRelationnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setInitiatorRelationnError(false);
-    // }
-    if (InitiatorName == null || InitiatorName == "" || InitiatorName == undefined) {
+    if (initiator == null || initiator == "" || initiator == undefined) {
       validFlag = false;
-      setInitiaterNameError(true);
+      setInitiatorError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setInitiaterNameError(false);
+      setInitiatorError(false);
+    }
+    if (initiatorNameEn == null || initiatorNameEn == "" || initiatorNameEn == undefined) {
+      validFlag = false;
+      setinfomantFirstNmeEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setinfomantFirstNmeEnError(false);
     }
     if (isCaretaker === true) {
-
 
       if (initiatorDesi == null || initiatorDesi == "" || initiatorDesi == undefined) {
         validFlag = false;
@@ -164,71 +274,133 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
         setinitiatorDesiError(false);
       }
     }
-    if (InitiatorAadhaar != null || InitiatorAadhaar != "" || InitiatorAadhaar != undefined) {
-      let adharLength = InitiatorAadhaar;
-      if (adharLength.length < 12 || adharLength.length > 12) {
+    if (isGuardian === true) {
+      if (relation == null || relation == "" || relation == undefined) {
         validFlag = false;
-        setInitiaterAadharError(true);
+        setrelationnError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
       } else {
-        setInitiaterAadharError(false);
+        setrelationnError(false);
+      }
+    }
+    if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
+      let adharLength = initiatorAadhar;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setinitiatorAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinitiatorAadharError(false);
       }
     } else {
       validFlag = false;
-      setInitiaterAadharError(true);
+      setinitiatorAadharError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     }
-    if (InitiatorMobile != null || InitiatorMobile != "" || InitiatorMobile != undefined) {
-      let mobileLength = InitiatorMobile;
+    if (initiatorMobile != null || initiatorMobile != "" || initiatorMobile != undefined) {
+      let mobileLength = initiatorMobile;
       if (mobileLength.length < 10 || mobileLength.length > 10) {
         validFlag = false;
-        setInitiaterMobileError(true);
+        setinitiatorMobileError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
       } else {
-        setInitiaterMobileError(false);
+        setinitiatorMobileError(false);
       }
     } else {
       validFlag = false;
-      setInitiaterMobileError(true);
+      setinitiatorMobileError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
+    }
+    if (isHospitalUser) {
+      if (ipopList === null) {
+        validFlag = false;
+        setipopListError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setipopListError(false);
+      }
+      if (ipopNumber === null || ipopNumber === "" || ipopNumber === undefined) {
+        validFlag = false;
+        setipopNumberError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setipopNumberError(false);
+      }
+      if (ipopNumber === null || ipopNumber === "" || ipopNumber === undefined) {
+        validFlag = false;
+        setipopNumberError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setipopNumberError(false);
+      }
+      if (obstetricsNumber === null || obstetricsNumber === "" || obstetricsNumber === undefined) {
+        validFlag = false;
+        setobstetricsNumberError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setobstetricsNumberError(false);
+      }
     }
     if (validFlag == true) {
 
       onSelect(config.key, {
-        InitiatorRelation,
-        InitiatorName : InitiatorName.trim(),
-        InitiatorAadhaar,
-        InitiatorMobile,
-        initiatorDesi : initiatorDesi.trim(),
-        InitiatorAddress: InitiatorAddress.trim(),
-        IsDeclarationInitiator,
+        initiator,
+        relation,
+        initiatorInstitutionName: initiatorInstitutionName.trim(),
+        initiatorNameEn: initiatorNameEn.trim(),
+        initiatorAadhar,
+        initiatorMobile,
+        initiatorDesi,
+        initiatorAddress: initiatorAddress.trim(),
+        isInitiatorDeclaration,
         isCaretaker,
+        isGuardian,
+        ipopList,
+        ipopNumber: (ipopNumber.toUpperCase()).trim(),
+        obstetricsNumber: (obstetricsNumber.toUpperCase()).trim()
       });
     }
+
   };
   return (
     <React.Fragment>
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
 
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} 
-      isDisabled={!InitiatorName || !InitiatorAadhaar || !InitiatorMobile 
-        || (isCaretaker === true ? (initiatorDesi === "" || InitiatorAddress === "") : false)
-      }>
-        
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
+        isDisabled={!initiator || !initiatorAadhar || !initiatorNameEn || !initiatorMobile || initiatorAddress === ""
+          || (isGuardian === true ? (!relation) : false)
+          || (isCaretaker === true ? (initiatorDesi === "" || initiatorAddress === "") : false)
+          || (isHospitalUser === true ? (!ipopList || ipopNumber === "" || obstetricsNumber === "") : false)
+        }>
 
         <div className="row">
           <div className="col-md-12">
@@ -239,103 +411,103 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-12">
-                  <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
-                </div>
-              </div>
+            <div className="col-md-3">
+              <CardLabel>{`${t("CR_INITIATOR")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                isMandatory={false}
+                option={sortDropdownNames(cmbInitiator ? cmbInitiator : [], "name", t)}
+                selected={initiator}
+                select={setSelectInitiator}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_INITIATOR")}`}
+              />
             </div>
-            
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
+            {isGuardian === true && (
+              <div className="col-md-3">
+                <CardLabel>{`${t("CR_RELATION")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                  isMandatory={false}
+                  option={sortDropdownNames(cmbRelation ? cmbRelation : [], "code", t)}
+                  selected={relation}
+                  select={setSelectrelation}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CR_RELATION")}`}
+                />
+              </div>
+            )}
             {isCaretaker === true && (
               <div>
                 <div className="col-md-3">
                   <CardLabel>
-                    {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
+                    {`${t("CR_INSTITUTION_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="initiatorDesi"
-                    value={initiatorDesi}
-                    onChange={setSelectinitiatorDesi}
+                    name="initiatorInstitutionName"
+                    value={initiatorInstitutionName}
+                    onChange={setSelectinitiatorInstitutionName}
                     disable={isDisableEdit}
-                    placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
-                    //            disable={isCaretaker}
-                    {...(validation = { pattern: "[a-zA-Z0-9_-]+", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
+                    placeholder={`${t("CR_INSTITUTION_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INSTITUTION_NAME") })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                    isMandatory={false}
+                    option={sortDropdownNames(cmbCareTakerDesign ? cmbCareTakerDesign : [], "code", t)}
+                    selected={initiatorDesi}
+                    select={setSelectinitiatorDesi}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}
                   />
                 </div>
               </div>
             )}
-            {isCaretaker === false && (
-              <div className="col-md-3">
-               
-                <CardLabel>{`${t("CR_InitiatorRelation")}`}</CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="i18nKey"
-                  isMandatory={false}
-                  option={sortDropdownNames(cmbInitiatorRelation ? cmbInitiatorRelation : [],"code",t)}
-                  selected={InitiatorRelation}
-                  select={setSelectInitiatorRelation}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_InitiatorRelation")}`}
-                />
-              </div>
-            )}
             <div className="col-md-3">
-              <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+              <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
-                name="InitiatorAadhaar"
-                value={InitiatorAadhaar}
-                onChange={setSelectInitiatorAadhaar}
+                name="initiatorAadhar"
+                value={initiatorAadhar}
+                onChange={setSelectinitiatorAadhar}
                 disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
-
             <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_INITIATOR_NAME")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+              <CardLabel>{`${t("CR_INITIATOR_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
-                name="InitiatorName"
-                value={InitiatorName}
-                onChange={setSelectInitiatorName}
+                name="initiatorNameEn"
+                value={initiatorNameEn}
+                onChange={setSelectinitiatorNameEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
-                {...(validation = { pattern: "[a-zA-Z0-9_- ]+", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_MOBILE_NO")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+              <CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 type={"number"}
                 optionKey="i18nKey"
-                name="InitiatorMobile"
-                value={InitiatorMobile}
-                onChange={setSelectInitiatorMobile}
+                name="initiatorMobile"
+                value={initiatorMobile}
+                onChange={setSelectinitiatorMobile}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
@@ -346,50 +518,121 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath = false }
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-            {isCaretaker === true && (
-              <CardLabel>{`${t("CR_CARE_TAKER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
-            )}
-             {isCaretaker === false && (
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
-            )}
+              {isCaretaker === true && (
+                <CardLabel>{`${t("CR_CARE_TAKER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
+              )}
+              {isCaretaker === false && (
+                <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
+              )}
               <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
-                name="InitiatorAddress"
-                value={InitiatorAddress}
-                onChange={setSelectInitiatorAddress}
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z,-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
         </div>
-
-
+        {isHospitalUser && (
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_DEATH_ADMISION_DETAILS")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-4">
+                  <CardLabel>{`${t("CR_HOSP_DEATH_ADMISSION_DETAILS")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                    isMandatory={false}
+                    option={sortDropdownNames(cmbIpopList ? cmbIpopList : [], "code", t)}
+                    selected={ipopList}
+                    select={setSelectipop}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_IP_OP")}`}
+                  />
+                </div>
+                <div className="col-md-2">
+                  <CardLabel>.
+                    {/* {`${t("CR_IP_OP_NO")}`}<span className="mandatorycss">*</span> */}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"number"}
+                    optionKey="i18nKey"
+                    name="ipopNumber"
+                    value={ipopNumber}
+                    onChange={setSelectipopNumber}
+                    style={{ textTransform: "uppercase" }}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_IP_OP_NO")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_IP_OP_NO") })}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <CardLabel>{`${t("CR_HOSPITAL_RECORD_DEATH")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput
+                    t={t}
+                    type={"number"}
+                    optionKey="i18nKey"
+                    name="obstetricsNumber"
+                    value={obstetricsNumber}
+                    style={{ textTransform: "uppercase" }}
+                    onChange={setSelectobstetricsNumber}
+                    disable={isDisableEdit}
+                    placeholder={`${t("CR_REG_NO")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-0-9/ ]*$", isRequired: true, type: "text", title: t("CR_REG_NO") })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {toast && (
           <Toast
-            error={InitiaterNameError || InitiaterAadharError || InitiaterMobileError || initiatorDesiError}
-            label={
-              InitiaterNameError || InitiaterAadharError || InitiaterMobileError || initiatorDesiError
-                ? InitiaterNameError
-                  ? t(`CR_ERROR_INITIATER_NAME_CHOOSE`)
-                  : InitiaterAadharError
-                    ? t(`CR_ERROR_INITIATER_AADHAR_CHOOSE`)
-                    : InitiaterMobileError
-                      ? t(`CR_ERROR_INITIATER_MOBILE_CHOOSE`)
-                      : initiatorDesiError
-                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                        : setToast(false)
-                : setToast(false)
+            error={InitiatorError || relationnError || infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
+              || ipopListError || ipopNumberError || obstetricsNumberError
+            }
+            label={InitiatorError || relationnError ||
+              infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
+              || ipopListError || ipopNumberError || obstetricsNumberError
+              ? InitiatorError
+                ? t(`BIRTH_ERROR_INITIATOR_CHOOSE`)
+                : relationnError
+                  ? t(`BIRTH_ERROR_RELATION_CHOOSE`)
+                  : infomantFirstNmeEnError
+                    ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
+                    : initiatorAadharError
+                      ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                      : initiatorMobileError
+                        ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                        : initiatorDesiError
+                          ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                          : ipopListError
+                            ? t(`BIRTH_ERROR_HOSP_IPLIST_CHOOSE`)
+                            : ipopNumberError
+                              ? t(`BIRTH_ERROR_HOSP_IPNO_CHOOSE`)
+                              : obstetricsNumberError
+                                ? t(`BIRTH_ERROR_HOSP_GYN_REG_CHOOSE`)
+                                : setToast(false)
+              : setToast(false)
             }
             onClose={() => setToast(false)}
           />
         )}
         {""}
       </FormStep>
-    </React.Fragment>
+    </React.Fragment >
   );
 };
 export default Initiater;
