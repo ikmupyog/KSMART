@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { Table } from "@egovernments/digit-ui-react-components";
 import { convertEpochToDateDMY } from "../../utils";
 import _ from "lodash";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { downloadDocument } from "../../utils/uploadedDocuments";
 
 const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -27,8 +27,10 @@ const ResultTable = ({ setValue, getValues, data = [], count = 0, handleSubmit, 
         </span>
         break;
       case "PENDINGPAYMENT":
-        response = <span className="link" onClick={() => goToLink({ pathname: `/digit-ui/citizen/payment/collect/CR/${rowData?.applicationNumber}?tenantId=${rowData?.marriageTenantid}` })}>
-          MAKE PAYMENT
+        response = <span className="link">
+          <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.applicationNumber}?tenantId=${rowData?.marriageTenantid}`}>
+            MAKE PAYMENT
+          </Link>
         </span>
         break;
       default:

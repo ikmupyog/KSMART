@@ -3,15 +3,20 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
+const InformarHospital = ({ config, onSelect, userType, formData,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
 
+  useEffect(()=>{
+    console.log("INFORMER_USEFFECT")
+  },[])
+
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.InformarHosInstDetails?.infomantFirstNameEn ? formData?.InformarHosInstDetails?.infomantFirstNameEn : "");
+  const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.InformarHosInstDetails?.infomantFirstNameEn ? 
+    formData?.InformarHosInstDetails?.infomantFirstNameEn : "");
   const [infomantAadhar, setinfomantAadhar] = useState(formData?.InformarHosInstDetails?.infomantAadhar ? formData?.InformarHosInstDetails?.infomantAadhar : "");
 
   const [infomantMobile, setinfomantMobile] = useState(formData?.InformarHosInstDetails?.infomantMobile ? formData?.InformarHosInstDetails?.infomantMobile : "");
@@ -126,13 +131,14 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
        isDisabled={!infomantAadhar || !infomantFirstNameEn || !informerDesi || !infomantMobile 
       } >
         <div className="row">
           <div className="col-md-12" >
-            <h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
+            <h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>
+                {`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
           </div>
         </div>
         <div className="row">
@@ -237,4 +243,4 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
     </React.Fragment>
   );
 };
-export default InformarHospitalInstitution;
+export default InformarHospital;
