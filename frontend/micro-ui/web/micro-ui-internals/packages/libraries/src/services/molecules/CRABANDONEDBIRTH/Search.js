@@ -25,6 +25,63 @@ const convertEpochToDate = (dateEpoch) => {
     return null;
   }
 };
+function TimeDispaly(birthDateTime){
+  let time = birthDateTime;
+  let timeParts = time.split(":");
+  let displaytimeTemp = "";
+  let displayAmPmTemp = "";
+  if (timeParts.length > 0) {
+    if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+      timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+      timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+       displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+       displayAmPmTemp = "AM";    
+    }
+    else if (timeParts[0] === "00") {
+      displaytimeTemp = "12" + ":" + timeParts[1];
+      displayAmPmTemp = "AM";
+    } else if (timeParts[0] >= "13") {
+      if (timeParts[0] === "13") {
+        displaytimeTemp = "01" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "14") {
+        displaytimeTemp = "02" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "15") {
+        displaytimeTemp = "03" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "16") {
+        displaytimeTemp = "04" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "17") {
+        displaytimeTemp = "05" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "18") {
+        displaytimeTemp = "06" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "19") {
+        displaytimeTemp = "07" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "20") {
+        displaytimeTemp = "08" + ":" + timeParts[1];
+        displayAmPm = "PM";
+      } else if (timeParts[0] === "21") {
+        displaytimeTemp = "09" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "22") {
+        displaytimeTemp = "10" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "23") {
+        displaytimeTemp = "11" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "24") {
+        displaytimeTemp = "12" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      }
+    }
+  }
+  return `${displaytimeTemp} ${displayAmPmTemp}`
+}
 // const getAddress = (address, t) => {
 //   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
 //     address?.landmark ? `${address?.landmark}, ` : ""
@@ -72,11 +129,9 @@ export const CRAbandonedsearch = {
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NOT_RECORDED" },
-        // { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NOT_RECORDED" },
-        // { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NOT_RECORDED"}, 
-        
+        // { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? TimeDispaly(response?.birthDateTime) : "NOT_RECORDED",isNotTranslated:true },
        ],
     };
     const birthPlaceHospDetails = {

@@ -92,13 +92,15 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
             mutation.mutate(formdata, {
             onSuccess,
             })          
-        } else {
-          let formdata = isEditBirth ? convertToAbandonedBirthRegistration(data) : [];
-          mutation.mutate(formdata, {
-            onSuccess,    
-        })
-        setIsInitialRender(false);
-      }
+        }
+      //    else {
+      //     let formdata = isEditBirth ? convertToAbandonedBirthRegistration(data) : [];
+      //     // let formdata = isEditAbandonedBirth ? convertToEditAbandonedBirthRegistration(data) : [];
+      //     mutation.mutate(formdata, {
+      //       onSuccess,    
+      //   })
+      //   setIsInitialRender(false);
+      // }
       } catch (err) {
       }
     }
