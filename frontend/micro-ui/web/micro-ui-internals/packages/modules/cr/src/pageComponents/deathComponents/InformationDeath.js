@@ -1230,14 +1230,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
   const [DateTimeError, setDateTimeError] = useState(false);
 
   const goNext = () => {
-    if (TimeOfDeath != null) {
+    console.log("goNext",DateOfDeath)
+    if (DateOfDeath != null) {
 
-      console.log("TimeOfDeath != null",TimeOfDeath)
+      console.log("TimeOfDeath != null",DateOfDeath)
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const DateofDeathTime = new Date(TimeOfDeath);
+      const DateofDeathTime = new Date(DateOfDeath);
       DateofDeathTime.setHours(0, 0, 0, 0);
-      console.log("new Date(TimeOfDeath)",new Date(TimeOfDeath))
+      console.log("new Date(TimeOfDeath)",new Date(DateOfDeath))
       if (DateofDeathTime.getTime() < today.getTime()) {
         console.log("DateofDeathTime.getTime() < today.getTime()")
         validFlag = true;

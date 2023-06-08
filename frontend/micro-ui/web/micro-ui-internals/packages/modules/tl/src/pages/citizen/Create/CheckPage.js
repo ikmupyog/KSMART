@@ -11,11 +11,12 @@ import {
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
 import { stringReplaceAll } from "../../../utils/index";
-import React from "react";
+import React, {useState} from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch  } from "react-router-dom";
 import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/TLTimeline";
+import { replace } from "lodash";
 
 
 const ActionButton = ({ jumpTo }) => {
@@ -46,7 +47,6 @@ const CheckPage = ({ onSubmit, value }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  console.log("value : " + JSON.stringify(value));
   const stateId = Digit.ULBService.getStateId();
 
   let Boundary = [];
@@ -64,6 +64,22 @@ const CheckPage = ({ onSubmit, value }) => {
   const { data: dataitem = {}, isstructuretypeLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeStructureSubtype");
   const { data: BoundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egov-location", "boundary-data");
   const { data: PostOffice = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "PostOffice");
+  const [BusinessCategoryMenu, setBusinessCategoryMenu] = useState([]);
+  let BusinessCategoryMenutemp = [];
+  const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
+  
+
+  Data &&
+  Data.TradeLicense &&
+  Data.TradeLicense.TradeType.map((ob) => {
+    if (!BusinessCategoryMenutemp.some((BusinessCategoryMenutemp) => BusinessCategoryMenutemp.code === `${ob.code.split(".")[0]}`)) {
+      BusinessCategoryMenutemp.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}`, categoryType: ob.categoryType });
+    }
+  });
+
+  if(BusinessCategoryMenutemp !== undefined && (BusinessCategoryMenu === null || BusinessCategoryMenu === undefined)){
+    setBusinessCategoryMenu(BusinessCategoryMenutemp);
+  }
 
   const menuLicensee = [
     { i18nKey: "TL_COMMON_INDIVIDUAL", code: "INDIVIDUAL" },
@@ -137,17 +153,17 @@ const CheckPage = ({ onSubmit, value }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   const businessSector = TradeDetails?.tradeLicenseDetail?.businessSector && isEdit ? menusector.filter((sec) => sec?.code.includes(TradeDetails?.tradeLicenseDetail?.businessSector))[0] : TradeDetails?.tradeLicenseDetail?.businessSector;
-  const enterpriseType = TradeDetails?.tradeLicenseDetail?.enterpriseType  && isEdit ? TradeDetails?.tradeLicenseDetail?.enterpriseType : "";
-  const BuildingType = TradeDetails?.tradeLicenseDetail?.address?.buildingType  && isEdit ? buildingtype.filter((type) => type.code.includes(TradeDetails?.tradeLicenseDetail?.address?.buildingType))[0] : TradeDetails?.tradeLicenseDetail?.address?.buildingType;
-  const businessCategory = TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory  && isEdit ? BusinessCategoryMenu?.filter((category) => category?.code.includes(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory))[0] : TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory;
-  const businessType = TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType  && isEdit ? getBusinessTypeMenu(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory).filter((type) => type?.code.includes(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType))[0] : TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType;
-  const businessSubType = TradeDetails?.tradeLicenseDetail?.Units?.businessSubtype  && isEdit ? getBusinessSubTypeMenu(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType).filter((type) => type?.code.includes(TradeDetails?.tradeLicenseDetail?.Units?.businessSubtype))[0] : TradeDetails?.tradeLicenseDetail?.Units?.businessSubtype;
-  const setSector = TradeDetails?.TradeDetails?.setSector;
+  // const enterpriseType = TradeDetails?.tradeLicenseDetail?.enterpriseType  && isEdit ? TradeDetails?.tradeLicenseDetail?.enterpriseType : "";
+  // const BuildingType = TradeDetails?.tradeLicenseDetail?.address?.buildingType  && isEdit ? buildingType.filter((type) => type.code.includes(TradeDetails?.tradeLicenseDetail?.address?.buildingType))[0] : TradeDetails?.tradeLicenseDetail?.address?.buildingType;
+  // const businessCategory = TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory  && isEdit ? BusinessCategoryMenu?.filter((category) => category?.code.includes(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory))[0] : TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory;
+  // const businessType = TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType  && isEdit ? getBusinessTypeMenu(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory).filter((type) => type?.code.includes(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType))[0] : TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType;
+  // const businessSubType = TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype  && isEdit ? getBusinessSubTypeMenu(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType).filter((type) => type?.code.includes(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype))[0] : TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype;
+  // const setSector = TradeDetails?.TradeDetails?.setSector;
   const structureType = TradeDetails?.tradeLicenseDetail?.structureType  && isEdit ? cmbStructure.filter((structure) => structure?.code.includes(TradeDetails?.tradeLicenseDetail?.structureType))[0] : TradeDetails?.tradeLicenseDetail?.structureType;
   const structurePlaceSubtype = TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype  && isEdit ? cmbPlace.filter((place) => place?.code.includes(TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype))[0] : TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype;
   const ownershipCategory = TradeDetails?.tradeLicenseDetail?.ownershipCategory  && isEdit ? ownershipCategoryMenumain.filter((category) => category?.code.includes(TradeDetails?.tradeLicenseDetail?.ownershipCategory.code))[0] : TradeDetails?.tradeLicenseDetail?.ownershipCategory;
   const pincode = TradeDetails?.tradeLicenseDetail?.address?.pincode  && isEdit ? TradeDetails?.tradeLicenseDetail?.address?.pincode : "";
-  const postOffice = TradeDetails?.tradeLicenseDetail?.address?.postOffice  && isEdit ? cmbPostOffice.filter((postoffice) => postoffice?.code.includes(TradeDetails?.tradeLicenseDetail?.address?.postOffice.code))[0] : TradeDetails?.tradeLicenseDetail?.address?.postOffice;
+  // const postOffice = TradeDetails?.tradeLicenseDetail?.address?.postOffice  && isEdit ? cmbPostOffice.filter((postoffice) => postoffice?.code.includes(TradeDetails?.tradeLicenseDetail?.address?.postOffice.code))[0] : TradeDetails?.tradeLicenseDetail?.address?.postOffice;
   const LicenseeType = TradeDetails?.tradeLicenseDetail?.licenseeType && isEdit ?
     menu.filter(obj => obj.code === TradeDetails?.tradeLicenseDetail?.licenseeType.code)[0]:  TradeDetails?.tradeLicenseDetail?.licenseeType;
   const ZonalOffice = TradeDetails?.tradeLicenseDetail?.address?.zonalId  && isEdit ? Zonal.filter((zone) => zone?.code.includes(TradeDetails?.tradeLicenseDetail?.address?.zonalId.code))[0] : TradeDetails?.tradeLicenseDetail?.address?.zonalId;
@@ -261,31 +277,41 @@ const CheckPage = ({ onSubmit, value }) => {
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(businessSector?.name)}`}</CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardText>
-                </div>
-                <div className="col-md-2">
-                {/* {TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.i18nKey} */}
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(businessCategory?.i18nKey)}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(stringReplaceAll(businessType?.i18nKey, ".", "_"))}`}</CardText>
-                </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
-                </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(stringReplaceAll(businessSubType?.code, ".", "_"))}`}</CardText>
-                </div>
-              </div>
-            </div>
+            { TradeDetails?.tradeLicenseDetail?.tradeUnits.length > 0 && (
+
+              TradeDetails?.tradeLicenseDetail?.tradeUnits.map((unit)=>{
+              return (
+                    <div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(unit?.businessCategory.i18nKey)}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(unit?.businessType.i18nKey)}`}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
+                          </div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(unit?.businessSubtype.i18nKey)}`}</CardText>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    )
+                    })
+                  )
+                }
+            
 
 
             <div className="row">

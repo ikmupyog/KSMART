@@ -276,11 +276,11 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
         "email": email?.trim(), "licenseUnitId": licenseUnitId?.trim()
       } : null;
       let licenseeType = LicenseeType.code;
-      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment?.trim();
+      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
       let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
       let structurePlaceSubtype = formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype;
       let businessActivityDesc = formDatalocal?.tradeLicenseDetail?.businessActivityDesc?.trim();
-      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees?.trim();
+      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees;
       let ownershipCategory = formDatalocal?.tradeLicenseDetail?.ownershipCategory;
       let address = formDatalocal?.tradeLicenseDetail?.address;
       let structurePlace = formDatalocal?.tradeLicenseDetail?.structurePlace;

@@ -107,6 +107,7 @@ const Urls = {
     updatepdewf: "/tl-services/pde/_updatewf",
     createcorrection: "/tl-services/correction/_create",
     updatecorrection: "/tl-services/correction/_update",
+    search_pt : "/tl-services/pt/_search"
   },
   cr: {
     create: "/birth-services/cr/createbirth",
@@ -120,7 +121,7 @@ const Urls = {
     create_adoption: "/birth-services/cr/createadoption",
     correct_update: "/birth-services/cr/createbirthcorrection",
     registry_search_Adoption: "/birth-services/cr/registry/_searchAdoption",
-    commonSearch: "/birth-services/cr/common//searchbirthcommon",
+    commonSearch: "/birth-services/cr/common/searchbirthcommon",
   },
   crcorrection: {
     marriage_correction_search: "/marriage-services/v1/marriagedetails/_searchmarriage",

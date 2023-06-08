@@ -151,8 +151,9 @@ html {
 }
 
 .main-flexnavaet .big-leftnavbarDrv li a {
-  font-size: 16px;
+  font-size: 15px;
   color: #1f1f1f;
+  text-decoration: none;
   /* font-family: "Lato-Regular"; */
 }
 
@@ -161,8 +162,9 @@ html {
 }
 
 .main-flexnavaet .right_iconNavbar li a {
-  font-size: 16px;
+  font-size: 15px;
   color: #1f1f1f;
+  text-decoration: none;
   /* font-family: "Lato-Regular"; */
 }
 
@@ -828,4 +830,42 @@ html {
   padding-left: 7% !important;
   margin-right: auto;
   margin-left: auto;
+}
+
+element.style {}
+
+.header-btm-search-box h4 {
+  font-size: 15px;
+  text-align: center;
+  color: #758da3;
+  margin-top: 20px;
+}
+
+
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 400 !important;
+  line-height: 1.2;
+  color: var(--bs-heading-color);
+}
+
+@media (min-width: 1200px) {
+
+  .h2,
+  h2 {
+    font-size: 1rem !important;
+  }
 }

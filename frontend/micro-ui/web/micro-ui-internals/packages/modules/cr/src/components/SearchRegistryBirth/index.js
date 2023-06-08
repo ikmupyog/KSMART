@@ -11,18 +11,18 @@ import _ from "lodash";
 
 const mystyle = {
   bgOpacity: "1",
-  backgroundColor: "#EDF2FA",
+  backgroundColor: "#fff",
+  backgroundColor: "rgba(255, 255, 255, var(--bg-opacity))",
   marginBottom: "24px",
-  marginTop: "20px",
-  padding: "2.5rem",
-  borderRadius: "2.6rem",
+  padding: "1.5rem",
+  borderRadius: "1.6rem",
 };
 const hstyle = {
   fontSize: "20px",
   fontWeight: "500",
-  color: "#00377B",
-  marginBottom: "2.5rem",
-  lineHieght: "2.5rem",
+  color: "#2B2F3E",
+  marginBottom: ".5rem",
+  lineHieght: "1.5rem",
 };
 
 const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) => {
