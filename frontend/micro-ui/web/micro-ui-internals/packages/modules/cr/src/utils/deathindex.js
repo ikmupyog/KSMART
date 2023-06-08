@@ -595,7 +595,6 @@ export const convertToDeathRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditDeathRegistration = (data = {}) => {
-  // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const empTenantId = Digit.ULBService.getCurrentUlb();
 
   console.log("dataaaa",data)
