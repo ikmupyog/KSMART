@@ -54,7 +54,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
         <div style={{ justifyContent: "space-around" }}>
           <div className="language-button-container">
             <div>
-              <div style={{ margin: "0 auto" }}>
+              <div className="loginMobile" style={{ margin: "0 auto" }}>
                 <img src="https://ulb-logos.s3.ap-south-1.amazonaws.com/Mobile+application.png" alt="No Image" style={{ maxWidth: "100px" }} />
 
                 <label style={{ fontSize: "25px", marginBottom: "20px !important", color: "#00377b", fontWeight: "600", marginRight: "50px" }}>{`${t(

@@ -92,17 +92,18 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
                   style={{ maxWidth: "100px", marginLeft: "121px", marginRight: "121px" }}
                 /> */}
 
-                <label style={{ fontSize: "25px", marginBottom: "20px !important", color: "#00377b", fontWeight: "600" }}>{`${t(
+                <label style={{ fontSize: "28px", marginBottom: "20px !important", color: "#00377b", fontWeight: "600" }}>{`${t(
                   "CS_LOGIN_OTP"
                 )}`}</label>
                 <br></br>
-                <label style={{ fontSize: "15px", marginTop: "20px !important", color: "#3b669b", fontWeight: "450" }}>
+                <label style={{ fontSize: "17px", marginTop: "20px !important", color: "#3b669b", fontWeight: "450" }}>
                   {`${t("CS_LOGIN_OTP_TEXT")}`}
                   {`${t("CORE_COMMON_MOBILE_NUMBER")}`}
                 </label>
               </div>
             </div>
             <FormStep
+              className="loginOtp"
               onSelect={onSelect}
               config={config}
               t={t}
