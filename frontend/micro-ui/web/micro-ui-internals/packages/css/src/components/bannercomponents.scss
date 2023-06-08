@@ -156,7 +156,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 400px;
+    min-width: 500px;
   }
   .bannerLogo {
     width: 80px;
@@ -263,6 +263,16 @@
   align-items: center;
   margin-right: 40px;
 }
+@media screen and (max-width: 768px) {
+  .loginCard {
+    display: none;
+    right: unset !important;
+  }
+  .card {
+    margin: 0 !important;
+    right: unset !important;
+  }
+}
 .loginTitle {
   margin: 20px 20px 0px 10px;
 }
@@ -277,4 +287,14 @@
   color: #3b669b;
   font-weight: 450;
   margin-left: 27px;
+}
+@media screen and (max-width: 768px) {
+  .loginMobile {
+    padding-left: 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .loginOtp {
+    padding-left: 20px;
+  }
 }
