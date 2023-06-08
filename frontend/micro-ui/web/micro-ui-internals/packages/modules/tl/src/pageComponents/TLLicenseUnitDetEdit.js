@@ -1,4 +1,4 @@
-import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSfieldelect, TextInput, TextArea, DatePicker, LabelFieldPair, Toast } from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSfieldelect, TextInput, TextArea, DatePicker, LabelFieldPair, Toast, MultiSelectDropdown, RemoveableTag } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect, useCallback, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
@@ -83,7 +83,8 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   const { data: sector = {}, isSectorLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "EnterpriseType");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: dataitem = {}, isstructuretypeLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeStructureSubtype");
-
+  let BusinessCategoryMenutemp = []
+  const [BusinessCategoryMenu, setBusinessCategoryMenu] = useState([]);
   const [value2, setValue2] = useState();
   const [value3, setValue3] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed === false ? "NO" : "YES");
   const [isInitialPageRender, setIsInitialPageRender] = useState();
@@ -133,6 +134,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   const [vesselNo, setVesselNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo : "");
   const [waterbody, setWaterbody] = useState(formDataPage?.tradeLicenseDetail?.address?.waterbody ? formDataPage?.tradeLicenseDetail?.address?.waterbody : "");
   const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null }]);
+  const [fillFields, setFillFields] = useState([{  businessCategory: "", businessType: "", businessSubtype: [], unit: null, uom: null }]);
   const [fieldsDoor, setFeildsDoor] = useState(
     (formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
       blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
@@ -234,7 +236,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   }
 
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
-  let BusinessCategoryMenu = [];
+  // let BusinessCategoryMenu = [];
   //let TradeTypeMenu = [];
 
   // Data &&
@@ -288,6 +290,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
         BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
       }
     });
+
 
   function getBusinessTypeMenu(BusinessCategory) {
     let BusinessTypeMenu = [];
@@ -575,6 +578,8 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   });
 
   const selectBusinessSector = (value => {
+    setFeilds([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+    setBusinessCategoryMenu(BusinessCategoryMenutemp.filter((category) => category.categoryType === value.code));
     setBusinessSector(value);
     setIsInitialRender(true);
   });
@@ -802,9 +807,6 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       setLocalbody(tenantId ? LBs.filter(obj => obj.code === tenantId)[0] : "");
     }
   }
-  console.log(formDataPage?.tradeLicenseDetail?.address?.zonalId);
-  console.log(zonalOffice);
-  console.log(zonalOffice);
 
   if ((formDataPage?.tradeLicenseDetail?.address?.zonalId) && (zonalOffice === undefined || zonalOffice === "") && (Zonal.length > 0)) {
     setZonalOffice(Zonal.filter(zone => parseInt(zone?.code) === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
@@ -828,25 +830,37 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
   if (formDataPage?.desiredLicensePeriod && LicensePeriod === undefined && LicensePeriod > 0 && LicensePeriod.length > 0) {
     setDesiredLicensePeriod(formDataPage?.desiredLicensePeriod ? LicensePeriod.filter((period) => period.code.includes(formDataPage?.desiredLicensePeriod))[0] : "");
   }
-
+  let subType = [];
+  let unitTemp = [];
+  let category = "";
+  let bustype = "";
   if(formDataPage?.tradeLicenseDetail?.tradeUnits !== null)
     if (formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
       && BusinessCategoryMenu.length > 0) {
-      let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
-      let bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
-      let bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
-      let id = formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.id;
-
-      setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
-        {
-          businessCategory: category,
-          businessType: bustype,
-          businessSubtype: bussubtyp, unit: null, uom: null , id : id
-        }
-
-      ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null}]);
+        formDataPage?.tradeLicenseDetail?.tradeUnits?.map((unit)=>{
+          category = BusinessCategoryMenu.filter((category) => category?.code.includes(unit?.businessCategory))[0];
+          bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(unit?.businessType))[0];
+          let bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
+          let id = unit?.id ? unit?.id : "";
+          unit?.businessSubtype ? subType.push(bussubtyp) : "";
+          unitTemp.push( 
+            {
+              businessCategory: category,
+              businessType: bustype,
+              businessSubtype: bussubtyp, unit: null, uom: null , id : id
+            }
+          )
+        });
+        setFeilds(unitTemp);
+        setFillFields([
+          {
+            businessCategory: category,
+            businessType: bustype,
+            businessSubtype: subType, unit: null, uom: null
+          }
+        ]);
     }
-    else  [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null, id : null }];
+
   if (formDataPage?.tradeLicenseDetail?.ownershipCategory && formDataPage?.tradeLicenseDetail?.ownershipCategory !== null && ownershipCategoryMenumain.length > 0
     && ownershipCategory === undefined && ownershipCategory !== "") {
     setOwnershipCategory(ownershipCategoryMenumain.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory))[0]);
@@ -1021,12 +1035,89 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
       setErrorMessage(t("TL_INVALID_SERVICE_AREA"));
       validation = false;
     }
-
+    if(value2 === "BUILDING")
+    if(flgCheckDoor === true || flgCheck === false){
+      setErrorMessage(t("Please Check Door Validation"));
+      validation = false;
+    }
     return Promise.resolve(validation);
 
   }
+  const selectCategorysubtype = (e) => {
+    let subUnitSelect = [];
+    let tempUnitFill = [];
+    e && e?.map((ob) => {
+      ob != "" || ob != [] ? subUnitSelect.push(ob?.[1]) : null;   
+    });
 
+    let tradeUnitJSON = [...fields];
+    let tradeUnitFill = [...fillFields];
+    const businessSubtypeJSON = Array.from(
+      new Set(tradeUnitJSON.map(type => type.businessSubtype))
+    ); 
 
+    for(let i=0; i<tradeUnitFill.length; i++){
+      if(subUnitSelect.length > 0 )
+          subUnitSelect.map(subType => {
+              tempUnitFill.push(subType)
+          });
+      
+      tradeUnitFill[i].businessSubtype = tempUnitFill;
+    }
+
+    if(subUnitSelect.length > 0 ){
+      subUnitSelect.map((selUnit,index) => {
+        tradeUnitJSON[index] =  (selUnit !== null && businessSubtypeJSON.includes(selUnit.code)) ? tradeUnitJSON[index]
+        : ({
+            "id": null,
+            "businessCategory": tradeUnitFill[0].businessCategory,
+            "businessType": tradeUnitFill[0].businessType, 
+            "businessSubtype": selUnit?.code ? selUnit: null,
+            "active":true,
+            "unit":null,"uom":null
+          });
+      })
+    }
+    
+
+    for(let i=0; i<tradeUnitJSON.length; i++){
+      // subUnitSelect.length > 0 ? ((subUnitSelect.filter(subUnit => subUnit?.code.includes(tradeUnitJSON[i]?.businessSubtype))).length === 0) ? delete tradeUnitJSON[i] : null :null;
+      //subUnitSelect.length > 0 ? !subUnitSelect.find(subUnit => subUnit.code === tradeUnitJSON[i]?.businessSubtype) ? delete tradeUnitJSON[i] : null :null;
+    }
+    setFillFields(tradeUnitFill);
+    setFeilds(tradeUnitJSON);
+  }  
+  const onRemoved = (index, key) => {
+    let temp =[];
+    let unitfill = [...fillFields];
+    let flag = false;
+    for (let i=0;i<unitfill.length;i++){
+      unitfill[i].businessSubtype.filter(subType =>{
+        if(subType !== null && subType?.code !== key.code)
+        {
+          temp.push(subType);
+          flag = true;
+        }
+      });
+
+      unitfill[i].businessSubtype = temp.length===0 ?  [] : temp;
+    }
+      setFillFields(unitfill);
+      
+       let unit = [...fields];
+       let tempUnit = [];
+      for (let i=0;i<unit.length;i++){
+        !key?.code.includes(unit[i]?.businessSubtype.code) ? tempUnit.push(unit[i]) : "";
+
+        if(temp.length===0){
+          unit[i].businessCategory=unit[i].businessCategory;
+          unit[i].businessType=unit[i].businessType;
+          unit[i].businessSubtype=null;
+          tempUnit.push(unit[i]);
+        }
+      }
+      setFeilds(tempUnit);
+  };
   const goNext = async () => {
 
     const result = await validateData();
@@ -1115,49 +1206,6 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
         >
 
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
-            {/* <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LB_DET_LABEL")}`}</span> </h1>
-              </div>
-            </div> 
-            <div className="row">
-              <div className="col-md-7" >
-                <div className="row">
-                  <div className="col-md-4" >
-                    <CardLabel>{`${t("TL_DISTRICT")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbDistrict} selected={DistrictList} select={selectDistrict} disabled={isEdit} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_DISTRICT"), })} />
-                  </div>
-                  <div className="col-md-4" >
-                    <CardLabel>{`${t("TL_LB_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={config.isMandatory}
-                      option={cmbLBType}
-                      selected={LBTypeList}
-                      select={selectLBType}
-                      disabled={isEdit}
-                      {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALBODY_TYPE"), })}
-                    />
-                  </div>
-                  <div className="col-md-4" >
-                    <CardLabel>{`${t("TL_LB_NAME_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={FilterLocalbody} selected={Localbody} select={selectLocalbody} disabled={isEdit} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALBODY"), })} />
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-5" >
-                <div className="row">
-                  <div className="col-md-6" >
-                    <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={Zonal} selected={zonalOffice} select={selectZonal}    {...(validation = { isRequired: true, title: t("TL_INVALID_ZONAL_NAME") })} />
-                  </div>
-                  <div className="col-md-6" >
-                    <CardLabel>{`${t("TL_LOCALIZATION_WARD_NO")}`}</CardLabel>
-                    <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={WardNo} select={selectWard}  {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })} />
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}</span> </h1>
               </div>
@@ -1172,7 +1220,7 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
                 <RadioButtons t={t} optionsKey="name" isMandatory={config.isMandatory} options={menusector} selectedOption={businessSector} onSelect={selectBusinessSector} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_SECTOR"), })} />&nbsp;
               </div>
             </div>
-            {fields.map((field, index) => {
+            {fillFields.map((field, index) => {
               return (
                 <div className="row" key={index}>
                   <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -1183,9 +1231,22 @@ const TLLicenseUnitDetEdit = ({ t, config, onSelect, userType, formData }) => {
                     <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={getBusinessTypeMenu(field?.businessCategory)} selected={field?.businessType} select={(e) => selectBusinessType(index, e)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_TYPE"), })} />
                   </div>
                   <div className="col-md-4" >
-                    <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)} selected={field?.businessSubtype} select={(e) => selectBusinessSubType(index, e)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
-                  </div>
+                      <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <MultiSelectDropdown t={t}
+                        optionsKey="i18nKey"
+                        isMandatory={config.isMandatory}
+                        options={getBusinessSubTypeMenu(field?.businessType) && getBusinessSubTypeMenu(field?.businessType)}
+                        selected={field?.businessSubtype}
+                        onSelect={selectCategorysubtype}
+                        placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })}
+                      />
+                      <div className="tag-container">
+                        {field?.businessSubtype?.length > 0 &&
+                          field?.businessSubtype.map((value, indexsub) => {
+                            return <RemoveableTag key={indexsub} text={`${t(value && value["i18nKey"]).slice(0, 22)} ...`} onClick={() => onRemoved(indexsub, value)} />;
+                        })}
+                      </div>
+                    </div>
                 </div>
               )
             }
