@@ -8,55 +8,66 @@ import _ from "lodash";
 
 const mystyle = {
   bgOpacity: "1",
-  backgroundColor: "#fff",
-  backgroundColor: "rgba(255, 255, 255, var(--bg-opacity))",
+  backgroundColor: "#EDF2FA",
   marginBottom: "24px",
-  padding: "1.5rem",
-  borderRadius: "1.6rem",
+  marginTop: "20px",
+  padding: "2.5rem",
+  borderRadius: "2.6rem",
 };
 const hstyle = {
   fontSize: "20px",
   fontWeight: "500",
-  color: "#2B2F3E",
-  marginBottom: ".5rem",
-  lineHieght: "1.5rem",
+  color: "#00377B",
+  marginBottom: "2.5rem",
+  lineHieght: "2.5rem",
 };
 
 const DEATH_APPLICATION_TYPE = {
-  "NORMAL": "CRDRNR",
-  "NAC": "CRDRNA"
-}
+  NORMAL: "CRDRNR",
+  NAC: "CRDRNA",
+};
 
 const generateActions = (rowData) => {
   const status = _.get(rowData, "TL_APPLICATION_STATUS", "INITIATED");
-  const type = _.get(rowData, 'APPLICATION_TYPE', DEATH_APPLICATION_TYPE.NORMAL);
+  const type = _.get(rowData, "APPLICATION_TYPE", DEATH_APPLICATION_TYPE.NORMAL);
   let response = "";
   switch (status) {
     case "CITIZENACTIONREQUIRED":
-      response = <span className="link">
-        <Link to={`/digit-ui/citizen/cr/cr-death-creation/information-death/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}>
-          EDIT
-        </Link>
-      </span>
+      response = (
+        <span className="link">
+          <Link
+            to={`/digit-ui/citizen/cr/cr-death-creation/information-death/${rowData?.TL_COMMON_TABLE_COL_APP_NO}/${rowData?.TL_COMMON_CITY_NAME}`}
+          >
+            EDIT
+          </Link>
+        </span>
+      );
       break;
     case "PENDINGPAYMENT":
-      response = <span className="link">
-        <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}?tenantId=${rowData?.TL_COMMON_CITY_NAME}`}>
-          MAKE PAYMENT
-        </Link>
-      </span>
+      response = (
+        <span className="link">
+          <Link to={`/digit-ui/citizen/payment/collect/CR/${rowData?.TL_COMMON_TABLE_COL_APP_NO}?tenantId=${rowData?.TL_COMMON_CITY_NAME}`}>
+            MAKE PAYMENT
+          </Link>
+        </span>
+      );
       break;
     default:
-      response = <span className="link">
-        <Link
-          to={`/digit-ui/citizen/cr/${type === DEATH_APPLICATION_TYPE.NORMAL ? 'my-application-death' : 'my-application-death-nac'}/${rowData?.TL_COMMON_TABLE_COL_APP_NO}`}>
-          VIEW DETAILS
-        </Link>
-      </span>
+      response = (
+        <span className="link">
+          <Link
+            to={`/digit-ui/citizen/cr/${type === DEATH_APPLICATION_TYPE.NORMAL ? "my-application-death" : "my-application-death-nac"}/${
+              rowData?.TL_COMMON_TABLE_COL_APP_NO
+            }`}
+          >
+            VIEW DETAILS
+          </Link>
+        </span>
+      );
       break;
   }
   return response;
-}
+};
 
 const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading, tenantId }) => {
   const [FileData, setFileData] = useState([]);
@@ -104,8 +115,8 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
         Header: "Status",
         disableSortBy: true,
         Cell: ({ row }) => {
-          console.log({ row })
-          return (generateActions(row.original));
+          console.log({ row });
+          return generateActions(row.original);
         },
       },
     ],
@@ -161,6 +172,7 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
                   minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
                   padding: "20px 18px",
                   fontSize: "16px",
+                  borderRadius: "25px",
                 },
               };
             }}
