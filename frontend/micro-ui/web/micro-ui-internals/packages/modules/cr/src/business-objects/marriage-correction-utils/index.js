@@ -12,7 +12,7 @@ import { getFilteredBrideMotherNameData } from './bride-mother-name-util';
 import { getFilteredBrideGuardianNameData } from './bride-guardian-name-util';
 import { getFilteredBrideAgeData } from './bride-age-util';
 // import { getFilteredBrideDOBData } from './bride-dob-util';
-// import { getFilteredMarriagePlaceNameData } from './marriage-place-name-util';
+import { getFilteredMarriagePlaceNameData } from './marriage-place-name-util';
 import { getFilteredGroomAddressData } from './present-address-util';
 import { getFilteredBrideAddressData } from './bride-address-util';
 
@@ -31,7 +31,7 @@ import { getFilteredBrideAddressData } from './bride-address-util';
     getFilteredBrideGuardianNameData,
     getFilteredBrideAgeData,
     // getFilteredBrideDOBData,
-    // getFilteredMarriagePlaceNameData,
+    getFilteredMarriagePlaceNameData,
     getFilteredGroomAddressData,
     getFilteredBrideAddressData,
   };

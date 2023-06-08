@@ -145,7 +145,7 @@ const MarriageCorrectionEditPage = ({
     } else if (checkLocation) {
       return { lineHeight: "19px", maxWidth: "600px", minWidth: "280px" };
     } else {
-      return {};
+      return { marginRight: "20px" };
     }
   };
 
@@ -451,6 +451,8 @@ const MarriageCorrectionEditPage = ({
     }
   };
 
+  console.log("marriageCorrectionFormsObj ===", marriageCorrectionFormsObj);
+
   if (Object.keys(marriageCorrectionFormsObj)?.length > 0) {
     // const config = { texts: { submitBarLabel: "Next" } };
     return (
@@ -664,6 +666,156 @@ const MarriageCorrectionEditPage = ({
               </div>
               <p /> */}
             {/* {active === types[0] ? ( */}
+            <div style={getMainDivStyles()}>
+              <Accordion
+                // expanded={index === 0 ? true : false}
+                title={`${t("CR_MARRIAGE_PLACE_DETAILS")}`}
+                style={{ margin: "10px" }}
+                content={
+                  <StatusTable style={getTableStyles()}>
+                    <div>
+                      <FormFieldContainer>
+                        <FieldComponentContainer>
+                          <div className="col-md-6">
+                            <CardLabel style={{ width: "100%" }}>{`${t("CR_HOUSE_NO_AND_NAME_EN")}`}</CardLabel>
+                            <TextInput
+                              t={t}
+                              type={"text"}
+                              name="groomHouseNameEn"
+                              disabled={marriageCorrectionFormsObj.PLACE_OF_MARRIAGE?.isDisable}
+                              // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                              defaultValue={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue.houseNameEn}
+                              onBlur={(e) => onGroomAddressChange(e, "houseNameEn")}
+                              placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+                              {...(validation = {
+                                pattern: "^[a-zA-Z-.`'0-9 ]*$",
+                                type: "text",
+                                isRequired: checkLangRequired("PLACE_OF_MARRIAGE", "houseNameEn", "En"),
+                                title: t("CR_INVALID_HOUSE_NAME_EN"),
+                              })}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <CardLabel style={{ width: "100%" }}>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
+                            <TextInput
+                              t={t}
+                              type={"text"}
+                              name="groomLocalityEn"
+                              disabled={marriageCorrectionFormsObj.PLACE_OF_MARRIAGE?.isDisable}
+                              // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                              defaultValue={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue.localityNameEn}
+                              onBlur={(e) => onGroomAddressChange(e, "localityNameEn")}
+                              placeholder={`${t("CR_LOCALITY_EN")}`}
+                              {...(validation = {
+                                pattern: "^[a-zA-Z-.`'0-9 ]*$",
+                                type: "text",
+                                isRequired: checkLangRequired("PLACE_OF_MARRIAGE", "localityNameEn", "En"),
+                                title: t("CR_INVALID_LOCALITY_EN"),
+                              })}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <CardLabel style={{ width: "100%" }}>{`${t("CR_STREET_EN")}`}</CardLabel>
+                            <TextInput
+                              t={t}
+                              type={"text"}
+                              name="groomStreetEn"
+                              disabled={marriageCorrectionFormsObj.PLACE_OF_MARRIAGE?.isDisable}
+                              // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                              defaultValue={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue.streetNameEn}
+                              onBlur={(e) => onGroomAddressChange(e, "streetNameEn")}
+                              placeholder={`${t("CR_STREET_EN")}`}
+                              {...(validation = {
+                                pattern: "^[a-zA-Z-.`'0-9 ]*$",
+                                type: "text",
+                                isRequired: checkLangRequired("PLACE_OF_MARRIAGE", "streetNameEn", "En"),
+                                title: t("CR_INVALID_STREET_NAME_EN"),
+                              })}
+                            />
+                          </div>
+                        </FieldComponentContainer>
+                        <div style={{ marginTop: "1.5rem" }}>
+                          {marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.isDisable && (
+                            <ButtonContainer>
+                              <span onClick={() => setMarriageCorrectionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["PLACE_OF_MARRIAGE"])}>
+                                <EditIcon style={{ position: "absolute", top: "0.6rem", right: "0.2rem", left: "0.5rem" }} />
+                              </span>
+                            </ButtonContainer>
+                          )}
+                        </div>
+                      </FormFieldContainer>
+                      <FormFieldContainer>
+                        <FieldComponentContainer>
+                          <div className="col-md-6">
+                            <CardLabel style={{ width: "100%" }}>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}</CardLabel>
+                            <TextInput
+                              t={t}
+                              type={"text"}
+                              name="groomHouseNameMl"
+                              defaultValue={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue.houseNameMl}
+                              disabled={marriageCorrectionFormsObj.PLACE_OF_MARRIAGE?.isDisable}
+                              // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                              onKeyPress={setCheckMalayalamInputField}
+                              onChange={(e) => onChangeMalayalam(e, "PLACE_OF_MARRIAGE", "houseNameMl")}
+                              onBlur={(e) => onGroomAddressChange(e, "houseNameMl")}
+                              placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                              {...(validation = {
+                                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
+                                type: "text",
+                                isRequired: checkLangRequired("PLACE_OF_MARRIAGE", "houseNameMl"),
+                                title: t("CR_INVALID_HOUSE_NAME_ML"),
+                              })}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <CardLabel style={{ width: "100%" }}>{`${t("CR_LOCALITY_MAL")}`}</CardLabel>
+                            <TextInput
+                              t={t}
+                              type={"text"}
+                              name="groomLocalityMl"
+                              defaultValue={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue.localityNameMl}
+                              disabled={marriageCorrectionFormsObj.PLACE_OF_MARRIAGE?.isDisable}
+                              onKeyPress={setCheckMalayalamInputField}
+                              onChange={(e) => onChangeMalayalam(e, "PLACE_OF_MARRIAGE", "localityNameMl")}
+                              // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                              onBlur={(e) => onGroomAddressChange(e, "localityNameMl")}
+                              placeholder={`${t("CR_LOCALITY_MAL")}`}
+                              {...(validation = {
+                                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                                type: "text",
+                                isRequired: checkLangRequired("PLACE_OF_MARRIAGE", "localityNameMl"),
+                                title: t("CR_INVALID_LOCALITY_ML"),
+                              })}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <CardLabel style={{ width: "100%" }}>{`${t("CR_STREET_MAL")}`}</CardLabel>
+                            <TextInput
+                              t={t}
+                              type={"text"}
+                              name="groomStreetMl"
+                              defaultValue={marriageCorrectionFormsObj?.PLACE_OF_MARRIAGE?.curValue.streetNameMl}
+                              disabled={marriageCorrectionFormsObj.PLACE_OF_MARRIAGE?.isDisable}
+                              onKeyPress={setCheckMalayalamInputField}
+                              onChange={(e) => onChangeMalayalam(e, "PLACE_OF_MARRIAGE", "streetNameMl")}
+                              // autofocus={marriageCorrectionFormsObj.GROOM_PERADD?.isFocused}
+                              onBlur={(e) => onGroomAddressChange(e, "streetNameMl")}
+                              placeholder={`${t("CR_STREET_MAL")}`}
+                              {...(validation = {
+                                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                                type: "text",
+                                isRequired: checkLangRequired("PLACE_OF_MARRIAGE", "streetNameMl"),
+                                title: t("CR_INVALID_STREET_NAME_ML"),
+                              })}
+                            />
+                          </div>
+                        </FieldComponentContainer>
+                      </FormFieldContainer>
+                    </div>
+                  </StatusTable>
+                }
+              />
+            </div>
             <div style={getMainDivStyles()}>
               <Accordion
                 // expanded={index === 0 ? true : false}
@@ -2124,7 +2276,7 @@ const MarriageCorrectionEditPage = ({
             {/* </FormFieldContainer> */}
             <div className="buttonContainerN" style={{ padding: "2rem" }}>
               <FormBackButton>{t("CS_COMMON_BACK")}</FormBackButton>
-              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
+              <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmitMarriageCorrection} />
             </div>
             {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} /> */}
             {/* <MarriageCorrectionModal
@@ -2139,7 +2291,7 @@ const MarriageCorrectionEditPage = ({
           </div>
           <div
             className="col-md-4"
-            style={{ backgroundColor: "#F5F5F5", borderRadius: "12px", marginTop: "0.5rem", height: "100vh", overflowY: "scroll" }}
+            style={{ backgroundColor: "#F5F5F5", borderRadius: "12px", marginTop: "0.5rem", height: "90vh", overflowY: "scroll" }}
           >
             {selectedCorrectionItem?.documentData?.[0] ? (
               <MarriageCorrectionDocUpload
@@ -2150,8 +2302,9 @@ const MarriageCorrectionEditPage = ({
                 selectedDocData={selectedDocData}
               />
             ) : (
-              <div style={{ width: "670px", height: "100vh" }}>
-                <img style={{ width: "100%", height: "100%" }} src="https://source.unsplash.com/user/c_v_r/1600×900" alt="" />
+              <div style={{ width: "440px", height: "100vh" }}>
+                <p style={{ marginTop: "10px",color: "#00377B", fontWeight: "700", fontSize: "20px" }}>Certificate Preview</p>
+                <img style={{ position: "absolute", right: "0px", left: "0px", top: "50px", borderRadius: "10px", height: "90vh" }} src="https://source.unsplash.com/user/c_v_r/1600×900" alt="" />
               </div>
             )}
           </div>

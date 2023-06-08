@@ -14,7 +14,7 @@ import {
   getFilteredBrideMotherNameData,
   getFilteredBrideAgeData,
   // getFilteredBrideDOBData,
-  // getFilteredMarriagePlaceNameData,
+  getFilteredMarriagePlaceNameData,
   getFilteredGroomAddressData,
   getFilteredBrideAddressData,
 } from "./marriage-correction-utils";
@@ -97,7 +97,7 @@ export const deathCorrectionFilterFieldsObj = {
 export const marriageCorrectionFilterFieldsObj = {
   DOM: ({data, inclusionData}) => getFilteredMarriageDOMData(data, inclusionData),
   GROOM_NAME: ({data, inclusionData}) => getFilteredGroomNameData(data, inclusionData),
-  // PLACE_OF_MARRIAGE: ({data, inclusionData, cmbWardNo}) => getFilteredMarriagePlaceWardData(data, inclusionData, cmbWardNo),
+  PLACE_OF_MARRIAGE: ({data, inclusionData}) => getFilteredMarriagePlaceNameData(data, inclusionData),
   // MARRIAGE_PLACE_TYPE: ({data, inclusionData, cmbPlace}) => getFilteredMarriagePlaceTypeData(data, inclusionData, cmbPlace),
   // MARRIAGE_PLACE_NAME: ({data, inclusionData, cmbPlaceName}) => getFilteredMarriagePlaceNameData(data, inclusionData, cmbPlaceName),
   GROOM_FATHER: ({data, inclusionData}) => getFilteredGroomFatherNameData(data, inclusionData),
