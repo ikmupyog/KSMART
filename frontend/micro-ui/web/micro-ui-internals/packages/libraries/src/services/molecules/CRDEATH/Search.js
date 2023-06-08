@@ -295,13 +295,15 @@ export const CRDeathsearch = {
       asSectionHeader: true,
       values: [
         // { title: "CR_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlace ? response?.InformationDeath?.DeathPlace : "CR_NOT_RECORDED" },
-        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceEn + " / " + response?.publicPlaceMl || "CR_NOT_RECORDED" },
-        { title: "CS_COMMON_WARD", value: response?.DeathPlaceWardId + " / " + response?.DeathPlaceWardIdMl || "CR_NOT_RECORDED" },
-        { title: "CR_LOCALITY_EN", value: response?.DeathPlaceLocalityEn || "CR_NOT_RECORDED" },
-        { title: "CR_LOCALITY_ML", value: response?.DeathPlaceLocalityMl || "CR_NOT_RECORDED" },
-        { title: "CR_STREET_NAME_EN", value: response?.DeathPlaceStreetEn || "CR_NOT_RECORDED" },
-        { title: "CR_STREET_NAME_ML", value: response?.DeathPlaceStreetMl || "CR_NOT_RECORDED" },
-        { title: "CR_DESCRIPTION", value: response?.GeneralRemarks || "CR_NOT_RECORDED" },
+        { title: "CR_PUBLIC_PLACE_TYPE", value: response?.publicPlaceEn ?response?.publicPlaceEn: t("CR_NOT_RECORDED")+
+         " / " + response?.publicPlaceMl?response?.publicPlaceMl:t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_WARD", value: response?.DeathPlaceWardId ?response?.DeathPlaceWardId:t("CR_NOT_RECORDED")
+        + " / " + response?.DeathPlaceWardIdMl?response?.DeathPlaceWardIdMl:t("CR_NOT_RECORDED") },
+        { title: "CR_LOCALITY_EN", value: response?.DeathPlaceLocalityEn || t("CR_NOT_RECORDED") },
+        { title: "CR_LOCALITY_ML", value: response?.DeathPlaceLocalityMl || t("CR_NOT_RECORDED") },
+        { title: "CR_STREET_NAME_EN", value: response?.DeathPlaceStreetEn || t("CR_NOT_RECORDED") },
+        { title: "CR_STREET_NAME_ML", value: response?.DeathPlaceStreetMl || t("CR_NOT_RECORDED") },
+        { title: "CR_DESCRIPTION", value: response?.GeneralRemarks || t("CR_NOT_RECORDED") },
       ],
     };
     const deathPlaceOUTSIDEJURISDICTIONDetails = {
@@ -478,6 +480,7 @@ export const CRDeathsearch = {
     };
     // } else if (response?.AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA") {
 
+
     const AddressBirthDetailsPresentOutsideIndiaInfo = {
       title: "CR_ADDRESS_DETAILS",
       values: [
@@ -604,12 +607,12 @@ export const CRDeathsearch = {
       title: "CR_INITIATOR_DETAILS",
       // asSectionHeader: true,
       values: [
-        { title: "CR_RELATION", value: response?.Initiator?.InitiatorRelation || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_NAME", value: response?.Initiator?.InitiatorName || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_AADHAR", value: response?.Initiator?.InitiatorAadhaar || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.Initiator?.InitiatorMobile || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_DESIGNATION", value: response?.Initiator?.initiatorDesi || "CR_NOT_RECORDED" },
-        { title: "PDF_INITIATOR_ADDRESS", value: response?.Initiator?.InitiatorAddress || "CR_NOT_RECORDED" },
+        { title: "CR_RELATION", value: response?.Initiator?.InitiatorRelation || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_NAME", value: response?.Initiator?.InitiatorName || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_AADHAR", value: response?.Initiator?.InitiatorAadhaar || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.Initiator?.InitiatorMobile || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_DESIGNATION", value: response?.Initiator?.initiatorDesi || t("CR_NOT_RECORDED") },
+        { title: "PDF_INITIATOR_ADDRESS", value: response?.Initiator?.InitiatorAddress || t("CR_NOT_RECORDED") },
       ],
     };
     const InformarHospitalInstitution = {
@@ -623,6 +626,8 @@ export const CRDeathsearch = {
         { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformantDetails?.informerAddress || "CR_NOT_RECORDED" },
       ],
     };
+
+   
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
     if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
@@ -651,7 +656,9 @@ export const CRDeathsearch = {
     response && employeeResponse.push(FamilyInformationDeath);
     response && employeeResponse.push(statisticalInfo);
     response && employeeResponse.push(InitiatorDetails);
+    if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
     response && employeeResponse.push(InformarHospitalInstitution);
+    }
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,

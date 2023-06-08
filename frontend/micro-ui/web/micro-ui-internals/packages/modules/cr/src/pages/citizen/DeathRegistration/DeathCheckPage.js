@@ -61,6 +61,26 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   //   routeLink = routeLink.replace("/check", "");
   // }
 
+  const uploadedImages = [
+    InformationDeath?.uploadedFile
+  ];
+  useEffect(() => {
+    if (uploadedImages?.length > 0) {
+      fetchImage();
+    }
+  }, []);
+  const [imagesThumbs, setImagesThumbs] = useState(null);
+  const [imageZoom, setImageZoom] = useState(null);
+  const fetchImage = async () => {
+    setImagesThumbs(null);
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(uploadedImages, Digit.ULBService.getStateId());
+    const newThumbnails = fileStoreIds.map((key) => {
+      const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
+      return { large: key.url.split(",")[1], small: key.url.split(",")[2], key: key.id, type: fileType, pdfUrl: key.url };
+    });
+    setImagesThumbs(newThumbnails);
+  }
+
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
   } else {
@@ -1918,6 +1938,70 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           </StatusTable>}
         />
+        {InformationDeath?.proceedNoRDO?
+            <Accordion expanded={false} title={t("CR_PROCEEDING_DOCUMENT")}
+          content={<StatusTable >
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                {uploadedImages.length > 0 && (
+                <div className="row" style={{ borderBottom: "none", paddingBottom: "1px", marginBottom: "1px" }}>
+                  <div
+                    className="col-md-12"
+                    style={{
+                      display: "flex",
+                      marginLeft: "15px",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {imagesThumbs &&
+                      imagesThumbs.map((thumbnail, index) => {
+                        return (
+                          <div key={index}>
+                            {thumbnail.type == "pdf" ? (
+                              <React.Fragment>
+                                <object
+                                  style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                  height={120}
+                                  data={thumbnail.pdfUrl}
+                                  alt={`upload-thumbnails-${index}`}
+                                />
+                              </React.Fragment>
+                            ) : (
+                              <img
+                                style={{ height: "120px", cursor: "zoom-in", margin: "5px" }}
+                                height={120}
+                                src={thumbnail.small}
+                                alt={`upload-thumbnails-${index}`}
+                                onClick={() => setImageZoom(thumbnail.large)}
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+                </div>
+              </div>
+            </div>
+            </StatusTable>}
+        />
+                   :null }
+         {/* const Documents = {
+
+title: ,
+
+documents: true,
+
+tenentId: Digit.ULBService.getStateId(),
+
+values: response.DeathNACDocuments.map((doc) => doc?.FileStoreId),
+
+}; */}
         {/* {window.location.href.includes("/citizen") && ( */}
         <div>
           <div className="row">

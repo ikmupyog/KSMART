@@ -122,7 +122,7 @@ export const CRAbandonedsearch = {
     let employeeResponse = [];
     const Birthdetails = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
-      asSectionHeader: true,      
+      asSectionHeader: true,
     }
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
@@ -150,7 +150,7 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
         // { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NOT_RECORDED" },
         { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeCode ? response?.institutionTypeCode : "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_NAME_EN", value:  response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
         { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NOT_RECORDED" },
       ],
     };
@@ -211,9 +211,9 @@ export const CRAbandonedsearch = {
     const motherInfo = {
       title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
       values: [
-        { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
-        { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar  || "NOT_RECORDED"},
-        { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother  || "NOT_RECORDED"},
+        { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails?.motherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails?.motherFirstNameMl || "NOT_RECORDED" }, { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar || "NOT_RECORDED" },
+        { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother || "NOT_RECORDED" },
       ],
     };
     const statisticalInfo = {
@@ -231,12 +231,12 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_INSTITUTION", value: response?.caretakerDetails?.institutionName || "NOT_RECORDED" },
         { title: "PDF_BIRTH_CARETAKER_NAME", value: response?.caretakerDetails?.caretakerName || "NOT_RECORDED" },
         { title: "PDF_BIRTH_CARETAKER_DESI", value: response?.caretakerDetails?.caretakerDesignation || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NOT_RECORDED" },     
+        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NOT_RECORDED" },
         { title: "PDF_BIRTH_CARETAKER_ADDRESS", value: response?.caretakerDetails?.caretakerAddress || "NOT_RECORDED" },
-        
+
       ],
     };
-   
+
     const informantDetailsInfo = {
       title: "CR_OFFICIAL_INFORMANT_HEADER",
       values: [
@@ -244,9 +244,9 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NOT_RECORDED" },
         { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NOT_RECORDED" },
         { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NOT_RECORDED" },
-        { title: "CS_COMMON_AADHAAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NOT_RECORDED" },  
+        { title: "CS_COMMON_AADHAAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NOT_RECORDED" },
         { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NOT_RECORDED" },
-        
+
       ],
     };
     // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
@@ -274,12 +274,12 @@ export const CRAbandonedsearch = {
       response && employeeResponse.push(birthPlaceVEHICLEDetails);
     } else if (response?.birthPlace === "PUBLIC_PLACES") {
       response && employeeResponse.push(birthPlacePUBLICPLACESDetails);
-    }  
+    }
     response && employeeResponse.push(motherInfo);
     response && employeeResponse.push(statisticalInfo);
     response && employeeResponse.push(childCustodyInfo);
     response && employeeResponse.push(informantDetailsInfo);
-    
+
 
     return {
       tenantId: response.tenantId,

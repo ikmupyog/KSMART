@@ -1,4 +1,4 @@
-import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSfieldelect, TextInput, TextArea, DatePicker, LabelFieldPair, Toast } from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSfieldelect, TextInput, TextArea, DatePicker, LabelFieldPair, Toast, MultiSelectDropdown, RemoveableTag } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect, useCallback, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
@@ -133,6 +133,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [vesselNo, setVesselNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo : "");
   const [waterbody, setWaterbody] = useState(formDataPage?.tradeLicenseDetail?.address?.waterbody ? formDataPage?.tradeLicenseDetail?.address?.waterbody : "");
   const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  const [fillFields, setFillFields] = useState([{  businessCategory: "", businessType: "", businessSubtype: [], unit: null, uom: null }]);
   const [fieldsDoor, setFeildsDoor] = useState(
     (formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
       blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
@@ -353,38 +354,27 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
   const selectBusinessCategory = (i, value) => {
     let units = [...fields];
-    units[i].businessCategory = value;
-    setBusinessCategory(value);
+    let fillUnits = [...fillFields];
+    units[i].businessCategory =  value?.code ? value.code : null;
+    fillUnits[i].businessCategory = value;
     selectBusinessType(i, null);
     selectBusinessSubType(i, null);
     setFeilds(units);
+    setFillFields(fillUnits);
   }
   const selectBusinessType = (i, value) => {
     let units = [...fields];
-    units[i].businessType = value;
-    setBusinessType(value);
+    let fillUnits = [...fillFields];
+    units[i].businessType = value?.code ? value.code : null;
+    fillUnits[i].businessType = value;
     selectBusinessSubType(i, null);
+    fillUnits[i].businessSubtype = [];
+    setFillFields(fillUnits);
     setFeilds(units);
   }
   const selectBusinessSubType = (i, value) => {
     let units = [...fields];
-    units[i].businessSubtype = value;
-    setBusinessSubType(value);
-    // if (value == null) {
-    //   units[i].unit = null;
-    //   setUnitOfMeasure(null);
-    // }
-    // Array.from(document.querySelectorAll("input")).forEach((input) => (input.value = ""));
-    // value &&
-    //   Data &&
-    //   Data.TradeLicense &&
-    //   Data.TradeLicense.TradeType.map((ob) => {
-    //     if (value.code === ob.code) {
-    //       units[i].unit = ob.uom;
-    //       setUnitOfMeasure(ob.uom);
-    //       // setFeilds(units);
-    //     }
-    //   });
+    units[i].businessSubtype =  value?.code ? value.code : null;
     setFeilds(units);
   }
 
@@ -835,24 +825,41 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     setDesiredLicensePeriod(formDataPage?.desiredLicensePeriod ? LicensePeriod.filter((period) => period.code.includes(formDataPage?.desiredLicensePeriod))[0] : "");
   }
 
+  let subType = [];
+  let category = "";
+  let bustype = "";
+  let bussubtyp = "";
+  if(formDataPage?.tradeLicenseDetail?.tradeUnits !== null){
+    formDataPage?.tradeLicenseDetail?.tradeUnits.map((unit)=>{
+      if((unit?.businessCategory) && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
+      && (BusinessCategoryMenu.length > 0)) {
+        category = BusinessCategoryMenu.filter((category) => category?.code.includes(unit?.businessCategory))[0];
+        bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(unit?.businessType))[0];
+        bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
+        subType.push(bussubtyp);
+        setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
+          {
+            businessCategory: category,
+            businessType: bustype,
+            businessSubtype: bussubtyp, unit: null, uom: null
+          }
 
-  if(formDataPage?.tradeLicenseDetail?.tradeUnits !== null)
-    if((formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory) && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
-    && (BusinessCategoryMenu.length > 0)) {
-      let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
-      let bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
-      let bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
-      setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
-        {
-          businessCategory: category,
-          businessType: bustype,
-          businessSubtype: bussubtyp, unit: null, uom: null
-        }
+        ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+      }
+      else  [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }];
+    });
+    if((fields) && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")
+      && (BusinessCategoryMenu.length > 0)) {
+      setFillFields(formDataPage?.tradeLicenseDetail?.tradeUnits ? [
+      {
+        businessCategory: category,
+        businessType: bustype,
+        businessSubtype: subType, unit: null, uom: null
+      }
 
-      ] : [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
-    }
-  else  [{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }];
-    
+    ] : [{ businessCategory: "", businessType: "", businessSubtype: [], unit: null, uom: null }]);
+  }
+} 
   if (formDataPage?.tradeLicenseDetail?.ownershipCategory && formDataPage?.tradeLicenseDetail?.ownershipCategory !== null && ownershipCategoryMenumain.length > 0
     && ownershipCategory === undefined && ownershipCategory !== "") {
     setOwnershipCategory(ownershipCategoryMenumain.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory))[0]);
@@ -1032,6 +1039,80 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     return Promise.resolve(validation);
 
   }
+  const selectCategorysubtype = (e) => {
+    let subUnitSelect = [];
+    let tempUnitFill = [];
+    e && e?.map((ob) => {
+      ob != "" || ob != [] ? subUnitSelect.push(ob?.[1]) : null;   
+    });
+
+    let tradeUnitJSON = [...fields];
+    let tradeUnitFill = [...fillFields];
+    const businessSubtypeJSON = Array.from(
+      new Set(tradeUnitJSON.map(type => type.businessSubtype))
+    ); 
+
+    for(let i=0; i<tradeUnitFill.length; i++){
+      if(subUnitSelect.length > 0 )
+          subUnitSelect.map(subType => {
+              tempUnitFill.push(subType)
+          });
+      
+      tradeUnitFill[i].businessSubtype = tempUnitFill;
+    }
+
+    if(subUnitSelect.length > 0 )
+      subUnitSelect.map((selUnit,index) => {
+        tradeUnitJSON[index] =  (selUnit !== null && businessSubtypeJSON.includes(selUnit.code)) ? tradeUnitJSON[index]
+        : ({
+            "id": null,
+            "businessCategory": tradeUnitFill[0].businessCategory.code,
+            "businessType": tradeUnitFill[0].businessType.code, 
+            "businessSubtype": selUnit?.code ? selUnit?.code : null,
+            "active":true,
+            "unit":null,"uom":null
+          });
+      })
+
+
+    for(let i=0; i<tradeUnitJSON.length; i++){
+      subUnitSelect.length > 0 ? ((subUnitSelect.filter(subUnit => subUnit?.code !== "" && subUnit?.code.includes(tradeUnitJSON[i]?.businessSubtype))).length === 0) ? delete tradeUnitJSON[i] : null :null;
+    }
+
+    setFillFields(tradeUnitFill);
+    setFeilds(tradeUnitJSON);
+  }  
+  const onRemoved = (index, key) => {
+    let temp =[];
+    let unitfill = [...fillFields];
+    let flag = false;
+    for (let i=0;i<unitfill.length;i++){
+      unitfill[i].businessSubtype.filter(subType =>{
+        if(subType !== null && subType?.code !== key.code)
+        {
+          temp.push(subType);
+          flag = true;
+        }
+      });
+
+      unitfill[i].businessSubtype = temp.length===0 ?  [] : temp;
+    }
+      setFillFields(unitfill);
+      
+       let unit = [...fields];
+       let tempUnit = [];
+      for (let i=0;i<unit.length;i++){
+        !key?.code.includes(unit[i]?.businessSubtype) ? tempUnit.push(unit[i]) : "";
+
+        if(temp.length===0){
+          unit[i].businessCategory=unit[i].businessCategory;
+          unit[i].businessType=unit[i].businessType;
+          unit[i].businessSubtype=null;
+          tempUnit.push(unit[i]);
+        }
+      }
+      setFeilds(tempUnit);
+  };
 
 
   const goNext = async () => {
@@ -1063,13 +1144,9 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
         "waterbody": waterbody?.trim(),
         "serviceArea": serviceArea?.trim()
       };
-      let tradeUnits =[
-        {
-          "businessCategory" :  units[0].businessCategory.code,
-          "businessType" :  units[0].businessType.code,
-          "businessSubtype" :  units[0].businessSubtype.code,
-        }
-      ]
+
+      let tradeUnits = units;
+
       let structurePlace = formStateDoor;
       let districtid = DistrictList;
       let localbodytype = LBTypeList;
@@ -1175,23 +1252,36 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                 <RadioButtons t={t} optionsKey="name" isMandatory={config.isMandatory} options={menusector} selectedOption={businessSector} onSelect={selectBusinessSector} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_SECTOR"), })} />&nbsp;
               </div>
             </div>
-            {fields.map((field, index) => {
+            {fillFields.map((field, index) => {
               return (
                 <div className="row" key={index}>
-                  <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} option={BusinessCategoryMenu} optionKey="i18nKey" isMandatory={config.isMandatory} value={field?.businessCategory} selected={field?.businessCategory} name={`TradeCategory-${index}`} select={(e) => selectBusinessCategory(index, e)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_CATEGORY"), })} />
+                    <div className="col-md-3" >
+                      <CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <Dropdown t={t} option={BusinessCategoryMenu} optionKey="i18nKey" isMandatory={config.isMandatory} value={field?.businessCategory} selected={field?.businessCategory} name={`TradeCategory-${index}`} select={(e) => selectBusinessCategory(index, e)} placeholder="Bussiness Category" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_CATEGORY"), })} />
+                    </div>
+                    <div className="col-md-4" >
+                      <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={getBusinessTypeMenu(field?.businessCategory)} selected={field?.businessType} select={(e) => selectBusinessType(index, e)} placeholder="Bussiness Type"  {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_TYPE"), })} />
+                    </div>
+                    <div className="col-md-4" >
+                      <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <MultiSelectDropdown t={t}
+                        optionsKey="i18nKey"
+                        isMandatory={config.isMandatory}
+                        options={getBusinessSubTypeMenu(field?.businessType) && getBusinessSubTypeMenu(field?.businessType)}
+                        selected={field?.businessSubtype}
+                        onSelect={selectCategorysubtype}
+                        placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })}
+                      />
+                      <div className="tag-container">
+                        {field?.businessSubtype?.length > 0 &&
+                          field?.businessSubtype.map((value, indexsub) => {
+                            return <RemoveableTag key={indexsub} text={`${t(value && value["i18nKey"]).slice(0, 22)} ...`} onClick={() => onRemoved(indexsub, value)} />;
+                        })}
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-md-4" >
-                    <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={getBusinessTypeMenu(field?.businessCategory)} selected={field?.businessType} select={(e) => selectBusinessType(index, e)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_TYPE"), })} />
-                  </div>
-                  <div className="col-md-4" >
-                    <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)} selected={field?.businessSubtype} select={(e) => selectBusinessSubType(index, e)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
-                  </div>
-                </div>
-              )
-            }
+              )}
             )}
             <div className="row">
               <div className="col-md-6">

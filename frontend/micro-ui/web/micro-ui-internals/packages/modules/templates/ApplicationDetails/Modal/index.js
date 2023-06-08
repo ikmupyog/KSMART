@@ -38,14 +38,14 @@ const ActionModal = (props) => {
     return <BirthActionModal {...props} />;
   }
   if (
-    props?.businessService.includes("WFBIRTH21DAYS") ||
-    props?.businessService.includes("BIRTH30DAYS") ||
-    props?.businessService.includes("BIRTH30TO1YEAR") ||
-    props?.businessService.includes("ABOVE1YEARBIRTH") ||
-    props?.businessService.includes("WFBIRTH21DAYSHOME") ||
-    props?.businessService.includes("BIRTH30DAYSHOME") ||
-    props?.businessService.includes("BIRTH30TO1YRHOME") ||
-    props?.businessService.includes("ABOVE1YRBIRTHHOME")
+    props?.businessService.includes("SBBIRTH21DAYS") ||
+    props?.businessService.includes("SBBIRTH30DAYS") ||
+    props?.businessService.includes("SBBIRTH30TO1YEAR") ||
+    props?.businessService.includes("SBABOVE1YEARBIRTH") ||
+    props?.businessService.includes("SBBIRTH21DAYSHOME") ||
+    props?.businessService.includes("SBBIRTH30DAYSHOME") ||
+    props?.businessService.includes("SBBIRTH30TO1YRHOME") ||
+    props?.businessService.includes("SBABOVE1YRBIRTHHOME")
   ) {
     return  <StillBirthActionModal {...props} />;
   }

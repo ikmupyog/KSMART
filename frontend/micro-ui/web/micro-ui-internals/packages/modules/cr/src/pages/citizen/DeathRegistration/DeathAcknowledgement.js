@@ -31,6 +31,15 @@ const BannerPicker = (props) => {
     // if (sessionStorage.getItem("applicationNumber") != null) {
     //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
     // }
+    return (
+      <Banner
+        message={GetActionMessage(props)}
+       // applicationNumber={props.data?.deathCertificateDtls[0]?.applicationNumber}
+       applicationNumber={props.data?.deathCertificateDtls[0]?.InformationDeath?.DeathACKNo}
+        info={props.isSuccess ? props.applicationNumber : ""}
+        successful={props.isSuccess}
+      />
+    );
   } else {
     return (
       <Banner

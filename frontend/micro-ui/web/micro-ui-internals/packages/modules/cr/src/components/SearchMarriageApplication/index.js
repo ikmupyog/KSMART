@@ -28,7 +28,7 @@ const selectedSearch = [
 ];
 let validation = "";
 
-const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType,isLoading }) => {
+const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType, isLoading }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
