@@ -597,10 +597,7 @@ export const convertToDeathRegistration = (data = {}) => {
 export const convertToEditDeathRegistration = (data = {}) => {
   // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const empTenantId = Digit.ULBService.getCurrentUlb();
-  // let tenantId = "";
-  // tenantId = empTenantId["code"];
-  // console.log(data);
-  // console.log(data?.InformationDeath?.workFlowCode);
+
   console.log("dataaaa",data)
 
   const formdata = {
