@@ -10,12 +10,13 @@
     @apply flex flex-col items-center;
 
     span {
+      padding: 3px;
       text-align: center;
       color: white;
     }
 
     .secondary-color {
-      color: #0B0C0C;
+      color:  #9EAFBF;
       padding: 5px;
       font-size: small;
     }
@@ -31,18 +32,23 @@
   }
 
   .circle {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     background-color: #B1B4B6;
     border-radius: 50%;
     text-align: center;
   }
-
+  
   .active {
-    background-color: #EA3D32;
-    border-color: #EA3D32;
+    @apply  bg-button-primary  text-label-primary ;
+    border-color: #EE3D7F;
   }
 } 
+
+.label-active {
+   color: #00377b !important;
+  }
+
 
 .TLComments{
   max-width: 360px;

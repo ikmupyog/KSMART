@@ -69,10 +69,10 @@ function KsmartFooter() {
                     </ul>
                 </div>
             </div>
-            <div className="copygirht_footer">
+            {/* <div className="copygirht_footer">
                 <div className="h6 wow animated fadeInUp">Copyright © 2023 Ksmart For Identity, Citizenship, Customs & Port Security.
                     All rights reserved.</div>
-            </div>
+            </div> */}
         </footer>
     )
 }

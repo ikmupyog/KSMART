@@ -271,7 +271,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
         <div className="col-md-12">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>{" "}
+              <span style={{  padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
         </div>

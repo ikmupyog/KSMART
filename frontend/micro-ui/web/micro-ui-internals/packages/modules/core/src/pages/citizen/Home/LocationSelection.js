@@ -144,10 +144,10 @@ const LocationSelection = () => {
           </div>
         )}
         {/* <BackButton /> */}
-        <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto", border: "none", boxShadow: "none" }}>
+        <Card className=" removeBottomMargin" style={{ margin: "0 auto", border: "none", boxShadow: "none", padding: "0px", width: "500px" }}>
           <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", width: "100%" }}>
             <div className="language-button-container">
-              <p style={{ color: "#00377b", fontWeight: "500", fontSize: "30px" }}>{t("CS_COMMON_CHOOSE_LOCATION")}</p>
+              <p style={{ color: "#00377b", fontWeight: "500", fontSize: "28px" }}>{t("CS_COMMON_CHOOSE_LOCATION")}</p>
               <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
               <Dropdown
                 t={t}
@@ -171,7 +171,7 @@ const LocationSelection = () => {
                 placeholder={`${t("CS_COMMON_LB")}`}
               />
               <SubmitBar
-                style={{ fonntF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
+                style={{ fonntF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important", marginTop: "30px" }}
                 label={t(`CORE_COMMON_CONTINUE`)}
                 onSubmit={onSubmit}
               />
