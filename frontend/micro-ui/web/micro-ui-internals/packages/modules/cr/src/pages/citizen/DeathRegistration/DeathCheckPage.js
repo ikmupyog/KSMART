@@ -1892,7 +1892,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_RELATION")}`} :</CardText>
                     </div>
                     <div className="col-md-5">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.InitiatorRelation?.i18nKey}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.initiator?.name}</CardText>
                     </div>
                   </div>
                 )}
@@ -1904,19 +1904,19 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_AADHAAR")}`} :</CardText>
                 </div>
                 <div className="col-md-5">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.InitiatorAadhaar}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.initiatorAadhar}</CardText>
                 </div>
                 <div className="col-md-5">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INITIATOR_NAME")}`} :</CardText>
                 </div>
                 <div className="col-md-5">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.InitiatorName}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.initiatorNameEn}</CardText>
                 </div>
                 <div className="col-md-5">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOBILE_NO")}`} :</CardText>
                 </div>
                 <div className="col-md-5">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.InitiatorMobile}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.initiatorMobile}</CardText>
                 </div>
                 {Initiator?.isCaretaker === true && (
                   <div className="col-md-5">
@@ -1929,7 +1929,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 )}
                 <div className="col-md-5">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.InitiatorAddress}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{Initiator?.initiatorAddress}</CardText>
                 </div>
               </div>
               <div className="col-md-2" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
