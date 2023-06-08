@@ -305,11 +305,15 @@ export const convertToTrade = (data = {}) => {
     structplace.isResurveyed = structplace?.isResurveyed?.code === "YES" ? true : false;
   });
   //structurePlace.isResurveyed = data?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed?.code === "YES" ? true : false;
-  let tradeUnits = [{
-    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory?.code,
-    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.code,
-    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code
-  }];
+  let tradeUnits =[];
+  data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.map((unit) => {
+    tradeUnits.push({
+      businessCategory: unit?.businessCategory?.code,
+      businessType: unit?.businessType?.code,
+      businessSubtype: unit?.businessSubtype?.code
+    })
+  });
+
   const formdata = {
     Licenses: [
       {
@@ -322,13 +326,13 @@ export const convertToTrade = (data = {}) => {
         tradeLicenseDetail: {
           channel: "CITIZEN",
           businessSector: data?.TradeDetails?.tradeLicenseDetail?.businessSector.code,
-          capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
+          capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment?.toString()?.trim(),
           enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,
           structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
           structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
           businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc?.trim(),
           licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType?.code,
-          noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
+          noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees?.toString()?.trim(),
           ownershipCategory: data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code,
           address: address,//data?.TradeDetails?.tradeLicenseDetail?.address
           applicationDocuments: null,
@@ -1342,6 +1346,7 @@ export const convertEpochToDateDMY = (dateEpoch) => {
   day = (day > 9 ? "" : "0") + day;
   return `${day}/${month}/${year}`;
 };
+
 // export const compareAttributes = (oldValues,newValues) => {
 //   const isEditRenew = window.location.href.includes("renew-trade");
 //   oldValues.map(([keyOld,oldValue]) => {

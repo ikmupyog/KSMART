@@ -23,6 +23,7 @@ import MarriageCorrection from "./pages/citizen/MarriageCorrection";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
+import BirthInclusionDetailPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionDetails";
 import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
@@ -55,6 +56,8 @@ import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents
 import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
 import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
 import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
+// InformarHospital
+import  InformarHospital from "../src/pageComponents/deathComponents/InformarHospital";
 import InitiatorDetails from "../src/pageComponents/birthComponents/InitiatorDetails";
 
 import StillBirthChildDetails from "../src/pageComponents/stillBirthComponents/StillBirthChildDetails";
@@ -366,6 +369,7 @@ const componentsToRegister = {
   CRBirthInclusions: BirthInclusion,
   CRMarriageCorrection: MarriageCorrection,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
+  CRBirthInclusionDetailPage:BirthInclusionDetailPage,
   CRBirthInclusionPage: BirthInclusionPage,
   SearchBirthInclusion,
   BirthInclusionModal,
@@ -384,6 +388,7 @@ const componentsToRegister = {
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
   InitiatorDetails,
+  InformarHospital,
   //////////////////
   StillBirthChildDetails,
   StillBirthParentsDetails,

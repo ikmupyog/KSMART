@@ -128,5 +128,16 @@ export const TLService = {
       params: {},
       auth: true,
     }),
-    
+    search_pt : (details, tenantId) =>
+    Request({
+      url: Urls.tl.search_pt,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+
 };
