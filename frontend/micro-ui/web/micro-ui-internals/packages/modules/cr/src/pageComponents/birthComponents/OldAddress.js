@@ -1409,7 +1409,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
+                      <span style={{ padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
@@ -1777,7 +1777,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS_OF_THE_FAMILY")}`}</span>{" "}
+                        <span style={{ padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS_OF_THE_FAMILY")}`}</span>{" "}
                       </h1>
                     </div>
                   </div>

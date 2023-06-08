@@ -21,6 +21,7 @@ module.exports = {
       },
       label: {
         primary: "#00377B",
+        secondary: "#547195"
       },
       card: {
         background: "#EDF2FA",

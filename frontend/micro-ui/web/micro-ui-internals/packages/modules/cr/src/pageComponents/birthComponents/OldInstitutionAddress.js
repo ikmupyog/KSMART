@@ -255,7 +255,7 @@ function setSelectAdrsPincode(e) {
  <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdrsDoorNo}>
 
  <div className="row">
- <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_ADDRESS")}`}</span> </h1>
+ <div className="col-md-12" ><h1 className="headingh1" ><span style={{ padding: "0 10px" }}>{`${t("CR_INSTITUTION_ADDRESS")}`}</span> </h1>
  </div>
  </div>
 

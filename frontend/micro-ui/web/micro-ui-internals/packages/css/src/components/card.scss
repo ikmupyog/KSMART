@@ -3,8 +3,19 @@
   border-radius: 25px;
   display: flow-root;
 
-  .card-header {
+  .summaryHeading {
+   color: #00377B !important;
+    font-weight: 500 !important;
+    font-size: 15px !important;  
+    text-align: left !important;
   }
+  .summarySubHeading {
+    color: #547195 !important;
+    font-size: 15px !important;  
+    text-align: left !important;
+  }
+  
+  .card-header {  }
 
   .card-sub-header {
     @apply text-text-primary text-caption-xl font-bold align-middle text-left mb-sm;

@@ -405,7 +405,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+              <span style={{ padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -543,7 +543,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_ADMISION_DETAILS")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_HOSPITAL_ADMISION_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
             </div>

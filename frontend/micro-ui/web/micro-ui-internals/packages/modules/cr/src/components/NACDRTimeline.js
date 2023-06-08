@@ -13,7 +13,7 @@ const getAction = (flow) => {
       'Instructions, Documents and Forms',
       'CR_DEATH_INFO',
       'CR_ADDRESS_DECESED',
-      'CR_FAMILY_DETAILS',        
+      'CR_FAMILY_DETAILS',
       'CR_INFORMENT_DETAILS',
       'CR_SUMMARY',
     ]
@@ -29,7 +29,7 @@ const Timeline = ({ currentStep = 1, flow = "" }) => {
         <div className="timeline-checkpoint" key={index}>
           <div className="timeline-content">
             <span className={`circle ${index <= currentStep - 1 && 'active'}`}>{index < currentStep - 1 ? <TickMark /> : index + 1}</span>
-            <span className="secondary-color">{t(action)}</span>
+            <span className={`secondary-color ${index <= currentStep - 1 && 'label-active'}`}>{t(action)}</span>
           </div>
           {index < arr.length - 1 && <span className={`line ${index < currentStep - 1 && 'active'}`}></span>}
         </div>

@@ -7,28 +7,28 @@ let link = [
   "license-unit-det",
   "license-applicant-det",
   'license-doc-det',
- // "license-declaration-det",
+  // "license-declaration-det",
   "check"
 ];
 const getAction = (flow) => {
   switch (flow) {
     case "STAKEHOLDER": actions = []
       break;
-    case "CORRECTION" :
+    case "CORRECTION":
       actions = [
         'TL_COMMON_TR_DETAILS',
         'TL_DOCUMENT_DETAIL',
         'TL_COMMON_SUMMARY',
       ]
-break;
+      break;
     default: actions = [
       'TL_COMMON_TR_DETAILS',
       'TL_APPLICANT_AND_OWNER_DETAILS',
       'TL_DOCUMENT_DETAIL',
-   //   'TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_HEADER',
+      //   'TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_HEADER',
       'TL_COMMON_SUMMARY',
     ]
-    break;
+      break;
   }
 }
 
@@ -44,9 +44,9 @@ const Timeline = ({ currentStep = 1, flow = "" }) => {
           <div className="timeline-content">
 
             <span className={`circle ${index <= currentStep - 1 && 'active'}`}>{index < currentStep - 1 ? <TickMark /> : index + 1}</span>
-            <span className="secondary-color">{t(action)}</span>
+            <span className={`secondary-color ${index <= currentStep - 1 && 'label-active'}`}>{t(action)}</span>
             {/* <Link to={{ pathname: `/digit-ui/citizen/tl/tradelicence/new-application/` + link[index] }}>
-              <span className="secondary-color">{t(action)}</span>
+              <span className={`secondary-color ${index <= currentStep - 1 && 'label-active'}`}>{t(action)}</span>
             </Link> */}
           </div>
           {index < arr.length - 1 && <span className={`line ${index < currentStep - 1 && 'active'}`}></span>}
