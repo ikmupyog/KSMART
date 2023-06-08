@@ -161,9 +161,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       cmbState.push(ob);
     });
 
-  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath);
-  const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate);
-  const [ToDate, setToDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.ToDate) : formData?.InformationDeath?.ToDate);
+  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? 
+    convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath);
+  const [FromDate, setFromDate] = useState(isEditDeath ?
+     convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.FromDate);
+  const [ToDate, setToDate] = useState(isEditDeath ?
+     convertEpochToDate(formData?.InformationDeath?.DateOfDeath1) : formData?.InformationDeath?.ToDate);
 
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -1106,15 +1109,109 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
     setNACFile(e.target.files[0]);
   }
 
-
-  const handleTimeChange = (value, cb) => {
+  const [checkdeathDateTime, setCheckdeathDateTime] = useState({
+    hh: formData?.InformationDeath?.checkdeathDateTime?.hh ? formData?.InformationDeath?.checkdeathDateTime.hh : null,
+    mm: formData?.InformationDeath?.checkdeathDateTime?.mm ? formData?.InformationDeath?.checkdeathDateTime.mm : null, 
+    amPm: formData?.InformationDeath?.checkdeathDateTime?.amPm ? formData?.InformationDeath?.checkdeathDateTime?.amPm : null });
+    const [displaytime, setDisplaytime] = useState(formData?.InformationDeath?.displaytime ? formData?.InformationDeath?.displaytime : null);
+    const [displayAmPm, setDisplayAmPm] = useState(formData?.InformationDeath?.displayAmPm ? formData?.InformationDeath?.displayAmPm : null);
+  
+    const handleTimeChange = (value, cb) => {
+      console.log("value",value,cb)
+  
+    if (value?.target?.name === "hour12") {
+      setCheckdeathDateTime({ ...checkdeathDateTime, hh: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "minute") {
+      setCheckdeathDateTime({ ...checkdeathDateTime, mm: value?.target?.value ? value?.target?.value : null })
+    } else if (value?.target?.name === "amPm") {
+      setCheckdeathDateTime({ ...checkdeathDateTime, amPm: value?.target?.value ? value?.target?.value : null })
+    }
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
-      // let hour = value;
-      // let period = hour > 12 ? "PM" : "AM";
-      // console.log(period);
       setDeathTime(value);
+      let time = value;
+      let timeParts = time.split(":");
+
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
+
+        }
+      }
+
     }
   };
   function setCheckedAdhar(e) {
@@ -1130,7 +1227,49 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
       setToast(false);
     }
   }
+  const [DateTimeError, setDateTimeError] = useState(false);
+
   const goNext = () => {
+    console.log("goNext",DateOfDeath)
+    if (DateOfDeath != null) {
+
+      console.log("TimeOfDeath != null",DateOfDeath)
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const DateofDeathTime = new Date(DateOfDeath);
+      DateofDeathTime.setHours(0, 0, 0, 0);
+      console.log("new Date(TimeOfDeath)",new Date(DateOfDeath))
+      if (DateofDeathTime.getTime() < today.getTime()) {
+        console.log("DateofDeathTime.getTime() < today.getTime()")
+        validFlag = true;
+        setDateTimeError(false);
+      } 
+      else if (DateofDeathTime.getTime() === today.getTime()) {
+        console.log("DateofDeathTime.getTime() === today.getTime()")
+        let todayDate = new Date();
+        let currenthours = todayDate.getHours();
+        let currentMints = todayDate.getMinutes();
+        currenthours = currenthours < 10 ? "0" + currenthours : currenthours;
+        currentMints = currentMints < 10 ? "0" + currentMints : currentMints;
+        let currentDatetime = "";
+        currentDatetime = currenthours + ":" + currentMints;
+        if (TimeOfDeath > currentDatetime) {
+          console.log("TimeOfDeath > currentDatetime")
+          validFlag = false;
+          setDeathTime("");
+          setCheckdeathDateTime({ hh: "", mm: "", amPm: "" });
+          setDateTimeError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          console.log("else Time")
+          setDateTimeError(false);
+          // alert("Right Time");
+        }
+      }
+    }
 
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
@@ -1533,7 +1672,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
         uploadedFile,
         UploadNACHIde,
         proceedNoRDO,
-        regNoNAC
+        regNoNAC,
+        checkdeathDateTime,
+        displaytime, 
+        displayAmPm,
       });
     }
   };
@@ -2307,13 +2449,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = 
           {toast && (
             <Toast
               error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
-                || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError || vehiDesDetailsEnError || AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError}
+               || DateTimeError || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError || vehiDesDetailsEnError || AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError}
               label={
+                DateTimeError||
                 DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError
                   || DeceasedFirstNameEnError || DeceasedFirstNameMlError || DeceasedMiddleNameEnError
                   || DeceasedMiddleNameMlError || DeceasedLastNameEnError || DeceasedLastNameMlError || vehiDesDetailsEnError || AgeValidationMsg || DeathPlaceHomeStreetNameEnError || DeathPlaceHomestreetNameMlError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
+                    : DateTimeError
+                    ? t(`CS_COMMON_DATE_TIME_ERROR`)
                     : sexError
                       ? t(`DEATH_ERROR_SEX_CHOOSE`)
                       : AadharError

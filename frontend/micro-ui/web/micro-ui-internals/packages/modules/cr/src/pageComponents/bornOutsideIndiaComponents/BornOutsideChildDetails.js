@@ -120,6 +120,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [birthDateTime, setbirthDateTime] = useState(
     formData?.BornOutsideChildDetails?.birthDateTime ? formData?.BornOutsideChildDetails?.birthDateTime : ""
   );
+  const [displaytime, setDisplaytime] = useState(formData?.BornOutsideChildDetails?.displaytime ? formData?.BornOutsideChildDetails?.displaytime : null);
+  const [displayAmPm, setDisplayAmPm] = useState(formData?.BornOutsideChildDetails?.displayAmPm ? formData?.BornOutsideChildDetails?.displayAmPm : null);
   const [birthPlace, setbirthPlace] = useState("OUTSIDE_COUNTRY");
   const [childPassportNo, setchildPassportNo] = useState(
     formData?.BornOutsideChildDetails?.childPassportNo ? formData?.BornOutsideChildDetails?.childPassportNo : ""
@@ -148,7 +150,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [ProvinceMlError, setProvinceMlError] = useState(formData?.BornOutsideChildDetails?.ProvinceMlError ? false : false);
   const [cityTownEnError, setcityTownEnError] = useState(formData?.BornOutsideChildDetails?.cityTownEnError ? false : false);
   const [cityTownMlError, setcityTownMlError] = useState(formData?.BornOutsideChildDetails?.cityTownMlError ? false : false);
-  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: null, mm: null, amPm: null });
+  const [checkbirthDateTime, setCheckbirthDateTime] = useState({ hh: formData?.BornOutsideChildDetails?.checkbirthDateTime?.hh ? formData?.BornOutsideChildDetails?.checkbirthDateTime.hh : null, mm: formData?.BornOutsideChildDetails?.checkbirthDateTime?.mm ? formData?.BornOutsideChildDetails?.checkbirthDateTime.mm : null, amPm: formData?.BornOutsideChildDetails?.checkbirthDateTime?.amPm ? formData?.BornOutsideChildDetails?.checkbirthDateTime.amPm : null });
   const [DateTimeError, setDateTimeError] = useState(false);
   const [DateTimeHourError, setDateTimeHourError] = useState(false);
   const [DateTimeMinuteError, setDateTimeMinuteError] = useState(false);
@@ -156,6 +158,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [outsideBirthPlaceEnError, setoutsideBirthPlaceEnError] = useState(
     formData?.BornOutsideChildDetails?.outsideBirthPlaceEnError ? false : false
   );
+  
   const [outsideBirthPlaceMlError, setoutsideBirthPlaceMlError] = useState(
     formData?.BornOutsideChildDetails?.outsideBirthPlaceMlError ? false : false
   );
@@ -236,12 +239,89 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     }
     if (typeof value === "string") {
       cb(value);
-      // let hour = value;
-      // let period = hour > 12 ? "PM" : "AM";
-      // console.log(period);
-      setbirthDateTime(value);
+      setbirthDateTime(value)
+      let time = value;
+      let timeParts = time.split(":");
+      if (timeParts.length > 0) {
+        if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+          timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+          timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+          let displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        }
+        else if (timeParts[0] === "00") {
+          let displaytimeTemp = "12" + ":" + timeParts[1];
+          setDisplaytime(displaytimeTemp);
+          let displayAmPmTemp = "AM";
+          setDisplayAmPm(displayAmPmTemp);
+        } else if (timeParts[0] >= "13") {
+          if (timeParts[0] === "13") {
+            let displaytimeTemp = "01" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "14") {
+            let displaytimeTemp = "02" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "15") {
+            let displaytimeTemp = "03" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "16") {
+            let displaytimeTemp = "04" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "17") {
+            let displaytimeTemp = "05" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "18") {
+            let displaytimeTemp = "06" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "19") {
+            let displaytimeTemp = "07" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "20") {
+            let displaytimeTemp = "08" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            displayAmPm = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "21") {
+            let displaytimeTemp = "09" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "22") {
+            let displaytimeTemp = "10" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "23") {
+            let displaytimeTemp = "11" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          } else if (timeParts[0] === "24") {
+            let displaytimeTemp = "12" + ":" + timeParts[1];
+            setDisplaytime(displaytimeTemp);
+            let displayAmPmTemp = "PM";
+            setDisplayAmPm(displayAmPmTemp);
+          }
     }
-  };
+  }
+}
+  }
   function setSelectPostCode(e) {
       setpostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^a-zA-Z0-9]/ig, '') : e.target.value.replace(/[^a-zA-Z0-9]/ig, '').substring(0, 6));
 
@@ -640,6 +720,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
         workFlowCode,
         childDOB,
         birthDateTime,
+        displaytime, 
+        displayAmPm,
         gender,
         childAadharNo,
         childPassportNo,
@@ -776,7 +858,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
 
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)}
+                value={birthDateTime} 
+                />
               </div>
               <div className="col-md-3">
                 <CardLabel>

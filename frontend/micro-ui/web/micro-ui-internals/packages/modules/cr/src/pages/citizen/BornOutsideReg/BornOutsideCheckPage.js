@@ -169,7 +169,11 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                       {convertEpochToDate(BornOutsideChildDetails?.childArrivalDate)}
                     </CardText>
                   </div>
-                  <div className="col-md-2">
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
@@ -177,16 +181,13 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                       {convertEpochToDate(BornOutsideChildDetails?.childDOB)}
                     </CardText>
                   </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_BIRTH")}`} :</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                      {BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")}
+                    {BornOutsideChildDetails?.displaytime ? BornOutsideChildDetails?.displaytime + " " + BornOutsideChildDetails?.displayAmPm : "NOT_RECORDED"}
+                      {/* {BornOutsideChildDetails?.birthDateTime ? BornOutsideChildDetails?.birthDateTime : t("CR_NOT_RECORDED")} */}
                     </CardText>
                   </div>
                   <div className="col-md-2">
@@ -314,8 +315,12 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideChildDetails?.postCode}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/born-outside-child-details`} />}
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/born-outside-child-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -493,8 +498,12 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideParentsDetails?.fatherEmail} </CardText>
-                    {<ActionButton jumpTo={`${routeLink}/born-outside-parents-details`} />}
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/born-outside-parents-details`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -740,9 +749,13 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
                       {BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl}
-                    </CardText>
-                    {<ActionButton jumpTo={`${routeLink}/born-outside-address`} />}
+                    </CardText>                    
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/born-outside-address`} />}</div>
                 </div>
               </div>
             </StatusTable>
@@ -844,9 +857,13 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_INFORMER_ADDRESS")}`} :</CardText>
                   </div>
                   <div className="col-md-4">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAddress}</CardText>
-                    {<ActionButton jumpTo={`${routeLink}/born-outside-static-infn`} />}
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{BornOutsideStaticInfn?.informarAddress}</CardText>                    
                   </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">{<ActionButton jumpTo={`${routeLink}/born-outside-static-infn`} />}</div>
                 </div>
               </div>
             </StatusTable>

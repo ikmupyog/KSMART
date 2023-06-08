@@ -105,7 +105,6 @@ const BrideAddressBasePage = ({
   const [value, setValue] = useState(
     formData?.BrideAddressDetails?.presentaddressStateName?.code ? formData?.BrideAddressDetails?.presentaddressStateName.code : "kl"
   );
-
   //################################# Present Inside Kerala #########################################################################################################
 
   const [presentWardNo, setPresentWardNo] = useState(
@@ -1671,6 +1670,8 @@ const BrideAddressBasePage = ({
     }
   };
 
+  console.log({presentInsideKeralaTaluk, permntInKeralaAdrTaluk, countryvalue, value})
+
   // if (isCountryLoading || isStateLoading || islocalbodiesLoading  || isDistrictLoading  ) {
   //     return <Loader></Loader>;
   // } else
@@ -1729,6 +1730,8 @@ const BrideAddressBasePage = ({
           setadrsVillage={setadrsVillage}
           setadrsCityTown={setadrsCityTown}
           setPostCode={setPostCode}
+          countryvalue={countryvalue}
+          presentOutSideIndiaProvinceEn={presentOutSideIndiaProvinceEn}
         />
         {!isBridePresentAddressSameAsGroomPresentAddress && (
           <div className="accordion-wrapper">
@@ -1759,6 +1762,7 @@ const BrideAddressBasePage = ({
               formData={formData}
               Districtvalues={Districtvalues}
               setDistrictvalue={setDistrictvalue}
+              isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
             />
           </div>
         )}
@@ -2193,6 +2197,7 @@ const BrideAddressBasePage = ({
              isEditAdoption={isEditAdoption}
              isEditBirthNAC={isEditBirthNAC}
              formData={formData}
+             isBridePresentAddressSameAsGroomPresentAddress={isBridePresentAddressSameAsGroomPresentAddress}
             />
           </div>
         )}

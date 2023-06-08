@@ -26,10 +26,13 @@ const BirthInclusion = () => {
   const { path } = useRouteMatch();
   let history = useHistory();
   const [apiConfig, setApiConfig] = useState({ enabled: false });
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_BIRTH_INCLUSION_APPLICATION_DETAILS", {});
   const [payload, setPayload] = useState({});
 
   const [toast, setToast] = useState({ show: false, message: "" });
-
+  React.useEffect(()=>{
+    clearParams()
+  },[])
   function onSubmit(_data) {
     console.log("error data", _data);
     if (!_data.gender && !_data.registrationNo) {    
@@ -69,7 +72,7 @@ const BirthInclusion = () => {
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0) && !toast.show,
   };
-
+console.log(payload);
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess, status } = Digit.Hooks.cr.useRegistrySearchBirth({
     filters: { ...payload,registrationNo: payload.registrationNo?.replace(/\s/g,''), birthDate: payload.birthDate && convertUTCDateToEpoch(payload.birthDate,"start") },
     config,
@@ -79,7 +82,9 @@ const BirthInclusion = () => {
 
   const gotoEditInclusion = async (data) => {
     history.push({
-      pathname: `/digit-ui/citizen/cr/birth-inclusion-edit`,
+      // pathname: `/digit-ui/citizen/cr/birth-inclusion-edit`,
+      pathname: `/digit-ui/citizen/cr/birth-inclusion-details`,
+      
       state: { inclusionData: data, isfetchData: true },
     });
   };

@@ -23,6 +23,7 @@ import MarriageCorrection from "./pages/citizen/MarriageCorrection";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
+import BirthInclusionDetailPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionDetails";
 import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
@@ -75,7 +76,6 @@ import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideChec
 import BornOutsideAddressPage from "./pageComponents/bornOutsideIndiaComponents/BornOutsideAddressPage";
 import BornOutsidePresentOutsideIndia from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresentOutsideIndia";
 import BornoutsidePermanentInsideKerala from "./pageComponents/bornOutsideIndiaComponents/BornoutsidePermanentInsideKerala";
-import BornoutsideSameAsAbove from "./pageComponents/bornOutsideIndiaComponents/BornoutsideSameAsAbove";
 import BornOutsidePermanent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePermanent";
 import BornOutsidePresent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresent";
 import BornOutsideDocuments from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideDocuments";
@@ -367,6 +367,7 @@ const componentsToRegister = {
   CRBirthInclusions: BirthInclusion,
   CRMarriageCorrection: MarriageCorrection,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
+  CRBirthInclusionDetailPage:BirthInclusionDetailPage,
   CRBirthInclusionPage: BirthInclusionPage,
   SearchBirthInclusion,
   BirthInclusionModal,
@@ -405,7 +406,6 @@ const componentsToRegister = {
   BornOutsideAddressPage,
   BornOutsidePresentOutsideIndia,
   BornoutsidePermanentInsideKerala,
-  BornoutsideSameAsAbove,
   BornOutsidePermanent,
   BornOutsidePresent,
   BornOutsideDocuments,

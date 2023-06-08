@@ -27,8 +27,8 @@ import { convertEpochToDateDMY } from "../../utils";
 const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption = false, isEditFlag = false }) => {
   //const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(true);
-  const [workFlowCode, setWorkFlowCode] = useState();
-
+  // const [workFlowCode, setWorkFlowCode] = useState();
+let workFlowCode = "ADOPTIONHOME";
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -1092,17 +1092,17 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
-    let currentWorgFlow = workFlowData.filter(
-      (workFlowData) =>
-        workFlowData.BirtPlace === value.code &&
-        workFlowData.startdateperiod <= Difference_In_DaysRounded &&
-        workFlowData.enddateperiod >= Difference_In_DaysRounded
-    );
-    if (currentWorgFlow.length > 0) {
-      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    // let currentWorgFlow = workFlowData.filter(
+    //   (workFlowData) =>
+    //     workFlowData.BirtPlace === value.code &&
+    //     workFlowData.startdateperiod <= Difference_In_DaysRounded &&
+    //     workFlowData.enddateperiod >= Difference_In_DaysRounded
+    // );
+    // if (currentWorgFlow.length > 0) {
+    //   setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
       //setIsPayment(currentWorgFlow[0].payment);
       //setAmount(currentWorgFlow[0].amount);
-    }
+    // }
     clearBirthPalce(value);
   }
   function setSelectBirthWeight(e) {

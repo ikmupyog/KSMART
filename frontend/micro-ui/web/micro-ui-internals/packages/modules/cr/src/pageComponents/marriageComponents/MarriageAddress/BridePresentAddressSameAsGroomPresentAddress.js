@@ -57,6 +57,8 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
   const setBridePresentAddressSameAsGroomPresentAddress = (e) => {
     setIsBridePresentAddressSameAsGroomPresentAddress(e.target.checked);
     if (e.target.checked) {
+      setCountryValue(formData?.GroomAddressDetails?.presentaddressCountry?.countrycode);
+      setValue(formData?.GroomAddressDetails?.presentaddressStateName?.code);
       setaddressCountry(formData?.GroomAddressDetails?.presentaddressCountry);
       setaddressStateName(formData?.GroomAddressDetails?.presentaddressStateName);
       setoutsideKeralaDistrict(formData?.GroomAddressDetails?.presentOutsideKeralaDistrict);
@@ -98,11 +100,11 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
       setadrsCityTown(formData?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown);
       setPostCode(formData?.GroomAddressDetails?.presentOutSideIndiaPostCode);
     } else {
-      setaddressCountry("");
-      setaddressStateName("");
+      // setaddressCountry("");
+      // setaddressStateName("");
+      // setpermtaddressCountry("");
+      // setpermtaddressStateName("");
       setoutsideKeralaDistrict("");
-      setpermtaddressCountry("");
-      setpermtaddressStateName("");
       setPresentWardNo("");
       setinsideKeralaDistrict("");
       setinsideKeralaLBTypeName("");
@@ -138,6 +140,10 @@ const BridePresentAddressSameAsGroomPresentAddress = ({
       setadrsVillage("");
       setadrsCityTown("");
       setPostCode("");
+      setCountryValue("IND");
+      setCountryValuePermanent("IND");
+      setValue("kl");
+      setValuePermanent("kl");
     }
   };
   return (

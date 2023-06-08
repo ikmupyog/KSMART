@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../config/constants";
 
-const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocs, selectedDocData }) => {
+const DeathCorrectionDocUpload = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocs, selectedDocData }) => {
   const { t } = useTranslation();
+  const fieldName = DEATH_CORRECTION_FIELD_NAMES[selectedConfig?.CorrectionField];
   let formData = {};
   let docIdDetails = [];
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [uploadDoc, setUploadDoc] = useState({});
-  const fieldName = DEATH_CORRECTION_FIELD_NAMES[selectedConfig?.CorrectionField];
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [docuploadedType, setDocuploadedType] = useState();
@@ -21,7 +21,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const [error, setError] = useState([]);
   const [isAlreadyUploaded,setIsAlreadyUploaded] = useState(false)
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
-  
 
   useEffect(() => {
     if (selectedConfig?.Documents?.length > 0) {
@@ -172,18 +171,18 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   if (!showModal) {
     return null;
   }
+ 
   return (
-    <PopUp>
-      <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
-        <h1 className="headingh1">
-          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(`CR_${fieldName}`)} ${t("CR_CHANGE")}`}</span>{" "}
-        </h1>
-        {isAlreadyUploaded ? (
-          <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_ALREADY_UPLOAD_DOCUMENTS")}`}</h2>
-        ) : (
-          <h2 style={{ marginBottom: "1rem" }}>{`${t("CR_UPLOAD_DOCUMENTS")} ${t(`CR_${fieldName}`)}`}</h2>
-        )}
-        {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
+    <React.Fragment>
+    <div style={{width:"30%", height:"150%", backgroundColor:'white', borderRadius: "0.5rem", marginTop: "0.5rem"}}>
+    {/* <fieldset style={{ border: "3px solid black"}}>
+      <legend style={{ margin: "5px"}}>Correction Procedures and Guidelines</legend> */}
+      <div style={{ margin: "1rem"}}>
+      <h2 style={{ marginBottom: "1rem", color: "#00377B", fontWeight: "600" }}>{`${t(`CR_${fieldName}`)}`}</h2>
+      <div style={{ margin: "1rem"}}>
+      <p>Please ensure that the following documents need to attach for correcting {`${t(`CR_${fieldName}`)}`}.</p>
+      </div>
+      {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
         {selectedConfig?.Documents?.map((item, index) => (
           <div>
             {!selectedDocs.includes(item.DocumentId?.toString()) && (
@@ -212,28 +211,19 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
             )}
           </div>
         ))}
-
-        <EditButton
-          selected={true}
-          label={isAlreadyUploaded ? (t("CR_CONTINUE")) : (t("CR_SAVE"))}
-          onClick={() => {
-            if (!isLoading && selectedConfig?.Documents?.length === uploadedFiles?.length) {
-              resetFields();
-              onSubmit(uploadedFiles, error);
-            } else {
-              setFileDocError(t("CR_UPLOAD_TO_MAKE_CHANGE"));
-            }
-          }}
-        />
+        </div>
         <EditButton
           selected={false}
-          label={(t("CR_CANCEL"))}
+          label={t("CS_COMMON_BACK")}
           onClick={() => {
             hideModal();
           }}
         />
-      </div>
-    </PopUp>
+    {/* </fieldset> */}
+  
+  </div>
+ 
+  </React.Fragment>
   );
 };
-export default DeathCorrectionModal;
+export default DeathCorrectionDocUpload;

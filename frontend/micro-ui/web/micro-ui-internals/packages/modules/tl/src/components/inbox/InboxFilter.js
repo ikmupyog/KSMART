@@ -80,7 +80,7 @@ const Filter = ({ searchParams, onFilterChange, defaultSearchParams, statuses, .
                 { code: "ASSIGNED_TO_ALL", name: "ES_INBOX_ASSIGNED_TO_ALL" },
               ]}
             />
-            <div>
+            {/* <div>
               <div className="filter-label" style={{ fontWeight: "normal" }}>
                 {t("ES_INBOX_LOCALITY")}:
               </div>
@@ -99,7 +99,7 @@ const Filter = ({ searchParams, onFilterChange, defaultSearchParams, statuses, .
                   );
                 })}
               </div>
-            </div>
+            </div> */}
             <div>
               <div className="filter-label" style={{ fontWeight: "normal" }}>
                 {t("CS_INBOX_STATUS_FILTER")}
