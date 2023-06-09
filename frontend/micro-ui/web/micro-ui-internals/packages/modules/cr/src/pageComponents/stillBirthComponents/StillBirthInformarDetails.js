@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/SBRTimeline";
 import { useTranslation } from "react-i18next";
 
-const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEditStillBirth=false }) => {
+const StillBirthInformarDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -198,7 +198,7 @@ const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEdi
             <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isDeclarationInfo}>
         <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
+          <div className="col-md-12" ><h1 className="headingh1" ><span className="headingline">{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
           </div>
         </div>
 

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea ,BackButton} from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType, setSelectedPublicPlaceType, 
+const PublicPlace = ({ config, onSelect, userType, formData, setPublicPlaceType, setSelectedPublicPlaceType,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   // const tenantId = Digit.ULBService.getCurrentTenantId(); 
@@ -21,7 +21,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
   // const [AdrsInfontName, setAdrsInfontName] = useState(formData?.PublicPlaceDetails?.AdrsInfontName);
   // const [ AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.PublicPlaceDetails?.AdrsPublicPlace);
   // const [ PublicPlaceDesption, setPublicPlaceDesption] = useState(formData?.PublicPlaceDetails?.PublicPlaceDesption);
- 
+
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
   // place &&
@@ -29,38 +29,38 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
   //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
   //     cmbPlace.push(ob);
   //   });
-    let cmbOtherplace = [];
-    otherplace &&
+  let cmbOtherplace = [];
+  otherplace &&
     otherplace["birth-death-service"] &&
     otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
-    // let Zonal = [];
-    // let cmbWardNo = [];
-    // let cmbWardNoFinal = [];
-    // boundaryList &&
-    //   boundaryList["egov-location"] &&
-    //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
-    //     //  console.log(ob);
-    //     // if(ob?.boundary){
-    //     Zonal.push(...ob.boundary.children);
-    //     ob.boundary.children.map((obward) => {
-    //       cmbWardNo.push(...obward.children);
-    //     });
-    //     // }
-    //   });
-    // //console.log(Zonal);
-    // cmbWardNo.map((wardmst) => {
-    //   wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
-    //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
-    //   cmbWardNoFinal.push(wardmst);
-    // });
+  // let Zonal = [];
+  // let cmbWardNo = [];
+  // let cmbWardNoFinal = [];
+  // boundaryList &&
+  //   boundaryList["egov-location"] &&
+  //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
+  //     //  console.log(ob);
+  //     // if(ob?.boundary){
+  //     Zonal.push(...ob.boundary.children);
+  //     ob.boundary.children.map((obward) => {
+  //       cmbWardNo.push(...obward.children);
+  //     });
+  //     // }
+  //   });
+  // //console.log(Zonal);
+  // cmbWardNo.map((wardmst) => {
+  //   wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+  //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+  //   cmbWardNoFinal.push(wardmst);
+  // });
   const onSkip = () => onSelect();
 
   // function selectPlaceofactivity(value) {
   //   setSelectedPlaceofActivity(value);
   // }
-  
+
   function selectPublicPlaceType(value) {
     setSelectedPublicPlaceType(value);
   }
@@ -80,7 +80,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
   }
   function setSelectPublicPlaceDesption(e) {
     setPublicPlaceDesption(e.target.value);
-  }  
+  }
   // function selectCommencementDate(value) {
   //   setCommencementDate(value);
   // }
@@ -93,7 +93,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
     // // sessionStorage.setItem(" WardNo",  WardNo);
     // sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace);
     // sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption);
-      
+
     // onSelect(config.key, {
     //   AdrsInfontName,
     //    setPublicPlaceType,
@@ -105,19 +105,19 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
   };
   return (
     <React.Fragment>
-     {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
+      {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
      <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!setPublicPlaceType}>
-      <div className="row">
-                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{  padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
-                    </div>
-                </div>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!setPublicPlaceType}>
+        <div className="row">
+          <div className="col-md-12" ><h1 className="headingh1" ><span className="headingline">{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
+          </div>
+        </div>
 
-    <div className="row">
-    <div className="col-md-12" >
-         <div className="col-md-6" >
-            <CardLabel>{`${t("CR_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown
+        <div className="row">
+          <div className="col-md-12" >
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CR_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
                 t={t}
                 optionKey="name"
                 isMandatory={true}
@@ -126,9 +126,9 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
                 select={selectPublicPlaceType}
                 disabled={isEdit}
                 placeholder={`${t("CR_TYPE")}`}
-            />
-        </div>
-        {/* <div className="col-md-6">
+              />
+            </div>
+            {/* <div className="col-md-6">
               <CardLabel>
                 {t("CR_INFORMANT_NAME")}
                 <span className="mandatorycss">*</span>
@@ -161,9 +161,9 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div> */}
-      </div> 
-    </div>  
-    {/* <div className="row">
+          </div>
+        </div>
+        {/* <div className="row">
          <div className="col-md-12" >
          <div className="col-md-6" >
           <CardLabel>{`${t("CR_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel> 

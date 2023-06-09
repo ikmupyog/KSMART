@@ -139,7 +139,12 @@
 .leftContainerNav {
   display: flex;
   align-items: center;
+
+  .select-wrap {
+    margin-bottom: 0px;
+  }
 }
+
 .mainNav {
   @media (min-width: 1400px){
     max-width: 1320px;

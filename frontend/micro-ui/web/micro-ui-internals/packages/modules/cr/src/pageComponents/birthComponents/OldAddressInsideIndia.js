@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox,Loader ,Toast} from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
@@ -14,7 +14,7 @@ const AddressAdrsInsideIndia = ({
   AdrsInsideIndiaStateName,
   setAdrsInsideIndiaStateName,
   AdrsInsideIndiaDistrict,
-  setAdrsInsideIndiaDistrict,  
+  setAdrsInsideIndiaDistrict,
   AdrsInsideIndiaTaluk,
   setAdrsInsideIndiaTaluk,
   AdrsInsideIndiaPostOffice,
@@ -26,25 +26,25 @@ const AddressAdrsInsideIndia = ({
   AdrsInsideIndiaHouseNameMl,
   setAdrsInsideIndiaHouseNameMl,
   AdrsInsideIndiaResNoEn,
-  setAdrsInsideIndiaResNoEn, 
-  AdrsInsideIndiaResNoMl, 
+  setAdrsInsideIndiaResNoEn,
+  AdrsInsideIndiaResNoMl,
   setAdrsInsideIndiaResNoMl,
   AdrsInsideIndiaMainPlaceEn,
   setAdrsInsideIndiaMainPlaceEn,
   AdrsInsideIndiaLocalityNameEn,
-  setAdrsInsideIndiaLocalityNameEn,  
+  setAdrsInsideIndiaLocalityNameEn,
   AdrsInsideIndiaVillage,
-  setAdrsInsideIndiaVillage, 
+  setAdrsInsideIndiaVillage,
   AdrsInsideIndiaMainPlaceMl,
   setAdrsInsideIndiaMainPlaceMl,
   AdrsInsideIndiaLocalityNameMl,
-  setAdrsInsideIndiaLocalityNameMl, 
+  setAdrsInsideIndiaLocalityNameMl,
   AdrsInsideIndiaCityVilgeEn,
   setAdrsInsideIndiaCityVilgeEn,
   AdrsInsideIndiaCityVilgeMl,
   setAdrsInsideIndiaCityVilgeMl,
 
- 
+
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ const AddressAdrsInsideIndia = ({
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  
+
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderTenant, setIsInitialRenderTenant] = useState(true);
@@ -92,13 +92,13 @@ const AddressAdrsInsideIndia = ({
   // const [AdrsInsideIndiaLocalityNameMl, setAdrsInsideIndiaLocalityNameMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameMl : null);  
   // const [AdrsInsideIndiaVillage, setAdrsInsideIndiaVillage] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaVillage ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaVillage : null);
 
-    // const [AdrsInsideIndiaPincodeError, setAdrsInsideIndiaPincodeError] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode ? false : false);
+  // const [AdrsInsideIndiaPincodeError, setAdrsInsideIndiaPincodeError] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode ? false : false);
 
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
     { i18nKey: "Village", code: "VILLAGE" },
-];
-let cmbfilterCountry = [];
+  ];
+  let cmbfilterCountry = [];
   let cmbCountry = [];
   let cmbState = [];
   let cmbPlace = [];
@@ -111,7 +111,7 @@ let cmbfilterCountry = [];
   let cmbLB = [];
 
 
- 
+
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk.map((ob) => {
@@ -143,8 +143,8 @@ let cmbfilterCountry = [];
     State["common-masters"] &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
-    }); 
-   
+    });
+
 
   const onSkip = () => onSelect();
   function setSelectAdrsInsideIndiaCountry(value) {
@@ -158,8 +158,8 @@ let cmbfilterCountry = [];
   }
 
   function setSelectAdrsInsideIndiaDistrict(value) {
-   
-    setAdrsInsideIndiaDistrict(value);    
+
+    setAdrsInsideIndiaDistrict(value);
     districtid = value.districtid;
   }
   // function setSelectAdrsInsideIndiaLBTypeName(value) {
@@ -183,7 +183,7 @@ let cmbfilterCountry = [];
   // function setSelectAdrsInsideIndiaPincode(e) {
   //   setAdrsInsideIndiaPincode(e.target.value);
   // }
-  
+
   function setSelectAdrsInsideIndiaPincode(e) {
     if (e.target.value.length === 7) {
       return false;
@@ -208,7 +208,7 @@ let cmbfilterCountry = [];
   //     else {
   //       setAdrsInsideIndiaPincodeeError(false);
   //       setAdrsInsideIndiaPincode(e.target.value);
-        
+
   //     }
   //   }
   // }
@@ -217,26 +217,26 @@ let cmbfilterCountry = [];
   function setSelectAdrsInsideIndiaResNoEn(e) {
     if (e.target.value.length === 20) {
       return false;
-     
+
     } else {
-    setAdrsInsideIndiaResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setAdrsInsideIndiaResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
-}
   function setSelectAdrsInsideIndiaResNoMl(e) {
     if (e.target.value.length === 20) {
       return false;
-      
+
     } else {
-    setAdrsInsideIndiaResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setAdrsInsideIndiaResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
-}
-  
+
   function setSelectAdrsInsideIndiaHouseNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
-      
+
     } else {
-      setAdrsInsideIndiaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setAdrsInsideIndiaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
 
@@ -245,27 +245,27 @@ let cmbfilterCountry = [];
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setAdrsInsideIndiaHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`' ]/ig,''));
+      setAdrsInsideIndiaHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`' ]/ig, ''));
     }
   }
- 
+
 
   function setSelectAdrsInsideIndiaMainPlaceEn(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-    setAdrsInsideIndiaMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
-  }
+      setAdrsInsideIndiaMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
 
-}
+  }
   function setSelectAdrsInsideIndiaMainPlaceMl(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-    setAdrsInsideIndiaMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
-  }
+      setAdrsInsideIndiaMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
 
   function setSelectAdrsInsideIndiaCityVilgeEn(e) {
@@ -273,23 +273,23 @@ let cmbfilterCountry = [];
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-    setAdrsInsideIndiaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setAdrsInsideIndiaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
-}
   function setSelectAdrsInsideIndiaCityVilgeMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setAdrsInsideIndiaCityVilgeMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setAdrsInsideIndiaCityVilgeMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
+
   }
-  
-}
   function setSelectAdrsInsideIndiaLocalityNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-    setAdrsInsideIndiaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setAdrsInsideIndiaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectAdrsInsideIndiaLocalityNameMl(e) {
@@ -297,14 +297,14 @@ let cmbfilterCountry = [];
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-    setAdrsInsideIndiaLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setAdrsInsideIndiaLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
-  }
- 
+
   const goNext = () => {
 
-   
-  
+
+
     //  sessionStorage.setItem("AdrsInsideIndiaCountry", AdrsInsideIndiaCountry.code ? AdrsInsideIndiaCountry.code  : null );
     //  sessionStorage.setItem("AdrsInsideIndiaStateName", AdrsInsideIndiaStateName.code ? AdrsInsideIndiaStateName.code  : null );
     //  sessionStorage.setItem("AdrsInsideIndiaDistrict", AdrsInsideIndiaDistrict.code ? AdrsInsideIndiaDistrict.code  : null );    
@@ -323,7 +323,7 @@ let cmbfilterCountry = [];
     //  sessionStorage.setItem("AdrsInsideIndiaPostOffice", AdrsInsideIndiaPostOffice.code ? AdrsInsideIndiaPostOffice.code  : null );
     //  sessionStorage.setItem("AdrsInsideIndiaPincode", AdrsInsideIndiaPincode ? AdrsInsideIndiaPincode  : null );   
     // onSelect(config.key, {     
-            
+
     //   AdrsInsideIndiaCountry,
     //   AdrsInsideIndiaStateName,
     //   AdrsInsideIndiaDistrict,
@@ -341,11 +341,11 @@ let cmbfilterCountry = [];
     //   AdrsInsideIndiaResNoMl,
     //   AdrsInsideIndiaHouseNameEn,
     //   AdrsInsideIndiaHouseNameMl,
-     
+
     // });
   };
 
-  if (isCountryLoading || isStateLoading  || isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
+  if (isCountryLoading || isStateLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
 
@@ -358,7 +358,7 @@ let cmbfilterCountry = [];
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ padding: "0 10px" }}>{`${t("CR_HOME_ADDRESS")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_HOME_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -410,16 +410,16 @@ let cmbfilterCountry = [];
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
-            </div>           
+            </div>
           </div>
         </div>
 
         <div className="row">
-          <div className="col-md-12">            
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_TALUK_TEHSIL")}
-              
+
               </CardLabel>
               <Dropdown
                 t={t}
@@ -433,7 +433,7 @@ let cmbfilterCountry = [];
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_TOWN_VILLAGE_EN")}              
+              <CardLabel>{t("CR_TOWN_VILLAGE_EN")}
               </CardLabel>
               <Dropdown
                 t={t}
@@ -445,14 +445,14 @@ let cmbfilterCountry = [];
                 disabled={isEdit}
                 placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
               />
-            </div>            
+            </div>
           </div>
         </div>
 
         <div className="row">
-          <div className="col-md-12">          
+          <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_CITY_VILLAGE_NAME_EN")}             
+              <CardLabel>{t("CR_CITY_VILLAGE_NAME_EN")}
               </CardLabel>
               <TextInput
                 t={t}
@@ -470,7 +470,7 @@ let cmbfilterCountry = [];
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_CITY_VILLAGE_NAME_ML")}
-               
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -482,7 +482,7 @@ let cmbfilterCountry = [];
                 onChange={setSelectAdrsInsideIndiaCityVilgeMl}
                 placeholder={`${t("CR_CITY_VILLAGE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_ML") })}
               />
             </div>
           </div>
@@ -490,9 +490,9 @@ let cmbfilterCountry = [];
 
 
         <div className="row">
-          <div className="col-md-12">          
+          <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_MAIN_PLACE_EN")}             
+              <CardLabel>{t("CR_MAIN_PLACE_EN")}
               </CardLabel>
               <TextInput
                 t={t}
@@ -508,7 +508,7 @@ let cmbfilterCountry = [];
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_MAIN_PLACE_ML")}              
+              <CardLabel>{t("CR_MAIN_PLACE_ML")}
               </CardLabel>
               <TextInput
                 t={t}
@@ -527,9 +527,9 @@ let cmbfilterCountry = [];
         </div>
 
         <div className="row">
-          <div className="col-md-12">    
-             <div className="col-md-6">
-              <CardLabel>{t("CR_LOCALITY_EN")}              
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_LOCALITY_EN")}
               </CardLabel>
               <TextInput
                 t={t}
@@ -545,7 +545,7 @@ let cmbfilterCountry = [];
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_LOCALITY_ML")}              
+              <CardLabel>{t("CR_LOCALITY_ML")}
               </CardLabel>
               <TextInput
                 t={t}
@@ -562,9 +562,9 @@ let cmbfilterCountry = [];
             </div>
           </div>
         </div>
-        
+
         <div className="row">
-          <div className="col-md-12">          
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CS_COMMON_POST_OFFICE")}
               </CardLabel>
@@ -603,7 +603,7 @@ let cmbfilterCountry = [];
                   title: t("CS_COMMON_INVALID_PIN_CODE"),
                 })}
               />
-            </div>           
+            </div>
           </div>
         </div>
 
@@ -637,7 +637,7 @@ let cmbfilterCountry = [];
                 onChange={setSelectAdrsInsideIndiaResNoMl}
                 placeholder={`${t("CR_RES_ASSOCIATION_NO_ML")}`}
                 disable={isEdit}
-                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
               />
             </div>
           </div>
@@ -664,7 +664,7 @@ let cmbfilterCountry = [];
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
-              
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -682,8 +682,8 @@ let cmbfilterCountry = [];
           </div>
         </div>
 
-     
-        
+
+
       </FormStep>
     </React.Fragment>
   );

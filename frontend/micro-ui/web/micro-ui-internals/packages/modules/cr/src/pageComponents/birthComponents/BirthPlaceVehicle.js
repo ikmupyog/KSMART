@@ -180,7 +180,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
           <div className="row">
             <div className="col-md-12" >
               <h1 className="headingh1" >
-                <span style={{  padding: "0 10px" }}>{`${t("CR_BIRTH_VEHICLE")}`}
+                <span className="headingline">{`${t("CR_BIRTH_VEHICLE")}`}
                 </span>
               </h1>
             </div>
@@ -192,7 +192,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
                 t={t}
                 optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                 isMandatory={true}
-                option={sortDropdownNames(cmbVehicle ? cmbVehicle : [],"name",t)}
+                option={sortDropdownNames(cmbVehicle ? cmbVehicle : [], "name", t)}
                 selected={vehicleType}
                 select={setSelectVehicleType}
                 disable={isDisableEdit}
@@ -314,7 +314,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
                 t={t}
                 optionKey={locale === "en_IN" ? "hospitalName" : locale === "ml_IN" ? "hospitalNamelocal" : "hospitalName"}
                 isMandatory={true}
-                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [], "hospitalName", t)}
                 selected={setadmittedHospitalEn}
                 select={selectadmittedHospitalEn}
                 disable={isDisableEdit}
@@ -329,7 +329,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}

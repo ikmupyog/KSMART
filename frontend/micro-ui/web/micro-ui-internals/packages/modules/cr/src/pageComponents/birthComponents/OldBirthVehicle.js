@@ -1,11 +1,11 @@
-import React, { useState ,useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistrationNo, setVehicleRegistrationNo,VehicleFromEn, setVehicleFromEn,
-  VehicleToEn, setVehicleToEn,VehicleFromMl, setVehicleFromMl,VehicleHaltPlace, setVehicleHaltPlace,VehicleToMl, setVehicleToMl,VehicleOtherDetailsEn, setVehicleOtherDetailsEn,
-  VehicleOtherDetailsMl, setVehicleOtherDetailsMl,setAdmittedHospitalEn, setSelectedAdmittedHospitalEn,setAdmittedHospitalMl, setSelectedAdmittedHospitalMl}) => {
+const BirthVehicle = ({ config, onSelect, userType, formData, VehicleRegistrationNo, setVehicleRegistrationNo, VehicleFromEn, setVehicleFromEn,
+  VehicleToEn, setVehicleToEn, VehicleFromMl, setVehicleFromMl, VehicleHaltPlace, setVehicleHaltPlace, VehicleToMl, setVehicleToMl, VehicleOtherDetailsEn, setVehicleOtherDetailsEn,
+  VehicleOtherDetailsMl, setVehicleOtherDetailsMl, setAdmittedHospitalEn, setSelectedAdmittedHospitalEn, setAdmittedHospitalMl, setSelectedAdmittedHospitalMl }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -32,8 +32,8 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   // const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthVehicleDetails?.VehicleRegistrationNo);  
   // const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthVehicleDetails?.setVehicleFromEn);
   // const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthVehicleDetails?.setSelectVehicleToEn);
-  
-   // const [VehicleFromMl, setVehicleFromMl] = useState(formData?.BirthVehicleDetails?.VehicleFromMl);
+
+  // const [VehicleFromMl, setVehicleFromMl] = useState(formData?.BirthVehicleDetails?.VehicleFromMl);
   // const [VehicleHaltPlace, setSelectVehicleHaltPlace] = useState(formData?.BirthVehicleDetails?.VehicleHaltPlace);
   // const [VehicleToMl, setVehicleToMl] = useState(formData?.BirthVehicleDetails?.VehicleToMl);
   // const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.BirthVehicleDetails?.VehicleOtherDetailsEn);  
@@ -41,30 +41,30 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   // const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.BirthVehicleDetails?.setDeathVehicleWard);
   // const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.BirthVehicleDetails?.setAdmittedHospitalEn);
   // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.BirthVehicleDetails?.setAdmittedHospitalMl);
-    
+
   let naturetypecmbvalue = null;
-    let cmbhospital = [];
+  let cmbhospital = [];
   hospitalData &&
-  hospitalData["egov-location"] &&
+    hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    useEffect(() => {
-          if (isInitialRender) {
-        if(setAdmittedHospitalEn){
-          setIsInitialRender(false);
-          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === setAdmittedHospitalEn.code);   
-          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === setAdmittedHospitalEn.code);     
-          // console.log(cmbRegistrarNames[0].registar);                
-          setFilteredOfficerName(cmbRegistrarNames[0].registar);
-          setFilteredDesignation(cmbDesignations[0].registar);
-          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
-          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
-        }
+  useEffect(() => {
+    if (isInitialRender) {
+      if (setAdmittedHospitalEn) {
+        setIsInitialRender(false);
+        let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === setAdmittedHospitalEn.code);
+        let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === setAdmittedHospitalEn.code);
+        // console.log(cmbRegistrarNames[0].registar);                
+        setFilteredOfficerName(cmbRegistrarNames[0].registar);
+        setFilteredDesignation(cmbDesignations[0].registar);
+        // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+        // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
       }
-    }, [OfficerNames,Designations,isInitialRender]);
+    }
+  }, [OfficerNames, Designations, isInitialRender]);
   const onSkip = () => onSelect();
- 
+
 
   //   let cmbhospital = [];
   //   hospital &&
@@ -73,10 +73,10 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   //       cmbhospital.push(ob);
   //     });
 
-    
+
   // const onSkip = () => onSelect();
 
- 
+
 
   // function setSelectDriverName(e) {
   //   setDriverName(e.target.value);
@@ -97,73 +97,73 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   //   setVehicleType(e.target.value);
   // }
   function setSelectVehicleRegistrationNo(e) {
-    if (e.target.value.length ===10) {
+    if (e.target.value.length === 10) {
       return false;
-    } else {  
-    setVehicleRegistrationNo(e.target.value);
+    } else {
+      setVehicleRegistrationNo(e.target.value);
+    }
   }
-}
   // function setSelectDriverLicenceNo(e) {
   //   setDriverLicenceNo(e.target.value);
   // }
 
-  function setSelectMotherFirstNameEn(e) {  
+  function setSelectMotherFirstNameEn(e) {
 
-}
+  }
 
 
-  
+
   function setSelectVehicleFromEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setVehicleFromEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setVehicleFromEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
-}
 
-  
+
   function setSelectVehicleToEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setVehicleToEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setVehicleToEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
-}
   function setSelectVehicleFromMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setVehicleFromMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
-  }
+      setVehicleFromMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
   function setSelectVehicleHaltPlace(e) {
-    if (e.target.value.length ===51) {
+    if (e.target.value.length === 51) {
       return false;
-    } else {  
-    setVehicleHaltPlace(e.target.value);
-}
-}
+    } else {
+      setVehicleHaltPlace(e.target.value);
+    }
+  }
 
   function setSelectVehicleToMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setVehicleToMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
-  }
+      setVehicleToMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
   function setSelectVehicleOtherDetailsEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setVehicleOtherDetailsEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
-  }
+      setVehicleOtherDetailsEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
 
   function setSelectVehicleOtherDetailsMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-    setVehicleOtherDetailsMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setVehicleOtherDetailsMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
   // function selectDeathVehicleWard(value) {
@@ -175,13 +175,13 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   function selectAdmittedHospitalMl(value) {
     setSelectedAdmittedHospitalMl(value);
   }
-  
+
   // function selectCommencementDate(value) {
   //   setCommencementDate(value);
   // }
 
   const goNext = () => {
-    
+
     // sessionStorage.setItem("DriverName", DriverName);
     // sessionStorage.setItem("DriverNameMl", DriverNameMl);
     // sessionStorage.setItem("DriverMobileNo", DriverMobileNo);
@@ -196,17 +196,17 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
     // sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
     // sessionStorage.setItem("VehicleToEn", VehicleToEn);
     // sessionStorage.setItem("VehicleFromMl", VehicleFromMl);  
-       sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace);
-    
+    sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace);
+
     // sessionStorage.setItem("VehicleToMl", VehicleToMl);
     // sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn.code);
     // sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl.code);    
     // sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn); 
     // sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn); 
-    
-    
-    
-    
+
+
+
+
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
       // setPlaceofActivity,
@@ -215,7 +215,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
       // DriverMobileNo,
       // DriverAadhar,
       // VehicleType,
-      VehicleHaltPlace     
+      VehicleHaltPlace
       // DriverLicenceNo,
       // setDeathVehicleWard,
 
@@ -224,31 +224,31 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
       // VehicleToEn,
       // VehicleFromMl,
       // VehicleToMl,
-  
+
       // setAdmittedHospitalEn,
       // setAdmittedHospitalMl,
       // VehicleOtherDetailsEn,
       // VehicleOtherDetailsMl,
-     });
+    });
   };
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-      <div className="row">
-        <div className="col-md-12" >
+        <div className="row">
+          <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{  padding: "0 10px" }}>{`${t("CR_BIRTH_VEHICLE")}`}
-                </span> 
+              <span className="headingline">{`${t("CR_BIRTH_VEHICLE")}`}
+              </span>
             </h1>
+          </div>
         </div>
-    </div>
-    <div className="row">    
-       <div className="col-md-12" >         
-       <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput       
+        <div className="row">
+          <div className="col-md-12" >
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -259,11 +259,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
-            />
-        </div>
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput       
+              />
+            </div>
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -274,11 +274,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
-            />
-        </div>
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_TO_EN")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput       
+              />
+            </div>
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_VEHICLE_TO_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -289,11 +289,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_TO_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
-            />
-        </div>
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_FROM_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput       
+              />
+            </div>
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_VEHICLE_FROM_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -304,9 +304,9 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
-            />
-        </div>
-        {/* <div className="col-md-6" > 
+              />
+            </div>
+            {/* <div className="col-md-6" > 
         <CardLabel>{`${t("CR_DRIVER_LICENCE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput       
                 t={t}
@@ -321,14 +321,14 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LICENCE_NO") })}
             />
         </div> */}
-       </div> 
-    </div> 
+          </div>
+        </div>
 
-    <div className="row">    
-       <div className="col-md-12" >            
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_TO_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput       
+        <div className="row">
+          <div className="col-md-12" >
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_VEHICLE_TO_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -339,11 +339,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_TO_ML")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
-            />
-        </div>
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}</CardLabel>
-        <TextInput       
+              />
+            </div>
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}</CardLabel>
+              <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -354,11 +354,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT") })}
-            />
-        </div>
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
-        <Dropdown
+              />
+            </div>
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
+              <Dropdown
                 t={t}
                 optionKey="hospitalName"
                 isMandatory={false}
@@ -367,11 +367,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 select={selectAdmittedHospitalEn}
                 disabled={isEdit}
                 placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
-            />
-        </div>
-        <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_ML")}`}</CardLabel>
-        <Dropdown
+              />
+            </div>
+            <div className="col-md-3" >
+              <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_ML")}`}</CardLabel>
+              <Dropdown
                 t={t}
                 optionKey="hospitalName"
                 isMandatory={false}
@@ -380,11 +380,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
                 select={selectAdmittedHospitalMl}
                 disabled={isEdit}
                 placeholder={`${t("CR_ADMITTED_HOSPITAL_ML")}`}
-            />
+              />
+            </div>
+          </div>
         </div>
-    </div> 
-    </div> 
-    {/* <div className="row">
+        {/* <div className="row">
     <div className="col-md-12" >
         <div className="col-md-6" >
             <CardLabel>{t("CR_DRIVER_NAME_EN")}<span className="mandatorycss">*</span></CardLabel>
@@ -483,43 +483,43 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
             />
         </div>
     </div>
-    </div> */}     
-       
-  
-     <div className="row">  
-     <div className="col-md-12" > 
-        <div className="col-md-6" >
-          <CardLabel>{`${t("CR_OTHER_DETAILS_EN")}`}</CardLabel>
-            <TextArea       
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            name="VehicleOtherDetailsEn"
-            value={VehicleOtherDetailsEn}
-            onChange={setSelectVehicleOtherDetailsEn}
-            disable={isEdit}
-            placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
-            />
+    </div> */}
+
+
+        <div className="row">
+          <div className="col-md-12" >
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CR_OTHER_DETAILS_EN")}`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="VehicleOtherDetailsEn"
+                value={VehicleOtherDetailsEn}
+                onChange={setSelectVehicleOtherDetailsEn}
+                disable={isEdit}
+                placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+              />
+            </div>
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CR_OTHER_DETAILS_ML")}`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="VehicleOtherDetailsMl"
+                value={VehicleOtherDetailsMl}
+                onChange={setSelectVehicleOtherDetailsMl}
+                disable={isEdit}
+                placeholder={`${t("CR_OTHER_DETAILS_ML")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
+              />
+            </div>
+          </div>
         </div>
-        <div className="col-md-6" >
-         <CardLabel>{`${t("CR_OTHER_DETAILS_ML")}`}</CardLabel>
-            <TextArea       
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            name="VehicleOtherDetailsMl"
-            value={VehicleOtherDetailsMl}
-            onChange={setSelectVehicleOtherDetailsMl}
-            disable={isEdit}
-            placeholder={`${t("CR_OTHER_DETAILS_ML")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
-            />
-        </div> 
-    </div>   
-    </div> 
 
       </FormStep>
     </React.Fragment>

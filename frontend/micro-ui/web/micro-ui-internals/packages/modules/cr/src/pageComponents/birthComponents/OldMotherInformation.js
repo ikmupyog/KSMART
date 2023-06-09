@@ -607,7 +607,12 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 {isMotherInfo === false && (
                     <div>
                         <div className="row">
-                            <div className="col-md-12" ><h1 className="headingh1" ><span style={{  padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span> </h1>
+                            <div className="col-md-12" >
+                                <div className="col-md-12">
+                                    <h1 className="headingh1" >
+                                        <span className="headingline" style={{ backgroundColor: "#edf2fa !important" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                         <div className="row">
@@ -820,7 +825,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                         disabled={isMotherInfo} placeholder={`${t("CR_PROFESSIONAL")}`}
                                     />
                                 </div>
-                                
+
 
                                 <div className="col-md-3" >
                                     <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>

@@ -41,8 +41,8 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   const [cmbFilterDistrict, setCmbFilterDistrict] = useState();
 
   const cmbUrbanRural = [
-    { name: "Town",namelocal:"ടൌണ്‍", code: "TOWN" },
-    { name: "Village",namelocal:"വില്ലേജ്", code: "VILLAGE" },
+    { name: "Town", namelocal: "ടൌണ്‍", code: "TOWN" },
+    { name: "Village", namelocal: "വില്ലേജ്", code: "VILLAGE" },
   ];
   // let cmbTaluk = [];
   // let cmbVillage = [];
@@ -356,7 +356,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_ADDRESS")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -369,7 +369,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
             <Dropdown
               t={t}
               optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-              option={sortDropdownNames(cmbFilterDistrict ? cmbFilterDistrict : [],"name",t)}
+              option={sortDropdownNames(cmbFilterDistrict ? cmbFilterDistrict : [], "name", t)}
               selected={presentOutsideKeralaDistrict}
               select={setSelectoutsideKeralaDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
@@ -409,7 +409,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
             <Dropdown
               t={t}
               optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-              option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [],"code",t)}
+              option={sortDropdownNames(cmbUrbanRural ? cmbUrbanRural : [], "code", t)}
               selected={presentOutsideKeralaVillage}
               select={setSelectoutsideKeralaVillage}
               disable={isDisableEdit}

@@ -1095,10 +1095,16 @@ h1.headingh1 {
   font-weight: 700;
   text-transform: uppercase;
   width: 100%;
-  text-align: left;
+  text-align: center;
+  border-bottom: 1px solid #547195;
   line-height: 0.1em;
   margin-top: 20px;
   font-size: 16px;
+
+  .headingline {
+    background: #EDF2FA !important;
+     padding: 0 10px;
+  }
 }
 
 h2.span {
@@ -1117,7 +1123,9 @@ h1.summaryheadingh {
   text-transform: uppercase;
   width: 100%;
   border-bottom: "1px solid  #E9EEF6";
-  margin: 10px 0 20px;
+  margin-left: 6px;
+  margin-bottom: 20px;
+  margin-top: 20px;
   font-size: 14px;
 }
 

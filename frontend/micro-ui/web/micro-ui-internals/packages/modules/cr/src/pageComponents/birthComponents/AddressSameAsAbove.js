@@ -4,7 +4,7 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
-  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditBirthNAC = false,isEditAdoption=false,
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditBirthNAC = false, isEditAdoption = false,
   presentaddressCountry, setaddressCountry, presentaddressStateName, setaddressStateName, presentOutsideKeralaDistrict,
   setoutsideKeralaDistrict, value, setValue, countryvalue, setCountryValue, countryValuePermanent, setCountryValuePermanent,
   valuePermanent, setValuePermanent, permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, presentWardNo, setPresentWardNo,
@@ -37,7 +37,7 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl,
   setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl,
   setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
-  permanentOutsideIndiaPostCode, setPermantpostCode, 
+  permanentOutsideIndiaPostCode, setPermantpostCode,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -187,9 +187,9 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
       {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}> */}
       <div className="row">
         <div className="col-md-12">
-          <div className="col-md-12" style={{marginBottom:"10px", marginTop:"10px"}}>
+          <div className="col-md-12" style={{ marginBottom: "10px", marginTop: "10px" }}>
             <h1 className="headingh1">
-              <span style={{  padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
         </div>

@@ -102,7 +102,7 @@ const InstitutionDetails = ({ config, onSelect, userType, formData, setInstituti
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{  padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
+              <span className="headingline">{`${t("CR_INSTITUTION_DETAILS")}`}</span>
             </h1>
           </div>
         </div>
@@ -153,7 +153,7 @@ const InstitutionDetails = ({ config, onSelect, userType, formData, setInstituti
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
               />
             </div>
- 
+
             <div className="col-md-6">
               <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown

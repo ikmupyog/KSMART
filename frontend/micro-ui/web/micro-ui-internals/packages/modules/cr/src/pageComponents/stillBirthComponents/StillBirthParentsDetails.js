@@ -19,7 +19,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
-  let cmbfilterNation = []; 
+  let cmbfilterNation = [];
 
   let cmbQualification = [];
   Qualification &&
@@ -69,9 +69,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
     formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl : "");
   const [motherNationality, setMotherNationality] = useState(formData?.StillBirthParentsDetails?.motherNationality?.code ? formData?.StillBirthParentsDetails?.motherNationality : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality ?
     (cmbNation.filter(cmbNation => cmbNation.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality)[0]) : "");
-  
 
- 
+
+
   const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthParentsDetails?.motherMarriageBirth :
     formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth : "");
   // const [orderofChildren, setOrderofChildren] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? formData?.StillBirthParentsDetails?.orderofChildren :
@@ -109,14 +109,14 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [MotherProfessionError, setMotherProfessionError] = useState(formData?.StillBirthParentsDetails?.motherProfession ? false : false);
   const [MotherNationalityError, setMotherNationalityError] = useState(formData?.StillBirthParentsDetails?.motherNationality ? false : false);
   const [FatherAadharError, setFatherAadharError] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? false : false);
- // const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? false : false);
+  // const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? false : false);
   const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameEn ? false : false);
   const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameMl ? false : false);
   const [FatherMobileError, setFatherMobileError] = useState(formData?.StillBirthParentsDetails?.fatherMobile ? false : false);
   const [FatherEduError, setFatherEduError] = useState(formData?.StillBirthParentsDetails?.fatherEducation ? false : false);
   const [FatherProfError, setFatherProfError] = useState(formData?.StillBirthParentsDetails?.fatherProfession ? false : false);
   const [ReligionError, setReligionError] = useState(formData?.StillBirthParentsDetails?.Religion ? false : false);
-  
+
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   //const [OrderofChildrenValidationMsg, setOrderofChildrenValidationMsg] = useState(false);
@@ -210,7 +210,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   // }
 
 
- 
+
   function setSelectMotherMarriageBirth(e) {
     if (e.target.value.trim().length >= 0) {
       setMotherMarriageBirth(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
@@ -229,7 +229,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   function setSelectStateName(value) {
     setStateName(value);
   }
- 
+
   // function setSelectOrderofChildren(e) {
   //   if (e.target.value < 10) {
   //     if (e.target.value > 4) {
@@ -295,13 +295,13 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setMotherFirstNameEn("");
       setMotherFirstNameMl("");
       setMotherAadhar(null);
-     
+
       setMotherMarriageBirth("");
       setMotherEducation(null);
       setMotherProfession(null);
 
       // setOrderofChildren("");
-      
+
     } else {
 
       setIsMotherInfo(e.target.checked);
@@ -313,10 +313,10 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setFatherAadhar(null);
       setFatherFirstNameEn("");
       setFatherFirstNameMl("");
-     
+
       setFatherEducation(null);
       setFatherProfession(null);
-   
+
     } else {
       setIsFatherInfo(e.target.checked);
     }
@@ -352,7 +352,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         setMotherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality)[0]);
       }
     }
-   
+
     if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation != null) {
       if (cmbQualification.length > 0 && (motherEducation === undefined || motherEducation === "")) {
         setMotherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation)[0]);
@@ -575,12 +575,12 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       // sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
       // sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
       // sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-     
+
       // sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
       // sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
       // sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
       // sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);     
-   
+
 
       // sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
       // sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
@@ -599,7 +599,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         motherFirstNameEn,
         motherFirstNameMl,
         motherAadhar,
-      
+
         motherMarriageBirth,
         motherEducation,
         motherProfession,
@@ -634,7 +634,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
           isDisabled={!fatherMobile ||
             (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
-              || motherMarriageBirth === "" ||  !motherEducation || !motherProfession) : false)
+              || motherMarriageBirth === "" || !motherEducation || !motherProfession) : false)
             || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
             ) : false)
             || !Religion || fatherMobile === ""
@@ -651,7 +651,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
+                    <span className="headingline">{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -730,7 +730,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       // optionKey="nationalityname"
                       optionKey={locale === "en_IN" ? "nationalityname" : locale === "ml_IN" ? "nationalitynamelocal" : "nationalityname"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
+                      option={sortDropdownNames(cmbNation ? cmbNation : [], "nationalityname", t)}
                       selected={motherNationality}
                       select={setSelectMotherNationality}
                       disable={isDisableEdit}
@@ -782,7 +782,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                   </div> */}
                 </div>
               </div>
-       
+
               <div className="row">
                 <div className="col-md-12">
                   {/* <div className="col-md-4">
@@ -807,7 +807,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       t={t}
                       optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbQualification ? cmbQualification : [],"name",t)}
+                      option={sortDropdownNames(cmbQualification ? cmbQualification : [], "name", t)}
                       selected={motherEducation}
                       select={setSelectMotherEducation}
                       disable={isDisableEdit}
@@ -820,7 +820,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       t={t}
                       optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbProfession ? cmbProfession : [],"name",t)}
+                      option={sortDropdownNames(cmbProfession ? cmbProfession : [], "name", t)}
                       selected={motherProfession}
                       select={setSelectMotherProfession}
                       disable={isDisableEdit}
@@ -843,7 +843,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
               <div className="row">
                 <div className="col-md-12">
                   <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
+                    <span className="headingline">{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -923,7 +923,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       // optionKey="nationalityname"
                       optionKey={locale === "en_IN" ? "nationalityname" : locale === "ml_IN" ? "nationalitynamelocal" : "nationalityname"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbNation ? cmbNation : [],"nationalityname",t)}
+                      option={sortDropdownNames(cmbNation ? cmbNation : [], "nationalityname", t)}
                       selected={fatherNationality}
                       select={setSelectFatherNationality}
                       disable={isDisableEdit}
@@ -937,7 +937,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       // optionKey="name"
                       optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbQualification ? cmbQualification : [],"name",t)}
+                      option={sortDropdownNames(cmbQualification ? cmbQualification : [], "name", t)}
                       selected={fatherEducation}
                       select={setSelectFatherEducation}
                       disable={isDisableEdit}
@@ -951,7 +951,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       // optionKey="name"
                       optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                       isMandatory={false}
-                      option={sortDropdownNames(cmbProfession ? cmbProfession : [],"name",t)}
+                      option={sortDropdownNames(cmbProfession ? cmbProfession : [], "name", t)}
                       selected={fatherProfession}
                       select={setSelectFatherProfession}
                       disable={isDisableEdit}
@@ -965,7 +965,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_FAMILY_INFORMATION")}`}</span>{" "}
+                <span className="headingline">{`${t("CR_ADDIONAL_FAMILY_INFORMATION")}`}</span>{" "}
               </h1>
             </div>
           </div>
@@ -979,7 +979,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                   // optionKey="name"
                   optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
                   isMandatory={false}
-                  option={sortDropdownNames(cmbReligion ? cmbReligion : [],"name",t)}
+                  option={sortDropdownNames(cmbReligion ? cmbReligion : [], "name", t)}
                   selected={Religion}
                   select={setSelectReligion}
                   disable={isDisableEdit}
@@ -1026,7 +1026,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
             <Toast
               error={
                 MotherAadharError ||
-              
+
                 MotherBirthageError ||
                 MotherEducationError ||
                 MotherProfessionError ||
@@ -1038,15 +1038,15 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
 
                 FatherMobileError ||
                 ReligionError ||
-              
-              
+
+
                 AdhaarDuplicationError ||
-                AgeValidationMsg 
+                AgeValidationMsg
               }
               label={
                 MotherAadharError ||
-                
-                MotherBirthageError ||
+
+                  MotherBirthageError ||
                   MotherEducationError ||
                   MotherProfessionError ||
                   MotherNationalityError ||
@@ -1057,43 +1057,43 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
 
                   FatherMobileError ||
                   ReligionError ||
-                 
+
                   AdhaarDuplicationError ||
-                  AgeValidationMsg 
+                  AgeValidationMsg
 
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
                     : MotherBirthageError
-                     ? t(`CR_INVALID_MOTHER_AGE_AT_BIRTH`)
-                      
-                        : MotherEducationError
-                          ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
-                          : MotherProfessionError
-                            ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`)
-                            : MotherNationalityError
-                              ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
-                              // :OrderofChildrenError
-                              //   ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
-                                : FatherAadharError
-                                  ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
-                                  : FatherFirstNmeEnError
-                                    ? t(`CR_INVALID_FATHER_NAME_EN`)
-                                    : FatherEduError
-                                      ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
-                                      : FatherProfError
-                                        ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
-                                        : ReligionError
-                                          ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
-                                          : FatherMobileError
-                                            ? t(`CR_INVALID_MOBILE_NO`)
-                                            : AdhaarDuplicationError
-                                              ? t(`CR_DUPLICATE_AADHAR_NO`)
-                                              : AgeValidationMsg
-                                                ? t(`CR_MOTHER_AGE_WARNING`)
-                                                
-                                                  :
+                      ? t(`CR_INVALID_MOTHER_AGE_AT_BIRTH`)
 
-                                                  setToast(false)
+                      : MotherEducationError
+                        ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
+                        : MotherProfessionError
+                          ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`)
+                          : MotherNationalityError
+                            ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
+                            // :OrderofChildrenError
+                            //   ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
+                            : FatherAadharError
+                              ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
+                              : FatherFirstNmeEnError
+                                ? t(`CR_INVALID_FATHER_NAME_EN`)
+                                : FatherEduError
+                                  ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
+                                  : FatherProfError
+                                    ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
+                                    : ReligionError
+                                      ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
+                                      : FatherMobileError
+                                        ? t(`CR_INVALID_MOBILE_NO`)
+                                        : AdhaarDuplicationError
+                                          ? t(`CR_DUPLICATE_AADHAR_NO`)
+                                          : AgeValidationMsg
+                                            ? t(`CR_MOTHER_AGE_WARNING`)
+
+                                            :
+
+                                            setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

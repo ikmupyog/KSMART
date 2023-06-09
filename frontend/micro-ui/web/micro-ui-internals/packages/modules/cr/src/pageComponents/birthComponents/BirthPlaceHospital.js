@@ -53,7 +53,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           setIsInitialRender(false);
         }
       } else if (formData?.ChildDetails?.hospitalName != null && formData?.ChildDetails?.hospitalName != "" && formData?.ChildDetails?.hospitalName != undefined) {
-        if (cmbhospital.length > 0) {     
+        if (cmbhospital.length > 0) {
           cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalName.code);
           selectHospitalName(cmbhospitalMl[0]);
           selectHospitalNameMl(cmbhospitalMl[0]);
@@ -94,7 +94,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{  padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
+                <span className="headingline">{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
               </h1>
             </div>
           </div>

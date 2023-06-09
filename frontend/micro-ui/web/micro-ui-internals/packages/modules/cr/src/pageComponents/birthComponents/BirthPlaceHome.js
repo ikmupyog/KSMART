@@ -71,11 +71,11 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         //setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         //setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-        if(currentLB.length>0){
+        if (currentLB.length > 0) {
           setCmbFilterPostOffice(currentLB[0].poList);
           setPostOfficevalues(currentLB[0].poList);
           setIsInitialRender(false);
-        }        
+        }
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
@@ -213,7 +213,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ padding: "0 10px" }}>{`${t("CR_BIRTH_PLACE_HOME")}`}</span>{" "}
+                <span className="headingline">{`${t("CR_BIRTH_PLACE_HOME")}`}</span>{" "}
               </h1>
             </div>
           </div>

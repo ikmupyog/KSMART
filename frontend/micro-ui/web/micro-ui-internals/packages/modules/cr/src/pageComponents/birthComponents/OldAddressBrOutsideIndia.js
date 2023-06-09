@@ -164,7 +164,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{  padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
+              <span className="headingline">{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
             </h1>
           </div>
         </div>
@@ -186,7 +186,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
@@ -262,7 +262,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
@@ -277,7 +277,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
@@ -297,7 +297,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
@@ -317,7 +317,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}

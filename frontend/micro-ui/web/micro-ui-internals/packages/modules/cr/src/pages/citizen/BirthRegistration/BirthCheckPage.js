@@ -1416,12 +1416,12 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <CardText className="summaryHeading">
                           {`${t("CR_STATE_REGION_PROVINCE_ML")}`}
                         </CardText>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-8">
                         <CardText className="summarySubHeading">
                           : {AddressBirthDetails?.presentOutSideIndiaProvinceMl}
                         </CardText>

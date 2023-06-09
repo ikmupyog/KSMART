@@ -124,7 +124,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}> */}
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-12" ><h1 className="headingh1" ><span style={{  padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
+            <div className="col-md-12" ><h1 className="headingh1" ><span className="headingline">{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
             </div>
           </div>
 
@@ -134,7 +134,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               <Dropdown
                 t={t}
                 optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-                option={sortDropdownNames(cmbOtherplace ? cmbOtherplace : [],"name",t)}
+                option={sortDropdownNames(cmbOtherplace ? cmbOtherplace : [], "name", t)}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}
                 disable={isDisableEdit}
@@ -149,7 +149,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
                 selected={wardNo}
                 select={setSelectWard}
                 disable={isDisableEdit}

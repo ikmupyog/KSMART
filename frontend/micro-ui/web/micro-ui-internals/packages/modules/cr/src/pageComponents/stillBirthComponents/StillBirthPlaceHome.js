@@ -24,13 +24,13 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
- // const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+  // const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
- // let cmbPostOffice = [];
+  // let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
 
@@ -70,12 +70,12 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         //setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-       // setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-       if(currentLB.length>0){
-        setCmbFilterPostOffice(currentLB[0].poList);
-        setPostOfficevalues(currentLB[0].poList);
-        setIsInitialRender(false);
-      }        
+        // setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+        if (currentLB.length > 0) {
+          setCmbFilterPostOffice(currentLB[0].poList);
+          setPostOfficevalues(currentLB[0].poList);
+          setIsInitialRender(false);
+        }
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
@@ -188,9 +188,9 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
     if (!(e.key.match(pattern))) {
-        e.preventDefault();
+      e.preventDefault();
     }
-}
+  }
   function setCheckSpecialCharSpace(e) {
     let pattern = /^[a-zA-Z-.`' ]*$/;
     if (!(e.key.match(pattern)) && e.code === 'Space') {
@@ -203,13 +203,13 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
       e.preventDefault();
     }
   }
-  
+
   function setCheckMalayalamInputFieldWithSplChar(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \/-]/;
     if (!(e.key.match(pattern))) {
-        e.preventDefault();
+      e.preventDefault();
     }
-}
+  }
   let validFlag = true;
 
   const goNext = () => {
@@ -217,18 +217,18 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
 
   };
 
-  if ( isWardLoaded || islocalbodiesLoading) {
+  if (isWardLoaded || islocalbodiesLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!adrsLocalityNameEn}> */}
-        
+
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_PLACE_HOME")}`}</span>{" "}
+                <span className="headingline">{`${t("CR_BIRTH_PLACE_HOME")}`}</span>{" "}
               </h1>
             </div>
           </div>
@@ -242,7 +242,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [],"namecmb",t)}
+                option={sortDropdownNames(cmbWardNoFinal ? cmbWardNoFinal : [], "namecmb", t)}
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
@@ -251,44 +251,44 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-                <CardLabel>
-                  {t("CS_COMMON_POST_OFFICE")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-                  option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
-                  selected={adrsPostOffice}
-                  select={setSelectAdrsPostOffice}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {t("CS_COMMON_PIN_CODE")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="adrsPincode"
-                  value={adrsPincode}
-                  onChange={setSelectAdrsPincode}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-                  {...(validation = {
-                    pattern: "^[0-9]{6}$",
-                    isRequired: true,
-                    type: "number",
-                    maxLength: 6,
-                    minLength: 6,
-                    title: t("CS_COMMON_INVALID_PIN_CODE"),
-                  })}
-                />
-              </div>
+              <CardLabel>
+                {t("CS_COMMON_POST_OFFICE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
+                option={sortDropdownNames(PostOfficevalues ? PostOfficevalues : [], "name", t)}
+                selected={adrsPostOffice}
+                select={setSelectAdrsPostOffice}
+                disable={isDisableEdit}
+                placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_PIN_CODE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="adrsPincode"
+                value={adrsPincode}
+                onChange={setSelectAdrsPincode}
+                disable={isDisableEdit}
+                placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+                {...(validation = {
+                  pattern: "^[0-9]{6}$",
+                  isRequired: true,
+                  type: "number",
+                  maxLength: 6,
+                  minLength: 6,
+                  title: t("CS_COMMON_INVALID_PIN_CODE"),
+                })}
+              />
+            </div>
           </div>
           <div className="row">
             <div className="col-md-4">
@@ -397,7 +397,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               />
             </div>
           </div>
-       
+
         </div>
         {/* </FormStep> */}
       </React.Fragment>
