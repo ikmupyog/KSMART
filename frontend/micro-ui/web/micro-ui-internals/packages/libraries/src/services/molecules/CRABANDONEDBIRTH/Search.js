@@ -25,6 +25,63 @@ const convertEpochToDate = (dateEpoch) => {
     return null;
   }
 };
+function TimeDispaly(birthDateTime){
+  let time = birthDateTime;
+  let timeParts = time.split(":");
+  let displaytimeTemp = "";
+  let displayAmPmTemp = "";
+  if (timeParts.length > 0) {
+    if (timeParts[0] === "01" || timeParts[0] === "02" || timeParts[0] === "03" || timeParts[0] === "04" ||
+      timeParts[0] === "05" || timeParts[0] === "06" || timeParts[0] === "07" || timeParts[0] === "08" ||
+      timeParts[0] === "09" || timeParts[0] === "10" || timeParts[0] === "11") {
+       displaytimeTemp = timeParts[0] + ":" + timeParts[1];
+       displayAmPmTemp = "AM";    
+    }
+    else if (timeParts[0] === "00") {
+      displaytimeTemp = "12" + ":" + timeParts[1];
+      displayAmPmTemp = "AM";
+    } else if (timeParts[0] >= "13") {
+      if (timeParts[0] === "13") {
+        displaytimeTemp = "01" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "14") {
+        displaytimeTemp = "02" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "15") {
+        displaytimeTemp = "03" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "16") {
+        displaytimeTemp = "04" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "17") {
+        displaytimeTemp = "05" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "18") {
+        displaytimeTemp = "06" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "19") {
+        displaytimeTemp = "07" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "20") {
+        displaytimeTemp = "08" + ":" + timeParts[1];
+        displayAmPm = "PM";
+      } else if (timeParts[0] === "21") {
+        displaytimeTemp = "09" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "22") {
+        displaytimeTemp = "10" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "23") {
+        displaytimeTemp = "11" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      } else if (timeParts[0] === "24") {
+        displaytimeTemp = "12" + ":" + timeParts[1];
+        displayAmPmTemp = "PM";
+      }
+    }
+  }
+  return `${displaytimeTemp} ${displayAmPmTemp}`
+}
 // const getAddress = (address, t) => {
 //   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
 //     address?.landmark ? `${address?.landmark}, ` : ""
@@ -65,18 +122,16 @@ export const CRAbandonedsearch = {
     let employeeResponse = [];
     const Birthdetails = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
-      asSectionHeader: true,      
+      asSectionHeader: true,
     }
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NOT_RECORDED" },
-        // { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NOT_RECORDED" },
-        // { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NOT_RECORDED"}, 
-        
+        // { title: "CR_TIME_OF_BIRTH", value: response?.birthDateTime ? TimeDispaly(response?.birthDateTime) : "NOT_RECORDED",isNotTranslated:true },
        ],
     };
     const birthPlaceHospDetails = {
@@ -95,7 +150,7 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace ? response?.birthPlace : "NOT_RECORDED" },
         // { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeEn + " / " + response?.institutionTypeMl || "NOT_RECORDED" },
         { title: "CR_INSTITUTION_TYPE", value: response?.institutionTypeCode ? response?.institutionTypeCode : "NOT_RECORDED" },
-        { title: "CR_INSTITUTION_NAME_EN", value:  response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
+        { title: "CR_INSTITUTION_NAME_EN", value: response?.institutionId ? response?.institutionId : "NOT_RECORDED" },
         { title: "CR_INSTITUTION_NAME_ML", value: response?.institutionIdMl ? response?.institutionIdMl : "NOT_RECORDED" },
       ],
     };
@@ -156,9 +211,9 @@ export const CRAbandonedsearch = {
     const motherInfo = {
       title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
       values: [
-        { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails.motherFirstNameEn || "NOT_RECORDED" },
-        { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails.motherFirstNameMl || "NOT_RECORDED" },        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar  || "NOT_RECORDED"},
-        { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother  || "NOT_RECORDED"},
+        { title: "CR_MOTHER_NAME_EN", value: response?.ParentsDetails?.motherFirstNameEn || "NOT_RECORDED" },
+        { title: "CR_MOTHER_NAME_ML", value: response?.ParentsDetails?.motherFirstNameMl || "NOT_RECORDED" }, { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar || "NOT_RECORDED" },
+        { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother || "NOT_RECORDED" },
       ],
     };
     const statisticalInfo = {
@@ -176,12 +231,12 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_INSTITUTION", value: response?.caretakerDetails?.institutionName || "NOT_RECORDED" },
         { title: "PDF_BIRTH_CARETAKER_NAME", value: response?.caretakerDetails?.caretakerName || "NOT_RECORDED" },
         { title: "PDF_BIRTH_CARETAKER_DESI", value: response?.caretakerDetails?.caretakerDesignation || "NOT_RECORDED" },
-        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NOT_RECORDED" },     
+        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NOT_RECORDED" },
         { title: "PDF_BIRTH_CARETAKER_ADDRESS", value: response?.caretakerDetails?.caretakerAddress || "NOT_RECORDED" },
-        
+
       ],
     };
-   
+
     const informantDetailsInfo = {
       title: "CR_OFFICIAL_INFORMANT_HEADER",
       values: [
@@ -189,9 +244,9 @@ export const CRAbandonedsearch = {
         { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NOT_RECORDED" },
         { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NOT_RECORDED" },
         { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NOT_RECORDED" },
-        { title: "CS_COMMON_AADHAAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NOT_RECORDED" },  
+        { title: "CS_COMMON_AADHAAR", value: response?.InformarHosInstDetails?.infomantAadhar || "NOT_RECORDED" },
         { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NOT_RECORDED" },
-        
+
       ],
     };
     // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
@@ -219,12 +274,12 @@ export const CRAbandonedsearch = {
       response && employeeResponse.push(birthPlaceVEHICLEDetails);
     } else if (response?.birthPlace === "PUBLIC_PLACES") {
       response && employeeResponse.push(birthPlacePUBLICPLACESDetails);
-    }  
+    }
     response && employeeResponse.push(motherInfo);
     response && employeeResponse.push(statisticalInfo);
     response && employeeResponse.push(childCustodyInfo);
     response && employeeResponse.push(informantDetailsInfo);
-    
+
 
     return {
       tenantId: response.tenantId,

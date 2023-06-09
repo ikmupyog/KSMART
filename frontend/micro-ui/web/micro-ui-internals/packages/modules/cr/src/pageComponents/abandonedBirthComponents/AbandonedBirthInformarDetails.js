@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast ,UploadFile} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 import Timeline from "../../components/CRABTimeline";
 
 const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth=false }) => {
@@ -557,6 +558,22 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                     message={uploadedFile1 ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
+                {uploadedFile1 && (
+                        <div className="col-md-4">
+                          {_.head(uploadedFile1)?.type === "pdf" ? (
+                            <object style={{ margin: "5px 0" }} height={120} width={100} data={_.head(uploadedFile1)?.pdfUrl} alt="CR_CHILDBIRTH_PROOF" />
+                          ) : (
+                            <img style={{ margin: "5px 0" }} height={120} width={100} src={_.head(uploadedFile1)?.small} alt="CR_CHILDBIRTH_PROOF" />
+                          )}
+                          <a
+                            style={{ color: "blue" }}
+                            target="_blank"
+                            href={_.head(uploadedFile1)?.type === "pdf" ? _.head(uploadedFile1)?.pdfUrl : _.head(uploadedFile1)?.large}
+                          >
+                            Preview
+                          </a>
+                        </div>
+                      )}
               </div>              
             </div>   
           </div>

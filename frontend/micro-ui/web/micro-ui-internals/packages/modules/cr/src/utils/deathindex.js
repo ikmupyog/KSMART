@@ -518,6 +518,9 @@ export const convertToDeathRegistration = (data = {}) => {
           SmokingType: data?.StatisticalInfo?.SmokingType,
           TobaccoType: data?.StatisticalInfo?.TobaccoType,
           AlcoholType: data?.StatisticalInfo?.AlcoholType,
+          smokingNumYears:data?.StatisticalInfo?.smokingNumYears,
+          tobaccoNumYears:data?.StatisticalInfo?.tobaccoNumYears,
+          alcoholNumYears:data?.StatisticalInfo?.alcoholNumYears
         },
         InformantDetails: {
           //InformantAadharSubmitted: null,
@@ -531,17 +534,22 @@ export const convertToDeathRegistration = (data = {}) => {
 
         },
         Initiator: {
-         
-          InitiatorRelation: data?.Initiator?.InitiatorRelation ? data?.Initiator?.InitiatorRelation.code : null,         
-          InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
-          InitiatorName: data?.Initiator?.InitiatorName,
-          InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-          initiatorDesi: data?.Initiator?.initiatorDesi,
-          InitiatorAddress: data?.Initiator?.InitiatorAddress,
-          IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
+          // iInitiatorRelation: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : null,
+          InitiatorRelation: data?.Initiator?.initiator ? data?.Initiator?.initiator.code : null,
+          initiatorInstitutionName: data?.Initiator?.initiatorInstitutionName,
+          InitiatorName: data?.Initiator?.initiatorNameEn,
+          InitiatorAadhaar: data?.Initiator?.initiatorAadhar,
+          InitiatorMobile: data?.Initiator?.initiatorMobile,
+          initiatorDesi: data?.Initiator?.initiatorDesi ? data?.Initiator?.initiatorDesi.code : null,
+          InitiatorAddress: data?.Initiator?.initiatorAddress,
+          IsDeclarationInitiator: data?.Initiator?.isInitiatorDeclaration,
           isCaretaker: data?.Initiator?.isCaretaker,
-
-         
+          isGuardian: data?.Initiator?.isGuardian,
+          ipopList: data?.Initiator?.ipopList ? data?.Initiator?.ipopList.code : null,
+          ipopNumber: data?.Initiator?.ipopNumber ? data?.Initiator?.ipopNumber : null,
+          registrationNoHospital: data?.Initiator?.obstetricsNumber ? data?.Initiator?.obstetricsNumber : null,
+           registrationNoInstitution: null,
+          admissionNoInstitution: null
         },
         DeathNACDocuments: [
           {
@@ -595,12 +603,8 @@ export const convertToDeathRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditDeathRegistration = (data = {}) => {
-  // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const empTenantId = Digit.ULBService.getCurrentUlb();
-  // let tenantId = "";
-  // tenantId = empTenantId["code"];
-  // console.log(data);
-  // console.log(data?.InformationDeath?.workFlowCode);
+
   console.log("dataaaa",data)
 
   const formdata = {
@@ -846,6 +850,9 @@ export const convertToEditDeathRegistration = (data = {}) => {
           SmokingType: data?.StatisticalInfo?.SmokingType,
           TobaccoType: data?.StatisticalInfo?.TobaccoType,
           AlcoholType: data?.StatisticalInfo?.AlcoholType,
+          smokingNumYears:data?.StatisticalInfo?.smokingNumYears,
+          tobaccoNumYears:data?.StatisticalInfo?.tobaccoNumYears,
+          alcoholNumYears:data?.StatisticalInfo?.alcoholNumYears
         },
         InformantDetails: {
           InformantAadharNo: data?.InformantDetails?.InformantAadharNo,
@@ -863,33 +870,41 @@ export const convertToEditDeathRegistration = (data = {}) => {
           // InformantDocumentUserType: null,
           // InformantDocumentFileStoreId: null,
         },
+        // Initiator: {
+        //   InitiatorRelation: data?.Initiator?.InitiatorRelation ? data?.Initiator?.InitiatorRelation.code : null,         
+        //   InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
+        //   InitiatorName: data?.Initiator?.InitiatorName,
+        //   InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
+        //   initiatorDesi: data?.Initiator?.initiatorDesi,
+        //   InitiatorAddress: data?.Initiator?.InitiatorAddress,
+        //   IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
+        //   isCaretaker: data?.Initiator?.isCaretaker,
+        // },
+        // InformarHosInstDetails: {
+        //   infomantFirstNameEn: data?.InformarHosInstDetails?.infomantFirstNameEn,
+        //   infomantAadhar: data?.InformarHosInstDetails?.infomantAadhar,
+        //   infomantMobile: data?.InformarHosInstDetails?.infomantMobile,
+        //   informerAddress: data?.InformarHosInstDetails?.informerAddress,
+        //   informerDesi: data?.InformarHosInstDetails?.informerDesi,
+        //   isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo,
+        // },
         Initiator: {
-          // IsDeclarationInitiator: data?.InformationDeath ?.Initiator?.IsDeclarationInitiator,
-          // InitiatorRelation:  data?.InformationDeath ?.Initiator?.InitiatorRelation,
-          // InitiatorAadhaar: data?.InformationDeath ?.Initiator?.InitiatorAadhaar,
-          // InitiatorName:  data?.InformationDeath ?.Initiator?.InitiatorName,
-          // InitiatorMobile:  data?.InformationDeath ?.Initiator?.InitiatorMobile,
-          // InitiatorAddress:data?.InformationDeath ?.Initiator?.InitiatorAddress,
-          // isCaretaker: data?.InformationDeath ?.Initiator?.isCaretaker,
-
-
-          InitiatorRelation: data?.Initiator?.InitiatorRelation ? data?.Initiator?.InitiatorRelation.code : null,         
-          InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
-          InitiatorName: data?.Initiator?.InitiatorName,
-          InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-          initiatorDesi: data?.Initiator?.initiatorDesi,
-          InitiatorAddress: data?.Initiator?.InitiatorAddress,
-          IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-          isCaretaker: data?.Initiator?.isCaretaker,
-
-          // InitiatorDocumentId: null,
-          // InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
-          // InitiatorDocumentAckNo: null,
-          // InitiatorDocumentType: null,
-          // InitiatorDocumentUserType: null,
-          // InitiatorDocumentFileStoreId: null,
-
-          
+          // iInitiatorRelation: data?.InitiatorinfoDetails?.initiator ? data?.InitiatorinfoDetails?.initiator.code : null,
+          InitiatorRelation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : null,
+          initiatorInstitutionName: data?.InitiatorinfoDetails?.initiatorInstitutionName,
+          InitiatorName: data?.InitiatorinfoDetails?.initiatorNameEn,
+          InitiatorAadhaar: data?.InitiatorinfoDetails?.initiatorAadhar,
+          InitiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi ? data?.InitiatorinfoDetails?.initiatorDesi.code : null,
+          InitiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress,
+          IsDeclarationInitiator: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
+          isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
+          isGuardian: data?.InitiatorinfoDetails?.isGuardian,
+          ipopList: data?.InitiatorinfoDetails?.ipopList ? data?.InitiatorinfoDetails?.ipopList.code : null,
+          ipopNumber: data?.InitiatorinfoDetails?.ipopNumber ? data?.InitiatorinfoDetails?.ipopNumber : null,
+          registrationNoHospital: data?.InitiatorinfoDetails?.obstetricsNumber ? data?.InitiatorinfoDetails?.obstetricsNumber : null,
+           registrationNoInstitution: null,
+          admissionNoInstitution: null
         },
 
         AuditDetails: {

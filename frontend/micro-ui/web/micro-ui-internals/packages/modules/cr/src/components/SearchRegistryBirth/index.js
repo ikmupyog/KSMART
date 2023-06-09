@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { downloadDocument } from "../../utils/uploadedDocuments";
 import { STATE_CODE } from "../../config/constants";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 const mystyle = {
   bgOpacity: "1",
@@ -89,12 +90,12 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
         disableSortBy: true,
         accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : "-"),
       },
-            {
+      {
         Header: t("CR_COMMON_GENDER"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.gender || "-"),
       },
-            {
+      {
         Header: t("CR_COMMON_FATHER_NAME"),
         disableSortBy: true,
         accessor: (row) => GetCell(row?.registerBirthFather?.firstname_en || "-"),
@@ -110,26 +111,34 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
         accessor: (row) => GetCell(row?.registration_no || "-"),
       },
       {
-        Header: t("Download Certificate"),
+        Header: t("CR_ACTIONS"),
         disableSortBy: true,
         Cell: ({ row }) => {
           let id = _.get(row, "original.id", null);
           return (
             <div>
-              {id !== null && <span className="link" onClick={() => {
-                fileSource.mutate({ filters: { id, source: "sms" } }, {
-                  onSuccess: (fileDownloadInfo) => {
-                    const { filestoreId } = fileDownloadInfo;
-                    if (filestoreId) {
-                      downloadDocument(filestoreId);
-                    } else {
-                      console.log("filestoreId is null");
+              {id !== null && <React.Fragment>
+                <span className="btn btn-primary" onClick={() => {
+                  fileSource.mutate({ filters: { id, source: "sms" } }, {
+                    onSuccess: (fileDownloadInfo) => {
+                      const { filestoreId } = fileDownloadInfo;
+                      if (filestoreId) {
+                        downloadDocument(filestoreId);
+                      } else {
+                        console.log("filestoreId is null");
+                      }
                     }
-                  }
-                });
-              }}>
-                Download
-              </span>}
+                  });
+                }}>
+                  Download
+                </span>
+                <span className="btn btn-primary" style={{ backgroundColor: "black", marginLeft: "5px" }} cursor="pointer">
+                  <Link to={`/digit-ui/citizen/cr/my-application-birth/${_.get(row, "original.ack_no", '')}`}>
+                    View
+                  </Link>
+                </span>
+              </React.Fragment>
+              }
             </div>
           );
         }

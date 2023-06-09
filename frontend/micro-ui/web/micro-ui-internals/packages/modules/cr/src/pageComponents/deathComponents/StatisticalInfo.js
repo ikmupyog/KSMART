@@ -290,6 +290,16 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
       ? months.filter((months) => months.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit2)[0]
       : ""
   );
+
+  const [smokingNumYears, setSmokingNumYears] = useState(
+    formData?.StatisticalInfo?.smokingNumYears ? formData?.StatisticalInfo?.smokingNumYears : null
+  );
+  const [tobaccoNumYears, setTobaccoNumYears] = useState(
+    formData?.StatisticalInfo?.tobaccoNumYears ? formData?.StatisticalInfo?.tobaccoNumYears : null
+  );
+  const [alcoholNumYears, setAlcoholNumYears] = useState(
+    formData?.StatisticalInfo?.alcohol ? formData?.StatisticalInfo?.alcohol : null
+  );
   // const [DeathCauseSubTimeUnit2, setDeathCauseSubTimeUnit2] = useState(
   //   formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 : null
   // );
@@ -437,6 +447,15 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   function selectDeathCauseSubCustom2(e) {
     setDeathCauseSubCustom2(e.target.value);
   }
+  function selectSmokingNumYears(e) {
+    setSmokingNumYears(e.target.value);
+  }
+  function selectTobaccoNumYears(e) {
+    setTobaccoNumYears(e.target.value);
+  }
+  function selectAlcoholNumYears(e) {
+    setAlcoholNumYears(e.target.value);
+  }
   function selectDeathCauseSubInterval2(e) {
     if (e.target.value.trim().length >= 0) {
       setDeathCauseSubInterval2(
@@ -563,6 +582,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
       SmokingType,
       TobaccoType,
       AlcoholType,
+      smokingNumYears,
+      tobaccoNumYears,
+      alcoholNumYears
     });
   };
 
@@ -970,7 +992,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+          <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>
               <RadioButton
                 t={t}
@@ -981,8 +1003,27 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                 onSelect={selectSmokingType}
                 handleChange={handleSmokingType}
               />
+              </div>
+              <div className="col-md-6">
+               <CardLabel>{t("CR_HABIT_YEAR")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="smokingNumYears"
+                    value={smokingNumYears}
+                    onChange={selectSmokingNumYears}
+                    disable={isEdit}
+                    placeholder={`${t("CR_HABIT_YEAR")}`}
+                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                  />
             </div>
-
+            </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>
               {/* <div className="statistical-flex"> */}
@@ -995,6 +1036,22 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                 onSelect={selectTobaccoType}
                 handleChange={handleTobaccoType}
               />
+              </div>
+              <div className="col-md-6">
+                <CardLabel>{t("CR_HABIT_YEAR")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="tobaccoNumYears"
+                    value={tobaccoNumYears}
+                    onChange={selectTobaccoNumYears}
+                    disable={isEdit}
+                    placeholder={`${t("CR_HABIT_YEAR")}`}
+                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                  />
+                  </div>
             </div>
           </div>
         </div>
@@ -1011,9 +1068,25 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
                 onSelect={selectAlcoholType}
                 handleChange={handleAlcoholType}
               />
+              </div>
+              <div className="col-md-6">
+               <CardLabel>{t("CR_HABIT_YEAR")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="alcoholNumYears"
+                    value={alcoholNumYears}
+                    onChange={selectAlcoholNumYears}
+                    disable={isEdit}
+                    placeholder={`${t("CR_HABIT_YEAR")}`}
+                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                  />
+                  </div>
             </div>
           </div>
-        </div>
+        
       </FormStep>
     </React.Fragment>
   );

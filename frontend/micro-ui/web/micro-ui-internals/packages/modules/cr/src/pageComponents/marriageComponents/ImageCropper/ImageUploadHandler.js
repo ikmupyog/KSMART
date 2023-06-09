@@ -327,7 +327,7 @@ export const ImageUploadHandler = ({
     var newUploadedImagesIds = uploadedImagesIds.filter((key) => key !== deleteImageKey[0].key);
     setUploadedImagesThumbs(newThumbsList);
     setUploadedImagesIds(newUploadedImagesIds);
-    onPhotoChange(newUploadedImagesIds);
+    onPhotoChange(newUploadedImagesIds?.length === 0 ? null : newUploadedImagesIds);
     Digit.SessionStorage.set("CROP_IMAGES", newUploadedImagesIds);
   }
 
@@ -372,11 +372,11 @@ export const ImageUploadHandler = ({
               <label htmlFor="scale-input">Scale: </label>
               <input
                 id="scale-input"
-                type="text"
+                type="number"
                 step="0.1"
                 value={scale}
                 disabled={!imgSrc}
-                style={{ border: "1px solid black", borderRadius: "5px", margin: "5px" }}
+                style={{ border: "1px solid black", borderRadius: "5px", margin: "5px", paddingLeft:"2px" }}
                 onChange={(e) => setScale(Number(e.target.value))}
               />
             </div>
@@ -384,10 +384,10 @@ export const ImageUploadHandler = ({
               <label htmlFor="rotate-input">Rotate: </label>
               <input
                 id="rotate-input"
-                type="text"
+                type="number"
                 value={rotate}
                 disabled={!imgSrc}
-                style={{ border: "1px solid black", borderRadius: "5px", margin: "5px" }}
+                style={{ border: "1px solid black", borderRadius: "5px", margin: "5px", paddingLeft:"2px" }}
                 onChange={(e) => setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))}
               />
             </div>
