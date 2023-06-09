@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Toast, 
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import AddressOutsideIndia from "./AddressOutsideIndia";
-import AddressInsideIndia  from "./OldAddressInsideIndia";
+import AddressInsideIndia from "./OldAddressInsideIndia";
 
 const Address = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -61,7 +61,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [AdrsInsideIndiaCountryError, setAdrsInsideIndiaCountryError] = useState(formData?.AddressDetails?.AdrsInsideIndiaCountry ? false : false);
   const [AdrsInsideIndiaStateNameError, setAdrsInsideIndiaStateNameError] = useState(formData?.AddressDetails?.AdrsInsideIndiaStateName ? false : false);
   const [AdrsInsideIndiaDistrictError, setAdrsInsideIndiaDistrictError] = useState(formData?.AddressDetails?.AdrsInsideIndiaDistrict ? false : false);
-  
+
   const [PresentCountry, setPresentCountry] = useState(formData?.AddressDetails?.PresentCountry ? formData?.AddressDetails?.PresentCountry : null);
   const [PresentStateName, setPresentStateName] = useState(formData?.AddressDetails?.PresentStateName ? formData?.AddressDetails?.PresentStateName : null);
   const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict ? formData?.AddressDetails?.PresentDistrict : null);
@@ -122,10 +122,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [AdrsInsideIndiaResNoMl, setAdrsInsideIndiaResNoMl] = useState(formData?.AddressDetails?.AdrsInsideIndiaResNoMl ? formData?.AddressDetails?.AdrsInsideIndiaResNoMl : null);
   const [AdrsInsideIndiaMainPlaceEn, setAdrsInsideIndiaMainPlaceEn] = useState(formData?.AddressDetails?.AdrsInsideIndiaMainPlaceEn ? formData?.AddressDetails?.AdrsInsideIndiaMainPlaceEn : null);
   const [AdrsInsideIndiaMainPlaceMl, setAdrsInsideIndiaMainPlaceMl] = useState(formData?.AddressDetails?.AdrsInsideIndiaMainPlaceMl ? formData?.AddressDetails?.AdrsInsideIndiaMainPlaceMl : null);
-  const [AdrsInsideIndiaCityVilgeEn,  setAdrsInsideIndiaCityVilgeEn] = useState(formData?.AddressDetails?. AdrsInsideIndiaCityVilgeEn ? formData?.AddressDetails?.AdrsInsideIndiaCityVilgeEn : null);
-  const [AdrsInsideIndiaCityVilgeMl, setAdrsInsideIndiaCityVilgeMl] = useState(formData?.AddressDetails?.AdrsInsideIndiaCityVilgeMl ? formData?.AddressDetails?.AdrsInsideIndiaCityVilgeMl : null);  
+  const [AdrsInsideIndiaCityVilgeEn, setAdrsInsideIndiaCityVilgeEn] = useState(formData?.AddressDetails?.AdrsInsideIndiaCityVilgeEn ? formData?.AddressDetails?.AdrsInsideIndiaCityVilgeEn : null);
+  const [AdrsInsideIndiaCityVilgeMl, setAdrsInsideIndiaCityVilgeMl] = useState(formData?.AddressDetails?.AdrsInsideIndiaCityVilgeMl ? formData?.AddressDetails?.AdrsInsideIndiaCityVilgeMl : null);
   const [AdrsInsideIndiaLocalityNameEn, setAdrsInsideIndiaLocalityNameEn] = useState(formData?.AddressDetails?.AdrsInsideIndiaLocalityNameEn ? formData?.AddressDetails?.AdrsInsideIndiaLocalityNameEn : null);
-  const [AdrsInsideIndiaLocalityNameMl, setAdrsInsideIndiaLocalityNameMl] = useState(formData?.AddressDetails?.AdrsInsideIndiaLocalityNameMl ? formData?.AddressDetails?.AdrsInsideIndiaLocalityNameMl : null);  
+  const [AdrsInsideIndiaLocalityNameMl, setAdrsInsideIndiaLocalityNameMl] = useState(formData?.AddressDetails?.AdrsInsideIndiaLocalityNameMl ? formData?.AddressDetails?.AdrsInsideIndiaLocalityNameMl : null);
   const [AdrsInsideIndiaVillage, setAdrsInsideIndiaVillage] = useState(formData?.AddressDetails?.AdrsInsideIndiaVillage ? formData?.AddressDetails?.AdrsInsideIndiaVillage : null);
 
 
@@ -145,7 +145,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressDetails?.OutSideCountry ? formData?.AddressDetails?.OutSideCountry : null);
   const [selectedValueRadio, setSelectedValue] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   const [valueRad, setValueRad] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
-  
+
 
   let cmbPlace = [];
   let cmbTaluk = [];
@@ -274,28 +274,28 @@ const Address = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_INSIDE_INDIA", code: "IIND" },
     { i18nKey: "CR_OUTSIDE_INDIA", code: "OIND" },
   ];
-      let Zonal = [];
-   let cmbWardNo = [];
-   let cmbWardNoFinal = [];
-   boundaryList &&
-     boundaryList["egov-location"] &&
-     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-       //  console.log(ob);
-       // if(ob?.boundary){
-       Zonal.push(...ob.boundary.children);
-       ob.boundary.children.map((obward) => {
-         cmbWardNo.push(...obward.children);
-       });
-       // }
+  let Zonal = [];
+  let cmbWardNo = [];
+  let cmbWardNoFinal = [];
+  boundaryList &&
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      //  console.log(ob);
+      // if(ob?.boundary){
+      Zonal.push(...ob.boundary.children);
+      ob.boundary.children.map((obward) => {
+        cmbWardNo.push(...obward.children);
+      });
+      // }
 
-     });
+    });
 
-   //console.log(Zonal);
-   cmbWardNo.map((wardmst) => {
-     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-     cmbWardNoFinal.push(wardmst);
-   });
+  //console.log(Zonal);
+  cmbWardNo.map((wardmst) => {
+    wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+    wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+    cmbWardNoFinal.push(wardmst);
+  });
 
 
   const onSkip = () => onSelect();
@@ -397,28 +397,28 @@ const Address = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 6) {
       return false;
     } else {
-    setPresentSubNo(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentSubNo(PresentSubNo);
+      setPresentSubNo(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentSubNo(PresentSubNo);
+      }
     }
   }
-}
   function setSelectPresentDoorNo(e) {
     if (e.target.value.length === 6) {
       return false;
     } else {
-    setPresentDoorNo(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentDoorNo(PresentDoorNo);
+      setPresentDoorNo(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentDoorNo(PresentDoorNo);
+      }
     }
   }
-}
   function setSelectPresentResNoEn(e) {
     if (e.target.value.length === 20) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPresentResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
       if (isPrsentAddress) {
         setPermanentResNoEn(PresentResNoEn);
       }
@@ -430,7 +430,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPresentResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
       if (isPrsentAddress) {
         setPermanentResNoMl(PresentResNoMl);
       }
@@ -443,7 +443,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPresentHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
       if (isPrsentAddress) {
         setPermanentHouseNameEn(PresentHouseNameEn);
       }
@@ -455,7 +455,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPresentHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
       if (isPrsentAddress) {
         setPermanentHouseNameMl(PresentHouseNameMl);
       }
@@ -468,7 +468,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPresentMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
       if (isPrsentAddress) {
         setPermanentMainPlaceEn(PresentMainPlaceEn);
       }
@@ -480,7 +480,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPresentMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
       if (isPrsentAddress) {
         setPermanentMainPlaceMl(PresentMainPlaceMl);
       }
@@ -492,7 +492,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPresentLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
       if (isPrsentAddress) {
         setPermanentLocalityNameEn(PresentLocalityNameEn);
       }
@@ -504,7 +504,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPresentLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
       if (isPrsentAddress) {
         setPermanentLocalityNameMl(PresentLocalityNameMl);
       }
@@ -590,22 +590,22 @@ const Address = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 6) {
       return false;
     } else {
-    setPermanentSubNo(e.target.value);
+      setPermanentSubNo(e.target.value);
+    }
   }
-}
   function setSelectPermanentDoorNo(e) {
     if (e.target.value.length === 6) {
       return false;
     } else {
-    setPermanentDoorNo(e.target.value);
+      setPermanentDoorNo(e.target.value);
+    }
   }
-}
   function setSelectPermanentResNoEn(e) {
     if (e.target.value.length === 20) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPermanentResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectPermanentResNoMl(e) {
@@ -613,7 +613,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPermanentResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
 
@@ -623,7 +623,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPermanentHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectPermanentHouseNameMl(e) {
@@ -631,7 +631,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPermanentHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
   function setSelectPermanentMainPlaceEn(e) {
@@ -639,7 +639,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPermanentMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectPermanentMainPlaceMl(e) {
@@ -647,7 +647,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPermanentMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
   function setSelectPermanentLocalityNameEn(e) {
@@ -655,7 +655,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setPermanentLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectPermanentLocalityNameMl(e) {
@@ -663,7 +663,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setPermanentLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
   // function setSelectPermanentStreetNameEn(e) {
@@ -1056,7 +1056,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       // } else {
       //   setOutSideIndiaAddressProvinceMlError(false);
       // }
-     
+
       if (AdrsInsideIndiaCountry == null) {
         validFlag = false;
         setAdrsInsideIndiaCountryError(true);
@@ -1106,7 +1106,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         setAdrsInsideIndiaPincodeeError(false);
       }
 
-       }
+    }
 
 
 
@@ -1210,59 +1210,59 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn.ProvinceEn : null);
         sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl.ProvinceMl : null);
         sessionStorage.setItem("PostCode", PostCode ? PostCode.PostCode : null);
-        sessionStorage.setItem("ResNoEn", ResNoEn  ? ResNoEn  : null);
-        sessionStorage.setItem("ResNoMl", ResNoMl  ? ResNoMl  : null);
-        sessionStorage.setItem("HouseNameEn", HouseNameEn  ? HouseNameEn  : null);
-        sessionStorage.setItem("HouseNameMl", HouseNameMl  ? HouseNameMl  : null);
+        sessionStorage.setItem("ResNoEn", ResNoEn ? ResNoEn : null);
+        sessionStorage.setItem("ResNoMl", ResNoMl ? ResNoMl : null);
+        sessionStorage.setItem("HouseNameEn", HouseNameEn ? HouseNameEn : null);
+        sessionStorage.setItem("HouseNameMl", HouseNameMl ? HouseNameMl : null);
         sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.OutSideCountry : null);
 
         onSelect(config.key, {
-          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl,PostCode, OutSideCountry,ResNoEn,ResNoMl,HouseNameEn,HouseNameMl,
+          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, PostCode, OutSideCountry, ResNoEn, ResNoMl, HouseNameEn, HouseNameMl,
           selectedValueRadio
 
         });
 
-      } else if  (valueRad === "IIND") {
+      } else if (valueRad === "IIND") {
 
-        sessionStorage.setItem("AdrsInsideIndiaCountry", AdrsInsideIndiaCountry ? AdrsInsideIndiaCountry.AdrsInsideIndiaCountry  : null );
-        sessionStorage.setItem("AdrsInsideIndiaStateName", AdrsInsideIndiaStateName? AdrsInsideIndiaStateName.AdrsInsideIndiaStateName  : null );
-        sessionStorage.setItem("AdrsInsideIndiaDistrict", AdrsInsideIndiaDistrict ? AdrsInsideIndiaDistrict.AdrsInsideIndiaDistrict  : null );    
-        sessionStorage.setItem("AdrsInsideIndiaHouseNameEn", AdrsInsideIndiaHouseNameEn ? AdrsInsideIndiaHouseNameEn.AdrsInsideIndiaHouseNameEn  : null );
-        sessionStorage.setItem("AdrsInsideIndiaHouseNameMl", AdrsInsideIndiaHouseNameMl ? AdrsInsideIndiaHouseNameMl.AdrsInsideIndiaHouseNameMl  : null );
-        sessionStorage.setItem("AdrsInsideIndiaMainPlaceEn", AdrsInsideIndiaMainPlaceEn ? AdrsInsideIndiaMainPlaceEn.AdrsInsideIndiaMainPlaceEn  : null );
-        sessionStorage.setItem("AdrsInsideIndiaMainPlaceMl", AdrsInsideIndiaMainPlaceMl ? AdrsInsideIndiaMainPlaceMl.AdrsInsideIndiaMainPlaceMl  : null );
-        sessionStorage.setItem("AdrsInsideIndiaCityVilgeEn", AdrsInsideIndiaCityVilgeEn ? AdrsInsideIndiaCityVilgeEn.AdrsInsideIndiaCityVilgeEn  : null );
-        sessionStorage.setItem("AdrsInsideIndiaCityVilgeMl", AdrsInsideIndiaCityVilgeMl ? AdrsInsideIndiaCityVilgeMl.AdrsInsideIndiaCityVilgeMl  : null );     
-        sessionStorage.setItem("AdrsInsideIndiaLocalityNameEn", AdrsInsideIndiaLocalityNameEn ? AdrsInsideIndiaLocalityNameEn.AdrsInsideIndiaLocalityNameEn : null );
-        sessionStorage.setItem("AdrsInsideIndiaLocalityNameMl", AdrsInsideIndiaLocalityNameMl ? AdrsInsideIndiaLocalityNameMl.AdrsInsideIndiaLocalityNameMl  : null );
-        sessionStorage.setItem("AdrsInsideIndiaVillage", AdrsInsideIndiaVillage ? AdrsInsideIndiaVillage.AdrsInsideIndiaVillage  : null );
-        sessionStorage.setItem("AdrsInsideIndiaResNoEn", AdrsInsideIndiaResNoEn ? AdrsInsideIndiaResNoEn.AdrsInsideIndiaResNoEn  : null );
-        sessionStorage.setItem("AdrsInsideIndiaResNoMl", AdrsInsideIndiaResNoMl ? AdrsInsideIndiaResNoMl.AdrsInsideIndiaResNoMl : null );   
-        sessionStorage.setItem("AdrsInsideIndiaTaluk", AdrsInsideIndiaTaluk ? AdrsInsideIndiaTaluk.AdrsInsideIndiaTaluk  : null );
-        sessionStorage.setItem("AdrsInsideIndiaPostOffice", AdrsInsideIndiaPostOffice ? AdrsInsideIndiaPostOffice.AdrsInsideIndiaPostOffice  : null );
-        sessionStorage.setItem("AdrsInsideIndiaPincode", AdrsInsideIndiaPincode ? AdrsInsideIndiaPincode.AdrsInsideIndiaPincode  : null );   
-  
-          onSelect(config.key, {
-            AdrsInsideIndiaCountry,
-            AdrsInsideIndiaStateName,
-            AdrsInsideIndiaDistrict,
-            AdrsInsideIndiaTaluk,
-            AdrsInsideIndiaVillage,
-            AdrsInsideIndiaMainPlaceEn,
-            AdrsInsideIndiaMainPlaceMl,
-            AdrsInsideIndiaCityVilgeEn,
-            AdrsInsideIndiaCityVilgeMl,      
-            AdrsInsideIndiaLocalityNameEn,
-            AdrsInsideIndiaLocalityNameMl, 
-            AdrsInsideIndiaPostOffice,
-            AdrsInsideIndiaPincode,
-            AdrsInsideIndiaResNoEn,
-            AdrsInsideIndiaResNoMl,
-            AdrsInsideIndiaHouseNameEn,
-            AdrsInsideIndiaHouseNameMl,
-            selectedValueRadio
-  
-          });
+        sessionStorage.setItem("AdrsInsideIndiaCountry", AdrsInsideIndiaCountry ? AdrsInsideIndiaCountry.AdrsInsideIndiaCountry : null);
+        sessionStorage.setItem("AdrsInsideIndiaStateName", AdrsInsideIndiaStateName ? AdrsInsideIndiaStateName.AdrsInsideIndiaStateName : null);
+        sessionStorage.setItem("AdrsInsideIndiaDistrict", AdrsInsideIndiaDistrict ? AdrsInsideIndiaDistrict.AdrsInsideIndiaDistrict : null);
+        sessionStorage.setItem("AdrsInsideIndiaHouseNameEn", AdrsInsideIndiaHouseNameEn ? AdrsInsideIndiaHouseNameEn.AdrsInsideIndiaHouseNameEn : null);
+        sessionStorage.setItem("AdrsInsideIndiaHouseNameMl", AdrsInsideIndiaHouseNameMl ? AdrsInsideIndiaHouseNameMl.AdrsInsideIndiaHouseNameMl : null);
+        sessionStorage.setItem("AdrsInsideIndiaMainPlaceEn", AdrsInsideIndiaMainPlaceEn ? AdrsInsideIndiaMainPlaceEn.AdrsInsideIndiaMainPlaceEn : null);
+        sessionStorage.setItem("AdrsInsideIndiaMainPlaceMl", AdrsInsideIndiaMainPlaceMl ? AdrsInsideIndiaMainPlaceMl.AdrsInsideIndiaMainPlaceMl : null);
+        sessionStorage.setItem("AdrsInsideIndiaCityVilgeEn", AdrsInsideIndiaCityVilgeEn ? AdrsInsideIndiaCityVilgeEn.AdrsInsideIndiaCityVilgeEn : null);
+        sessionStorage.setItem("AdrsInsideIndiaCityVilgeMl", AdrsInsideIndiaCityVilgeMl ? AdrsInsideIndiaCityVilgeMl.AdrsInsideIndiaCityVilgeMl : null);
+        sessionStorage.setItem("AdrsInsideIndiaLocalityNameEn", AdrsInsideIndiaLocalityNameEn ? AdrsInsideIndiaLocalityNameEn.AdrsInsideIndiaLocalityNameEn : null);
+        sessionStorage.setItem("AdrsInsideIndiaLocalityNameMl", AdrsInsideIndiaLocalityNameMl ? AdrsInsideIndiaLocalityNameMl.AdrsInsideIndiaLocalityNameMl : null);
+        sessionStorage.setItem("AdrsInsideIndiaVillage", AdrsInsideIndiaVillage ? AdrsInsideIndiaVillage.AdrsInsideIndiaVillage : null);
+        sessionStorage.setItem("AdrsInsideIndiaResNoEn", AdrsInsideIndiaResNoEn ? AdrsInsideIndiaResNoEn.AdrsInsideIndiaResNoEn : null);
+        sessionStorage.setItem("AdrsInsideIndiaResNoMl", AdrsInsideIndiaResNoMl ? AdrsInsideIndiaResNoMl.AdrsInsideIndiaResNoMl : null);
+        sessionStorage.setItem("AdrsInsideIndiaTaluk", AdrsInsideIndiaTaluk ? AdrsInsideIndiaTaluk.AdrsInsideIndiaTaluk : null);
+        sessionStorage.setItem("AdrsInsideIndiaPostOffice", AdrsInsideIndiaPostOffice ? AdrsInsideIndiaPostOffice.AdrsInsideIndiaPostOffice : null);
+        sessionStorage.setItem("AdrsInsideIndiaPincode", AdrsInsideIndiaPincode ? AdrsInsideIndiaPincode.AdrsInsideIndiaPincode : null);
+
+        onSelect(config.key, {
+          AdrsInsideIndiaCountry,
+          AdrsInsideIndiaStateName,
+          AdrsInsideIndiaDistrict,
+          AdrsInsideIndiaTaluk,
+          AdrsInsideIndiaVillage,
+          AdrsInsideIndiaMainPlaceEn,
+          AdrsInsideIndiaMainPlaceMl,
+          AdrsInsideIndiaCityVilgeEn,
+          AdrsInsideIndiaCityVilgeMl,
+          AdrsInsideIndiaLocalityNameEn,
+          AdrsInsideIndiaLocalityNameMl,
+          AdrsInsideIndiaPostOffice,
+          AdrsInsideIndiaPincode,
+          AdrsInsideIndiaResNoEn,
+          AdrsInsideIndiaResNoMl,
+          AdrsInsideIndiaHouseNameEn,
+          AdrsInsideIndiaHouseNameMl,
+          selectedValueRadio
+
+        });
 
 
       } else if (valueRad === "ILB" || valueRad === "IKL") {
@@ -1270,7 +1270,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("PresentCountry", PresentCountry ? PresentCountry.code : null);
         sessionStorage.setItem("PresentStateName", PresentStateName ? PresentStateName.code : null);
         sessionStorage.setItem("PresentLBTypeName", PresentLBTypeName ? PresentLBTypeName.code : null);
-        sessionStorage.setItem("PresentSubNo", PresentSubNo ? PresentSubNo : null );
+        sessionStorage.setItem("PresentSubNo", PresentSubNo ? PresentSubNo : null);
         sessionStorage.setItem("PresentDoorNo", PresentDoorNo ? PresentDoorNo : null);
         sessionStorage.setItem("PresentResNoEn", PresentResNoEn ? PresentResNoEn : null);
         sessionStorage.setItem("PresentResNoMl", PresentResNoMl ? PresentResNoMl : null);
@@ -1292,7 +1292,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("PermanentCountry", PermanentCountry ? PermanentCountry.code : null);
         sessionStorage.setItem("PermanentStateName", PermanentStateName ? PermanentStateName.code : null);
         sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName ? PermanentLBTypeName.code : null);
-        sessionStorage.setItem("PermanentSubNo", PermanentSubNo ? PermanentSubNo : null );
+        sessionStorage.setItem("PermanentSubNo", PermanentSubNo ? PermanentSubNo : null);
         sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo ? PermanentDoorNo : null);
         sessionStorage.setItem("PermanentResNoEn", PermanentResNoEn ? PermanentResNoEn : null);
         sessionStorage.setItem("PermanentResNoMl", PermanentResNoMl ? PermanentResNoMl : null);
@@ -1305,7 +1305,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         // sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
         // sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
         sessionStorage.setItem("PermanentVillage", PermanentVillage ? PermanentVillage.code : null);
-        sessionStorage.setItem("PermanentWardNo", PermanentWardNo ? PermanentWardNo .code : null );
+        sessionStorage.setItem("PermanentWardNo", PermanentWardNo ? PermanentWardNo.code : null);
         sessionStorage.setItem("PermanentLBName", PermanentLBName ? PermanentLBName.code : null);
         sessionStorage.setItem("PermanentDistrict", PermanentDistrict ? PermanentDistrict.code : null);
         sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
@@ -1354,21 +1354,21 @@ const Address = ({ config, onSelect, userType, formData }) => {
           PermanentCountry,
           PermanentStateName,
           PermanentLBTypeName,
-        //   AdressEn,
-        //   AdressMl,
-        //   AdressEnB,
-        //   AdressMlB,
-        //   LocalityEn,
-        //   LocalityMl,
-        //   ProvinceEn,
-        //   ProvinceMl,
-        //   PostCode,
-        //   OutSideCountry,
-        //   ResNoEn, 
-        //  ResNoMl,  
-        // HouseNameEn,    
-        // HouseNameMl,
-   
+          //   AdressEn,
+          //   AdressMl,
+          //   AdressEnB,
+          //   AdressMlB,
+          //   LocalityEn,
+          //   LocalityMl,
+          //   ProvinceEn,
+          //   ProvinceMl,
+          //   PostCode,
+          //   OutSideCountry,
+          //   ResNoEn, 
+          //  ResNoMl,  
+          // HouseNameEn,    
+          // HouseNameMl,
+
 
 
         });
@@ -1386,7 +1386,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-       
+
         <div className="row">
           <div className="col-md-12">
 
@@ -1409,7 +1409,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
+                      <span className="headingline">{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
@@ -1497,7 +1497,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>
                         {t("CS_COMMON_TALUK")}
-                     
+
                       </CardLabel>
                       <Dropdown
                         t={t}
@@ -1512,7 +1512,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>
                         {t("CS_COMMON_VILLAGE")}
-                        
+
                       </CardLabel>
                       <Dropdown
                         t={t}
@@ -1524,17 +1524,17 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         placeholder={`${t("CS_COMMON_VILLAGE")}`}
                       />
                     </div>
-                     <div className="col-md-3" ><CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
-                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PresentWardNo} select={setSelectPresentWard}  {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })} />
-                </div>
+                    <div className="col-md-3" ><CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
+                      <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PresentWardNo} select={setSelectPresentWard}  {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })} />
+                    </div>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-12">               
+                  <div className="col-md-12">
 
                     <div className="col-md-6">
                       <CardLabel>
-                        {t("CR_MAIN_PLACE_EN")}                        
+                        {t("CR_MAIN_PLACE_EN")}
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1550,7 +1550,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     </div>
                     <div className="col-md-6">
                       <CardLabel>
-                        {t("CR_MAIN_PLACE_ML")}                       
+                        {t("CR_MAIN_PLACE_ML")}
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1563,16 +1563,16 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         placeholder={`${t("CR_MAIN_PLACE_ML")}`}
                         {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
                       />
-                    </div>                    
+                    </div>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="col-md-12">
-                  <div className="col-md-6">
+                    <div className="col-md-6">
                       <CardLabel>
                         {t("CR_LOCALITY_EN")}
-                       
+
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1589,7 +1589,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-6">
                       <CardLabel>
                         {t("CR_LOCALITY_ML")}
-                       
+
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1603,15 +1603,15 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
                       />
                     </div>
-                    
+
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
-                  <div className="col-md-6">
+                    <div className="col-md-6">
                       <CardLabel>
                         {t("CS_COMMON_POST_OFFICE")}
-                       
+
                       </CardLabel>
                       <Dropdown
                         t={t}
@@ -1647,14 +1647,14 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           title: t("CS_COMMON_INVALID_PIN_CODE"),
                         })}
                       />
-                    </div>              
-                                      
+                    </div>
+
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
-                  <div className="col-md-6">
-                
+                    <div className="col-md-6">
+
                       <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} </CardLabel>
                       <TextInput
                         t={t}
@@ -1688,10 +1688,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
                 <div className="row">
                   <div className="col-md-12">
-                  <div className="col-md-6">
+                    <div className="col-md-6">
                       <CardLabel>
                         {t("CR_HOUSE_NAME_EN")}
-                     
+
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1708,7 +1708,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-6">
                       <CardLabel>
                         {t("CR_HOUSE_NAME_ML")}
-                       
+
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1722,15 +1722,15 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
                       />
                     </div>
-                    </div>
-                    </div>
-                    <div className="row">
+                  </div>
+                </div>
+                <div className="row">
                   <div className="col-md-12">
-                
-                  <div className="col-md-2">
+
+                    <div className="col-md-2">
                       <CardLabel>
                         {t("CR_DOOR_NO")}
-                       
+
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1745,26 +1745,26 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       />
                     </div>
                     <div className="col-md-2">
-              <CardLabel>{t("CR_SUB_NO")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="PresentSubNo"
-                value={PresentSubNo}
-                onChange={setSelectPresentSubNo}
-                placeholder={`${t("CR_SUB_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_SUB_NO") })}
-              />
-            </div>
-                   
-                   
-                   
+                      <CardLabel>{t("CR_SUB_NO")}</CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="PresentSubNo"
+                        value={PresentSubNo}
+                        onChange={setSelectPresentSubNo}
+                        placeholder={`${t("CR_SUB_NO")}`}
+                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_SUB_NO") })}
+                      />
+                    </div>
+
+
+
                   </div>
                 </div>
 
-              
+
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1777,13 +1777,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
-                        <span style={{ padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS_OF_THE_FAMILY")}`}</span>{" "}
+                        <span className="headingline">{`${t("CR_PERMANENT_ADDRESS_OF_THE_FAMILY")}`}</span>{" "}
                       </h1>
                     </div>
                   </div>
 
 
-                  
+
                   <div className="row">
                     <div className="col-md-12">
                       <div className="col-md-3">
@@ -1864,7 +1864,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CS_COMMON_TALUK")}
-                          
+
                         </CardLabel>
                         <Dropdown
                           t={t}
@@ -1879,7 +1879,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CS_COMMON_VILLAGE")}
-                        
+
                         </CardLabel>
                         <Dropdown
                           t={t}
@@ -1892,18 +1892,18 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         />
                       </div>
                       <div className="col-md-3" ><CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
-                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PermanentWardNo} select={setSelectPermanentWard}  {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })} />
-                </div>
-                      
+                        <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PermanentWardNo} select={setSelectPermanentWard}  {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })} />
+                      </div>
+
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
-                    
+
                       <div className="col-md-6">
                         <CardLabel>
                           {t("CR_MAIN_PLACE_EN")}
-                        
+
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1920,7 +1920,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-6">
                         <CardLabel>
                           {t("CR_MAIN_PLACE_ML")}
-                         
+
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1934,17 +1934,17 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
                         />
                       </div>
-                      
+
                     </div>
                   </div>
 
 
                   <div className="row">
                     <div className="col-md-12">
-                    <div className="col-md-6">
+                      <div className="col-md-6">
                         <CardLabel>
                           {t("CR_LOCALITY_EN")}
-                         
+
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1961,7 +1961,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-6">
                         <CardLabel>
                           {t("CR_LOCALITY_ML")}
-                          
+
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1975,16 +1975,16 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
                         />
                       </div>
-                      </div>
-                      </div>
+                    </div>
+                  </div>
 
                   <div className="row">
                     <div className="col-md-12">
 
-                    <div className="col-md-6">
+                      <div className="col-md-6">
                         <CardLabel>
                           {t("CS_COMMON_POST_OFFICE")}
-                         
+
                         </CardLabel>
                         <Dropdown
                           t={t}
@@ -1998,7 +1998,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       </div>
                       <div className="col-md-6">
                         <CardLabel>
-                          {t("CS_COMMON_PIN_CODE")}   <span className="mandatorycss">*</span>                          
+                          {t("CS_COMMON_PIN_CODE")}   <span className="mandatorycss">*</span>
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -2018,13 +2018,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
                             title: t("CS_COMMON_INVALID_PIN_CODE"),
                           })}
                         />
-                      </div>           
-                     </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="row">
                     <div className="col-md-12">
-                  <div className="col-md-6">
+                      <div className="col-md-6">
                         <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}</CardLabel>
                         <TextInput
                           t={t}
@@ -2053,12 +2053,12 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         />
                       </div>
                     </div>
-                  </div>               
+                  </div>
                   <div className="row">
                     <div className="col-md-12">
-                    <div className="col-md-6">
+                      <div className="col-md-6">
                         <CardLabel>
-                          {t("CR_HOUSE_NAME_EN")}                         
+                          {t("CR_HOUSE_NAME_EN")}
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -2075,7 +2075,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-6">
                         <CardLabel>
                           {t("CR_HOUSE_NAME_ML")}
-                         
+
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -2088,19 +2088,19 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                           {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
                         />
-                      </div>                     
                       </div>
+                    </div>
                   </div>
 
 
                   <div className="row">
                     <div className="col-md-12">
-                     
-                     
+
+
                       <div className="col-md-2">
                         <CardLabel>
                           {t("CR_DOOR_NO")}
-                          
+
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -2115,20 +2115,20 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         />
                       </div>
                       <div className="col-md-2">
-                <CardLabel>{t("CR_SUB_NO")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="PermanentSubNo"
-                  value={PermanentSubNo}
-                  onChange={setSelectPermanentSubNo}
-                  placeholder={`${t("CR_SUB_NO")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_SUB_NO") })}
-                />
-              </div> 
-                     
+                        <CardLabel>{t("CR_SUB_NO")}</CardLabel>
+                        <TextInput
+                          t={t}
+                          isMandatory={false}
+                          type={"text"}
+                          optionKey="i18nKey"
+                          name="PermanentSubNo"
+                          value={PermanentSubNo}
+                          onChange={setSelectPermanentSubNo}
+                          placeholder={`${t("CR_SUB_NO")}`}
+                          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_SUB_NO") })}
+                        />
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -2158,12 +2158,12 @@ const Address = ({ config, onSelect, userType, formData }) => {
               setAdrsInsideIndiaLocalityNameMl={setAdrsInsideIndiaLocalityNameMl} AdrsInsideIndiaLocalityNameMl={AdrsInsideIndiaLocalityNameMl}
               setAdrsInsideIndiaCityVilgeEn={setAdrsInsideIndiaCityVilgeEn} AdrsInsideIndiaCityVilgeEn={AdrsInsideIndiaCityVilgeEn}
               setAdrsInsideIndiaCityVilgeMl={setAdrsInsideIndiaCityVilgeMl} AdrsInsideIndiaCityVilgeMl={AdrsInsideIndiaCityVilgeMl}
-              
+
             />
           </div>)
         }
 
-        
+
         {valueRad === "OIND" && (
           <div>
             <AddressOutsideIndia
@@ -2181,52 +2181,52 @@ const Address = ({ config, onSelect, userType, formData }) => {
               setResNoMl={setResNoMl} ResNoMl={ResNoMl}
               setHouseNameEn={setHouseNameEn} HouseNameEn={HouseNameEn}
               setHouseNameMl={setHouseNameMl} HouseNameMl={HouseNameMl}
-              
+
             />
           </div>)
         }
         {toast && (
           <Toast
             error={
-              PresentCountryError || PresentStateNameError || PresentDistrictError || PresentLBTypeNameError || PresentLBNameError  || PresentPincodeError
+              PresentCountryError || PresentStateNameError || PresentDistrictError || PresentLBTypeNameError || PresentLBNameError || PresentPincodeError
               // || PresentVillageError || PresentTalukError || PresentPincodeError
-               || PermanentCountryError || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError  || PermanentPincodeError
+              || PermanentCountryError || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError || PermanentPincodeError
               //  || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError
               //  || OutSideIndiaAddressOneEnError || OutSideIndiaAddressOneMlError || OutSideIndiaAddressLocEnError || OutSideIndiaAddressLocMlError || OutSideIndiaAddressProvinceEnError
               // || OutSideIndiaAddressProvinceMlError 
               || OutSideIndiaAddressError
-              || AdrsInsideIndiaCountryError || AdrsInsideIndiaStateNameError || AdrsInsideIndiaDistrictError || AdrsInsideIndiaPincodeeError 
+              || AdrsInsideIndiaCountryError || AdrsInsideIndiaStateNameError || AdrsInsideIndiaDistrictError || AdrsInsideIndiaPincodeeError
 
             }
             label={
               (PresentCountryError || PresentStateNameError || PresentDistrictError || PresentLBTypeNameError || PresentLBNameError || PresentPincodeError
                 //  || PresentVillageError  || PresentTalukError || PresentPostOfficeError 
-                  || PermanentCountryError || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError || PermanentPincodeError
-                  // || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError 
+                || PermanentCountryError || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError || PermanentPincodeError
+                // || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError 
                 // || OutSideIndiaAddressOneEnError || OutSideIndiaAddressOneMlError || OutSideIndiaAddressLocEnError || OutSideIndiaAddressLocMlError || OutSideIndiaAddressProvinceEnError
                 // || OutSideIndiaAddressProvinceMlError
-                 || OutSideIndiaAddressError
-                 || AdrsInsideIndiaCountryError || AdrsInsideIndiaStateNameError  || AdrsInsideIndiaDistrictError 
-                  || AdrsInsideIndiaPincodeeError 
+                || OutSideIndiaAddressError
+                || AdrsInsideIndiaCountryError || AdrsInsideIndiaStateNameError || AdrsInsideIndiaDistrictError
+                || AdrsInsideIndiaPincodeeError
                 ?
                 (PresentCountryError ? t(`BIRTH_ERROR_PRESENT_COUNTRY_CHOOSE`) : PresentStateNameError ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`) : PresentDistrictError ? t(`BIRTH_ERROR_PRESENT_DISTRICT_CHOOSE`)
                   : PresentLBTypeNameError ? t(`BIRTH_ERROR_PRESENT_LBTYPE_CHOOSE`) : PresentLBNameError ? t(`BIRTH_ERROR_PRESENT_LBNAME_CHOOSE`) : PresentPincodeError ? t(`BIRTH_ERROR_PRESENT_PINCODE_CHOOSE`)
                     // : PresentVillageError ? t(`BIRTH_ERROR_PRESENT_VILLAGE_CHOOSE`) : PresentTalukError ? t(`BIRTH_ERROR_PRESENT_TALUK_CHOOSE`) : PresentPostOfficeError ? t(`BIRTH_ERROR_PRESENT_POSTOFFICE_CHOOSE`)
-                       : PermanentCountryError ? t(`BIRTH_ERROR_PERMANENT_COUNTRY_CHOOSE`)
-                        : PermanentStateNameError ? t(`BIRTH_ERROR_PERMANENT_STATE_CHOOSE`) : PermanentDistrictError ? t(`BIRTH_ERROR_PERMANENT_DISTRICT_CHOOSE`) : PermanentLBTypeNameError ? t(`BIRTH_ERROR_PERMANENT_LBTYPE_CHOOSE`)
-                          : PermanentLBNameError ? t(`BIRTH_ERROR_PERMANENT_LBNAME_CHOOSE`) : PermanentPincodeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`)
+                    : PermanentCountryError ? t(`BIRTH_ERROR_PERMANENT_COUNTRY_CHOOSE`)
+                      : PermanentStateNameError ? t(`BIRTH_ERROR_PERMANENT_STATE_CHOOSE`) : PermanentDistrictError ? t(`BIRTH_ERROR_PERMANENT_DISTRICT_CHOOSE`) : PermanentLBTypeNameError ? t(`BIRTH_ERROR_PERMANENT_LBTYPE_CHOOSE`)
+                        : PermanentLBNameError ? t(`BIRTH_ERROR_PERMANENT_LBNAME_CHOOSE`) : PermanentPincodeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`)
                           //  : PermanentVillageError ? t(`BIRTH_ERROR_PERMANENT_VILLAGE_CHOOSE`) : PermanentTalukError ? t(`BIRTH_ERROR_PERMANENT_TALUK_CHOOSE`)
                           //   : PermanentPostOfficeError ? t(`BIRTH_ERROR_PERMANENT_POSTOFFICE_CHOOSE`) 
-                            // : OutSideIndiaAddressOneEnError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_EN_ERROR`)
-                            // : OutSideIndiaAddressOneMlError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_ML_ERROR`)
-                            // : OutSideIndiaAddressLocEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                            // : OutSideIndiaAddressLocMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                            // : OutSideIndiaAddressProvinceEnError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)  
-                            // : OutSideIndiaAddressProvinceMlError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_ML_ERROR`)  
-                            : OutSideIndiaAddressError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
-                            : AdrsInsideIndiaCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : AdrsInsideIndiaStateNameError ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`)  : AdrsInsideIndiaDistrictError ? t(`BIRTH_ERROR_PRESENT_DISTRICT_CHOOSE`)
-                            : AdrsInsideIndiaPincodeeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`)
-                            
+                          // : OutSideIndiaAddressOneEnError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_EN_ERROR`)
+                          // : OutSideIndiaAddressOneMlError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_ML_ERROR`)
+                          // : OutSideIndiaAddressLocEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                          // : OutSideIndiaAddressLocMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                          // : OutSideIndiaAddressProvinceEnError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)  
+                          // : OutSideIndiaAddressProvinceMlError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_ML_ERROR`)  
+                          : OutSideIndiaAddressError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
+                            : AdrsInsideIndiaCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : AdrsInsideIndiaStateNameError ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`) : AdrsInsideIndiaDistrictError ? t(`BIRTH_ERROR_PRESENT_DISTRICT_CHOOSE`)
+                              : AdrsInsideIndiaPincodeeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`)
+
                                 : setToast(false)
                 ) : setToast(false)
               )

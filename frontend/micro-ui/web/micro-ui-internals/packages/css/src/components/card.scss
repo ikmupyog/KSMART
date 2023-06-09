@@ -1,6 +1,6 @@
 .card {
-  @apply bg-card-background m-sm px-md pt-md pb-lg shadow-card;
-  border-radius: 25px;
+  @apply bg-card-background m-sm px-md pt-md pb-lg shadow-card !important;
+  border-radius: 25px !important;
   display: flow-root;
 
   .summaryHeading {

@@ -28,7 +28,7 @@ const CardBasedOptions = ({header, sideOption, options, styles={}}) => {
             <h2>{header}</h2>
             <p onClick={sideOption.onClick}>{sideOption.name}</p>
         </div>
-        <div  style={{display: 'flex',justifyContent: 'space-between',marginTop: "-40px"}}>
+        <div className="cardChildMain" >
         {options.map( (props, index) => 
         <div className="header-btm-search-box" key={index} onClick={()=>props.onClick()}>
               <div className="inner-box-v">

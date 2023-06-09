@@ -183,11 +183,11 @@
 .loginBanner {
   display: flex;
   align-items: center;
-  height: calc(100vh - 80px);
   background-color: #edf2fa;
   border-radius: 25px;
   margin-left: 7%;
   margin-right: 7%;
+  padding: 40px 0;
   .leftdiv {
     padding: 15px 40px 15px 40px;
     background-color: #6e80e5;
@@ -248,7 +248,11 @@
     }
   }
 }
-
+.bannerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .loginRegister {
   padding: 10px 0px 300px 0px;
   margin: 14px 100px 0px 0px;
@@ -269,7 +273,6 @@
     right: unset !important;
   }
   .card {
-    margin: 0 !important;
     right: unset !important;
   }
 }

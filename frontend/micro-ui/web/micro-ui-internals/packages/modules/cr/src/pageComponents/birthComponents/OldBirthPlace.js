@@ -262,10 +262,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   // });
 
   Menu &&
-  Menu["birth-death-service"] &&
-  Menu["birth-death-service"].PlaceMaster.map((ob) => {
-    menu.push(ob);
-  });
+    Menu["birth-death-service"] &&
+    Menu["birth-death-service"].PlaceMaster.map((ob) => {
+      menu.push(ob);
+    });
 
 
   localbodies &&
@@ -2046,7 +2046,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
             </h1>
           </div>
         </div>

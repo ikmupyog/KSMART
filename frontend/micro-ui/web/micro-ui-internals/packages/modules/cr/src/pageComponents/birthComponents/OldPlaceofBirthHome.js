@@ -188,7 +188,7 @@ const PlaceofBirthHome = ({
       setIsInitialRender(false);
     }
     // }
-  }, [Country, State, District, LBType, localbodies,Talukvalues,Villagevalues, isInitialRender]);
+  }, [Country, State, District, LBType, localbodies, Talukvalues, Villagevalues, isInitialRender]);
 
   // let Zonal = [];
   // let cmbWardNo = [];
@@ -408,7 +408,7 @@ const PlaceofBirthHome = ({
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{  padding: "0 10px" }}>{`${t("CR_HOME_ADDRESS")}`}</span>{" "}
+              <span className="headingline" >{`${t("CR_HOME_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
         </div>

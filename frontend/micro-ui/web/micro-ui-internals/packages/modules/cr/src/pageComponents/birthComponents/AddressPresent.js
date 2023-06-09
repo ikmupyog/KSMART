@@ -251,7 +251,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                     <div className="col-md-12">
                         <div className="col-md-12">
                             <h1 className="headingh1">
-                                <span style={{  padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
+                                <span className="headingline">{`${t("CR_ADDRESS")}`}</span>{" "}
                             </h1>
                         </div>
                     </div>

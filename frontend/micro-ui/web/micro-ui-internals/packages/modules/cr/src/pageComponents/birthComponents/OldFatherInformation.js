@@ -78,7 +78,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+            setFatherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
         }
     }
     function setSelectFatherMiddleNameEn(e) {
@@ -86,7 +86,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+            setFatherMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
         }
     }
     function setSelectFatherLastNameEn(e) {
@@ -94,7 +94,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+            setFatherLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
         }
     }
     function setSelectFatherFirstNameMl(e) {
@@ -102,7 +102,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+            setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
         }
     }
     function setSelectFatherMiddleNameMl(e) {
@@ -110,7 +110,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+            setFatherMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
         }
     }
     function setSelectFatherLastNameMl(e) {
@@ -118,7 +118,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+            setFatherLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
         }
     }
     function setSelectFatherAadhar(e) {
@@ -330,103 +330,103 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                         <CheckBox label={t("Father Information Missing")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
                     </div>
                 </div>
-                {isFatherInfo === false && ( 
-                <div>
-                <div className="row">
-                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{  padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span> </h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-                        <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherAadhar" value={FatherAadhar}
-                                onChange={setSelectFatherAadhar} disable={isFatherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
+                {isFatherInfo === false && (
+                    <div>
+                        <div className="row">
+                            <div className="col-md-12" ><h1 className="headingh1" ><span className="headingline" style={{ background: "#edf2fa" }}>{`${t("CR_FATHER_INFORMATION")}`}</span> </h1>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherFirstNameEn"
-                                value={FatherFirstNameEn} onChange={setSelectFatherFirstNameEn} disable={isFatherInfo} placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+                        <div className="row">
+                            <div className="col-md-12" >
+                                <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherAadhar" value={FatherAadhar}
+                                        onChange={setSelectFatherAadhar} disable={isFatherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMiddleNameEn"
-                                value={FatherMiddleNameEn} onChange={setSelectFatherMiddleNameEn} disable={isFatherInfo} placeholder={`${t("CR_MIDDLE_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })} />
+                        <div className="row">
+                            <div className="col-md-12" >
+                                <div className="col-md-4" ><CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherFirstNameEn"
+                                        value={FatherFirstNameEn} onChange={setSelectFatherFirstNameEn} disable={isFatherInfo} placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+                                </div>
+                                <div className="col-md-4" ><CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMiddleNameEn"
+                                        value={FatherMiddleNameEn} onChange={setSelectFatherMiddleNameEn} disable={isFatherInfo} placeholder={`${t("CR_MIDDLE_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })} />
+                                </div>
+                                <div className="col-md-4" ><CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherLastNameEn" value={FatherLastNameEn}
+                                        onChange={setSelectFatherLastNameEn} disable={isFatherInfo} placeholder={`${t("CR_LAST_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })} />
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherLastNameEn" value={FatherLastNameEn}
-                                onChange={setSelectFatherLastNameEn} disable={isFatherInfo} placeholder={`${t("CR_LAST_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })} />
+                        <div className="row">
+                            <div className="col-md-12" >
+                                <div className="col-md-4" ><CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherFirstNameMl" value={FatherFirstNameMl}
+                                        onChange={setSelectFatherFirstNameMl} disable={isFatherInfo} placeholder={`${t("CR_FIRST_NAME_ML")}`}  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
+                                </div>
+                                <div className="col-md-4" ><CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMiddleNameMl" value={FatherMiddleNameMl}
+                                        onChange={setSelectFatherMiddleNameMl} disable={isFatherInfo} placeholder={`${t("CR_MIDDLE_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })} />
+                                </div>
+                                <div className="col-md-4"><CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherLastNameMl" value={FatherLastNameMl}
+                                        onChange={setSelectFatherLastNameMl} disable={isFatherInfo} placeholder={`${t("CR_LAST_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherFirstNameMl" value={FatherFirstNameMl}
-                                onChange={setSelectFatherFirstNameMl} disable={isFatherInfo} placeholder={`${t("CR_FIRST_NAME_ML")}`}  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
-                        </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMiddleNameMl" value={FatherMiddleNameMl}
-                                onChange={setSelectFatherMiddleNameMl} disable={isFatherInfo} placeholder={`${t("CR_MIDDLE_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })} />
-                        </div>
-                        <div className="col-md-4"><CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherLastNameMl" value={FatherLastNameMl}
-                                onChange={setSelectFatherLastNameMl} disable={isFatherInfo} placeholder={`${t("CR_LAST_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })} />
-                        </div>
-                    </div>
-                </div>
 
-                <div className="row">
-                    <div className="col-md-12" >
-                        <div className="col-md-3" >
-                            {/* <span className="mandatorycss">*</span> */}
-                            <CardLabel>{`${t("CR_NATIONALITY")}`}</CardLabel>
-                            <Dropdown
-                                t={t}
-                                optionKey="nationalityname"
-                                isMandatory={false}
-                                option={cmbNation}
-                                selected={FatherNationality}
-                                select={setSelectFatherNationality}
-                                disable={isFatherInfo}
-                            />
+                        <div className="row">
+                            <div className="col-md-12" >
+                                <div className="col-md-3" >
+                                    {/* <span className="mandatorycss">*</span> */}
+                                    <CardLabel>{`${t("CR_NATIONALITY")}`}</CardLabel>
+                                    <Dropdown
+                                        t={t}
+                                        optionKey="nationalityname"
+                                        isMandatory={false}
+                                        option={cmbNation}
+                                        selected={FatherNationality}
+                                        select={setSelectFatherNationality}
+                                        disable={isFatherInfo}
+                                    />
+                                </div>
+                                <div className="col-md-3" >  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey"
+                                        name="FatherPassportNo"
+                                        value={FatherPassportNo}
+                                        onChange={setSelectFatherPassportNo}
+                                        disable={isFatherInfo} placeholder={`${t("CR_PASSPORT_NO")}`}
+                                        style={{ textTransform: "uppercase" }}
+                                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
+                                    />
+                                </div>
+                                <div className="col-md-3" ><CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
+                                    <TextInput t={t} isMandatory={false} type="email" optionKey="i18nKey" name="FatherEmail" value={FatherEmail}
+                                        onChange={setSelectFatherEmail} disable={isFatherInfo} placeholder={`${t("CR_EMAIL")}`} {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })} />
+                                </div>
+                                <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherMobile" value={FatherMobile}
+                                        onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-3" >  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey"
-                                name="FatherPassportNo"
-                                value={FatherPassportNo}
-                                onChange={setSelectFatherPassportNo}
-                                disable={isFatherInfo} placeholder={`${t("CR_PASSPORT_NO")}`}
-                                style={{ textTransform: "uppercase" }}
-                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
-                            />
-                        </div>
-                        <div className="col-md-3" ><CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type="email" optionKey="i18nKey" name="FatherEmail" value={FatherEmail}
-                                onChange={setSelectFatherEmail} disable={isFatherInfo} placeholder={`${t("CR_EMAIL")}`} {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })} />
-                        </div>
-                        <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherMobile" value={FatherMobile}
-                                onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
+                        <div className="row">
+                            <div className="col-md-12" >
 
 
-                        <div className="col-md-3" ><CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualification} selected={FatherEducation}
-                                select={setSelectFatherEducation} disable={isFatherInfo} />
+                                <div className="col-md-3" ><CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualification} selected={FatherEducation}
+                                        select={setSelectFatherEducation} disable={isFatherInfo} />
+                                </div>
+                                <div className="col-md-3" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbProfession} selected={FatherProfession}
+                                        select={setSelectFatherProfession} disable={isFatherInfo} />
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-3" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbProfession} selected={FatherProfession}
-                                select={setSelectFatherProfession} disable={isFatherInfo} />
-                        </div>
-                    </div>
-                </div>
-                </div>)}
+                    </div>)}
                 {toast && (
                     <Toast
                         error={

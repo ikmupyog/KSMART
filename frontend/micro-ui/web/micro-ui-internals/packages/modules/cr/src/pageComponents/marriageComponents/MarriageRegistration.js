@@ -1236,7 +1236,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         <Dropdown
                           t={t}
                           type={"text"}
-                          optionKey={marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? "locationOfOffice" : "name"}
+                          optionKey={"address"}
                           option={sortDropdownNames(marriagePlacetype ? setMarriagePlace(marriagePlacetype) : [], "name", t)}
                           selected={placeidEn}
                           select={setSelectPlaceidEn}
@@ -1253,7 +1253,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         <Dropdown
                           t={t}
                           type={"text"}
-                          optionKey={marriagePlacetype?.code === "SUB_REGISTRAR_OFFICE" ? "officeLocal" : "nameLocal"}
+                          optionKey={"addressLocal"}
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidMl}
                           // select={setSelectPlaceidMl}

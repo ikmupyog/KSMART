@@ -28,7 +28,7 @@ import _ from "lodash";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));
   // console.log(formData);
-  // console.log(isEditBirth);
+  // console.log(isEditBirth,"isEditBirth");
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
@@ -182,8 +182,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     formData?.ChildDetails?.gender?.code
       ? formData?.ChildDetails?.gender
       : formData?.ChildDetails?.gender
-      ? menu.filter((menu) => menu.code === formData?.ChildDetails?.gender)[0]
-      : ""
+        ? menu.filter((menu) => menu.code === formData?.ChildDetails?.gender)[0]
+        : ""
   );
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [proceedNoRDO, setproceedNoRDO] = useState(formData?.ChildDetails?.proceedNoRDO ? formData?.ChildDetails?.proceedNoRDO : "");
@@ -220,8 +220,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     formData?.ChildDetails?.birthPlace?.code
       ? formData?.ChildDetails?.birthPlace
       : formData?.ChildDetails?.birthPlace
-      ? cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]
-      : ""
+        ? cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]
+        : ""
   );
   const [value, setValue] = useState();
   const [hospitalName, selectHospitalName] = useState(
@@ -279,8 +279,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     formData?.ChildDetails?.setadmittedHospitalEn?.code
       ? formData?.ChildDetails?.setadmittedHospitalEn
       : formData?.ChildDetails?.setadmittedHospitalEn
-      ? ""
-      : ""
+        ? ""
+        : ""
   );
 
   const [publicPlaceType, setpublicPlaceType] = useState(
@@ -303,16 +303,16 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     formData?.ChildDetails?.medicalAttensionSub?.code
       ? formData?.ChildDetails?.medicalAttensionSub
       : formData?.ChildDetails?.medicalAttensionSub
-      ? cmbAttDeliverySub.filter((cmbAttDeliverySub) => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]
-      : ""
+        ? cmbAttDeliverySub.filter((cmbAttDeliverySub) => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]
+        : ""
   );
   // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : formData?.ChildDetails?.medicalAttensionSub);
   const [deliveryMethods, setDeliveryMethod] = useState(
     formData?.ChildDetails?.deliveryMethods?.code
       ? formData?.ChildDetails?.deliveryMethods
       : formData?.ChildDetails?.deliveryMethods
-      ? cmbDeliveryMethod.filter((cmbDeliveryMethod) => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]
-      : ""
+        ? cmbDeliveryMethod.filter((cmbDeliveryMethod) => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]
+        : ""
   );
   //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
@@ -570,7 +570,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 setFileUploadError(false);
               }, 3000);
             }
-          } catch (err) {}
+          } catch (err) { }
         } else {
           setFileTypeError(true);
           setToast(true);
@@ -1705,7 +1705,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   };
   //&& isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined)
   if (isEditBirth) {
-    if (formData?.ChildDetails?.birthDateTime != null) {
+    // console.log(formData?.ChildDetails?.birthDateTime);
+    if (formData?.ChildDetails?.birthDateTime != null && formData?.ChildDetails?.birthDateTime != "") {
       if (birthDateTime === undefined || birthDateTime === "" || birthDateTime === null) {
         //console.log(formData?.ChildDetails?.birthDateTime);
         //let time = formData?.ChildDetails?.birthDateTime;
@@ -1765,21 +1766,21 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             (value === "INSTITUTION" ? !institution || !institutionId || !institutionIdMl : false) ||
             (value === "HOME"
               ? !wardNo ||
-                !adrsPostOffice ||
-                adrsPincode === "" ||
-                adrsLocalityNameEn === "" ||
-                adrsHouseNameEn === "" ||
-                adrsLocalityNameMl === "" ||
-                adrsHouseNameMl === ""
+              !adrsPostOffice ||
+              adrsPincode === "" ||
+              adrsLocalityNameEn === "" ||
+              adrsHouseNameEn === "" ||
+              adrsLocalityNameMl === "" ||
+              adrsHouseNameMl === ""
               : false) ||
             (value === "PUBLIC_PLACES" ? !publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "" : false) ||
             (value === "VEHICLE"
               ? !vehicleType ||
-                vehicleRegistrationNo === "" ||
-                vehicleHaltPlace === "" ||
-                !setadmittedHospitalEn ||
-                !wardNo ||
-                vehicleDesDetailsEn === ""
+              vehicleRegistrationNo === "" ||
+              vehicleHaltPlace === "" ||
+              !setadmittedHospitalEn ||
+              !wardNo ||
+              vehicleDesDetailsEn === ""
               : false) ||
             !medicalAttensionSub ||
             !deliveryMethods ||
@@ -1792,7 +1793,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{  padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                  <span className="headingline">{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -1871,7 +1872,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 <div className="col-md-12">
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{  padding: "0 10px" }}>{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
+                      <span className="headingline">{`${t("CR_NAC_CERTIFICATE_UPLOAD")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
@@ -1969,7 +1970,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{  padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
+                  <span className="headingline">{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -2111,7 +2112,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{  padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
+                  <span className="headingline">{`${t("CR_CHILD_INFO")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -2122,7 +2123,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               {/* <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{  padding: "0 10px" }}>{`${t("CR_NAME_OF_CHILD")}`}</span>{" "}
+                  <span className="headingline">{`${t("CR_NAME_OF_CHILD")}`}</span>{" "}
                 </h1>
               </div>
             </div> */}
@@ -2266,7 +2267,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             </div>
           </div>
           {/* <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{  padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
+          <div className="col-md-12" ><h1 className="headingh1" ><span className="headingline">{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>
         </div> */}
           {/* <div className="row">         
@@ -2279,7 +2280,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{  padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
+                  <span className="headingline">{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -2477,126 +2478,126 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               }
               label={
                 AadharError ||
-                DOBError ||
-                DateTimeError ||
-                DateTimeHourError ||
-                DateTimeMinuteError ||
-                DateTimeAMPMError ||
-                HospitalError ||
-                InstitutionError ||
-                InstitutionNameError ||
-                WardError ||
-                AdsHomePincodeError ||
-                AdsHomePostOfficeError ||
-                AdsHomeLocalityNameEnError ||
-                AdsHomeLocalityNameMlError ||
-                AdsHomeHouseNameEnError ||
-                AdsHomeHouseNameMlError ||
-                vehiTypeError ||
-                vehicleRegiNoError ||
-                vehicleHaltPlaceError ||
-                admittedHospitalEnError ||
-                vehiDesDetailsEnError ||
-                placeTypepEnError ||
-                localNameEnError ||
-                localNameMlError ||
-                MedicalAttensionSubStError ||
-                DeliveryMethodStError ||
-                BirthWeightError ||
-                PregnancyDurationStError ||
-                PregnancyDurationInvalidError ||
-                ChildFirstNameEnError ||
-                ChildMiddleNameEnError ||
-                ChildLastNameEnError ||
-                ChildFirstNameMlError ||
-                ChildMiddleNameMlError ||
-                ChildLastNameMlError ||
-                AdsHomeStreetNameEnError ||
-                AdsHomeStreetNameMlError ||
-                fileSizeError ||
-                fileTypeError ||
-                fileUploadError
+                  DOBError ||
+                  DateTimeError ||
+                  DateTimeHourError ||
+                  DateTimeMinuteError ||
+                  DateTimeAMPMError ||
+                  HospitalError ||
+                  InstitutionError ||
+                  InstitutionNameError ||
+                  WardError ||
+                  AdsHomePincodeError ||
+                  AdsHomePostOfficeError ||
+                  AdsHomeLocalityNameEnError ||
+                  AdsHomeLocalityNameMlError ||
+                  AdsHomeHouseNameEnError ||
+                  AdsHomeHouseNameMlError ||
+                  vehiTypeError ||
+                  vehicleRegiNoError ||
+                  vehicleHaltPlaceError ||
+                  admittedHospitalEnError ||
+                  vehiDesDetailsEnError ||
+                  placeTypepEnError ||
+                  localNameEnError ||
+                  localNameMlError ||
+                  MedicalAttensionSubStError ||
+                  DeliveryMethodStError ||
+                  BirthWeightError ||
+                  PregnancyDurationStError ||
+                  PregnancyDurationInvalidError ||
+                  ChildFirstNameEnError ||
+                  ChildMiddleNameEnError ||
+                  ChildLastNameEnError ||
+                  ChildFirstNameMlError ||
+                  ChildMiddleNameMlError ||
+                  ChildLastNameMlError ||
+                  AdsHomeStreetNameEnError ||
+                  AdsHomeStreetNameMlError ||
+                  fileSizeError ||
+                  fileTypeError ||
+                  fileUploadError
                   ? AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : DateTimeError
-                    ? t(`CS_COMMON_DATE_TIME_ERROR`)
-                    : DateTimeHourError
-                    ? t(`CS_COMMON_DATE_HOUR_ERROR`)
-                    : DateTimeMinuteError
-                    ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
-                    : DateTimeAMPMError
-                    ? t(`CS_COMMON_DATE_AMPM_ERROR`)
-                    : DOBError
-                    ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                    : HospitalError
-                    ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                    : InstitutionError
-                    ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                    : InstitutionNameError
-                    ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                    : WardError
-                    ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                    : AdsHomePincodeError
-                    ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                    : AdsHomePostOfficeError
-                    ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                    : AdsHomeLocalityNameEnError
-                    ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                    : AdsHomeLocalityNameMlError
-                    ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                    : AdsHomeHouseNameEnError
-                    ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                    : AdsHomeHouseNameMlError
-                    ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                    : vehiTypeError
-                    ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                    : vehicleRegiNoError
-                    ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                    : vehicleHaltPlaceError
-                    ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-                    : admittedHospitalEnError
-                    ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                    : vehiDesDetailsEnError
-                    ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                    : placeTypepEnError
-                    ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                    : localNameEnError
-                    ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                    : localNameMlError
-                    ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                    : BirthWeightError
-                    ? t(`BIRTH_WEIGHT_ERROR`)
-                    : MedicalAttensionSubStError
-                    ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                    : PregnancyDurationStError
-                    ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                    : PregnancyDurationInvalidError
-                    ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
-                    : DeliveryMethodStError
-                    ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-                    : ChildFirstNameEnError
-                    ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
-                    : ChildMiddleNameEnError
-                    ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
-                    : ChildLastNameEnError
-                    ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
-                    : ChildFirstNameMlError
-                    ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
-                    : ChildMiddleNameMlError
-                    ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
-                    : ChildLastNameMlError
-                    ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
-                    : AdsHomeStreetNameEnError
-                    ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
-                    : AdsHomeStreetNameMlError
-                    ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
-                    : fileSizeError
-                    ? t("FILE_SIZE_VALIDATION_MESSAGE")
-                    : fileTypeError
-                    ? t("FILE_TYPE_VALIDATION_MESSAGE")
-                    : fileUploadError
-                    ? t("FILE_UPLOAD_VALIDATION_MESSAGE")
-                    : setToast(false)
+                      ? t(`CS_COMMON_DATE_TIME_ERROR`)
+                      : DateTimeHourError
+                        ? t(`CS_COMMON_DATE_HOUR_ERROR`)
+                        : DateTimeMinuteError
+                          ? t(`CS_COMMON_DATE_MINUTE_ERROR`)
+                          : DateTimeAMPMError
+                            ? t(`CS_COMMON_DATE_AMPM_ERROR`)
+                            : DOBError
+                              ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                              : HospitalError
+                                ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                                : InstitutionError
+                                  ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                                  : InstitutionNameError
+                                    ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                                    : WardError
+                                      ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                                      : AdsHomePincodeError
+                                        ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                        : AdsHomePostOfficeError
+                                          ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                          : AdsHomeLocalityNameEnError
+                                            ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                            : AdsHomeLocalityNameMlError
+                                              ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                              : AdsHomeHouseNameEnError
+                                                ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                                : AdsHomeHouseNameMlError
+                                                  ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                                  : vehiTypeError
+                                                    ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                                    : vehicleRegiNoError
+                                                      ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                                      : vehicleHaltPlaceError
+                                                        ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                                        : admittedHospitalEnError
+                                                          ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                          : vehiDesDetailsEnError
+                                                            ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                            : placeTypepEnError
+                                                              ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                              : localNameEnError
+                                                                ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                                : localNameMlError
+                                                                  ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                                  : BirthWeightError
+                                                                    ? t(`BIRTH_WEIGHT_ERROR`)
+                                                                    : MedicalAttensionSubStError
+                                                                      ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                                      : PregnancyDurationStError
+                                                                        ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                        : PregnancyDurationInvalidError
+                                                                          ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
+                                                                          : DeliveryMethodStError
+                                                                            ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                                            : ChildFirstNameEnError
+                                                                              ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                              : ChildMiddleNameEnError
+                                                                                ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                                : ChildLastNameEnError
+                                                                                  ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                                  : ChildFirstNameMlError
+                                                                                    ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                                    : ChildMiddleNameMlError
+                                                                                      ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                                      : ChildLastNameMlError
+                                                                                        ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                                        : AdsHomeStreetNameEnError
+                                                                                          ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                          : AdsHomeStreetNameMlError
+                                                                                            ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                            : fileSizeError
+                                                                                              ? t("FILE_SIZE_VALIDATION_MESSAGE")
+                                                                                              : fileTypeError
+                                                                                                ? t("FILE_TYPE_VALIDATION_MESSAGE")
+                                                                                                : fileUploadError
+                                                                                                  ? t("FILE_UPLOAD_VALIDATION_MESSAGE")
+                                                                                                  : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

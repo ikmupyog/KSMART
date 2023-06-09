@@ -91,7 +91,7 @@ export const CRBornOutsideIndiasearch = {
           title: "PDF_BIRTH_NAME_OF_FATHER",
           value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || t("CR_NOT_RECORDED"),
         },
-        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassportNo || t("CR_NOT_RECORDED") }, 
+        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassportNo || t("CR_NOT_RECORDED") },
         { title: "CR_FATHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.fatherNationalityEn + "/" + response?.BornOutsideParentsDetails?.fatherNationalityMl || t("CR_NOT_RECORDED") },
         { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.BornOutsideParentsDetails?.motherMarriageAge || t("CR_NOT_RECORDED") },
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.BornOutsideParentsDetails?.motherMarriageBirth || t("CR_NOT_RECORDED") },
@@ -107,42 +107,44 @@ export const CRBornOutsideIndiasearch = {
     const PermanentrAddressBirthDetailsInfo = {
       title: "CR_PERMANENT_ADDRESS",
       values: [
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL",  value:
-        response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn +
-          " / " +
-          response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl || t("CR_NOT_RECORDED"), },
-        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.BornOutsideAddressBirthDetails.streetNameEnPermanent + " / " + response?.BornOutsideAddressBirthDetails.streetNameMlPermanent  || t("CR_NOT_RECORDED") },
+        {
+          title: "CR_BIRTH_PERM_HO_NAME_LABEL", value:
+            response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn +
+            " / " +
+            response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl || t("CR_NOT_RECORDED"),
+        },
+        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.BornOutsideAddressBirthDetails.streetNameEnPermanent + " / " + response?.BornOutsideAddressBirthDetails.streetNameMlPermanent || t("CR_NOT_RECORDED") },
         {
           title: "CR_BIRTH_PERM_LOCALITY_LABEL",
-          value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn + " / " +
-          response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl || t("CR_NOT_RECORDED"),
+          value: response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn + " / " +
+            response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl || t("CR_NOT_RECORDED"),
         },
         { title: "CS_COMMON_WARD", value: response?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo || "NOT_RECORDED" },
-        { title: "CS_COMMON_LB_NAME", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrLBNameEn + "/" + response?.BornOutsideAddressBirthDetails.permntInKeralaAdrLBNameMl || t("CR_NOT_RECORDED") },
-        { title: "CS_COMMON_POST_OFFICE", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPostOfficeEn + "/" + response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPostOfficeMl || t("CR_NOT_RECORDED") },
-        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPincode || t("CR_NOT_RECORDED") },
-        { title: "CS_COMMON_VILLAGE", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrVillageEn + "/" + response?.BornOutsideAddressBirthDetails.permntInKeralaAdrVillageMl || t("CR_NOT_RECORDED") },
-        { title: "CS_COMMON_TALUK", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrTalukEn + "/" + response?.BornOutsideAddressBirthDetails.permntInKeralaAdrTalukMl || t("CR_NOT_RECORDED") },
-        { title: "CS_COMMON_DISTRICT", value: response?.BornOutsideAddressBirthDetails.districtIdPermanentEn + "/" + response?.BornOutsideAddressBirthDetails.districtIdPermanentMl || t("CR_NOT_RECORDED") },
-        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails.stateIdPermanentEn + "/" + response?.BornOutsideAddressBirthDetails.stateIdPermanentMl || t("CR_NOT_RECORDED") },
-        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails.countryIdPermanentEn + "/" + response?.BornOutsideAddressBirthDetails.countryIdPermanentMl  || t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_LB_NAME", value: response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLBNameEn + "/" + response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLBNameMl || t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOfficeEn + "/" + response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOfficeMl || t("CR_NOT_RECORDED") },
+        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode || t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_VILLAGE", value: response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillageEn + "/" + response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillageMl || t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_TALUK", value: response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTalukEn + "/" + response?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTalukMl || t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_DISTRICT", value: response?.BornOutsideAddressBirthDetails?.districtIdPermanentEn + "/" + response?.BornOutsideAddressBirthDetails?.districtIdPermanentMl || t("CR_NOT_RECORDED") },
+        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails?.stateIdPermanentEn + "/" + response?.BornOutsideAddressBirthDetails?.stateIdPermanentMl || t("CR_NOT_RECORDED") },
+        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails?.countryIdPermanentEn + "/" + response?.BornOutsideAddressBirthDetails?.countryIdPermanentMl || t("CR_NOT_RECORDED") },
       ],
     };
     const OutsideAddressBirthDetailsInfo = {
       title: "CR_PARENTS_FOREIGN_ADDRESS",
       values: [
-        { title: "CS_COMMON_COUNTRY", value: response?.BornOutsideAddressBirthDetails.countryIdPresentEn + "/" + response?.BornOutsideAddressBirthDetails.countryIdPresentMl || t("CR_NOT_RECORDED") },
+        { title: "CS_COMMON_COUNTRY", value: response?.BornOutsideAddressBirthDetails?.countryIdPresentEn + "/" + response?.BornOutsideAddressBirthDetails?.countryIdPresentMl || t("CR_NOT_RECORDED") },
         { title: "CR_STATE_REGION_PROVINCE_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn + "/" + response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl || t("CR_NOT_RECORDED") },
         { title: "CR_TOWN_VILLAGE_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown || t("CR_NOT_RECORDED") },
         { title: "CR_CITY_TOWN_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage || t("CR_NOT_RECORDED") },
         { title: "CR_ZIP_CODE", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode || t("CR_NOT_RECORDED") },
-        { title: "CR_ADDRES_LINE_ONE_EN", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaAdressEn || t("CR_NOT_RECORDED") },
+        { title: "CR_ADDRES_LINE_ONE_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn || t("CR_NOT_RECORDED") },
         { title: "CR_ADDRES_LINE_ONE_ML", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl || NA },
         { title: "CR_ADDRES_LINE_TWO_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB || t("CR_NOT_RECORDED") },
         { title: "CR_ADDRES_LINE_TWO_ML", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB || t("CR_NOT_RECORDED") },
       ],
     };
-    
+
     const statisticalInfo = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [

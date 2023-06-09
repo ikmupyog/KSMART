@@ -127,11 +127,11 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!infomantAadhar || !infomantFirstNameEn || !informerDesi || !infomantMobile 
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!infomantAadhar || !infomantFirstNameEn || !informerDesi || !infomantMobile
       } >
         <div className="row">
           <div className="col-md-12" >
-            <h1 className="headingh1" ><span style={{ padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
+            <h1 className="headingh1" ><span className="headingline">{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
           </div>
         </div>
         <div className="row">

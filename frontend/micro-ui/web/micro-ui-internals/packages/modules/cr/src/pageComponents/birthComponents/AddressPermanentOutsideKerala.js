@@ -42,8 +42,8 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   const [isDisableEdit, setisDisableEdit] = useState(false);
   const [cmbFilterPerDistrict, setcmbFilterPerDistrict] = useState();
   const cmbUrbanRural = [
-    { name: "Town",namelocal:"ടൌണ്‍", code: "TOWN" },
-    { name: "Village",namelocal:"വില്ലേജ്", code: "VILLAGE" },
+    { name: "Town", namelocal: "ടൌണ്‍", code: "TOWN" },
+    { name: "Village", namelocal: "വില്ലേജ്", code: "VILLAGE" },
   ];
   let cmbTaluk = [];
   let cmbVillage = [];
@@ -271,7 +271,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
         <div className="col-md-12">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{  padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
         </div>

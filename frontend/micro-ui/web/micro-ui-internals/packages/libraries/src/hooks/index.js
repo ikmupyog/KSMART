@@ -118,6 +118,7 @@ import useTLInbox from "./tl/useInbox";
 import useTradeLicenseBillingslab from "./tl/useTradeLicenseBillingslab";
 import useTLMDMS from "./tl/useMDMS";
 import useTLSearch from "./tl/useSearch";
+import useTLSearchPT from "./tl/useSearchPT";
 
 import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
@@ -373,6 +374,7 @@ const tl = {
   useInbox: useTLInbox,
   useMDMS: useTLMDMS,
   useSearch: useTLSearch,
+  useSearchPT : useTLSearchPT,
   useApplicationDetail: useTLApplicationDetail,
   useApplicationActions: useTLApplicationActions,
   useFetchBill: useTLFetchBill,

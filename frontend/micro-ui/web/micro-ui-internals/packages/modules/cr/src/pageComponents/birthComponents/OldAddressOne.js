@@ -114,7 +114,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -146,8 +146,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 ? PresentCountryError
                   ? t(`BIRTH_ERROR_PRESENT_COUNTRY_CHOOSE`)
                   : PresentStateNameError
-                  ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`)
-                  : setToast(false)
+                    ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`)
+                    : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}

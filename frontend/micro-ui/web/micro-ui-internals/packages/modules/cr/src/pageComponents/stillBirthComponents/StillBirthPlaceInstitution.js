@@ -46,7 +46,7 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
         setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.StillBirthChildDetails?.institutionTypeCode)[0]);
       }
     }
-    if (formData?.StillBirthChildDetails?.institutionNameCode != null) {      
+    if (formData?.StillBirthChildDetails?.institutionNameCode != null) {
       if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
         setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.StillBirthChildDetails?.institutionNameCode)[0]);
         setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.StillBirthChildDetails?.institutionNameCode)[0]);
@@ -85,12 +85,12 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}> */}
-        
+
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
+                <span className="headingline">{`${t("CR_INSTITUTION_DETAILS")}`}</span>
               </h1>
             </div>
           </div>
@@ -101,7 +101,7 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
                 t={t}
                 // optionKey="name"
                 optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-                option={sortDropdownNames(cmbInstitutionType ? cmbInstitutionType : [],"name",t)}
+                option={sortDropdownNames(cmbInstitutionType ? cmbInstitutionType : [], "name", t)}
                 selected={institution}
                 select={setselectInstitution}
                 disable={isDisableEdit}
@@ -109,11 +109,11 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>              
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="institutionName"
-                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [],"institutionName",t)}
+                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [], "institutionName", t)}
                 selected={institutionId}
                 select={setselectInstitutionId}
                 disable={isDisableEdit}
@@ -121,11 +121,11 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="institutionNamelocal"
-                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [],"institutionNamelocal",t)}
+                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [], "institutionNamelocal", t)}
                 selected={institutionIdMl}
                 select={setselectInstitutionIdMl}
                 placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
@@ -133,8 +133,8 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
           </div>
-          </div>
-        
+        </div>
+
         {/* </FormStep> */}
       </React.Fragment>
     );

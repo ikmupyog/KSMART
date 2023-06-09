@@ -3,11 +3,11 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrsCountry, setInformantAdrsCountry,InformantAdrsStateName, setInformantAdrsStateName,InformantAdrsDistrict, setInformantAdrsDistrict,
-  InformantAdrsLBTypeName, setInformantAdrsLBTypeName,InformantAdrsLBName, setInformantAdrsLBName,InformantAdrsTaluk, setInformantAdrsTaluk,InformantAdrsPostOffice, setInformantAdrsPostOffice,
-  InformantAdrsPincode, setInformantAdrsPincode,InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn,
-  InformantAdrsResNo, setInformantAdrsResNo,InformantAdrsDoorNo, setInformantAdrsDoorNo,InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn,InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn,
-  InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn,InformantAdrsVillage, setInformantAdrsVillage,
+const InformantAddress = ({ config, onSelect, userType, formData, InformantAdrsCountry, setInformantAdrsCountry, InformantAdrsStateName, setInformantAdrsStateName, InformantAdrsDistrict, setInformantAdrsDistrict,
+  InformantAdrsLBTypeName, setInformantAdrsLBTypeName, InformantAdrsLBName, setInformantAdrsLBName, InformantAdrsTaluk, setInformantAdrsTaluk, InformantAdrsPostOffice, setInformantAdrsPostOffice,
+  InformantAdrsPincode, setInformantAdrsPincode, InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn,
+  InformantAdrsResNo, setInformantAdrsResNo, InformantAdrsDoorNo, setInformantAdrsDoorNo, InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn, InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn,
+  InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn, InformantAdrsVillage, setInformantAdrsVillage,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
 
@@ -98,7 +98,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-    localbodies &&
+  localbodies &&
     localbodies["tenant"] &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
@@ -141,7 +141,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
     setLbs(null);
     districtid = value.districtid;
   }
-  
+
   function setSelectInformantAdrsLBTypeName(value) {
     setInformantAdrsLBTypeName(value);
   }
@@ -243,7 +243,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
     // sessionStorage.setItem("InformantAdrsPincode", InformantAdrsPincode.code);
     // sessionStorage.setItem("InformantAdrsInfontName", InformantAdrsInfontName);
     // sessionStorage.setItem(" InfntWardNo",  InfntWardNo);
-   
+
     // onSelect(config.key, {
     //   InformantAdrsBuldingNo,
     //   InformantAdrsDoorNo,
@@ -274,7 +274,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ padding: "0 10px" }}>{`${t("CR_BIRTH_INFORMANT_ADDRESS_HEADER")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_BIRTH_INFORMANT_ADDRESS_HEADER")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -342,10 +342,10 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
           </div>
         </div>
 
-      
+
         <div className="row">
           <div className="col-md-12">
-          <div className="col-md-3">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_LB_NAME")}
                 <span className="mandatorycss">*</span>
@@ -393,7 +393,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
                 placeholder={`${t("CS_COMMON_VILLAGE")}`}
               />
             </div>
-            
+
             {/* <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
@@ -429,8 +429,8 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
         </div>
         <div className="row">
           <div className="col-md-12">
-            
-            
+
+
             <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
@@ -510,12 +510,12 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
           </div>
         </div>
 
-        
-      
+
+
 
         <div className="row">
           <div className="col-md-12">
-            
+
             <div className="col-md-3">
               <CardLabel>
                 {t("CR_HOUSE_NAME_EN")}
@@ -535,9 +535,9 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
               />
             </div>
             <div className="col-md-3">
-            <CardLabel>
+              <CardLabel>
                 {t("CR_DOOR_NO")}
-                
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -569,10 +569,10 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
             </div>
           </div>
         </div>
-      
 
-        
-       
+
+
+
       </FormStep>
     </React.Fragment>
   );

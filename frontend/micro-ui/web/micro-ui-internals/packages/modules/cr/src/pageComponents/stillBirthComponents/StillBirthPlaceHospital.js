@@ -18,8 +18,8 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
- // const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
- const [isDisableEdit, setisDisableEdit] = useState(false);
+  // const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
   if (tenantboundary) {
@@ -43,7 +43,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
       }
     }
   }
- 
+
 
   useEffect(() => {
     if (isInitialRender) {
@@ -56,7 +56,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
           setIsInitialRender(false);
         }
       } else if (formData?.StillBirthChildDetails?.hospitalName != null && formData?.StillBirthChildDetails?.hospitalName != "" && formData?.StillBirthChildDetails?.hospitalName != undefined) {
-        if (cmbhospital.length > 0) {     
+        if (cmbhospital.length > 0) {
           cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalName.code);
           selectHospitalName(cmbhospitalMl[0]);
           selectHospitalNameMl(cmbhospitalMl[0]);
@@ -95,7 +95,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
   function setselectHospitalName(value) {
     selectHospitalName(value);
     selectHospitalNameMl(value);
-   // setIsInitialRender(true);
+    // setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
@@ -110,12 +110,12 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}> */}
-       
+
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
+                <span className="headingline">{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
               </h1>
             </div>
           </div>
@@ -130,11 +130,11 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 // optionKey={locale === "en_IN" ? "hospitalName" : "hospitalNamelocal"}
                 optionKey="hospitalName"
                 isMandatory={true}
-                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [], "hospitalName", t)}
                 selected={hospitalName}
                 select={setselectHospitalName}
-               // disable={isDisableEditRole}
-             //   disable={isDisableEdit}
+                // disable={isDisableEditRole}
+                //   disable={isDisableEdit}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
@@ -147,16 +147,16 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 t={t}
                 optionKey="hospitalNamelocal"
                 isMandatory={true}
-                option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalNamelocal",t)}
+                option={sortDropdownNames(cmbhospital ? cmbhospital : [], "hospitalNamelocal", t)}
                 selected={hospitalNameMl}
                 select={setselectHospitalNameMl}
                 placeholder={`${t("CR_HOSPITAL_ML")}`}
                 disable={true}
               />
-            
+
+            </div>
           </div>
-          </div>
-          </div>
+        </div>
         {/* </FormStep> */}
       </React.Fragment>
     );

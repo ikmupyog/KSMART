@@ -10,10 +10,10 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
   const { t } = useTranslation();
   const locale = Digit.SessionStorage.get("locale");
   let validation = {};
-  let cmbInitiator =[];
-  let cmbRelation =[];
-  let cmbCareTakerDesign =[];
-  let cmbIpopList =[];
+  let cmbInitiator = [];
+  let cmbRelation = [];
+  let cmbCareTakerDesign = [];
+  let cmbIpopList = [];
 
   // const cmbInitiator = [
   //   { i18nKey: "Father", code: "FATHER" },
@@ -48,23 +48,23 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
   const { data: RelationDetails = {}, isRelationDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Relation");
   const { data: CareTakerDesigDetails = {}, isCareTakerDesigDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "CareTakerDesignation");
   const { data: IPOPListDetails = {}, isIPOPListDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IPOPList");
-  
+
   StillBirthInitiatorDetails &&
-  StillBirthInitiatorDetails["birth-death-service"] && StillBirthInitiatorDetails["birth-death-service"].Initiator &&
-  StillBirthInitiatorDetails["birth-death-service"].Initiator.map((ob) => {
-    cmbInitiator.push(ob);
+    StillBirthInitiatorDetails["birth-death-service"] && StillBirthInitiatorDetails["birth-death-service"].Initiator &&
+    StillBirthInitiatorDetails["birth-death-service"].Initiator.map((ob) => {
+      cmbInitiator.push(ob);
     });
-    RelationDetails &&
+  RelationDetails &&
     RelationDetails["birth-death-service"] && RelationDetails["birth-death-service"].Relation &&
     RelationDetails["birth-death-service"].Relation.map((ob) => {
       cmbRelation.push(ob);
     });
-    CareTakerDesigDetails &&
+  CareTakerDesigDetails &&
     CareTakerDesigDetails["birth-death-service"] && CareTakerDesigDetails["birth-death-service"].CareTakerDesignation &&
     CareTakerDesigDetails["birth-death-service"].CareTakerDesignation.map((ob) => {
       cmbCareTakerDesign.push(ob);
     });
-    IPOPListDetails &&
+  IPOPListDetails &&
     IPOPListDetails["birth-death-service"] && IPOPListDetails["birth-death-service"].IPOPList &&
     IPOPListDetails["birth-death-service"].IPOPList.map((ob) => {
       cmbIpopList.push(ob);
@@ -333,7 +333,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       } else {
         setipopNumberError(false);
       }
-     
+
       if (obstetricsNumber === null || obstetricsNumber === "" || obstetricsNumber === undefined) {
         validFlag = false;
         setobstetricsNumberError(true);
@@ -381,7 +381,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -522,7 +522,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_ADMISION_DETAILS")}`}</span>{" "}
+                  <span className="headingline">{`${t("CR_HOSPITAL_ADMISION_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -545,7 +545,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
                 <div className="col-md-2">
                   <CardLabel>.
                     {/* {`${t("CR_IP_OP_NO")}`}<span className="mandatorycss">*</span> */}
-                    </CardLabel>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     type={"number"}
@@ -583,29 +583,29 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
             error={InitiatorError || relationnError || infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
               || ipopListError || ipopNumberError || obstetricsNumberError
             }
-            label={ InitiatorError || relationnError || 
+            label={InitiatorError || relationnError ||
               infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
-                || ipopListError || ipopNumberError || obstetricsNumberError
-                ? InitiatorError
+              || ipopListError || ipopNumberError || obstetricsNumberError
+              ? InitiatorError
                 ? t(`BIRTH_ERROR_INITIATOR_CHOOSE`)
                 : relationnError
-                ? t(`BIRTH_ERROR_RELATION_CHOOSE`)
-                : infomantFirstNmeEnError
-                  ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
-                  : initiatorAadharError
-                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                    : initiatorMobileError
-                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                      : initiatorDesiError
-                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                        : ipopListError
-                          ? t(`BIRTH_ERROR_HOSP_IPLIST_CHOOSE`)
-                          : ipopNumberError
-                            ? t(`BIRTH_ERROR_HOSP_IPNO_CHOOSE`)
-                            : obstetricsNumberError
-                              ? t(`BIRTH_ERROR_HOSP_GYN_REG_CHOOSE`)
-                              : setToast(false)
-                : setToast(false)
+                  ? t(`BIRTH_ERROR_RELATION_CHOOSE`)
+                  : infomantFirstNmeEnError
+                    ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
+                    : initiatorAadharError
+                      ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                      : initiatorMobileError
+                        ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                        : initiatorDesiError
+                          ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                          : ipopListError
+                            ? t(`BIRTH_ERROR_HOSP_IPLIST_CHOOSE`)
+                            : ipopNumberError
+                              ? t(`BIRTH_ERROR_HOSP_IPNO_CHOOSE`)
+                              : obstetricsNumberError
+                                ? t(`BIRTH_ERROR_HOSP_GYN_REG_CHOOSE`)
+                                : setToast(false)
+              : setToast(false)
             }
             onClose={() => setToast(false)}
           />

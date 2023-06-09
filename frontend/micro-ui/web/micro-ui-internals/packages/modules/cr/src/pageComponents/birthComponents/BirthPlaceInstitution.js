@@ -89,7 +89,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
+                <span className="headingline">{`${t("CR_INSTITUTION_DETAILS")}`}</span>
               </h1>
             </div>
           </div>
@@ -99,7 +99,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey={locale === "en_IN" ? "name" : locale === "ml_IN" ? "namelocal" : "name"}
-                option={sortDropdownNames(cmbInstitutionType ? cmbInstitutionType : [],"name",t)}
+                option={sortDropdownNames(cmbInstitutionType ? cmbInstitutionType : [], "name", t)}
                 selected={institution}
                 select={setselectInstitution}
                 disable={isDisableEdit}
@@ -111,7 +111,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="institutionName"
-                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [],"institutionName",t)}
+                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [], "institutionName", t)}
                 selected={institutionId}
                 select={setselectInstitutionId}
                 disable={isDisableEdit}
@@ -123,7 +123,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="institutionNamelocal"
-                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [],"institutionNamelocal",t)}
+                option={sortDropdownNames(InstitutionFilterList ? InstitutionFilterList : [], "institutionNamelocal", t)}
                 selected={institutionIdMl}
                 select={setselectInstitutionIdMl}
                 placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}

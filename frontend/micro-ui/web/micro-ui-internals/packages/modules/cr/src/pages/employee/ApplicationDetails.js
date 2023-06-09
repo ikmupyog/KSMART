@@ -7,10 +7,14 @@ import { useParams } from "react-router-dom";
 import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
+import { STATE_CODE } from "../../config/constants";
 
 const ApplicationDetails = () => {
   const { t } = useTranslation();
-  const tenantId = Digit.ULBService.getCurrentTenantId();
+  let tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === STATE_CODE.KL) {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);

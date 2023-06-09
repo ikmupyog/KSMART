@@ -329,7 +329,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
         if (formData?.AddressBirthDetails?.presentWardNo != null && cmbWardNo.length > 0) {
             if (cmbWardNo.length > 0 && (presentWardNo === undefined || presentWardNo === "")) {
-                setPresentWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === 
+                setPresentWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code ===
                     formData?.AddressBirthDetails?.presentWardNo)[0]);
             }
         }
@@ -681,7 +681,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                     <div className="col-md-12">
                         <div className="col-md-12">
                             <h1 className="headingh1">
-                                <span style={{padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>
+                                <span className="headingline">{`${t("CR_PRESENT_ADDRESS")}`}</span>
                             </h1>
                         </div>
                     </div>

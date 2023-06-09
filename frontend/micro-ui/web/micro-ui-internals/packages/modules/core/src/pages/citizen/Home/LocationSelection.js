@@ -119,7 +119,7 @@ const LocationSelection = () => {
                 />
                 <label style={{ fontSize: "32px", marginBottom: "20px !important" }}>Exploring K-Smart</label>
                 <br></br>
-                <label style={{ fontSize: "17px", marginTop: "20px !important" }}>
+                <label style={{ fontSize: "17px", marginTop: "20px !important", width: "60%" }}>
                   Kerala - Solutions for Managing Administrative Reformation and Transformation.
                 </label>
               </div>

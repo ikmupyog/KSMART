@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, selectHospitalName, selectSignedOfficerName,
   SignedOfficerName, SignedOfficerDesignation, selectSignedOfficerDesignation, SignedOfficerAadharNo, setSignedOfficerAadharNo,
-  SignedOfficerMobileNo, setSignedOfficerMobileNo,selectSignedOfficerDesignationOther,selectSignedOfficerNameOther,SignedOfficerNameOther,
-  SignedOfficerDesignationOther,SignedOfficerOtherStatus,setSignedOfficerOtherStatus
+  SignedOfficerMobileNo, setSignedOfficerMobileNo, selectSignedOfficerDesignationOther, selectSignedOfficerNameOther, SignedOfficerNameOther,
+  SignedOfficerDesignationOther, SignedOfficerOtherStatus, setSignedOfficerOtherStatus
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -45,21 +45,21 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
           // console.log(cmbRegistrarNames);
           let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
           // console.log(cmbRegistrarNames[0].registar);      
-          let OtherRegistrar=[];
+          let OtherRegistrar = [];
           OtherRegistrar = cmbRegistrarNames[0].registar;
           let CheckIfExists = OtherRegistrar.filter((OtherRegistrar) => OtherRegistrar.hospitalRegistar === "Others");
-          if(CheckIfExists.length>0){
-            
+          if (CheckIfExists.length > 0) {
+
           } else {
             OtherRegistrar.push({
-              hospitalRegistar:'Others',
-              registarDesig:'',
-              registrationAadhaar:'',
-              registrationMobile:'',
-              registrationNo:''
+              hospitalRegistar: 'Others',
+              registarDesig: '',
+              registrationAadhaar: '',
+              registrationMobile: '',
+              registrationNo: ''
             })
-           
-          }   
+
+          }
           setFilteredOfficerName(OtherRegistrar);
           setFilteredDesignation(cmbDesignations[0].registar);
           // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
@@ -91,7 +91,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      selectSignedOfficerNameOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      selectSignedOfficerNameOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectSignedOfficerOthersDesignation(e) {
@@ -99,7 +99,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      selectSignedOfficerDesignationOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      selectSignedOfficerDesignationOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectSignedOfficerAadharNo(e) {
@@ -160,7 +160,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
+              <span className="headingline">{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -196,24 +196,24 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
             />
           </div>
           {SignedOfficerOtherStatus != "Others" && (
-          <div className="col-md-4">
-            <CardLabel>
-              {`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="registarDesig"
-              isMandatory={false}
-              option={Designations}
-              selected={SignedOfficerDesignation}
-              select={setselectSignedOfficerDesignation}
-              placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
-            />
-          </div>)}
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="registarDesig"
+                isMandatory={false}
+                option={Designations}
+                selected={SignedOfficerDesignation}
+                select={setselectSignedOfficerDesignation}
+                placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+              />
+            </div>)}
         </div>
-        {SignedOfficerOtherStatus === "Others" && ( 
-        <div className="row">
+        {SignedOfficerOtherStatus === "Others" && (
+          <div className="row">
             <div className="col-md-6">
               <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
@@ -242,8 +242,8 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
               />
             </div>
-        </div>
-         )} 
+          </div>
+        )}
         <div className="row">
           <div className="col-md-6">
             {" "}
