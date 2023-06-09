@@ -1,4 +1,5 @@
-import { Dropdown, UploadFile } from "@egovernments/digit-ui-react-components";
+import { Dropdown, UploadFile, Loader, Toast } from "@egovernments/digit-ui-react-components";
+import _ from "lodash";
 import React from "react";
 
 export const configBirthApproverApplication = ({
@@ -12,7 +13,14 @@ export const configBirthApproverApplication = ({
   setUploadedFile,
   assigneeLabel,
   businessService,
+  uploadedFileDetails,
+  isLoading,
+  toast,
+  fileUploadError,
+  fileTypeError,
+  fileSizeError,
 }) => {
+  console.log({ uploadedFileDetails });
   let checkCondtions = true;
   if (action?.action == "SENDBACKTOCITIZEN" || action?.action == "APPROVE") checkCondtions = false;
   if (action.isTerminateState) checkCondtions = false;
@@ -52,16 +60,73 @@ export const configBirthApproverApplication = ({
           {
             label: t("BIRTH_APPROVAL_CHECKLIST_BUTTON_UP_FILE"),
             populators: (
-              <UploadFile
-                id={"workflow-doc"}
-                // accept=".jpg"
-                onUpload={selectFile}
-                onDelete={() => {
-                  setUploadedFile(null);
-                }}
-                message={uploadedFile ? `1 ${t(`ES_PT_ACTION_FILEUPLOADED`)}` : t(`CS_ACTION_NO_FILEUPLOADED`)}
-              />
-            )
+              <React.Fragment>
+                <UploadFile
+                  id={"workflow-doc"}
+                  // accept=".jpg"
+                  onUpload={selectFile}
+                  onDelete={() => {
+                    setUploadedFile(null);
+                  }}
+                  message={uploadedFile ? `1 ${t(`ES_PT_ACTION_FILEUPLOADED`)}` : t(`CS_ACTION_NO_FILEUPLOADED`)}
+                />
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <React.Fragment>
+                    {uploadedFileDetails && (
+                      <div className="col-md-4">
+                        {_.head(uploadedFileDetails)?.type === "pdf" ? (
+                          <React.Fragment>
+                            <object
+                              style={{ margin: "5px 0" }}
+                              height={120}
+                              width={100}
+                              data={_.head(uploadedFileDetails)?.pdfUrl}
+                              alt="Witness2 Aadhar Pdf"
+                            />
+                          </React.Fragment>
+                        ) : (
+                          <img
+                            style={{ margin: "5px 0" }}
+                            height={120}
+                            width={100}
+                            src={_.head(uploadedFileDetails)?.small}
+                            alt="Witness2 Aadhar Image"
+                          />
+                        )}
+                        <a
+                          style={{ color: "blue" }}
+                          target="_blank"
+                          href={
+                            _.head(uploadedFileDetails)?.type === "pdf" ? _.head(uploadedFileDetails)?.pdfUrl : _.head(uploadedFileDetails)?.large
+                          }
+                        >
+                          Preview
+                        </a>
+                      </div>
+                    )}
+                  </React.Fragment>
+                )}
+                {toast && (
+                  <Toast
+                    error={fileSizeError || fileTypeError || fileUploadError}
+                    label={
+                      fileSizeError || fileTypeError || fileUploadError
+                        ? fileSizeError
+                          ? t("FILE_SIZE_VALIDATION_MESSAGE")
+                          : fileTypeError
+                          ? t("FILE_TYPE_VALIDATION_MESSAGE")
+                          : fileUploadError
+                          ? t("FILE_UPLOAD_VALIDATION_MESSAGE")
+                          : setToast(false)
+                        : setToast(false)
+                    }
+                    onClose={() => setToast(false)}
+                  />
+                )}
+              </React.Fragment>
+            ),
           },
           //   {
           //     label: action.docUploadRequired ? t("ES_PT_UPLOAD_FILE") : null,

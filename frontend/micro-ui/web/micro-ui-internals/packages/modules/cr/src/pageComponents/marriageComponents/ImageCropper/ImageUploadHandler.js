@@ -327,7 +327,7 @@ export const ImageUploadHandler = ({
     var newUploadedImagesIds = uploadedImagesIds.filter((key) => key !== deleteImageKey[0].key);
     setUploadedImagesThumbs(newThumbsList);
     setUploadedImagesIds(newUploadedImagesIds);
-    onPhotoChange(newUploadedImagesIds);
+    onPhotoChange(newUploadedImagesIds?.length === 0 ? null : newUploadedImagesIds);
     Digit.SessionStorage.set("CROP_IMAGES", newUploadedImagesIds);
   }
 

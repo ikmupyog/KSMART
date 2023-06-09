@@ -133,7 +133,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 option={sortDropdownNames(cmbhospital ? cmbhospital : [],"hospitalName",t)}
                 selected={hospitalName}
                 select={setselectHospitalName}
-               // disable={isDisableEditRole}
+                disable={isDisableEditRole}
              //   disable={isDisableEdit}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
