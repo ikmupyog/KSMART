@@ -89,12 +89,12 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
         disableSortBy: true,
         accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : "-"),
       },
-            {
+      {
         Header: t("CR_COMMON_GENDER"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.gender || "-"),
       },
-            {
+      {
         Header: t("CR_COMMON_FATHER_NAME"),
         disableSortBy: true,
         accessor: (row) => GetCell(row?.registerBirthFather?.firstname_en || "-"),
@@ -116,24 +116,32 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
           let id = _.get(row, "original.id", null);
           return (
             <div>
-              {id !== null && <span className="link" onClick={() => {
-                fileSource.mutate({ filters: { id, source: "sms" } }, {
-                  onSuccess: (fileDownloadInfo) => {
-                    const { filestoreId } = fileDownloadInfo;
-                    if (filestoreId) {
-                      downloadDocument(filestoreId);
-                    } else {
-                      console.log("filestoreId is null");
-                    }
-                  }
-                });
-              }}>
-                Download
-              </span>}
+              {id !== null && (
+                <span
+                  className="link"
+                  onClick={() => {
+                    fileSource.mutate(
+                      { filters: { id, source: "sms" } },
+                      {
+                        onSuccess: (fileDownloadInfo) => {
+                          const { filestoreId } = fileDownloadInfo;
+                          if (filestoreId) {
+                            downloadDocument(filestoreId);
+                          } else {
+                            console.log("filestoreId is null");
+                          }
+                        },
+                      }
+                    );
+                  }}
+                >
+                  Download
+                </span>
+              )}
             </div>
           );
-        }
-      }
+        },
+      },
     ],
     []
   );
@@ -146,33 +154,37 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
           <SearchFields {...{ register, control, reset, previousPage, t, tenantId }} />
         </SearchForm>
       </div>
-      {isLoading ? <Loader /> : data.length > 0 ? <Table
-        t={t}
-        data={data || []}
-        totalRecords={count}
-        columns={columns}
-        getCellProps={(cellInfo) => {
-          return {
-            style: {
-              minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
-              padding: "20px 18px",
-              fontSize: "16px",
-            },
-          };
-        }}
-        onPageSizeChange={onPageSizeChange}
-        currentPage={getValues("offset") / getValues("limit")}
-        onNextPage={nextPage}
-        onPrevPage={previousPage}
-        pageSizeLimit={getValues("limit")}
-        onSort={onSort}
-        disableSort={false}
-        sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-      /> : <Card style={{ marginTop: 20 }}>
-        <p style={{ textAlign: "center" }}>
-          {t("ES_COMMON_NO_DATA")}
-        </p>
-      </Card>}
+      {isLoading ? (
+        <Loader />
+      ) : data.length > 0 ? (
+        <Table
+          t={t}
+          data={data || []}
+          totalRecords={count}
+          columns={columns}
+          getCellProps={(cellInfo) => {
+            return {
+              style: {
+                minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                padding: "20px 18px",
+                fontSize: "16px",
+              },
+            };
+          }}
+          onPageSizeChange={onPageSizeChange}
+          currentPage={getValues("offset") / getValues("limit")}
+          onNextPage={nextPage}
+          onPrevPage={previousPage}
+          pageSizeLimit={getValues("limit")}
+          onSort={onSort}
+          disableSort={false}
+          sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+        />
+      ) : (
+        <Card style={{ marginTop: 20 }}>
+          <p style={{ textAlign: "center" }}>{t("ES_COMMON_NO_DATA")}</p>
+        </Card>
+      )}
     </React.Fragment>
   );
 };

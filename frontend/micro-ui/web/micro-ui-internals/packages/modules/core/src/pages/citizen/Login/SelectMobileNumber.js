@@ -50,7 +50,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
           </div>
         </div>
       )}
-      <div className="bannerCard removeBottomMargin" style={{ backgroundColor: "#EDF2FA", border: "none", boxShadow: "none" }}>
+      <div className="loginBannerCard removeBottomMargin" style={{ backgroundColor: "#EDF2FA", border: "none", boxShadow: "none" }}>
         <div style={{ justifyContent: "space-around" }}>
           <div className="language-button-container">
             <div>
@@ -64,26 +64,26 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
                 <label style={{ fontSize: "15px", marginTop: "20px !important", color: "#3b669b", fontWeight: "490" }}>{`${t(
                   "CS_LOGIN_TEXT"
                 )}`}</label>
+                <FormStep
+                  isDisabled={mobileNumber.length !== 10}
+                  onSelect={onSelect}
+                  config={config}
+                  t={t}
+                  componentInFront="+91"
+                  onChange={onMobileChange}
+                  value={mobileNumber}
+                  cardStyle={{
+                    border: "none",
+                    borderRadius: "12px",
+                    background: "#EDF2FA",
+                    boxShadow: "none",
+                    width: "100%",
+                    margin: "0",
+                    padding: "0",
+                  }}
+                ></FormStep>
               </div>
             </div>
-
-            <FormStep
-              isDisabled={mobileNumber.length !== 10}
-              onSelect={onSelect}
-              config={config}
-              t={t}
-              componentInFront="+91"
-              onChange={onMobileChange}
-              value={mobileNumber}
-              cardStyle={{
-                border: "none",
-                borderRadius: "12px",
-                background: "#EDF2FA",
-                boxShadow: "none",
-                right: "52px",
-                width: "100%",
-              }}
-            ></FormStep>
           </div>
         </div>
       </div>

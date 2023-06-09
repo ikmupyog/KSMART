@@ -8,18 +8,18 @@ import MobileSearchApplication from "./MobileSearchApplication";
 
 const mystyle = {
   bgOpacity: "1",
-  backgroundColor: "#fff",
-  backgroundColor: "rgba(255, 255, 255, var(--bg-opacity))",
+  backgroundColor: "#EDF2FA",
   marginBottom: "24px",
-  padding: "1.5rem",
-  borderRadius: "1.6rem",
+  marginTop: "20px",
+  padding: "2.5rem",
+  borderRadius: "2.6rem",
 };
 const hstyle = {
   fontSize: "20px",
   fontWeight: "500",
-  color: "#2B2F3E",
-  marginBottom: ".5rem",
-  lineHieght: "1.5rem",
+  color: "#00377B",
+  marginBottom: "2.5rem",
+  lineHieght: "2.5rem",
 };
 
 const selectedSearch = [
@@ -28,7 +28,7 @@ const selectedSearch = [
 ];
 let validation = "";
 
-const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType,isLoading }) => {
+const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count, applicationType, setApplicationType, isLoading }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
