@@ -22,7 +22,7 @@ const MarriageCorrectionPage = () => {
   let marriagePlace = [];
   let cmbWardNo = [];
   let correctionDocs = [];
-  let navigationData = location?.state?.marriageCorrectionData;
+  let navigationData = location?.state?.marriageCorrectionDocuments;
 
   const mutation = Digit.Hooks.cr.useCivilRegMDMS(stateId);
   const correctionDocsMutation = Digit.Hooks.cr.useCivilRegMDMS(stateId);

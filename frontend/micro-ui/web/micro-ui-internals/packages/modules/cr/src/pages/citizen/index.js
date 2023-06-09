@@ -54,6 +54,7 @@ const App = () => {
   const DownloadMarriageCertificate = Digit?.ComponentRegistryService?.getComponent('DownloadMarriageCertificate');
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
   const CRBirthInclusionDetailsPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionDetailPage');
+  const CRMarriageCorrectionDetailsPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionDetailsPage');
   const DeathCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionAcknowledgement');
   const DeathCorrectionSummary = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionSummary');
   const BirthInclusionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('BirthInclusionAcknowledgement');
@@ -90,6 +91,7 @@ const App = () => {
           <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
           <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
           <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-details`} component={CRBirthInclusionDetailsPage} />
+          <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-applicant-details`} component={CRMarriageCorrectionDetailsPage} />
           <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-edit`} component={CRMarriageCorrectionLoadPage} />
           <PrivateRoute path={`${path}/birth-inclusion-acknowledgement`} component={BirthInclusionAcknowledgement} />
           <PrivateRoute path={`${path}/death-correction-acknowledgement`} component={DeathCorrectionAcknowledgement} />

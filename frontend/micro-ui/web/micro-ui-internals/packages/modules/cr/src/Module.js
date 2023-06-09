@@ -24,6 +24,7 @@ import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDo
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
 import BirthInclusionDetailPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionDetails";
+import MarriageCorrectionDetailsPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionApplicantDetails";
 import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
@@ -466,6 +467,7 @@ const componentsToRegister = {
   MarriageAcknowledgement,
   CRMarriageCorrectionEditPage: MarriageCorrectionEditPage,
   CRMarriageCorrectionLoadPage: MarriageCorrectionLoadPage,
+  CRMarriageCorrectionDetailsPage: MarriageCorrectionDetailsPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   BirthNacCertificate,

@@ -74,7 +74,8 @@ const MarriageCorrection = () => {
 
   const gotoEditCorrection = async (data) => {
     history.push({
-      pathname: `/digit-ui/citizen/cr/marriage-correction-edit`,
+      // pathname: `/digit-ui/citizen/cr/marriage-correction-edit`,
+      pathname: `/digit-ui/citizen/cr/marriage-correction-applicant-details`,
       state: { marriageCorrectionData: data },
     });
   };
