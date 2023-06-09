@@ -825,7 +825,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row" style={{paddingBottom:"20px"}} >
         <div className="col-md-12">
           <div className="col-md-4">
             <CardLabel>

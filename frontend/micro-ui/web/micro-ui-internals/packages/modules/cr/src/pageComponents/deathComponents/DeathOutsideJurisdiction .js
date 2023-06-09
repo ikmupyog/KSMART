@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Toast, TextArea } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
@@ -57,10 +57,11 @@ const DeathOutsideJurisdiction = ({
   let cmbDistrict = [];
   let cmbFilterState = [];
   Country &&
-  Country["common-masters"] && Country["common-masters"].Country &&
-  Country["common-masters"].Country.map((ob) => {
+    Country["common-masters"] &&
+    Country["common-masters"].Country &&
+    Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
-  });
+    });
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country.map((ob) => {
@@ -153,7 +154,7 @@ const DeathOutsideJurisdiction = ({
       setGeneralRemarks(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
- let cmbfilterNation =[];
+  let cmbfilterNation = [];
   useEffect(() => {
     if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
       if (stateId === "kl" && cmbCountry.length > 0) {
@@ -177,8 +178,7 @@ const DeathOutsideJurisdiction = ({
   //     //     setSelectedNationality(cmbfilterNation[0]);
   //     //   }
   //     // }
-      
-  
+
   //     // if (Religion == null || Religion == "") {
   //     //   if (stateId === "kl" && cmbReligion.length > 0) {
   //     //     cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
@@ -202,7 +202,7 @@ const DeathOutsideJurisdiction = ({
   //     }
   //   }
   // }, [Nation, isInitialRender]);
-  
+
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
     // sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
@@ -260,7 +260,7 @@ const DeathOutsideJurisdiction = ({
                 option={cmbCountry}
                 selected={DeathPlaceCountry}
                 select={selectDeathPlaceCountry}
-             disable={isDisableStatus}
+                disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_COUNTRY")}`}
               />
             </div>
@@ -335,7 +335,7 @@ const DeathOutsideJurisdiction = ({
                 value={DeathPlaceRemarksMl}
                 onChange={setSelectDeathPlaceRemarksMl}
                 placeholder={`${t("CR_PLACE_DEATH_ML")}`}
-                {...(validation = { pattern:  "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_PLACE_DEATH_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_PLACE_DEATH_ML") })}
               />
             </div>
           </div>
@@ -343,7 +343,7 @@ const DeathOutsideJurisdiction = ({
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_BURIAL_CREMATION")}`}</span>
+              <span style={{ padding: "0 10px" }}>{`${t("CR_PLACE_BURIAL_CREMATION")}`}</span>
             </h1>
           </div>
         </div>
@@ -394,27 +394,35 @@ const DeathOutsideJurisdiction = ({
                 value={PlaceOfBurialMl}
                 onChange={setSelectPlaceOfBurialMl}
                 placeholder={`${t("CR_PLACE_BURIAL_ML")}`}
-                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_PLACE_BURIAL_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_PLACE_BURIAL_ML"),
+                })}
               />
             </div>
-            <div className="col-md-6">
-              <CardLabel>
-                {`${t("CR_OTHER_DETAILS_EN")}`}
-                {/* <span className="mandatorycss">*</span> */}
-              </CardLabel>
-              <TextArea
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="GeneralRemarks"
-                value={GeneralRemarks}
-                onChange={setSelectGeneralRemarks}
-                placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
-              />
+          
+              <div className="col-md-12"></div>
+              <div className="col-md-6">
+                <CardLabel>
+                  {`${t("CR_OTHER_DETAILS_EN")}`}
+                  {/* <span className="mandatorycss">*</span> */}
+                </CardLabel>
+                <TextArea
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="GeneralRemarks"
+                  value={GeneralRemarks}
+                  onChange={setSelectGeneralRemarks}
+                  placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+                />
+              </div>
             </div>
-          </div>
+      
         </div>
       </div>
       {/* </FormStep> */}

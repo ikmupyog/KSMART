@@ -5,7 +5,7 @@ function CommonFooter() {
     <footer className="footer-ksmart-bg">
       <div className="copygirht_footer">
         <div className="h6 wow animated fadeInUp">
-        Powered ByUPYOG | Designed, Developed and Maintained by Information Kerala Mission | Government of Kerala
+        Powered By UPYOG | Designed, Developed and Maintained by Information Kerala Mission | Government of Kerala
         </div>
       </div>
     </footer>

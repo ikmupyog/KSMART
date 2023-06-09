@@ -580,7 +580,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_MORE_INFO")}`}</span>{" "}
+              <span style={{ padding: "0 10px" }}>{`${t("CR_DEATH_MORE_INFO")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -602,7 +602,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_AUTOPSY_POSTMARTUM")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_AUTOPSY_POSTMARTUM")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -641,7 +641,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MANNER_OF_DEATH")}`}</span>{" "}
+                  <span style={{ padding: "0 10px" }}>{`${t("CR_MANNER_OF_DEATH")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -666,7 +666,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CAUSE_OF_DEATH")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_CAUSE_OF_DEATH")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -690,7 +690,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IMMEDIATE_CAUSE")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_IMMEDIATE_CAUSE")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -756,7 +756,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_UNDERLYING_CAUSE")}`}</span>{" "}
+                  <span style={{  padding: "0 10px" }}>{`${t("CR_UNDERLYING_CAUSE")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -884,7 +884,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_SIGNIFICANT")}`}</span>{" "}
+              <span style={{ padding: "0 10px" }}>{`${t("CR_OTHER_SIGNIFICANT")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -912,7 +912,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
+                  <span style={{ padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
                 </h1>
               </div>
             </div>
@@ -964,7 +964,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HABITS")}`}</span>{" "}
+              <span style={{ padding: "0 10px" }}>{`${t("CR_HABITS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -998,7 +998,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row" style={{ paddingBottom: "20px" }}>
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
