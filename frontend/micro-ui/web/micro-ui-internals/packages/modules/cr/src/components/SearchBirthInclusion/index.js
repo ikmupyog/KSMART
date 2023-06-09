@@ -42,16 +42,18 @@ const SearchBirthInclusion = ({ onSubmit, data, count, onInclusionClick, isLoadi
       limit: 10,
       // sortBy: "applicationNumber",
       // sortOrder: "DESC",
-      tenantId: Digit.ULBService.getCitizenCurrentTenant(),
+      tenantId: "kl.cochin",
+      // tenantId: Digit.ULBService.getCitizenCurrentTenant(),
     },
   });
-
+  console.log('p',Digit.ULBService.getCitizenCurrentTenant(), Digit.ULBService.getCurrentTenantId());
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
     // register("sortBy", "applicationNumber");
     // register("sortOrder", "DESC");
-    register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
+    register("tenantId","kl.cochin");
+    // register("tenantId", Digit.ULBService.getCitizenCurrentTenant());
   }, [register]);
 
   const onSort = useCallback((args) => {

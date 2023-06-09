@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useHistory } from "react-router-dom";
 
 import BirthInclusionEditPage from "./BirthInclusionEditPage";
+import BirthInclusionDetails from "./BirthInclusionDetails";
 
 const BirthInclusionPage = () => {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ const BirthInclusionPage = () => {
   let location = useLocation();
   let navigationData = location?.state?.inclusionData;
 
-  
+  const [isBirthInclusionEdit, setIsBirthInclusionEdit] =useState(false)
 
   const navigateAcknowledgement = ({birthInclusionFormsObj,navigationData}) =>{
     history.push({
@@ -59,7 +60,7 @@ const BirthInclusionPage = () => {
   //   Nation["common-masters"].Country.map((ob) => {
   //     cmbNation.push(ob);
   //   });
-  console.log("loader index",sex?.length > 0 , cmbPlace?.length > 0 , BirthCorrectionDocuments?.length > 0);
+  // console.log("loader index",sex?.length > 0 , cmbPlace?.length > 0 , BirthCorrectionDocuments?.length > 0);
 
   if (isLoad || isGenderLoad || isLoading) {
     return <Loader />;

@@ -31,30 +31,47 @@ const BirthInclusionDetails = () => {
   let navigationData = location?.state?.inclusionData;
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { data: RelationDetails = {}, isRelationDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Relation");
+  const { data: RelationDetails = {}, isRelationDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "Relation"
+  );
+  const { data: BirthInitiatorDetails = {}, BirthInitiatorDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "Initiator"
+  );
+
+  let cmbRelation = [];
+  BirthInitiatorDetails &&
+    BirthInitiatorDetails["birth-death-service"] &&
+    BirthInitiatorDetails["birth-death-service"].Relation &&
+    BirthInitiatorDetails["birth-death-service"].Initiator.map((ob) => {
+      cmbRelation.push(ob);
+    });
   const [toast, setToast] = useState({ show: false, message: "" });
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_BIRTH_INCLUSION_APPLICATION_DETAILS", {});
   const [showModal, setShowModal] = useState(false);
-  const [relationShiptoChild, setRelationShiptoChild] = useState('')
-  const [aadharNo, setAadharNo] = useState(params?.birthInlcusionDetails?.aadharNo?params?.birthInlcusionDetails?.aadharNo:'')
-  const [name, setName] = useState(params?.birthInlcusionDetails?.name?params?.birthInlcusionDetails?.name:'')
-  const [mobileNo, setMobileNo] = useState(params?.birthInlcusionDetails?.mobileNo?params?.birthInlcusionDetails?.mobileNo:'')
-  const [address, setAddress] = useState(params?.birthInlcusionDetails?.address ?params?.birthInlcusionDetails?.address:'')
+  const [relationShiptoChild, setRelationShiptoChild] = useState(
+    params?.birthInlcusionDetails?.relationShiptoChild
+      ? cmbRelation?.filter((item) => item.code == params?.birthInlcusionDetails?.relationShiptoChild)[0]
+      : ""
+  );
+  const [aadharNo, setAadharNo] = useState(params?.birthInlcusionDetails?.aadharNo ? params?.birthInlcusionDetails?.aadharNo : "");
+  const [name, setName] = useState(params?.birthInlcusionDetails?.name ? params?.birthInlcusionDetails?.name : "");
+  const [mobileNo, setMobileNo] = useState(params?.birthInlcusionDetails?.mobileNo ? params?.birthInlcusionDetails?.mobileNo : "");
+  const [address, setAddress] = useState(params?.birthInlcusionDetails?.address ? params?.birthInlcusionDetails?.address : "");
   const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [AadharUploadedFile, setAadharUploadedFile] = useState(null);
-  const [documentFile, setDocumentFile] = useState(null);
+  const [AadharUploadedFile, setAadharUploadedFile] = useState(
+    params?.birthInlcusionDetails?.AadharUploadedFile ? params.birthInlcusionDetails.AadharUploadedFile : null
+  );
+  const [documentFile, setDocumentFile] = useState(params?.birthInlcusionDetails?.documentFile ? params.birthInlcusionDetails.documentFile : null);
   const [aadharDocumentFile, setAadharDocumentFile] = useState(null);
   const [documentFileError, setDocumentFileError] = useState(null);
   const [documentAadharFileError, setDocumentAadharFileError] = useState(null);
   const config = { texts: { submitBarLabel: "Next" } };
 
-  let cmbRelation = [];
-  RelationDetails &&
-    RelationDetails["birth-death-service"] && RelationDetails["birth-death-service"].Relation &&
-    RelationDetails["birth-death-service"].Relation.map((ob) => {
-      cmbRelation.push(ob);
-    });
   useEffect(() => {
     (async () => {
       setDocumentAadharFileError(null);
@@ -63,9 +80,9 @@ const BirthInclusionDetails = () => {
           setDocumentAadharFileError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", documentFile, tenantId);
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", aadharDocumentFile, tenantId);
             if (response?.data?.files?.length > 0) {
-                setAadharUploadedFile(response?.data?.files[0]?.fileStoreId);
+              setAadharUploadedFile(response?.data?.files[0]?.fileStoreId);
               //   const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               //   setDocPreview(fileDetails);
             } else {
@@ -86,7 +103,7 @@ const BirthInclusionDetails = () => {
           try {
             const response = await Digit.UploadServices.Filestorage("citizen-profile", documentFile, tenantId);
             if (response?.data?.files?.length > 0) {
-              setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              setDocumentFile(response?.data?.files[0]?.fileStoreId);
               //   const fileDetails = await fetchFile(response?.data?.files[0]?.fileStoreId);
               //   setDocPreview(fileDetails);
             } else {
@@ -100,48 +117,55 @@ const BirthInclusionDetails = () => {
   const selectfile = (e) => {
     setDocumentFile(e.target.files[0]);
   };
-  const setSelectMobile =(e) => {
+  const setSelectMobile = (e) => {
     if (e.target.value.trim().length >= 0) {
-        setMobileNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setMobileNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
-  }
-  const setSelectAadharNo =(e) => {
+  };
+  const setSelectAadharNo = (e) => {
     if (e.target.value.trim().length >= 0) {
-        setAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
     }
-  }
+  };
   const selectAadharfile = (e) => {
     setAadharDocumentFile(e.target.files[0]);
   };
   const gotoEditInclusion = async (data) => {
     history.push({
       pathname: `/digit-ui/citizen/cr/birth-inclusion-edit`,
-    //   pathname: `/digit-ui/citizen/cr/birth-inclusion-details`,
-      
+      //   pathname: `/digit-ui/citizen/cr/birth-inclusion-details`,
+
       state: { inclusionData: navigationData, isfetchData: true },
     });
   };
-  const onSelect =(key, data)=>{
+  const onSelect = (key, data) => {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-  }
-  const onSubmitBirthInclusion =()=>{
-
-    onSelect("birthInlcusionDetails", {
-        relationShiptoChild:relationShiptoChild.code,
+  };
+  const onSubmitBirthInclusion = () => {
+    if (relationShiptoChild === "") {
+      setToast({ show: true, message: t("CR_INVALID_RELATIONSHIP_CHILD") });
+    } else if (documentFile == null) {
+      setToast({ show: true, message: t("CR_INVALID_PROOF_GUARDIAN") });
+    } else if (aadharDocumentFile == null) {
+      setToast({ show: true, message: t("CR_INVALID_AADHAR_DOC") });
+    } else {
+      onSelect("birthInlcusionDetails", {
+        relationShiptoChild: relationShiptoChild.code,
         documentFile,
         aadharNo,
         name,
         mobileNo,
         address,
         AadharUploadedFile,
-    })
-    gotoEditInclusion()
-  }
+      });
+      gotoEditInclusion();
+    }
+  };
   return (
     <React.Fragment>
       <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
         <div style={{ width: "100%" }}>
-          <FormStep onSelect={onSubmitBirthInclusion}  config={config}>
+          <FormStep onSelect={onSubmitBirthInclusion} config={config}>
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-12">
@@ -154,10 +178,13 @@ const BirthInclusionDetails = () => {
             <div className="row">
               <div className="col-md-12" style={{ display: "flex" }}>
                 <div className="col-md-4">
-                  <CardLabel>{t("RelationShip to the child")}</CardLabel>
+                  <CardLabel>
+                    {t("CR_RELATIONSHIP_CHILD")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <Dropdown
                     //   selected={birthInclusionFormsObj?.CHILD_SEX?.curValue}
-                    select={(e)=>setRelationShiptoChild(e)}
+                    select={(e) => setRelationShiptoChild(e)}
                     selected={relationShiptoChild}
                     option={sortDropdownNames(cmbRelation ? cmbRelation : [], "code", t)}
                     optionKey="code"
@@ -166,15 +193,18 @@ const BirthInclusionDetails = () => {
                   />
                 </div>
                 <div className="col-md-6">
-                  <CardLabel>{t("Proof of Guardianship (IF Guardian)")}</CardLabel>
+                  <CardLabel>
+                    {t("CR_PROOF_GUARDIAN")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
                     onUpload={selectfile}
                     onDelete={() => {
-                      setUploadedFile(null);
+                      setDocumentFile(null);
                     }}
-                    message={uploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
+                    message={documentFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
               </div>
@@ -191,16 +221,19 @@ const BirthInclusionDetails = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+                  <CardLabel>
+                    {t("CS_COMMON_AADHAAR")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
                     name="aadharNo"
-                      value={aadharNo}
+                    value={aadharNo}
                     //disable={childAadharNo === "" ? false : isDisableEdit}
-                      onChange={(e)=> setSelectAadharNo(e)}
+                    onChange={(e) => setSelectAadharNo(e)}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
                     inputProps={{
                       maxLength: 12,
@@ -209,16 +242,19 @@ const BirthInclusionDetails = () => {
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{t("CR_NAME")}</CardLabel>
+                  <CardLabel>
+                    {t("CR_NAME")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
                     name="name"
-                      value={name}
+                    value={name}
                     //   onChange={setSelectChildFirstNameEn}
-                     onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     //disable={childFirstNameEn === "" ? true : isDisableEdit}
                     placeholder={`${t("CR_NAME")}`}
                     {...(validation = {
@@ -230,7 +266,10 @@ const BirthInclusionDetails = () => {
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
+                  <CardLabel>
+                    {t("CR_MOBILE_NO")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -238,7 +277,7 @@ const BirthInclusionDetails = () => {
                     optionKey="i18nKey"
                     name="mobileNo"
                     value={mobileNo}
-                    onChange={(e) =>setSelectMobile(e)}
+                    onChange={(e) => setSelectMobile(e)}
                     // disable={isEdit}
                     placeholder={`${t("CR_MOBILE_NO")}`}
                     {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
@@ -249,7 +288,10 @@ const BirthInclusionDetails = () => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                <CardLabel>{`${t("CR_ADDRESS")}`}</CardLabel>
+                  <CardLabel>
+                    {`${t("CR_ADDRESS")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextArea
                     t={t}
                     isMandatory={false}
@@ -264,17 +306,19 @@ const BirthInclusionDetails = () => {
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
                   />
                 </div>
-                <div className="col-md-6"  style={{display:"flex",flexDirection:"column",height:"135px",justifyContent:"space-between"}}>
-                <CardLabel>{`${t("Attach Aadhaar Document of the Applicant")}`}
-                <div style={{fontSize:"12px",color:"grey"}}>{`${t("(Attach Aadhaar Document of the Applicant)")}`}</div></CardLabel>
-               
-                <UploadFile
-                   
+                <div className="col-md-6" style={{ display: "flex", flexDirection: "column", height: "135px", justifyContent: "space-between" }}>
+                  <CardLabel>
+                    {`${t("CR_AADHAR_DOC")}`}
+                    <span className="mandatorycss">*</span>
+                    <div style={{ fontSize: "12px", color: "grey" }}>{`${t("CR_AADHAR_DOC_SUB")}`}</div>
+                  </CardLabel>
+
+                  <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
                     onUpload={selectAadharfile}
                     onDelete={() => {
-                        setAadharUploadedFile(null);
+                      setAadharUploadedFile(null);
                     }}
                     message={AadharUploadedFile ? `1 ${t(`CR_ACTION_FILEUPLOADED`)}` : t(`CR_ACTION_NO_FILEUPLOADED`)}
                   />
@@ -284,7 +328,7 @@ const BirthInclusionDetails = () => {
           </FormStep>
         </div>
       </div>
-      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast(false)} />}
+      {toast.show && <Toast error={toast.show} label={toast.message} onClose={() => setToast({ show: false, message: "" })} />}
     </React.Fragment>
   );
 };
