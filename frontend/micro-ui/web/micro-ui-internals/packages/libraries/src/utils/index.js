@@ -248,6 +248,9 @@ const hrmsAccess = () => {
   const HRMS_ACCESS = userRoles?.filter((role) => hrmsRoles.includes(role));
   return HRMS_ACCESS?.length > 0;
 };
+const trimURL = (url = "") => {
+  return url?.split("?")[0]
+}
 
 export default {
   pdf: PDFUtil,
@@ -282,5 +285,6 @@ export default {
   tlAccess,
   crAccess,
   dfmAccess,
-  dataFormatter
+  dataFormatter,
+  trimURL
 };

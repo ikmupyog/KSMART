@@ -1,9 +1,7 @@
-import { Loader, Modal, FormComposer, Toast } from "@egovernments/digit-ui-react-components";
+import { Loader, Modal, FormComposer } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect } from "react";
 
 import { configBirthApproverApplication } from "../config";
-import * as predefinedConfig from "../config";
-import { trimURL } from "../../../cr/src/utils";
 
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
@@ -71,7 +69,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     console.log({ fileStoreIds });
     const newThumbnails = fileStoreIds.map((key) => {
       const fileType = Digit.Utils.getFileTypeFromFileStoreURL(key.url);
-      return { large: trimURL(key.url.split(",")[1]), small: trimURL=(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: trimURL(key.url) };
+      return { large: Digit.Utils.trimURL(key.url.split(",")[1]), small: Digit.Utils.trimURL(key.url.split(",")[2]), key: key.id, type: fileType, pdfUrl: Digit.Utils.trimURL(key.url) };
     });
     console.log({ newThumbnails });
     return newThumbnails;
@@ -182,12 +180,12 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
       // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
       wfDocuments: uploadedFile
         ? [
-            {
-              documentType: action?.action + " DOC",
-              fileName: file?.name,
-              fileStoreId: uploadedFile,
-            },
-          ]
+          {
+            documentType: action?.action + " DOC",
+            fileName: file?.name,
+            fileStoreId: uploadedFile,
+          },
+        ]
         : null,
     };
     submitAction({
@@ -202,7 +200,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
       actionCancelLabel={t(config.label.cancel)}
       actionCancelOnSubmit={closeModal}
       actionSaveLabel={t(config.label.submit)}
-      actionSaveOnSubmit={() => {}}
+      actionSaveOnSubmit={() => { }}
       // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
       formId="modal-action"
     >
@@ -217,7 +215,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           onSubmit={submit}
           defaultValues={defaultValues}
           formId="modal-action"
-          // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
+        // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
         />
       )}
     </Modal>
