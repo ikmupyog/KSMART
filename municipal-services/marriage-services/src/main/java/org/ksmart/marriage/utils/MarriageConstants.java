@@ -5,6 +5,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class MarriageConstants {
+
+ // Patterns for constraint validations
+   public static final String PATTERN_NAME = "^[^\\\\$\\\"<>?\\\\\\\\~`!@#$%^()+={}\\\\[\\\\]*,:;“”‘’]*$";
+   public static final String PATTERN_AADHAAR = "^[1-9][0-9]{11}$";
+   public static final String PATTERN_MOBILE = "^[1-9][0-9]{9,14}$";
+   public static final String PATTERN_TENANT = "^kl\\.[a-z]+$";
+   public static final String PATTERN_PINCODE = "^[1-9][0-9]{5}$";
+   public static final String PATTERN_YEAR = "^[1-9][0-9]{3}$";
+   public static final String PATTERN_MODULE_CODE = "^[A-Z]+$";
+   public static final String PATTERN_ENGLISH = "^[()_?a-zA-Z0-9-]+$;";
+   public static final String PATTERN_PASSPORT =  "^[A-PR-WY][1-9]\\d\\s?\\d{4}[1-9]$"; 
+   public static final String PATTERN_SSN = "^(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$";
+   public static final String PATTERN_EMAIL = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
+
+   
+
+   // public static final String PATTERN_MALAYALAM = "U+0D00–U+0D7F";
+   //public static final String PATTERN_MALAYALAM = "(?:\P{M}\p{M}*)+";
+   
+
     public static final String TENANTS = "tenants";
     public static final String TENANT_MODULE_NAME = "tenant";
     public static final String CR_MDMS_MARRIAGETYPE = "MarriagePlaceType";
@@ -115,6 +135,7 @@ public class MarriageConstants {
 
 
        public static final String PLACE_TYPE_PUBLIC_PLACE = "PUBLIC_PLACE";
+       
 
         public static final String ADDRESS_INDIA = "COUNTRY_INDIA";
 
@@ -159,6 +180,7 @@ public class MarriageConstants {
        public static final String MARRIAGE_TYPE = "TypeOfMarriage";
 
        public static final String SUB_REGISTAR_PLACE_TYPE = "SubRegistar";
+     
 
        public static final String WORKFLOW_STATUS_APPROVED = "APPROVED";
        

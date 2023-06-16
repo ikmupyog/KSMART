@@ -126,7 +126,6 @@ public class MarriageRegistryService {
                     log.error("DateToWords conversion error. threw an Exception: ",e);
                 }
             }
-
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
@@ -154,7 +153,6 @@ public class MarriageRegistryService {
         }
 
     }
-
     public List<MarriageCertificate> searchCertificate(MarriageRegistrySearchCriteria criteria,RequestInfo requestInfo) {
         List<MarriageRegistryDetails> obj = repository.searchMarriageRegistry(criteria,requestInfo);
         if(null!=obj&&obj.size()>0) {
@@ -163,9 +161,6 @@ public class MarriageRegistryService {
             throw  new CustomException("MARRIAGE REGISTRY DATA NOT FOUND", " Marriage Registry data not found");
         }
     }
-
-
-
     public List<MarriageCorrectionDetails> updateMarriageRegistry(MarriageCorrectionRequest request) {
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());

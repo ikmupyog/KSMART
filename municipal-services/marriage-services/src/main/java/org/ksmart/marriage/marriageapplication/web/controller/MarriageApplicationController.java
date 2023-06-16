@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/marriagedetails")
 
-public class MarriageApplicationController {
+public class MarriageApplicationController implements MarriageApplicationBaseController {
     private final MarriageApplicationService MarriageService;
     private final ResponseInfoFactory responseInfoFactory;
     private final MarriageRegistryRequestService marriageRegistryRequestService;
@@ -47,6 +47,7 @@ public class MarriageApplicationController {
         this.marriageRegistryService = marriageRegistryService;
         this.repository = repository;
     }
+    @Override
     @PostMapping(value = {"/_createmarriage"})
     
     public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {

@@ -324,6 +324,7 @@ public class MarriageRegistryRepository {
                         if (!isImageExists(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
 //                    req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl( req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
 //                }else{
+                    System.out.println("CheckgroomUrl"+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
                             log.error("PDF_ERROR. Marriage Certificate , Invalid Groom Photo Path!!!");
                             throw new CustomException("PDF_ERROR", "Invalid Groom Photo Path!!!");
                         }

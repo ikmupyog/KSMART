@@ -102,9 +102,13 @@ public class MarriageApplicationService {
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
 
+        // WorkFlowCheck wfc = new WorkFlowCheck();
+
         validatorService.validateCommonFields( request);
 
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
+
+        // validatorService.ruleEngineMarriage(request, wfc, mdmsData);
 
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
 

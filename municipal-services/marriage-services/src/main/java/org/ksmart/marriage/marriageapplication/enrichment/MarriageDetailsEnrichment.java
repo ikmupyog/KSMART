@@ -642,7 +642,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     marriage.getBrideAddressDetails().setPinNoPresent(null);
                     marriage.getBrideAddressDetails().setPoNoPresent(null);
 
-
                     marriage.getBrideAddressDetails().setCountryIdPresent(null);
                     marriage.getBrideAddressDetails().setStateIdPresent(null);
 
@@ -664,7 +663,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                     marriage.getBrideAddressDetails().setTownOrVillagePresent(null);
                     marriage.getBrideAddressDetails().setVillageNamePresent(null);
-
 
                     marriage.getBrideAddressDetails().setCountryIdPresent(null);
 
@@ -717,7 +715,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                     marriage.getBrideAddressDetails().setHouseNameNoEnPermanent(null);
                     marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(null);
-
 
                     marriage.getBrideAddressDetails().setPermntOthrTalukName(null);
                     marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(null);
