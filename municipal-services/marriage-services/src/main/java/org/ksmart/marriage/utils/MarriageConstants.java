@@ -19,7 +19,7 @@ public class MarriageConstants {
    public static final String PATTERN_SSN = "^(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$";
    public static final String PATTERN_AGE ="^(?:[1-9][0-9]?|1[01][0-9]|120)$";
    public static final String PATTERN_EMAIL = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
-
+   public static final String PATTERN_NAME_ML = "^[\\u0D02\\u0D03\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D28\\u0D2A-\\u0D39\\u0D3E-\\u0D43\\u0D46-\\u0D48\\u0D4A-\\u0D4D\\u0D57\\u0D60\\u0D61\\u0D66-\\u0D6F][0-9]*$";
 
    // public static final String PATTERN_MALAYALAM = "U+0D00–U+0D7F";
    //public static final String PATTERN_MALAYALAM = "(?:\P{M}\p{M}*)+";
