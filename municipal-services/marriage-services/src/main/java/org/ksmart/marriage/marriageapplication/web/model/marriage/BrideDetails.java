@@ -48,14 +48,12 @@ public class BrideDetails {
     private String residentship;
 
     @Schema(type = "string", description = "Aadhaar number")
-    // @NotBlank(message = "Aadhaar number is required")
     @Size(min = 12, max = 12, message = "BRIDE DETAILS :Aadhaar number must be a 12 digit number")
     @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "BRIDE DETAILS :Invalid aadhaar number")
     @JsonProperty("brideAadharNo")
     private String aadharno;
 
     @Schema(type = "string", description = "Passport number")
-    // @NotBlank(message = "Aadhaar number is required")
     @Size(min=8,max=8, message = "BRIDE DETAILS :Passport number  must be an 8 digit number")
     @Pattern(regexp = MarriageConstants.PATTERN_PASSPORT, message = "BRIDE DETAILS :Invalid Passport number")
     @JsonProperty("bridePassportNo")
@@ -90,7 +88,7 @@ public class BrideDetails {
 
   
     @Schema(type = "string", description = "Bride's Middle name malayalam")
-    @Size(max = 64)//, message = "Middle name in malayalam length cannot exceed 64 characters")
+    @Size(max = 64)//, message =````````````````````````````````````````````````````````````````````````````````````````````````
     @JsonProperty("brideMiddlenameMl")
     private String middlenameMl;
 
@@ -100,7 +98,7 @@ public class BrideDetails {
     private String lastnameEn;
 
     @Schema(type = "string", description = "Bride's Last name malayalam")
-    @Size(max = 64)//, message = "Last name in malayalam length cannot exceed 64 characters")
+    @Size(max = 64)
     @JsonProperty("brideLastnameMl")
     private String lastnameMl;
 
@@ -112,13 +110,14 @@ public class BrideDetails {
     private Long mobile;
 
     @Schema(type = "string", description = "Email")
- //   @NotBlank(message = "BRIDE DETAILS :Mobile number is required")
     @Size(min = 10, max = 10, message = "BRIDE DETAILS :Invalid Email Id")
-    @Pattern(regexp = MarriageConstants.PATTERN_MOBILE, message = "BRIDE DETAILS :Invalid Email Id")
+    @Pattern(regexp = MarriageConstants.PATTERN_EMAIL, message = "BRIDE DETAILS :Invalid Email Id")
     @JsonProperty("brideEmailid")
     private String emailid;
 
-    @Size(max = 20)
+    @Schema(type = "string", description = "Email")
+    @NotBlank(message = "BRIDE DETAILS :Gender is required")
+    @Size(max = 20, message = "BRIDE DETAILS :length cannot exceed 64 characters")
     @JsonProperty("brideGender")
     private String gender;
 
@@ -126,10 +125,16 @@ public class BrideDetails {
     @JsonProperty("brideDOB")
     private long dateofbirth;
 
+
+    @Schema(type = "integer", description = "Age")
+    @Size(min = 2, max = 3, message = "BRIDE DETAILS :Invalid age")
+    @Pattern(regexp = MarriageConstants.PATTERN_AGE, message = "BRIDE DETAILS :Invalid Age")
     @JsonProperty("brideAge")
     private Integer age;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Parent or Guardian")
+    @Size(max = 64, message = "BRIDE DETAILS:Parent/guardian flag cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME, message = "Invalid  Parent or Guardian")
     @JsonProperty("brideParentGuardian")
     private String parentGuardian;
 
@@ -147,7 +152,7 @@ public class BrideDetails {
 
 
     @Schema(type = "string", description = "Name of Mother")
-    @Size(max = 200, message = "Name length of Bride's mother cannot exceed 200 characters")
+    @Size(max = 200, message = "BRIDE DETAILS: Length of Mother's name cannot exceed 200 characters")
     @Pattern(regexp = MarriageConstants.PATTERN_NAME, message = "Invalid  name")
     @JsonProperty("brideMothernameEn")
     private String mothernameEn;
@@ -159,22 +164,20 @@ public class BrideDetails {
     private String mothernameMl;
 
     @Schema(type = "string", description = "Aadhaar number")
-    // @NotBlank(message = "Aadhaar number is required")
-    @Size(min = 12, max = 12, message = "Aadhaar number of Brides's father must be a 12 digit number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS:Aadhaar number of father must be a 12 digit number")
     @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "Invalid aadhaar number")
     @JsonProperty("brideFatherAadharNo")
     private String fatherAadharno;
 
     @Schema(type = "string", description = "Aadhaar number")
-    // @NotBlank(message = "Aadhaar number is required")
-    @Size(min = 12, max = 12, message = "Aadhaar number of Brides's mother must be a 12 digit number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS:Aadhaar number of  mother must be a 12 digit number")
     @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "Invalid aadhaar number")
     @JsonProperty("brideMotherAadharNo")
     private String motherAadharno;
 
-    @Schema(type = "string", description = "Name of Guardian in malayalam")
-    @Size(max = 200, message = "Name length of Bride's guardian  cannot exceed 200 characters")
-    @Pattern(regexp = MarriageConstants.PATTERN_NAME, message = "Invalid  name")
+    @Schema(type = "string", description = "Name of Guardian")
+    @Size(max = 200, message = "BRIDE DETAILS:Name length of guardian  cannot exceed 200 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME, message = "BRIDE DETAILS:Invalid  name of guardian")
     @JsonProperty("brideGuardiannameEn")
     private String guardiannameEn;
 
@@ -185,22 +188,24 @@ public class BrideDetails {
     private String guardiannameMl;
 
     @Schema(type = "string", description = "Aadhaar number")
-    // @NotBlank(message = "Aadhaar number is required")
-    @Size(min = 12, max = 12, message = "Aadhaar number of Brides's guardian must be a 12 digit number")
-    @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "Invalid aadhaar number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS:Aadhaar number of guardian must be a 12 digit number")
+    @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "BRIDE DETAILS:Invalid aadhaar number of guardian")
     @JsonProperty("brideGuardianAadharNo")
     private String guardianAadharno;
 
     @Schema(type = "string", description = "Marital Status")
-    @NotBlank(message = "Marital Status is required")
-    @Size(min = 64, message = "Marital Statusof Bride cannot exceed 64 characters")
+    @NotBlank(message = "BRIDE DETAILS:Marital Status is required")
+    @Size(min = 64, message = "BRIDE DETAILS:Marital Status cannot exceed 64 characters")
     @JsonProperty("brideMaritalstatusID")
     private String maritalstatusid;
 
-
+    @Schema(type = "boolean", description = "Is spouseliving")
     @JsonProperty("brideIsSpouseLiving")
     private Boolean brideIsSpouseLiving;
 
+    @Schema(type = "integer", description = "No: of Spouse")
+    @Size(max = 2,message = "BRIDE DETAILS :Invalid No: of Spouse")
+    @Pattern(regexp = MarriageConstants.PATTERN_AGE, message = "BRIDE DETAILS :Invalid No: of Spouse")
     @JsonProperty("brideNoOfSpouse")
     private Integer brideNoOfSpouse;
 

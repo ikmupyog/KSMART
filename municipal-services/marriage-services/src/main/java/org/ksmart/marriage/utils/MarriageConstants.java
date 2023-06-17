@@ -17,9 +17,9 @@ public class MarriageConstants {
    public static final String PATTERN_ENGLISH = "^[()_?a-zA-Z0-9-]+$;";
    public static final String PATTERN_PASSPORT =  "^[A-PR-WY][1-9]\\d\\s?\\d{4}[1-9]$"; 
    public static final String PATTERN_SSN = "^(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$";
+   public static final String PATTERN_AGE ="^(?:[1-9][0-9]?|1[01][0-9]|120)$";
    public static final String PATTERN_EMAIL = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
 
-   
 
    // public static final String PATTERN_MALAYALAM = "U+0D00–U+0D7F";
    //public static final String PATTERN_MALAYALAM = "(?:\P{M}\p{M}*)+";

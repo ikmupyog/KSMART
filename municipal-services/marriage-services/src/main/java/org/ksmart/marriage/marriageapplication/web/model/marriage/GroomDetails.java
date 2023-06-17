@@ -2,10 +2,14 @@ package org.ksmart.marriage.marriageapplication.web.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
+import org.ksmart.marriage.utils.MarriageConstants;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 @Getter
 @Setter
@@ -13,11 +17,17 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 public class GroomDetails {
-    @Size(max = 64)
+
+    @Schema(type = "string", format = "uuid", description = "Bride Details Id")
+    @Size(max = 64, message = "GROOM DETAILS :Groom id length cannot exceed 64 characters")
     @JsonProperty("groomId")
     private String groomId;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Tenant identification number", example = "kl.cochin")
+    @NotBlank(message = "GROOM DETAILS :Tenant identification number is required")
+    @Size(max = 64, message = "GROOM DETAILS :Tenant identification number length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_TENANT,
+             message = "GROOM DETAILS :Invalid tenant identification number format, eg: kl.cochin")
     @JsonProperty("tenentId")
     private String tenentId;
 
@@ -34,7 +44,9 @@ public class GroomDetails {
     @JsonProperty("groomResidentShip")
     private String residentship;
 
-    @Size(max = 15)
+    @Schema(type = "string", description = "Aadhaar number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS :Aadhaar number must be a 12 digit number")
+    @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "BRIDE DETAILS :Invalid aadhaar number")
     @JsonProperty("groomAadharNo")
     private String aadharno;
 
@@ -108,29 +120,43 @@ public class GroomDetails {
     @JsonProperty("groomMothernameMl")
     private String mothernameMl;
 
-    @Size(max = 15)
+    @Schema(type = "string", description = "Aadhaar number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS :Aadhaar number must be a 12 digit number")
+    @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "BRIDE DETAILS :Invalid aadhaar number")
     @JsonProperty("groomFatherAadharNo")
     private String fatherAadharno;
-    @Size(max = 15)
+
+    @Schema(type = "string", description = "Aadhaar number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS :Aadhaar number must be a 12 digit number")
+    @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "BRIDE DETAILS :Invalid aadhaar number")
     @JsonProperty("groomMotherAadharNo")
     private String motherAadharno;
+
     @Size(max = 200)
     @JsonProperty("groomGuardiannameEn")
     private String guardiannameEn;
+    
     @Size(max = 200)
     @JsonProperty("groomGuardiannameMl")
     private String guardiannameMl;
     @Size(max = 15)
+
+    @Schema(type = "string", description = "Aadhaar number")
+    @Size(min = 12, max = 12, message = "BRIDE DETAILS :Aadhaar number must be a 12 digit number")
+    @Pattern(regexp = MarriageConstants.PATTERN_AADHAAR, message = "BRIDE DETAILS :Invalid aadhaar number")
     @JsonProperty("groomGuardianAadharNo")
     private String guardianAadharno;
 
     @Size(max = 64)
     @JsonProperty("groomMaritalstatusID")
     private String maritalstatusid;
+
     @JsonProperty("groomIsSpouseLiving")
     private Boolean groomIsSpouseLiving;
+
     @JsonProperty("groomNoOfSpouse")
     private Integer groomNoOfSpouse;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
