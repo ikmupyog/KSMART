@@ -1,8 +1,12 @@
 package org.ksmart.marriage.marriageapplication.web.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.ksmart.marriage.utils.MarriageConstants;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 @Getter
 @Setter
@@ -11,143 +15,215 @@ import javax.validation.constraints.Size;
 @Builder
 public class GroomAddressDetails {
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Present country")
+    @NotBlank(message = "GROOM ADDRESS :Present country is required")
+    @Size(max = 64, message = "GROOM ADDRESS: Present country length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present country")
     @JsonProperty("presentaddressCountry")
     private String presentaddressCountry;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Present State")
+    @Size(max = 64, message = "GROOM ADDRESS: Present state length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present state")
     @JsonProperty("presentaddressStateName")
     private String presentaddressStateName;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Localbody Name")
+    @Size(max = 64, message = "GROOM ADDRESS:Present LB length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present LB")
     @JsonProperty("presentInsideKeralaLBName")
     private String presentInsideKeralaLBName;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "District")
+    @Size(max = 64, message = "GROOM ADDRESS:Present district length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present district")
     @JsonProperty("presentInsideKeralaDistrict")
     private String presentInsideKeralaDistrict;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Taluk Name")
+    @Size(max = 64, message = "GROOM ADDRESS:Present Taluk length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Taluk")
     @JsonProperty("presentInsideKeralaTaluk")
     private String presentInsideKeralaTaluk;
 
-    @Size(max = 64)
+    @Schema(type = "string", description ="Village Name")
+    @Size(max = 64, message = "GROOM ADDRESS:Present village length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present LB")
     @JsonProperty("presentInsideKeralaVillage")
     private String presentInsideKeralaVillage;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Locality Name")
+    @Size(max = 1000, message = "GROOM ADDRESS:Present Locality length cannot exceed 1000 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Locality")
     @JsonProperty("presentInsideKeralaLocalityNameEn")
     private String presentInsideKeralaLocalityNameEn;
 
-    @Size(max = 2000)
+    @Schema(type = "string", description = "Street Name")
+    @Size(max = 2000, message = "GROOM ADDRESS:Present street name length cannot exceed 2000 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present street name")
     @JsonProperty("presentInsideKeralaStreetNameEn")
     private String presentInsideKeralaStreetNameEn;
 
-    @Size(max = 2500)
+    @Schema(type = "string", description = "House Name")
+    @Size(max = 2500, message = "GROOM ADDRESS:Present House Name length cannot exceed 2500 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present House Name")
     @JsonProperty("presentInsideKeralaHouseNameEn")
     private String presentInsideKeralaHouseNameEn;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Locality Name in malayalam")
+    @Size(max = 1000)//, message = "GROOM ADDRESS:Invalid Present Locality Name in malayalam length cannot exceed 1000 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Locality Name in malayalam")
     @JsonProperty("presentInsideKeralaLocalityNameMl")
     private String presentInsideKeralaLocalityNameMl;
 
-    @Size(max = 2000)
+    @Schema(type = "string", description = "Street Name in malayalam")
+    @Size(max = 2000)//, message = "GROOM ADDRESS:Street Name in malayalam length cannot exceed 2000 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Street Name in malayalam")
     @JsonProperty("presentInsideKeralaStreetNameMl")
     private String presentInsideKeralaStreetNameMl;
 
-    @Size(max = 2500)
+    @Schema(type = "string", description = "House Name in malayalam")
+    @Size(max = 2500 )//, message = "GROOM ADDRESS:Invalid Present House Name in malayalam")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present House Name in malayalam")
     @JsonProperty("presentInsideKeralaHouseNameMl")
     private String presentInsideKeralaHouseNameMl;
 
-    @Size(max = 10)
+    @Schema(type = "string", description = "Pincode")
+    @Size(min = 6, max = 6, message = "Invalid pincode")
+    @Pattern(regexp = MarriageConstants.PATTERN_PINCODE, message = "Invalid pincode")
     @JsonProperty("presentInsideKeralaPincode")
     private String presentInsideKeralaPincode;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "PostOffice Name")
+    @Size(max = 64, message = "GROOM ADDRESS:Present Postoffice Name length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Postoffice Name")
     @JsonProperty("presentInsideKeralaPostOffice")
     private String presentInsideKeralaPostOffice;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Ward Number")
+    @Size(max = 64, message = "GROOM ADDRESS:Invalid Present Ward Number length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Ward Number")
     @JsonProperty("presentWardNo")
     private String presentWardNo;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Outside Kerala District")
+    @Size(max = 64, message = "GROOM ADDRESS:Outside Kerala District length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala District")
     @JsonProperty("presentOutsideKeralaDistrict")
     private String presentOutsideKeralaDistrict;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Outside Kerala Taluk")
+    @Size(max = 250, message = "GROOM ADDRESS:Outside Kerala Taluk length cannot exceed 250 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala Taluk")
     @JsonProperty("presentOutsideKeralaTaluk")
     private String presentOutsideKeralaTalukName;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Outside Kerala Village/Town")
+    @Size(max = 64, message = "GROOM ADDRESS:Outside Kerala Village/Town length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala Village/Town")
     @JsonProperty("presentOutsideKeralaVillage")
     private String presentOutsideKeralaVillageorTown;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Outside Kerala Village Name")
+    @Size(max = 250, message = "GROOM ADDRESS:Outside Kerala Village name length cannot exceed 250 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala Village Name")
     @JsonProperty("presentOutsideKeralaCityVilgeEn")
     private String presentOutsideKeralaCityVilgeNameEn;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Pincode")
+    @Size(min = 6, max = 6, message = "Invalid pincode")
+    @Pattern(regexp = MarriageConstants.PATTERN_PINCODE, message = "Invalid pincode")
     @JsonProperty("presentOutsideKeralaPincode")
     private String presentOutsideKeralaPincode;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Outside Kerala Postoffice Name")
+    @Size(max = 64, message = "GROOM ADDRESS:Outside Kerala Postoffice name length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala Postoffice Name")
     @JsonProperty("presentOutsideKeralaPostOfficeEn")
     private String presentOutsideKeralaPostOfficeEn;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "Outside Kerala Postoffice Name in malayalam")
+    @Size(max = 64)//, message = "GROOM ADDRESS:"Invalid Present LB")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Outside Kerala Postoffice Name in malayalam")
     @JsonProperty("presentOutsideKeralaPostOfficeMl")
     private String presentOutsideKeralaPostOfficeMl;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Outside Kerala Locality Name")
+    @Size(max = 1000, message = "GROOM ADDRESS:Outside Kerala Locality name length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala Locality Name")
     @JsonProperty("presentOutsideKeralaLocalityNameEn")
     private String presentOutsideKeralaLocalityNameEn;
 
-    @Size(max = 2000)
+    @Schema(type = "string", description = "Outside Kerala Street Name")
+    @Size(max = 64, message = "GROOM ADDRESS:Outside Kerala street name length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala Street Name")
     @JsonProperty("presentOutsideKeralaStreetNameEn")
     private String presentOutsideKeralaStreetNameEn;
 
-    @Size(max = 2500)
+    @Schema(type = "string", description = "Outside Kerala House Name")
+    @Size(max = 2500, message = "GROOM ADDRESS:Outside Kerala House Name length cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside Kerala House Name")
     @JsonProperty("presentOutsideKeralaHouseNameEn")
     private String presentOutsideKeralaHouseNameEn;
 
     @Size(max = 1000)
+    @Schema(type = "string", description = "Outside Kerala locality in malayalam")
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Outside Kerala locality in malayalam")
     @JsonProperty("presentOutsideKeralaLocalityNameMl")
     private String presentOutsideKeralaLocalityNameMl;
 
+    @Schema(type = "string", description = "Outside Kerala StreetName in malayalam")
     @Size(max = 2000)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Outside Kerala StreetName in malayalam")
     @JsonProperty("presentOutsideKeralaStreetNameMl")
     private String presentOutsideKeralaStreetNameMl;
 
+    @Schema(type = "string", description = "Outside Kerala Housename in malayalam")
     @Size(max = 2500)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Outside Kerala Housename in malayalam")
     @JsonProperty("presentOutsideKeralaHouseNameMl")
     private String presentOutsideKeralaHouseNameMl;
 
-    @Size(max = 2500)
+    @Schema(type = "string", description = "Outside India Address-1")
+    @Size(max = 2500, message = "GROOM ADDRESS:Present Outside India Address-1 cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside India Address-1")
     @JsonProperty("presentOutSideIndiaAdressEn")
     private String presentOutSideIndiaAdressEn;
 
+    @Schema(type = "string", description = "Outside India Address-2 in malayalam")
     @Size(max = 2500)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Outside India Address-2 in malayalam")
     @JsonProperty("presentOutSideIndiaAdressMl")
     private String presentOutSideIndiaAdressMl;
 
-    @Size(max = 2500)
+    @Schema(type = "string", description = "Outside India Address-2")
+    @Size(max = 2500, message = "GROOM ADDRESS:Present Outside India Address-2 cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside India Address-2")
     @JsonProperty("presentOutSideIndiaAdressEnB")
     private String presentOutSideIndiaAdressEnB;
 
+    @Schema(type = "string", description = "Outside India Address-2 in malayalam")
     @Size(max = 2500)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Outside India Address-2 in malayalam")
     @JsonProperty("presentOutSideIndiaAdressMlB")
     private String presentOutSideIndiaAdressMlB;
 
-    @Size(max = 2500)
+
+    @Schema(type = "string", description = "Province")
+    @Size(max = 2500, message = "GROOM ADDRESS:Present Province  cannot exceed 2500 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Province")
     @JsonProperty("presentOutSideIndiaProvinceEn")
     private String presentOutSideIndiaProvinceEn;
 
+    @Schema(type = "string", description = "Outside India Locality in malayalam")
     @Size(max = 1000)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Present Outside India Locality")
     @JsonProperty("presentOutSideIndiaLocalityMl")
     private String presentOutSideIndiaLocalityMl;
 
+    @Schema(type = "string", description = "Province in Malayalam")
     @Size(max = 2500)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "GROOM ADDRESS:Invalid Province in Malayalam ")
     @JsonProperty("presentOutSideIndiaProvinceMl")
     private String presentOutSideIndiaProvinceMl;
 
@@ -155,14 +231,21 @@ public class GroomAddressDetails {
     @JsonProperty("presentOutSideCountry")
     private String presentOutSideCountry;
 
-    @Size(max = 1000)
+    @Schema(type = "string", description = "Outside India Village Name")
+    @Size(max = 1000, message = "GROOM ADDRESS: Present Outside India Village Name cannot exceed 1000 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside India Village Name")
     @JsonProperty("presentOutSideIndiaadrsVillage")
     private String presentOutSideIndiaadrsVillage;
 
-    @Size(max = 64)
+    @Schema(type = "string", description = "OutsideIndia City/Town")
+    @Size(max = 64, message = "GROOM ADDRESS: Present OutsideIndia City/Town cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present OutsideIndia City/Town")
     @JsonProperty("presentOutSideIndiaadrsCityTown")
     private String presentOutSideIndiaadrsCityTown;
-    @Size(max = 10)
+
+    @Schema(type = "string", description = "Outside India PostalCode")
+    @Size(max = 10, message = "GROOM ADDRESS:Present Outside India PostalCode cannot exceed 64 characters")
+    @Pattern(regexp = MarriageConstants.PATTERN_ENGLISH, message = "GROOM ADDRESS:Invalid Present Outside India PostalCode")
     @JsonProperty("presentOutSideIndiaPostCode")
     private String presentOutSideIndiaPostCode;
     ////Db Fields//////
