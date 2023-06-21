@@ -26,8 +26,7 @@ public class GroomDetails {
     @Schema(type = "string", description = "Tenant identification number", example = "kl.cochin")
     @NotBlank(message = "GROOM DETAILS :Tenant identification number is required")
     @Size(max = 64, message = "GROOM DETAILS :Tenant identification number length cannot exceed 64 characters")
-    @Pattern(regexp = MarriageConstants.PATTERN_TENANT,
-             message = "GROOM DETAILS :Invalid tenant identification number format, eg: kl.cochin")
+    @Pattern(regexp = MarriageConstants.PATTERN_TENANT,message = "GROOM DETAILS :Invalid tenant identification number format, eg: kl.cochin")
     @JsonProperty("tenentId")
     private String tenentId;
 
@@ -77,6 +76,7 @@ public class GroomDetails {
     @Schema(type = "string", description = "Groom's First name")
     @NotBlank(message = "GROOM DETAILS :First name in malayalam is required")
     @Size(max = 100)
+    @Pattern(regexp = MarriageConstants.PATTERN_NAME_ML, message = "Invalid first name")
     @JsonProperty("groomFirstnameMl")
     private String firstnameMl;
 
@@ -114,7 +114,7 @@ public class GroomDetails {
     @JsonProperty("groomEmailid")
     private String emailid;
 
-    @Schema(type = "string", description = "Email")
+    @Schema(type = "string", description = "Gender")
     @NotBlank(message = "GROOM DETAILS :Gender is required")
     @Size(max = 20, message = "GROOM DETAILS :length cannot exceed 64 characters")
     @JsonProperty("groomGender")

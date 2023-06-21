@@ -115,7 +115,7 @@ public class BrideDetails {
     @JsonProperty("brideEmailid")
     private String emailid;
 
-    @Schema(type = "string", description = "Email")
+    @Schema(type = "string", description = "Gender")
     @NotBlank(message = "BRIDE DETAILS :Gender is required")
     @Size(max = 20, message = "BRIDE DETAILS :length cannot exceed 64 characters")
     @JsonProperty("brideGender")
