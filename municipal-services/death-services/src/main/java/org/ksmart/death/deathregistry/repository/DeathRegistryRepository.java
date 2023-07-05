@@ -1188,7 +1188,7 @@ public class DeathRegistryRepository {
 
                     String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathRegistryConstants.HOSPITAL_LIST).toString();
                     deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
-                    cert.getDeathBasicInfo().setPlaceofDeath(deathPlaceHospitalMl+" / "+deathPlaceHospital);
+                    cert.getDeathBasicInfo().setPlaceofDeath(deathPlaceHospital+" / "+deathPlaceHospitalMl);
                 }
                 //Place of Death Institution
                 else if(DeathRegistryConstants.DEATH_PLACE_INSTITUTION.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
@@ -1208,32 +1208,15 @@ public class DeathRegistryRepository {
                     String deathPlaceInstitutionMl = masterDataInstitutionMl.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
                     deathPlaceInstitutionMl = deathPlaceInstitutionMl.replaceAll("[\\[\\]\\(\\)]", "");
                     
-                    cert.getDeathBasicInfo().setPlaceofDeath(deathPlaceInstitutionMl+" / "+deathPlaceInstitution);
+                    cert.getDeathBasicInfo().setPlaceofDeath(deathPlaceInstitution+" / "+deathPlaceInstitutionMl);
                 }
                 //Place of Death Vehicle
                 else if(DeathRegistryConstants.DEATH_PLACE_VEHICLE.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
-                    // Object mdmsDatavehicleFirstHalt = util.mDMSCallCertificateVehicle(pdfApplicationRequest.getRequestInfo()     
-                    //                         , cert.getVehicleFirstHalt()                   
-                    //                         );
-                    // Map<String,List<String>> masterDataVehicle = getAttributeValuesVehicle(mdmsDatavehicleFirstHalt);
-
-                    // Object mdmsDatavehicleFirstHaltMl = util.mDMSCallCertificateVehicleMl(pdfApplicationRequest.getRequestInfo()     
-                    //                         , cert.getVehicleFirstHalt()                   
-                    //                          );
-                    // Map<String,List<String>> masterDataVehicleMl = getAttributeValuesVehicle(mdmsDatavehicleFirstHaltMl);
-
-                    // String vehicleFirstHalt = masterDataVehicle.get(CrDeathRegistryConstants.TENANTS).toString();
-                    // vehicleFirstHalt = vehicleFirstHalt.replaceAll("[\\[\\]\\(\\)]", "");  
-                    
                    
-                    // String vehicleFirstHaltMl = masterDataVehicleMl.get(CrDeathRegistryConstants.TENANTS).toString();
-                    // vehicleFirstHaltMl = vehicleFirstHaltMl.replaceAll("[\\[\\]\\(\\)]", "");
-
-                    // cert.setPlaceofDeath(CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getVehicleFromplaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getVehicleToPlaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+vehicleFirstHaltMl+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()
-                    // +" / "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getVehicleFromplaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getVehicleToPlaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+vehicleFirstHalt+".");
                     if(cert.getDeathBasicInfo().getVehicleFromplaceEn() != null){
-                        cert.getDeathBasicInfo().setPlaceofDeath(DeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getDeathBasicInfo().getVehicleFromplaceMl()+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getDeathBasicInfo().getVehicleToPlaceMl()+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+lbNameMl+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()
-                        +" / "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getDeathBasicInfo().getVehicleFromplaceEn()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getDeathBasicInfo().getVehicleToPlaceEn()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+lbName+".");
+                        // cert.getDeathBasicInfo().setPlaceofDeath(DeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getDeathBasicInfo().getVehicleFromplaceMl()+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getDeathBasicInfo().getVehicleToPlaceMl()+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+lbNameMl+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()
+                        cert.getDeathBasicInfo().setPlaceofDeath(DeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getDeathBasicInfo().getVehicleFromplaceEn()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getDeathBasicInfo().getVehicleToPlaceEn()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+lbName+"."
+                        +" / "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getDeathBasicInfo().getVehicleFromplaceMl()+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getDeathBasicInfo().getVehicleToPlaceMl()+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+DeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+lbNameMl+" "+DeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()+".");
                     }
                     else{
                         cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceOtherMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceOtherEn());
@@ -1312,17 +1295,29 @@ public class DeathRegistryRepository {
                     jurisdictionCountryMl = jurisdictionCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
 
                     //************************** */
-                    cert.getDeathBasicInfo().setPlaceofDeath(jurisdictionDistrictMl+", "
-                                                        +jurisdictionStateMl+", "
-                                                        +jurisdictionCountryMl+", "
-                                                        +cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "
-                                                        +jurisdictionDistrict+", "
+                    // cert.getDeathBasicInfo().setPlaceofDeath(jurisdictionDistrictMl+", "
+                    //                                     +jurisdictionStateMl+", "
+                    //                                     +jurisdictionCountryMl+", "
+                    //                                     +cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "
+                    //                                     +jurisdictionDistrict+", "
+                    //                                     +jurisdictionState+", "
+                    //                                     +jurisdictionCountry+", "
+                    //                                     +cert.getDeathBasicInfo().getDeathPlaceRemarksEn()
+                    //                                     +"("+DeathRegistryConstants.PLACE_OF_BURIAL.toString() 
+                    //                                     +cert.getDeathBasicInfo().getPlaceOfBurialMl()+" / "
+                    //                                     +cert.getDeathBasicInfo().getPlaceOfBurialEn()+")");
+
+                    cert.getDeathBasicInfo().setPlaceofDeath(jurisdictionDistrict+", "
                                                         +jurisdictionState+", "
                                                         +jurisdictionCountry+", "
-                                                        +cert.getDeathBasicInfo().getDeathPlaceRemarksEn()
+                                                        +cert.getDeathBasicInfo().getDeathPlaceRemarksEn()+" / "
+                                                        +jurisdictionDistrictMl+", "
+                                                        +jurisdictionStateMl+", "
+                                                        +jurisdictionCountryMl+", "
+                                                        +cert.getDeathBasicInfo().getDeathPlaceRemarksMl()
                                                         +"("+DeathRegistryConstants.PLACE_OF_BURIAL.toString() 
-                                                        +cert.getDeathBasicInfo().getPlaceOfBurialMl()+" / "
-                                                        +cert.getDeathBasicInfo().getPlaceOfBurialEn()+")");
+                                                        +cert.getDeathBasicInfo().getPlaceOfBurialEn()+" / "
+                                                        +cert.getDeathBasicInfo().getPlaceOfBurialMl()+")");
                 }
 
                 // place of death OTHER
@@ -1364,14 +1359,23 @@ public class DeathRegistryRepository {
                     else{
                         cert.getDeathBasicInfo().setDeathPlaceHomeLocalityMl("");
                     }                  
-                    cert.getDeathBasicInfo().setPlaceofDeath(                       
-                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
-                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+" / "+
+                    // cert.getDeathBasicInfo().setPlaceofDeath(                       
+                    //     cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
+                    //     cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
+                    //     cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+" / "+
 
+                    //     cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ 
+                    //     cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+
+                    //     cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn());
+
+                    cert.getDeathBasicInfo().setPlaceofDeath(                       
                         cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ 
                         cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn());
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn()+" / "+
+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ 
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl());
                 }
 
 
