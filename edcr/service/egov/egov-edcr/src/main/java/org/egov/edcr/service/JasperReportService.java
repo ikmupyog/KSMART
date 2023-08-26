@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.jfree.util.Log;
 import org.springframework.stereotype.Service;
 
 import ar.com.fdvs.dj.domain.Style;
@@ -23,7 +24,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class JasperReportService {
 
     public InputStream exportPdf(final JasperPrint jasperPrint) throws JRException, IOException {
-        ByteArrayOutputStream outputBytes = new ByteArrayOutputStream(1 * 1024 * 1024);
+   
+    	ByteArrayOutputStream outputBytes = new ByteArrayOutputStream(1 * 1024 * 1024);
         JasperExportManager.exportReportToPdfStream(jasperPrint, outputBytes);
         InputStream inputStream = new ByteArrayInputStream(outputBytes.toByteArray());
         // closeStream(reportStream);

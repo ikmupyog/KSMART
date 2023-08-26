@@ -16,7 +16,9 @@ public class PlanPdfLayerConfig {
     private int overrideColor;
     // Line/text thickness
     private int overrideThickness;
-    // Print layername
+   
+
+	// Print layername
     private boolean printLayerName = false;
 
     public String getLayerName() {
@@ -59,4 +61,10 @@ public class PlanPdfLayerConfig {
         this.printLayerName = printLayerName;
     }
 
+    @Override
+   	public String toString() {
+   		return "PlanPdfLayerConfig [layerName=" + layerName + ", layerType=" + layerType + ", overrideColor="
+   				+ overrideColor + ", overrideThickness=" + overrideThickness + ", printLayerName=" + printLayerName
+   				+ "]";
+   	}
 }

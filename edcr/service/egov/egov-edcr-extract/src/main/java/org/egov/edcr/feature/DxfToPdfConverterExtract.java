@@ -136,8 +136,14 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                             DxfToPdfLayerConfig config = mapper1.readValue(jsonString, DxfToPdfLayerConfig.class);
                             List<EdcrPdfDetail> layerNameList = getPdfLayerNames(planDetail, config);
                             for (EdcrPdfDetail d : layerNameList) {
-                                if (LOG.isDebugEnabled())
-                                    LOG.debug("\t\t\tSheetName : " + d.getLayer() + " , list of layers :\n" + d.getLayers());
+                                if (LOG.isInfoEnabled()){
+                                    LOG.info("\t\t\t SheetName : " + d.getLayer() + " , list of layers :\n" + d.getLayers());
+                                    for(String s: d.getLayers())
+                                    {
+                                    	LOG.info("SheetName : "+s);	
+                                    }
+                                    	
+                                }
                             }
                             // get a particular layer from the document and enable the layer
                             if (layerNameList != null && !layerNameList.isEmpty()) {
@@ -167,12 +173,18 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
             List<AppConfigValues> appConfigValues = appConfigValueService
                     .getConfigValuesByModuleAndKey(DcrConstants.APPLICATION_MODULE_TYPE, DcrConstants.EDCR_DXF_PDF);
             for (AppConfigValues appConfigValue : appConfigValues) {
-                if (LOG.isDebugEnabled())
-                    LOG.debug("App Config value :" + appConfigValue.getValue());
+                if (LOG.isInfoEnabled())
+                    LOG.info("App Config value :" + appConfigValue.getValue());
                 List<EdcrPdfDetail> layerNameList = getPdfLayerNames(planDetail, appConfigValue.getValue());
                 for (EdcrPdfDetail d : layerNameList) {
-                    if (LOG.isDebugEnabled())
-                        LOG.debug("\t\t\tSheetName : " + d.getLayer() + " , list of layers :\n" + d.getLayers());
+                	 if (LOG.isInfoEnabled()){
+                         LOG.info("\t\t\t SheetName : " + d.getLayer() + " , list of layers :\n" + d.getLayers());
+                         for(String s: d.getLayers())
+                         {
+                         	LOG.info(" : "+s);	
+                         }
+                         	
+                     }
                 }
                 // get a particular layer from the document and enable the layer
                 if (layerNameList != null && !layerNameList.isEmpty()) {
@@ -271,7 +283,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
             }
 
         }
-
+        
+        LOG.info("PDF file are converted");
         return planDetail;
 
     }
@@ -283,16 +296,16 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
         // get a particular layer from the document and enable the layer
         if (layerNameList != null)
             for (EdcrPdfDetail pdfDetail : layerNameList) {
-                if (LOG.isInfoEnabled())
-                    LOG.info("Print layer Name" + pdfDetail.getLayer());
-                if (LOG.isInfoEnabled())
-                    LOG.info("print layers" + pdfDetail.getLayers());
+                if (LOG.isDebugEnabled())
+                    LOG.debug("Print layer Name" + pdfDetail.getLayer());
+                if (LOG.isDebugEnabled())
+                    LOG.debug("print layers" + pdfDetail.getLayers());
                 if (pdfDetail.getLayers() != null)
                     for (String layerName : pdfDetail.getLayers()) {
 
                         DXFLayer dxfLayer = planDetail.getDxfDocument().getDXFLayer(layerName);
-                        if (LOG.isInfoEnabled())
-                            LOG.info(layerName + " reason= " + pdfDetail.getFailureReasons() + "  , LayerName"
+                        if (LOG.isDebugEnabled())
+                            LOG.debug(layerName + " reason= " + pdfDetail.getFailureReasons() + "  , LayerName"
                                     + pdfDetail.getLayer());
                         checkNegetiveWidth(dxfLayer, pdfDetail);
                     }
@@ -312,6 +325,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                     addMeasurement = true;
 
                 DXFLayer dxfLayer = dxfDocument.getDXFLayer(layer);
+                if (LOG.isDebugEnabled())
                 LOG.debug(edcrPdfDetail.getLayer());
 
                 sanitizeTexts(edcrPdfDetail, dxfDocument, dxfLayer);
@@ -364,6 +378,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                                 t.setText(t.getText().replaceAll("\n", " "));
                                 String textStyle = t.getTextStyle();
                                 t.setTextStyle("timesnewroman");
+                                if (LOG.isDebugEnabled())
                                 LOG.debug("Style--------" + textStyle);
                                 break;
 
@@ -377,6 +392,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                                 t.setText(t.getText().replaceAll("\n", " "));
                                 String textStyle = t.getTextStyle();
                                 t.setTextStyle("timesnewroman");
+                                if (LOG.isDebugEnabled())
                                 LOG.debug("Style--------" + textStyle);
                                 break;
 
@@ -782,13 +798,14 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
     private File convertDxfToPdf(DXFDocument dxfDocument, String fileName, String layerName,
             EdcrPdfDetail edcrPdfDetail) {
 
+    	
         File fileOut = new File(layerName + ".pdf");
 
         if (fileOut != null) {
             try {
 
-                if (LOG.isDebugEnabled())
-                    LOG.debug("---------converting " + fileName + " - " + layerName + " to pdf----------");
+                if (LOG.isInfoEnabled())
+                    LOG.info("---------converting " + fileName + " - " + layerName + " to pdf----------");
                 FileOutputStream fout = new FileOutputStream(fileOut);
 
                 DcrSvgGenerator generator = new DcrSvgGenerator();
@@ -814,8 +831,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                 }
 
                 generator.generate(dxfDocument, out, map);
-                if (LOG.isDebugEnabled())
-                    LOG.debug("---------conversion success " + fileName + " - " + layerName + "----------");
+                if (LOG.isInfoEnabled())
+                    LOG.info("---------conversion success " + fileName + " - " + layerName + "----------");
                 fout.flush();
                 fout.close();
                 return fileOut.length() > 0 ? fileOut : null;
@@ -952,7 +969,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
             for (Object o : mtexts) {
                 DXFMText mText = (DXFMText) o;
                 boolean underLinePresent = mText.getText().contains("\\L") || mText.getText().contains("\\l");
-
+                if (LOG.isDebugEnabled())
                 LOG.debug(mText.getText() + " Under line Present" + underLinePresent);
                 mText.setText(mText.getText().replace(UNDERLINE_CAPITAL, ""));
                 mText.setText(mText.getText().replace(UNDERLINE_SMALL, ""));
@@ -1096,6 +1113,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
         } else {
             try {
                 sheetName = regEx[0];
+                LOG.info("Sheename regEx" +sheetName );
+                
                 layerNamesRegEx = regEx[1];
                 String[] split = sheetName.split(",");
                 if (split.length < 4) {
@@ -1104,7 +1123,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                     return pdfLayers;
                 }
                 sheetName = split[0];
-
+                LOG.info("Split[0] sheetName   "+sheetName);
                 // set page size
                 page.setSize(split[1]);
                 // set
@@ -1127,6 +1146,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
         }
         layers = new ArrayList<>();
+        sheetNameFinal = sheetName;
         if (layerNamesRegEx.equals("*")) {
 
             pdfdetail = new EdcrPdfDetail();
@@ -1143,12 +1163,14 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
             String[] split = layerNamesRegEx.split(","); // split by comma
             for (Block b : planDetail.getBlocks()) {
                 for (Floor f : b.getBuilding().getFloors()) {
+                	LOG.info("floor nmnber"+f.getNumber());
                     sheetNameFinal = sheetName.replace("BLK_*", "BLK_" + b.getNumber());
                     sheetNameFinal = sheetNameFinal.replace("FLR_*", "FLR_" + f.getNumber());
                     sheetNameFinal = sheetNameFinal.replace("LVL_*", "LVL_" + f.getNumber());
                     sheetNameFinal = sheetNameFinal.replace("_*", "_" + b.getNumber());
                     // sheetNameFinal =
                     // sheetNameFinal.substring(0,sheetNameFinal.indexOf(":"));
+                    LOG.info("Sheename final after replace" +sheetNameFinal );
                     pdfdetail = new EdcrPdfDetail();
                     pdfdetail.setPageSize(page);
                     pdfdetail.setLayer(sheetNameFinal);
@@ -1162,7 +1184,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                         s = s.substring(0, s.indexOf(":") != -1 ? s.indexOf(":") : s.length());
 
                         List<String> layer = Util.getLayerNamesLike(planDetail.getDxfDocument(), s);
-
+                        LOG.info("Blk related names found....."+layer); 
                         if (layer != null && !layer.isEmpty()) {
                             if (pdfdetail.getLayers() == null || pdfdetail.getLayers().isEmpty()) {
                                 pdfdetail.setLayers(layer);
@@ -1181,14 +1203,22 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
             // fix this case after getting usecase
             pdfdetail = new EdcrPdfDetail();
             pdfdetail.setPageSize(page);
+            List<String> layersNos=    Util.getLayerNamesLike(planDetail.getDxfDocument(), sheetNameFinal);
+            for(String s:layersNos)
+            {
+            	LOG.info("No_* formated layer "+s);
+            }
+            	
             pdfdetail.setLayer(sheetNameFinal);
+            
+            
             int i = 1;
             String[] split = layerNamesRegEx.split(",");
             for (String s : split) {
 
                 getLayerColorConfigs(planDetail, pdfdetail, s);
                 s = s.substring(0, s.indexOf(":") != -1 ? s.indexOf(":") : s.length());
-                s = s.replace("NO_*", "NO_" + i);
+                //s = s.replace("NO_*", "NO_" + i);
 
                 List<String> layer = Util.getLayerNamesLike(planDetail.getDxfDocument(), s);
                 if (layer != null && !layer.isEmpty()) {
@@ -1200,6 +1230,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
                 }
             }
+            i++;
 
         } else {
             if (layerNamesRegEx.contains("_*")) {
@@ -1215,9 +1246,12 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
                         layers.addAll(Util.getLayerNamesLike(planDetail.getDxfDocument(), s));
                     }
                 }
+               
             } else {
                 pdfdetail = new EdcrPdfDetail();
                 pdfdetail.setPageSize(page);
+                LOG.info("sheetname inside last else"+sheetNameFinal);
+               
                 pdfdetail.setLayer(sheetNameFinal);
                 String[] split = layerNamesRegEx.split(",");
                 for (String s : split) {
@@ -1231,7 +1265,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
         }
 
         if (!layers.isEmpty()) {
-            pdfdetail.setLayer(layers.get(0));
+           // pdfdetail.setLayer(layers.get(0));
+        	
             pdfdetail.setLayers(layers);
             pdfLayers.add(pdfdetail);
         }
@@ -1249,6 +1284,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
         String layerNamesRegEx = "";
         String sheetNameFinal = "";
         PdfPageSize page = new PdfPageSize();
+        LOG.info("PDF config details" +config);  
         // Name_of_the_sheet,PageSize,multiplication_factor_of_Page_Size,#Layer_regex:Measurement(M)/Dimension(D)LayerNametoInclude(L)ColorCode(C1),Repeat
 
         // BLK_*_FLR_*_FLOOR_PLAN,A0,1#BLK_*_FLR_*_FLOOR_PLAN,BLK_*_FLR_*_BLT_UP_AREA:ML,BLK_*_FLR_*_BLT_UP_AREA_DEDUCT:DL
@@ -1301,6 +1337,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
                         List<String> layer = Util.getLayerNamesLike(planDetail.getDxfDocument(), s);
 
+                        LOG.info("foud layer..."+layer.toString());
                         if (layer != null && !layer.isEmpty()) {
                             if (pdfdetail.getLayers() == null || pdfdetail.getLayers().isEmpty()) {
                                 pdfdetail.setLayers(layer);
@@ -1365,7 +1402,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
             }
         }
         if (!layers.isEmpty()) {
-            pdfdetail.setLayer(layers.get(0));
+        	// this line changes the printing filename .
+           // pdfdetail.setLayer(layers.get(0));
             pdfdetail.setLayers(layers);
             pdfLayers.add(pdfdetail);
         }

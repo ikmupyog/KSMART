@@ -173,7 +173,7 @@ public class PrintUtil {
     }
 
     public static void printForDXfPoint(List<Point> outsidePoints, String layerName, PlanDetail pl) {
-        LOG.error("Printing lines for dxf");
+        LOG.debug("Printing lines for dxf");
         StringBuilder sb = new StringBuilder();
         // sb.append("Printing lines for dxf");
         sb.append("LWPOLYLINE").append("\n");

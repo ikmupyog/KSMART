@@ -46,6 +46,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @Transactional(readOnly = true)
 public class EdcrApplicationService {
+	
     private static final String RESUBMIT_SCRTNY = "Resubmit Plan Scrutiny";
     private static final String NEW_SCRTNY = "New Plan Scrutiny";
     public static final String ULB_NAME = "ulbName";
@@ -117,11 +118,12 @@ public class EdcrApplicationService {
     }
 
     private Plan callDcrProcess(EdcrApplication edcrApplication, String applicationType) {
+    	LOG.info("Initializing DCR Process" );
         Plan planDetail = new Plan();
         planDetail = planService.process(edcrApplication, applicationType);
         updateFile(planDetail, edcrApplication);
         edcrApplicationDetailService.saveAll(edcrApplication.getEdcrApplicationDetails());
-
+        LOG.info("completed DCR Process" );
         return planDetail;
     }
 
@@ -253,7 +255,8 @@ public class EdcrApplicationService {
     }
 
     private void updateFile(Plan pl, EdcrApplication edcrApplication) {
-        String readFile = readFile(edcrApplication.getSavedDxfFile());
+       LOG.info("Saving file ....");
+    	String readFile = readFile(edcrApplication.getSavedDxfFile());
         String replace = readFile.replace("ENTITIES", "ENTITIES\n0\n" + pl.getAdditionsToDxf());
         String newFile = edcrApplication.getDxfFile().getOriginalFilename().replace(".dxf", "_system_scrutinized.dxf");
         File f = new File(newFile);
@@ -268,6 +271,7 @@ public class EdcrApplicationService {
         } catch (IOException e) {
             LOG.error("Error occurred when reading file!!!!!", e);
         }
+        LOG.info("Saved file ....");
     }
 
     @Transactional

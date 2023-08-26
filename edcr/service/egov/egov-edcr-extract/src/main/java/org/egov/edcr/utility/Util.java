@@ -188,14 +188,14 @@ public class Util {
         Set<String> layerNames = new TreeSet<>();
         List<String> disNames = new ArrayList();
         Iterator dxfLayerIterator = doc.getDXFLayerIterator();
+        Pattern pat = Pattern.compile(regExp);
+        LOG.info("Pattern in getLayerNamesLike "+pat);
         while (dxfLayerIterator.hasNext()) {
             DXFLayer name = (DXFLayer) dxfLayerIterator.next();
-            Pattern pat = Pattern.compile(regExp);
-            LOG.trace(pat);
             Matcher m = pat.matcher(name.getName());
             while (m.find()) {
                 String group = m.group();
-                LOG.trace("Found:" + group);
+                LOG.info("Found:" + group);
                 layerNames.add(group);
             }
 
@@ -298,8 +298,11 @@ public class Util {
             String layerName) {
         DXFDocument dxfDocument = planDetail.getDoc();
         String dimensionBlock = line.getDimensionBlock();
-        if (line.getDXFDimensionStyle() != null)
-            LOG.info("DIM Style Name=" + line.getDXFDimensionStyle().getName());
+        if (line.getDXFDimensionStyle() != null){
+        	
+        	  if(LOG.isDebugEnabled())
+            LOG.debug("DIM Style Name=" + line.getDXFDimensionStyle().getName());
+        }
         DXFBlock dxfBlock = dxfDocument.getDXFBlock(dimensionBlock);
         if (!planDetail.getStrictlyValidateDimension()) {
             Iterator dxfEntitiesIterator = dxfBlock.getDXFEntitiesIterator();
@@ -364,7 +367,8 @@ public class Util {
                     if (dxfLine.getLineWeight() == 20) {
                         byWeight.add(dub1);
                     }
-                    LOG.error("line length=" + dxfLine.getLength() + " Layer Name : " + line.getLayerName() + "Style"
+                    if(LOG.isDebugEnabled())
+                    LOG.debug("line length=" + dxfLine.getLength() + " Layer Name : " + line.getLayerName() + "Style"
                             + line.getDimensionStyleID() + " type:" + dxfLine.getType() + " Line Type "
                             + dxfLine.getLineType() + " " + dxfLine.getLineWeight());
 
@@ -421,7 +425,8 @@ public class Util {
 
                 }
             }
-            LOG.error("Before Delete ArrayList : " + values);
+            if(LOG.isDebugEnabled())
+            LOG.debug("Before Delete ArrayList : " + values);
             Iterator itr = values.iterator();
             int count = 0;
             while (itr.hasNext()) {
@@ -431,25 +436,30 @@ public class Util {
                     itr.remove();
                 }
             }
-
-            LOG.error("Modified ArrayList : " + values);
-            LOG.error("Dimension text : " + text2);
+            if(LOG.isDebugEnabled())
+            {
+            LOG.debug("Modified ArrayList : " + values);
+            LOG.debug("Dimension text : " + text2);
+            }
             BigDecimal textValue = BigDecimal.ZERO;
             if (StringUtils.isNotBlank(text2)) {
                 textValue = BigDecimal.valueOf(Double.parseDouble(text2))
                         .setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS, DcrConstants.ROUNDMODE_MEASUREMENTS);
 
             }
-            LOG.error("dimDecimal : " + textValue);
+            if(LOG.isDebugEnabled())
+            LOG.debug("dimDecimal : " + textValue);
             // LOG.error("Dimension text : " + text2);
             if (values.size() == 1) {
                 if (values.get(0).compareTo(textValue) == 0) {
+                	  if(LOG.isDebugEnabled())
                     LOG.debug("Proper Dimension found");
                     dimensionValues.add(values.get(0));
                 } else if (values.get(0).compareTo(textValue.subtract(BigDecimal.valueOf(0.4d))) == 0) {
                     BigDecimal actual = values.get(0).add(BigDecimal.valueOf(0.2d));
                     values.remove(0);
                     dimensionValues.add(actual);
+                    if(LOG.isDebugEnabled())
                     LOG.debug("Proper Dimension found");
                 } else {
                     planDetail.getErrors().put(layerName + "-" + DcrConstants.DIMENSION_EDITED,
@@ -457,12 +467,14 @@ public class Util {
                 }
             } else if (specialValues.size() == 1) {
                 if (specialValues.get(0).compareTo(textValue) == 0) {
+                	  if(LOG.isDebugEnabled())
                     LOG.debug("Next proper Dimension found");
                     dimensionValues.add(specialValues.get(0));
                 } else if (specialValues.get(0).compareTo(textValue.subtract(BigDecimal.valueOf(0.4d))) == 0) {
                     BigDecimal actual = specialValues.get(0).add(BigDecimal.valueOf(0.2d));
                     specialValues.remove(0);
                     dimensionValues.add(actual);
+                    if(LOG.isDebugEnabled())
                     LOG.debug("Proper Dimension found");
                 } else {
                     planDetail.getErrors().put(layerName + "-" + DcrConstants.DIMENSION_EDITED,
@@ -471,12 +483,14 @@ public class Util {
 
             } else if (byWeight.size() == 1) {
                 if (byWeight.get(0).compareTo(textValue) == 0) {
+                	  if(LOG.isDebugEnabled())
                     LOG.debug("Next proper Dimension found");
                     dimensionValues.add(byWeight.get(0));
                 } else if (byWeight.get(0).compareTo(textValue.subtract(BigDecimal.valueOf(0.4d))) == 0) {
                     BigDecimal actual = byWeight.get(0).add(BigDecimal.valueOf(0.2d));
                     byWeight.remove(0);
                     dimensionValues.add(actual);
+                    if(LOG.isDebugEnabled())
                     LOG.debug("Proper Dimension found");
                 } else {
                     planDetail.getErrors().put(layerName + "-" + DcrConstants.DIMENSION_EDITED,

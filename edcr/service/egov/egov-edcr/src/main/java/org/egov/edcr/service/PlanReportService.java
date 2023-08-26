@@ -60,6 +60,7 @@ import org.egov.infra.admin.master.service.CityService;
 import org.egov.infra.config.core.ApplicationThreadLocals;
 import org.egov.infra.reporting.util.ReportUtil;
 import org.egov.infra.utils.DateUtils;
+import org.jfree.util.Log;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -584,7 +585,8 @@ public class PlanReportService {
 
     public InputStream generateReport(Plan plan, EdcrApplication dcrApplication) {
 
-        FastReportBuilder drb = new FastReportBuilder();
+      
+    	FastReportBuilder drb = new FastReportBuilder();
         StringBuilder reportBuilder = new StringBuilder();
 
         final Style titleStyle = new Style("titleStyle");
@@ -958,9 +960,12 @@ public class PlanReportService {
         plan.setEdcrPassed(finalReportStatus);
         InputStream exportPdf = null;
         try {
+            Log.info("starting dynamic to PDF");
             JasperPrint generateJasperPrint = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(),
                     ds, valuesMap);
+            Log.info("Exporting to PDF");
             exportPdf = reportService.exportPdf(generateJasperPrint);
+            Log.info("Exported to PDF");
         } catch (IOException | JRException e) {
             LOG.error("Error occurred when generating Jasper report", e);
         }

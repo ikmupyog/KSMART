@@ -155,7 +155,7 @@ public class ExtractService {
         }
 
         Date start = new Date();
-        LOG.info("Initializeing fetch extract api" + start);
+        LOG.debug("Initializeing fetch extract api" + start);
         for (PlanFeature ruleClass : features) {
             FeatureExtract rule = null;
 
@@ -164,7 +164,7 @@ public class ExtractService {
                 if (ruleClass.getRuleClass() != null) {
                     String str = ruleClass.getRuleClass().getSimpleName();
                     str = str.substring(0, 1).toLowerCase() + str.substring(1);
-                    LOG.info("Looking for bean " + str);
+                    LOG.debug("Looking for bean " + str);
 
                     if (amd.getDetails().isEmpty() || index == -1)
                         rule = (FeatureExtract) specificRuleService.find(str + "Extract");
@@ -197,7 +197,7 @@ public class ExtractService {
             }
 
             if (rule != null) {
-                LOG.info("Got bean ..." + rule.getClass().getSimpleName());
+                LOG.debug("Got bean ..." + rule.getClass().getSimpleName());
                 try {
                     rule.extract(planDetail);
                 } catch (Exception e) {
@@ -212,7 +212,7 @@ public class ExtractService {
 
         }
         Date end = new Date();
-        LOG.info("Ending fetch extract api" + end);
+        LOG.debug("Ending fetch extract api" + end);
         return (Plan) planDetail;
 
     }

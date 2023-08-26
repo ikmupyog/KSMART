@@ -17,7 +17,9 @@ public class DxfToPdfLayerConfig {
     // Plan pdf name
     private String sheetName;
 
-    // Page size of pdf like A0, A1, A2, A3, A4
+   
+
+	// Page size of pdf like A0, A1, A2, A3, A4
     private String sheetSize = "A3";
 
     // Pdf page size enlarging on top of default size like A0*3, A1*2
@@ -77,5 +79,11 @@ public class DxfToPdfLayerConfig {
     public void setPlanPdfLayerConfigs(List<PlanPdfLayerConfig> planPdfLayerConfigs) {
         this.planPdfLayerConfigs = planPdfLayerConfigs;
     }
+    @Override
+   	public String toString() {
+   		return "DxfToPdfLayerConfig [sheetName=" + sheetName + ", sheetSize=" + sheetSize + ", sheetSizeEnlargeFactor="
+   				+ sheetSizeEnlargeFactor + ", orientation=" + orientation + ", removeHatch=" + removeHatch
+   				+ ", planPdfLayerConfigs=" + planPdfLayerConfigs + "]";
+   	}
 
 }

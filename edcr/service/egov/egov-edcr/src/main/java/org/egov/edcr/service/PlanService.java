@@ -75,7 +75,7 @@ public class PlanService {
 
     public Plan process(EdcrApplication dcrApplication, String applicationType) {
         Map<String, String> cityDetails = specificRuleService.getCityDetails();
-
+        LOG.info("Initializing  Process" );
         Date asOnDate = null;
         if (dcrApplication.getPermitApplicationDate() != null) {
             asOnDate = dcrApplication.getPermitApplicationDate();
@@ -167,13 +167,14 @@ public class PlanService {
             saveOutputReport(dcrApplication, targetStream, plan);
             updateFinalReport(dcrApplication.getEdcrApplicationDetails().get(0).getReportOutputId());
         }
+        LOG.info("completed  Process" );
         return plan;
     }
 
     public void savePlanDetail(Plan plan, EdcrApplicationDetail detail) {
 
-        if (LOG.isInfoEnabled())
-            LOG.info("*************Before serialization******************");
+        if (LOG.isDebugEnabled())
+            LOG.debug("*************Before serialization******************");
         File f = new File("plandetail.txt");
         try (FileOutputStream fos = new FileOutputStream(f); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             ObjectMapper mapper = new ObjectMapper();
@@ -185,13 +186,15 @@ public class PlanService {
         } catch (IOException e) {
             LOG.error("Unable to serialize!!!!!!", e);
         }
-        if (LOG.isInfoEnabled())
-            LOG.info("*************Completed serialization******************");
+        if (LOG.isDebugEnabled())
+            LOG.debug("*************Completed serialization******************");
 
     }
 
     private Plan applyRules(Plan plan, Amendment amd, Map<String, String> cityDetails) {
 
+    	LOG.info("Applying rules.....");
+    	
         // check whether valid amendments are present
         int index = -1;
         AmendmentDetails[] a = null;
@@ -207,7 +210,8 @@ public class PlanService {
             FeatureProcess rule = null;
             String str = ruleClass.getRuleClass().getSimpleName();
             str = str.substring(0, 1).toLowerCase() + str.substring(1);
-            LOG.info("Looking for bean " + str);
+           if( LOG.isDebugEnabled())
+            LOG.debug("Looking for bean " + str);
             // when amendments are not present
             if (amd.getDetails().isEmpty() || index == -1)
                 rule = (FeatureProcess) specificRuleService.find(ruleClass.getRuleClass().getSimpleName());
@@ -233,24 +237,28 @@ public class PlanService {
             }
 
             if (rule != null) {
-                LOG.info("Looking for bean resulted in " + rule.getClass().getSimpleName());
+            	  if( LOG.isDebugEnabled())
+                LOG.debug("Looking for bean resulted in " + rule.getClass().getSimpleName());
                 try {
                     rule.process(plan);
                 } catch (Exception e) {
                 	e.printStackTrace();
                 }
-                LOG.info("Completed Process " + rule.getClass().getSimpleName() + "  " + new Date());
+                if( LOG.isDebugEnabled())
+                LOG.debug("Completed Process " + rule.getClass().getSimpleName() + "  " + new Date());
             }
 
             if (plan.getErrors().containsKey("msg.error.occ.invalid")
                     || plan.getErrors().containsKey("units not in meters"))
                 return plan;
         }
+        LOG.info("Applied rules.");
         return plan;
     }
 
-    private InputStream generateReport(Plan plan, Amendment amd, EdcrApplication dcrApplication) {
+	private InputStream generateReport(Plan plan, Amendment amd, EdcrApplication dcrApplication) {
 
+    	  LOG.info("generating report outout"); 	
         String beanName = "PlanReportService";
         PlanReportService service = null;
         int index = -1;
@@ -264,10 +272,10 @@ public class PlanService {
         }
 
         try {
-            if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_011020) >= 0)
+          /*  if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_011020) >= 0)
                 beanName = "PlanReportService_Amend02Oct20";
             else if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_081119) >= 0)
-                beanName = "PlanReportService_Amend08Nov19";
+                beanName = "PlanReportService_Amend08Nov19";*/
             
             beanName = beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
 
@@ -292,13 +300,15 @@ public class PlanService {
             LOG.error("No Bean Defined for the Rule " + beanName);
         }
 
+        LOG.info("generating report outout completed"); 	
         return reportStream;
     }
 
     @Transactional
     public void saveOutputReport(EdcrApplication edcrApplication, InputStream reportOutputStream, Plan plan) {
-
-        List<EdcrApplicationDetail> edcrApplicationDetails = edcrApplicationDetailService
+ 
+       LOG.info("Saving outout");
+    	List<EdcrApplicationDetail> edcrApplicationDetails = edcrApplicationDetailService
                 .fingByDcrApplicationId(edcrApplication.getId());
         final String fileName = edcrApplication.getApplicationNumber() + "-v" + edcrApplicationDetails.size() + ".pdf";
 
@@ -308,13 +318,16 @@ public class PlanService {
         buildDocuments(edcrApplication, null, fileStoreMapper, plan);
 
         PlanInformation planInformation = plan.getPlanInformation();
-        edcrApplication.getEdcrApplicationDetails().get(0).setPlanInformation(planInformation);
+        edcrApplication.getEdcrApplicationDetails().get(0).setPlanInformation(planInformation); 
+        LOG.info("Saving outout to DB");
         edcrApplicationDetailService.saveAll(edcrApplication.getEdcrApplicationDetails());
+        
+        LOG.info("Saved outout");
     }
 
     public void buildDocuments(EdcrApplication edcrApplication, FileStoreMapper dxfFile, FileStoreMapper reportOutput,
             Plan plan) {
-
+    	  LOG.info("generating and saving dxf to pdf ");
         if (dxfFile != null) {
             EdcrApplicationDetail edcrApplicationDetail = new EdcrApplicationDetail();
 
@@ -346,6 +359,7 @@ public class PlanService {
             savePlanDetail(plan, edcrApplicationDetail);
 
             ArrayList<org.egov.edcr.entity.EdcrPdfDetail> edcrPdfDetails = new ArrayList<>();
+            LOG.info("generating and saving dxf to pdf ");
 
             if (plan.getEdcrPdfDetails() != null && !plan.getEdcrPdfDetails().isEmpty()) {
                 for (EdcrPdfDetail edcrPdfDetail : plan.getEdcrPdfDetails()) {
@@ -358,6 +372,7 @@ public class PlanService {
                     if (convertedPdf != null && convertedPdf.length() > 0) {
                         FileStoreMapper fileStoreMapper = fileStoreService.store(convertedPdf, convertedPdf.getName(),
                                 DcrConstants.PDF_EXT, DcrConstants.FILESTORE_MODULECODE);
+                        LOG.info("saved the file  ",fileStoreMapper.getFileName());
                         pdfDetail.setConvertedPdf(fileStoreMapper);
                         pdfDetail.setEdcrApplicationDetail(edcrApplicationDetail);
                         edcrPdfDetails.add(pdfDetail);
@@ -372,6 +387,7 @@ public class PlanService {
 
             edcrApplication.setEdcrApplicationDetails(edcrApplicationDetails);
         }
+        LOG.info("generating and saving completed ");
     }
 
     public Plan extractPlan(EdcrRequest edcrRequest, MultipartFile dxfFile) {

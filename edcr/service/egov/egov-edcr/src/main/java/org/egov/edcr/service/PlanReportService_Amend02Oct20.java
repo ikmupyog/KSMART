@@ -495,6 +495,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     }
 
     public InputStream generateReport(Plan plan, EdcrApplication dcrApplication) {
+    	
+    	LOG.info("starting report......Amend02Oct20");
 
         FastReportBuilder drb = new FastReportBuilder();
         StringBuilder reportBuilder = new StringBuilder();
@@ -697,6 +699,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                         allMap.get(cmnFeature).getHeading(), allMap.get(cmnFeature).getSubHeading(), cmnFeature));
                 valuesMap.put(cmnFeature, allMap.get(cmnFeature).getDetail());
             }
+            
+            LOG.info("completed  "+common);
 
             for (String blkName : blocks.keySet()) {
                 List blkHeading = new ArrayList();
@@ -766,6 +770,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
                 }
                 // This is only for rest
+                
+                LOG.info("starting "+blkName);
                 for (String blkFeature : blocks.get(blkName)) {
                     if (blkFeature.equals(FRONT_YARD_DESC) || blkFeature.equals(REAR_YARD_DESC)
                             || blkFeature.equals(SIDE_YARD_DESC)) {
@@ -829,6 +835,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             finalReportStatus = finalReportStatus && (dcrApplication.getDeviationStatus().equalsIgnoreCase("Accepted"));
         }
         
+        LOG.info("status"+finalReportStatus);
         reportBuilder.append("Report Status : " + (finalReportStatus ? "Accepted" : "Not Accepted")).append("\\n")
                 .append("\\n");
         reportBuilder.append("Rules Verified : ").append("\\n");
@@ -849,9 +856,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             edcrApplicationDetail.setDcrNumber(dcrApplicationNumber);
             valuesMap.put("dcrNo", dcrApplicationNumber);
         }
+        LOG.info("Generating QR Code");
         if (finalReportStatus) {
             valuesMap.put("qrCode", generatePDF417Code(buildQRCodeDetails(dcrApplication, finalReportStatus)));
         }
+        LOG.info("Generating QR Code completed");
         valuesMap.put("applicationType", dcrApplication.getApplicationType().getApplicationTypeVal());
        // Map<String, String> serviceTypeList = DxfFileConstants.getServiceTypeList();
         Map<String, String> serviceTypeList = new ConcurrentHashMap<>();
@@ -870,12 +879,17 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         plan.setEdcrPassed(finalReportStatus);
         InputStream exportPdf = null;
         try {
+        	LOG.info("starting DynamicJasperHelper....");
             JasperPrint generateJasperPrint = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(),
                     ds, valuesMap);
+            LOG.info("completed DynamicJasperHelper.generateJasperPrint");
             exportPdf = reportService.exportPdf(generateJasperPrint);
+            LOG.info("completed reportService.exportPdf("); 
+            
         } catch (IOException | JRException e) {
             LOG.error("Error occurred when generating Jasper report", e);
         }
+        LOG.info("completed the report Amend02Oct20 ..");
         return exportPdf;
 
     }

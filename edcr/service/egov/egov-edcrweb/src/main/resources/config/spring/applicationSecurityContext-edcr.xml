@@ -60,6 +60,7 @@
 				<security:filter-chain pattern="/resources/**" filters="none" />
 				<security:filter-chain pattern="/error/**" filters="none" />
 				<security:filter-chain pattern="/public/**" filters="none"/>
+				<security:filter-chain pattern="/edcr/**" filters="none"/>
 				<security:filter-chain pattern="/rest/dcr/downloadfile/**" filters="none"/>
 				<security:filter-chain pattern="/rest/dcr/scrutinydetails/**" filters="none"/>
 				<security:filter-chain pattern="/**"  filters="concurrentSessionFilter,securityContextPersistenceFilter,authenticationProcessingFilter,springSecurityFilterChain,securityContextHolderAwareRequestFilter,rememberMeAuthenticationFilter,anonymousAuthenticationFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
