@@ -272,10 +272,10 @@ public class PlanService {
         }
 
         try {
-          /*  if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_011020) >= 0)
+            if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_011020) >= 0)
                 beanName = "PlanReportService_Amend02Oct20";
             else if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_081119) >= 0)
-                beanName = "PlanReportService_Amend08Nov19";*/
+                beanName = "PlanReportService_Amend08Nov19";
             
             beanName = beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
 

@@ -83,8 +83,13 @@ public class EdcrPdfDetail implements Serializable {
     private List<String> dimensionLayers = new ArrayList<>();
     @Transient
     private List<String> printNameLayers = new ArrayList<>();
-
+    
     @Transient
+    private List<String> countLayers = new ArrayList<>();
+
+   
+
+	@Transient
     private Map<String, Integer> colorOverrides = new HashMap<>();
     @Transient
     private Map<String, Integer> thicknessOverrides = new HashMap<>();
@@ -194,5 +199,12 @@ public class EdcrPdfDetail implements Serializable {
     public void setDownloadURL(String downloadURL) {
         this.downloadURL = downloadURL;
     }
+    public List<String> getCountLayers() {
+		return countLayers;
+	}
+
+	public void setCountLayers(List<String> countLayers) {
+		this.countLayers = countLayers;
+	}
 
 }

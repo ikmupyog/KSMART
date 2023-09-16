@@ -71,6 +71,9 @@ import org.egov.infra.admin.master.entity.City;
 import org.egov.infra.admin.master.repository.CityRepository;
 import org.egov.infra.utils.FileStoreUtils;
 import org.egov.infra.utils.TenantUtils;
+import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -80,7 +83,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class CityService {
-
+	 private static final Logger LOGGER = LoggerFactory.getLogger(CityService.class);
     private static final String CITY_DATA_CACHE_KEY = "%s-city-pref";
     private static final String CITY_LOGO_CACHE_KEY = "%s-city-logo";
     private static final String CITY_LOGO_HASH_KEY = "city-logo";
@@ -197,6 +200,7 @@ public class CityService {
     }
 
     public String getCityLogoFileStoreId() {
+    	LOGGER.error("City loggo file storeid"+(String) cityDataForKey(CITY_LOGO_FS_UUID_KEY));
         return (String) cityDataForKey(CITY_LOGO_FS_UUID_KEY);
     }
 

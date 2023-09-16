@@ -237,7 +237,7 @@ public class EdcrRestService {
             edcrApplication.setThirdPartyUserTenant(tenantId);
         }
 
-        edcrApplication = edcrApplicationService.createRestEdcr(edcrApplication);
+        edcrApplication = edcrApplicationService.createRestEdcr(edcrApplication);  
         
         //Code to push the data of edcr application to kafka index
         EdcrIndexData edcrIndexData = new EdcrIndexData();
@@ -447,6 +447,7 @@ public class EdcrRestService {
                         planPdf.getConvertedPdf().getFileStoreId(),
                         ApplicationThreadLocals.getTenantID()));
                 planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
+                if(edcrDetail.getPlanDetail().getEdcrPdfDetails()!=null && !edcrDetail.getPlanDetail().getEdcrPdfDetails().isEmpty())
                 for (org.egov.common.entity.edcr.EdcrPdfDetail pdf : edcrDetail.getPlanDetail().getEdcrPdfDetails()) {
                     if (planPdf.getLayer().equalsIgnoreCase(pdf.getLayer()))
                         pdf.setDownloadURL(downloadURL);

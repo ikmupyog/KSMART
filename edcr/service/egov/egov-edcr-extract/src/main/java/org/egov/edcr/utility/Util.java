@@ -762,6 +762,7 @@ public class Util {
                 || OccupancyType.OCCUPANCY_B3.equals(occupancy)) {
             if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
                 occupancy = OccupancyType.OCCUPANCY_A2;
+            
             else
                 occupancy = OccupancyType.OCCUPANCY_B1;
         } else if (OccupancyType.OCCUPANCY_C.equals(occupancy) || OccupancyType.OCCUPANCY_C1.equals(occupancy)

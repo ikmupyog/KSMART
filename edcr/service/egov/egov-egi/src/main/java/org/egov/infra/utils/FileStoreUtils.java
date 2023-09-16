@@ -77,6 +77,7 @@ import org.egov.infra.filestore.entity.FileStoreMapper;
 import org.egov.infra.filestore.repository.FileStoreMapperRepository;
 import org.egov.infra.filestore.service.FileStoreService;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.jfree.util.Log;
 import org.owasp.esapi.ESAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,7 +101,7 @@ public class FileStoreUtils {
     private FileStoreService fileStoreService;
 
     @Autowired
-    private FileStoreMapperRepository fileStoreMapperRepository;
+    private FileStoreMapperRepository fileStoreMapperRepository; 
 
     public Path getFileAsPath(String fileStoreId, String moduleName) {
         return fileStoreService.fetchAsPath(fileStoreId, moduleName);
@@ -188,6 +189,7 @@ public class FileStoreUtils {
 
     public byte[] fileAsByteArray(String fileStoreId, String moduleName) {
         fileStoreId = normalizeString(fileStoreId);
+        LOGGER.error("Filestore id"+fileStoreId);
         moduleName = normalizeString(moduleName);
         try {
             Optional<FileStoreMapper> fileStoreMapper = getFileStoreMapper(fileStoreId);

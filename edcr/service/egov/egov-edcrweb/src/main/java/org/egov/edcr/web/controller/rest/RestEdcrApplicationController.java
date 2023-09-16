@@ -110,6 +110,7 @@ public class RestEdcrApplicationController {
 
     private static final String INVALID_JSON_FORMAT = "Invalid JSON Data";
     private static final String INCORRECT_REQUEST = "INCORRECT_REQUEST";
+    
     private static final String DIGIT_DCR = "Digit DCR";
     private static final String USER_INFO_HEADER_NAME = "x-user-info";
     
@@ -282,13 +283,21 @@ public class RestEdcrApplicationController {
             else {
                 edcrDetail = edcrRestService.createEdcr(edcr, planFile, masterData);
             }
-
+            return getSuccessResponse(Arrays.asList(edcrDetail), edcr.getRequestInfo());
         } catch (IOException e) {
+        	LOGGER.error("error while scrutiny",e);
             ErrorResponse error = new ErrorResponse(INCORRECT_REQUEST, e.getLocalizedMessage(),
                     HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }catch(Exception e)
+        {
+        	LOGGER.error("Exception while scrutiny",e);
+        	 ErrorResponse error = new ErrorResponse(INCORRECT_REQUEST, e.getLocalizedMessage(),
+                     HttpStatus.BAD_REQUEST);
+             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-        return getSuccessResponse(Arrays.asList(edcrDetail), edcr.getRequestInfo());
+  
+       
     }
 
     @PostMapping(value = "/scrutinydetails", produces = MediaType.APPLICATION_JSON_VALUE)

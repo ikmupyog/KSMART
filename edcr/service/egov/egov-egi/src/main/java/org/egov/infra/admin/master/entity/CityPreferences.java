@@ -240,6 +240,10 @@ public class CityPreferences extends AbstractAuditable {
     }
 
     public boolean logoExist() {
+    	if(municipalityLogo != null)
+    		System.out.print("municipalityLogo "+municipalityLogo.getId());
+    	else
+    		System.out.print("municipalityLogo  is null");
         return municipalityLogo != null && isNotBlank(municipalityLogo.getFileStoreId());
     }
 }
