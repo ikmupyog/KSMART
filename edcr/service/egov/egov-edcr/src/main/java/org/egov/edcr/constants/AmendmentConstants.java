@@ -13,6 +13,10 @@ public class AmendmentConstants {
     public static final Date AMEND_DATE_011020 = DateUtils.toDateUsingDefaultPattern("02/10/2020");
 
     public static final String AMEND_OCT20 = "amendment02Oct20";
+    
+    public static final Date AMEND_DATE_010923 = DateUtils.toDateUsingDefaultPattern("01/09/2023");
+
+    public static final String AMEND_SEP23 = "amendment01Sep23";
 
     /*
      * In production, plans scrutiny submission allowed till 09/11/19, but rules amendment effective from 08/11/19

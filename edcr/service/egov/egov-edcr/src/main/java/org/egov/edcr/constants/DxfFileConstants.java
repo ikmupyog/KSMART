@@ -6,11 +6,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DxfFileConstants {
 
+	public static final String A4 = "A4"; // Apartment/Flat
 	public static final String A1 = "A1"; // Residential
+	public static final String A5 = "A5"; // Professional Office
+
 	public static final String A2 = "A2"; // Special Residential
 	public static final String A3 = "A3"; // Hostel Educational
-	public static final String A4 = "A4"; // Apartment/Flat
-	public static final String A5 = "A5"; // Professional Office
+	public static final String F3 = "F3"; // Hotels
+
 	public static final String B1 = "B1"; // Educational
 	public static final String B2 = "B2"; // Educational HighSchool
 	public static final String B3 = "B3"; // Higher Educational Institute
@@ -25,7 +28,6 @@ public class DxfFileConstants {
 	public static final String F = "F"; // Mercantile / Commercial
 	public static final String F1 = "F1"; // Commercial Parking Plaza
 	public static final String F2 = "F2"; // Commercial Parking Appurtenant
-	public static final String F3 = "F3"; // Hotels
 	public static final String F4 = "F4"; // Kiosk
 	public static final String G1 = "G1"; // Industrial
 	public static final String G2 = "G2"; // Small Industrial

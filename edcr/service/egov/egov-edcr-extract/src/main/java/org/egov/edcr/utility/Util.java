@@ -65,9 +65,10 @@ public class Util {
     private static final int DECIMALDIGITS = 10;
     private static String FLOOR_NAME_PREFIX = "FLOOR_";
     static final Logger LOG = LogManager.getLogger(Util.class);
-    private static final BigDecimal ONEHUNDREDFIFTY = BigDecimal.valueOf(150);
+    private static final BigDecimal TWOHUNDRED = BigDecimal.valueOf(200);
     private static final BigDecimal FIFTY = BigDecimal.valueOf(50);
     private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
+    private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
 
     @Autowired
     public LayerNames layerNames;
@@ -745,24 +746,24 @@ public class Util {
     public static OccupancyType getOccupancyAsPerFloorArea(OccupancyType occupancy, BigDecimal floorArea) {
         if (OccupancyType.OCCUPANCY_B1.equals(occupancy) || OccupancyType.OCCUPANCY_B2.equals(occupancy)
                 || OccupancyType.OCCUPANCY_B3.equals(occupancy)) {
-            if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
+            if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
                 occupancy = OccupancyType.OCCUPANCY_A2;
             else
                 occupancy = OccupancyType.OCCUPANCY_B1;
         } else if (OccupancyType.OCCUPANCY_C.equals(occupancy) || OccupancyType.OCCUPANCY_C1.equals(occupancy)
                 || OccupancyType.OCCUPANCY_C2.equals(occupancy) || OccupancyType.OCCUPANCY_C3.equals(occupancy)) {
-            if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
+            if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
                 occupancy = OccupancyType.OCCUPANCY_F;
             else
                 occupancy = OccupancyType.OCCUPANCY_C;
-        } else if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0
+        } else if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0
                 && OccupancyType.OCCUPANCY_D.equals(occupancy))
             occupancy = OccupancyType.OCCUPANCY_F;
         else if (OccupancyType.OCCUPANCY_D1.equals(occupancy) || OccupancyType.OCCUPANCY_D2.equals(occupancy))
             occupancy = OccupancyType.OCCUPANCY_D;
 
         else if (OccupancyType.OCCUPANCY_E.equals(occupancy)) {
-            if (floorArea != null && floorArea.compareTo(THREEHUNDRED) <= 0)
+            if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
                 occupancy = OccupancyType.OCCUPANCY_F;
             else
                 occupancy = OccupancyType.OCCUPANCY_E;
@@ -782,24 +783,24 @@ public class Util {
     public static OccupancyTypeHelper getOccupancyAsPerFloorArea(OccupancyTypeHelper occupancy, BigDecimal floorArea, Plan pl) {
         if ("B1".equals(occupancy.getType().getCode()) || "B2".equals(occupancy.getType().getCode())
                 || "B3".equals(occupancy.getType().getCode())) {
-            if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
+            if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
                 occupancy = getConvertedOccupancy(pl, OCCUPANCY_A2_COLOR_CODE);
             else
                 occupancy = getConvertedOccupancy(pl, OCCUPANCY_B1_COLOR_CODE);
         } else if ("C".equals(occupancy.getType().getCode()) || "C1".equals(occupancy.getType().getCode())
                 || "C2".equals(occupancy.getType().getCode()) || "C3".equals(occupancy.getType().getCode())) {
-            if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
+            if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
                 occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
             else
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_C_COLOR_CODE);
             
-        } else if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0
-                && "D".equals(occupancy.getType().getCode()))
+        } else if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0
+                && "D".equals(occupancy.getType().getCode())) {
         	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
-        else if ("D1".equals(occupancy.getType().getCode()) || "D2".equals(occupancy.getType().getCode()))
+        } else if ("D1".equals(occupancy.getType().getCode()) || "D2".equals(occupancy.getType().getCode())) {
         	occupancy = getConvertedOccupancy(pl, OCCUPANCY_D_COLOR_CODE);
-        else if ("E".equals(occupancy.getType().getCode())) {
-            if (floorArea != null && floorArea.compareTo(THREEHUNDRED) <= 0)
+        } else if ("E".equals(occupancy.getType().getCode())) {
+            if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
             else
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_E_COLOR_CODE);
@@ -808,11 +809,17 @@ public class Util {
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
             else
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_H_COLOR_CODE);
-        } else if ("A5".equals(occupancy.getType().getCode()))
+        } else if ("G1".equals(occupancy.getType().getCode())) {
+            if (floorArea != null && floorArea.compareTo(THOUSAND) <= 0)
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_G1_COLOR_CODE);
+            else
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_G2_COLOR_CODE);
+        } else if ("A5".equals(occupancy.getType().getCode())) {
             if (floorArea != null && floorArea.compareTo(FIFTY) <= 0)
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_A1_COLOR_CODE);
             else
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+        }
         return occupancy;
     }
     

@@ -49,6 +49,8 @@ package org.egov.edcr.feature;
 
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_010923;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_SEP23;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 import static org.egov.edcr.utility.DcrConstants.HEIGHTNOTDEFINED;
@@ -93,11 +95,19 @@ public class SetBackService extends FeatureProcess {
     private FrontYardService_Amend02Oct20 frontYardServiceAmend2020Oct02;
 
     @Autowired
+    private FrontYardService_Amend01Sep23 frontYardServiceAmend2023Sep01;
+    
+    @Autowired
     private SideYardService_Amend02Oct20 sideYardServiceAmendment2020Oct02;
 
     @Autowired
     private RearYardService_Amend02Oct20 rearYardServiceAmendment2020Oct02;
+    
+    @Autowired
+    private RearYardService_Amend01Sep23 rearYardService_Amend01Sep23;
 
+    @Autowired
+    private SideYardService_Amend01Sep23 sideYardService_Amend01Sep23;
 
     @Override
     public Plan validate(Plan pl) {
@@ -209,7 +219,12 @@ public class SetBackService extends FeatureProcess {
     public Plan process(Plan pl) {
         String amendmentRefNumber = this.getAmendmentsRefNumber(pl.getAsOnDate());
 
-        if (amendmentRefNumber != null && AMEND_OCT20.equals(amendmentRefNumber)) {
+        if (amendmentRefNumber != null && AMEND_SEP23.equals(amendmentRefNumber)) {
+            validate(pl);
+            frontYardServiceAmend2023Sep01.processFrontYard(pl);
+            sideYardService_Amend01Sep23.processSideYard(pl);
+            rearYardService_Amend01Sep23.processRearYard(pl);
+        } else if (amendmentRefNumber != null && AMEND_OCT20.equals(amendmentRefNumber)) {
             validate(pl);
             frontYardServiceAmend2020Oct02.processFrontYard(pl);
             sideYardServiceAmendment2020Oct02.processSideYard(pl);
@@ -233,6 +248,8 @@ public class SetBackService extends FeatureProcess {
         Map<String, Date> setbackAmendments = new LinkedHashMap<>();
         setbackAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
         setbackAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
+        setbackAmendments.put(AMEND_SEP23, AMEND_DATE_010923);
+        
         return setbackAmendments;
     }
 }

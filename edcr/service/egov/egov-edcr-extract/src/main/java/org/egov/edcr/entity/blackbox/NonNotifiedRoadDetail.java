@@ -59,6 +59,12 @@ public class NonNotifiedRoadDetail extends NonNotifiedRoad {
     @JsonIgnore
     protected transient DXFLWPolyline polyLine;
 
+    public NonNotifiedRoadDetail() {
+    	//Invaraint
+    }
+    public NonNotifiedRoadDetail(NonNotifiedRoad nonNotifiedRoad) {
+    	super();
+    }
 	public DXFLWPolyline getPolyLine() {
 		return polyLine;
 	}
