@@ -47,10 +47,6 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
@@ -66,6 +62,8 @@ import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
 import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.E1;
+import static org.egov.edcr.constants.DxfFileConstants.E2;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
@@ -124,9 +122,9 @@ public class Far extends FeatureProcess {
 	private static final String VALIDATION_NEGATIVE_EXISTING_FLOOR_AREA = "msg.error.negative.existing.floorarea.occupancy.floor";
 	private static final String VALIDATION_NEGATIVE_BUILTUP_AREA = "msg.error.negative.builtuparea.occupancy.floor";
 	private static final String VALIDATION_NEGATIVE_EXISTING_BUILTUP_AREA = "msg.error.negative.existing.builtuparea.occupancy.floor";
-	public static final String RULE_31_1 = "31(1)";
-	public static final String RULE_AMD19_27_1 = "27(1)";
+	public static final String RULE_27 = "27";
 
+	private static final BigDecimal onePointTwo = BigDecimal.valueOf(1.2);
 	private static final BigDecimal onePointFive = BigDecimal.valueOf(1.5);
 	private static final BigDecimal two = BigDecimal.valueOf(2.0);
 	private static final BigDecimal twoPointFive = BigDecimal.valueOf(2.5);
@@ -170,9 +168,8 @@ public class Far extends FeatureProcess {
 				for (Occupancy occupancy : flr.getOccupancies()) {
 					validate2(pl, blk, flr, occupancy);
 
-					occupancy.setCarpetArea(getCarpetArea(occupancy.getFloorArea(), pl.getAsOnDate()));
-
-					occupancy.setExistingCarpetArea(getCarpetArea(occupancy.getExistingFloorArea(), pl.getAsOnDate()));
+					occupancy.setCarpetArea(getCarpetArea(occupancy.getFloorArea()));
+					occupancy.setExistingCarpetArea(getCarpetArea(occupancy.getExistingFloorArea()));
 
 					bltUpArea = bltUpArea.add(
 							occupancy.getBuiltUpArea() == null ? BigDecimal.valueOf(0) : occupancy.getBuiltUpArea());
@@ -248,7 +245,7 @@ public class Far extends FeatureProcess {
 
 					for (MezzanineFloor mezz : flr.getMezzanineFloor()) {
 						if (mezz.getTypeHelper() != null && mezz.getBuiltUpArea() != null
-								&& mezz.getTypeHelper().getType().equals(occupancyType.getType().getCode())) {
+								&& mezz.getTypeHelper().getType().getCode().equals(occupancyType.getType().getCode())) {
 							blockWiseMezzanineFloorArea = blockWiseMezzanineFloorArea.add(mezz.getFloorArea());
 							blockWiseMezzanineBuiltupArea = blockWiseMezzanineBuiltupArea.add(mezz.getBuiltUpArea());
 						}
@@ -260,7 +257,7 @@ public class Far extends FeatureProcess {
 				occupancy.setFloorArea(blockWiseFloorArea);
 				occupancy.setExistingFloorArea(blockWiseExistingFloorArea);
 				occupancy.setExistingBuiltUpArea(blockWiseExistingBuiltupArea);
-				occupancy.setCarpetArea(getCarpetArea(blockWiseFloorArea, pl.getAsOnDate()));
+				occupancy.setCarpetArea(getCarpetArea(blockWiseFloorArea));
 				occupancy.setTypeHelper(occupancyType);
 				building.getTotalArea().add(occupancy);
 
@@ -268,7 +265,7 @@ public class Far extends FeatureProcess {
 					Occupancy mezzanineOccupancy = new Occupancy();
 					mezzanineOccupancy.setBuiltUpArea(blockWiseMezzanineBuiltupArea);
 					mezzanineOccupancy.setFloorArea(blockWiseMezzanineFloorArea);
-					mezzanineOccupancy.setCarpetArea(getCarpetArea(blockWiseMezzanineFloorArea, pl.getAsOnDate()));
+					mezzanineOccupancy.setCarpetArea(getCarpetArea(blockWiseMezzanineFloorArea));
 					mezzanineOccupancy.setTypeHelper(occupancyType);
 					building.getMezzanineOccupancies().add(mezzanineOccupancy);
 					building.getTotalArea().add(mezzanineOccupancy);
@@ -293,6 +290,7 @@ public class Far extends FeatureProcess {
 			Set<OccupancyTypeHelper> setOfOccupancyTypes = new HashSet<>(listOfOccupancyTypes);
 
 			List<Occupancy> listOfOccupanciesOfAParticularblock = new ArrayList<>();
+			//TODO: Cross check this logic occupancy conversion is applicable
 			// for each distinct converted occupancy types
 			for (OccupancyTypeHelper occupancyType : setOfOccupancyTypes) {
 				if (occupancyType != null) {
@@ -319,8 +317,8 @@ public class Far extends FeatureProcess {
 					occupancy.setFloorArea(totalFlrArea);
 					occupancy.setExistingBuiltUpArea(totalExistingBltUpArea);
 					occupancy.setExistingFloorArea(totalExistingFlrArea);
-					occupancy.setExistingCarpetArea(getCarpetArea(totalExistingFlrArea, pl.getAsOnDate()));
-					occupancy.setCarpetArea(getCarpetArea(totalExistingFlrArea, pl.getAsOnDate()));
+					occupancy.setExistingCarpetArea(getCarpetArea(totalExistingFlrArea));
+					occupancy.setCarpetArea(getCarpetArea(totalExistingFlrArea));
 
 					listOfOccupanciesOfAParticularblock.add(occupancy);
 				}
@@ -374,7 +372,6 @@ public class Far extends FeatureProcess {
 								|| F.equals(occupancy.getTypeHelper().getType().getCode())
 								|| F1.equals(occupancy.getTypeHelper().getType().getCode())
 								|| F2.equals(occupancy.getTypeHelper().getType().getCode())
-								|| F3.equals(occupancy.getTypeHelper().getType().getCode())
 								|| F4.equals(occupancy.getTypeHelper().getType().getCode())) {
 							residentialOrCommercialOccupancyType = 1;
 						}
@@ -397,35 +394,19 @@ public class Far extends FeatureProcess {
 					if (floor.getNumber() != null) {
 						BigDecimal occupancyTotalBuiltUpArea = floor.getOccupancies().stream()
 								.map(Occupancy::getBuiltUpArea).reduce(BigDecimal.ZERO, BigDecimal::add);
-
 						BigDecimal occupancyTotalExistingBuiltUpArea = floor.getOccupancies().stream()
 								.map(Occupancy::getExistingBuiltUpArea).reduce(BigDecimal.ZERO, BigDecimal::add);
 						proposedBuiltUpArea = occupancyTotalExistingBuiltUpArea.compareTo(BigDecimal.ZERO) > 0
 								? occupancyTotalBuiltUpArea.subtract(occupancyTotalExistingBuiltUpArea)
 								: occupancyTotalBuiltUpArea;
 						/*
-						 * As per Amendment, the KMBR 08/11/2019 and 01/02/2020 cellar floors also need
-						 * to consider in the total floor count, but as per KMBR 1999, the floors ground
-						 * and above (G+1) only need to consider in the total floor count. Ex, if
-						 * building having floors cellar -1, cellar -2, ground 0, upper 1 then as per
-						 * KMBR 1999 floor count is 2, as per KMBR 2019 floor count is 4
+						 * Calculate cellar floor count and ground & above floor count
 						 */
-						if (!AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-								&& !AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-								&& floor.getNumber() < 0) {
-							proposedBuiltUpArea = BigDecimal.ZERO;
-						}
-
-						if (proposedBuiltUpArea.compareTo(BigDecimal.ZERO) > 0 && floor.getNumber() != null
-								&& floor.getNumber() >= 0)
+						if (floor.getNumber() < 0 && proposedBuiltUpArea.compareTo(BigDecimal.ZERO) > 0)
+							noOfCellars = noOfCellars.add(BigDecimal.ONE);
+						else if (floor.getNumber() >= 0 && proposedBuiltUpArea.compareTo(BigDecimal.ZERO) > 0)
 							noOfFloorsAboveGround = noOfFloorsAboveGround.add(BigDecimal.ONE);
 					}
-
-					if (floor.getNumber() != null && floor.getNumber() < 0
-							&& proposedBuiltUpArea.compareTo(BigDecimal.ZERO) > 0) {
-						noOfCellars = noOfCellars.add(BigDecimal.ONE);
-					}
-
 				}
 
 				boolean hasTerrace = blk.getBuilding().getFloors().stream()
@@ -434,12 +415,9 @@ public class Far extends FeatureProcess {
 				noOfFloorsAboveGround = hasTerrace ? noOfFloorsAboveGround.subtract(BigDecimal.ONE)
 						: noOfFloorsAboveGround;
 				blk.getBuilding().setMaxFloor(noOfFloorsAboveGround);
-
-				if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-						|| AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-					noOfFloorsAboveGround = noOfFloorsAboveGround.add(noOfCellars);
-
-				}
+				
+				//TODO: Need to look setting cellar floor count set to this variable, else need to use total floor count value instead of noOfFloorsAboveGround value
+				noOfFloorsAboveGround = noOfFloorsAboveGround.add(noOfCellars);
 
 				blk.getBuilding().setFloorsAboveGround(noOfFloorsAboveGround);
 				blk.getBuilding().setTotalFloors(BigDecimal.valueOf(blk.getBuilding().getFloors().size()));
@@ -581,10 +559,10 @@ public class Far extends FeatureProcess {
 
 		pl.setOccupancies(plotDeclaredAndConvertedOccupancyWiseArea);
 		pl.getVirtualBuilding().setTotalFloorArea(totalFloorArea);
-		pl.getVirtualBuilding().setTotalCarpetArea(getCarpetArea(totalFloorArea, pl.getAsOnDate()));
+		pl.getVirtualBuilding().setTotalCarpetArea(getCarpetArea(totalFloorArea));
 		pl.getVirtualBuilding().setTotalExistingBuiltUpArea(totalExistingBuiltUpArea);
 		pl.getVirtualBuilding().setTotalExistingFloorArea(totalExistingFloorArea);
-		pl.getVirtualBuilding().setTotalExistingCarpetArea(getCarpetArea(totalExistingFloorArea, pl.getAsOnDate()));
+		pl.getVirtualBuilding().setTotalExistingCarpetArea(getCarpetArea(totalExistingFloorArea));
 		pl.getVirtualBuilding().setOccupancyTypes(distinctOccupancyTypesHelper);
 		pl.getVirtualBuilding().setTotalBuitUpArea(totalBuiltUpArea);
 		pl.getVirtualBuilding().setMostRestrictiveFarHelper(getMostRestrictiveFar(setOfDistinctOccupancyTypes));
@@ -614,8 +592,7 @@ public class Far extends FeatureProcess {
 				int residentialOrCommercialOccupancyTypeForPlan = 0;
 				if (A1.equals(occupancyType.getType().getCode()) || A4.equals(occupancyType.getType().getCode())
 						|| F.equals(occupancyType.getType().getCode()) || F1.equals(occupancyType.getType().getCode())
-						|| F2.equals(occupancyType.getType().getCode()) || F3.equals(occupancyType.getType().getCode())
-						|| F4.equals(occupancyType.getType().getCode())) {
+						|| F2.equals(occupancyType.getType().getCode()) || F4.equals(occupancyType.getType().getCode())) {
 					residentialOrCommercialOccupancyTypeForPlan = 1;
 				}
 				if (residentialOrCommercialOccupancyTypeForPlan == 0) {
@@ -685,12 +662,7 @@ public class Far extends FeatureProcess {
 
 	private void calculateFar(Plan pl, OccupancyTypeHelper mostRestrictiveOccupancy, FarDetails far) {
 		ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-		if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-				|| AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
-			scrutinyDetail.setKey("Common_FSI");
-		else
-			scrutinyDetail.setKey("Common_FAR");
-
+		scrutinyDetail.setKey("Common_FSI");
 		scrutinyDetail.addColumnHeading(1, RULE_NO);
 		scrutinyDetail.addColumnHeading(2, DESCRIPTION);
 		scrutinyDetail.addColumnHeading(3, OCCUPANCY);
@@ -706,88 +678,23 @@ public class Far extends FeatureProcess {
 		loweWeightedFar.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
 		weightedAreaWOAddnlFee.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
 
-		if (pl.getPlot().getArea().doubleValue() >= 5000) {
-
-			for (Occupancy occ : pl.getOccupancies()) {
-				weightedAreaWOAddnlFee = weightedAreaWOAddnlFee
-						.add(occ.getFloorArea().multiply(getPermissibleFar(occ.getTypeHelper())));
-				weightedAreaWithAddnlFee = weightedAreaWithAddnlFee
-						.add(occ.getFloorArea().multiply(getMaxPermissibleFar(occ.getTypeHelper())));
-			}
-			if (pl.getVirtualBuilding().getTotalFloorArea() != null
-					&& pl.getVirtualBuilding().getTotalFloorArea().doubleValue() > 0) {
-				loweWeightedFar = weightedAreaWOAddnlFee.divide(pl.getVirtualBuilding().getTotalFloorArea(), 2,
-						ROUNDMODE_MEASUREMENTS);
-				upperWeightedFar = weightedAreaWithAddnlFee.divide(pl.getVirtualBuilding().getTotalFloorArea(), 2,
-						ROUNDMODE_MEASUREMENTS);
-			}
-
-			processFar(pl, null, pl.getFarDetails(), upperWeightedFar, loweWeightedFar, scrutinyDetail,
-					RULE_DESCRIPTION_KEY_WEIGHTED);
-
-		} else {
-			if (mostRestrictiveOccupancy != null) {
-				switch (mostRestrictiveOccupancy.getType().getCode()) {
-				case A1:
-				case A4:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), four, three, scrutinyDetail, null);
-					break;
-				case A2:
-				case F3:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), four, twoPointFive, scrutinyDetail,
-							null);
-					break;
-				// case B:
-				case B1:
-				case B2:
-				case B3:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), three, twoPointFive, scrutinyDetail,
-							null);
-					break;
-				case C:
-				case C1:
-				case C2:
-				case C3:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), threePointFive, twoPointFive,
-							scrutinyDetail, null);
-					break;
-				case D:
-				case D1:
-				case D2:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), twoPointFive, onePointFive,
-							scrutinyDetail, null);
-					break;
-				case E:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), four, three, scrutinyDetail, null);
-					break;
-				case F:
-				case F4:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), four, three, scrutinyDetail, null);
-					break;
-				case G1:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), twoPointFive, twoPointFive,
-							scrutinyDetail, null);
-					break;
-				case G2:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), four, threePointFive, scrutinyDetail,
-							null);
-					break;
-				case H:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), four, three, scrutinyDetail, null);
-					break;
-				case I1:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), two, two, scrutinyDetail, null);
-					break;
-				case I2:
-					processFar(pl, mostRestrictiveOccupancy, pl.getFarDetails(), onePointFive, onePointFive,
-							scrutinyDetail, null);
-					break;
-				default:
-					break;
-
-				}
-			}
+		for (Occupancy occ : pl.getOccupancies()) {
+			weightedAreaWOAddnlFee = weightedAreaWOAddnlFee
+					.add(occ.getFloorArea().multiply(getPermissibleFar(occ.getTypeHelper())));
+			weightedAreaWithAddnlFee = weightedAreaWithAddnlFee
+					.add(occ.getFloorArea().multiply(getMaxPermissibleFar(occ.getTypeHelper())));
 		}
+		if (pl.getVirtualBuilding().getTotalFloorArea() != null
+				&& pl.getVirtualBuilding().getTotalFloorArea().doubleValue() > 0) {
+			loweWeightedFar = weightedAreaWOAddnlFee.divide(pl.getVirtualBuilding().getTotalFloorArea(), 2,
+					ROUNDMODE_MEASUREMENTS);
+			upperWeightedFar = weightedAreaWithAddnlFee.divide(pl.getVirtualBuilding().getTotalFloorArea(), 2,
+					ROUNDMODE_MEASUREMENTS);
+		}
+
+		processFar(pl, null, pl.getFarDetails(), upperWeightedFar, loweWeightedFar, scrutinyDetail,
+				RULE_DESCRIPTION_KEY_WEIGHTED);
+
 	}
 
 	private BigDecimal getPermissibleFar(OccupancyTypeHelper occupancyType) {
@@ -818,7 +725,11 @@ public class Far extends FeatureProcess {
 			permissibleFar = onePointFive;
 			break;
 		case E:
-			permissibleFar = three;
+			permissibleFar = four;
+			break;
+		case E1:
+		case E2:
+			permissibleFar = four;
 			break;
 		case F:
 		case F4:
@@ -834,10 +745,10 @@ public class Far extends FeatureProcess {
 			permissibleFar = three;
 			break;
 		case I1:
-			permissibleFar = two;
+			permissibleFar = onePointTwo;
 			break;
 		case I2:
-			permissibleFar = onePointFive;
+			permissibleFar = two;
 			break;
 		default:
 			break;
@@ -866,7 +777,6 @@ public class Far extends FeatureProcess {
 		case C1:
 		case C2:
 		case C3:
-
 			permissibleFar = threePointFive;
 			break;
 		case D:
@@ -875,6 +785,8 @@ public class Far extends FeatureProcess {
 			permissibleFar = twoPointFive;
 			break;
 		case E:
+		case E1:
+		case E2:
 			permissibleFar = four;
 			break;
 		case F:
@@ -882,7 +794,7 @@ public class Far extends FeatureProcess {
 			permissibleFar = four;
 			break;
 		case G1:
-			permissibleFar = twoPointFive;
+			permissibleFar = threePointFive;
 			break;
 		case G2:
 			permissibleFar = four;
@@ -891,10 +803,10 @@ public class Far extends FeatureProcess {
 			permissibleFar = four;
 			break;
 		case I1:
-			permissibleFar = two;
+			permissibleFar = onePointTwo;
 			break;
 		case I2:
-			permissibleFar = onePointFive;
+			permissibleFar = four;
 			break;
 		default:
 			break;
@@ -903,14 +815,8 @@ public class Far extends FeatureProcess {
 		return permissibleFar;
 	}
 
-	public BigDecimal getCarpetArea(BigDecimal floorArea, Date asOnDate) {
-		BigDecimal carpetArea;
-		if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(asOnDate))
-				|| AMEND_NOV19.equals(super.getAmendmentsRefNumber(asOnDate)))
-			carpetArea = floorArea;
-		else
-			carpetArea = floorArea.multiply(BigDecimal.valueOf(0.80));
-		return carpetArea;
+	public BigDecimal getCarpetArea(BigDecimal floorArea) {
+		return floorArea.multiply(BigDecimal.valueOf(0.80));
 	}
 
 	private void decideNocIsRequired(Plan pl) {
@@ -1046,13 +952,7 @@ public class Far extends FeatureProcess {
 
 	private void processFar(Plan pl, OccupancyTypeHelper occupancyType, FarDetails far, BigDecimal upperLimit,
 			BigDecimal additionFeeLimit, ScrutinyDetail scrutinyDetail, String desc) {
-		String ruleNo;
-		if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-				|| AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-			ruleNo = RULE_AMD19_27_1;
-			pl.getFeatureAmendments().put("FAR", AMEND_DATE_081119.toString());
-		} else
-			ruleNo = RULE_31_1;
+		String ruleNo = RULE_27;
 		if (far.getProvidedFar().doubleValue() <= upperLimit.doubleValue()) {
 
 			if (far.getProvidedFar().doubleValue() > additionFeeLimit.doubleValue()) {
@@ -1066,7 +966,6 @@ public class Far extends FeatureProcess {
 					desc = getLocaleMessage(RULE_DESCRIPTION_KEY, upperLimit.toString(), additionFeeLimit.toString());
 				else
 					desc = getLocaleMessage(desc, upperLimit.toString(), additionFeeLimit.toString());
-				desc = desc + "Kozhikode";
 				Map<String, String> details = new HashMap<>();
 				details.put(RULE_NO, ruleNo);
 				details.put(DESCRIPTION, desc);
@@ -1141,9 +1040,9 @@ public class Far extends FeatureProcess {
 									totalFlrArea = totalFlrArea.add(mezzanineFloor.getFloorArea());
 									totalBlkFlrArea = totalBlkFlrArea.add(mezzanineFloor.getFloorArea());
 									totalCrptArea = totalCrptArea
-											.add(getCarpetArea(mezzanineFloor.getFloorArea(), pl.getAsOnDate()));
+											.add(getCarpetArea(mezzanineFloor.getFloorArea()));
 									totalBlkCrptArea = totalBlkCrptArea
-											.add(getCarpetArea(mezzanineFloor.getFloorArea(), pl.getAsOnDate()));
+											.add(getCarpetArea(mezzanineFloor.getFloorArea()));
 								}
 							}
 						}
@@ -1179,7 +1078,7 @@ public class Far extends FeatureProcess {
 			block.getBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalBlockFloorUnits));
 			List<String> occupancyCodes = pl.getVirtualBuilding().getOccupancyTypes().stream()
 					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())) && occupancyCodes.contains(A1)) {
+			if (occupancyCodes.contains(A1)) {
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
 							String.format("Mandatory Kitchen unit is not defined for Residential in the block %s",
@@ -1196,8 +1095,6 @@ public class Far extends FeatureProcess {
 	@Override
 	public Map<String, Date> getAmendments() {
 		Map<String, Date> farAmend = new LinkedHashMap<>();
-		farAmend.put(AMEND_NOV19, AMEND_DATE_081119);
-		farAmend.put(AMEND_OCT20, AMEND_DATE_011020);
 		return farAmend;
 	}
 }
