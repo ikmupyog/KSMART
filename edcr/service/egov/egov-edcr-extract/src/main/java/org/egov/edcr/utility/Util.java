@@ -784,7 +784,7 @@ public class Util {
         if ("B1".equals(occupancy.getType().getCode()) || "B2".equals(occupancy.getType().getCode())
                 || "B3".equals(occupancy.getType().getCode())) {
             if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
-                occupancy = getConvertedOccupancy(pl, OCCUPANCY_A2_COLOR_CODE);
+                occupancy = getConvertedOccupancy(pl, OCCUPANCY_A1_COLOR_CODE);
             else
                 occupancy = getConvertedOccupancy(pl, OCCUPANCY_B1_COLOR_CODE);
         } else if ("C".equals(occupancy.getType().getCode()) || "C1".equals(occupancy.getType().getCode())
