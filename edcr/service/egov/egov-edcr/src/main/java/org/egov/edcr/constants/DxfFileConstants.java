@@ -25,6 +25,8 @@ public class DxfFileConstants {
 	public static final String D1 = "D1"; // Assembly Worship
 	public static final String D2 = "D2"; // Bus Terminal
 	public static final String E = "E"; // Office/Business
+	public static final String E1 = "E1"; // Govt. approved/ owned IT parks
+	public static final String E2 = "E2"; // For all Govt. Offices in plot owned by Govt.
 	public static final String F = "F"; // Mercantile / Commercial
 	public static final String F1 = "F1"; // Commercial Parking Plaza
 	public static final String F2 = "F2"; // Commercial Parking Appurtenant
