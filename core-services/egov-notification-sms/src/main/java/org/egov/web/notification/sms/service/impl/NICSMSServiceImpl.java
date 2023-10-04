@@ -67,7 +67,7 @@ public class NICSMSServiceImpl extends BaseSMSService {
                 
                
                 try (InputStream is = getClass().getClassLoader()
-                                            .getResourceAsStream("smsgwsmsgovin-sep23.cer")) {
+                                            .getResourceAsStream("smsgwsmsgovin-dec23.cer")) {
 
                     //KeyStore trustStore = KeyStore.getInstance("pkcs12");
                     //trustStore.load(is, "changeit".toCharArray());
