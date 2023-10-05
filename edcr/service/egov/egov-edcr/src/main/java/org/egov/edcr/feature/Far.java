@@ -74,6 +74,7 @@ import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.J;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.PLOT_AREA;
@@ -725,9 +726,9 @@ public class Far extends FeatureProcess {
 			permissibleFar = onePointFive;
 			break;
 		case E:
-			permissibleFar = four;
-			break;
 		case E1:
+			permissibleFar = three;
+			break;
 		case E2:
 			permissibleFar = four;
 			break;
@@ -736,19 +737,20 @@ public class Far extends FeatureProcess {
 			permissibleFar = three;
 			break;
 		case G1:
-			permissibleFar = twoPointFive;
+			permissibleFar = threePointFive;
 			break;
 		case G2:
-			permissibleFar = threePointFive;
+			permissibleFar = twoPointFive;
 			break;
 		case H:
 			permissibleFar = three;
 			break;
 		case I1:
+		case I2:
 			permissibleFar = onePointTwo;
 			break;
-		case I2:
-			permissibleFar = two;
+		case J:
+			permissibleFar = three;
 			break;
 		default:
 			break;
@@ -803,9 +805,10 @@ public class Far extends FeatureProcess {
 			permissibleFar = four;
 			break;
 		case I1:
+		case I2:
 			permissibleFar = onePointTwo;
 			break;
-		case I2:
+		case J:
 			permissibleFar = four;
 			break;
 		default:
