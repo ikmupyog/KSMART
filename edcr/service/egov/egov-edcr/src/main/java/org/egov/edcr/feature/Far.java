@@ -283,7 +283,7 @@ public class Far extends FeatureProcess {
 				allDtlsMap.put("existingFloorArea", blockWiseExistingFloorArea);
 				allDtlsMap.put("existingBuiltUpArea", blockWiseExistingBuiltupArea);
 
-				listOfOccupancyTypes.add(occupancyType);
+				listOfOccupancyTypes.add(occupancyTypeAsPerFloorArea);
 
 				listOfMapOfAllDtls.add(allDtlsMap);
 			}
