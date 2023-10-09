@@ -131,6 +131,7 @@ public class DcrConstants {
     public static final String COVERAGE = "COVERAGE";
     public static final String COVERAGE_DEDUCT = "COVERAGE DEDUCT";
     public static final RoundingMode ROUNDMODE_MEASUREMENTS = RoundingMode.HALF_UP;
+    public static final RoundingMode ROUNDUP = RoundingMode.UP;
     public static final String YES = "YES";
     public static final String NO = "NO";
     public static final String NA = "NA";

@@ -24,6 +24,7 @@ public class DxfFileConstants {
 	public static final String D = "D"; // Assembly
 	public static final String D1 = "D1"; // Assembly Worship
 	public static final String D2 = "D2"; // Bus Terminal
+	public static final String D3 = "D3"; // Auditorium, Community Halls & Wedding Halls 
 	public static final String E = "E"; // Office/Business
 	public static final String E1 = "E1"; // Govt. approved/ owned IT parks
 	public static final String E2 = "E2"; // For all Govt. Offices in plot owned by Govt.
@@ -36,6 +37,7 @@ public class DxfFileConstants {
 	public static final String H = "H"; // Storage
 	public static final String I1 = "I1"; // Hazardous (I1)
 	public static final String I2 = "I2"; //
+	public static final String J = "J"; //Multiplex
 	
 	
 	//TODO: Need to cleanup below occupancies codes after all features conversion completed
