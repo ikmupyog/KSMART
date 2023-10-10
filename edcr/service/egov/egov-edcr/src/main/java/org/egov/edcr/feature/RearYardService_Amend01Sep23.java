@@ -7,7 +7,6 @@ import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
 import static org.egov.edcr.constants.DxfFileConstants.A5;
-import static org.egov.edcr.constants.DxfFileConstants.B;
 import static org.egov.edcr.constants.DxfFileConstants.B1;
 import static org.egov.edcr.constants.DxfFileConstants.B2;
 import static org.egov.edcr.constants.DxfFileConstants.B3;
@@ -38,11 +37,9 @@ import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.YES;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.egov.common.entity.edcr.Block;
@@ -54,8 +51,6 @@ import org.egov.common.entity.edcr.Plot;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.SetBack;
-import org.egov.edcr.service.ProcessHelper;
-import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -162,38 +157,10 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 						BigDecimal buildingHeight = block.getBuilding().getBuildingHeight();
 
 						if (buildingHeight != null && (min.doubleValue() > 0 || mean.doubleValue() > 0)) {
-							List<Occupancy> occupanciesList = ProcessHelper.groupOccupanciesForOccupancy_B_C_D(pl, block);
-
-							for (final Occupancy occupancy : occupanciesList) {
+						 
+							for (final Occupancy occupancy : block.getBuilding().getOccupancies()) {
 								OccupancyTypeHelper occpncy = occupancy.getTypeHelper();
-
-								if (occupancy.getBuiltUpArea() != null && B.equals(occupancy.getTypeHelper().getType().getCode())
-                                        && occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)
-                                    occpncy = Util.getOccupancyByCode(pl, A1);
-								else if (occupancy.getBuiltUpArea() != null
-										&& occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0
-										&& D.equals(occupancy.getTypeHelper().getType().getCode()))
-									occpncy = Util.getOccupancyByCode(pl, F);
-								else if (C.equals(occupancy.getTypeHelper().getType().getCode())
-										&& occupancy.getBuiltUpArea() != null
-										&& occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)
-									occpncy = Util.getOccupancyByCode(pl, F);
-								else if (H.equals(occupancy.getTypeHelper().getType().getCode()))
-									if (occupancy.getBuiltUpArea() != null
-											&& occupancy.getBuiltUpArea().compareTo(THREEHUNDRED) <= 0)
-										occpncy = Util.getOccupancyByCode(pl, F);
-									else
-										occpncy = Util.getOccupancyByCode(pl, H);
-								else if (E.equals(occupancy.getTypeHelper().getType().getCode()))
-	                                 if (occupancy.getBuiltUpArea() != null
-	                                            && occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)
-	                                        occpncy = Util.getOccupancyByCode(pl, F);
-	                            else if (G1.equals(occupancy.getTypeHelper().getType().getCode()))
-	                               if (occupancy.getBuiltUpArea() != null
-	                                          && occupancy.getBuiltUpArea().compareTo(THOUSAND) <= 0)
-	                                      occpncy = Util.getOccupancyByCode(pl, G1);
-	                               else
-	                                      occpncy = Util.getOccupancyByCode(pl, G2);
+ 
 								scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Rear Yard");
 
 								if (-1 == setback.getLevel()) {
