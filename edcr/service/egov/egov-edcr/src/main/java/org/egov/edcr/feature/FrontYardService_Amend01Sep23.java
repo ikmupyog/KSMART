@@ -74,6 +74,8 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
     private static final String RULE_50_2 = "50(2)";
     private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
     private static final BigDecimal TWOHUNDRED = BigDecimal.valueOf(200);
+    private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
+
 
     private static final String SUB_RULE_26_11_DESCRIPTION = "Basement front yard distance";
     private static final String SUB_RULE_24_3_DESCRIPTION = "Front yard distance";
@@ -191,8 +193,18 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                                     occpncy = Util.getOccupancyByCode(pl, F);
                                 else
                                     occpncy = Util.getOccupancyByCode(pl, H);
-                                scrutinyDetail.setKey("Block_" + block.getName() + "_" + FRONT_YARD_DESC);
-
+                           else if (E.equals(occupancy.getTypeHelper().getType().getCode()))
+                                 if (occupancy.getBuiltUpArea() != null
+                                            && occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)
+                                        occpncy = Util.getOccupancyByCode(pl, F);
+                           else if (G1.equals(occupancy.getTypeHelper().getType().getCode()))
+                               if (occupancy.getBuiltUpArea() != null
+                                          && occupancy.getBuiltUpArea().compareTo(THOUSAND) <= 0)
+                                      occpncy = Util.getOccupancyByCode(pl, G1);
+                               else
+                                      occpncy = Util.getOccupancyByCode(pl, G2);
+                           
+							scrutinyDetail.setKey("Block_" + block.getName() + "_" + FRONT_YARD_DESC);
                                 if (-1 == setback.getLevel()) {
                                     scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Basement Front Yard");
                                     checkFrontYardLessThanTenMts(pl, setback, block.getBuilding(), block.getName(),

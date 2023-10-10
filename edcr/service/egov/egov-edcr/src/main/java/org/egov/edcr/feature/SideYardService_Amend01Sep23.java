@@ -53,6 +53,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
     private static final BigDecimal SIDEVALUE_ZERO = BigDecimal.valueOf(0);
     private static final BigDecimal SIDEVALUE_SIXTY_CM = BigDecimal.valueOf(0.60);
     private static final BigDecimal SIDEVALUE_FIFTY_CM = BigDecimal.valueOf(0.50);
+    private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
 
     private static final BigDecimal SIDEVALUE_SEVENTYFIVE_CM = BigDecimal.valueOf(0.75);
     private static final BigDecimal SIDEVALUE_NINTY_CM = BigDecimal.valueOf(0.90);
@@ -217,16 +218,23 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                                         else if (C.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getBuiltUpArea() != null &&
                                                 occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
                                             occpncy = Util.getOccupancyByCode(pl, F);
-                                        else if (E.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getBuiltUpArea() != null &&
-                                                occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
-                                            occpncy = Util.getOccupancyByCode(pl, F);
                                         else if (H.equals(occupancy.getTypeHelper().getType().getCode()))
                                             if (occupancy.getBuiltUpArea() != null
                                                     && occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_300) <= 0)
                                                 occpncy = Util.getOccupancyByCode(pl, F);
                                             else
                                                 occpncy = Util.getOccupancyByCode(pl, H);
-
+                                        else if (E.equals(occupancy.getTypeHelper().getType().getCode()))
+                                            if (occupancy.getBuiltUpArea() != null
+                                                       && occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
+                                                   occpncy = Util.getOccupancyByCode(pl, F);
+                                        else if (G1.equals(occupancy.getTypeHelper().getType().getCode()))
+                                          if (occupancy.getBuiltUpArea() != null
+                                                     && occupancy.getBuiltUpArea().compareTo(THOUSAND) <= 0)
+                                                 occpncy = Util.getOccupancyByCode(pl, G1);
+                                          else
+                                                 occpncy = Util.getOccupancyByCode(pl, G2);
+                                        
                                         scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Side Yard");
                                         if (-1 == setback.getLevel()) {
                                             scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Basement Side Yard");

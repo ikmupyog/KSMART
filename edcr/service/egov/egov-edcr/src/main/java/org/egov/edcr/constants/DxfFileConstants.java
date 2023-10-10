@@ -17,7 +17,7 @@ public class DxfFileConstants {
 	public static final String B1 = "B1"; // Educational
 	public static final String B2 = "B2"; // Educational HighSchool
 	public static final String B3 = "B3"; // Higher Educational Institute
-	public static final String C = "C"; // Residential
+	public static final String C = "C"; // Medical
 	public static final String C1 = "C1"; // Medical IP
 	public static final String C2 = "C2"; // Medical OP
 	public static final String C3 = "C3"; // Medical Admin

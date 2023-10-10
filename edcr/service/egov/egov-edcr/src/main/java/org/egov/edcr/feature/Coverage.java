@@ -52,23 +52,28 @@ import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
 import static org.egov.edcr.constants.DxfFileConstants.B1;
 import static org.egov.edcr.constants.DxfFileConstants.B2;
 import static org.egov.edcr.constants.DxfFileConstants.B3;
 import static org.egov.edcr.constants.DxfFileConstants.C;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
 import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.F;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F1;
+import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F4;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
-import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS;
+import static org.egov.edcr.constants.DxfFileConstants.J;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
 
@@ -76,6 +81,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,6 +89,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
+import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
@@ -104,6 +111,7 @@ public class Coverage extends FeatureProcess {
     private static final BigDecimal ThirtyFive = BigDecimal.valueOf(35);
     private static final BigDecimal Forty = BigDecimal.valueOf(40);
     private static final BigDecimal FortyFive = BigDecimal.valueOf(45);
+    private static final BigDecimal Fifty = BigDecimal.valueOf(50);
     private static final BigDecimal Sixty = BigDecimal.valueOf(60);
     private static final BigDecimal SixtyFive = BigDecimal.valueOf(65);
     private static final BigDecimal Seventy = BigDecimal.valueOf(70);
@@ -129,32 +137,31 @@ public class Coverage extends FeatureProcess {
         BigDecimal totalCoverage = BigDecimal.ZERO;
         BigDecimal totalCoverageArea = BigDecimal.ZERO;
 
-        for (Block block : pl.getBlocks()) {
-            BigDecimal coverageAreaWithoutDeduction = BigDecimal.ZERO;
-            BigDecimal coverageDeductionArea = BigDecimal.ZERO;
+		for (Block block : pl.getBlocks()) {
+			BigDecimal coverageAreaWithoutDeduction = BigDecimal.ZERO;
+			BigDecimal coverageDeductionArea = BigDecimal.ZERO;
 
-            for (Measurement coverage : block.getCoverage()) {
-                coverageAreaWithoutDeduction = coverageAreaWithoutDeduction.add(coverage.getArea());
-            }
-            for (Measurement deduct : block.getCoverageDeductions()) {
-                coverageDeductionArea = coverageDeductionArea.add(deduct.getArea());
-            }
-            if (block.getBuilding() != null) {
-                block.getBuilding().setCoverageArea(coverageAreaWithoutDeduction.subtract(coverageDeductionArea));
-                BigDecimal coverage = BigDecimal.ZERO;
-                if (pl.getPlot().getArea().doubleValue() > 0)
-                    coverage = block.getBuilding().getCoverageArea().multiply(BigDecimal.valueOf(100)).divide(
-                            pl.getPlot().getArea(), DECIMALDIGITS_MEASUREMENTS,
-                            ROUNDMODE_MEASUREMENTS);
+			for (Measurement coverage : block.getCoverage()) {
+				coverageAreaWithoutDeduction = coverageAreaWithoutDeduction.add(coverage.getArea());
+			}
+			for (Measurement deduct : block.getCoverageDeductions()) {
+				coverageDeductionArea = coverageDeductionArea.add(deduct.getArea());
+			}
+			if (block.getBuilding() != null) {
+				block.getBuilding().setCoverageArea(coverageAreaWithoutDeduction.subtract(coverageDeductionArea));
+				BigDecimal coverage = BigDecimal.ZERO;
+				if (pl.getPlot().getArea().doubleValue() > 0)
+					coverage = block.getBuilding().getCoverageArea().multiply(BigDecimal.valueOf(100))
+							.divide(pl.getPlot().getArea(), DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
 
-                block.getBuilding().setCoverage(coverage);
+				block.getBuilding().setCoverage(coverage);
 
-                totalCoverageArea = totalCoverageArea.add(block.getBuilding().getCoverageArea());
-                // totalCoverage =
-                // totalCoverage.add(block.getBuilding().getCoverage());
-            }
+				totalCoverageArea = totalCoverageArea.add(block.getBuilding().getCoverageArea());
+				// totalCoverage =
+				// totalCoverage.add(block.getBuilding().getCoverage());
+			}
 
-        }
+		}
 
         //pl.setCoverageArea(totalCoverageArea);
         // use plotBoundaryArea
@@ -170,80 +177,97 @@ public class Coverage extends FeatureProcess {
         if (pl.getVirtualBuilding() != null) {
             pl.getVirtualBuilding().setTotalCoverageArea(totalCoverageArea);
         }
-		  // for weighted coverage 
-        if (pl.getPlot().getArea().doubleValue() >= 5000) {
-			BigDecimal provideCoverage = BigDecimal.ZERO;
-			BigDecimal weightedArea = BigDecimal.ZERO;
-			BigDecimal weightedCoverage = BigDecimal.ZERO;
-			weightedArea = weightedArea.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
-			weightedCoverage = weightedCoverage.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
-			provideCoverage = provideCoverage.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
+        
+        /*
+         * Check whether in each block, same set of occupencies present ?
+         * If same occupancy type for whole plan the use covered area. compare with plot area required. 
+         * If different occupancies, get floorwise occupancies and check the coverage percentage and compare the area with plot area
+         * If  More than one blocks and occupancies are same, use covered area concept. Else, each blockwise, floor wise use the same logic.
+         * Print covered or occupancy wise floorwise output.
+         */
+		
+        // for weighted coverage 
+           boolean exemption = ProcessHelper.isSmallPlot(pl);
+			if (exemption) {
+				// Print excemption details for small plot.
+				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+				scrutinyDetail.setKey("Common_Coverage");
+				scrutinyDetail.setHeading("Coverage in Percentage");
+				scrutinyDetail.addColumnHeading(1, RULE_NO);
+				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+				scrutinyDetail.addColumnHeading(3, OCCUPANCY);
+				scrutinyDetail.addColumnHeading(4, PROVIDED);
+				scrutinyDetail.addColumnHeading(5, STATUS);
 
-			for (Occupancy occ : pl.getOccupancies()) {
-				BigDecimal occupancyWiseCoverage = occ.getBuiltUpArea().multiply(getPermissibleCoverage(occ.getTypeHelper()));
-				weightedArea = weightedArea.add(occupancyWiseCoverage);
+				String desc = "Coverage";
+				String ruleNo = RULE_AMD19_27_1;
 
-			}
-			if (pl.getVirtualBuilding().getTotalBuitUpArea().doubleValue() > 0)
-				weightedCoverage = weightedArea.divide(pl.getVirtualBuilding().getTotalBuitUpArea(), DECIMALDIGITS,
-						ROUNDMODE_MEASUREMENTS);
-			if (pl.getPlot().getArea().doubleValue() > 0)
-				provideCoverage = pl.getCoverage()
-						.divide(pl.getPlot().getPlotBndryArea(), DECIMALDIGITS, ROUNDMODE_MEASUREMENTS)
-						.multiply(BigDecimal.valueOf(100)); //
-			provideCoverage.setScale(2);
-			processCoverage(pl, "-", provideCoverage.setScale(2, ROUNDMODE_MEASUREMENTS),
-					weightedCoverage.setScale(2, ROUNDMODE_MEASUREMENTS));
-		} else {
-			boolean exemption = ProcessHelper.isSmallPlot(pl);
-			if (!exemption) {
 				OccupancyTypeHelper mostRestrictiveOccupancy = getMostRestrictiveCoverage(
 						pl.getVirtualBuilding().getOccupancyTypes());
 				String occupancyname = mostRestrictiveOccupancy.getType().getName();
-				if (mostRestrictiveOccupancy != null) {
-					switch (mostRestrictiveOccupancy.getType().getCode()) {
-					case B1:
-					case B2:
-					case B3:
-						processCoverage(pl, occupancyname, totalCoverage, ThirtyFive);
-						break;
-					case D:
-					case D1:
-					case D2:
-						processCoverage(pl, occupancyname, totalCoverage, Forty);
-						break;
-					case I1:
-						processCoverage(pl, occupancyname, totalCoverage, FortyFive);
-						break;
-					case C:
-						processCoverage(pl, occupancyname, totalCoverage, Sixty);
-						break;
 
-					case A1:
-					case A4:
-					case A2:
-					case G1:
-						processCoverage(pl, occupancyname, totalCoverage, SixtyFive);
-						break;
-					case E:
-					case F:
-					case F4:
-						processCoverage(pl, occupancyname, totalCoverage, Seventy);
-						break;
+				Map<String, String> details = new HashMap<>();
+				details.put(RULE_NO, ruleNo);
+				details.put(DESCRIPTION, desc);
+				details.put(OCCUPANCY, occupancyname);
+				details.put(PROVIDED, "Excempted for small plot.");
+				details.put(STATUS, Result.Accepted.getResultVal());
+				scrutinyDetail.getDetail().add(details);
+				pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
+			        
+			} else {
+				if(pl.getOccupancies()!=null && pl.getOccupancies().size()==1) //Mean the blocks has more than one type of occupancy or any one block has more than one type of occupancy.
+				{
+					//Based on covered area, based on most restrictive occupancy, calculate the expected plot area
+					
+					//BigDecimal weightedArea = BigDecimal.ZERO;
+					BigDecimal weightedCoverage = BigDecimal.ZERO;
+					weightedCoverage = weightedCoverage.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS);
 
-					case G2:
-						processCoverage(pl, occupancyname, totalCoverage, SeventyFive);
-						break;
-					case H:
-						processCoverage(pl, occupancyname, totalCoverage, Eighty);
-						break;
-					default:
-						break;
-					}
+ 
+					OccupancyTypeHelper mostRestrictiveOccupancy = getMostRestrictiveCoverage(
+							pl.getVirtualBuilding().getOccupancyTypes());
+					weightedCoverage=getPermissibleCoverage(mostRestrictiveOccupancy);
+					
+			    	processCoverage(pl, mostRestrictiveOccupancy.getType().getName(), pl.getCoverage().setScale(2, ROUNDMODE_MEASUREMENTS),
+							weightedCoverage.setScale(2, ROUNDMODE_MEASUREMENTS));
+				
+				}else
+				{
+			        Map<Integer, List<Occupancy>> codesMap = new HashMap<Integer,List<Occupancy>>();
+					BigDecimal weightedArea = BigDecimal.ZERO;
+
+					 for (Block block : pl.getBlocks()) {
+						//sum total area present in each floor, occupancy wise. Also save block and floor information to print.
+					  
+						if( block.getBuilding()!=null)
+						 for (Floor flr : block.getBuilding().getFloors() ) {
+							 
+							 if(codesMap!=null && codesMap.get(flr.getNumber()).equals(flr.getNumber()))
+								 codesMap.get(flr.getNumber()).addAll(flr.getOccupancies());  
+							 else
+								 codesMap.put(flr.getNumber(), flr.getOccupancies());
+							
+						 }
+					 }
+					 
+			            BigDecimal pArea = plotBndryArea.compareTo(plotArea) >= 0 ? plotArea : plotBndryArea;
+				 
+				        for (Map.Entry<Integer, List<Occupancy>> floorOccupancies : codesMap.entrySet())  
+				        {
+				        	for(Occupancy occ:floorOccupancies.getValue())
+							 {
+								BigDecimal occupancyWiseCoverage = occ.getBuiltUpArea().multiply(getPermissibleCoverage(occ.getTypeHelper()));
+								weightedArea = weightedArea.add(occupancyWiseCoverage);
+							}
+				        	processCoverage(pl,"Coverage in Floor " +floorOccupancies.getKey(), weightedArea.setScale(2, ROUNDMODE_MEASUREMENTS),
+				        			pArea.setScale(2, ROUNDMODE_MEASUREMENTS));
+				        }
+				   
+					 }
+					 //each floorwise, occupancy wise, coverage valuewise compare required plot area.
 				}
 			}
-		}
-    }
 			 
         return pl;
     }
@@ -251,38 +275,46 @@ public class Coverage extends FeatureProcess {
     private BigDecimal getPermissibleCoverage(OccupancyTypeHelper type) {
         switch (type.getType().getCode()) {
         case B1:
+            return ThirtyFive;
         case B2:
         case B3:
-            return ThirtyFive;
+            return Fifty;
 
-        case D:
         case D1:
-        case I2:
+            return Fifty;
+        case D:
+        case D2:	
             return Forty;
 
+        case I2:
         case I1:
+        case F4:
             return FortyFive;
 
         case C:
-            return Sixty;
+        case C1:
+        case C2:
+        case C3:
+            return Fifty;
 
         case A1:
         case A4:
+        case A5:
         case A2:
-        case F3:
-        case G1:
+        case F:
+        case F1:
+        case F2:
             return SixtyFive;
 
         case E:
-        case F:
-        case F4:
-            return Seventy;
-
+        case G1:
         case G2:
-            return SeventyFive;
-
+            return Sixty;
         case H:
-            return Eighty;
+            return Seventy;
+        case J:
+            return SixtyFive;
+
         default:
             return BigDecimal.ZERO;
         }
@@ -301,13 +333,8 @@ public class Coverage extends FeatureProcess {
         String desc = getLocaleMessage(RULE_DESCRIPTION_KEY, upperLimit.toString());
         String actualResult = getLocaleMessage(RULE_ACTUAL_KEY, coverage.toString());
         String expectedResult = getLocaleMessage(RULE_EXPECTED_KEY, upperLimit.toString());
-        String ruleNo;
-        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-            ruleNo = RULE_AMD19_27_1;
-            pl.getFeatureAmendments().put("Coverage in Percentage", AMEND_DATE_081119.toString());
-        }
-        else
-            ruleNo = RULE_31_1;
+        String ruleNo= RULE_AMD19_27_1;; 	
+        
         if (coverage.doubleValue() > 0 && coverage.doubleValue() <= upperLimit.doubleValue()) {
             Map<String, String> details = new HashMap<>();
             details.put(RULE_NO, ruleNo);
@@ -346,38 +373,54 @@ public class Coverage extends FeatureProcess {
         codes = codesMap.keySet();
         if (codes.contains(B1))
             return codesMap.get(B1);
-        if (codes.contains(B2))
-            return codesMap.get(B2);
-        if (codes.contains(B3))
-            return codesMap.get(B3);
+        if (codes.contains(D2))
+            return codesMap.get(D2);
         if (codes.contains(D))
             return codesMap.get(D);
         if (codes.contains(D1))
             return codesMap.get(D1);
+        if (codes.contains(B2))
+            return codesMap.get(B2);
+        if (codes.contains(B3))
+            return codesMap.get(B3);
         if (codes.contains(I2))
             return codesMap.get(I2);
         if (codes.contains(I1))
             return codesMap.get(I1);
+        if (codes.contains(F4))
+            return codesMap.get(F4);
         if (codes.contains(C))
             return codesMap.get(C);
+        if (codes.contains(C1))
+            return codesMap.get(C1);
+        if (codes.contains(C2))
+            return codesMap.get(C2);
+        if (codes.contains(C3))
+            return codesMap.get(C3);
+        if (codes.contains(E))
+            return codesMap.get(E);
+        if (codes.contains(G1))
+            return codesMap.get(G1);
+        if (codes.contains(G2))
+            return codesMap.get(G2);
         if (codes.contains(A1))
             return codesMap.get(A1);
         if (codes.contains(A4))
             return codesMap.get(A4);
+        if (codes.contains(A5))
+            return codesMap.get(A5);
         if (codes.contains(A2))
             return codesMap.get(A2);
-        if (codes.contains(G1))
-            return codesMap.get(G1);
-        if (codes.contains(E))
-            return codesMap.get(E);
         if (codes.contains(F))
             return codesMap.get(F);
-        if (codes.contains(F4))
-            return codesMap.get(F4);
-        if (codes.contains(G2))
-            return codesMap.get(G2);
+        if (codes.contains(F1))
+            return codesMap.get(F1);
+        if (codes.contains(F2))
+            return codesMap.get(F2);
         if (codes.contains(H))
             return codesMap.get(H);
+        if (codes.contains(J))
+            return codesMap.get(J);
         else
             return null;
     }

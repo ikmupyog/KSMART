@@ -104,6 +104,7 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 	private static final BigDecimal ONEHUNDREDFIFTY = BigDecimal.valueOf(150);
 	private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
 	private static final BigDecimal TWOHUNDRED = BigDecimal.valueOf(200);
+    private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
 
 	private static final int SITEAREA_125 = 125;
 	private static final int BUILDUPAREA_200 = 200;
@@ -183,6 +184,16 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 										occpncy = Util.getOccupancyByCode(pl, F);
 									else
 										occpncy = Util.getOccupancyByCode(pl, H);
+								else if (E.equals(occupancy.getTypeHelper().getType().getCode()))
+	                                 if (occupancy.getBuiltUpArea() != null
+	                                            && occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)
+	                                        occpncy = Util.getOccupancyByCode(pl, F);
+	                            else if (G1.equals(occupancy.getTypeHelper().getType().getCode()))
+	                               if (occupancy.getBuiltUpArea() != null
+	                                          && occupancy.getBuiltUpArea().compareTo(THOUSAND) <= 0)
+	                                      occpncy = Util.getOccupancyByCode(pl, G1);
+	                               else
+	                                      occpncy = Util.getOccupancyByCode(pl, G2);
 								scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Rear Yard");
 
 								if (-1 == setback.getLevel()) {
