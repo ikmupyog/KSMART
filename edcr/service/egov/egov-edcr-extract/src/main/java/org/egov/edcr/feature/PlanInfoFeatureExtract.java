@@ -463,6 +463,14 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
         } else
             pi.setAccessWidth(BigDecimal.ZERO);
 
+        String accessOfHeadRoom = planInfoProperties.get(DxfFileConstants.ACCESS_HEAD_ROOM);
+        if(accessOfHeadRoom == null || accessOfHeadRoom.equals(DcrConstants.NA))
+        	pi.setAccessHeadRoom(null);
+        else {
+        	accessOfHeadRoom = accessOfHeadRoom.replaceAll(digitsRegex, "");
+        	pi.setAccessHeadRoom(getNumericValue(accessOfHeadRoom, pl, DxfFileConstants.ACCESS_HEAD_ROOM));
+        }
+        
 		String depthCutting = planInfoProperties.get(DxfFileConstants.DEPTH_CUTTING);
 		if (StringUtils.isNotBlank(depthCutting))
 			if (depthCutting.equalsIgnoreCase(DcrConstants.YES)) {

@@ -188,6 +188,9 @@ public class PlanInformation implements Serializable {
     private transient String commercialZoneBldgOpenOnSide1 = NA;
     @SafeHtml
     private transient String commercialZoneBldgOpenOnSide2 = NA;
+    
+    //Value from Plan info.  Access width to the plot.
+	private transient BigDecimal accessHeadRoom;
 
     public Boolean getGovernmentOrAidedSchool() {
         return governmentOrAidedSchool;
@@ -732,6 +735,14 @@ public class PlanInformation implements Serializable {
 
 	public void setCommercialZoneBldgOpenOnSide2(String commercialZoneBldgOpenOnSide2) {
 		this.commercialZoneBldgOpenOnSide2 = commercialZoneBldgOpenOnSide2;
+	}
+
+	public BigDecimal getAccessHeadRoom() {
+		return accessHeadRoom;
+	}
+
+	public void setAccessHeadRoom(BigDecimal accessHeadRoom) {
+		this.accessHeadRoom = accessHeadRoom;
 	}
 
 }

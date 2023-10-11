@@ -34,6 +34,8 @@ public class DxfFileConstants {
 	public static final String F4 = "F4"; // Kiosk
 	public static final String G1 = "G1"; // Industrial
 	public static final String G2 = "G2"; // Small Industrial
+	public static final String G3 = "G3"; // Modern meat processing unit/slaughter houses, Electric and gas crematoria
+	public static final String G4 = "G4"; // Automobile service station with repairing facility
 	public static final String H = "H"; // Storage
 	public static final String I1 = "I1"; // Hazardous (I1)
 	public static final String I2 = "I2"; //

@@ -44,7 +44,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParkingExtract extends FeatureExtract {
     private static final Logger LOGGER = LogManager.getLogger(ParkingExtract.class);
-    private static final String DA_PARKING = "DA parking";
+    private static final String DA_PARKING = "DA_PARKING";
     final Ray rayCasting = new Ray(new Point(-1.123456789, -1.987654321, 0d));
 
     @Autowired

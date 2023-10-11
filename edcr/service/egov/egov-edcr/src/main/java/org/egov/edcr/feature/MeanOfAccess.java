@@ -47,10 +47,7 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
+
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
@@ -74,6 +71,8 @@ import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.F4;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
 import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
@@ -114,7 +113,9 @@ public class MeanOfAccess extends FeatureProcess {
     private static final String SUB_RULE_DESCRIPTION = "Minimum access width for plan for %s";
     public static final String OCCUPANCY = "occupancy";
     private static final String SUBRULE_33_1 = "33(1)";
-    private static final String SUBRULE_AMD_28_1 = "28(1)";
+    private static final String SUBRULE_28_1 = "28(1), Table 7";
+    private static final String SUBRULE_28_1_TABLE8 = "28(1), Table 8";
+    private static final String SUBRULE_28_1_TABLE8A = "28(1), Table 8A";
     public static final BigDecimal VAL_200 = BigDecimal.valueOf(200);
     public static final BigDecimal VAL_400 = BigDecimal.valueOf(400);
 
@@ -135,15 +136,8 @@ public class MeanOfAccess extends FeatureProcess {
     @Override
     public Plan process(Plan pl) {
         String amendmentRefNumber = this.getAmendmentsRefNumber(pl.getAsOnDate());
-        String subRule;
-        if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-            subRule = SUBRULE_AMD_28_1;
-            pl.getFeatureAmendments().put(ACCESS_WIDTH, AMEND_DATE_011020.toString());
-        } else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-            subRule = SUBRULE_AMD_28_1;
-            pl.getFeatureAmendments().put(ACCESS_WIDTH, AMEND_DATE_081119.toString());
-        } else
-            subRule = SUBRULE_33_1;
+        String subRule = SUBRULE_28_1;
+        
         scrutinyDetail = new ScrutinyDetail();
         scrutinyDetail.setKey("Common_Access Width");
         scrutinyDetail.addColumnHeading(1, RULE_NO);
@@ -173,94 +167,43 @@ public class MeanOfAccess extends FeatureProcess {
                         if (occupancy.getType().getCode().equals(A1) || occupancy.getType().getCode().equals(A4)
                                 || occupancy.getType().getCode().equals(A5)) {
 
-                            if (amendmentRefNumber != null && AMEND_OCT20.equals(amendmentRefNumber)) {
-                                BigDecimal totalFloorUnits = BigDecimal.ZERO;
-                                for (Block block : pl.getBlocks()) {
-                                    totalFloorUnits = totalFloorUnits.add(block.getBuilding().getTotalFloorUnits());
-                                }
-                                if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                    // dont validate access width for single family residential with floor area <= 300
-                                    if (totalFloorUnits.compareTo(BigDecimal.ONE) == 0)
-                                        break;
-                                    else {
-                                        minimumAccessWidth = BigDecimal.valueOf(1.2);
-                                    }
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(2);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_600) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(3);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_4000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(3.6);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_4000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_8000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(5);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_8000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(6);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_18000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_24000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(7);
-                                } else {
-                                    minimumAccessWidth = BigDecimal.valueOf(10);
-                                }
-                            } else if (amendmentRefNumber != null && AMEND_NOV19.equals(amendmentRefNumber)) {
 
-                                if (totalFloorAreaOfAllBlocks.compareTo(VAL_200) <= 0) {
-                                    // dont validate access width for single family residential with floor area <= 200
-                                    if (occupancy.getType().getCode().equals(A1))
-                                        break;
-                                    else {
-                                        minimumAccessWidth = BigDecimal.valueOf(1.2);
-                                    }
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_200) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_400) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(1.5);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_400) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_4000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(3.6);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_4000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_8000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(5);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_8000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_24000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(7);
-                                } else {
-                                    minimumAccessWidth = BigDecimal.valueOf(10);
-                                }
-                            } else {
-                                if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                    // dont validate access width for single family residential with floor area <= 300
-                                    if (occupancy.getType().getCode().equals(A1))
-                                        break;
-                                    else {
-                                        minimumAccessWidth = BigDecimal.valueOf(1.2);
-                                    }
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(2);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_600) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(3);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_4000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(3.6);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_4000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_8000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(5);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_8000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(6);
-                                } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_18000) > 0
-                                        && totalFloorAreaOfAllBlocks.compareTo(VAL_24000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(7);
-                                } else {
-                                    minimumAccessWidth = BigDecimal.valueOf(10);
-                                }
+                            BigDecimal totalFloorUnits = BigDecimal.ZERO;
+                            for (Block block : pl.getBlocks()) {
+                                totalFloorUnits = totalFloorUnits.add(block.getBuilding().getTotalFloorUnits());
                             }
-
+                            if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(3);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
+                                // dont validate access width for single family residential with floor area <= 300
+                                if (totalFloorUnits.compareTo(BigDecimal.ONE) == 0)
+                                    break;
+                                else {
+                                    minimumAccessWidth = BigDecimal.valueOf(1.2);
+                                }
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(2);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_600) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(3);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_4000) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(3.6);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_4000) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_8000) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(5);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_8000) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(6);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_18000) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_24000) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(7);
+                            } else {
+                                minimumAccessWidth = BigDecimal.valueOf(10);
+                            }
+                        
                         } else if (occupancy.getType().getCode().equals(A2) || occupancy.getType().getCode().equals(A3) ||
                                 occupancy.getType().getCode().equals(B1) || occupancy.getType().getCode().equals(B2) ||
                                 occupancy.getType().getCode().equals(B3) || occupancy.getType().getCode().equals(C) ||
@@ -270,12 +213,16 @@ public class MeanOfAccess extends FeatureProcess {
                                 occupancy.getType().getCode().equals(E) || occupancy.getType().getCode().equals(F) ||
                                 occupancy.getType().getCode().equals(F1) || occupancy.getType().getCode().equals(F2) ||
                                 occupancy.getType().getCode().equals(F3) || occupancy.getType().getCode().equals(F4)) {
-                            if (occupancy.getType().getCode().equals(B3) && pl.getParkingRequired() > 0
+                            
+                        	if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
                                     && totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(2.7);
+                                minimumAccessWidth = BigDecimal.valueOf(3);
                             } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(1.2);
                             } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
+                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
+                                minimumAccessWidth = BigDecimal.valueOf(3);
+                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
                                     && totalFloorAreaOfAllBlocks.compareTo(VAL_1500) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(3.6);
                             } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1500) > 0
@@ -288,8 +235,9 @@ public class MeanOfAccess extends FeatureProcess {
                                     && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(7);
                             } else {
-                                minimumAccessWidth = BigDecimal.valueOf(10);
+                                minimumAccessWidth = BigDecimal.valueOf(8);
                             }
+                        	subRule = SUBRULE_28_1_TABLE8;
                         } else if (occupancy.getType().getCode().equals(G1) || occupancy.getType().getCode().equals(G2)) {
                             if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(3);
@@ -302,13 +250,22 @@ public class MeanOfAccess extends FeatureProcess {
                             } else {
                                 minimumAccessWidth = BigDecimal.valueOf(6);
                             }
-                            subRule = SUBRULE_57_5;
+                            subRule = SUBRULE_28_1_TABLE8A;
+                        } else if (occupancy.getType().getCode().equals(G3)) {
+                        	minimumAccessWidth = BigDecimal.valueOf(5);
+                            subRule = SUBRULE_28_1_TABLE8A;
+                        } else if (occupancy.getType().getCode().equals(G4)) {
+                        	minimumAccessWidth = BigDecimal.valueOf(7);
+                            subRule = SUBRULE_28_1_TABLE8A;
                         } else if (occupancy.getType().getCode().equals(H)) {
+                        	if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0)
+                                minimumAccessWidth = BigDecimal.valueOf(1.2);
+                            else
                             minimumAccessWidth = BigDecimal.valueOf(7);
-                            subRule = SUBRULE_58_3b;
+                            subRule = SUBRULE_28_1_TABLE8A;
                         } else if (occupancy.getType().getCode().equals(I1) || occupancy.getType().getCode().equals(I2)) {
                             minimumAccessWidth = BigDecimal.valueOf(7);
-                            subRule = SUBRULE_59_4;
+                            subRule = SUBRULE_28_1_TABLE8A;
                         }
                         occupancyMinimumAccessWidthMap.put("subRule", subRule);
                         occupancyMinimumAccessWidthMap.put("minAccessWidth", minimumAccessWidth);
@@ -565,8 +522,6 @@ public class MeanOfAccess extends FeatureProcess {
     @Override
     public Map<String, Date> getAmendments() {
         Map<String, Date> meanofAccessAmendments = new LinkedHashMap<>();
-        meanofAccessAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
-        meanofAccessAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
         return meanofAccessAmendments;
     }
 }
