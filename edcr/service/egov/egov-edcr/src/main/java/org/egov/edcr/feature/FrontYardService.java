@@ -61,6 +61,12 @@ import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.G;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_010923;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_SEP23;
 import static org.egov.edcr.constants.DxfFileConstants.*;
 import static org.egov.edcr.utility.DcrConstants.BSMT_FRONT_YARD_DESC;
 import static org.egov.edcr.utility.DcrConstants.FRONT_YARD_DESC;
@@ -68,9 +74,11 @@ import static org.egov.edcr.utility.DcrConstants.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Building;
@@ -739,5 +747,14 @@ public class FrontYardService extends GeneralRule {
         if (min.compareTo(minval) >= 0 && mean.compareTo(meanval) >= 0)
             valid = true;
         return valid;
+    }
+    
+    @Override
+    public Map<String, Date> getAmendments() {
+        Map<String, Date> frontYardAmendments = new ConcurrentHashMap<>();
+        frontYardAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        frontYardAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
+        frontYardAmendments.put(AMEND_SEP23, AMEND_DATE_010923);
+        return frontYardAmendments;
     }
 }

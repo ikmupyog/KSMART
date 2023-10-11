@@ -1,4 +1,4 @@
-
+/*
 package org.egov.edcr;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class DxfToPdfExtractTest extends BaseTest {
 		super.setUp();
 	}
 
-	/*@Test
+	@Test
 	public final void testExtract() {
 		
 		String appconfigValue="BLK_*_ELEVATION_NO_*_PRINT,A0,2,LANDSCAPE#BLK_*_ELEVATION_NO_*_PRINT:MAD";
@@ -57,6 +57,7 @@ public class DxfToPdfExtractTest extends BaseTest {
 			
 		}
 		
-	}*/
+	}
 
 }
+*/

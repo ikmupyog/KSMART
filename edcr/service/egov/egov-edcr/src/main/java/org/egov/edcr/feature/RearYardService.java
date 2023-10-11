@@ -47,6 +47,12 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_010923;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_SEP23;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
@@ -83,9 +89,11 @@ import static org.egov.edcr.utility.DcrConstants.YES;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Building;
@@ -871,5 +879,14 @@ public class RearYardService extends GeneralRule {
                 }
             }
 
+    }
+    
+    @Override
+    public Map<String, Date> getAmendments() {
+        Map<String, Date> rearYardAmendments = new ConcurrentHashMap<>();
+        rearYardAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        rearYardAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
+        rearYardAmendments.put(AMEND_SEP23, AMEND_DATE_010923);
+        return rearYardAmendments;
     }
 }

@@ -168,7 +168,15 @@ public class PrintUtil {
         sb.append("21").append("\n").append(p2.getY()).append("\n");
         sb.append("0").append("\n");
         LOG.debug("***************\n" + sb.toString());
+            
         pl.addToAdditionsToDxf(sb.toString());
+        
+        DXFLine line=new DXFLine();
+        line.setLayerName(layerName);
+        line.setStartPoint(p1);
+        line.setEndPoint(p2);
+       
+        pl.getDxfDocument().addDXFEntity(line);  
 
     }
 
@@ -198,16 +206,22 @@ public class PrintUtil {
         sb.append("0").append("\n");
         sb.append("43").append("\n");
         sb.append("0").append("\n");
+        DXFLWPolyline pline=new DXFLWPolyline();
+        pline.setLayerName(layerName);
 
         for (Point p : outsidePoints) {
             sb.append("10").append("\n");
             sb.append(p.getX()).append("\n");
+            DXFVertex vertex=new DXFVertex();
+            vertex.setPoint(p);
+            pline.addVertex(vertex);
 
             sb.append("20").append("\n");
             sb.append(p.getY()).append("\n");
         }
         sb.append("0").append("\n");
         pl.addToAdditionsToDxf(sb.toString());
+        pl.getDxfDocument().addDXFEntity(pline);
         LOG.debug("##############\n" + sb.toString());
     }
 

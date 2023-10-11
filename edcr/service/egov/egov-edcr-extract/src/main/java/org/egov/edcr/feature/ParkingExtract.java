@@ -219,7 +219,7 @@ public class ParkingExtract extends FeatureExtract {
 
     @Override
     public PlanDetail validate(PlanDetail pl) {
-            validateDuplicate(pl);
+           // validateDuplicate(pl);
         return pl;
     }
 
