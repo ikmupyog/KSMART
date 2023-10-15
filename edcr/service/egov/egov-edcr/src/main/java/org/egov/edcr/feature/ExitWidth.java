@@ -47,9 +47,39 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A3;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
+import static org.egov.edcr.constants.DxfFileConstants.B1;
+import static org.egov.edcr.constants.DxfFileConstants.B2;
+import static org.egov.edcr.constants.DxfFileConstants.B3;
+import static org.egov.edcr.constants.DxfFileConstants.C;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
+import static org.egov.edcr.constants.DxfFileConstants.D;
+import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.E1;
+import static org.egov.edcr.constants.DxfFileConstants.E2;
+import static org.egov.edcr.constants.DxfFileConstants.F;
+import static org.egov.edcr.constants.DxfFileConstants.F1;
+import static org.egov.edcr.constants.DxfFileConstants.F2;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.G1;
+import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
+import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.J;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
-import static org.egov.edcr.constants.DxfFileConstants.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -79,6 +109,8 @@ public class ExitWidth extends FeatureProcess {
 
 	private static final String EXIT_WIDTH_DESC = "Exit Width";
 	private static final String SUBRULE_46_2 = "46(2)";
+	private static final String SUBRULE_37_2 = "37(2) Table 16";
+	private static final String SUBRULE_37_2_38_2 = "37(2) 37(3) Table 16 & 17";
 	private static final String SUB_RULE_DESCRIPTION = "Minimum exit width";
 	public static final BigDecimal VAL_0_75 = BigDecimal.valueOf(0.75);
 	public static final BigDecimal VAL_1_2 = BigDecimal.valueOf(1.2);
@@ -288,7 +320,7 @@ public class ExitWidth extends FeatureProcess {
 
 										}
 									}
-									validateRule_46_2(flr, pl, subRule, rule, block,
+									validateRule_37_2(flr, pl, subRule, rule, block,
 											(BigDecimal) mostRestrictiveOccupancyAndMaxValueMap.get(EXIT_WIDTH),
 											(String) mostRestrictiveOccupancyAndMaxValueMap.get(OCCUPANCY));
 								}
@@ -337,7 +369,7 @@ public class ExitWidth extends FeatureProcess {
 									BigDecimal noOfOccupantsPerUnitExitWidthOfStairWay = BigDecimal.valueOf(60);
 									maxOccupantsAllowedThrghExits = getMaximumNumberOfOccupantsAllwdThroughExits(flr,
 											noOfDoors, noOfOccupantsPerUnitExitWidthOfStairWay);
-								} else if (occupancyCode.equals(E)) {
+								} else if (occupancyCode.equals(E)|| occupancyCode.equals(E1) || occupancyCode.equals(E2)) {
 									occupantLoadDivisonFactor = BigDecimal.valueOf(1.5);
 									occupantLoad = getOccupantLoadOfAFloor(occupancy, occupantLoadDivisonFactor);
 									BigDecimal noOfDoors = BigDecimal.valueOf(75);
@@ -353,7 +385,7 @@ public class ExitWidth extends FeatureProcess {
 									BigDecimal noOfOccupantsPerUnitExitWidthOfStairWay = BigDecimal.valueOf(50);
 									maxOccupantsAllowedThrghExits = getMaximumNumberOfOccupantsAllwdThroughExits(flr,
 											noOfDoors, noOfOccupantsPerUnitExitWidthOfStairWay);
-								} else if (occupancyCode.equals(G1) || occupancyCode.equals(G2)) {
+								} else if (occupancyCode.equals(G1) || occupancyCode.equals(G2)|| occupancyCode.equals(G3)|| occupancyCode.equals(G4)) {
 									occupantLoadDivisonFactor = BigDecimal.valueOf(10);
 									occupantLoad = getOccupantLoadOfAFloor(occupancy, occupantLoadDivisonFactor);
 									BigDecimal noOfDoors = BigDecimal.valueOf(75);
@@ -370,8 +402,15 @@ public class ExitWidth extends FeatureProcess {
 								} else if (occupancyCode.equals(I1) || occupancyCode.equals(I2)) {
 									occupantLoadDivisonFactor = BigDecimal.valueOf(10);
 									occupantLoad = getOccupantLoadOfAFloor(occupancy, occupantLoadDivisonFactor);
-									BigDecimal noOfDoors = BigDecimal.valueOf(25);
-									BigDecimal noOfOccupantsPerUnitExitWidthOfStairWay = BigDecimal.valueOf(40);
+									BigDecimal noOfDoors = BigDecimal.valueOf(40);
+									BigDecimal noOfOccupantsPerUnitExitWidthOfStairWay = BigDecimal.valueOf(25);
+									maxOccupantsAllowedThrghExits = getMaximumNumberOfOccupantsAllwdThroughExits(flr,
+											noOfDoors, noOfOccupantsPerUnitExitWidthOfStairWay);
+								}else if (occupancyCode.equals(J) ) {
+									occupantLoadDivisonFactor = BigDecimal.valueOf(4.5);
+									occupantLoad = getOccupantLoadOfAFloor(occupancy, occupantLoadDivisonFactor);
+									BigDecimal noOfDoors = BigDecimal.valueOf(75);
+									BigDecimal noOfOccupantsPerUnitExitWidthOfStairWay = BigDecimal.valueOf(50);
 									maxOccupantsAllowedThrghExits = getMaximumNumberOfOccupantsAllwdThroughExits(flr,
 											noOfDoors, noOfOccupantsPerUnitExitWidthOfStairWay);
 								}
@@ -387,7 +426,7 @@ public class ExitWidth extends FeatureProcess {
 										minimumOfMaxOccupantsAllowedThrghExits = occupantsAllowedThroughExits;
 									}
 								}
-								validateRule_45_1(rule, subRule, totalOccupantLoadForAFloor,
+								validateRule_37_2_38_2(rule, subRule, totalOccupantLoadForAFloor,
 										minimumOfMaxOccupantsAllowedThrghExits, pl, block, flr, scrutinyDetail2);
 							}
 
@@ -399,12 +438,12 @@ public class ExitWidth extends FeatureProcess {
 		return pl;
 	}
 
-	private void validateRule_45_1(String rule, String subRule, BigDecimal occupantLoadInAFlr,
+	private void validateRule_37_2_38_2(String rule, String subRule, BigDecimal occupantLoadInAFlr,
 			BigDecimal maxOccupantsAllowedThrghExits, Plan pl, Block block, Floor floor,
 			ScrutinyDetail scrutinyDetail2) {
 		boolean valid = false;
 		boolean isTypicalRepititiveFloor = false;
-		subRule = SUBRULE_45_1;
+		subRule = SUBRULE_37_2_38_2;
 
 		if (maxOccupantsAllowedThrghExits != null && occupantLoadInAFlr != null
 				&& maxOccupantsAllowedThrghExits.compareTo(BigDecimal.ZERO) > 0
@@ -471,11 +510,11 @@ public class ExitWidth extends FeatureProcess {
 				.divide(occupantLoadDivisonFactor, DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS).doubleValue()));
 	}
 
-	private void validateRule_46_2(Floor floor, Plan pl, String subRule, String rule, Block block, BigDecimal value,
+	private void validateRule_37_2(Floor floor, Plan pl, String subRule, String rule, Block block, BigDecimal value,
 			String occupancyType) {
 		// calculate minimum of exit widths provided and validate for that.
 		boolean isTypicalRepititiveFloor = false;
-		subRule = SUBRULE_46_2;
+		subRule = SUBRULE_37_2;
 
 		if (!floor.getExitWidthDoor().isEmpty()) {
 			BigDecimal minimumExitWidth = floor.getExitWidthDoor().get(0);
