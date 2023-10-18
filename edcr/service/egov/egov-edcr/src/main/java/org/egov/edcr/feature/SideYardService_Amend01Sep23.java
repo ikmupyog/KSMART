@@ -1,6 +1,5 @@
 package org.egov.edcr.feature;
 
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
@@ -29,11 +28,6 @@ import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
-=======
-import static org.egov.edcr.constants.DxfFileConstants.*;
-
-import static org.egov.edcr.constants.AmendmentConstants.*;
->>>>>>> adding the pdf changes
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.NA;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
@@ -43,26 +37,14 @@ import static org.egov.edcr.utility.DcrConstants.SIDE_YARD2_DESC;
 import static org.egov.edcr.utility.DcrConstants.SIDE_YARD_DESC;
 
 import java.math.BigDecimal;
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-=======
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
->>>>>>> adding the pdf changes
 import java.util.Map;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Building;
 import org.egov.common.entity.edcr.Occupancy;
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
-=======
-import org.egov.common.entity.edcr.OccupancyType;
->>>>>>> adding the pdf changes
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Plot;
@@ -70,10 +52,6 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.SetBack;
 import org.egov.common.entity.edcr.Yard;
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
-=======
-import org.egov.edcr.service.ProcessHelper;
->>>>>>> adding the pdf changes
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
@@ -96,10 +74,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
     private static final BigDecimal SIDEVALUE_ZERO = BigDecimal.valueOf(0);
     private static final BigDecimal SIDEVALUE_SIXTY_CM = BigDecimal.valueOf(0.60);
     private static final BigDecimal SIDEVALUE_FIFTY_CM = BigDecimal.valueOf(0.50);
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
     private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
-=======
->>>>>>> adding the pdf changes
 
     private static final BigDecimal SIDEVALUE_SEVENTYFIVE_CM = BigDecimal.valueOf(0.75);
     private static final BigDecimal SIDEVALUE_NINTY_CM = BigDecimal.valueOf(0.90);
@@ -250,36 +225,9 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 
                                 } else {
 
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
                                     for (final Occupancy occupancy : block.getBuilding().getOccupancies()) {
                                         OccupancyTypeHelper occpncy = occupancy.getTypeHelper();
 
-=======
-                                	List<Occupancy> occupanciesList = ProcessHelper.groupOccupanciesForOccupancy_B_C_D(pl, block);
-
-                                    for (final Occupancy occupancy : occupanciesList) {
-                                        OccupancyTypeHelper occpncy = occupancy.getTypeHelper();
-
-                                        if (occupancy.getBuiltUpArea() != null && B.equals(occupancy.getTypeHelper().getType().getCode())
-                                                && occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
-                                            occpncy = Util.getOccupancyByCode(pl, A1);
-                                        else if (occupancy.getBuiltUpArea() != null && D.equals(occupancy.getTypeHelper().getType().getCode())
-                                                && occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
-                                            occpncy = Util.getOccupancyByCode(pl, F);
-                                        else if (C.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getBuiltUpArea() != null &&
-                                                occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
-                                            occpncy = Util.getOccupancyByCode(pl, F);
-                                        else if (E.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getBuiltUpArea() != null &&
-                                                occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_200) <= 0)
-                                            occpncy = Util.getOccupancyByCode(pl, F);
-                                        else if (H.equals(occupancy.getTypeHelper().getType().getCode()))
-                                            if (occupancy.getBuiltUpArea() != null
-                                                    && occupancy.getBuiltUpArea().compareTo(BUILDUPAREA_300) <= 0)
-                                                occpncy = Util.getOccupancyByCode(pl, F);
-                                            else
-                                                occpncy = Util.getOccupancyByCode(pl, H);
-
->>>>>>> adding the pdf changes
                                         scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Side Yard");
                                         if (-1 == setback.getLevel()) {
                                             scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Basement Side Yard");

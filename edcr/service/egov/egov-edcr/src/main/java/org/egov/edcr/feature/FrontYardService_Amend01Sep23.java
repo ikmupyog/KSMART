@@ -7,10 +7,6 @@ import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
 import static org.egov.edcr.constants.DxfFileConstants.A5;
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
-=======
-import static org.egov.edcr.constants.DxfFileConstants.B;
->>>>>>> adding the pdf changes
 import static org.egov.edcr.constants.DxfFileConstants.B1;
 import static org.egov.edcr.constants.DxfFileConstants.B2;
 import static org.egov.edcr.constants.DxfFileConstants.B3;
@@ -39,17 +35,9 @@ import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
 
 import java.math.BigDecimal;
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-=======
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
->>>>>>> adding the pdf changes
 import java.util.Map;
 
 import org.egov.common.entity.edcr.Block;
@@ -64,10 +52,6 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.SetBack;
 import org.egov.edcr.entity.blackbox.NonNotifiedRoadDetail;
 import org.egov.edcr.entity.blackbox.YardDetail;
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
-=======
-import org.egov.edcr.service.ProcessHelper;
->>>>>>> adding the pdf changes
 import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
 
@@ -86,11 +70,8 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
     private static final String RULE_50_2 = "50(2)";
     private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
     private static final BigDecimal TWOHUNDRED = BigDecimal.valueOf(200);
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
     private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
 
-=======
->>>>>>> adding the pdf changes
 
     private static final String SUB_RULE_26_11_DESCRIPTION = "Basement front yard distance";
     private static final String SUB_RULE_24_3_DESCRIPTION = "Front yard distance";
@@ -187,37 +168,11 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                         BigDecimal buildingHeight = block.getBuilding().getBuildingHeight();
 
                         if (buildingHeight != null && (min.doubleValue() > 0 || mean.doubleValue() > 0)) {
-<<<<<<< 8cd49635fc644556661bbe9f51d7dda32ed5bc6d
  
 							for (final Occupancy occupancy : block.getBuilding().getOccupancies()) {
 								OccupancyTypeHelper occpncy = occupancy.getTypeHelper();
 
  							scrutinyDetail.setKey("Block_" + block.getName() + "_" + FRONT_YARD_DESC);
-=======
-                            List<Occupancy> occupanciesList = ProcessHelper.groupOccupanciesForOccupancy_B_C_D(pl, block);
-
-                            for (final Occupancy occupancy : occupanciesList) {
-                        	OccupancyTypeHelper occpncy = occupancy.getTypeHelper();
-
-							if (occupancy.getBuiltUpArea() != null && B.equals(occupancy.getTypeHelper().getType().getCode())
-                                    && occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)
-                                occpncy = Util.getOccupancyByCode(pl, A1);
-							else if (occupancy.getBuiltUpArea() != null
-                                    && occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0
-                                    && D.equals(occupancy.getTypeHelper().getType().getCode()))
-                                occpncy = Util.getOccupancyByCode(pl, F);
-                            else if (C.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getBuiltUpArea() != null &&
-                                    occupancy.getBuiltUpArea().compareTo(TWOHUNDRED) <= 0)//TODO:VERIFY SUM OF ALL OCCUPANCY TYPES OF C LIKE C,C1,C2 to be consoider.
-                                occpncy = Util.getOccupancyByCode(pl, F);
-                            else if (H.equals(occupancy.getTypeHelper().getType().getCode()))
-                                if (occupancy.getBuiltUpArea() != null
-                                        && occupancy.getBuiltUpArea().compareTo(THREEHUNDRED) <= 0)
-                                    occpncy = Util.getOccupancyByCode(pl, F);
-                                else
-                                    occpncy = Util.getOccupancyByCode(pl, H);
-                                scrutinyDetail.setKey("Block_" + block.getName() + "_" + FRONT_YARD_DESC);
-
->>>>>>> adding the pdf changes
                                 if (-1 == setback.getLevel()) {
                                     scrutinyDetail.setKey("Block_" + block.getName() + "_" + "Basement Front Yard");
                                     checkFrontYardLessThanTenMts(pl, setback, block.getBuilding(), block.getName(),
