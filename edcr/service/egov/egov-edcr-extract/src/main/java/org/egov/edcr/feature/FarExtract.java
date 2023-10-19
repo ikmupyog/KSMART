@@ -664,7 +664,7 @@ public class FarExtract extends FeatureExtract {
         List<GeneralStair> generalStairs = floor.getGeneralStairs();
         if (generalStairs != null && !generalStairs.isEmpty())
             for (Stair generalStair : generalStairs) {
-                if (generalStair != null && !generalStair.getStairMeasurements().isEmpty())
+                if (generalStair != null && generalStair.getStairMeasurements() != null && !generalStair.getStairMeasurements().isEmpty())
                     for (Measurement m : generalStair.getStairMeasurements()) {
                         BigDecimal stairArea = m.getArea();
                         generalStairArea = generalStairArea.add(stairArea)

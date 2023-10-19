@@ -79,6 +79,7 @@ public class ParkingDetails implements Serializable {
 	private Integer validSpecialSlots = 0;
 	private List<Measurement> stilts = new ArrayList<>();
 	private List<Measurement> mechanicalLifts = new ArrayList<>();
+	private List<Measurement> evChargers = new ArrayList<>();
 
 	public List<Measurement> getCars() {
 		return cars;
@@ -238,6 +239,14 @@ public class ParkingDetails implements Serializable {
 
 	public void setMechanicalLifts(List<Measurement> mechanicalLifts) {
 		this.mechanicalLifts = mechanicalLifts;
+	}
+
+	public List<Measurement> getEvChargers() {
+		return evChargers;
+	}
+
+	public void setEvChargers(List<Measurement> evChargers) {
+		this.evChargers = evChargers;
 	}
 
 }

@@ -499,7 +499,12 @@ public class Parking extends FeatureProcess {
         }
 
         processUnits(pl);
-
+		if (result.totalRequiredCarParking > 0 && (pl.getParkingDetails().getEvChargers() == null
+				|| pl.getParkingDetails().getEvChargers().isEmpty())) {
+			HashMap<String, String> errors = new HashMap<>();
+			errors.put(DcrConstants.EV_CHARGE_SLOT, getLocaleMessage(OBJECT_NOT_DEFINED, DcrConstants.EV_CHARGE_SLOT));
+			pl.addErrors(errors);
+		}
         LOGGER.info("******************Require no of Car Parking***************" + result.totalRequiredCarParking);
     }
     

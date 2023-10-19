@@ -199,6 +199,7 @@ public class DcrConstants {
     public static final String BLDG_WITHNAME_FOOT_PRINT_NOT_DEFINED = "Building footprint for the block %s";
     public static final String RAINWATER_HARVESTING_CAPACITY = "Rain Water Harvesting Capacity ";
     public static final String RAINWATERCAPACITY = "msg.error.not.defined.capacity";
+    public static final String EV_CHARGE_SLOT = "EV Charge Unit";
 
     
 }

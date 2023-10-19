@@ -209,6 +209,8 @@ public class ParkingExtract extends FeatureExtract {
                 visitorPark -> pl.getParkingDetails().getVisitors().add(new MeasurementDetail(visitorPark, true)));
         Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_SPECIAL_PARKING")).forEach(
                 specialPark -> pl.getParkingDetails().getSpecial().add(new MeasurementDetail(specialPark, true)));
+        Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_EV_CHARGE")).forEach(
+                evCharge -> pl.getParkingDetails().getEvChargers().add(new MeasurementDetail(evCharge, true)));
 
         validate(pl);
         
