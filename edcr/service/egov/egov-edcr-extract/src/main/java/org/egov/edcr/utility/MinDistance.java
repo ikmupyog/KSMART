@@ -23,8 +23,11 @@ import org.egov.edcr.entity.blackbox.PlotDetail;
 import org.egov.edcr.entity.blackbox.YardDetail;
 import org.egov.edcr.service.LayerNames;
 import org.egov.edcr.utility.Util;
+import org.kabeja.dxf.DXFConstants;
 import org.kabeja.dxf.DXFDocument;
+import org.kabeja.dxf.DXFEntity;
 import org.kabeja.dxf.DXFLWPolyline;
+import org.kabeja.dxf.DXFLayer;
 import org.kabeja.dxf.DXFLine;
 import org.kabeja.dxf.DXFVertex;
 import org.kabeja.dxf.helpers.Point;
@@ -364,6 +367,8 @@ public class MinDistance {
             DXFLine line = map.get(dist);
             LOG.debug("the shortest Distance is " + dist);
             PrintUtil.printForDXf(line.getStartPoint(), line.getEndPoint(), name + "_MIN_DISTANCE", pl);
+             DXFLayer dxfLayer = pl.getDxfDocument().getDXFLayer(name + "_MIN_DISTANCE");
+             LOG.info("mindisttace...." +dxfLayer.getName());
             return BigDecimal.valueOf(dist).setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS, RoundingMode.HALF_UP);
         } else
             return BigDecimal.ZERO.setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS);

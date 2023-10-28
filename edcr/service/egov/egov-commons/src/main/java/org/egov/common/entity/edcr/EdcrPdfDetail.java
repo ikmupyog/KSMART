@@ -86,8 +86,15 @@ public class EdcrPdfDetail implements Serializable {
     
     @Transient
     private List<String> countLayers = new ArrayList<>();
-
-   
+    
+    @Transient
+    private List<String> printAreaLayers = new ArrayList<>();
+    @Transient
+    private List<String> printOcLayers = new ArrayList<>();
+    
+    @Transient
+    private List<String> printChangeEntityLayers = new ArrayList<>();
+ 
 
 	@Transient
     private Map<String, Integer> colorOverrides = new HashMap<>();
@@ -206,5 +213,31 @@ public class EdcrPdfDetail implements Serializable {
 	public void setCountLayers(List<String> countLayers) {
 		this.countLayers = countLayers;
 	}
+
+	public List<String> getPrintAreaLayers() {
+		return printAreaLayers;
+	}
+
+	public void setPrintAreaLayers(List<String> printAreaLayers) {
+		this.printAreaLayers = printAreaLayers;
+	}
+
+	public List<String> getPrintOcLayers() {
+		return printOcLayers;
+	}
+
+	public void setPrintOcLayers(List<String> printOcLayers) {
+		this.printOcLayers = printOcLayers;
+	}
+
+	public List<String> getPrintChangeEntityLayers() {
+		return printChangeEntityLayers;
+	}
+
+	public void setPrintChangeEntityLayers(List<String> printChangeEntityLayers) {
+		this.printChangeEntityLayers = printChangeEntityLayers;
+	}
+
+	
 
 }

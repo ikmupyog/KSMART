@@ -1722,6 +1722,11 @@ public class Util {
 
         return new Point((line1.getX() + line2.getX()) / 2, (line1.getY() + line2.getY()) / 2, 0d);
     }
+    
+    public static Point getMidPoint(Point line1, Point line2) {
+
+        return new Point((line1.getX() + line2.getX()) / 2, (line1.getY() + line2.getY()) / 2, 0d);
+    }
 
     public static String getTexForDimension(String text) {
         String[] split = text.split(" X ");
@@ -1795,7 +1800,41 @@ public class Util {
         OccupancyTypeHelper occupancyType = null;
         String name = null;
         
-        if (pline.getColor() != 0) {
+        if(dxfLayer.getName().equalsIgnoreCase("WASTE_DISPOSAL"))
+        {
+        	
+        	 if(pline.getColor()!=0)
+             {
+          	   if (pline.getColor() == 1)
+          		   name="Existing Waste Disposal Facility";
+                 else if (pline.getColor() == 2)
+              	   name="Proposed Waste Disposal Facility";
+             }
+        	return name;
+        }
+        if(dxfLayer.getName().equalsIgnoreCase("SEPTIC_TANK"))
+        {
+        	
+        	
+        	 if(pline.getColor()!=0)
+             {
+          	   if (pline.getColor() == 1)
+          		   name="Existing Septic Tank";
+                 else if (pline.getColor() == 2)
+              	   name="Proposed Septic Tank";
+             }
+        	 LOG.info("returning "+name);
+        	return name;
+        }
+        
+        
+        String name1 = getlayerNameMap(dxfLayer);
+        if(name1!=null)
+        {
+        	name=name1;
+        	return name;
+        }
+        else if (pline.getColor() != 0) {
             occupancyType = findOccupancyType((DXFLWPolyline) pline, pl);
         }
         if (occupancyType != null) {
@@ -1813,12 +1852,39 @@ public class Util {
             name = dxfLayer.getName();
             name = name.replace("BLK_", "");
             name = name.replace("FLR_", "");
-            name.replace("NO_", "");
-            name.replaceAll("[^\\d.]", "");
+            name=  name.replace("NO_", "");
+            name=  name.replaceAll("_", "");
+            name= name.replaceAll("[\\d.]", "");
             LOG.info("returning layer name " + name);
             return name;
         }
     }
+    
+    public static String getPolylinePrintableTextOC(DXFPolyline pline, DXFLayer dxfLayer, EdcrPdfDetail detail, PlanDetail pl) {
+
+        OccupancyTypeHelper occupancyType = null;
+        String name = null;
+        String occupancyName = "";
+        
+        if (pline.getColor() != 0) {
+            occupancyType = findOccupancyType((DXFLWPolyline) pline, pl);
+        }
+        if (occupancyType != null) {
+          
+                if (occupancyType.getSubtype() != null)
+                    occupancyName = occupancyType.getSubtype().getName();
+                else {
+                    if (occupancyType.getType() != null)
+                        occupancyName = occupancyType.getType().getName();
+                }
+            LOG.info("returning Occupancy " + occupancyName);
+         
+    }
+        return occupancyName;
+        
+    }
+    
+    
     
     public static String getPolylinePrintableTextOfLayer(DXFPolyline pline, DXFLayer dxfLayer, EdcrPdfDetail detail,
 			PlanDetail pl) {
@@ -1837,8 +1903,10 @@ public class Util {
 			name = dxfLayer.getName();
 			name = name.replace("BLK_", "");
 			name = name.replace("FLR_", "");
-			name.replace("NO_", "");
-			name.replaceAll("[^\\d.]", "");
+			name=	name.replace("NO_", "");
+			name=	name.replace("LVL_", "");
+			name= name.replaceAll("_", " ");
+			name= name.replaceAll("[\\d.]", "");
 			}
 			if (LOG.isInfoEnabled())
 				LOG.info("returning layer name " + name);
@@ -1861,6 +1929,21 @@ public class Util {
 			return name;
 		
 	}
+    public static String getLinePrintableText(DXFLine line, DXFLayer dxfLayer, EdcrPdfDetail detail,
+			PlanDetail pl)
+    {
+        String	name = dxfLayer.getName();
+        name = name.replaceAll("BLK_\\d", "");
+		name = name.replaceAll("FLR_\\d", "");
+		name= name.replaceAll("NO_\\d", "");
+		name= name.replaceAll("LVL_\\d", "");
+		name= name.replaceAll("DISTANCE", "");
+		name = name.replaceAll("_", " ");
+		
+		if (LOG.isInfoEnabled())
+			LOG.info("returning layer name " + name);
+		return name;
+    }
 
 	private static String getlayerNameMap(DXFLayer dxfLayer) {
 		if(dxfLayer.getName().equalsIgnoreCase("NOTIFIED_ROAD"))
@@ -1871,6 +1954,9 @@ public class Util {
 			  return "Lanes up to 75m";
 		if(dxfLayer.getName().equalsIgnoreCase("NON_NOTIFIED_ROAD"))
 			  return "Un notified Road-Width less than 6.0 m";
+		if(dxfLayer.getName().equalsIgnoreCase("UNIT_FA"))
+			  return "Kithen";
+		
 		
 		return null;
 	}

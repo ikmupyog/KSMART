@@ -13,7 +13,8 @@ public class PlanDetail extends Plan {
 
     @JsonIgnore
     private DXFDocument doc;
-
+   
+    @JsonIgnore
     public DXFDocument getDoc() {
         return doc;
     }

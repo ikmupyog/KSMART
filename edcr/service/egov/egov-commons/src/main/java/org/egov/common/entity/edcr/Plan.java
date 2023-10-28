@@ -460,6 +460,7 @@ public class Plan implements Serializable {
         this.subFeatureColorCodesMaster = subFeatureColorCodesMaster;
     }
 
+    @JsonIgnore
     public StringBuffer getAdditionsToDxf() {
         return additionsToDxf;
     }

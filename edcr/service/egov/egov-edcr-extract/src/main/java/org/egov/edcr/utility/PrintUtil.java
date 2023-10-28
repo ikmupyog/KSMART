@@ -15,6 +15,7 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.entity.blackbox.MeasurementDetail;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.kabeja.dxf.DXFLWPolyline;
+import org.kabeja.dxf.DXFLayer;
 import org.kabeja.dxf.DXFLine;
 import org.kabeja.dxf.DXFVertex;
 import org.kabeja.dxf.helpers.Point;
@@ -170,11 +171,15 @@ public class PrintUtil {
         LOG.debug("***************\n" + sb.toString());
             
         pl.addToAdditionsToDxf(sb.toString());
+        DXFLayer layer=new DXFLayer();
+        layer.setName(layerName);
+        pl.getDxfDocument().addDXFLayer(layer);
         
         DXFLine line=new DXFLine();
         line.setLayerName(layerName);
         line.setStartPoint(p1);
         line.setEndPoint(p2);
+        line.setColor(160);
        
         pl.getDxfDocument().addDXFEntity(line);  
 
@@ -206,8 +211,14 @@ public class PrintUtil {
         sb.append("0").append("\n");
         sb.append("43").append("\n");
         sb.append("0").append("\n");
+        
+        DXFLayer layer=new DXFLayer();
+        layer.setName(layerName);
+        pl.getDxfDocument().addDXFLayer(layer);
+        
         DXFLWPolyline pline=new DXFLWPolyline();
         pline.setLayerName(layerName);
+        pline.setColor(160);
 
         for (Point p : outsidePoints) {
             sb.append("10").append("\n");
