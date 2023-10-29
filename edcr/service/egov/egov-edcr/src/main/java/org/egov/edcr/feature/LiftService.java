@@ -67,7 +67,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -195,7 +195,7 @@ public class LiftService extends FeatureProcess {
                             occupancyTypeList.contains(D2) ||
                             occupancyTypeList.contains(E) || occupancyTypeList.contains(F) ||
                             occupancyTypeList.contains(F1) || occupancyTypeList.contains(F2) ||
-                            occupancyTypeList.contains(F3) || occupancyTypeList.contains(F4) ||
+                            occupancyTypeList.contains(F3) || occupancyTypeList.contains(F3) ||
                             occupancyTypeList.contains(G1) ||
                             occupancyTypeList.contains(G2) || occupancyTypeList.contains(H) ||
                             occupancyTypeList.contains(I1) || occupancyTypeList.contains(I2))

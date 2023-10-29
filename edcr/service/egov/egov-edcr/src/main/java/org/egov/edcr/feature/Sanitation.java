@@ -63,7 +63,6 @@ import static org.egov.edcr.constants.DxfFileConstants.D2;
 import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -210,7 +209,6 @@ public class Sanitation extends FeatureProcess {
                             break;
                         case E:
                         case F:
-                        case F4:
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
                             break;
                         case F3:
@@ -259,7 +257,7 @@ public class Sanitation extends FeatureProcess {
             pl.addError(BLDG_PART_URINAL,
                     getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_URINAL, b.getNumber()));
 
-        if (!F.equals(occupancy.getType().getCode()) && !F4.equals(occupancy.getType().getCode()) && !E.equals(occupancy.getType().getCode())
+        if (!F.equals(occupancy.getType().getCode()) && !F3.equals(occupancy.getType().getCode()) && !E.equals(occupancy.getType().getCode())
                 && sanityDetails.getTotalwashBasins() == 0)
             pl.addError(BLDG_PART_WASHBASIN,
                     getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_WASHBASIN, b.getNumber()));
@@ -532,14 +530,13 @@ public class Sanitation extends FeatureProcess {
                             break;
                         case E:
                         case F:
-                        case F4:
                             helper.maleWc += carpetArea * 2 / (4.75 * 3 * 25);
                             helper.femaleWc += carpetArea / (4.75 * 3 * 15);
                             helper.urinal += carpetArea * 2 / (4.75 * 3 * 25);
 
                             helper.ruleNo.add("56(3C)");
                             helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
-                            if ((type.getTypeHelper().getType().getCode().equals(F) || type.getTypeHelper().getType().getCode().equals(F4))
+                            if ((type.getTypeHelper().getType().getCode().equals(F) || type.getTypeHelper().getType().getCode().equals(F3))
                                     && !Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), b))
                                 processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                         failedDimensionSpWcMap);

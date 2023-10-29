@@ -65,7 +65,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -180,7 +180,7 @@ public class RampService extends FeatureProcess {
 				|| occupancyType.getType().getCode().equals(D2) || occupancyType.getType().getCode().equals(E)
 				|| occupancyType.getType().getCode().equals(F) || occupancyType.getType().getCode().equals(F1)
 				|| occupancyType.getType().getCode().equals(F2) || occupancyType.getType().getCode().equals(F3)
-				|| occupancyType.getType().getCode().equals(F4);
+				|| occupancyType.getType().getCode().equals(F3);
 	}
 
     @Override

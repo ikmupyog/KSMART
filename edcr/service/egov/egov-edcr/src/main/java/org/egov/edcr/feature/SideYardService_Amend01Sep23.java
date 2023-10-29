@@ -22,7 +22,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -357,7 +357,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                         || occupancy.getTypeHelper().getType().getCode().equals(F1) ||
                         occupancy.getTypeHelper().getType().getCode().equals(F2)
                         || occupancy.getTypeHelper().getType().getCode().equals(F3)
-                        || occupancy.getTypeHelper().getType().getCode().equals(F4))
+                        || occupancy.getTypeHelper().getType().getCode().equals(F3))
                     commercialTypeOccupancyType = 1;
                 if (commercialTypeOccupancyType == 0) {
                     allCommercialOccTypes = 0;
@@ -694,7 +694,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
             side1val = distanceIncrementBasedOnHeight.add(SIDEVALUE_SEVEN_FIVE);
             side2Meanval = side2val;
             side1Meanval = side1val;
-        } else if (mostRestrictiveOccupancy.getType().getCode().equals(F4)) {
+        } else if (mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
             subRule = RULE_26_4_4A;
             side2val = distanceIncrementBasedOnHeight.add(SIDEVALUE_ONE);
             side1val = distanceIncrementBasedOnHeight.add(SIDEVALUE_ONE);

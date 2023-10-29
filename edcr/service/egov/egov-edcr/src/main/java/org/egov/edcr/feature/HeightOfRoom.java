@@ -65,7 +65,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -357,7 +357,7 @@ public class HeightOfRoom extends FeatureProcess {
 
         // For other occupancies, atleast one room required in the plan.
 		boolean isBCDEFHIOccupancies = occupancies.stream()
-				.anyMatch(occupancy -> Arrays.asList(A2, B1, B2, B3, C, C1, C2, C3, E, F, F1, F2, F3, F4, H, I1, I2)
+				.anyMatch(occupancy -> Arrays.asList(A2, B1, B2, B3, C, C1, C2, C3, E, F, F1, F2, F3, F3, H, I1, I2)
 						.contains(occupancy.getType().getCode()));
 
         if (isBCDEFHIOccupancies) {

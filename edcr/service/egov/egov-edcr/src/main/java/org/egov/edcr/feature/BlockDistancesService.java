@@ -71,7 +71,6 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -241,8 +240,7 @@ public class BlockDistancesService extends FeatureProcess {
 							|| occupancy.getTypeHelper().getType().getCode().equals(F)
 							|| occupancy.getTypeHelper().getType().getCode().equals(F1)
 							|| occupancy.getTypeHelper().getType().getCode().equals(F2)
-							|| occupancy.getTypeHelper().getType().getCode().equals(F3)
-							|| occupancy.getTypeHelper().getType().getCode().equals(F4)) {
+							|| occupancy.getTypeHelper().getType().getCode().equals(F3)) {
 						if (getHeightLessThanTenCondition(block)) {
 							subRule = SUBRULE_24_2;
 							if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))

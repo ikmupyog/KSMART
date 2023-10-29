@@ -67,7 +67,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -174,7 +174,7 @@ public class WaterTreatmentPlant extends FeatureProcess {
 		String occupCode = occupancyType.getType().getCode();
 		return occupCode.equals(A1) || occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4)
 				|| occupCode.equals(A5) || occupCode.equals(E) || occupCode.equals(F) || occupCode.equals(F1)
-				|| occupCode.equals(F2) || occupCode.equals(F3) || occupCode.equals(F4);
+				|| occupCode.equals(F2) || occupCode.equals(F3) || occupCode.equals(F3);
 	}
 
     private void setReportOutputDetailsWithoutOccupancy(Plan pl, String ruleNo, String ruleDesc, String expected, String actual,

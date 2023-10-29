@@ -65,10 +65,9 @@ import static org.egov.edcr.constants.DxfFileConstants.D3;
 import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
-import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.*;
 import static org.egov.edcr.constants.DxfFileConstants.PARKING_SLOT;
 import static org.egov.edcr.constants.DxfFileConstants.UNITFA_HALL;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
@@ -345,7 +344,7 @@ public class Parking extends FeatureProcess {
 
                 break;
             case A2:
-            case F3:
+            case A3:
             	BigDecimal noOfCarParkingForA2 = BigDecimal.ZERO;
                 if (occupancy != null && occupancy.getBuiltUpArea() != null
                         && occupancy.getBuiltUpArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) <= 0)
@@ -430,7 +429,9 @@ public class Parking extends FeatureProcess {
                 }
                 break;
             case F:
-            case F4:
+            case F1:
+            case F2:
+            case F3:
                 BigDecimal noOfCarParking = BigDecimal.ZERO;
                 if (occupancy != null && occupancy.getBuiltUpArea() != null
                         && occupancy.getBuiltUpArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) <= 0)
@@ -584,7 +585,7 @@ public class Parking extends FeatureProcess {
     private double processParkingForIndustrialAndStorage(Plan pl) {
         List<Occupancy> occupancyList = new ArrayList<>();
         Occupancy f = pl.getOccupancies().stream()
-                .filter(occupancy -> F4.equals(occupancy.getTypeHelper().getType().getCode())
+                .filter(occupancy -> F3.equals(occupancy.getTypeHelper().getType().getCode())
                         || F.equals(occupancy.getTypeHelper().getType().getCode()))
                 .findAny().orElse(null);
         Occupancy g1 = pl.getOccupancies().stream()

@@ -69,7 +69,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.G3;
@@ -378,7 +378,7 @@ public class ExitWidth extends FeatureProcess {
 											noOfDoors, noOfOccupantsPerUnitExitWidthOfStairWay);
 								} else if (occupancyCode.equals(F) || occupancyCode.equals(F1)
 										|| occupancyCode.equals(F2) || occupancyCode.equals(F3)
-										|| occupancyCode.equals(F4)) {
+										|| occupancyCode.equals(F3)) {
 									occupantLoadDivisonFactor = BigDecimal.valueOf(4.5);
 									occupantLoad = getOccupantLoadOfAFloor(occupancy, occupantLoadDivisonFactor);
 									BigDecimal noOfDoors = BigDecimal.valueOf(75);

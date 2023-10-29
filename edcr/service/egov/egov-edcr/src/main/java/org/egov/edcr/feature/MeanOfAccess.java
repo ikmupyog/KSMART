@@ -68,7 +68,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.G3;
@@ -212,7 +212,7 @@ public class MeanOfAccess extends FeatureProcess {
                                 occupancy.getType().getCode().equals(D1) || occupancy.getType().getCode().equals(D2) ||
                                 occupancy.getType().getCode().equals(E) || occupancy.getType().getCode().equals(F) ||
                                 occupancy.getType().getCode().equals(F1) || occupancy.getType().getCode().equals(F2) ||
-                                occupancy.getType().getCode().equals(F3) || occupancy.getType().getCode().equals(F4)) {
+                                occupancy.getType().getCode().equals(F3) || occupancy.getType().getCode().equals(F3)) {
                             
                         	if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
                                     && totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {

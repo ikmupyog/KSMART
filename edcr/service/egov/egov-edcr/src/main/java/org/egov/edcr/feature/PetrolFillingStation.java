@@ -47,7 +47,7 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
 import static org.egov.edcr.utility.DcrConstants.CANOPY_DISTANCE;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
@@ -77,7 +77,7 @@ public class PetrolFillingStation extends FeatureProcess {
 		if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 			List<String> occupancyTpes = pl.getVirtualBuilding().getOccupancyTypes().stream()
 					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (occupancyTpes.contains(F4) && occupancyTpes.contains(I2)
+			if (occupancyTpes.contains(F3) && occupancyTpes.contains(I2)
 					&& pl.getCanopyDistanceFromPlotBoundary().isEmpty()) {
 				errors.put(CANOPY_DISTANCE, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
 						new String[] { CANOPY_DISTANCE }, LocaleContextHolder.getLocale()));
@@ -101,7 +101,7 @@ public class PetrolFillingStation extends FeatureProcess {
 		if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 			List<String> occupancyTpes = pl.getVirtualBuilding().getOccupancyTypes().stream()
 					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (occupancyTpes.contains(F4) && occupancyTpes.contains(I2)
+			if (occupancyTpes.contains(F3) && occupancyTpes.contains(I2)
 					&& !pl.getCanopyDistanceFromPlotBoundary().isEmpty()) {
 				BigDecimal minimumCanopyDistanceFromPlotBoundary = pl.getCanopyDistanceFromPlotBoundary().get(0);
 				for (BigDecimal canopyDistanceFromPlotBoundary : pl.getCanopyDistanceFromPlotBoundary()) {

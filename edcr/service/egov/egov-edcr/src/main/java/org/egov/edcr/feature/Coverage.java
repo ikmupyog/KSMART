@@ -51,6 +51,7 @@ import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A3;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
 import static org.egov.edcr.constants.DxfFileConstants.A5;
 import static org.egov.edcr.constants.DxfFileConstants.B1;
@@ -67,12 +68,19 @@ import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
+import static org.egov.edcr.constants.DxfFileConstants.G5;
 import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.I3;
+import static org.egov.edcr.constants.DxfFileConstants.I4;
+import static org.egov.edcr.constants.DxfFileConstants.I5;
+import static org.egov.edcr.constants.DxfFileConstants.I6;
 import static org.egov.edcr.constants.DxfFileConstants.J;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
@@ -286,9 +294,13 @@ public class Coverage extends FeatureProcess {
         case D2:	
             return Forty;
 
-        case I2:
         case I1:
-        case F4:
+		case I2:
+		case I3:
+		case I4:
+		case I5:
+		case I6:
+        case F3:
             return FortyFive;
 
         case C:
@@ -301,6 +313,7 @@ public class Coverage extends FeatureProcess {
         case A4:
         case A5:
         case A2:
+        case A3:
         case F:
         case F1:
         case F2:
@@ -309,6 +322,9 @@ public class Coverage extends FeatureProcess {
         case E:
         case G1:
         case G2:
+        case G3:
+        case G4:
+        case G5:
             return Sixty;
         case H:
             return Seventy;
@@ -387,8 +403,8 @@ public class Coverage extends FeatureProcess {
             return codesMap.get(I2);
         if (codes.contains(I1))
             return codesMap.get(I1);
-        if (codes.contains(F4))
-            return codesMap.get(F4);
+        if (codes.contains(F3))
+            return codesMap.get(F3);
         if (codes.contains(C))
             return codesMap.get(C);
         if (codes.contains(C1))

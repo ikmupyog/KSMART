@@ -21,7 +21,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -540,7 +540,7 @@ public class RearYardService_Amend02Oct20 extends GeneralRule {
         }
 
         if (mostRestrictiveOccupancy.getType().getCode().equals(F) || mostRestrictiveOccupancy.getType().getCode().equals(F1)
-                || mostRestrictiveOccupancy.getType().getCode().equals(F4)
+                || mostRestrictiveOccupancy.getType().getCode().equals(F3)
                 || mostRestrictiveOccupancy.getType().getCode().equals(F2)/* || mostRestrictiveOccupancy.getType().getCode().equals(F3) */) {
             minval = BigDecimal.valueOf(1.5);
             meanval = BigDecimal.valueOf(1.5);
@@ -776,7 +776,7 @@ public class RearYardService_Amend02Oct20 extends GeneralRule {
             subRule = RULE_59_3;
             minVal = distanceIncrementBasedOnHeight.add(REARYARDMINIMUM_DISTANCE_7_5);
             meanVal = distanceIncrementBasedOnHeight.add(REARYARDMEAN_DISTANCE_7_5);
-        } else if (mostRestrictiveOccupancy.getType().getCode().equals(F4)) {
+        } else if (mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
             subRule = RULE_59_11;
             minVal = distanceIncrementBasedOnHeight.add(REARYARDMINIMUM_DISTANCE_1);
             meanVal = distanceIncrementBasedOnHeight.add(REARYARDMEAN_DISTANCE_1);

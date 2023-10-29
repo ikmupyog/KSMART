@@ -71,7 +71,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
@@ -143,7 +143,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 						break;
 					}
 				} else if ((occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-						|| occupCode.equals(F4)) && pl.getVirtualBuilding().getTotalFloorArea() != null
+						|| occupCode.equals(F3)) && pl.getVirtualBuilding().getTotalFloorArea() != null
 						&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
 						&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0) {
 					if (validateRWH(pl, errors))
@@ -200,7 +200,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 						break;
 					}
 				} else if ((occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-						|| occupCode.equals(F4)) && pl.getVirtualBuilding().getTotalFloorArea() != null
+						|| occupCode.equals(F3)) && pl.getVirtualBuilding().getTotalFloorArea() != null
 						&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
 						&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0) {
 					if (processRWH(pl, subRule, subRuleDesc))
@@ -216,7 +216,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 					String occupCode = occupancyType.getType().getCode();
 					Map<String, Object> mapOfAllOccupancyAndTankCapacity = new HashMap<>();
 					if ((occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-							|| occupCode.equals(F4)) && pl.getVirtualBuilding().getTotalFloorArea() != null
+							|| occupCode.equals(F3)) && pl.getVirtualBuilding().getTotalFloorArea() != null
 							&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
 							&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0
 							&& !pl.getUtility().getRainWaterHarvest().isEmpty()

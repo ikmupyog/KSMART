@@ -22,7 +22,7 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -679,7 +679,7 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
             subRule = SUB_RULE_26_4_TABLE_4_4A;
             minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_7_5);
             meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_7_5);
-        } else if (mostRestrictiveOccupancy.getType().getCode().equals(F4)) { //TODO: VALIDATE THIS CONDITION
+        } else if (mostRestrictiveOccupancy.getType().getCode().equals(F3)) { //TODO: VALIDATE THIS CONDITION
             subRule = SUB_RULE_26_4_TABLE_4_4A;
             minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_1);
             meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_1);

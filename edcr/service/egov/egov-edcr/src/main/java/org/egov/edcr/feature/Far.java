@@ -61,6 +61,8 @@ import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.D3;
+import static org.egov.edcr.constants.DxfFileConstants.D4;
 import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.E1;
 import static org.egov.edcr.constants.DxfFileConstants.E2;
@@ -68,13 +70,14 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
 import static org.egov.edcr.constants.DxfFileConstants.J;
+import static org.egov.edcr.constants.DxfFileConstants.*;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.PLOT_AREA;
@@ -373,7 +376,7 @@ public class Far extends FeatureProcess {
 								|| F.equals(occupancy.getTypeHelper().getType().getCode())
 								|| F1.equals(occupancy.getTypeHelper().getType().getCode())
 								|| F2.equals(occupancy.getTypeHelper().getType().getCode())
-								|| F4.equals(occupancy.getTypeHelper().getType().getCode())) {
+								|| F3.equals(occupancy.getTypeHelper().getType().getCode())) {
 							residentialOrCommercialOccupancyType = 1;
 						}
 						if (residentialOrCommercialOccupancyType == 0) {
@@ -593,7 +596,7 @@ public class Far extends FeatureProcess {
 				int residentialOrCommercialOccupancyTypeForPlan = 0;
 				if (A1.equals(occupancyType.getType().getCode()) || A4.equals(occupancyType.getType().getCode())
 						|| F.equals(occupancyType.getType().getCode()) || F1.equals(occupancyType.getType().getCode())
-						|| F2.equals(occupancyType.getType().getCode()) || F4.equals(occupancyType.getType().getCode())) {
+						|| F2.equals(occupancyType.getType().getCode()) || F3.equals(occupancyType.getType().getCode())) {
 					residentialOrCommercialOccupancyTypeForPlan = 1;
 				}
 				if (residentialOrCommercialOccupancyTypeForPlan == 0) {
@@ -703,10 +706,11 @@ public class Far extends FeatureProcess {
 		switch (occupancyType.getType().getCode()) {
 		case A1:
 		case A4:
+		case A5:
 			permissibleFar = three;
 			break;
 		case A2:
-		case F3:
+		case A3:
 			permissibleFar = twoPointFive;
 			break;
 		case B1:
@@ -723,6 +727,8 @@ public class Far extends FeatureProcess {
 		case D:
 		case D1:
 		case D2:
+		case D3:
+		case D4:
 			permissibleFar = onePointFive;
 			break;
 		case E:
@@ -733,13 +739,18 @@ public class Far extends FeatureProcess {
 			permissibleFar = four;
 			break;
 		case F:
-		case F4:
+		case F1:
+		case F2:
+		case F3:
 			permissibleFar = three;
 			break;
 		case G1:
+		case G4:
+		case G5:
 			permissibleFar = threePointFive;
 			break;
 		case G2:
+		case G3:
 			permissibleFar = twoPointFive;
 			break;
 		case H:
@@ -747,6 +758,10 @@ public class Far extends FeatureProcess {
 			break;
 		case I1:
 		case I2:
+		case I3:
+		case I4:
+		case I5:
+		case I6:
 			permissibleFar = onePointTwo;
 			break;
 		case J:
@@ -764,10 +779,11 @@ public class Far extends FeatureProcess {
 		switch (occupancyType.getType().getCode()) {
 		case A1:
 		case A4:
+		case A5:
 			permissibleFar = four;
 			break;
 		case A2:
-		case F3:
+		case A3:
 			permissibleFar = four;
 			break;
 		case B1:
@@ -784,6 +800,8 @@ public class Far extends FeatureProcess {
 		case D:
 		case D1:
 		case D2:
+		case D3:
+		case D4:	
 			permissibleFar = twoPointFive;
 			break;
 		case E:
@@ -792,13 +810,18 @@ public class Far extends FeatureProcess {
 			permissibleFar = four;
 			break;
 		case F:
-		case F4:
+		case F1:
+		case F2:	
+		case F3:
 			permissibleFar = four;
 			break;
 		case G1:
+		case G4:
+		case G5:	
 			permissibleFar = threePointFive;
 			break;
 		case G2:
+		case G3:
 			permissibleFar = four;
 			break;
 		case H:
@@ -806,6 +829,10 @@ public class Far extends FeatureProcess {
 			break;
 		case I1:
 		case I2:
+		case I3:
+		case I4:
+		case I5:
+		case I6:
 			permissibleFar = onePointTwo;
 			break;
 		case J:
@@ -938,8 +965,8 @@ public class Far extends FeatureProcess {
 			return codesMap.get(E);
 		else if (codes.contains(F))
 			return codesMap.get(F);
-		else if (codes.contains(F4))
-			return codesMap.get(F4);
+		else if (codes.contains(F3))
+			return codesMap.get(F3);
 		else if (codes.contains(A1))
 			return codesMap.get(A1);
 		else if (codes.contains(A4))

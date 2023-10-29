@@ -7,16 +7,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DxfFileConstants {
 
 	public static final String A4 = "A4"; // Apartment/Flat
-	public static final String A1 = "A1"; // Residential
-	public static final String A5 = "A5"; // Professional Office
+	public static final String A1 = "A1"; // Single family dwelling & Dual Single family units 
+	public static final String A5 = "A5"; // Small proffessional offices used as part of principal residential use
 
 	public static final String A2 = "A2"; // Special Residential
-	public static final String A3 = "A3"; // Hostel Educational
-	public static final String F3 = "F3"; // Hotels
+	public static final String A3 = "A3"; // Hotels
 
-	public static final String B1 = "B1"; // Educational
-	public static final String B2 = "B2"; // Educational HighSchool
-	public static final String B3 = "B3"; // Higher Educational Institute
+	public static final String B1 = "B1"; // Educational up to high school
+	public static final String B2 = "B2"; // High schools, Higher Secondary, Junior technical schools, ITIs
+	public static final String B3 = "B3"; // Higher educational Institutions
 	public static final String C = "C"; // Medical
 	public static final String C1 = "C1"; // Medical IP
 	public static final String C2 = "C2"; // Medical OP
@@ -25,20 +24,27 @@ public class DxfFileConstants {
 	public static final String D1 = "D1"; // Assembly Worship
 	public static final String D2 = "D2"; // Bus Terminal
 	public static final String D3 = "D3"; // Auditorium, Community Halls & Wedding Halls 
+	public static final String D4 = "D4"; // Assembly - Patriotic
 	public static final String E = "E"; // Office/Business
 	public static final String E1 = "E1"; // Govt. approved/ owned IT parks
 	public static final String E2 = "E2"; // For all Govt. Offices in plot owned by Govt.
-	public static final String F = "F"; // Mercantile / Commercial
-	public static final String F1 = "F1"; // Commercial Parking Plaza
-	public static final String F2 = "F2"; // Commercial Parking Appurtenant
-	public static final String F4 = "F4"; // Kiosk
+	public static final String F = "F"; // Commercial/Parking Plaza
+	public static final String F1 = "F1"; // Appurtenant - Parking
+	public static final String F2 = "F2"; // Restaurant
+	public static final String F3 = "F3"; // Saegregated Sanitation
 	public static final String G1 = "G1"; // Industrial
 	public static final String G2 = "G2"; // Small Industrial
 	public static final String G3 = "G3"; // Modern meat processing unit/slaughter houses, Electric and gas crematoria
 	public static final String G4 = "G4"; // Automobile service station with repairing facility
+	public static final String G5 = "G5"; // Non nuisance, Non dangerous type
 	public static final String H = "H"; // Storage
-	public static final String I1 = "I1"; // Hazardous (I1)
-	public static final String I2 = "I2"; //
+	public static final String I = "I"; // Hazardous
+	public static final String I1 = "I1"; // Automobile Fuel filling Station Canopy
+	public static final String I2 = "I2"; // Sales office/ kiosks in Fuel Filling Station
+	public static final String I3 = "I3"; // Storage of LPG cylinders designated as white category as per PCB
+	public static final String I4 = "I4"; // Burial ground, Vault and Crematori
+	public static final String I5 = "I5"; // Type C Magazine for explosives	
+	public static final String I6 = "I6"; // Fuel Filling station intended to fuel Boats 
 	public static final String J = "J"; //Multiplex
 	
 	
@@ -51,9 +57,7 @@ public class DxfFileConstants {
     //public static final String E = "E"; // Office/Business
     //public static final String F = "F"; // Mercantile / Commercial
     public static final String G = "G"; // Industrial
-    //public static final String H = "H"; // Storage
-    public static final String I = "I"; // Hazardous
-
+    //public static final String H = "H"; // Storage	
     // sub occupancies code
     //public static final String A2 = "A2";// Old Age Home
     public static final String A_R = "A-R"; // Single family Residential
