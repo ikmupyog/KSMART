@@ -80,6 +80,7 @@ public class ParkingDetails implements Serializable {
 	private List<Measurement> stilts = new ArrayList<>();
 	private List<Measurement> mechanicalLifts = new ArrayList<>();
 	private List<Measurement> evChargers = new ArrayList<>();
+	private List<BigDecimal> mechParkingHeights = new ArrayList<>();
 
 	public List<Measurement> getCars() {
 		return cars;
@@ -247,6 +248,14 @@ public class ParkingDetails implements Serializable {
 
 	public void setEvChargers(List<Measurement> evChargers) {
 		this.evChargers = evChargers;
+	}
+
+	public List<BigDecimal> getMechParkingHeights() {
+		return mechParkingHeights;
+	}
+
+	public void setMechParkingHeights(List<BigDecimal> mechParkingHeights) {
+		this.mechParkingHeights = mechParkingHeights;
 	}
 
 }

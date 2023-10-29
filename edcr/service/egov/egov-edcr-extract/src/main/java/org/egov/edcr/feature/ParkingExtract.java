@@ -164,6 +164,13 @@ public class ParkingExtract extends FeatureExtract {
             for (String s : layerNames2)
                 Util.getPolyLinesByLayer(pl.getDoc(), s).forEach(
                         dinningPolyline -> block.getDiningSpaces().add(new MeasurementDetail(dinningPolyline, true)));
+            String stackAreaLayerName = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
+                    + layerNames.getLayerName("LAYER_NAME_STACK_AREA") + "_" + "\\d";
+            List<String> stackAreaLayer = Util.getLayerNamesLike(pl.getDoc(), stackAreaLayerName);
+            for (String s : stackAreaLayer)
+                Util.getPolyLinesByLayer(pl.getDoc(), s).forEach(
+                        stackAreaPolyline -> block.getLibraryStackArea().add(new MeasurementDetail(stackAreaPolyline, true)));
+
         }
 
         Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_LOADING_UNLOADING"))
@@ -171,17 +178,21 @@ public class ParkingExtract extends FeatureExtract {
                         .add(new MeasurementDetail(loadUnloadPolyline, true)));
 
         Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_MECH_PARKING"))
-                .forEach(mechParkPolyline -> pl.getParkingDetails().getMechParking()
-                        .add(new MeasurementDetail(mechParkPolyline, true)));
+                .forEach(mechParkPolyline -> {
+                	MeasurementDetail m = new MeasurementDetail(mechParkPolyline, true);
+                	BigDecimal dimension = Util.getSingleDimensionValueByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_MECH_PARKING"), pl);
+                	m.setMinimumSide(dimension);
+                	pl.getParkingDetails().getMechParking().add(m);
+                        });
 
         Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_TWO_WHEELER_PARKING"))
                 .forEach(twoWheelerPolyline -> pl.getParkingDetails().getTwoWheelers()
                         .add(new MeasurementDetail(twoWheelerPolyline, true)));
 
-        Util.getPolyLinesByLayer(pl.getDoc(), DA_PARKING).forEach(disablePersonParkPolyline -> pl.getParkingDetails()
+        Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_DA_PARKING")).forEach(disablePersonParkPolyline -> pl.getParkingDetails()
                 .getDisabledPersons().add(new MeasurementDetail(disablePersonParkPolyline, true)));
 
-        BigDecimal dimension = Util.getSingleDimensionValueByLayer(pl.getDoc(), DA_PARKING, pl);
+        BigDecimal dimension = Util.getSingleDimensionValueByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_DA_PARKING"), pl);
         pl.getParkingDetails().setDistFromDAToMainEntrance(dimension);
         List<DXFLWPolyline> bldParking = Util.getPolyLinesByLayer(pl.getDoc(),
                 layerNames.getLayerName("LAYER_NAME_PARKING_SLOT"));
@@ -211,7 +222,9 @@ public class ParkingExtract extends FeatureExtract {
                 specialPark -> pl.getParkingDetails().getSpecial().add(new MeasurementDetail(specialPark, true)));
         Util.getPolyLinesByLayer(pl.getDoc(), layerNames.getLayerName("LAYER_NAME_EV_CHARGE")).forEach(
                 evCharge -> pl.getParkingDetails().getEvChargers().add(new MeasurementDetail(evCharge, true)));
-
+        List<BigDecimal> mechParkingHeights = Util.getListOfDimensionValueByLayer(pl, layerNames.getLayerName("LAYER_NAME_MECHEIGHT_PARKING"));
+        if(mechParkingHeights != null)
+        	pl.getParkingDetails().getMechParkingHeights().addAll(mechParkingHeights);
         validate(pl);
         
         if (LOGGER.isDebugEnabled())

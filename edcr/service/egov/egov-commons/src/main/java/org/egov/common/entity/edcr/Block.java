@@ -94,6 +94,7 @@ public class Block extends Measurement {
     private Parapet parapetV2;
     private Chimney chimneyV2;
     private List<Portico> porticos = new ArrayList<>();
+    private List<Measurement> libraryStackArea = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -427,6 +428,14 @@ public class Block extends Measurement {
 
 	public void addPorticos(Portico portico) {
 		this.porticos.add(portico);
+	}
+
+	public List<Measurement> getLibraryStackArea() {
+		return libraryStackArea;
+	}
+
+	public void setLibraryStackArea(List<Measurement> libraryStackArea) {
+		this.libraryStackArea = libraryStackArea;
 	}
 
 }
