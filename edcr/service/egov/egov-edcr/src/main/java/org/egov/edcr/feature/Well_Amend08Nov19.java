@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.RoadOutput;
@@ -34,6 +35,7 @@ import org.egov.common.entity.edcr.SepticTank;
 import org.egov.common.entity.edcr.WasteDisposal;
 import org.egov.common.entity.edcr.WellUtility;
 import org.egov.edcr.utility.DcrConstants;
+import org.egov.edcr.utility.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -54,13 +56,15 @@ public class Well_Amend08Nov19 extends GeneralRule {
     private static final String SUB_RULE_AMD19_75_2II = "75(2(ii))";
     private static final String SUB_RULE_AMD19_75_2IV = "75(2(iv))";
     private static final String SUB_RULE_AMD20_79_4 = "79(4)";
+    private static final String SUB_RULE_23_2 = "23(2)";
 
-    private static final BigDecimal three = BigDecimal.valueOf(3);
-    private static final BigDecimal TWO_MTR = BigDecimal.valueOf(2);
+    private static final BigDecimal THREE = BigDecimal.valueOf(3);
+    private static final BigDecimal TWO = BigDecimal.valueOf(2);
     private static final BigDecimal ONE_ANDHALF_MTR = BigDecimal.valueOf(1.5);
     private static final BigDecimal DIST_1_POINT_2 = BigDecimal.valueOf(1.2);
     private static final BigDecimal DIST_7_POINT_5 = BigDecimal.valueOf(7.5);
     private static final BigDecimal DIST_30_CM = BigDecimal.valueOf(0.3);
+    private static BigDecimal SEVEN = BigDecimal.valueOf(7);
 
     @Override
     public Plan validate(Plan pl) {
@@ -560,27 +564,44 @@ public class Well_Amend08Nov19 extends GeneralRule {
         String subRule = null;
         String subRuleDesc = null;
         boolean valid = false;
+        BigDecimal minimumHeightOfBuilding = BigDecimal.ZERO;
+        for (Block block : pl.getBlocks()) {
+            if (minimumHeightOfBuilding.compareTo(BigDecimal.ZERO) == 0 ||
+                    block.getBuilding().getBuildingHeight().compareTo(minimumHeightOfBuilding) < 0) {
+                minimumHeightOfBuilding = block.getBuilding().getBuildingHeight();
+            }
+        }
         for (RoadOutput roadOutput : pl.getUtility().getWellDistance()) {
             BigDecimal minimumDistance;
             if (checkConditionForNotifiedRoad(roadOutput)) {
-                minimumDistance = three;
-                subRule = SUB_RULE_AMD19_75_2I;
+                minimumDistance = THREE;
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2I_DESCRIPTION, proposed);
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             } else if (checkConditionForNonNotifiedRoad(roadOutput) || checkConditionForCuldesacRoad(roadOutput)) {
-                minimumDistance = TWO_MTR;
-                subRule = SUB_RULE_AMD19_75_2I;
+                minimumDistance = TWO;
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2I_DESCRIPTION, proposed);
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             } else if (checkConditionForLane(roadOutput)) {
-                minimumDistance = ONE_ANDHALF_MTR;
-                subRule = SUB_RULE_AMD19_75_2I;
+            	if (Util.isSmallPlot(pl)) {
+	            	 if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	            		 minimumDistance = ONE_ANDHALF_MTR;
+	                 else
+	                	 minimumDistance = THREE; 
+	            } else {
+	                if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	                	minimumDistance = ONE_ANDHALF_MTR;
+	                else
+	                	minimumDistance = THREE;
+	            }
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2I_DESCRIPTION, proposed);
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             } else if (checkConditionForBoundary(roadOutput)) {
-                subRule = SUB_RULE_AMD19_75_2II;
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2II_DESCRIPTION, proposed);
-                minimumDistance = DIST_1_POINT_2;
+                minimumDistance = ONE_ANDHALF_MTR;
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             }
         }

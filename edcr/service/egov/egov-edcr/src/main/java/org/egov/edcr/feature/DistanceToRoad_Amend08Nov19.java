@@ -2,6 +2,13 @@ package org.egov.edcr.feature;
 
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.DxfFileConstants.I;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.I3;
+import static org.egov.edcr.constants.DxfFileConstants.I4;
+import static org.egov.edcr.constants.DxfFileConstants.I5;
+import static org.egov.edcr.constants.DxfFileConstants.I6;
 import static org.egov.edcr.utility.DcrConstants.CULDESAC_ROAD;
 import static org.egov.edcr.utility.DcrConstants.CULD_SAC_SHORTESTDISTINCTTOROAD;
 import static org.egov.edcr.utility.DcrConstants.LANE_ROAD;
@@ -17,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.CulDeSacRoad;
@@ -43,6 +51,7 @@ public class DistanceToRoad_Amend08Nov19 extends GeneralRule {
     private static BigDecimal ONEPOINTFIVE = BigDecimal.valueOf(1.5);
     private static final String RULE_EXPECTED_KEY = "meanofaccess.expected";
     private static final String RULE_ACTUAL_KEY = "meanofaccess.actual";
+    private static final String SUB_RULE_47_4 = "47(4)";
 
     @Override
     public Plan validate(Plan pl) {
@@ -101,9 +110,9 @@ public class DistanceToRoad_Amend08Nov19 extends GeneralRule {
     }
 
     @Override
-    public Plan process(Plan planDetail) {
+    public Plan process(Plan pl) {
 
-        validate(planDetail);
+        validate(pl);
         BigDecimal exptectedDistance;
 
         scrutinyDetail = new ScrutinyDetail();
@@ -115,93 +124,124 @@ public class DistanceToRoad_Amend08Nov19 extends GeneralRule {
         scrutinyDetail.addColumnHeading(5, STATUS);
 
         BigDecimal minimumHeightOfBuilding = BigDecimal.ZERO;
-        for (Block block : planDetail.getBlocks()) {
+        for (Block block : pl.getBlocks()) {
             if (minimumHeightOfBuilding.compareTo(BigDecimal.ZERO) == 0 ||
                     block.getBuilding().getBuildingHeight().compareTo(minimumHeightOfBuilding) < 0) {
                 minimumHeightOfBuilding = block.getBuilding().getBuildingHeight();
             }
         }
+        List<String> occupancyCodes = pl.getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
+		if (!occupancyCodes.isEmpty() && occupancyCodes.contains(I) || occupancyCodes.contains(I1)
+				|| occupancyCodes.contains(I2) || occupancyCodes.contains(I3) || occupancyCodes.contains(I4)
+				|| occupancyCodes.contains(I5) || occupancyCodes.contains(I6)) {
+			exptectedDistance = THREE;
 
-        // validating minimum distance in notified roads minimum 3m
-        if (planDetail.getNotifiedRoads() != null && !planDetail.getNotifiedRoads().isEmpty()) {
+			if (pl.getNotifiedRoads() != null && pl.getNotifiedRoads().get(0).getShortestDistanceToRoad() != null) {
+				checkBuildingDistanceFromRoad(pl, exptectedDistance,
+						pl.getNotifiedRoads().get(0).getShortestDistanceToRoad(), NOTIFIED_SHORTESTDISTINCTTOROAD,
+						SUB_RULE_47_4, SUB_RULE_47_4, NOTIFIED_ROAD + SUB_RULE_23_1_DESCRIPTION);
+			}
 
-            exptectedDistance = THREE;
+			if ((pl.getNonNotifiedRoads() != null
+					&& pl.getNotifiedRoads().get(0).getShortestDistanceToRoad() != null)) {
+				checkBuildingDistanceFromRoad(pl, exptectedDistance,
+						pl.getNonNotifiedRoads().get(0).getShortestDistanceToRoad(), NONNOTIFIED_SHORTESTDISTINCTTOROAD,
+						SUB_RULE_47_4, SUB_RULE_47_4, UNNOTIFIED_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+			}
 
-            if (planDetail.getNotifiedRoads().get(0).getShortestDistanceToRoad() != null
-                    && !planDetail.getNotifiedRoads().get(0).getShortestDistanceToRoad().isEmpty()) {
+			if ((pl.getCuldeSacRoads() != null && pl.getCuldeSacRoads().get(0).getShortestDistanceToRoad() != null)
+					|| (pl.getLaneRoads() != null && pl.getLaneRoads().get(0).getShortestDistanceToRoad() != null)) {
+				checkBuildingDistanceFromRoad(pl, exptectedDistance,
+						pl.getCuldeSacRoads().get(0).getShortestDistanceToRoad(), CULD_SAC_SHORTESTDISTINCTTOROAD,
+						SUB_RULE_47_4, SUB_RULE_47_4, CULDESAC_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+			}
+			if ((pl.getLaneRoads() != null && pl.getLaneRoads().get(0).getShortestDistanceToRoad() != null)) {
+				checkBuildingDistanceFromRoad(pl, exptectedDistance,
+						pl.getLaneRoads().get(0).getShortestDistanceToRoad(), LANE_SHORTESTDISTINCTTOROAD,
+						SUB_RULE_47_4, SUB_RULE_47_4, LANE_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+			}
+		} else {
+			// validating minimum distance in notified roads minimum 3m
+	        if (pl.getNotifiedRoads() != null && !pl.getNotifiedRoads().isEmpty()) {
 
-                checkBuildingDistanceFromRoad(planDetail, exptectedDistance,
-                        planDetail.getNotifiedRoads().get(0).getShortestDistanceToRoad(),
-                        NOTIFIED_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2, SUB_RULE_AMD19_23_2,
-                        NOTIFIED_ROAD + SUB_RULE_23_1_DESCRIPTION);
+	            exptectedDistance = THREE;
 
-            }
-        }
-        // validating minimum distance in non-notified roads minimum 2m
-        if (planDetail.getNonNotifiedRoads() != null && !planDetail.getNonNotifiedRoads().isEmpty()) {
-            exptectedDistance = TWO;
+	            if (pl.getNotifiedRoads().get(0).getShortestDistanceToRoad() != null
+	                    && !pl.getNotifiedRoads().get(0).getShortestDistanceToRoad().isEmpty()) {
 
-            if (planDetail.getNonNotifiedRoads().get(0).getShortestDistanceToRoad() != null &&
-                    !planDetail.getNonNotifiedRoads().get(0).getShortestDistanceToRoad().isEmpty()) {
+	                checkBuildingDistanceFromRoad(pl, exptectedDistance,
+	                        pl.getNotifiedRoads().get(0).getShortestDistanceToRoad(),
+	                        NOTIFIED_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2, SUB_RULE_AMD19_23_2,
+	                        NOTIFIED_ROAD + SUB_RULE_23_1_DESCRIPTION);
 
-                if (Util.isSmallPlot(planDetail)) {
-                    checkBuildingDistanceFromRoad(planDetail, exptectedDistance,
-                            planDetail.getNonNotifiedRoads().get(0).getShortestDistanceToRoad(),
-                            NONNOTIFIED_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2, SUB_RULE_AMD19_23_2,
-                            UNNOTIFIED_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
-                } else
-                    checkBuildingDistanceFromRoad(planDetail, exptectedDistance,
-                            planDetail.getNonNotifiedRoads().get(0).getShortestDistanceToRoad(),
-                            NONNOTIFIED_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2, SUB_RULE_AMD19_23_2,
-                            UNNOTIFIED_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+	            }
+	        }
+	        // validating minimum distance in non-notified roads minimum 2m
+	        if (pl.getNonNotifiedRoads() != null && !pl.getNonNotifiedRoads().isEmpty()) {
+	            exptectedDistance = TWO;
 
-            }
-        }
-        // validating minimum distance in culd_sac_road minimum 2 or 3 based on height of building
-        if (planDetail.getCuldeSacRoads() != null && !planDetail.getCuldeSacRoads().isEmpty()) {
-            if (Util.isSmallPlot(planDetail)) {
-            	if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
-                    exptectedDistance = TWO;
-                else
-                    exptectedDistance = THREE; 
-            } else {
-                if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
-                    exptectedDistance = TWO;
-                else
-                    exptectedDistance = THREE;
-            }
-            if (planDetail.getCuldeSacRoads().get(0).getShortestDistanceToRoad() != null
-                    && !planDetail.getCuldeSacRoads().get(0).getShortestDistanceToRoad().isEmpty())
-                checkBuildingDistanceFromRoad(planDetail, exptectedDistance,
-                        planDetail.getCuldeSacRoads().get(0).getShortestDistanceToRoad(),
-                        CULD_SAC_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2_PROVISIO, SUB_RULE_AMD19_23_2_PROVISIO,
-                        CULDESAC_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+	            if (pl.getNonNotifiedRoads().get(0).getShortestDistanceToRoad() != null &&
+	                    !pl.getNonNotifiedRoads().get(0).getShortestDistanceToRoad().isEmpty()) {
 
-        }
+	                if (Util.isSmallPlot(pl)) {
+	                    checkBuildingDistanceFromRoad(pl, exptectedDistance,
+	                            pl.getNonNotifiedRoads().get(0).getShortestDistanceToRoad(),
+	                            NONNOTIFIED_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2, SUB_RULE_AMD19_23_2,
+	                            UNNOTIFIED_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+	                } else
+	                    checkBuildingDistanceFromRoad(pl, exptectedDistance,
+	                            pl.getNonNotifiedRoads().get(0).getShortestDistanceToRoad(),
+	                            NONNOTIFIED_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2, SUB_RULE_AMD19_23_2,
+	                            UNNOTIFIED_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
 
-        // validating minimum distance in culd_sac_road minimum 1.5 or 3 based on height of building
-        if (planDetail.getLaneRoads() != null && !planDetail.getLaneRoads().isEmpty()) {
-            if (Util.isSmallPlot(planDetail)) {
-            	 if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
-                     exptectedDistance = ONEPOINTFIVE;
-                 else
-                     exptectedDistance = THREE; 
-            } else {
-                if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
-                    exptectedDistance = ONEPOINTFIVE;
-                else
-                    exptectedDistance = THREE;
-            }
-            if (planDetail.getLaneRoads().get(0).getShortestDistanceToRoad() != null
-                    && !planDetail.getLaneRoads().get(0).getShortestDistanceToRoad().isEmpty())
-                checkBuildingDistanceFromRoad(planDetail, exptectedDistance,
-                        planDetail.getLaneRoads().get(0).getShortestDistanceToRoad(),
-                        LANE_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2_PROVISIO, SUB_RULE_AMD19_23_2_PROVISIO,
-                        LANE_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+	            }
+	        }
+	        // validating minimum distance in culd_sac_road minimum 2 or 3 based on height of building
+	        if (pl.getCuldeSacRoads() != null && !pl.getCuldeSacRoads().isEmpty()) {
+	            if (Util.isSmallPlot(pl)) {
+	            	if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	                    exptectedDistance = TWO;
+	                else
+	                    exptectedDistance = THREE; 
+	            } else {
+	                if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	                    exptectedDistance = TWO;
+	                else
+	                    exptectedDistance = THREE;
+	            }
+	            if (pl.getCuldeSacRoads().get(0).getShortestDistanceToRoad() != null
+	                    && !pl.getCuldeSacRoads().get(0).getShortestDistanceToRoad().isEmpty())
+	                checkBuildingDistanceFromRoad(pl, exptectedDistance,
+	                        pl.getCuldeSacRoads().get(0).getShortestDistanceToRoad(),
+	                        CULD_SAC_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2_PROVISIO, SUB_RULE_AMD19_23_2_PROVISIO,
+	                        CULDESAC_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
 
-        }
+	        }
 
-        return planDetail;
+	        // validating minimum distance in culd_sac_road minimum 1.5 or 3 based on height of building
+	        if (pl.getLaneRoads() != null && !pl.getLaneRoads().isEmpty()) {
+	            if (Util.isSmallPlot(pl)) {
+	            	 if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	                     exptectedDistance = ONEPOINTFIVE;
+	                 else
+	                     exptectedDistance = THREE; 
+	            } else {
+	                if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	                    exptectedDistance = ONEPOINTFIVE;
+	                else
+	                    exptectedDistance = THREE;
+	            }
+	            if (pl.getLaneRoads().get(0).getShortestDistanceToRoad() != null
+	                    && !pl.getLaneRoads().get(0).getShortestDistanceToRoad().isEmpty())
+	                checkBuildingDistanceFromRoad(pl, exptectedDistance,
+	                        pl.getLaneRoads().get(0).getShortestDistanceToRoad(),
+	                        LANE_SHORTESTDISTINCTTOROAD, SUB_RULE_AMD19_23_2_PROVISIO, SUB_RULE_AMD19_23_2_PROVISIO,
+	                        LANE_ROAD + SUB_RULE_23_2_PROVISIO_DESC);
+
+	        }
+		}
+        
+        return pl;
 
     }
 
