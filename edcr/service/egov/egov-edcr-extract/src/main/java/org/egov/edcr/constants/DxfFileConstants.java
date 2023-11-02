@@ -116,7 +116,9 @@ public class DxfFileConstants {
     public static final String COLOR_KEY_MALE_WATER_CLOSET = "Male water closet";
     public static final String COLOR_KEY_FEMALE_WATER_CLOSET = "Female water closet";
     public static final String COLOR_KEY_COMMON_WATER_CLOSET = "Common water closet";
-
+    public static final String COLOR_KEY_MALE_VISITORS_WATER_CLOSET = "Male Visitors";
+    public static final String COLOR_KEY_FEMALE_VISITORS_WATER_CLOSET = "Female Visitors";
+    public static final String COLOR_KEY_MALE_OR_FEMALE_VISITORS_WATER_CLOSET = "Male or Female Visitors";
     // Yard related
     public static final String COLOR_KEY_YARD_DIMENSION = "Yard dimension";
 

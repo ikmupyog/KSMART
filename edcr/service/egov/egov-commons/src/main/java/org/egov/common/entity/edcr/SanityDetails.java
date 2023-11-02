@@ -48,16 +48,28 @@
 package org.egov.common.entity.edcr;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SanityDetails implements Serializable {
     private static final long serialVersionUID = 9L;
+    // Water closets
     private List<Measurement> maleWaterClosets = new ArrayList<>();
     private List<Measurement> femaleWaterClosets = new ArrayList<>();
     private List<Measurement> commonWaterClosets = new ArrayList<>();
-    private List<Measurement> urinals = new ArrayList<>();
-    // Exclusive for Bath and Shower
+    private List<Measurement> maleVisitorsWaterClosets = new ArrayList<>();
+    private List<Measurement> femaleVisitorsWaterClosets = new ArrayList<>();
+    private List<Measurement> maleOrFemaleVisitorsWaterClosets = new ArrayList<>();
+
+    //urinals
+    //private List<Measurement> urinals = new ArrayList<>();
+    private List<Measurement> maleUrinals = new ArrayList<>();
+    private List<Measurement> maleVisitorUrinals = new ArrayList<>();
+    private List<Measurement> commonUrinals = new ArrayList<>();
+    private List<Measurement> maleOrFemaleVisitorsUrinals = new ArrayList<>();
+    
+// Exclusive for Bath and Shower
     private List<Measurement> maleBathRooms = new ArrayList<>();
     private List<Measurement> femaleBathRooms = new ArrayList<>();
     private List<Measurement> commonBathRooms = new ArrayList<>();
@@ -69,10 +81,30 @@ public class SanityDetails implements Serializable {
     private List<Measurement> drinkingWater = new ArrayList<>();
 
     private List<Measurement> totalSpecialWC = new ArrayList<>();
-
+    private List<Occupancy> parkingArea = new ArrayList<>();
+    
     private int totalSPWC = 0;
     private int totalwashBasins = 0;
 
+    public void addParkingArea(Occupancy occupancy) {
+        if (parkingArea == null) {
+        	parkingArea = new ArrayList<>();
+        	parkingArea.add(occupancy);
+        } else if (parkingArea.contains(occupancy)) {
+        	parkingArea.get(parkingArea.indexOf(occupancy))
+                    .setBuiltUpArea((parkingArea.get(parkingArea.indexOf(occupancy)).getBuiltUpArea() == null
+                            ? BigDecimal.ZERO
+                            : parkingArea.get(parkingArea.indexOf(occupancy)).getBuiltUpArea())
+                                    .add(occupancy.getBuiltUpArea()));
+        	parkingArea.get(parkingArea.indexOf(occupancy)).setExistingBuiltUpArea(
+                    (parkingArea.get(parkingArea.indexOf(occupancy)).getExistingBuiltUpArea() == null ? BigDecimal.ZERO
+                            : parkingArea.get(parkingArea.indexOf(occupancy)).getExistingBuiltUpArea())
+                                    .add(occupancy.getExistingBuiltUpArea()));
+
+        } else
+        	parkingArea.add(occupancy);
+
+    }
     public List<Measurement> getMaleWaterClosets() {
         return maleWaterClosets;
     }
@@ -88,20 +120,32 @@ public class SanityDetails implements Serializable {
     public void setFemaleWaterClosets(List<Measurement> femaleWaterClosets) {
         this.femaleWaterClosets = femaleWaterClosets;
     }
-
+/*
     public List<Measurement> getUrinals() {
         return urinals;
     }
 
     public void setUrinals(List<Measurement> urinals) {
         this.urinals = urinals;
-    }
+    }*/
 
     public List<Measurement> getMaleBathRooms() {
         return maleBathRooms;
     }
 
-    public void setMaleBathRooms(List<Measurement> maleBathRooms) {
+    public List<Measurement> getMaleUrinals() {
+		return maleUrinals;
+	}
+	public void setMaleUrinals(List<Measurement> maleUrinals) {
+		this.maleUrinals = maleUrinals;
+	}
+	public List<Measurement> getMaleVisitorUrinals() {
+		return maleVisitorUrinals;
+	}
+	public void setMaleVisitorUrinals(List<Measurement> maleVisitorUrinals) {
+		this.maleVisitorUrinals = maleVisitorUrinals;
+	}
+	public void setMaleBathRooms(List<Measurement> maleBathRooms) {
         this.maleBathRooms = maleBathRooms;
     }
 
@@ -153,7 +197,23 @@ public class SanityDetails implements Serializable {
         this.commonWaterClosets = commonWaterClosets;
     }
 
-    public int getTotalSPWC() {
+    public List<Measurement> getMaleVisitorsWaterClosets() {
+		return maleVisitorsWaterClosets;
+	}
+
+	public void setMaleVisitorsWaterClosets(List<Measurement> maleVisitorsWaterClosets) {
+		this.maleVisitorsWaterClosets = maleVisitorsWaterClosets;
+	}
+
+	public List<Measurement> getFemaleVisitorsWaterClosets() {
+		return femaleVisitorsWaterClosets;
+	}
+
+	public void setFemaleVisitorsWaterClosets(List<Measurement> femaleVisitorsWaterClosets) {
+		this.femaleVisitorsWaterClosets = femaleVisitorsWaterClosets;
+	}
+
+	public int getTotalSPWC() {
         return totalSPWC;
     }
 
@@ -184,4 +244,31 @@ public class SanityDetails implements Serializable {
     public void setCommonRoomsWithWaterCloset(List<Measurement> commonRoomsWithWaterCloset) {
         this.commonRoomsWithWaterCloset = commonRoomsWithWaterCloset;
     }
+
+	public List<Occupancy> getParkingArea() {
+		return parkingArea;
+	}
+
+	public void setParkingArea(List<Occupancy> parkingArea) {
+		this.parkingArea = parkingArea;
+	}
+	public List<Measurement> getMaleOrFemaleVisitorsWaterClosets() {
+		return maleOrFemaleVisitorsWaterClosets;
+	}
+	public void setMaleOrFemaleVisitorsWaterClosets(List<Measurement> maleOrFemaleVisitorsWaterClosets) {
+		this.maleOrFemaleVisitorsWaterClosets = maleOrFemaleVisitorsWaterClosets;
+	}
+	public List<Measurement> getMaleOrFemaleVisitorsUrinals() {
+		return maleOrFemaleVisitorsUrinals;
+	}
+	public void setMaleOrFemaleVisitorsUrinals(List<Measurement> maleOrFemaleVisitorsUrinals) {
+		this.maleOrFemaleVisitorsUrinals = maleOrFemaleVisitorsUrinals;
+	}
+	public List<Measurement> getCommonUrinals() {
+		return commonUrinals;
+	}
+	public void setCommonUrinals(List<Measurement> commonUrinals) {
+		this.commonUrinals = commonUrinals;
+	}
+    
 }
