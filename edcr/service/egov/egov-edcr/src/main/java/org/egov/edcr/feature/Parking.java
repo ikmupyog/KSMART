@@ -74,6 +74,7 @@ import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.PARKING_SLOT;
 import static org.egov.edcr.constants.DxfFileConstants.UNITFA_HALL;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
+import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 import static org.egov.edcr.utility.DcrConstants.ROUNDUP;
 
 import java.math.BigDecimal;
@@ -507,7 +508,9 @@ public class Parking extends FeatureProcess {
 			processMechanicalParking(pl, result);
 		}
 		if(!pl.getParkingDetails().getEvChargers().isEmpty())
-			setReportOutputDetails(pl, rule, "Charging Point", "", "Defined", Result.Verify.getResultVal());
+			setReportOutputDetails(pl, SUB_RULE_29_12, "Charging Point", "", OBJECTDEFINED_DESC,
+					Result.Accepted.getResultVal());
+			
 		processUnits(pl);
 		if (result.totalRequiredCarParking > 0 && (pl.getParkingDetails().getEvChargers() == null
 				|| pl.getParkingDetails().getEvChargers().isEmpty())) {

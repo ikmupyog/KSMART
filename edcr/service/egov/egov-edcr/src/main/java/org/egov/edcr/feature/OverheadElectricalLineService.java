@@ -47,8 +47,6 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.utility.DcrConstants.ELECTRICLINE_DISTANCE;
 import static org.egov.edcr.utility.DcrConstants.HORIZONTAL_ELECTRICLINE_DISTANCE;
 import static org.egov.edcr.utility.DcrConstants.HORIZONTAL_ELECTRICLINE_DISTANCE_NOC;
@@ -76,16 +74,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class OverheadElectricalLineService extends FeatureProcess {
 
-	private static final String SUB_RULE_5_DESCRIPTION = "Overhead Electric line and Voltage";
-	private static final String SUB_RULE_5 = "23(5)";
-
 	private static final String SUB_RULE_AMD_22_5 = "22(5) Table 2";
-
-	private static final BigDecimal VERTICAL_DISTANCE_11000 = BigDecimal.valueOf(2.4);
-	private static final BigDecimal AMDNOV19_VERTICAL_DISTANCE_11000 = BigDecimal.valueOf(2.5);
+	private static final BigDecimal VERTICAL_DISTANCE_11000 = BigDecimal.valueOf(2.5);
 	private static final BigDecimal VERTICAL_DISTANCE_33000 = BigDecimal.valueOf(3.7);
-	private static final BigDecimal HORIZONTAL_DISTANCE_33000 = BigDecimal.valueOf(1.85);
-	private static final BigDecimal AMDNOV19_HORIZONTAL_DISTANCE_33000 = BigDecimal.valueOf(2);
+	private static final BigDecimal HORIZONTAL_DISTANCE_33000 = BigDecimal.valueOf(2);
 
 	private static final int VOLTAGE_11000 = 11;
 	private static final int VOLTAGE_33000 = 33;
@@ -135,15 +127,8 @@ public class OverheadElectricalLineService extends FeatureProcess {
 					if (electricalLine.getHorizontalDistance() != null) {
 						String ruleNo;
 						BigDecimal distance;
-						if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-							ruleNo = SUB_RULE_AMD_22_5;
-							distance = AMDNOV19_HORIZONTAL_DISTANCE_33000;
-							pl.getFeatureAmendments().put("OverHead Horizontal Electric Line",
-									AMEND_DATE_081119.toString());
-						} else {
-							ruleNo = SUB_RULE_5;
-							distance = HORIZONTAL_DISTANCE_33000;
-						}
+						ruleNo = SUB_RULE_AMD_22_5;
+						distance = HORIZONTAL_DISTANCE_33000;
 						String expectedResult = "";
 						String actualResult = electricalLine.getHorizontalDistance().toString() + IN_METER;
 						if (electricalLine.getVoltage().compareTo(BigDecimal.valueOf(VOLTAGE_11000)) < 0) {
@@ -219,14 +204,8 @@ public class OverheadElectricalLineService extends FeatureProcess {
 		boolean verticalDistancePassed = false;
 		String ruleNo;
 		BigDecimal distance;
-		if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(planDetail.getAsOnDate()))) {
-			ruleNo = SUB_RULE_AMD_22_5;
-			distance = AMDNOV19_VERTICAL_DISTANCE_11000;
-			planDetail.getFeatureAmendments().put("Common_OverHead Vertical Electric Line", AMEND_NOV19);
-		} else {
-			ruleNo = SUB_RULE_5;
-			distance = VERTICAL_DISTANCE_11000;
-		}
+		ruleNo = SUB_RULE_AMD_22_5;
+		distance = VERTICAL_DISTANCE_11000;
 		if (electricalLine.getVerticalDistance() != null) {
 			String actualResult = electricalLine.getVerticalDistance().toString() + IN_METER;
 			String expectedResult = "";
@@ -285,7 +264,6 @@ public class OverheadElectricalLineService extends FeatureProcess {
 	@Override
 	public Map<String, Date> getAmendments() {
 		Map<String, Date> ohel = new ConcurrentHashMap<>();
-		ohel.put(AMEND_NOV19, AMEND_DATE_081119);
 		return ohel;
 	}
 

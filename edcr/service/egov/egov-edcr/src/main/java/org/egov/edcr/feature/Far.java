@@ -106,6 +106,7 @@ import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.service.ProcessPrintHelper;
 import org.egov.edcr.utility.Util;
 import org.egov.infra.utils.StringUtils;
@@ -627,14 +628,20 @@ public class Far extends FeatureProcess {
 				? pl.getVirtualBuilding().getMostRestrictiveFarHelper()
 				: null;
 
-		/*
-		 * if (!(pl.getVirtualBuilding().getResidentialOrCommercialBuilding() ||
-		 * (mostRestrictiveOccupancy != null && mostRestrictiveOccupancy.getType() !=
-		 * null &&
-		 * DxfFileConstants.G.equalsIgnoreCase(mostRestrictiveOccupancy.getType().
-		 * getCode())))) { pl.getErrors().put(DxfFileConstants.OCCUPANCY_ALLOWED_KEY,
-		 * DxfFileConstants.OCCUPANCY_ALLOWED); return pl; }
-		 */
+		List<BigDecimal> bldgHghts = pl.getBlocks().stream().map(b -> b.getBuilding().getBuildingHeight()).collect(Collectors.toList());
+		boolean isHeightAllowed = true;
+		if(!bldgHghts.isEmpty())
+			for (BigDecimal hght : bldgHghts)
+				if(hght.doubleValue() > 10) {
+					isHeightAllowed = false;
+					break;
+				}
+		
+		if (!isHeightAllowed) {
+			pl.getErrors().put(DxfFileConstants.OCCUPANCY_ALLOWED_KEY, DxfFileConstants.OCCUPANCY_ALLOWED);
+			return pl;
+		}
+		 
 
 		/*
 		 * Set<String> occupancyCodes = new HashSet<>(); for (OccupancyTypeHelper oth :

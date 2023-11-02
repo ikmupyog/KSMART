@@ -189,7 +189,13 @@ public class RainWaterHarvestingExtract extends FeatureExtract {
                     }
             }
         }
-
+        
+        List<DXFLWPolyline> gwRecharge = Util.getPolyLinesByLayer(pl.getDoc(),
+                layerNames.getLayerName("LAYER_NAME_GW_RECHARGE"));
+        for (DXFLWPolyline pline : gwRecharge) {
+            Measurement gwr = new MeasurementDetail(pline, true);
+            pl.getUtility().addGroundWaterRecharge(gwr);
+        }
         if (LOG.isInfoEnabled())
             LOG.info("End of Rain Water Harvesting Extract......");
         return pl;

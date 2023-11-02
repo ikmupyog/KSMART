@@ -47,10 +47,6 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
@@ -66,16 +62,21 @@ import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.D3;
+import static org.egov.edcr.constants.DxfFileConstants.D4;
 import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.E1;
+import static org.egov.edcr.constants.DxfFileConstants.E2;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
-import static org.egov.edcr.constants.DxfFileConstants.I1;
-import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
+import static org.egov.edcr.constants.DxfFileConstants.G5;
+import static org.egov.edcr.constants.DxfFileConstants.J;
 import static org.egov.edcr.utility.DcrConstants.IN_LITRE;
 import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
@@ -96,6 +97,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
@@ -105,17 +107,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RainWaterHarvesting extends FeatureProcess {
-	private static final BigDecimal THREEHUNDREDANDTWENTY = BigDecimal.valueOf(320);
-	private static final String SUB_RULE_109_B_DESCRIPTION = "RainWater Storage Arrangement ";
-	private static final String SUB_RULE_109_B = "109(B)";
+	private static final String SUB_RULE_109_B_DESCRIPTION = "Workable RainWater Storage Arrangement ";
 	private static final String SUB_RULE_AMD19_76_2 = "76(2)";
-	private static final String SUB_RULE_AMD20_76 = "76";
+	private static final String SUB_RULE_AMD20_76_1 = "76(1)";
 	private static final String RAINWATER_HARVESTING_TANK_CAPACITY = "Minimum capacity of Rain Water Harvesting Tank";
 	private static final String OCCUPANCY = "Occupancy";
-	private static final BigDecimal ONEHUNDREDFIFTY = BigDecimal.valueOf(150);
 	private static final BigDecimal TWENTYFIVE = BigDecimal.valueOf(25);
 	private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
 	private static final BigDecimal TWOHUNDREDANDTWODOTTHIRTYFIVE = BigDecimal.valueOf(202.35);
+	private static final String GW_RECHARGE = "Ground water recharging system";
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -127,29 +127,22 @@ public class RainWaterHarvesting extends FeatureProcess {
 				if (checkOccupancyTypeForRWH(occupancyType)) {
 					if (validateRWH(pl, errors))
 						break;
-				} else if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-						&& (occupCode.equals(A1) || occupCode.equals(A5))) {
+				} else if ((occupCode.equals(A1) || occupCode.equals(A5))) {
 					if ((pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() != 1
 							&& (pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
 									|| pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0))
 							&& validateRWH(pl, errors)) {
 						break;
 					}
-				} else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-						&& (occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))) {
-					if ((pl.getVirtualBuilding().getTotalFloorArea().compareTo(ONEHUNDREDFIFTY) > 0
-							|| pl.getPlot().getArea().compareTo(THREEHUNDREDANDTWENTY) > 0)
-							&& validateRWH(pl, errors)) {
-						break;
-					}
-				} else if ((occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-						|| occupCode.equals(F3)) && pl.getVirtualBuilding().getTotalFloorArea() != null
-						&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
-						&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0) {
-					if (validateRWH(pl, errors))
-						break;
 				}
 			}
+		}
+
+		if (pl.getUtility().getGroundWaterRecharge().isEmpty()) {
+			HashMap<String, String> err = new HashMap<>();
+			err.put(GW_RECHARGE, edcrMessageSource.getMessage(OBJECTNOTDEFINED, new String[] { GW_RECHARGE },
+					LocaleContextHolder.getLocale()));
+			pl.addErrors(err);
 		}
 		return pl;
 	}
@@ -165,46 +158,21 @@ public class RainWaterHarvesting extends FeatureProcess {
 		scrutinyDetail.addColumnHeading(5, PROVIDED);
 		scrutinyDetail.addColumnHeading(6, STATUS);
 		scrutinyDetail.setKey("Common_Rain Water Harvesting");
-		String subRule;
-		if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-			subRule = SUB_RULE_AMD20_76;
-			pl.getFeatureAmendments().put("Rain Water Harvesting", AMEND_DATE_011020.toString());
-		} else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-			subRule = SUB_RULE_AMD19_76_2;
-			pl.getFeatureAmendments().put("Rain Water Harvesting", AMEND_DATE_081119.toString());
-		} else
-			subRule = SUB_RULE_109_B;
+		String subRule = SUB_RULE_AMD19_76_2;
 		String subRuleDesc = SUB_RULE_109_B_DESCRIPTION;
 		BigDecimal expectedTankCapacity = BigDecimal.ZERO;
-		if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
-				String occupCode = occupancyType.getType().getCode();
-				if (checkOccupancyTypeForRWH(occupancyType)) {
+		if (!pl.getOccupancies().isEmpty()) {
+			for (Occupancy occupancyType : pl.getOccupancies()) {
+				String occupCode = occupancyType.getTypeHelper().getType().getCode();
+				if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())) {
 					if (processRWH(pl, subRule, subRuleDesc))
 						break;
-				} else if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-						&& (occupCode.equals(A1) || occupCode.equals(A5))) {
-					if (pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() > 1
-							&& processRWH(pl, subRule, subRuleDesc)) {
-						break;
-					} else if ((pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
-							|| pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0)
-							&& processRWH(pl, subRule, subRuleDesc)) {
-						break;
-					}
-				} else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-						&& (occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))) {
-					if ((pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(ONEHUNDREDFIFTY) > 0
-							|| pl.getPlot().getArea().compareTo(THREEHUNDREDANDTWENTY) > 0)
-							&& processRWH(pl, subRule, subRuleDesc)) {
-						break;
-					}
-				} else if ((occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-						|| occupCode.equals(F3)) && pl.getVirtualBuilding().getTotalFloorArea() != null
-						&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
-						&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0) {
-					if (processRWH(pl, subRule, subRuleDesc))
-						break;
+				} else if ((occupCode.equals(A1)
+						|| occupCode.equals(A5) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1)
+						&& (pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
+								&& pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0)
+						&& processRWH(pl, subRule, subRuleDesc)) {
+					break;
 				}
 			}
 		}
@@ -212,56 +180,31 @@ public class RainWaterHarvesting extends FeatureProcess {
 		if (pl.getUtility() != null && !pl.getUtility().getRainWaterHarvest().isEmpty()
 				&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null) {
 			if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-				for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
-					String occupCode = occupancyType.getType().getCode();
+				for (Occupancy occupancyType : pl.getOccupancies()) {
+					String occupCode = occupancyType.getTypeHelper().getType().getCode();
 					Map<String, Object> mapOfAllOccupancyAndTankCapacity = new HashMap<>();
-					if ((occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-							|| occupCode.equals(F3)) && pl.getVirtualBuilding().getTotalFloorArea() != null
-							&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
-							&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0
-							&& !pl.getUtility().getRainWaterHarvest().isEmpty()
-							&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-						expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
-								.setScale(2, RoundingMode.HALF_UP);
-						mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getType().getName());
-						mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
-					} else if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-							&& (occupCode.equals(A1) || occupCode.equals(A5))
+					if ((occupCode.equals(A1) || occupCode.equals(A5))
 							&& !pl.getUtility().getRainWaterHarvest().isEmpty()
 							&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
 							&& pl.getVirtualBuilding().getTotalCoverageArea() != null
 							&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
 
 						if (pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() > 1
-								|| pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
-								|| pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0) {
+								&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
+								&& pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0) {
 							expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
 									.setScale(2, RoundingMode.HALF_UP);
-							mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getType().getName());
+							mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());
 							mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
 						}
-					} else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-							&& (occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))
+					} else if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())
 							&& !pl.getUtility().getRainWaterHarvest().isEmpty()
 							&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
 							&& pl.getVirtualBuilding().getTotalCoverageArea() != null
 							&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-						if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(ONEHUNDREDFIFTY) > 0
-								|| pl.getPlot().getArea().compareTo(THREEHUNDREDANDTWENTY) > 0) {
-							expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
-									.setScale(2, RoundingMode.HALF_UP);
-							mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getType().getName());
-							mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
-						}
-					} else if (checkOccupancyTypeForRWH(occupancyType)
-							&& !pl.getUtility().getRainWaterHarvest().isEmpty()
-							&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-						if (occupCode.equals(A2) || occupCode.equals(F3) || occupCode.equals(A3) || occupCode.equals(I1)
-								|| occupCode.equals(I2)) {
+						if (occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4) || occupCode.equals(F)
+								|| occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
+								|| occupCode.equals(J)) {
 							expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
 									.setScale(2, RoundingMode.HALF_UP);
 						} else {
@@ -269,7 +212,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 									.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
 									.setScale(2, RoundingMode.HALF_UP);
 						}
-						mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getType().getName());
+						mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());
 						mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
 					}
 					if (!mapOfAllOccupancyAndTankCapacity.isEmpty()) {
@@ -326,15 +269,17 @@ public class RainWaterHarvesting extends FeatureProcess {
 				&& pl.getUtility().getRainWaterHarvestingTankCapacity() == null
 				&& pl.getVirtualBuilding().getTotalCoverageArea() != null
 				&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0
-				&& pl.getVirtualBuilding().getTotalFloorArea() != null
-				&& pl.getVirtualBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(100)) > 0
-				&& pl.getPlot().getArea().compareTo(BigDecimal.valueOf(200)) > 0) {
+				&& pl.getVirtualBuilding().getTotalFloorArea() != null) {
 			HashMap<String, String> errors = new HashMap<>();
 			errors.put(RAINWATER_HARVESTING_TANK_CAPACITY, edcrMessageSource.getMessage(RAINWATERCAPACITY,
 					new String[] { RAINWATER_HARVESTING_CAPACITY }, LocaleContextHolder.getLocale()));
 			pl.addErrors(errors);
 
 		}
+
+		if (!pl.getUtility().getGroundWaterRecharge().isEmpty())
+			setReportOutputDetails(pl, SUB_RULE_AMD20_76_1, GW_RECHARGE, "", "", OBJECTDEFINED_DESC,
+					Result.Accepted.getResultVal());
 		return pl;
 	}
 
@@ -370,11 +315,13 @@ public class RainWaterHarvesting extends FeatureProcess {
 
 	private boolean checkOccupancyTypeForRWH(OccupancyTypeHelper occupancyType) {
 		String occupCode = occupancyType.getType().getCode();
-		return occupCode.equals(A2) || occupCode.equals(F3) || occupCode.equals(A3) || occupCode.equals(B1)
+		return occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4) || occupCode.equals(B1)
 				|| occupCode.equals(B2) || occupCode.equals(B3) || occupCode.equals(C) || occupCode.equals(C1)
 				|| occupCode.equals(C2) || occupCode.equals(C3) || occupCode.equals(D) || occupCode.equals(D1)
-				|| occupCode.equals(D2) || occupCode.equals(E) || occupCode.equals(G1) || occupCode.equals(G2)
-				|| occupCode.equals(I1) || occupCode.equals(I2);
+				|| occupCode.equals(D2) || occupCode.equals(D3) || occupCode.equals(D4) || occupCode.equals(E)
+				|| occupCode.equals(F) || occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
+				|| occupCode.equals(E1) || occupCode.equals(E2) || occupCode.equals(G1) || occupCode.equals(G2)
+				|| occupCode.equals(G3) || occupCode.equals(G4) || occupCode.equals(G5) || occupCode.equals(J);
 	}
 
 	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String occupancy, String expected,
@@ -409,8 +356,6 @@ public class RainWaterHarvesting extends FeatureProcess {
 	@Override
 	public Map<String, Date> getAmendments() {
 		Map<String, Date> rwhAmendments = new LinkedHashMap<>();
-		rwhAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
-		rwhAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
 		return rwhAmendments;
 	}
 }
