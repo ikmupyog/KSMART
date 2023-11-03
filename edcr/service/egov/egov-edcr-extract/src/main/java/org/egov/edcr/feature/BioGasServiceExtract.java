@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.BioGas;
+import org.egov.common.entity.edcr.Measurement;
+import org.egov.edcr.entity.blackbox.MeasurementDetail;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.service.LayerNames;
 import org.egov.edcr.utility.Util;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BioGasServiceExtract extends FeatureExtract {
-    private static final Logger LOG = LogManager.getLogger(BioGasServiceExtract.class);
     
     @Autowired
     private LayerNames layerNames;
@@ -32,28 +31,51 @@ public class BioGasServiceExtract extends FeatureExtract {
     @Override
     public PlanDetail extract(PlanDetail planDetail) {
     	String layername = layerNames.getLayerName("LAYER_NAME_BIO_GAS");
+    	BioGas bioGas = new BioGas();
         if (planDetail.getDoc().containsDXFLayer(layername)) {
             List<DXFLWPolyline> bioGasPolyLine = Util.getPolyLinesByLayer(planDetail.getDoc(), layername);
             if (bioGasPolyLine != null && !bioGasPolyLine.isEmpty())
                 for (DXFLWPolyline pline : bioGasPolyLine) {
-                   BioGas bioGas = new BioGas();
-                    bioGas.setPresentInDxf(true);
-                    BigDecimal area = Util.getPolyLineArea(pline);
-                    bioGas.setArea(area);
-                    planDetail.getUtility().addBioGas(bioGas);
+                	Measurement m = new MeasurementDetail(pline, true);
+                    m.setPresentInDxf(true);
+                    bioGas.getBiogas().add(m);
                 }
 
             List<DXFCircle> bioGasPolyLineCircles = Util.getPolyCircleByLayer(planDetail.getDoc(), layername);
             if (bioGasPolyLineCircles != null && !bioGasPolyLineCircles.isEmpty())
                 for (DXFCircle dxfCircle : bioGasPolyLineCircles) {
-                    BioGas bioGas = new BioGas();
-                    bioGas.setPresentInDxf(true);
+                	Measurement m = new Measurement();
+                    m.setPresentInDxf(true);
                     double radius = dxfCircle.getRadius();
                     double area = 3.14 * radius * radius;
-                    bioGas.setArea(BigDecimal.valueOf(area));
-                    planDetail.getUtility().addBioGas(bioGas);
+                    m.setArea(BigDecimal.valueOf(area));
+                    bioGas.getBiogas().add(m);
                 }
         }
+        
+        String bioDegWastelayer = layerNames.getLayerName("LAYER_NAME_BIO_DEG_WASTE");
+        if (planDetail.getDoc().containsDXFLayer(bioDegWastelayer)) {
+            List<DXFLWPolyline> bioGasPolyLine = Util.getPolyLinesByLayer(planDetail.getDoc(), bioDegWastelayer);
+            if (bioGasPolyLine != null && !bioGasPolyLine.isEmpty())
+                for (DXFLWPolyline pline : bioGasPolyLine) {
+                	Measurement m = new MeasurementDetail(pline, true);
+                    m.setPresentInDxf(true);
+                    bioGas.getBioDegWaste().add(m);
+                }
+
+            List<DXFCircle> bioGasPolyLineCircles = Util.getPolyCircleByLayer(planDetail.getDoc(), bioDegWastelayer);
+            if (bioGasPolyLineCircles != null && !bioGasPolyLineCircles.isEmpty())
+                for (DXFCircle dxfCircle : bioGasPolyLineCircles) {
+                	Measurement m = new Measurement();
+                    m.setPresentInDxf(true);
+                    double radius = dxfCircle.getRadius();
+                    double area = 3.14 * radius * radius;
+                    m.setArea(BigDecimal.valueOf(area));
+                    bioGas.getBioDegWaste().add(m);
+                }
+        }
+        
+        planDetail.getUtility().addBioGas(bioGas);
         return planDetail;
     }
 

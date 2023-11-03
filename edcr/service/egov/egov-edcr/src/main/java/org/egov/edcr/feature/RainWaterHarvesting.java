@@ -122,9 +122,9 @@ public class RainWaterHarvesting extends FeatureProcess {
 		HashMap<String, String> errors = new HashMap<>();
 		// rain water harvest defined or not
 		if (pl != null && pl.getUtility() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
-				String occupCode = occupancyType.getType().getCode();
-				if (checkOccupancyTypeForRWH(occupancyType)) {
+			for (Occupancy occupancyType : pl.getOccupancies()) {
+				String occupCode = occupancyType.getTypeHelper().getType().getCode();
+				if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())) {
 					if (validateRWH(pl, errors))
 						break;
 				} else if ((occupCode.equals(A1) || occupCode.equals(A5))) {

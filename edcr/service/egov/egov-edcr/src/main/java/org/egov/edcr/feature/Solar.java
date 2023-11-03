@@ -47,8 +47,6 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
@@ -57,9 +55,7 @@ import static org.egov.edcr.constants.DxfFileConstants.C;
 import static org.egov.edcr.constants.DxfFileConstants.C1;
 import static org.egov.edcr.constants.DxfFileConstants.C2;
 import static org.egov.edcr.constants.DxfFileConstants.C3;
-import static org.egov.edcr.constants.DxfFileConstants.D;
-import static org.egov.edcr.constants.DxfFileConstants.D1;
-import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.D3;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
@@ -67,11 +63,14 @@ import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED_DESC;
 import static org.egov.edcr.utility.DcrConstants.SOLAR_SYSTEM;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
+import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
@@ -81,12 +80,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class Solar extends FeatureProcess {
-	private static final String SUB_RULE_109_C_DESCRIPTION = "Solar Assisted Water Heating / Lighting system ";
-	private static final String SUB_RULE_109_C = "109(C)";
 	private static final String SUB_RULE_AMD_77 = "77";
 	private static final String SUB_RULE_AMD_78 = "78";
 	private static final String SUB_RULE_AMD_77_78_DESCRIPTION = "Solar assisted water heating system and Solar Energy installations";
 	private static final BigDecimal FOURHUNDRED = BigDecimal.valueOf(400);
+	private static final BigDecimal FIVEHUNDRED = BigDecimal.valueOf(500);
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -96,7 +94,7 @@ public class Solar extends FeatureProcess {
 			if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 				for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
 					String occCode = occupancyType.getType().getCode();
-					if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null
+					if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1 && pl.getVirtualBuilding().getTotalBuitUpArea() != null
 							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FOURHUNDRED) > 0
 							&& pl.getUtility().getSolar().isEmpty()) {
 						errors.put(SOLAR_SYSTEM, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
@@ -105,9 +103,9 @@ public class Solar extends FeatureProcess {
 						break;
 					} else if ((occCode.equals(A4) || occCode.equals(A2) || occCode.equals(F3) || occCode.equals(A3)
 							|| occCode.equals(C) || occCode.equals(C1) || occCode.equals(C2) || occCode.equals(C3)
-							|| occCode.equals(D) || occCode.equals(D1) || occCode.equals(D2))
+							|| occCode.equals(D3))
 							&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
-							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(BigDecimal.valueOf(500)) > 0
+							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FIVEHUNDRED) > 0
 							&& pl.getUtility().getSolar().isEmpty()) {
 						errors.put(SOLAR_SYSTEM, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
 								new String[] { SOLAR_SYSTEM }, LocaleContextHolder.getLocale()));
@@ -131,49 +129,60 @@ public class Solar extends FeatureProcess {
 		scrutinyDetail.addColumnHeading(4, PROVIDED);
 		scrutinyDetail.addColumnHeading(5, STATUS);
 		scrutinyDetail.setKey("Common_Solar");
-		String subRule;
-		String subRuleDesc;
-		if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-			subRule = SUB_RULE_AMD_77 + ", " + SUB_RULE_AMD_78;
-			subRuleDesc = SUB_RULE_AMD_77_78_DESCRIPTION;
-			pl.getFeatureAmendments().put("Solar", AMEND_DATE_081119.toString());
-		} else {
-			subRule = SUB_RULE_109_C;
-			subRuleDesc = SUB_RULE_109_C_DESCRIPTION;
-		}
+		String subRule = SUB_RULE_AMD_77 + ", " + SUB_RULE_AMD_78;
+		String subRuleDesc = SUB_RULE_AMD_77_78_DESCRIPTION;
 		if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
 				String occCode = occupancyType.getType().getCode();
-				if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null
+				if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
 						&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FOURHUNDRED) > 0) {
 					processSolar(pl, subRule, subRuleDesc);
 					break;
 				} else if ((occCode.equals(A4) || occCode.equals(A2) || occCode.equals(F3) || occCode.equals(A3)
 						|| occCode.equals(C) || occCode.equals(C1) || occCode.equals(C2) || occCode.equals(C3)
-						|| occCode.equals(D) || occCode.equals(D1) || occCode.equals(D2))
+						|| occCode.equals(D3))
 						&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
-						&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(BigDecimal.valueOf(500)) > 0) {
+						&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FIVEHUNDRED) > 0) {
 					processSolar(pl, subRule, subRuleDesc);
 					break;
 				}
 			}
 		}
+		processSloarArea(pl);
 		return pl;
 	}
 
 	private void processSolar(Plan pl, String subRule, String subRuleDesc) {
 		if (!pl.getUtility().getSolar().isEmpty()) {
-			setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc, "", OBJECTDEFINED_DESC,
+			setReportOutputDetails(pl, subRule, subRuleDesc, "", OBJECTDEFINED_DESC,
 					Result.Accepted.getResultVal());
 			return;
 		} else {
-			setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc, "", OBJECTNOTDEFINED_DESC,
+			setReportOutputDetails(pl, subRule, subRuleDesc, "", OBJECTNOTDEFINED_DESC,
 					Result.Not_Accepted.getResultVal());
 			return;
 		}
 	}
 
-	private void setReportOutputDetailsWithoutOccupancy(Plan pl, String ruleNo, String ruleDesc, String expected,
+	private void processSloarArea(Plan pl) {
+		if(pl.getVirtualBuilding().getTotalCoverageArea() != null && !pl.getUtility().getSolar().isEmpty()) {
+			String subRule = SUB_RULE_AMD_77 + ", " + SUB_RULE_AMD_78;
+			String subRuleDesc = SUB_RULE_AMD_77_78_DESCRIPTION;
+			BigDecimal solarArea = pl.getUtility().getSolar().stream().map(Measurement::getArea)
+					.collect(Collectors.toList()).stream().reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+			BigDecimal coveredArea = pl.getVirtualBuilding().getTotalCoverageArea();
+			BigDecimal requiredArea = coveredArea.multiply(BigDecimal.valueOf(0.005)).setScale(2, RoundingMode.HALF_UP);
+			if(solarArea.compareTo(requiredArea) >= 0) {
+				setReportOutputDetails(pl, subRule, subRuleDesc, String.valueOf(requiredArea), String.valueOf(solarArea),
+						Result.Accepted.getResultVal());
+			} else {
+				setReportOutputDetails(pl, subRule, subRuleDesc, String.valueOf(requiredArea), String.valueOf(solarArea),
+						Result.Not_Accepted.getResultVal());
+			}
+		}
+	}
+	
+	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String expected,
 			String actual, String status) {
 		Map<String, String> details = new HashMap<>();
 		details.put(RULE_NO, ruleNo);
@@ -188,7 +197,6 @@ public class Solar extends FeatureProcess {
 	@Override
 	public Map<String, Date> getAmendments() {
 		Map<String, Date> solarAmendments = new ConcurrentHashMap<>();
-		solarAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
 		return solarAmendments;
 	}
 }

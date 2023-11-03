@@ -64,8 +64,7 @@ public class WasteDisposalExtract extends FeatureExtract {
     public PlanDetail validate(PlanDetail pl) {
         HashMap<String, String> errors = new HashMap<>();
         // waste disposal defined or not
-        if (pl.getUtility() != null && pl.getUtility().getLiquidWasteTreatementPlant().isEmpty()
-                && pl.getUtility().getWasteDisposalUnits().isEmpty()) {
+        if (pl.getUtility().getWasteDisposalUnits().isEmpty()) {
             errors.put(WASTEDISPOSAL,
                     edcrMessageSource.getMessage(OBJECTNOTDEFINED,
                             new String[] { WASTEDISPOSAL }, LocaleContextHolder.getLocale()));

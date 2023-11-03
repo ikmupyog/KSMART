@@ -48,8 +48,6 @@
 package org.egov.edcr.feature;
 
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
-import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.utility.DcrConstants.IN_METER_SQR;
 
 import java.math.BigDecimal;
@@ -60,8 +58,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
@@ -71,7 +67,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SepticTank extends FeatureProcess {
 
-	private static final Logger LOG = LogManager.getLogger(SepticTank.class);
     private static final String SUB_RULE_79_2_DESCRIPTION = "Minimum area of septic tank";
     private static final String SUB_RULE_79_2 = "79(2)";
     private static final BigDecimal HUNDRED = BigDecimal.valueOf(100);
@@ -82,56 +77,49 @@ public class SepticTank extends FeatureProcess {
 
 	@Override
 	public Plan validate(Plan pl) {
-		List<String> occupancyTypes = pl.getVirtualBuilding().getOccupancyTypes().stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-		if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())) && occupancyTypes.size() == 1
-				&& occupancyTypes.contains(A1)) {
-            HashMap<String, String> errors = new HashMap<>();
-            if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
-                    && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
-                    && pl.getSepticTanks().isEmpty()) {
-                errors.put(SUB_RULE_79_2, getLocaleMessage(OBJECT_NOT_DEFINED, "Septic tank"));
-                pl.addErrors(errors);
-            }
+		HashMap<String, String> errors = new HashMap<>();
+        if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
+                && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
+                && pl.getSepticTanks().isEmpty()) {
+            errors.put(SUB_RULE_79_2, getLocaleMessage(OBJECT_NOT_DEFINED, "Septic tank"));
+            pl.addErrors(errors);
         }
         return pl;
     }
 
 	@Override
 	public Plan process(Plan pl) {
-		List<String> occupancyTypes = pl.getVirtualBuilding().getOccupancyTypes().stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-		if (occupancyTypes.size() == 1 && occupancyTypes.contains(A1)
-				&& AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
-            validate(pl);
-            scrutinyDetail = new ScrutinyDetail();
-            scrutinyDetail.addColumnHeading(1, RULE_NO);
-            scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-            scrutinyDetail.addColumnHeading(3, REQUIRED);
-            scrutinyDetail.addColumnHeading(4, PROVIDED);
-            scrutinyDetail.addColumnHeading(5, STATUS);
-            scrutinyDetail.setKey("Common_Septic Tank");
-            String subRule = SUB_RULE_79_2;
-            String subRuleDesc = SUB_RULE_79_2_DESCRIPTION;
-            pl.getFeatureAmendments().put("Septic Tank", AMEND_DATE_081119.toString());
-            if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
-                    && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
-                    && !pl.getSepticTanks().isEmpty()) {
-                List<BigDecimal> collect = pl.getSepticTanks().stream().filter(
-                        septicTank -> Util.roundOffTwoDecimal(septicTank.getArea()).compareTo(ONE_POINTFIVE) >= 0)
-                        .map(org.egov.common.entity.edcr.SepticTank::getArea).collect(Collectors.toList());
+        validate(pl);
+        scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail.addColumnHeading(1, RULE_NO);
+        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+        scrutinyDetail.addColumnHeading(3, REQUIRED);
+        scrutinyDetail.addColumnHeading(4, PROVIDED);
+        scrutinyDetail.addColumnHeading(5, STATUS);
+        scrutinyDetail.setKey("Common_Septic Tank");
+        String subRule = SUB_RULE_79_2;
+        String subRuleDesc = SUB_RULE_79_2_DESCRIPTION;
+        pl.getFeatureAmendments().put("Septic Tank", AMEND_DATE_081119.toString());
+        if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
+                && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
+                && !pl.getSepticTanks().isEmpty()) {
+            List<BigDecimal> collect = pl.getSepticTanks().stream().filter(
+                    septicTank -> Util.roundOffTwoDecimal(septicTank.getArea()).compareTo(ONE_POINTFIVE) >= 0)
+                    .map(org.egov.common.entity.edcr.SepticTank::getArea).collect(Collectors.toList());
 
-                if (!collect.isEmpty()) {
-                    setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
-                            ONE_POINTFIVE.toString() + IN_METER_SQR,
-                            collect.size() == 1 ? collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE
-                                    : collect.size() + SEPTIC_TANK_AREA_DESC_MULTIPLE,
-                            Result.Accepted.getResultVal());
-                } else {
-                    setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
-                            ONE_POINTFIVE.toString() + IN_METER_SQR, collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE,
-                            Result.Not_Accepted.getResultVal());
-                }
+            if (!collect.isEmpty()) {
+                setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
+                        ONE_POINTFIVE.toString() + IN_METER_SQR,
+                        collect.size() == 1 ? collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE
+                                : collect.size() + SEPTIC_TANK_AREA_DESC_MULTIPLE,
+                        Result.Accepted.getResultVal());
+            } else {
+                setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
+                        ONE_POINTFIVE.toString() + IN_METER_SQR, collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE,
+                        Result.Not_Accepted.getResultVal());
             }
         }
+    
 
         return pl;
     }
@@ -151,7 +139,6 @@ public class SepticTank extends FeatureProcess {
 	@Override
 	public Map<String, Date> getAmendments() {
         Map<String, Date> septicTankAmend = new ConcurrentHashMap<>();
-        septicTankAmend.put(AMEND_NOV19, AMEND_DATE_081119);
         return septicTankAmend;
     }
 
