@@ -1,0 +1,7 @@
+--ALTER TABLE IF EXISTS public.eg_marriage_document
+--    ADD COLUMN IF NOT EXISTS  bride_age_proof character varying(64),
+--     ADD COLUMN IF NOT EXISTS  groom_age_proof character varying(64);
+--
+--ALTER TABLE IF EXISTS public.eg_marriage_document_audit
+--    ADD COLUMN IF NOT EXISTS  bride_age_proof character varying(64),
+--     ADD COLUMN IF NOT EXISTS  groom_age_proof character varying(64);

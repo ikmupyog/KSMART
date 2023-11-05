@@ -1,0 +1,34 @@
+alter table eg_marriage_details drop column IF EXISTS domcorreflag ;
+alter table eg_marriage_details drop column IF EXISTS placeidcorrflag ;
+alter table eg_marriage_details drop column IF EXISTS groomnamecorreflag ;
+alter table eg_marriage_details drop column IF EXISTS bridenamecorreflag ;
+alter table eg_marriage_details drop column IF EXISTS groomagecorreflag ;
+alter table eg_marriage_details drop column IF EXISTS brideagecorreflag ;
+alter table eg_marriage_details drop column IF EXISTS groomdobcorreflag ;
+alter table eg_marriage_details drop column IF EXISTS bridedobcorreflag ;
+alter table eg_marriage_details drop column IF EXISTS groompermanentaddrcorreflag ;
+alter table eg_marriage_details drop column IF EXISTS bridepermanentaddrcorreflag ;
+alter table eg_marriage_details drop column IF EXISTS groommothercorreflag ;
+alter table eg_marriage_details drop column IF EXISTS bridemothercorreflag ;
+alter table eg_marriage_details drop column IF EXISTS groomfathercorreflag ;
+alter table eg_marriage_details drop column IF EXISTS bridefathercorreflag ;
+alter table eg_marriage_details drop column IF EXISTS groomguardiancorreflag ;
+alter table eg_marriage_details drop column IF EXISTS brideguardiancorreflag ;
+
+alter table eg_marriage_details_audit drop column IF EXISTS domcorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS placeidcorrflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groomnamecorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS bridenamecorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groomagecorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS brideagecorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groomdobcorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS bridedobcorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groompermanentaddrcorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS bridepermanentaddrcorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groommothercorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS bridemothercorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groomfathercorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS bridefathercorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS groomguardiancorreflag ;
+alter table eg_marriage_details_audit drop column IF EXISTS brideguardiancorreflag ;
+
