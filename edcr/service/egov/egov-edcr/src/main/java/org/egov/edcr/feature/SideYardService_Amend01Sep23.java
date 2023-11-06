@@ -467,7 +467,10 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                 mostRestrictiveOccupancy.getType().getCode().equals(A3) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(A4) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(A5) ||
-                mostRestrictiveOccupancy.getType().getCode().equals(F) || mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
+                mostRestrictiveOccupancy.getType().getCode().equals(F) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F1) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F2) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
 
             if (plot.getArea().compareTo(SITEAREA_125) <= 0) {
                 subRule = RULE_26_4 + ", " + RULE_50_2;
@@ -478,7 +481,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
             } else {
                 subRule = RULE_26_4;
                 side2val = SIDEVALUE_ONE;
-                side1val = SIDEVALUE_ONE_TWO;
+                side1val = SIDEVALUE_ONE;
                 side2Meanval = side2val;
                 side1Meanval = side1val;
             }
@@ -773,7 +776,10 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                 mostRestrictiveOccupancy.getType().getCode().equals(A3) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(A4) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(A5) ||
-                mostRestrictiveOccupancy.getType().getCode().equals(F) || mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
+                mostRestrictiveOccupancy.getType().getCode().equals(F) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F1) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F2) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
 
         	
             // Plot area less than or equal to 125

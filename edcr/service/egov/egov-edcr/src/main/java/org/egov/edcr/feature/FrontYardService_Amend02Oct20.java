@@ -543,6 +543,8 @@ public class FrontYardService_Amend02Oct20 extends GeneralRule {
                 mostRestrictiveOccupancy.getType().getCode().equals(A4) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(A5) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(F) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F1) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F2) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
             processFrontYardForOccupancyA1A2FWithHightGtThanTenMtrs(setback, buildingHeight, pl, mostRestrictiveOccupancy,
                     blockName, level, plot, frontYardFieldName,

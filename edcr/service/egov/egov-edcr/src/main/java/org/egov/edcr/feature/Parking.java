@@ -110,7 +110,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class Parking extends FeatureProcess {
 
-	private static final String MINIMUM_REQUIRED_AREA_30_M = "Minimum required area <= 30 m²";
+	private static final String MINIMUM_REQUIRED_AREA_30_M = "Minimum required area >= 30 m²";
 
 	private static final int THOUSAND_200 = 1200;
 
@@ -657,7 +657,7 @@ public class Parking extends FeatureProcess {
 		int validDimension = 0;
 		for (Measurement measurement : pl.getParkingDetails().getLoadUnload()) {
 			count++;
-			if(measurement.getArea().doubleValue() > 30)
+			if(measurement.getArea().doubleValue() >= 30)
 				valid++;
 			if(measurement.getMinimumSide().doubleValue() >= 2.7)
 				validDimension++;
@@ -666,7 +666,7 @@ public class Parking extends FeatureProcess {
 		
 		if (pl.getParkingDetails().getLoadUnload().isEmpty()) {
 			HashMap<String, String> errors = new HashMap<>();
-			errors.put(DcrConstants.RULE34,
+			errors.put(SUB_RULE_29_7,
 					getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.LOAD_UNLOAD_AREA));
 			pl.addErrors(errors);
 		} else if (valid < count) {
@@ -686,27 +686,25 @@ public class Parking extends FeatureProcess {
 						"Out of " + count + PARKING + (count-validDimension) + PARKING_VIOLATED_MINIMUM_AREA, Result.Not_Accepted.getResultVal());
 		}
 		
-		BigDecimal totalBuiltuptArea = BigDecimal.ZERO;
-		for (Occupancy occupancy : occupancies) {
-			totalBuiltuptArea = totalBuiltuptArea
-					.add(occupancy.getFloorArea() == null ? BigDecimal.ZERO : occupancy.getFloorArea());
-		}
-		if (count > 0) {
-			double requiredArea = Math.ceil(((totalBuiltuptArea.doubleValue() - 700) / 1000) * 30);
-			HashMap<String, String> errors = new HashMap<>();
-			if (pl.getParkingDetails().getLoadUnload().isEmpty()) {
-				errors.put(DcrConstants.RULE34,
-						getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.LOAD_UNLOAD_AREA));
-				pl.addErrors(errors);
-			} else if (providedArea < requiredArea) {
-				setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC, String.valueOf(requiredArea),
-						String.valueOf(providedArea), Result.Not_Accepted.getResultVal());
-			} else {
-				setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC, String.valueOf(requiredArea),
-						String.valueOf(providedArea), Result.Accepted.getResultVal());
-			}
-			
-		}
+		/*
+		 * BigDecimal totalFloorArea = BigDecimal.ZERO; for (Occupancy occupancy :
+		 * occupancies) { totalFloorArea = totalFloorArea .add(occupancy.getFloorArea()
+		 * == null ? BigDecimal.ZERO : occupancy.getFloorArea()); } if (count > 0) {
+		 * double requiredArea = Math.ceil(((totalFloorArea.doubleValue() - 700) / 1000)
+		 * * 30); HashMap<String, String> errors = new HashMap<>(); if
+		 * (pl.getParkingDetails().getLoadUnload().isEmpty()) {
+		 * errors.put(DcrConstants.RULE34,
+		 * getLocaleMessage(DcrConstants.OBJECTNOTDEFINED,
+		 * DcrConstants.LOAD_UNLOAD_AREA)); pl.addErrors(errors); } else if
+		 * (providedArea < requiredArea) { setReportOutputDetails(pl, SUB_RULE_29_7,
+		 * LOADING_UNLOADING_DESC, String.valueOf(requiredArea),
+		 * String.valueOf(providedArea), Result.Not_Accepted.getResultVal()); } else {
+		 * setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC,
+		 * String.valueOf(requiredArea), String.valueOf(providedArea),
+		 * Result.Accepted.getResultVal()); }
+		 * 
+		 * }
+		 */
 	}
 
 	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String expected, String actual,
@@ -874,6 +872,14 @@ public class Parking extends FeatureProcess {
 			else
 				failedCount++;
 		}
+		for (Measurement daParkingSlot : pl.getParkingDetails().getDisabledPersons()) {
+			if (daParkingSlot.getHeight().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_HEIGHT
+					&& daParkingSlot.getWidth().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_WIDTH
+					&& daParkingSlot.getWidth().setScale(2, RoundingMode.UP).doubleValue() < DA_PARKING_SLOT_WIDTH) {
+				success++;
+				parkingCount++;
+			}
+		}
 		pl.getParkingDetails().setValidCarParkingSlots(parkingCount - failedCount);
 		if (parkingCount > 0)
 			if (failedCount > 0) {
@@ -905,8 +911,14 @@ public class Parking extends FeatureProcess {
 			if (daParkingSlot.getWidth().setScale(2, RoundingMode.UP).doubleValue() >= DA_PARKING_SLOT_WIDTH
 					&& daParkingSlot.getHeight().setScale(2, RoundingMode.UP).doubleValue() >= DA_PARKING_SLOT_HEIGHT)
 				success++;
-			else
+			else {
+				if (daParkingSlot.getHeight().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_HEIGHT
+					&& daParkingSlot.getWidth().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_WIDTH)
+					planDetail.getParkingDetails().setValidCarParkingSlots(planDetail.getParkingDetails().getValidCarParkingSlots() + 1);
+					
 				daFailedCount++;
+				
+			}
 		}
 		planDetail.getParkingDetails().setValidDAParkingSlots(daParkingCount - daFailedCount);
 		if (daParkingCount > 0)

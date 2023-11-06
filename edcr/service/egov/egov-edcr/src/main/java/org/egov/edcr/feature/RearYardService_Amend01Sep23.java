@@ -22,7 +22,6 @@ import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
 import static org.egov.edcr.constants.DxfFileConstants.H;
@@ -416,6 +415,9 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 
 		if (mostRestrictiveOccupancy.getType().getCode().equals(A1)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A2)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(F)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(F1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(F2)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(F3)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A3)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A4)
