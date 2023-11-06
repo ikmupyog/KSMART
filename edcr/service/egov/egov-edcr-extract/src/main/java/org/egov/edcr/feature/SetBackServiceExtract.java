@@ -4,17 +4,15 @@ import static org.egov.edcr.utility.DcrConstants.MORETHANONEPOLYLINEDEFINED;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.SetBack;
-import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.entity.blackbox.YardDetail;
 import org.egov.edcr.service.LayerNames;
@@ -109,21 +107,24 @@ public class SetBackServiceExtract extends FeatureExtract {
             YardDetail yard = getYard(pl, doc, yardName, setBack.getLevel());
             if (yard != null && yard.getPolyLine() != null) {
                 setBack.setSideYard2(yard);
-                if (pl.getDrawingPreference() != null &&
-                        org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom())
-                        && (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom())
-                                || DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()))) {
-                    List<BigDecimal> yardWidthDistance = Util.getListOfDimensionByColourCode(pl, yardName,
-                            DxfFileConstants.YARD_DIMENSION_COLOR);
-                    if (!yardWidthDistance.isEmpty()) {
-                        yard.setMinimumDistance(Collections.min(yardWidthDistance));
-                    } else {
-                        pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE, yardName));
-                    }
-                } else {
-                    yard.setMinimumDistance(
-                            minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
-                }
+				/*
+				 * if (pl.getDrawingPreference() != null &&
+				 * org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom(
+				 * )) &&
+				 * (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom(
+				 * )) ||
+				 * DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()
+				 * ))) { List<BigDecimal> yardWidthDistance =
+				 * Util.getListOfDimensionByColourCode(pl, yardName,
+				 * DxfFileConstants.YARD_DIMENSION_COLOR); if (!yardWidthDistance.isEmpty()) {
+				 * yard.setMinimumDistance(Collections.min(yardWidthDistance)); } else {
+				 * pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE,
+				 * yardName)); } } else { yard.setMinimumDistance(
+				 * minDistance.getYardMinDistance(pl, yardName,
+				 * String.valueOf(setBack.getLevel()), doc)); }
+				 */
+                yard.setMinimumDistance(
+                        minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
                 setYardHeight(doc, yardName, yard);
             }
         }
@@ -187,21 +188,24 @@ public class SetBackServiceExtract extends FeatureExtract {
             YardDetail sideYard1 = getYard(pl, doc, yardName, setBack.getLevel());
             if (sideYard1 != null && sideYard1.getPolyLine() != null) {
                 setBack.setSideYard1(sideYard1);
-                if (pl.getDrawingPreference() != null &&
-                        org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom())
-                        && (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom())
-                                || DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()))) {
-                    List<BigDecimal> yardWidthDistance = Util.getListOfDimensionByColourCode(pl, yardName,
-                            DxfFileConstants.YARD_DIMENSION_COLOR);
-                    if (!yardWidthDistance.isEmpty()) {
-                        sideYard1.setMinimumDistance(Collections.min(yardWidthDistance));
-                    } else {
-                        pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE, yardName));
-                    }
-                } else {
-                    sideYard1.setMinimumDistance(
-                            minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
-                }
+				/*
+				 * if (pl.getDrawingPreference() != null &&
+				 * org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom(
+				 * )) &&
+				 * (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom(
+				 * )) ||
+				 * DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()
+				 * ))) { List<BigDecimal> yardWidthDistance =
+				 * Util.getListOfDimensionByColourCode(pl, yardName,
+				 * DxfFileConstants.YARD_DIMENSION_COLOR); if (!yardWidthDistance.isEmpty()) {
+				 * sideYard1.setMinimumDistance(Collections.min(yardWidthDistance)); } else {
+				 * pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE,
+				 * yardName)); } } else { sideYard1.setMinimumDistance(
+				 * minDistance.getYardMinDistance(pl, yardName,
+				 * String.valueOf(setBack.getLevel()), doc)); }
+				 */
+                sideYard1.setMinimumDistance(
+                        minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
                 setYardHeight(doc, yardName, sideYard1);
             } 
         }
@@ -218,21 +222,24 @@ public class SetBackServiceExtract extends FeatureExtract {
             YardDetail rearYard = getYard(pl, doc, yardName, setBack.getLevel());
             if (rearYard != null && rearYard.getPolyLine() != null) {
                 setBack.setRearYard(rearYard);
-                if (pl.getDrawingPreference() != null &&
-                        org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom())
-                        && (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom())
-                                || DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()))) {
-                    List<BigDecimal> yardWidthDistance = Util.getListOfDimensionByColourCode(pl, yardName,
-                            DxfFileConstants.YARD_DIMENSION_COLOR);
-                    if (!yardWidthDistance.isEmpty()) {
-                        rearYard.setMinimumDistance(Collections.min(yardWidthDistance));
-                    } else {
-                        pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE, yardName));
-                    }
-                } else {
-                    rearYard.setMinimumDistance(
-                            minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
-                }
+				/*
+				 * if (pl.getDrawingPreference() != null &&
+				 * org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom(
+				 * )) &&
+				 * (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom(
+				 * )) ||
+				 * DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()
+				 * ))) { List<BigDecimal> yardWidthDistance =
+				 * Util.getListOfDimensionByColourCode(pl, yardName,
+				 * DxfFileConstants.YARD_DIMENSION_COLOR); if (!yardWidthDistance.isEmpty()) {
+				 * rearYard.setMinimumDistance(Collections.min(yardWidthDistance)); } else {
+				 * pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE,
+				 * yardName)); } } else { rearYard.setMinimumDistance(
+				 * minDistance.getYardMinDistance(pl, yardName,
+				 * String.valueOf(setBack.getLevel()), doc)); }
+				 */
+                rearYard.setMinimumDistance(
+                        minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
                 setYardHeight(doc, yardName, rearYard);
             }
         }
@@ -244,21 +251,24 @@ public class SetBackServiceExtract extends FeatureExtract {
             YardDetail frontYard = getYard(pl, doc, yardName, setBack.getLevel());
             if (frontYard != null && frontYard.getPolyLine() != null) {
                 setBack.setFrontYard(frontYard);
-                if (pl.getDrawingPreference() != null &&
-                        org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom())
-                        && (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom())
-                                || DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()))) {
-                    List<BigDecimal> yardWidthDistance = Util.getListOfDimensionByColourCode(pl, yardName,
-                            DxfFileConstants.YARD_DIMENSION_COLOR);
-                    if (!yardWidthDistance.isEmpty()) {
-                        frontYard.setMinimumDistance(Collections.min(yardWidthDistance));
-                    } else {
-                        pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE, yardName));
-                    }
-                } else {
-                    frontYard.setMinimumDistance(
-                            minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
-                }
+				/*
+				 * if (pl.getDrawingPreference() != null &&
+				 * org.egov.infra.utils.StringUtils.isNotBlank(pl.getDrawingPreference().getUom(
+				 * )) &&
+				 * (DxfFileConstants.INCH_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom(
+				 * )) ||
+				 * DxfFileConstants.FEET_UOM.equalsIgnoreCase(pl.getDrawingPreference().getUom()
+				 * ))) { List<BigDecimal> yardWidthDistance =
+				 * Util.getListOfDimensionByColourCode(pl, yardName,
+				 * DxfFileConstants.YARD_DIMENSION_COLOR); if (!yardWidthDistance.isEmpty()) {
+				 * frontYard.setMinimumDistance(Collections.min(yardWidthDistance)); } else {
+				 * pl.addError(yardName + "_MIN_DISTANCE", String.format(ERR_MIN_DISTANCE,
+				 * yardName)); } } else { frontYard.setMinimumDistance(
+				 * minDistance.getYardMinDistance(pl, yardName,
+				 * String.valueOf(setBack.getLevel()), doc)); }
+				 */
+                frontYard.setMinimumDistance(
+                        minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
                 setYardHeight(doc, yardName, frontYard);
             } else
                 yardNotDefined(pl, yardName);

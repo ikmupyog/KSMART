@@ -249,7 +249,7 @@ public class PlanService {
             }
 
             if (plan.getErrors().containsKey("msg.error.occ.invalid")
-                    || plan.getErrors().containsKey("units not in meters"))
+                    || plan.getErrors().containsKey("units not in meters") || plan.getErrors().containsKey(DxfFileConstants.OCCUPANCY_ALLOWED))
                 return plan;
         }
         LOG.info("Applied rules.");

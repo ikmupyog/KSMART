@@ -40,8 +40,7 @@ public class BioGasService extends FeatureProcess {
 		HashMap<String, String> errors = new HashMap<>();
 		if ((occupancyTypes.contains(A1) || occupancyTypes.contains(A4) || occupancyTypes.contains(A5))
 				&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
-				&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREE_HUNDRED) > 0
-				&& pl.getVirtualBuilding().getResidentialBuilding()) {
+				&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREE_HUNDRED) > 0) {
 			if (pl.getUtility().getBioGases().isEmpty() || (!pl.getUtility().getBioGases().isEmpty()
 					&& pl.getUtility().getBioGases().get(0).getBiogas().isEmpty())) {
 				errors.put(SUB_RULE_79_3, getLocaleMessage(OBJECT_NOT_DEFINED, "Biogas"));
