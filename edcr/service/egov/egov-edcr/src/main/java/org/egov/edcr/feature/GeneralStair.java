@@ -38,13 +38,16 @@ public class GeneralStair extends FeatureProcess {
     private static final String WIDTH_DESCRIPTION = "Minimum width for general stair %s";
     private static final String TREAD_DESCRIPTION = "Minimum tread for general stair %s";
     private static final String HEIGHT_FLOOR_DESCRIPTION = "Height of floor in layer ";
-    private static final String RULE39 = "39";
-    private static final String RULE112_1 = "112(1)";
     private static final String FLOOR = "Floor";
     private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "Flight polyline is not defined in layer ";
     private static final String FLIGHT_LENGTH_DEFINED_DESCRIPTION = "Flight polyline length is not defined in layer ";
     private static final String FLIGHT_WIDTH_DEFINED_DESCRIPTION = "Flight polyline width is not defined in layer ";
     private static final String LINE_DESCRIPTION = "Minimum length of line for general stair %s flight layer";
+    private static final String RULE35_1_5 = "39(1)(5)";
+    private static final String RULE_35_1_3a = "35(1)(3a)";
+    private static final String RULE_35_1_3b = "35(1)(3b)";
+    private static final String RULE_35_1_3c = "35(1)(3c)";
+    private static final String RULE_35_1_3d = "35(1)(3d)";
     
     @Autowired
     private LayerNames layerNames;
@@ -60,10 +63,10 @@ public class GeneralStair extends FeatureProcess {
         HashMap<String, String> errors = new HashMap<>();
         blk: for (Block block : pl.getBlocks()) {
             if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                if (Util.checkExemptionConditionForBuildingParts(block) ||
-                        Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block)) {
-                    continue blk;
-                }
+				if (block.getBuilding() != null && block.getBuilding().getFloorsAboveGround() != null
+						&& block.getBuilding().getFloorsAboveGround().intValue() <= 1) {
+					continue blk;
+				}
 
                 ScrutinyDetail scrutinyDetail2 = new ScrutinyDetail();
                 scrutinyDetail2.addColumnHeading(1, RULE_NO);
@@ -163,10 +166,10 @@ public class GeneralStair extends FeatureProcess {
                                         : " floor " + floor.getNumber();
 
                                 if (valid) {
-                                    setReportOutputDetailsFloorWise(pl, RULE112_1, value, String.valueOf(2),
+                                    setReportOutputDetailsFloorWise(pl, RULE35_1_5, value, String.valueOf(2),
                                             String.valueOf(size), Result.Accepted.getResultVal(), scrutinyDetail7);
                                 } else {
-                                    setReportOutputDetailsFloorWise(pl, RULE112_1, value, String.valueOf(2),
+                                    setReportOutputDetailsFloorWise(pl, RULE35_1_5, value, String.valueOf(2),
                                             String.valueOf(size), Result.Not_Accepted.getResultVal(), scrutinyDetail7);
                                 }
                             }
@@ -205,12 +208,12 @@ public class GeneralStair extends FeatureProcess {
                                                     : " floor " + floor.getNumber();
 
                                             if (valid) {
-                                                setReportOutputDetailsFloorStairWise(pl, RULE39, value,
+                                                setReportOutputDetailsFloorStairWise(pl, RULE_35_1_3a, value,
                                                         String.format(LINE_DESCRIPTION, generalStair.getNumber()),
                                                         EXPECTED_LINE_LENGTH, String.valueOf(lineLength),
                                                         Result.Accepted.getResultVal(), scrutinyDetail6);
                                             } else {
-                                                setReportOutputDetailsFloorStairWise(pl, RULE39, value,
+                                                setReportOutputDetailsFloorStairWise(pl, RULE_35_1_3a, value,
                                                         String.format(LINE_DESCRIPTION, generalStair.getNumber()),
                                                         EXPECTED_LINE_LENGTH, String.valueOf(lineLength),
                                                         Result.Not_Accepted.getResultVal(), scrutinyDetail6);
@@ -241,12 +244,12 @@ public class GeneralStair extends FeatureProcess {
                                                     : " floor " + floor.getNumber();
 
                                             if (valid) {
-                                                setReportOutputDetailsFloorStairWise(pl, RULE39, value,
+                                                setReportOutputDetailsFloorStairWise(pl, RULE_35_1_3a, value,
                                                         String.format(WIDTH_DESCRIPTION, generalStair.getNumber()),
                                                         EXPECTED_WIDTH, String.valueOf(minWidth),
                                                         Result.Not_Accepted.getResultVal(), scrutinyDetail2);
                                             } else {
-                                                setReportOutputDetailsFloorStairWise(pl, RULE39, value,
+                                                setReportOutputDetailsFloorStairWise(pl, RULE_35_1_3a, value,
                                                         String.format(WIDTH_DESCRIPTION, generalStair.getNumber()),
                                                         EXPECTED_WIDTH, String.valueOf(minWidth), Result.Accepted.getResultVal(),
                                                         scrutinyDetail2);
@@ -298,12 +301,12 @@ public class GeneralStair extends FeatureProcess {
                                                             : " floor " + floor.getNumber();
 
                                                     if (valid) {
-                                                        setReportOutputDetailsFloorStairWise(pl, RULE39, value,
+                                                        setReportOutputDetailsFloorStairWise(pl, RULE_35_1_3b, value,
                                                                 String.format(TREAD_DESCRIPTION, generalStair.getNumber()),
                                                                 EXPECTED_TREAD, String.valueOf(minTread),
                                                                 Result.Accepted.getResultVal(), scrutinyDetail3);
                                                     } else {
-                                                        setReportOutputDetailsFloorStairWise(pl, RULE39, value,
+                                                        setReportOutputDetailsFloorStairWise(pl, RULE_35_1_3b, value,
                                                                 String.format(TREAD_DESCRIPTION, generalStair.getNumber()),
                                                                 EXPECTED_TREAD, String.valueOf(minTread),
                                                                 Result.Not_Accepted.getResultVal(), scrutinyDetail3);
@@ -338,13 +341,13 @@ public class GeneralStair extends FeatureProcess {
                     }
                 }
 
-                if (floorSize > 4) {
+                if (floorSize > 3) {
                     if (noOfFireStair.add(generalStairCount)
                             .compareTo(Util.roundOffTwoDecimal(BigDecimal.valueOf(2))) >= 0) {
-                        setReportOutputDetails(pl, RULE39, String.format(RULE39, block.getNumber()), "",
+                        setReportOutputDetails(pl, RULE35_1_5, String.format(RULE35_1_5, block.getNumber()), "",
                                 DcrConstants.OBJECTDEFINED_DESC, Result.Accepted.getResultVal(), scrutinyDetail4);
                     } else {
-                        setReportOutputDetails(pl, RULE39, String.format(RULE39, block.getNumber()),
+                        setReportOutputDetails(pl, RULE35_1_5, String.format(RULE35_1_5, block.getNumber()),
                                 "Minimum 2 General stair required",
                                 DcrConstants.OBJECTNOTDEFINED_DESC, Result.Not_Accepted.getResultVal(), scrutinyDetail4);
                     }

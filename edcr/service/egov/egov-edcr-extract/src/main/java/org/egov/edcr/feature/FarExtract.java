@@ -874,7 +874,7 @@ public class FarExtract extends FeatureExtract {
                     List<DXFLine> fireStairLines = Util.getLinesByLayer(doc, flightLayerNamePattern);
 					fireStair.setLines(fireStairLines);
 					String landingNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_FIRESTAIR_LANDING"),
-							block.getNumber(), floor.getNumber(), stairNo, "+\\d");
+							block.getNumber(), floor.getNumber(), stairNo);
 
 					addStairLanding(pl, landingNamePattern, fireStair);
 
@@ -1062,7 +1062,7 @@ public class FarExtract extends FeatureExtract {
 					addFlight(pl, flightLayerNamePattern, generalStair, highRise);
 
 					String landingNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_STAIR_LANDING"),
-							block.getNumber(), floor.getNumber(), stairNo, "+\\d");
+							block.getNumber(), floor.getNumber(), stairNo);
 
 					addStairLanding(pl, landingNamePattern, generalStair);
 
