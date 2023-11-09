@@ -56,6 +56,7 @@ public class SanityHelper implements Serializable {
     private static final long serialVersionUID = 55L;
     public Double maleWc = 0d;
     public Double femaleWc = 0d;
+    public Double commonWc = 0d;
     public Double urinal = 0d;
     public Double commonUrinal=0d;
     public Double maleWash = 0d;
