@@ -83,7 +83,10 @@ public class SanitationExtract extends FeatureExtract {
                     if (!polyLinesByLayer.isEmpty())
                         for (DXFLWPolyline pline : polyLinesByLayer) {
                             Measurement m = new MeasurementDetail(pline, true);
-                            f.getSpecialWaterClosets().add(m);
+                            if (pline.getColor() == subFeaturesColor.get(COLOR_KEY_MALE_OR_FEMALE_VISITORS_WATER_CLOSET))
+								f.getCommonVisitorSpecialWaterClosets().add(m);
+							else
+								f.getSpecialWaterClosets().add(m);
                         }
                 }
 
@@ -105,11 +108,28 @@ public class SanitationExtract extends FeatureExtract {
                             m.setArea(BigDecimal.valueOf(area));
                             m.setLength(BigDecimal.valueOf(dxfCircle.getLength()));
                             m.setPresentInDxf(true);
-                            f.getWashBasins().add(m); 
-                        }
+							if (m.getColorCode() == subFeaturesColor.get(COLOR_KEY_MALE_VISITORS_WATER_CLOSET)
+									.intValue())
+								f.getMaleVisitorWashBasins().add(m);
+							else if (m.getColorCode() == subFeaturesColor.get(COLOR_KEY_FEMALE_VISITORS_WATER_CLOSET)
+									.intValue())
+								f.getFemaleVisitorWashBasins().add(m);
+							else if (m.getColorCode() == subFeaturesColor.get(COLOR_KEY_MALE_OR_FEMALE_VISITORS_WATER_CLOSET)
+									.intValue())
+								f.getVisitorCommonWashBasins().add(m);
+							else
+								f.getWashBasins().add(m);
+						}
                     } else if (!polyLinesByLayer.isEmpty())
                         for (DXFLWPolyline pline : polyLinesByLayer) {
                             Measurement m = new MeasurementDetail(pline, true);
+                            if (pline.getColor() == subFeaturesColor.get(COLOR_KEY_MALE_VISITORS_WATER_CLOSET))
+								f.getMaleVisitorWashBasins().add(m);
+							else if (pline.getColor() == subFeaturesColor.get(COLOR_KEY_FEMALE_VISITORS_WATER_CLOSET))
+								f.getFemaleVisitorWashBasins().add(m);
+							else if (pline.getColor() == subFeaturesColor.get(COLOR_KEY_MALE_OR_FEMALE_VISITORS_WATER_CLOSET))
+								f.getVisitorCommonWashBasins().add(m);
+							else
                             f.getWashBasins().add(m);
                         }
                 }

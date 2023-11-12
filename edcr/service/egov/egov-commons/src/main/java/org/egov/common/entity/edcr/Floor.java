@@ -69,6 +69,9 @@ public class Floor extends Measurement {
     // private List<Measurement> openSpaces = new ArrayList<>();
     // this is for differently able people
     private List<Measurement> specialWaterClosets = new ArrayList<>();
+    private List<Measurement> commonVisitorSpecialWaterClosets = new ArrayList<>();
+
+    
     private List<Measurement> coverageDeduct = new ArrayList<>();
     private String name;
     private Integer number;
@@ -109,6 +112,9 @@ public class Floor extends Measurement {
     private List<BigDecimal> heightFromFloorToBottomOfBeam;
     
     private List<Measurement> washBasins = new ArrayList<>();
+    private List<Measurement> maleVisitorWashBasins = new ArrayList<>();
+    private List<Measurement> femaleVisitorWashBasins = new ArrayList<>();
+    private List<Measurement> visitorCommonWashBasins = new ArrayList<>();
     
     private Boolean terrace = false;
     
@@ -117,7 +123,40 @@ public class Floor extends Measurement {
     // Inside building declared parking area details
     private List<ParkingArea> parkingProvidedInsideBuilding = new ArrayList<>();
     
-    public List<FireStair> getFireStairs() {
+   
+	public List<Measurement> getCommonVisitorSpecialWaterClosets() {
+		return commonVisitorSpecialWaterClosets;
+	}
+
+	public void setCommonVisitorSpecialWaterClosets(List<Measurement> commonVisitorSpecialWaterClosets) {
+		this.commonVisitorSpecialWaterClosets = commonVisitorSpecialWaterClosets;
+	}
+
+	public List<Measurement> getMaleVisitorWashBasins() {
+		return maleVisitorWashBasins;
+	}
+
+	public void setMaleVisitorWashBasins(List<Measurement> maleVisitorWashBasins) {
+		this.maleVisitorWashBasins = maleVisitorWashBasins;
+	}
+
+	public List<Measurement> getFemaleVisitorWashBasins() {
+		return femaleVisitorWashBasins;
+	}
+
+	public void setFemaleVisitorWashBasins(List<Measurement> femaleVisitorWashBasins) {
+		this.femaleVisitorWashBasins = femaleVisitorWashBasins;
+	}
+
+	public List<Measurement> getVisitorCommonWashBasins() {
+		return visitorCommonWashBasins;
+	}
+
+	public void setVisitorCommonWashBasins(List<Measurement> visitorCommonWashBasins) {
+		this.visitorCommonWashBasins = visitorCommonWashBasins;
+	}
+
+	public List<FireStair> getFireStairs() {
         return fireStairs;
     }
 

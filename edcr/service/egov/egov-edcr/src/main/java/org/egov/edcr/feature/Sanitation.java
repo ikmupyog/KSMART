@@ -51,6 +51,7 @@ import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
 import static org.egov.edcr.constants.DxfFileConstants.B1;
 import static org.egov.edcr.constants.DxfFileConstants.B2;
 import static org.egov.edcr.constants.DxfFileConstants.B3;
@@ -126,6 +127,10 @@ public class Sanitation extends FeatureProcess {
     public static final String BLOCK_U_S = "Block_";
     private static final String WITH = " with ";
     private static final String BLDG_PART_WATER_CLOSET = "Water Closet";
+    private static final String BLDG_PART_VISITOR_WATER_CLOSET = "Visitor Water Closets";
+    private static final String BLDG_PART_VISITOR_URINAL = "Visitor Urinal";
+    private static final String BLDG_PART_VISITOR_SPECIAL_WATER_CLOSET = "Visitor Special Water Closet";
+
     private static final String BLDG_PART_SPECIAL_WATER_CLOSET = "Special Water Closet";
     private static final String BLDG_PART_URINAL = "Urinal";
     private static final String BLDG_PART_BATHROOM = "Bath Room";
@@ -159,6 +164,8 @@ public class Sanitation extends FeatureProcess {
     public static final String RULE_34_3_1_TABLE_13_14__RULE_42 = "34(3)(1) Table 13, 14 And Rule 42";
     public static final String RULE_34_3_1_TABLE_13_15__RULE_42 = "34(3)(1) Table 13, 15 And Rule 42";
     public static final String RULE_34_3_1_TABLE_13_14 = "34(3)(1) Table 13, 14";
+    public static final String RULE_34_3_3_TABLE_13_14 = "34(3)(3) Table 13, 14";
+
     public static final String RULE_34_3_34_3_5 ="34(3)(2) 34(3)(5) ";
     public static final String RULE_34_3_34_3_3 ="34(3)(2) 34(3)(3) ";
     public static final String RULE_34_3_1_34_3_3_TABLE_13_14__RULE_42 ="34(3)(1) Table 13, 14 ,34(3)(3), Rule 42";
@@ -181,12 +188,15 @@ public class Sanitation extends FeatureProcess {
 
                 int totalSpecialWC = 0;
                 int totalWashBasins = 0;
+                int totalVisitorSPWC=0;
                 for (Floor f : b.getBuilding().getFloors()) {
                     totalSpecialWC += f.getSpecialWaterClosets().size();
                     totalWashBasins += f.getWashBasins().size();
+                    totalVisitorSPWC += f.getCommonVisitorSpecialWaterClosets().size();
                 }
                 b.getSanityDetails().setTotalSPWC(totalSpecialWC);
                 b.getSanityDetails().setTotalwashBasins(totalWashBasins);
+                b.getSanityDetails().setTotalVisitorSPWC(totalVisitorSPWC);
 
                 
                 /*
@@ -195,25 +205,14 @@ public class Sanitation extends FeatureProcess {
                  */
                 if (!Util.singleFamilyWithLessThanOrEqualToThreeFloor(b)) {
                     List<Occupancy> occupancies = b.getBuilding().getOccupancies();//TODO: CONVERSION OCCUPANCY TO BE USED ???
-                    List<Occupancy> sanityDetailParkingArea = b.getSanityDetails().getParkingArea();
-
+ 
                     SanityDetails sanityDetails = b.getSanityDetails();
-                    BigDecimal deductionArea=BigDecimal.valueOf(0);
                     validateDimensions(pl, b, sanityDetails);
                     for (Occupancy occupancy : occupancies) {
                     	
-                    	List<Occupancy> collect = sanityDetailParkingArea.stream().filter(o -> o.getTypeHelper() != null
-                                && (occupancy.getTypeHelper() != null && o.getTypeHelper().getType() != null
-                                        && o.getTypeHelper().getType().getCode()
-                                                .equalsIgnoreCase(occupancy.getTypeHelper().getType().getCode())))
-                                .collect(Collectors.toList());
-                        if (!collect.isEmpty()) { 
-                        	deductionArea=collect.get(0).getBuiltUpArea();
-                        }
-                        
-                        if (I2.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getFloorArea().doubleValue() == 0
+                         if (I2.equals(occupancy.getTypeHelper().getType().getCode()) && occupancy.getFloorArea().doubleValue() == 0
                                 && occupancy.getBuiltUpArea().doubleValue() == 0)
-                            break;
+                            break; 
                         switch (occupancy.getTypeHelper().getType().getCode()) {
                         case A1:
                         case A2:
@@ -232,6 +231,7 @@ public class Sanitation extends FeatureProcess {
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
                             break;
                         case C1:
+                            validateVisitorUrinalWaterClosets(pl, b, sanityDetails);
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
                             if (pl.getPlanInformation().getNoOfBeds() == null)
                                 pl.addError(NOOFBEDS,
@@ -240,15 +240,22 @@ public class Sanitation extends FeatureProcess {
                         case C2:
                         case C3:
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
+                            validateVisitorUrinalWaterClosets(pl, b, sanityDetails);
                             break;
                         case D:
                         case D1:
+                            commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
+                            break;
                         case D2:
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
+                            validateVisitorUrinalWaterClosets(pl, b, sanityDetails);
                             break;
                         case E:
                         case F:
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
+                            break;
+                        case E2:
+                            validateVisitorUrinalWaterClosets(pl, b, sanityDetails);
                             break;
                         case F3:
                             commonSanitationValidations(pl, b, sanityDetails, occupancy.getTypeHelper());
@@ -259,6 +266,7 @@ public class Sanitation extends FeatureProcess {
                         case H:
                         case I1:
                         case I2:
+                            validateVisitorUrinalWaterClosets(pl, b, sanityDetails);
                             if (sanityDetails.getMaleWaterClosets().isEmpty()
                                     && sanityDetails.getFemaleWaterClosets().isEmpty())
                                 pl.addError(BLDG_PART_WATER_CLOSET,
@@ -275,6 +283,14 @@ public class Sanitation extends FeatureProcess {
             }
         return pl;
     }
+
+	private void validateVisitorUrinalWaterClosets(Plan pl, Block b, SanityDetails sanityDetails) {
+		
+	 	
+		if (sanityDetails.getTotalVisitorSPWC() == 0)
+            pl.addError(BLDG_PART_VISITOR_SPECIAL_WATER_CLOSET,
+                    getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_VISITOR_SPECIAL_WATER_CLOSET, b.getNumber()));
+ 	}
 
     private void validateBathRoom(Plan pl, Block b, SanityDetails sanityDetails) {
         if (sanityDetails.getMaleBathRooms().isEmpty() && sanityDetails.getFemaleBathRooms().isEmpty()
@@ -298,7 +314,7 @@ public class Sanitation extends FeatureProcess {
             pl.addError(BLDG_PART_URINAL,
                     getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_URINAL, b.getNumber()));
 
-        if (!F.equals(occupancy.getType().getCode())/* && !F4.equals(occupancy.getType().getCode()) */&& !E.equals(occupancy.getType().getCode())
+        if (!F.equals(occupancy.getType().getCode()) && !E1.equals(occupancy.getType().getCode()) && !E2.equals(occupancy.getType().getCode()) && !E.equals(occupancy.getType().getCode())
                 && sanityDetails.getTotalwashBasins() == 0)
             pl.addError(BLDG_PART_WASHBASIN,
                     getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_WASHBASIN, b.getNumber()));
@@ -376,6 +392,7 @@ public class Sanitation extends FeatureProcess {
     public Plan process(Plan pl) {
         verifyDimesions(pl);
         checkCount(pl);
+        checkSegregatedSanitation(pl);
         return pl;
     }
 
@@ -402,18 +419,6 @@ public class Sanitation extends FeatureProcess {
 
         return pl;
     }
-
-    private ScrutinyDetail getNewScrutinyDetail(String key) {
-        ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-        scrutinyDetail.addColumnHeading(1, RULE_NO);
-        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-        scrutinyDetail.addColumnHeading(3, REQUIRED);
-        scrutinyDetail.addColumnHeading(4, PROVIDED);
-        scrutinyDetail.addColumnHeading(5, STATUS);
-        scrutinyDetail.setKey(key);
-        return scrutinyDetail;
-    }
-
     private void checkCount(Plan pl) {
 
         Boolean accepted = true;
@@ -669,23 +674,6 @@ public class Sanitation extends FeatureProcess {
                         	processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                         failedDimensionSpWcMap);
                             break;
-                      /*  case F3:
-                            helper.maleWc += buildUpArea * 2 / (5.9 * 3 * 100);
-                            helper.femaleWc += buildUpArea / (5.9 * 3 * 100);
-                            helper.urinal += buildUpArea * 2 / (5.9 * 3 * 100);
-                            // preferable one on each floor to be implemented
-                            helper.maleWash += buildUpArea * 2 / (5.9 * 3 * 100);
-                            helper.femaleWash += buildUpArea / (5.9 * 3 * 100);
-                            helper.commonBath += buildUpArea / (5.9 * 100);
-                            processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
-                                    failedDimensionSpWcMap);
-                            Double totalSpecialWc = 0.0;
-                            for (Map.Entry<Integer, Integer> req : requiredSpWcMap.entrySet())
-                                totalSpecialWc += req.getValue();
-                            if (totalSpecialWc > 0 && totalSpecialWc <= helper.maleWc)
-                                helper.maleWc = helper.maleWc - totalSpecialWc;
-                            helper.ruleNo.add(RULE_54_6);
-                            break;*/
                         case G1:
                         case G2:
                         case G3:
@@ -791,6 +779,229 @@ public class Sanitation extends FeatureProcess {
             }
     }
 
+    private ScrutinyDetail getNewScrutinyDetail(String key) {
+        ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail.addColumnHeading(1, RULE_NO);
+        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+        scrutinyDetail.addColumnHeading(3, REQUIRED);
+        scrutinyDetail.addColumnHeading(4, PROVIDED);
+        scrutinyDetail.addColumnHeading(5, STATUS);
+        scrutinyDetail.setKey(key);
+        return scrutinyDetail;
+    }
+
+    //Check plot level converted occupancy contain c1+c2+c3>=10000
+    //If occupancy D2, E2, I1 AND I2 THEN VALIDATE.
+    private void checkSegregatedSanitation(Plan pl) {
+        if (pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
+        	
+            if (pl.getVirtualBuilding().getOccupancyTypes().stream()
+                    .anyMatch(occ -> (occ.getType().getCode().equals(D2) || occ.getType().getCode().equals(C1) ||
+                    		occ.getType().getCode().equals(C2) ||occ.getType().getCode().equals(C3)
+                            || occ.getType().getCode().equals(E2) || occ.getType().getCode().equals(I1) || occ.getType().getCode().equals(I2)))) {
+            	
+                BigDecimal totalMedicalOccupancyBuildUpArea = BigDecimal.ZERO;
+
+                for (Block block : pl.getBlocks()) {
+                	 for (Occupancy type : block.getBuilding().getOccupancies())
+                	 {
+                		 if(type.getTypeHelper().getType().getCode().equals(C1) || 
+                				 type.getTypeHelper().getType().getCode().equals(C2) || 
+                				 type.getTypeHelper().getType().getCode().equals(C3))
+                    		 totalMedicalOccupancyBuildUpArea=totalMedicalOccupancyBuildUpArea.add(type.getBuiltUpArea());
+                	 }
+                   }
+
+                 SanityHelper helper = new SanityHelper();
+                 Integer providedWcMale =  0;
+                 Integer providedWcFemale =  0;
+                 Integer providedCommonWc =  0;
+
+                 Integer providedCommonUrinal =  0;
+                 Integer providedUrinalForMale =  0;
+                 
+                 Integer providedCommonWashBasin =  0;
+                 Integer providedMaleWashBasin =  0;
+                 Integer providedFemaleWashBasin =  0;
+
+          for (Block b : pl.getBlocks())
+             if (!b.getCompletelyExisting()) {
+                if (!Util.singleFamilyWithLessThanOrEqualToThreeFloor(b)) {
+                    ScrutinyDetail scrutinyDetail = getNewScrutinyDetail(BLOCK_U_S + b.getNumber() + "_" + SANITATION);
+                    Map<Integer, Integer> requiredSpWcMap = new ConcurrentHashMap<>();
+                    Map<Integer, Integer> providedSpWcMap = new ConcurrentHashMap<>();
+                    Map<Integer, Integer> failedAreaSpWcMap = new ConcurrentHashMap<>();
+                    Map<Integer, Integer> failedDimensionSpWcMap = new ConcurrentHashMap<>();
+                    List<Occupancy> sanityDetailParkingArea = b.getSanityDetails().getParkingArea();
+
+                    //TODO: CHECK DIMENSION OF THESE MEASUREMENTS.
+                    providedWcMale +=b.getSanityDetails().getMaleVisitorsWaterClosets().size();
+                    providedWcFemale +=b.getSanityDetails().getFemaleVisitorsWaterClosets().size();
+                    providedCommonWc +=b.getSanityDetails().getMaleOrFemaleVisitorsWaterClosets().size();
+                    providedCommonUrinal+= b.getSanityDetails().getMaleOrFemaleVisitorsUrinals().size();
+                    providedUrinalForMale +=b.getSanityDetails().getMaleVisitorUrinals().size();
+                    
+                    for (Floor f : b.getBuilding().getFloors()) {
+	                    providedCommonWashBasin +=f.getVisitorCommonWashBasins().size(); 
+	                    providedMaleWashBasin +=f.getMaleVisitorWashBasins().size();
+	                    providedFemaleWashBasin+=f.getFemaleVisitorWashBasins().size();
+	                  }
+                    
+                    for (Occupancy type : b.getBuilding().getOccupancies()) {
+                        double buildUpArea = 0d;
+						BigDecimal deductionArea = BigDecimal.valueOf(0);
+
+						List<Occupancy> collect = sanityDetailParkingArea.stream()
+								.filter(o -> o.getTypeHelper() != null
+										&& (type.getTypeHelper() != null && o.getTypeHelper().getType() != null
+												&& o.getTypeHelper().getType().getCode()
+														.equalsIgnoreCase(type.getTypeHelper().getType().getCode())))
+								.collect(Collectors.toList());
+						if (!collect.isEmpty()) {
+							deductionArea = collect.get(0).getBuiltUpArea();
+						}
+						
+						if (type.getBuiltUpArea() != null && type.getBuiltUpArea().doubleValue() > 0)
+                        {
+                        	if(deductionArea.doubleValue() > 0 && (type.getBuiltUpArea().doubleValue()-deductionArea.doubleValue())>0)
+                               buildUpArea = (type.getBuiltUpArea().doubleValue()-deductionArea.doubleValue());
+                        	else
+                               buildUpArea = type.getBuiltUpArea().doubleValue();
+                        
+                        }else {
+                            pl.addError("Invalid Buildup area",
+                                    "Buildup area is not calculated . Some thing wrong with builtup area");
+                            return;
+                        }
+ 
+						switch (type.getTypeHelper().getType().getCode()) {
+                         case C3://Medical admin
+                         case C2://Medical OP
+                         case C1://medical IP
+                        	 if(totalMedicalOccupancyBuildUpArea.compareTo(BigDecimal.valueOf(1000))>0){
+	                             processSpecialWaterClosetForVisitorsl(b, helper, scrutinyDetail, requiredSpWcMap,
+	                                     providedSpWcMap, failedAreaSpWcMap, failedDimensionSpWcMap,RULE_34_3_1_TABLE_13_15__RULE_42);
+	                         	 helper.maleWc += buildUpArea * 0.1 * 2 / (5.9 * 3 * 100);
+	                             helper.femaleWc += buildUpArea * 0.1 / (5.9 * 3 * 50);
+	                             helper.urinal += buildUpArea * 0.1 * 1 / (5.9 * 50);
+	                             helper.commonWash += buildUpArea * 0.1 * 1 / (5.9 * 100);
+	                        	 helper.ruleNo.add(RULE_34_3_1_TABLE_13_15__RULE_42);
+	                        	 helper.occupanciesType.add(type.getTypeHelper().getType().getName());
+                        	 }
+                             break;
+                        case D2://bus terminal
+                             processSpecialWaterClosetForVisitorsl(b, helper, scrutinyDetail, requiredSpWcMap,
+                                     providedSpWcMap, failedAreaSpWcMap, failedDimensionSpWcMap,RULE_34_3_1_34_3_3_TABLE_13_14__RULE_42);
+                        	 if (buildUpArea/1.8 <= 1000)
+                                helper.commonWc += 1d; //As per doc (4 x 0.1) rounded up to the next higher digit 
+                            else
+                                helper.commonWc += 4d + (((buildUpArea/1.8) - 1000)/1000)*0.1; 
+                        	 
+                            if (buildUpArea/1.8 <= 1000)
+                                helper.urinal += 1d; //As per doc  (6 x 0.1) rounded up to the next higher digit 
+                            else
+                                helper.urinal += 6d + (((buildUpArea/1.8) - 1000) / (1000)) *0.1;
+                            
+                            helper.maleWash += 1d;
+                            helper.femaleWash += 1d; 
+                            helper.ruleNo.add(RULE_34_3_1_34_3_3_TABLE_13_14__RULE_42);
+                        	helper.occupanciesType.add(type.getTypeHelper().getType().getName());
+ 
+                            break;
+                        case E2:
+                            processSpecialWaterClosetForVisitorsl(b, helper, scrutinyDetail, requiredSpWcMap,
+                                    providedSpWcMap, failedAreaSpWcMap, failedDimensionSpWcMap,RULE_34_3_3_TABLE_13_14);
+                    
+                            helper.maleWc += ((buildUpArea * 2 / (5.9 * 3 * 25)) * 0.1);
+                            helper.femaleWc += (buildUpArea / (5.9 * 3 * 15) * 0.1);
+                            helper.urinal += buildUpArea * 1 / (5.9 * 25); 
+                            helper.maleWash += 1d;
+                            helper.femaleWash += 1d; 
+                            helper.ruleNo.add(RULE_34_3_3_TABLE_13_14);
+                            helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
+                            helper.occupanciesType.add(type.getTypeHelper().getType().getName());
+
+                            break;
+                        case I1:
+                        case I2:
+                        	   processSpecialWaterClosetForVisitorsl(b, helper, scrutinyDetail, requiredSpWcMap,
+                                       providedSpWcMap, failedAreaSpWcMap, failedDimensionSpWcMap,RULE_34_3_34_3_3);
+                      
+                        	double worker = pl.getPlanInformation().getNumberOfWorkers().doubleValue();
+                           
+                            if(worker<=5)
+                            	helper.commonWc+=1d;
+                            if(worker==0 || worker>5)
+                            {
+                            	if((buildUpArea/30)<=50){
+                            	       helper.femaleWc += 1d;
+                                       helper.maleWc += 1d;
+                            	}
+                            	else{
+                            		helper.maleWc += (1d+ ((buildUpArea/30)-50) * 2 / (3 * 70))  * 0.1;
+                            		helper.femaleWc +=(2d+ ((buildUpArea/30)-50) * 1 / (3 * 70)) * 0.1;
+                                    
+                            	}
+                            }
+                            helper.maleWash += 1d;
+                            helper.femaleWash += 1d; 
+                            helper.urinal += (((buildUpArea/30) * 2 / (3 * 100)) * 0.1);
+                            helper.ruleNo.add(RULE_34_3_34_3_3);
+                       	    helper.occupanciesType.add(type.getTypeHelper().getType().getName());
+
+                            break;
+
+                        }
+                    }
+                    for (Map.Entry<Integer, Integer> req : requiredSpWcMap.entrySet())
+                        helper.requiredSpecialWc += req.getValue();
+                    for (Map.Entry<Integer, Integer> pro : providedSpWcMap.entrySet())
+                        helper.providedSpecialWc += pro.getValue();
+                    for (Map.Entry<Integer, Integer> pro : failedAreaSpWcMap.entrySet())
+                        helper.failedAreaSpecialWc += pro.getValue();
+                    for (Map.Entry<Integer, Integer> pro : failedDimensionSpWcMap.entrySet())
+                        helper.failedDimensionSpecialWc += pro.getValue();
+
+                    if (helper.requiredSpecialWc > 0 && helper.requiredSpecialWc>0) {
+                        Set<String> ruleNo = new HashSet<>();
+                        ruleNo.add(RULE_42);
+                        if (helper.failedAreaSpecialWc > 0 && helper.failedAreaSpecialWc <= helper.requiredSpecialWc)
+                            addReportDetail(ruleNo, BLDG_PART_SPECIAL_WATER_CLOSET + " - Minimum Area", MINIMUM_AREA_SPWC,
+                                    String.valueOf(helper.failedAreaSpecialWc.intValue()) + " not having area 2.625 M2",
+                                    Result.Not_Accepted.getResultVal(), scrutinyDetail);
+                        else
+                            addReportDetail(ruleNo, BLDG_PART_SPECIAL_WATER_CLOSET + " - Minimum Area", MINIMUM_AREA_SPWC,
+                                    String.valueOf(helper.providedSpecialWc.intValue() - helper.failedAreaSpecialWc.intValue())
+                                            + " having area 2.625 M2",
+                                    Result.Accepted.getResultVal(), scrutinyDetail);
+
+                        if (helper.failedDimensionSpecialWc > 0 && helper.failedDimensionSpecialWc <= helper.requiredSpecialWc)
+                            addReportDetail(ruleNo, BLDG_PART_SPECIAL_WATER_CLOSET + " - Minimum Dimension",
+                                    MINIMUM_DIMENSION_SPWC,
+                                    String.valueOf(helper.failedDimensionSpecialWc.intValue()) + " not having dimension 1.5M",
+                                    Result.Not_Accepted.getResultVal(), scrutinyDetail);
+                        else
+                            addReportDetail(ruleNo, BLDG_PART_SPECIAL_WATER_CLOSET + " - Minimum Dimension",
+                                    MINIMUM_DIMENSION_SPWC,
+                                    String.valueOf(
+                                            helper.providedSpecialWc.intValue() - helper.failedDimensionSpecialWc.intValue())
+                                            + " having dimension 1.5M",
+                                    Result.Accepted.getResultVal(), scrutinyDetail);
+							}
+
+						}
+					}
+
+         	   processUrinalsForVisitors(pl, helper, scrutinyDetail,providedCommonUrinal,providedUrinalForMale);
+         	   processVisitorWaterCloset(pl, helper, scrutinyDetail,providedWcMale,providedWcFemale,providedCommonWc);
+         	   processVisitorWash(pl, helper, scrutinyDetail,providedCommonWashBasin,providedMaleWashBasin,providedFemaleWashBasin);
+ 
+         	   pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
+
+			}
+		}
+	}
+
     /*
      * private Boolean processSpecialWaterCloset(Block block, SanityHelper helper, ScrutinyDetail detail, Map<Integer, Integer>
      * spWcMap) { boolean notFound = false; StringBuilder expectedResult = new StringBuilder(); StringBuilder actualResult = new
@@ -811,7 +1022,89 @@ public class Sanitation extends FeatureProcess {
      * String.valueOf(required), String.valueOf(provided), Result.Accepted.getResultVal(), detail); } return !notFound; }
      */
 
-    private void processSpecialWaterCloset(Block block, Map<Integer, Integer> requiredSpWcMap,
+    private void processVisitorWash(Plan pl, SanityHelper helper, ScrutinyDetail detail,
+			Integer providedCommonWashBasin, Integer providedMaleWashBasin, Integer providedFemaleWashBasin) {
+         String description = "";
+         String expected = "";
+         String actual = "";
+        if (helper.maleWash > 0 || helper.femaleWash > 0|| helper.commonWash>0) {
+
+            int actualWash = providedCommonWashBasin+providedMaleWashBasin+providedFemaleWashBasin;
+            description = "Visitor "+BLDG_PART_WASHBASIN + " - Count";
+            Double totalWashExpected = Math.ceil(helper.maleWash + helper.femaleWash + helper.commonWash);
+            expected = "" + totalWashExpected.intValue();
+            actual = "" + actualWash;
+            if (totalWashExpected.intValue() >= 0) {
+                if (totalWashExpected.intValue() > actualWash) {
+                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                            detail);
+                } else {
+                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                            detail);
+                }
+            }
+        }		
+	}
+
+	private Boolean processUrinalsForVisitors(Plan pl, SanityHelper helper, ScrutinyDetail detail,
+			Integer providedCommonUrinal, Integer providedUrinalForMale) {
+        Boolean accepted = true;
+        String description = "";
+        String expected = "";
+        String actual = "";
+          if (helper.urinal > 0 || helper.commonUrinal>0) {
+            helper.urinal = Math.ceil(helper.urinal); //todo: check this logic required
+            description = BLDG_PART_VISITOR_URINAL + " - Count";
+        
+        
+            Integer urinalActual = providedCommonUrinal + providedUrinalForMale;
+            Double urinalsExpected = Math.ceil(helper.urinal + helper.commonUrinal ); 
+            expected = "" + urinalsExpected.intValue();
+            actual = "" + urinalActual.intValue();
+            if (urinalsExpected.intValue() >= 0) {
+                if (urinalActual.intValue()>= urinalsExpected.intValue()){
+                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                            detail);
+                } else {
+                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                            detail);
+                }
+            }
+        }
+       return accepted;
+    
+		}
+
+	private Boolean processVisitorWaterCloset(Plan pl, SanityHelper helper, ScrutinyDetail detail, 
+			Integer providedWcMale, Integer providedWcFemale, Integer providedCommonWc) {
+        Boolean accepted = true;
+        String description = "";
+        String expected = "";
+        String actual = "";
+ 
+        if (helper.maleWc > 0 || helper.femaleWc > 0 || helper.commonWc > 0 ) {
+    	 	             		
+    		            Double totalWCActual = Math.ceil(providedWcMale + providedWcFemale + providedCommonWc);
+    		            Double totalWCExpected = Math.ceil(helper.maleWc + helper.femaleWc+ helper.commonWc); 
+    		            if (totalWCExpected > 0) {
+    		                expected = "" + totalWCExpected.intValue();
+    		                actual = "" + totalWCActual.intValue();
+    		                description = BLDG_PART_VISITOR_WATER_CLOSET + " - Count";
+    		                if (totalWCExpected.intValue() > totalWCActual.intValue()) {
+    		                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+    		                            detail);
+    		                } else {
+    		                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+    		                            detail);
+    		
+    		                } 
+    		            }
+    	        }
+         return accepted;
+    
+	}
+
+	private void processSpecialWaterCloset(Block block, Map<Integer, Integer> requiredSpWcMap,
             Map<Integer, Integer> providedSpWcMap, Map<Integer, Integer> failedAreaSpWcMap,
             Map<Integer, Integer> failedDimensionSpWcMap) {
         for (Floor f : block.getBuilding().getFloors()) {
@@ -868,6 +1161,45 @@ public class Sanitation extends FeatureProcess {
         } else {
             actualResult.append("Found");
             addReportDetail(ruleNo, BLDG_PART_SPECIAL_WATER_CLOSET + " - Minimum one at Ground Floor", String.valueOf(required),
+                    String.valueOf(provided),
+                    Result.Accepted.getResultVal(), detail);
+        }
+
+        return !notFound;
+    }
+    private Boolean processSpecialWaterClosetForVisitorsl(Block block, SanityHelper helper, ScrutinyDetail detail,
+            Map<Integer, Integer> requiredSpWcMap, Map<Integer, Integer> providedSpWcMap,
+            Map<Integer, Integer> failedAreaSpWcMap, Map<Integer, Integer> failedDimensionSpWcMap,String ruleNumber) {
+        boolean notFound = false;
+        StringBuilder expectedResult = new StringBuilder();
+        StringBuilder actualResult = new StringBuilder();
+        expectedResult.append(" Minimum one at Ground Floor");
+        int required = 0;
+        int provided = 0;
+        for (Floor f : block.getBuilding().getFloors()) {
+            if (f.getNumber().intValue() < 0)
+                continue;
+            if (f.getNumber() == 0) {
+                required++;
+                provided++;
+                if (f.getCommonVisitorSpecialWaterClosets().isEmpty())
+                    notFound = true;
+
+                validateDimensionOfSPWC(f.getCommonVisitorSpecialWaterClosets(), f.getNumber(), failedAreaSpWcMap, failedDimensionSpWcMap,
+                        providedSpWcMap);
+
+            }
+        }
+        Set<String> ruleNo = new HashSet<>();
+        ruleNo.add(ruleNumber);
+        if (notFound) {   
+            actualResult.append("Not Found");
+            addReportDetail(ruleNo, BLDG_PART_VISITOR_SPECIAL_WATER_CLOSET + " - Minimum one at Ground Floor", String.valueOf(required),
+                    String.valueOf(provided),
+                    Result.Not_Accepted.getResultVal(), detail);
+        } else {
+            actualResult.append("Found");
+            addReportDetail(ruleNo, BLDG_PART_VISITOR_SPECIAL_WATER_CLOSET + " - Minimum one at Ground Floor", String.valueOf(required),
                     String.valueOf(provided),
                     Result.Accepted.getResultVal(), detail);
         }

@@ -85,7 +85,7 @@ public class SanityDetails implements Serializable {
     
     private int totalSPWC = 0;
     private int totalwashBasins = 0;
-
+    private int totalVisitorSPWC=0;
     public void addParkingArea(Occupancy occupancy) {
         if (parkingArea == null) {
         	parkingArea = new ArrayList<>();
@@ -105,7 +105,16 @@ public class SanityDetails implements Serializable {
         	parkingArea.add(occupancy);
 
     }
-    public List<Measurement> getMaleWaterClosets() {
+    
+    public int getTotalVisitorSPWC() {
+		return totalVisitorSPWC;
+	}
+
+	public void setTotalVisitorSPWC(int totalVisitorSPWC) {
+		this.totalVisitorSPWC = totalVisitorSPWC;
+	}
+
+	public List<Measurement> getMaleWaterClosets() {
         return maleWaterClosets;
     }
 
