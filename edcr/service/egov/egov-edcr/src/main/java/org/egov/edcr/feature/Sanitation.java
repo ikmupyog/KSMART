@@ -619,7 +619,8 @@ public class Sanitation extends FeatureProcess {
                             if (buildUpArea <= 1000)
                                 helper.urinal += 6d;
                             else
-                                helper.urinal += 6d + (buildUpArea - 1000) / (1.8*1000);
+                                helper.urinal += 6d + (((buildUpArea/1.8) - 1000) / (1000));
+ 
                             helper.maleWash += 4d;
                             helper.femaleWash += 4d;
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
@@ -900,7 +901,7 @@ public class Sanitation extends FeatureProcess {
                             if (buildUpArea/1.8 <= 1000)
                                 helper.urinal += 1d; //As per doc  (6 x 0.1) rounded up to the next higher digit 
                             else
-                                helper.urinal += 6d + (((buildUpArea/1.8) - 1000) / (1000)) *0.1;
+                                helper.urinal += 6d + (((buildUpArea/1.8) - 1000) / (1000)) * 0.1;
                             
                             helper.maleWash += 1d;
                             helper.femaleWash += 1d; 
