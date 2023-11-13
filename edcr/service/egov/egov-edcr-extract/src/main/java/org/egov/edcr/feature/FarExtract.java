@@ -895,7 +895,7 @@ public class FarExtract extends FeatureExtract {
 
 			String[] landingNo = landingLayer.split("_");
 
-			stairLanding.setNumber(landingNo[7]);
+			stairLanding.setNumber(landingNo[5]);
 
 			List<DXFLWPolyline> landingPolyLines = Util.getPolyLinesByLayer(doc, landingLayer);
 
@@ -1143,7 +1143,7 @@ public class FarExtract extends FeatureExtract {
 
 			String[] landingNo = landingLayer.split("_");
 
-			stairLanding.setNumber(landingNo[7]);
+			stairLanding.setNumber(landingNo[5]);
 
 			List<DXFLWPolyline> landingPolyLines = Util.getPolyLinesByLayer(doc, landingLayer);
 

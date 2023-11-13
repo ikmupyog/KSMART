@@ -160,36 +160,6 @@ public class RainWaterHarvestingExtract extends FeatureExtract {
 
             }
 
-        for (Block block : pl.getBlocks()) {
-            Building building = block.getBuilding();
-            if (building != null) {
-                List<Floor> floors = building.getFloors();
-                if (floors != null && !floors.isEmpty())
-                    for (Floor floor : floors) {
-                        String roofAreaLayerName = String.format(layerNames.getLayerName("LAYER_NAME_ROOF_AREA"),
-                                block.getNumber(), floor.getNumber());
-                        List<DXFLWPolyline> roofAreas = Util.getPolyLinesByLayer(pl.getDoc(), roofAreaLayerName);
-
-                        if (roofAreas != null && !roofAreas.isEmpty()) {
-                            List<RoofArea> roofAreaList = new ArrayList<>();
-                            for (DXFLWPolyline pline : roofAreas) {
-                                Measurement measurement = new MeasurementDetail(pline, true);
-                                RoofArea roofArea = new RoofArea();
-                                roofArea.setArea(measurement.getArea());
-                                roofArea.setColorCode(measurement.getColorCode());
-                                roofArea.setHeight(measurement.getHeight());
-                                roofArea.setWidth(measurement.getWidth());
-                                roofArea.setLength(measurement.getLength());
-                                roofArea.setInvalidReason(measurement.getInvalidReason());
-                                roofArea.setPresentInDxf(true);
-                                roofAreaList.add(roofArea);
-                            }
-                            floor.setRoofAreas(roofAreaList);
-                        }
-                    }
-            }
-        }
-        
         List<DXFLWPolyline> gwRecharge = Util.getPolyLinesByLayer(pl.getDoc(),
                 layerNames.getLayerName("LAYER_NAME_GW_RECHARGE"));
         for (DXFLWPolyline pline : gwRecharge) {

@@ -91,6 +91,7 @@ import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -635,6 +636,9 @@ public class Far extends FeatureProcess {
 				: null;
 
 		List<BigDecimal> bldgHghts = pl.getBlocks().stream().map(b -> b.getBuilding().getBuildingHeight()).collect(Collectors.toList());
+		pl.getVirtualBuilding().setBuildingHeight(Collections.max(bldgHghts));
+		List<BigDecimal> bldgFloorCounts = pl.getBlocks().stream().map(b -> b.getBuilding().getFloorsAboveGround()).collect(Collectors.toList());
+		pl.getVirtualBuilding().setFloorsAboveGround(Collections.max(bldgFloorCounts));
 		boolean isHeightAllowed = true;
 		if(!bldgHghts.isEmpty())
 			for (BigDecimal hght : bldgHghts)

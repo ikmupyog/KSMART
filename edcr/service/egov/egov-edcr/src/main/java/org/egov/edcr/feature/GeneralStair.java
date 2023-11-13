@@ -230,7 +230,7 @@ public class GeneralStair extends FeatureProcess {
                                     	List<BigDecimal> widths = new ArrayList<>();
                                     	for(List<BigDecimal> fw : flightWidths)
                                     		widths.addAll(fw);
-                                        BigDecimal flightPolyLine = widths.stream().reduce(BigDecimal::min).get();
+                                        BigDecimal flightPolyLine = widths.isEmpty() ? BigDecimal.ZERO : widths.stream().reduce(BigDecimal::min).get();
 
                                         boolean valid = false;
 

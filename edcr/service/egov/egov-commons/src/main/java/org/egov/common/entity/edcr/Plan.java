@@ -209,6 +209,7 @@ public class Plan implements Serializable {
     private transient Boolean mainDcrPassed = false;
     private List<ICT> icts = new ArrayList<>();
     private transient String applicationType;
+    private RecreationArea recreationArea;
     
     public List<BigDecimal> getCanopyDistanceFromPlotBoundary() {
         return canopyDistanceFromPlotBoundary;
@@ -687,6 +688,14 @@ public class Plan implements Serializable {
 
 	public void setApplicationType(String applicationType) {
 		this.applicationType = applicationType;
+	}
+
+	public RecreationArea getRecreationArea() {
+		return recreationArea;
+	}
+
+	public void setRecreationArea(RecreationArea recreationArea) {
+		this.recreationArea = recreationArea;
 	}
 
 }

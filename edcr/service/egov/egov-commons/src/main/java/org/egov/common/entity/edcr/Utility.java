@@ -69,7 +69,7 @@ public class Utility extends Measurement {
     private SupplyLine supplyLine;
 	private List<BioGas> bioGases = new ArrayList<>();
 	private List<Measurement> groundWaterRecharge = new ArrayList<>();
-
+	private List<Measurement> inBuiltSolutuons = new ArrayList<>();
     public void setBiometricWasteTreatment(List<BiometricWasteTreatment> biometricWasteTreatment) {
         this.biometricWasteTreatment = biometricWasteTreatment;
     }
@@ -234,6 +234,14 @@ public class Utility extends Measurement {
 
 	public List<Measurement> getGroundWaterRecharge() {
 		return groundWaterRecharge;
+	}
+
+	public List<Measurement> getInBuiltSolutuons() {
+		return inBuiltSolutuons;
+	}
+
+	public void setInBuiltSolutuons(List<Measurement> inBuiltSolutuons) {
+		this.inBuiltSolutuons = inBuiltSolutuons;
 	}
 
 }

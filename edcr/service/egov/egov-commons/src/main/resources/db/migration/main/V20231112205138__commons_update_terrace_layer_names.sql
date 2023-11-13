@@ -1,0 +1,5 @@
+update state.egdcr_layername set value='BLK_%s_FLR_%s_TERRACE_AREA' where key='LAYER_NAME_ROOF_AREA';
+
+insert into state.egdcr_layername(id,key,value,createdby,createddate,lastmodifiedby,lastmodifieddate,version) select nextval('state.seq_egdcr_layername'),'LAYER_NAME_EXT_RECREATION','EXT_RECREATION',1,now(),1,now(),0 where not exists(select key from state.egdcr_layername where key='LAYER_NAME_EXT_RECREATION');
+insert into state.egdcr_layername(id,key,value,createdby,createddate,lastmodifiedby,lastmodifieddate,version) select nextval('state.seq_egdcr_layername'),'LAYER_NAME_TERRACE_RECREATION','TERRACE_RECREATION',1,now(),1,now(),0 where not exists(select key from state.egdcr_layername where key='LAYER_NAME_TERRACE_RECREATION');
+insert into state.egdcr_layername(id,key,value,createdby,createddate,lastmodifiedby,lastmodifieddate,version) select nextval('state.seq_egdcr_layername'),'LAYER_NAME_BUILTIN_SOLUTION','BUILTIN_SOLUTION',1,now(),1,now(),0 where not exists(select key from state.egdcr_layername where key='LAYER_NAME_BUILTIN_SOLUTION');
