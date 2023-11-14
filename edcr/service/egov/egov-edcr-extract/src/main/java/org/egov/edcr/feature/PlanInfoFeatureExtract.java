@@ -482,6 +482,16 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 			} else
 				pl.addError(DxfFileConstants.DEPTH_CUTTING,
 						DxfFileConstants.DEPTH_CUTTING + " cannot be accepted , should be either YES/NO.");
+		
+		String depthHeightCutting = planInfoProperties.get(DxfFileConstants.DEPTH_HEIGHT_CUTTING);
+		if (StringUtils.isNotBlank(depthHeightCutting))
+			if (depthHeightCutting.equalsIgnoreCase(DcrConstants.YES)) {
+				pi.setDepthHeightCutting(DcrConstants.YES);
+			} else if (depthHeightCutting.equalsIgnoreCase(DcrConstants.NO)) {
+				pi.setDepthHeightCutting(DcrConstants.NO);
+			} else
+				pl.addError(DxfFileConstants.DEPTH_HEIGHT_CUTTING,
+						DxfFileConstants.DEPTH_HEIGHT_CUTTING + " cannot be accepted , should be either YES/NO.");
 
 		String governmentAided = planInfoProperties.get(DxfFileConstants.GOVERNMENT_AIDED);
 		if (StringUtils.isNotBlank(governmentAided))

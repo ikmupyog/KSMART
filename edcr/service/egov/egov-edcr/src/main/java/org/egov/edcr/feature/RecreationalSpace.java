@@ -136,7 +136,7 @@ public class RecreationalSpace extends FeatureProcess {
 	        }
 		}
 		if(isRequired) {
-			if (!pl.getRecreationArea().getOutsideBuildingRecreationArea().isEmpty()) {
+			if (pl.getRecreationArea() != null && !pl.getRecreationArea().getOutsideBuildingRecreationArea().isEmpty()) {
 	            int count = 0;
 	            for (Measurement m : pl.getRecreationArea().getOutsideBuildingRecreationArea())
 	                if (m.getInvalidReason() != null && m.getInvalidReason().length() > 0)
@@ -146,7 +146,7 @@ public class RecreationalSpace extends FeatureProcess {
 	                        count + " number of " + "Recreational space outside of building in the ground floor " + " polyline not having only 4 points in block");
 	        }
 			
-			if (!pl.getRecreationArea().getTerraceRecreationArea().isEmpty()) {
+			if (pl.getRecreationArea() != null && !pl.getRecreationArea().getTerraceRecreationArea().isEmpty()) {
 	            int count = 0;
 	            for (Measurement m : pl.getRecreationArea().getTerraceRecreationArea())
 	                if (m.getInvalidReason() != null && m.getInvalidReason().length() > 0)

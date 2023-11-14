@@ -204,5 +204,6 @@ public class DxfFileConstants {
     public static final String COMMERCIAL_ZONE_BLDG_OPENING_ON_SIDE2="COMMERCIAL_ZONE_BLDG_OPENING_ON_SIDE2";
     
     public static final String ACCESS_HEAD_ROOM = "ACCESS_HEADROOM_M";
+    public static final String DEPTH_HEIGHT_CUTTING = "DEPTHEIGHT_CUTTING_MORE_THAN_1.5_M";
     
 }

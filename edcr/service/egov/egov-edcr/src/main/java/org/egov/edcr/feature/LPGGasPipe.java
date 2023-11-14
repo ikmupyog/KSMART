@@ -1,5 +1,5 @@
 /*
- * eGov  SmartCity eGovernance suite aims to improve the internal efficiency,transparency,
+*-+ * eGov  SmartCity eGovernance suite aims to improve the internal efficiency,transparency,
  * accountability and the service delivery of the government  organizations.
  *
  *  Copyright (C) <2019>  eGovernments Foundation
@@ -47,77 +47,81 @@
 
 package org.egov.edcr.feature;
 
-import java.math.BigDecimal;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
+import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED_DESC;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
+import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
-import org.egov.edcr.utility.DcrConstants;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DepthCuttingService extends FeatureProcess {
-    private static final String SUBRULE_11_A_DESC = "Maximum depth of cutting from ground level";
-    private static final String RULE_AMD19_10 = "10";
+public class LPGGasPipe extends FeatureProcess {
+	private static final String RULE_43_3 = "43(3)";
+	private static final String RULE_43_3_DESC = "LPG piped gas system ";
+	
+    @Override
+    public Plan validate(Plan pl) {
+        return pl;
+    }
 
-	@Override
-	public Plan validate(Plan pl) {
-		return pl;
+    private boolean checkExemption(Plan pl, Block block) {
+    	List<String> occupancies = block.getBuilding().getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode())
+				.collect(Collectors.toList());
+    	boolean exmpted = false;
+		if (!occupancies.isEmpty()) {
+			if (!occupancies.contains(A4)) {
+				exmpted = true;
+			}
+		}
+		return exmpted;
 	}
 
 	@Override
     public Plan process(Plan pl) {
-        boolean valid = false;
-        scrutinyDetail = new ScrutinyDetail();
-        scrutinyDetail.setKey("Common_Depth Cutting");
-        scrutinyDetail.addColumnHeading(1, RULE_NO);
-        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-        scrutinyDetail.addColumnHeading(3, REQUIRED);
-        scrutinyDetail.addColumnHeading(4, PROVIDED);
-        scrutinyDetail.addColumnHeading(5, STATUS);
-		if (pl.getPlanInformation() != null && pl.getPlanInformation().getDepthHeightCutting() != null
-				&& pl.getPlanInformation().getDepthHeightCutting().equals(DcrConstants.YES)) {
-			scrutinyDetail.setRemarks("Documents as per KMBR rule 10, shall be submitted along with the application");
-		}
-		if (pl.getPlanInformation() != null && pl.getPlanInformation().getDepthCutting() != null
-				&& pl.getPlanInformation().getDepthCuttingDesc().equals(DcrConstants.YES)) {
-			String ruleNo = RULE_AMD19_10;
-			if (!pl.getPlanInformation().getDepthCutting()) {
-				valid = true;
-			}
-			if (valid) {
-				setReportOutputDetails(pl, ruleNo, SUBRULE_11_A_DESC,
-						BigDecimal.valueOf(1.5).toString() + DcrConstants.IN_METER,
-						"Less Than Or Equal To 1.5" + DcrConstants.IN_METER, Result.Accepted.getResultVal());
-			} else {
-				setReportOutputDetails(pl, ruleNo, SUBRULE_11_A_DESC,
-						BigDecimal.valueOf(1.5).toString() + DcrConstants.IN_METER,
-						"More Than 1.5" + DcrConstants.IN_METER, Result.Verify.getResultVal());
+		for (Block block : pl.getBlocks()) {
+			if (!checkExemption(pl, block)) {
+				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+				scrutinyDetail.setKey("Block_" + block.getNumber() + "_LPG piped gas system");
+				scrutinyDetail.addColumnHeading(1, RULE_NO);
+				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+				scrutinyDetail.addColumnHeading(3, PERMITTED);
+				scrutinyDetail.addColumnHeading(4, PROVIDED);
+				scrutinyDetail.addColumnHeading(5, STATUS);
+				if(block.getLpgSystem().isEmpty())
+					setReportOutputDetails(pl, RULE_43_3, RULE_43_3_DESC, "", OBJECTNOTDEFINED_DESC,
+						Result.Not_Accepted.getResultVal());
+				else
+					setReportOutputDetails(pl, RULE_43_3, RULE_43_3_DESC, "", OBJECTDEFINED_DESC,
+							Result.Accepted.getResultVal());
 			}
 		}
-
         return pl;
     }
 
-	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDescription, String expected, String actual,
-			String status) {
+	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String expected,
+			String actual, String status) {
 		Map<String, String> details = new HashMap<>();
 		details.put(RULE_NO, ruleNo);
-		details.put(DESCRIPTION, ruleDescription);
+		details.put(DESCRIPTION, ruleDesc);
 		details.put(REQUIRED, expected);
 		details.put(PROVIDED, actual);
 		details.put(STATUS, status);
 		scrutinyDetail.getDetail().add(details);
 		pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
 	}
-
-	@Override
-	public Map<String, Date> getAmendments() {
-        Map<String, Date> meanofAccessAmendments = new ConcurrentHashMap<>();
-        return meanofAccessAmendments;
+	
+    @Override
+    public Map<String, Date> getAmendments() {
+        return new LinkedHashMap<>();
     }
 }

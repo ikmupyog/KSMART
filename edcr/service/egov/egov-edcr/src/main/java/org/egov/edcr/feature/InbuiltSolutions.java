@@ -70,6 +70,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
@@ -84,39 +85,42 @@ public class InbuiltSolutions extends FeatureProcess {
 
 	@Override
 	public Plan validate(Plan pl) {
-		if(pl.getUtility() != null && pl.getUtility().getInBuiltSolutuons().isEmpty()) {
-			HashMap<String, String> errors = new HashMap<>();
-			errors.put(RULE_41A_DESC,
-	                edcrMessageSource.getMessage(OBJECTNOTDEFINED, new String[] {
-	                		RULE_41A_DESC }, LocaleContextHolder.getLocale()));
-	        pl.addErrors(errors);
+		for (Block block : pl.getBlocks()) {
+			if (!checkExemption(pl, block))
+				if (block != null && block.getInBuiltSolutuons().isEmpty()) {
+					HashMap<String, String> errors = new HashMap<>();
+					errors.put("Block_" + block.getNumber() + "_In-Building Solutions", edcrMessageSource.getMessage(OBJECTNOTDEFINED,
+							new String[] { RULE_41A_DESC + "in the block " + block.getNumber() }, LocaleContextHolder.getLocale()));
+					pl.addErrors(errors);
+				}
 		}
-        
 		return pl;
 	}
 
 	@Override
 	public Plan process(Plan pl) {
-		if (!checkExemption(pl)) {
-			validate(pl);
-			ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-			scrutinyDetail.setKey("Common_In-Building Solutions");
-			scrutinyDetail.addColumnHeading(1, RULE_NO);
-			scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-			scrutinyDetail.addColumnHeading(3, PERMITTED);
-			scrutinyDetail.addColumnHeading(4, PROVIDED);
-			scrutinyDetail.addColumnHeading(5, STATUS);
-			processInbuiltSolutions(pl);
+		validate(pl);
+		for (Block block : pl.getBlocks()) {
+			if (!checkExemption(pl, block)) {
+				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+				scrutinyDetail.setKey("Block_" + block.getNumber() + "_In-Building Solutions");
+				scrutinyDetail.addColumnHeading(1, RULE_NO);
+				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+				scrutinyDetail.addColumnHeading(3, PERMITTED);
+				scrutinyDetail.addColumnHeading(4, PROVIDED);
+				scrutinyDetail.addColumnHeading(5, STATUS);
+				processInbuiltSolutions(pl);
+			}
 		}
 		return pl;
 	}
 
-	private boolean checkExemption(Plan pl) {
-		List<String> occupancies = pl.getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode())
+	private boolean checkExemption(Plan pl, Block block) {
+		List<String> occupancies = block.getBuilding().getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode())
 				.collect(Collectors.toList());
-		double builtupArea = pl.getVirtualBuilding().getTotalBuitUpArea().doubleValue();
-		double flrCount = pl.getVirtualBuilding().getFloorsAboveGround() == null ? 0 : pl.getVirtualBuilding().getFloorsAboveGround().doubleValue();
-		double bldgHght = pl.getVirtualBuilding().getBuildingHeight().doubleValue();
+		double builtupArea = block.getBuilding().getTotalBuitUpArea().doubleValue();
+		double flrCount = block.getBuilding().getFloorsAboveGround() == null ? 0 : block.getBuilding().getFloorsAboveGround().doubleValue();
+		double bldgHght = block.getBuilding().getBuildingHeight().doubleValue();
 		boolean exmpted = false;
 		if (!occupancies.isEmpty()) {
 			if ((occupancies.contains(A1) || occupancies.contains(A4))

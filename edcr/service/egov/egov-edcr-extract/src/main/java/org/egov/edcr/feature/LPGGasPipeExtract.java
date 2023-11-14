@@ -18,28 +18,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InBuiltSolutionsExtract extends FeatureExtract {
-    private static final Logger LOG = LogManager.getLogger(InBuiltSolutionsExtract.class);
+public class LPGGasPipeExtract extends FeatureExtract {
+    private static final Logger LOG = LogManager.getLogger(LPGGasPipeExtract.class);
     @Autowired
     private LayerNames layerNames;
 
     @Override
     public PlanDetail extract(PlanDetail pl) {
-        if (LOG.isInfoEnabled())
-            LOG.info("Starting of Inbuilt Solutions Extract......");
+        if (LOG.isDebugEnabled())
+            LOG.debug("Starting of LPG Gas Pipe System Extract......");
         for(Block block : pl.getBlocks()) {
-        	String inBuiltSolutionLayerName = String.format(layerNames.getLayerName("LAYER_NAME_BUILTIN_SOLUTION"),
+        	String lpgSystemLayerName = String.format(layerNames.getLayerName("LAYER_NAME_LPG_SYSTEM"),
                     block.getNumber());
-        	List<DXFLWPolyline> inBuiltSolutions = Util.getPolyLinesByLayer(pl.getDoc(),
-            		inBuiltSolutionLayerName);
-            if (inBuiltSolutions != null && !inBuiltSolutions.isEmpty())
-                for (DXFLWPolyline pline : inBuiltSolutions) {
+        	List<DXFLWPolyline> lpgSystems = Util.getPolyLinesByLayer(pl.getDoc(),
+            		lpgSystemLayerName);
+            if (lpgSystems != null && !lpgSystems.isEmpty())
+                for (DXFLWPolyline pline : lpgSystems) {
                     Measurement measurement = new MeasurementDetail(pline, true);
-                    block.getInBuiltSolutuons().add(measurement);
+                    block.getLpgSystem().add(measurement);
                 }
         }
-        if (LOG.isInfoEnabled())
-            LOG.info("End of Inbuilt Solutions Extract......");
+        if (LOG.isDebugEnabled())
+            LOG.debug("End of LPG Gas Pipe System Extract......");
         return pl;
     }
 

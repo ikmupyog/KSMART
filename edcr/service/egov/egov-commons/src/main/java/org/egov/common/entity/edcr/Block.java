@@ -95,7 +95,8 @@ public class Block extends Measurement {
     private Chimney chimneyV2;
     private List<Portico> porticos = new ArrayList<>();
     private List<Measurement> libraryStackArea = new ArrayList<>();
-
+    private List<Measurement> inBuiltSolutuons = new ArrayList<>();
+    private List<Measurement> lpgSystem = new ArrayList<>();
     @Override
     public String toString() {
         return "Block [building=" + building + ", name=" + name + ", number=" + number + ", setBacks=" + setBacks
@@ -436,6 +437,22 @@ public class Block extends Measurement {
 
 	public void setLibraryStackArea(List<Measurement> libraryStackArea) {
 		this.libraryStackArea = libraryStackArea;
+	}
+
+	public List<Measurement> getInBuiltSolutuons() {
+		return inBuiltSolutuons;
+	}
+
+	public void setInBuiltSolutuons(List<Measurement> inBuiltSolutuons) {
+		this.inBuiltSolutuons = inBuiltSolutuons;
+	}
+
+	public List<Measurement> getLpgSystem() {
+		return lpgSystem;
+	}
+
+	public void setLpgSystem(List<Measurement> lpgSystem) {
+		this.lpgSystem = lpgSystem;
 	}
 
 }

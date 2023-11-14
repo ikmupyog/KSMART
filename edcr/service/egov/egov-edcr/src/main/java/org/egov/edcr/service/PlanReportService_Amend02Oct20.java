@@ -698,6 +698,14 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 drb.addConcatenatedReport(getSub(allMap.get(cmnFeature), i, i + "." + cmnFeature,
                         allMap.get(cmnFeature).getHeading(), allMap.get(cmnFeature).getSubHeading(), cmnFeature));
                 valuesMap.put(cmnFeature, allMap.get(cmnFeature).getDetail());
+                List featureFooter = new ArrayList();
+                if (allMap.get(cmnFeature).getRemarks() != null) {
+                    drb.addConcatenatedReport(
+                            createFooterSubreport("Remarks :  " + allMap.get(cmnFeature).getRemarks(),
+                                    "Remarks_" + cmnFeature));
+                    featureFooter.add(allMap.get(cmnFeature).getRemarks());
+                    valuesMap.put("Remarks_" + cmnFeature, featureFooter);
+                }
             }
             
             LOG.info("completed  "+common);

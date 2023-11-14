@@ -191,6 +191,9 @@ public class PlanInformation implements Serializable {
     
     //Value from Plan info.  Access width to the plot.
 	private transient BigDecimal accessHeadRoom;
+	
+	//Extracted from Plan info. Depth Height cutting more than 1.5 Meter flag. 
+    private transient String depthHeightCutting = NA;
 
     public Boolean getGovernmentOrAidedSchool() {
         return governmentOrAidedSchool;
@@ -745,4 +748,11 @@ public class PlanInformation implements Serializable {
 		this.accessHeadRoom = accessHeadRoom;
 	}
 
+	public String getDepthHeightCutting() {
+		return depthHeightCutting;
+	}
+
+	public void setDepthHeightCutting(String depthHeightCutting) {
+		this.depthHeightCutting = depthHeightCutting;
+	}
 }
