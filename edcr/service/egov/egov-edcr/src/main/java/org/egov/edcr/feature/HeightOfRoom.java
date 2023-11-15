@@ -60,17 +60,29 @@ import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.D3;
+import static org.egov.edcr.constants.DxfFileConstants.D4;
 import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.E1;
+import static org.egov.edcr.constants.DxfFileConstants.E2;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
+import static org.egov.edcr.constants.DxfFileConstants.G5;
 import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.I3;
+import static org.egov.edcr.constants.DxfFileConstants.I4;
+import static org.egov.edcr.constants.DxfFileConstants.I5;
+import static org.egov.edcr.constants.DxfFileConstants.I6;
+import static org.egov.edcr.constants.DxfFileConstants.J;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -100,28 +112,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class HeightOfRoom extends FeatureProcess {
 
-    private static final String SUBRULE_35_2 = "35(2)";
-    private static final String SUBRULE_36 = "36";
-    private static final String SUBRULE_55_3 = "55(3)";
-    private static final String SUBRULE_55_4 = "55(4)";
-    private static final String SUBRULE_55_5 = "55(5)";
-    private static final String SUBRULE_55_6 = "55(6)";
-    private static final String SUBRULE_55_7 = "55(7)";
-    private static final String SUBRULE_55_8 = "55(8)";
-    private static final String SUBRULE_55_9 = "55(9)";
+    private static final String SUBRULE_32_2 = "32(2)";
+    private static final String SUBRULE_33 = "33";
+    private static final String SUBRULE_33_PROVISIO_1 = "33 Proviso 1";
+    private static final String SUBRULE_29_4 = "29(4) (iv)";
+    private static final String SUBRULE_44_1 = "44(1)";
+    private static final String SUBRULE_44_1_PROVISIO = "44(1) Provisio 1";
 
-    private static final String SUBRULE_35_2_DESC = "Minimum height of head room below mezzanine floor";
-    private static final String SUBRULE_36_DESC_NORMAL_ROOMS = "Minimum height of room under occupancy Educational,Medical/Hospital,Office/Business,Mercantile/Commercial,Storage,Hazardous";
-    private static final String SUBRULE_36_DESC_AC_ROOMS = "Minimum height of AC room under occupancy Educational,Medical/Hospital,Office/Business,Mercantile/Commercial,Storage,Hazardous";
-    private static final String SUBRULE_36_DESC_PARKING_ROOMS = "Minimum height of car and two wheeler parking room";
-    private static final String SUBRULE_55_3_DESC_ASSEMBLY_ROOMS = "Minimum height of room under assembly occupancy";
-    private static final String SUBRULE_55_3_DESC_ASSEMBLY_AC_ROOMS = "Minimum height of AC room under assembly occupancy";
-    private static final String SUBRULE_55_4_DESC = "Minimum height of headroom beneath or above balcony";
-    private static final String SUBRULE_55_5_DESC = "Minimum height of headroom in general ac rooms in assembly occupancy";
-    private static final String SUBRULE_55_6_DESC = "Minimum height of general ac rooms,store rooms,toilets,lamber and cellar rooms";
-    private static final String SUBRULE_55_7_DESC = "Minimum height of work room under occupancy G";
-    private static final String SUBRULE_55_8_DESC = "Minimum height of laboratory,entrance hall,canteen,cloak room";
-    private static final String SUBRULE_55_9_DESC = "Minimum height of store rooms and toilets in industrial buildings";
+    private static final String SUBRULE_44_2 = "44(2)";
+    private static final String SUBRULE_44_3 = "44(3)";
+    private static final String SUBRULE_45_4_PROVISIO = "45(4) Proviso 1";
+    private static final String SUBRULE_45_5 = "45(5)";
+    private static final String SUBRULE_45_6 = "45(6)";
+
+    private static final String SUBRULE_32_2_DESC = "Minimum height of head room below mezzanine floor";
+    private static final String SUBRULE_33_DESC_NORMAL_ROOMS = "Minimum height of room under occupancy Educational,Medical/Hospital,Office/Business,Mercantile/Commercial,Storage,Hazardous";
+    private static final String SUBRULE_33_PROVISIO_DESC_AC_ROOMS = "Minimum height of AC room under occupancy Educational,Medical/Hospital,Office/Business,Mercantile/Commercial,Storage,Hazardous";
+    private static final String SUBRULE_29_4_DESC_PARKING_ROOMS = "Minimum height of car and two wheeler parking room";
+    private static final String SUBRULE_44_1_DESC_ASSEMBLY_ROOMS = "Minimum height of room under assembly occupancy";
+    private static final String SUBRULE_44_1_PROVISIO_DESC_ASSEMBLY_AC_ROOMS = "Minimum height of AC room under assembly occupancy";
+    private static final String SUBRULE_44_2_DESC = "Minimum height of headroom beneath or above balcony";
+    private static final String SUBRULE_44_3_DESC = "Minimum height of headroom in general ac rooms in assembly occupancy";
+    private static final String SUBRULE_44_3_STORE_DESC = "Minimum height of general ac rooms,store rooms,toilets,lamber and cellar rooms";
+    private static final String SUBRULE_45_4_DESC = "Minimum height of work room under occupancy G";
+    private static final String SUBRULE_45_5_DESC = "Minimum height of laboratory,entrance hall,canteen,cloak room";
+    private static final String SUBRULE_45_6_DESC = "Minimum height of store rooms and toilets in industrial buildings";
 
     public static final BigDecimal MINIMUM_HEIGHT_2_2 = BigDecimal.valueOf(2.2);
     public static final BigDecimal MINIMUM_HEIGHT_3 = BigDecimal.valueOf(3);
@@ -175,63 +190,63 @@ public class HeightOfRoom extends FeatureProcess {
 													if (height
 															.getColorCode() == DxfFileConstants.MEZZANINE_HEAD_ROOM_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_2_2;
-														subRule = SUBRULE_35_2;
-														subRuleDesc = SUBRULE_35_2_DESC;
+														subRule = SUBRULE_32_2;
+														subRuleDesc = SUBRULE_32_2_DESC;
 													} else if (height
 															.getColorCode() == DxfFileConstants.NORMAL_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_3;
-														subRule = SUBRULE_36;
-														subRuleDesc = SUBRULE_36_DESC_NORMAL_ROOMS;
+														subRule = SUBRULE_33;
+														subRuleDesc = SUBRULE_33_DESC_NORMAL_ROOMS;
 													} else if (height
 															.getColorCode() == DxfFileConstants.AC_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_2_4;
-														subRule = SUBRULE_36;
-														subRuleDesc = SUBRULE_36_DESC_AC_ROOMS;
+														subRule = SUBRULE_33_PROVISIO_1;
+														subRuleDesc = SUBRULE_33_PROVISIO_DESC_AC_ROOMS;
 													} else if (height
 															.getColorCode() == DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_2_2;
-														subRule = SUBRULE_36;
-														subRuleDesc = SUBRULE_36_DESC_PARKING_ROOMS;
+														subRule = SUBRULE_29_4;
+														subRuleDesc = SUBRULE_29_4_DESC_PARKING_ROOMS;
 													} else if (height
 															.getColorCode() == DxfFileConstants.ASSEMBLY_ROOM_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_4;
-														subRule = SUBRULE_55_3;
-														subRuleDesc = SUBRULE_55_3_DESC_ASSEMBLY_ROOMS;
+														subRule = SUBRULE_44_1;
+														subRuleDesc = SUBRULE_44_1_DESC_ASSEMBLY_ROOMS;
 													} else if (height
 															.getColorCode() == DxfFileConstants.ASSEMBLY_AC_HALL_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_3;
-														subRule = SUBRULE_55_3;
-														subRuleDesc = SUBRULE_55_3_DESC_ASSEMBLY_AC_ROOMS;
+														subRule = SUBRULE_44_1_PROVISIO;
+														subRuleDesc = SUBRULE_44_1_PROVISIO_DESC_ASSEMBLY_AC_ROOMS;
 													} else if (height
 															.getColorCode() == DxfFileConstants.HEAD_ROOM_BENEATH_OR_ABOVE_BALCONY_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_3;
-														subRule = SUBRULE_55_4;
-														subRuleDesc = SUBRULE_55_4_DESC;
+														subRule = SUBRULE_44_2;
+														subRuleDesc = SUBRULE_44_2_DESC;
 													} else if (height
 															.getColorCode() == DxfFileConstants.HEAD_ROOM_IN_GENERAL_AC_ROOM_IN_ASSEMBLY_OCCUPANCY_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_2_4;
-														subRule = SUBRULE_55_5;
-														subRuleDesc = SUBRULE_55_5_DESC;
+														subRule = SUBRULE_44_3;
+														subRuleDesc = SUBRULE_44_3_DESC;
 													} else if (height
 															.getColorCode() == DxfFileConstants.GENERALAC_STORE_TOILET_LAMBER_CELLAR_ROOM_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_2_4;
-														subRule = SUBRULE_55_6;
-														subRuleDesc = SUBRULE_55_6_DESC;
+														subRule = SUBRULE_44_3;
+														subRuleDesc = SUBRULE_44_3_STORE_DESC;
 													} else if (height
 															.getColorCode() == DxfFileConstants.WORK_ROOM_UNDER_OCCUPANCY_G_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_3_6;
-														subRule = SUBRULE_55_7;
-														subRuleDesc = SUBRULE_55_7_DESC;
+														subRule = SUBRULE_45_4_PROVISIO;
+														subRuleDesc = SUBRULE_45_4_DESC;
 													} else if (height
 															.getColorCode() == DxfFileConstants.LAB_ENTRANCE_HALL_CANTEEN_CLOAK_ROOM_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_3;
-														subRule = SUBRULE_55_8;
-														subRuleDesc = SUBRULE_55_8_DESC;
+														subRule = SUBRULE_45_5;
+														subRuleDesc = SUBRULE_45_5_DESC;
 													} else if (height
 															.getColorCode() == DxfFileConstants.STORE_TOILET_ROOM_IN_INDUSTRIES_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_2_4;
-														subRule = SUBRULE_55_9;
-														subRuleDesc = SUBRULE_55_9_DESC;
+														subRule = SUBRULE_45_6;
+														subRuleDesc = SUBRULE_45_6_DESC;
 													}
 													distancesList.add(height.getHeight());
 												}
@@ -306,7 +321,7 @@ public class HeightOfRoom extends FeatureProcess {
             Set<Integer> coloursUniqueSet) {
         boolean isPresent = false;
         List<OccupancyTypeHelper> occupancies = floor.getOccupancies().stream().map(Occupancy::getTypeHelper).collect(Collectors.toList());
-        boolean isAssembly = occupancies.stream().anyMatch(occupancy -> Arrays.asList(D, D1, D2).contains(occupancy.getType().getCode()));
+        boolean isAssembly = occupancies.stream().anyMatch(occupancy -> Arrays.asList(D, D1, D2,D3,D4).contains(occupancy.getType().getCode()));
 
         if (isAssembly) {
 
@@ -340,7 +355,7 @@ public class HeightOfRoom extends FeatureProcess {
             }
         }
 
-        boolean isIndustrial = occupancies.stream().anyMatch(occupancy -> Arrays.asList(G1, G2).contains(occupancy.getType().getCode()));
+        boolean isIndustrial = occupancies.stream().anyMatch(occupancy -> Arrays.asList(G1, G2,G3,G4,G5).contains(occupancy.getType().getCode()));
         if (isIndustrial) {
             isPresent = coloursUniqueSet.stream()
                     .anyMatch(colorCode -> colorCode == DxfFileConstants.WORK_ROOM_UNDER_OCCUPANCY_G_COLOR_CODE);
@@ -357,7 +372,7 @@ public class HeightOfRoom extends FeatureProcess {
 
         // For other occupancies, atleast one room required in the plan.
 		boolean isBCDEFHIOccupancies = occupancies.stream()
-				.anyMatch(occupancy -> Arrays.asList(A2, B1, B2, B3, C, C1, C2, C3, E, F, F1, F2, F3, F3, H, I1, I2)
+				.anyMatch(occupancy -> Arrays.asList(A2, B1, B2, B3, C, C1, C2, C3, E,E1,E2, F, F1, F2, F3, H,I, I1, I2,I3,I4,I5,I6,J)
 						.contains(occupancy.getType().getCode()));
 
         if (isBCDEFHIOccupancies) {
