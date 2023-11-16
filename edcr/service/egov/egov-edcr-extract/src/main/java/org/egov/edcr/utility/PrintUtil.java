@@ -180,6 +180,7 @@ public class PrintUtil {
         line.setStartPoint(p1);
         line.setEndPoint(p2);
         line.setColor(160);
+        line.setLineType("Continuous");
        
         pl.getDxfDocument().addDXFEntity(line);  
 
