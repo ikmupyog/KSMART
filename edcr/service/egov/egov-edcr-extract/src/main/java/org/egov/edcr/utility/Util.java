@@ -1954,7 +1954,7 @@ public class Util {
 			  return "Lanes up to 75m";
 		if(dxfLayer.getName().equalsIgnoreCase("NON_NOTIFIED_ROAD"))
 			  return "Un notified Road-Width less than 6.0 m";
-		if(dxfLayer.getName().equalsIgnoreCase("UNIT_FA"))
+		if(dxfLayer.getName().contains("UNITFA"))
 			  return "Kithen";
 		
 		

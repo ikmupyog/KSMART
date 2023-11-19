@@ -280,11 +280,12 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 				continue;
 			}
 			LOG.debug("Validation : pdf  to print for as found is true  for : " + edcrPdfDetail.getLayer());
+			
 			edcrPdfDetail.getLayers().add("system_measurements");
 			enablePrintableLayers(edcrPdfDetail, planDetail.getDxfDocument());
 		
 			sanitize(fileName, planDetail.getDxfDocument(), edcrPdfDetail, planDetail);
-
+			
 			File file = convertDxfToPdf(planDetail.getDxfDocument(), fileName, edcrPdfDetail.getLayer(), edcrPdfDetail);
 			disablePrintableLayers(edcrPdfDetail, planDetail.getDxfDocument());
 
@@ -669,11 +670,17 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 	       
 	       List dxfEntities =  newLayer.getDXFEntities(DXFConstants.ENTITY_TYPE_LWPOLYLINE);
 	       if(dxfEntities!=null && dxfEntities.size()>0)
-	       for(Object oo: dxfEntities)
 	       {
-	    	   DXFEntity eee=(DXFEntity)oo;
-	    	   LOG.info(" Old Entities from Measurement Layers :" +eee.getID());
-	       }  
+	    	   LOG.info(" Old Entities from Measurement Layers  count:" +dxfEntities.size());
+	    	   if(LOG.isDebugEnabled())
+	    	   {
+			       for(Object oo: dxfEntities)
+			       {
+			    	   DXFEntity eee=(DXFEntity)oo;
+			    	   LOG.debug(" Old Entities from Measurement Layers :" +eee.getID());
+			       }  
+	    	   }
+	       }
 		
 
 		DXFVariable psltScale = dxfDocument.getDXFHeader().getVariable("$PSLTSCALE");
@@ -1960,9 +1967,9 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 				}
 			}
 			if (layerAndConf[1].contains("T")) {
-				String color = layerAndConf[1].substring(layerAndConf[1].indexOf("T") + 1, layerAndConf[1].length());
-				if (color != null) {
-					Integer no = Integer.parseInt(color);
+				String thick = layerAndConf[1].substring(layerAndConf[1].indexOf("T") + 1, layerAndConf[1].length());
+				if (thick != null) {
+					Integer no = Integer.parseInt(thick);
 					for (String ln : layerNamesLike) {
 						pdfdetail.getThicknessOverrides().put(ln, no);
 					}

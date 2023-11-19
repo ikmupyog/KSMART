@@ -179,8 +179,10 @@ public class PrintUtil {
         line.setLayerName(layerName);
         line.setStartPoint(p1);
         line.setEndPoint(p2);
-        line.setColor(160);
+        line.setColor(5);
         line.setLineType("Continuous");
+        
+        
        
         pl.getDxfDocument().addDXFEntity(line);  
 
@@ -219,7 +221,7 @@ public class PrintUtil {
         
         DXFLWPolyline pline=new DXFLWPolyline();
         pline.setLayerName(layerName);
-        pline.setColor(160);
+        pline.setColor(5);
 
         for (Point p : outsidePoints) {
             sb.append("10").append("\n");

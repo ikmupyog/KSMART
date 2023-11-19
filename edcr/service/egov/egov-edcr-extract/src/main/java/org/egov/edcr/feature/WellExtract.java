@@ -69,13 +69,16 @@ public class WellExtract extends FeatureExtract {
                         well.setType(DcrConstants.PROPOSED);
                     pl.getUtility().addWells(well);
                 }
+
         }
         if (pl.getDoc().containsDXFLayer(layerNames.getLayerName("LAYER_NAME_DIST_WELL"))) {
         	List<RoadOutput> distFrmWellWithColor = extractDistanceWithColourCode(pl,
                     layerNames.getLayerName("LAYER_NAME_DIST_WELL"));
             if (!distFrmWellWithColor.isEmpty())
                 pl.getUtility().setWellDistance(distFrmWellWithColor);
+ 
         }
+        
         if (LOG.isDebugEnabled())
             LOG.debug("End of Well Extract......");
         return pl;
