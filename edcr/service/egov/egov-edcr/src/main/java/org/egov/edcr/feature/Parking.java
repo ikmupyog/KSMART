@@ -70,7 +70,17 @@ import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
+import static org.egov.edcr.constants.DxfFileConstants.G5;
 import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.I3;
+import static org.egov.edcr.constants.DxfFileConstants.I4;
+import static org.egov.edcr.constants.DxfFileConstants.I5;
+import static org.egov.edcr.constants.DxfFileConstants.I6;
 import static org.egov.edcr.constants.DxfFileConstants.PARKING_SLOT;
 import static org.egov.edcr.constants.DxfFileConstants.UNITFA_HALL;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
@@ -80,6 +90,7 @@ import static org.egov.edcr.utility.DcrConstants.ROUNDUP;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -100,7 +111,6 @@ import org.egov.common.entity.edcr.ParkingHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
-import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.egov.edcr.utility.math.Ray;
@@ -155,7 +165,7 @@ public class Parking extends FeatureProcess {
 	public static final String NO_OF_UNITS = "No of apartment units";
 	private static final String SUB_RULE_34_2_VISIT_DESCRIPTION = "Visitor Car Parking ";
 	private static final String UNITFA_HALL_NOT_DEFINED = "UNITFA_HALL to calculate required parking";
-	private static final String LOADING_UNLOADING_DIMENSION= "Minimum required Loading/Unloading Dimension";
+	private static final String LOADING_UNLOADING_DIMENSION = "Minimum required Loading/Unloading Dimension";
 	private static final String SUB_RULE_29_3_9 = "29(3) Table 9";
 	private static final String SUB_RULE_29_3_10 = "29(3) Table 10";
 	private static final String SUB_RULE_29_5 = "29(5)";
@@ -215,7 +225,8 @@ public class Parking extends FeatureProcess {
 				if (!occupancies.isEmpty()) {
 					if (occupancies.size() == 1 && occupancies.containsKey(A4)
 							&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
-							|| bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0 || floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
+									|| bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+									|| floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
 						exempted = true;
 					} else if (occupancies.size() <= 2 && floorCount != null && floorCount.intValue() <= 3) {
 						if ((occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5)))
@@ -426,8 +437,8 @@ public class Parking extends FeatureProcess {
 				else {
 					if (occupancy != null && occupancy.getFloorArea() != null
 							&& occupancy.getFloorArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) <= 0)
-						noOfCarParkingForF = occupancy.getFloorArea().divide(BigDecimal.valueOf(90), DECIMALDIGITS_MEASUREMENTS,
-								ROUNDUP);
+						noOfCarParkingForF = occupancy.getFloorArea().divide(BigDecimal.valueOf(90),
+								DECIMALDIGITS_MEASUREMENTS, ROUNDUP);
 					else if (occupancy != null && occupancy.getFloorArea() != null
 							&& occupancy.getFloorArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) > 0)
 						noOfCarParkingForF = BigDecimal.valueOf(THOUSAND_200)
@@ -507,10 +518,10 @@ public class Parking extends FeatureProcess {
 			processTwoWheelerParking(pl, result);
 			processMechanicalParking(pl, result);
 		}
-		if(!pl.getParkingDetails().getEvChargers().isEmpty())
+		if (!pl.getParkingDetails().getEvChargers().isEmpty())
 			setReportOutputDetails(pl, SUB_RULE_29_12, "Charging Point", "", OBJECTDEFINED_DESC,
 					Result.Accepted.getResultVal());
-			
+
 		processUnits(pl);
 		if (result.totalRequiredCarParking > 0 && (pl.getParkingDetails().getEvChargers() == null
 				|| pl.getParkingDetails().getEvChargers().isEmpty())) {
@@ -605,6 +616,12 @@ public class Parking extends FeatureProcess {
 				.filter(occupancy -> G1.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
 		Occupancy g2 = pl.getOccupancies().stream()
 				.filter(occupancy -> G2.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
+		Occupancy g3 = pl.getOccupancies().stream()
+				.filter(occupancy -> G3.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
+		Occupancy g4 = pl.getOccupancies().stream()
+				.filter(occupancy -> G4.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
+		Occupancy g5 = pl.getOccupancies().stream()
+				.filter(occupancy -> G5.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
 		Occupancy h = pl.getOccupancies().stream()
 				.filter(occupancy -> H.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
 
@@ -619,6 +636,18 @@ public class Parking extends FeatureProcess {
 		if (g2 != null && g2.getFloorArea() != null) {
 			noOfCarParking = g2.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g2);
+		}
+		if (g3 != null && g3.getFloorArea() != null) {
+			noOfCarParking = g3.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
+			occupancyList.add(g3);
+		}
+		if (g4 != null && g4.getFloorArea() != null) {
+			noOfCarParking = g4.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
+			occupancyList.add(g4);
+		}
+		if (g5 != null && g5.getFloorArea() != null) {
+			noOfCarParking = g5.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
+			occupancyList.add(g5);
 		}
 		if (h != null && h.getFloorArea() != null) {
 			occupancyList.add(h);
@@ -655,37 +684,46 @@ public class Parking extends FeatureProcess {
 		int valid = 0;
 		int count = 0;
 		int validDimension = 0;
-		for (Measurement measurement : pl.getParkingDetails().getLoadUnload()) {
-			count++;
-			if(measurement.getArea().doubleValue() >= 30)
-				valid++;
-			if(measurement.getMinimumSide().doubleValue() >= 2.7)
-				validDimension++;
-			providedArea = providedArea + measurement.getArea().doubleValue();
+		BigDecimal totalFloorArea = BigDecimal.ZERO;
+		for (Occupancy occupancy : occupancies) {
+			totalFloorArea = totalFloorArea
+					.add(occupancy.getFloorArea() == null ? BigDecimal.ZERO : occupancy.getFloorArea());
 		}
-		
-		if (pl.getParkingDetails().getLoadUnload().isEmpty()) {
-			HashMap<String, String> errors = new HashMap<>();
-			errors.put(SUB_RULE_29_7,
-					getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.LOAD_UNLOAD_AREA));
-			pl.addErrors(errors);
-		} else if (valid < count) {
-			setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC, MINIMUM_REQUIRED_AREA_30_M,
-					"Out of " + count + PARKING + (count-valid) + PARKING_VIOLATED_MINIMUM_AREA, Result.Not_Accepted.getResultVal());
-		} else {
-			setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC, MINIMUM_REQUIRED_AREA_30_M,
-					"No violation of area in " + count + PARKING, Result.Accepted.getResultVal());
-		}
-		
-		if(count > 0) {
-			if(validDimension == count)
-				setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DIMENSION, ">=2.70m",
+		if (totalFloorArea.doubleValue() > 700) {
+			for (Measurement measurement : pl.getParkingDetails().getLoadUnload()) {
+				count++;
+				if (measurement.getArea().doubleValue() >= 30)
+					valid++;
+				if (measurement.getMinimumSide().doubleValue() >= 2.7)
+					validDimension++;
+				providedArea = providedArea + measurement.getArea().doubleValue();
+			}
+
+			if (pl.getParkingDetails().getLoadUnload().isEmpty()) {
+				HashMap<String, String> errors = new HashMap<>();
+				errors.put(SUB_RULE_29_7,
+						getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.LOAD_UNLOAD_AREA));
+				pl.addErrors(errors);
+			} else if (valid < count) {
+				setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC, MINIMUM_REQUIRED_AREA_30_M,
+						"Out of " + count + PARKING + (count - valid) + PARKING_VIOLATED_MINIMUM_AREA,
+						Result.Not_Accepted.getResultVal());
+			} else {
+				setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DESC, MINIMUM_REQUIRED_AREA_30_M,
 						"No violation of area in " + count + PARKING, Result.Accepted.getResultVal());
-			else
-				setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DIMENSION, ">=2.70m",
-						"Out of " + count + PARKING + (count-validDimension) + PARKING_VIOLATED_MINIMUM_AREA, Result.Not_Accepted.getResultVal());
+			}
+
+			if (count > 0) {
+				if (validDimension == count)
+					setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DIMENSION, ">=2.70m",
+							"No violation of area in " + count + PARKING, Result.Accepted.getResultVal());
+				else
+					setReportOutputDetails(pl, SUB_RULE_29_7, LOADING_UNLOADING_DIMENSION, ">=2.70m",
+							"Out of " + count + PARKING + (count - validDimension) + PARKING_VIOLATED_MINIMUM_AREA,
+							Result.Not_Accepted.getResultVal());
+			}
 		}
-		
+
 		/*
 		 * BigDecimal totalFloorArea = BigDecimal.ZERO; for (Occupancy occupancy :
 		 * occupancies) { totalFloorArea = totalFloorArea .add(occupancy.getFloorArea()
@@ -720,38 +758,47 @@ public class Parking extends FeatureProcess {
 	}
 
 	private void validateDAParking(Plan pl, ParkingHelper result) {
-		result.daParking = Math.ceil(result.carParkingForDACal * 3 / 100);
-		checkDimensionForDAParking(pl, result);
 		HashMap<String, String> errors = new HashMap<>();
 		Boolean isValid = true;
-		if (pl.getParkingDetails().getDisabledPersons().isEmpty()) {
-			isValid = false;
-			errors.put(SUB_RULE_42__5, getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.DAPARKING_UNIT));
-			pl.addErrors(errors);
-		} else if (pl.getParkingDetails().getDistFromDAToMainEntrance() == null
-				|| pl.getParkingDetails().getDistFromDAToMainEntrance().compareTo(BigDecimal.ZERO) == 0) {
-			isValid = false;
-			errors.put(SUB_RULE_42__5,
-					getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.DIST_FROM_DA_TO_ENTRANCE));
-			pl.addErrors(errors);
-		} else if (pl.getParkingDetails().getDistFromDAToMainEntrance().compareTo(BigDecimal.valueOf(30)) > 0) {
-			isValid = false;
-			setReportOutputDetails(pl, SUB_RULE_42__5, DcrConstants.DIST_FROM_DA_TO_ENTRANCE,
-					"Should be less than 30" + DcrConstants.IN_METER,
-					pl.getParkingDetails().getDistFromDAToMainEntrance() + DcrConstants.IN_METER,
-					Result.Not_Accepted.getResultVal());
-		} else if (pl.getParkingDetails().getValidDAParkingSlots() < result.daParking) {
-			setReportOutputDetails(pl, SUB_RULE_42__5, DA_PARKING, result.daParking.intValue() + NUMBERS,
-					pl.getParkingDetails().getValidDAParkingSlots() + NUMBERS, Result.Not_Accepted.getResultVal());
-		} else {
-			setReportOutputDetails(pl, SUB_RULE_42__5, DA_PARKING, result.daParking.intValue() + NUMBERS,
-					pl.getParkingDetails().getValidDAParkingSlots() + NUMBERS, Result.Accepted.getResultVal());
-		}
-		if (isValid) {
-			setReportOutputDetails(pl, SUB_RULE_42__5, DcrConstants.DIST_FROM_DA_TO_ENTRANCE,
-					"Less than 30" + DcrConstants.IN_METER,
-					pl.getParkingDetails().getDistFromDAToMainEntrance() + DcrConstants.IN_METER,
-					Result.Accepted.getResultVal());
+		List<String> occupanciesCode = pl.getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode())
+				.collect(Collectors.toList());
+		if (!occupanciesCode.contains(H) && !occupanciesCode.contains(G1) && !occupanciesCode.contains(G2)
+				&& !occupanciesCode.contains(G3) && !occupanciesCode.contains(G4) && !occupanciesCode.contains(G5)
+				 && !occupanciesCode.contains(I) && !occupanciesCode.contains(I1) && !occupanciesCode.contains(I2)
+				 && !occupanciesCode.contains(I3) && !occupanciesCode.contains(I4) && !occupanciesCode.contains(I5)
+				 && !occupanciesCode.contains(I6)) {
+			result.daParking = Math.ceil(result.carParkingForDACal * 3 / 100);
+			checkDimensionForDAParking(pl, result);
+			if (pl.getParkingDetails().getDisabledPersons().isEmpty()) {
+				isValid = false;
+				errors.put(SUB_RULE_42__5,
+						getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.DAPARKING_UNIT));
+				pl.addErrors(errors);
+			} else if (pl.getParkingDetails().getDistFromDAToMainEntrance() == null
+					|| pl.getParkingDetails().getDistFromDAToMainEntrance().compareTo(BigDecimal.ZERO) == 0) {
+				isValid = false;
+				errors.put(SUB_RULE_42__5,
+						getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.DIST_FROM_DA_TO_ENTRANCE));
+				pl.addErrors(errors);
+			} else if (pl.getParkingDetails().getDistFromDAToMainEntrance().compareTo(BigDecimal.valueOf(30)) > 0) {
+				isValid = false;
+				setReportOutputDetails(pl, SUB_RULE_42__5, DcrConstants.DIST_FROM_DA_TO_ENTRANCE,
+						"Should be less than 30" + DcrConstants.IN_METER,
+						pl.getParkingDetails().getDistFromDAToMainEntrance() + DcrConstants.IN_METER,
+						Result.Not_Accepted.getResultVal());
+			} else if (pl.getParkingDetails().getValidDAParkingSlots() < result.daParking) {
+				setReportOutputDetails(pl, SUB_RULE_42__5, DA_PARKING, result.daParking.intValue() + NUMBERS,
+						pl.getParkingDetails().getValidDAParkingSlots() + NUMBERS, Result.Not_Accepted.getResultVal());
+			} else {
+				setReportOutputDetails(pl, SUB_RULE_42__5, DA_PARKING, result.daParking.intValue() + NUMBERS,
+						pl.getParkingDetails().getValidDAParkingSlots() + NUMBERS, Result.Accepted.getResultVal());
+			}
+			if (isValid) {
+				setReportOutputDetails(pl, SUB_RULE_42__5, DcrConstants.DIST_FROM_DA_TO_ENTRANCE,
+						"Less than 30" + DcrConstants.IN_METER,
+						pl.getParkingDetails().getDistFromDAToMainEntrance() + DcrConstants.IN_METER,
+						Result.Accepted.getResultVal());
+			}
 		}
 	}
 
@@ -769,7 +816,7 @@ public class Parking extends FeatureProcess {
 							+ DcrConstants.SQMTRS,
 					Result.Not_Accepted.getResultVal());
 		} else {
-			setReportOutputDetails(pl, SUB_RULE_29_5	, TWO_WHEELER_PARK_AREA,
+			setReportOutputDetails(pl, SUB_RULE_29_5, TWO_WHEELER_PARK_AREA,
 					result.twoWheelerParking + " " + DcrConstants.SQMTRS,
 					BigDecimal.valueOf(providedArea).setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDUP) + " "
 							+ DcrConstants.SQMTRS,
@@ -913,11 +960,12 @@ public class Parking extends FeatureProcess {
 				success++;
 			else {
 				if (daParkingSlot.getHeight().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_HEIGHT
-					&& daParkingSlot.getWidth().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_WIDTH)
-					planDetail.getParkingDetails().setValidCarParkingSlots(planDetail.getParkingDetails().getValidCarParkingSlots() + 1);
-					
+						&& daParkingSlot.getWidth().setScale(2, RoundingMode.UP).doubleValue() >= PARKING_SLOT_WIDTH)
+					planDetail.getParkingDetails()
+							.setValidCarParkingSlots(planDetail.getParkingDetails().getValidCarParkingSlots() + 1);
+
 				daFailedCount++;
-				
+
 			}
 		}
 		planDetail.getParkingDetails().setValidDAParkingSlots(daParkingCount - daFailedCount);

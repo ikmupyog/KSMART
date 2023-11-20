@@ -97,19 +97,15 @@ public class FireStair extends FeatureProcess {
 	private static final String RULE_35_2_3 = "35(2)(3)";
 	private static final String RULE_35_2_4 = "35(2)(4)";
 	private static final String RULE_35_2_5 = "35(2)(5)";
-	private static final String RULE42 = "42";
 	private static final String EXPECTED_WIDTH = "1";
 	private static final String EXPECTED_LINE = "1";
 	private static final String EXPECTED_TREAD = "0.25";
 	private static final String EXPECTED_TREAD_HIGHRISE = "0.2";
 	private static final String WIDTH_DESCRIPTION = "Minimum width for fire stair %s";
 	private static final String TREAD_DESCRIPTION = "Minimum tread for fire stair %s";
-	private static final String LINE_DESCRIPTION = "Minimum length of line for fire stair %s flight layer";
 	private static final String HEIGHT_FLOOR_DESCRIPTION = "Height of floor in layer ";
 	private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "Flight polyline is not defined in layer ";
-	private static final String FLIGHT_LENGTH_DEFINED_DESCRIPTION = "Flight polyline length is not defined in layer ";
-	private static final String FLIGHT_WIDTH_DEFINED_DESCRIPTION = "Flight polyline width is not defined in layer ";
-	private static final String LANDING_WIDTH_DEFINED_DESCRIPTION = "Landing polyline width is not defined in layer ";
+	private static final String LANDING_NOT_DEFINED_DESCRIPTION = "Landing polyline is not defined in layer ";
 	private static final String LANDING_DESCRIPTION = "Minimum width for fire stair landing %s";
 	private static final String FLIGHT_MAX_ALLOWED_STEPS = "Maximum Number of risers allowed flight of stairs;";
 	
@@ -271,8 +267,6 @@ public class FireStair extends FeatureProcess {
 
 							// Boolean flightPolyLineClosed = fireStair.getFlightPolyLineClosed();
 							List<DXFLWPolyline> fireStairPolylines = ((FireStairDetail) fireStair).getStairPolylines();
-							BigDecimal minTread = BigDecimal.ZERO;
-							BigDecimal minFlightWidth = BigDecimal.ZERO;
 							String flightLayerName = String.format(
 									layerNames.getLayerName("LAYER_NAME_FIRESTAIR_FLIGHT"), block.getNumber(),
 									floor.getNumber(), fireStair.getNumber());
@@ -436,7 +430,7 @@ public class FireStair extends FeatureProcess {
 
 								} else {
 									errors.put("Flight PolyLine width" + flightLayerName,
-											FLIGHT_WIDTH_DEFINED_DESCRIPTION + flightLayerName);
+											FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION + flightLayerName);
 									pl.addErrors(errors);
 								}
 								
@@ -454,15 +448,10 @@ public class FireStair extends FeatureProcess {
 										}
 									int landingSize = landings.size();
 									if (!landings.isEmpty()) {
-
-										boolean valid = false;
-
 										if (!(Boolean) typicalFloorValues.get("isTypicalRepititiveFloor")) {
-											
 											String value = typicalFloorValues.get("typicalFloors") != null
 													? (String) typicalFloorValues.get("typicalFloors")
 													: " floor " + floor.getNumber();
-
 											if (failedLandingCount > 0) {
 												setReportOutputDetailsFloorStairWise(pl, RULE_35_2_2, value,
 														String.format(LANDING_DESCRIPTION, fireStair.getNumber()),
@@ -475,10 +464,9 @@ public class FireStair extends FeatureProcess {
 														Result.Accepted.getResultVal(), landingSD);
 											}
 										}
-
 									} else {
 										errors.put("Flight PolyLine width" + flightLayerName,
-												LANDING_WIDTH_DEFINED_DESCRIPTION + flightLayerName);
+												LANDING_NOT_DEFINED_DESCRIPTION + flightLayerName);
 										pl.addErrors(errors);
 									}
 								}
@@ -512,6 +500,8 @@ public class FireStair extends FeatureProcess {
 										String.format(RULE_35_2_1, block.getNumber()), "",
 										DcrConstants.OBJECTDEFINED_DESC, Result.Accepted.getResultVal(),
 										scrutinyDetail4);
+								setReportOutputDetails(pl, RULE_35_2_5, String.format(RULE_35_2_5, block.getNumber()), "The height of stair handrails shall not be less than 1.0 m and greater than 1.20 m",
+		                                "", Result.Verify.getResultVal(), scrutinyDetail4);
 							} else {
 								if (spiralStairCount == 0)
 									setReportOutputDetails(pl, RULE_35_2_1,

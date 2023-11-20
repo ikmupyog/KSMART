@@ -38,7 +38,6 @@ public class GeneralStair extends FeatureProcess {
     private static final String HEIGHT_FLOOR_DESCRIPTION = "Height of floor in layer ";
     private static final String FLOOR = "Floor";
     private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "Flight polyline is not defined in layer ";
-    private static final String FLIGHT_LENGTH_DEFINED_DESCRIPTION = "Flight polyline length is not defined in layer ";
     private static final String FLIGHT_WIDTH_DEFINED_DESCRIPTION = "General stair is not defined in layer ";
     private static final String RISER_DESCRIPTION = "Maximum Height of Riser";
     private static final String RULE35_1_5 = "39(1)(5)";
@@ -312,15 +311,10 @@ public class GeneralStair extends FeatureProcess {
                                         }
                                     } else {
                                         errors.put("Flight PolyLine length" + flightLayerName,
-                                                FLIGHT_LENGTH_DEFINED_DESCRIPTION + flightLayerName);
+                                        		FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION + flightLayerName);
                                         pl.addErrors(errors);
                                     }
-                                    // }
-                                } else {
-                                    errors.put("Flight PolyLine " + flightLayerName,
-                                            FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION + flightLayerName);
-                                    pl.addErrors(errors);
-                                }
+                                } 
                             }
 
                         }
