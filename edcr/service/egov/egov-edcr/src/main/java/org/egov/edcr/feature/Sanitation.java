@@ -262,8 +262,18 @@ public class Sanitation extends FeatureProcess {
                             validateBathRoom(pl, b, sanityDetails);
                             break;
                         case G1:
-                        case G2:
+//                        case G2:
                         case H:
+                        	if (sanityDetails.getMaleWaterClosets().isEmpty()
+                                    && sanityDetails.getFemaleWaterClosets().isEmpty())
+                                pl.addError(BLDG_PART_WATER_CLOSET,
+                                        getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_WATER_CLOSET,
+                                                b.getNumber()));
+
+                            if (sanityDetails.getMaleUrinals().isEmpty() && sanityDetails.getCommonUrinals().isEmpty())
+                                pl.addError(BLDG_PART_URINAL,
+                                        getLocaleMessage(MSG_ERROR_MANDATORY, FEATURE_NAME, BLDG_PART_URINAL, b.getNumber()));
+                            break;
                         case I1:
                         case I2:
                             validateVisitorUrinalWaterClosets(pl, b, sanityDetails);
