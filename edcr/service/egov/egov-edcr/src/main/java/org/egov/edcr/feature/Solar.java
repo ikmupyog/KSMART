@@ -71,7 +71,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Measurement;
-import org.egov.common.entity.edcr.OccupancyTypeHelper;
+import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
@@ -91,11 +91,12 @@ public class Solar extends FeatureProcess {
 		HashMap<String, String> errors = new HashMap<>();
 		if (pl != null && pl.getUtility() != null) {
 			// solar water heating defined or not
-			if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-				for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
-					String occCode = occupancyType.getType().getCode();
-					if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1 && pl.getVirtualBuilding().getTotalBuitUpArea() != null
-							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FOURHUNDRED) > 0
+			if (!pl.getOccupancies().isEmpty()) {
+				for (Occupancy occupancy : pl.getOccupancies()) {
+					String occCode = occupancy.getTypeHelper().getType().getCode();
+					BigDecimal builtupArea = occupancy.getBuiltUpArea();
+					if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
+							&& builtupArea != null && builtupArea.compareTo(FOURHUNDRED) > 0
 							&& pl.getUtility().getSolar().isEmpty()) {
 						errors.put(SOLAR_SYSTEM, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
 								new String[] { SOLAR_SYSTEM }, LocaleContextHolder.getLocale()));
@@ -103,9 +104,7 @@ public class Solar extends FeatureProcess {
 						break;
 					} else if ((occCode.equals(A4) || occCode.equals(A2) || occCode.equals(F3) || occCode.equals(A3)
 							|| occCode.equals(C) || occCode.equals(C1) || occCode.equals(C2) || occCode.equals(C3)
-							|| occCode.equals(D3))
-							&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
-							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FIVEHUNDRED) > 0
+							|| occCode.equals(D3)) && builtupArea != null && builtupArea.compareTo(FIVEHUNDRED) > 0
 							&& pl.getUtility().getSolar().isEmpty()) {
 						errors.put(SOLAR_SYSTEM, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
 								new String[] { SOLAR_SYSTEM }, LocaleContextHolder.getLocale()));
@@ -131,28 +130,28 @@ public class Solar extends FeatureProcess {
 		scrutinyDetail.setKey("Common_Solar");
 		String subRule = SUB_RULE_AMD_77 + ", " + SUB_RULE_AMD_78;
 		String subRuleDesc = SUB_RULE_AMD_77_78_DESCRIPTION;
-		if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
-				String occCode = occupancyType.getType().getCode();
-				if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
-						&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FOURHUNDRED) > 0) {
+		if (!pl.getOccupancies().isEmpty()) {
+			for (Occupancy occupancy : pl.getOccupancies()) {
+				String occCode = occupancy.getTypeHelper().getType().getCode();
+				BigDecimal builtupArea = occupancy.getBuiltUpArea();
+				if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null
+						&& pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
+						&& builtupArea.compareTo(FOURHUNDRED) > 0) {
 					processSolar(pl, subRule, subRuleDesc);
 					break;
 				} else if ((occCode.equals(A4) || occCode.equals(A2) || occCode.equals(F3) || occCode.equals(A3)
 						|| occCode.equals(C) || occCode.equals(C1) || occCode.equals(C2) || occCode.equals(C3)
-						|| occCode.equals(D3))
-						&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
-						&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(FIVEHUNDRED) > 0) {
+						|| occCode.equals(D3)) && builtupArea != null && builtupArea.compareTo(FIVEHUNDRED) > 0) {
 					processSolar(pl, subRule, subRuleDesc);
 					break;
 				}
 			}
 		}
-		processSloarArea(pl);
 		return pl;
 	}
 
 	private void processSolar(Plan pl, String subRule, String subRuleDesc) {
+		processSloarArea(pl);
 		if (!pl.getUtility().getSolar().isEmpty()) {
 			setReportOutputDetails(pl, subRule, subRuleDesc, "", OBJECTDEFINED_DESC,
 					Result.Accepted.getResultVal());
