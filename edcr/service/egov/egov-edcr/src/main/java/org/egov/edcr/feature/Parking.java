@@ -90,7 +90,6 @@ import static org.egov.edcr.utility.DcrConstants.ROUNDUP;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -106,6 +105,7 @@ import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.FloorUnit;
 import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Occupancy;
+import org.egov.common.entity.edcr.ParkingArea;
 import org.egov.common.entity.edcr.ParkingDetails;
 import org.egov.common.entity.edcr.ParkingHelper;
 import org.egov.common.entity.edcr.Plan;
@@ -225,8 +225,13 @@ public class Parking extends FeatureProcess {
 				if (!occupancies.isEmpty()) {
 					if (occupancies.size() == 1 && occupancies.containsKey(A4)
 							&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
-									|| bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
-									|| floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
+									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
+						exempted = true;
+					} else if (occupancies.size() == 1 && occupancies.containsKey(F)
+							&& (occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
+									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
 						exempted = true;
 					} else if (occupancies.size() <= 2 && floorCount != null && floorCount.intValue() <= 3) {
 						if ((occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5)))
@@ -234,8 +239,7 @@ public class Parking extends FeatureProcess {
 										&& (occupancies.containsKey(A1) || occupancies.containsKey(A5)))) {
 							exempted = true;
 						} else if (occupancies.size() == 2
-								&& (occupancies.containsKey(A1) || occupancies.containsKey(A5))
-								&& occupancies.containsKey(F)) {
+								&& (occupancies.containsKey(A1) || occupancies.containsKey(A5))) {
 							exempted = true;
 						} else {
 							exempted = false;
@@ -345,6 +349,7 @@ public class Parking extends FeatureProcess {
 				result.carParkingForDACal += result.a1TotalParking;
 				result.visitorParking = Math.ceil(result.a1TotalParking * 15 / 100);
 				result.totalRequiredCarParking += result.a1TotalParking + result.visitorParking;
+				result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), result.a1TotalParking + result.visitorParking);
 				rule = SUB_RULE_29_3_9;
 				break;
 			case A2:
@@ -363,6 +368,7 @@ public class Parking extends FeatureProcess {
 				double e = noOfCarParkingForA2 == null ? 0 : noOfCarParkingForA2.doubleValue();
 				result.totalRequiredCarParking += e;
 				result.carParkingForDACal += e;
+				result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), e);
 				break;
 			case B1:
 			case B2:
@@ -373,6 +379,7 @@ public class Parking extends FeatureProcess {
 							.doubleValue();
 					result.totalRequiredCarParking += b1;
 					result.carParkingForDACal += b1;
+					result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), b1);
 				}
 				BigDecimal builtupAreaForB2 = getTotalBuilltUpAreaByOccupancy(pl, B2);
 				if (builtupAreaForB2 != null) {
@@ -380,6 +387,7 @@ public class Parking extends FeatureProcess {
 							.doubleValue();
 					result.totalRequiredCarParking += b2;
 					result.carParkingForDACal += b2;
+					result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), b2);
 				}
 				BigDecimal builtupAreaForB3 = getTotalBuilltUpAreaByOccupancy(pl, B3);
 				if (builtupAreaForB3 != null) {
@@ -387,6 +395,7 @@ public class Parking extends FeatureProcess {
 							.doubleValue();
 					result.totalRequiredCarParking += b3;
 					result.carParkingForDACal += b3;
+					result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), b3);
 				}
 				break;
 			case D:
@@ -398,6 +407,7 @@ public class Parking extends FeatureProcess {
 							.doubleValue();
 					result.totalRequiredCarParking += b1;
 					result.carParkingForDACal += b1;
+					result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), b1);
 				}
 			case D3:
 				BigDecimal hallArea = BigDecimal.ZERO;
@@ -419,11 +429,13 @@ public class Parking extends FeatureProcess {
 								ROUNDUP);
 						result.totalRequiredCarParking += hall.doubleValue();
 						result.carParkingForDACal += hall.doubleValue();
+						result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), hall.doubleValue());
 					} else {
 						BigDecimal dining = diningSpace.divide((BigDecimal.valueOf(1)), DECIMALDIGITS_MEASUREMENTS,
 								ROUNDUP);
 						result.totalRequiredCarParking += dining.doubleValue();
 						result.carParkingForDACal += dining.doubleValue();
+						result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), dining.doubleValue());
 					}
 				} else {
 					pl.addError(UNITFA_HALL, getLocaleMessage(OBJECT_NOT_DEFINED, UNITFA_HALL_NOT_DEFINED));
@@ -448,6 +460,7 @@ public class Parking extends FeatureProcess {
 					double f = noOfCarParkingForF == null ? 0 : noOfCarParkingForF.doubleValue();
 					result.totalRequiredCarParking += f;
 					result.carParkingForDACal += f;
+					result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), f);
 				}
 				break;
 			case F1:
@@ -465,6 +478,7 @@ public class Parking extends FeatureProcess {
 							.add(occupancy.getFloorArea().subtract(BigDecimal.valueOf(THOUSAND_200))
 									.divide(BigDecimal.valueOf(60), 0, ROUNDUP));
 				double f = noOfCarParking == null ? 0 : noOfCarParking.doubleValue();
+				result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), f);
 				result.totalRequiredCarParking += f;
 				result.carParkingForDACal += f;
 				break;
@@ -481,16 +495,17 @@ public class Parking extends FeatureProcess {
 							.add(occupancy.getFloorArea().subtract(BigDecimal.valueOf(THOUSAND_200))
 									.divide(BigDecimal.valueOf(60), DECIMALDIGITS_MEASUREMENTS, ROUNDUP));
 				double office = noOfCarParking1 == null ? 0 : noOfCarParking1.doubleValue();
+				result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), office);
 				result.totalRequiredCarParking += office;
 				result.carParkingForDACal += office;
 				break;
 			}
 		}
 
-		double medical = processParkingForMedical(pl);
+		double medical = processParkingForMedical(pl, result);
 		result.totalRequiredCarParking += medical;
 		result.carParkingForDACal += medical;
-		result.totalRequiredCarParking += processParkingForIndustrialAndStorage(pl);
+		result.totalRequiredCarParking += processParkingForIndustrialAndStorage(pl, result);
 		result.totalRequiredCarParking = Math.ceil(result.totalRequiredCarParking);
 		result.carParkingForDACal = Math.ceil(result.carParkingForDACal);
 		pl.setParkingRequired(result.totalRequiredCarParking);
@@ -528,6 +543,27 @@ public class Parking extends FeatureProcess {
 			HashMap<String, String> errors = new HashMap<>();
 			errors.put(DcrConstants.EV_CHARGE_SLOT, getLocaleMessage(OBJECT_NOT_DEFINED, DcrConstants.EV_CHARGE_SLOT));
 			pl.addErrors(errors);
+		}
+		// Calculate the parking area declared inside building for each occupancy
+		if(!result.occupancyWiseParkingRequired.isEmpty()) {
+			for (Block block : pl.getBlocks()) {
+				if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
+					for (Floor floor : block.getBuilding().getFloors()) {
+						if (!floor.getParkingProvidedInsideBuilding().isEmpty()) {
+							BigDecimal parkingArea = floor.getParkingProvidedInsideBuilding().stream()
+									.map(ParkingArea::getParkingArea).reduce(BigDecimal.ZERO, BigDecimal::add);
+							for (Map.Entry<String, Double> map : result.getOccupancyWiseParkingRequired().entrySet()) {
+								double AreaForOccupancy = Math.ceil(map.getValue()) / Math.ceil(result.totalRequiredCarParking)
+										* parkingArea.doubleValue();
+								ParkingArea parkingAreaByOcc = new ParkingArea();
+								parkingAreaByOcc.setOccupancyType(Util.getOccupancyByCode(pl, map.getKey()));
+								parkingAreaByOcc.setParkingArea(BigDecimal.valueOf(AreaForOccupancy));
+								floor.getParkingProvidedInsideBuilding().add(parkingAreaByOcc);
+							}
+						}
+					}
+				}
+			}
 		}
 		LOGGER.info("******************Require no of Car Parking***************" + result.totalRequiredCarParking);
 	}
@@ -606,7 +642,7 @@ public class Parking extends FeatureProcess {
 
 	}
 
-	private double processParkingForIndustrialAndStorage(Plan pl) {
+	private double processParkingForIndustrialAndStorage(Plan pl, ParkingHelper result) {
 		List<Occupancy> occupancyList = new ArrayList<>();
 		Occupancy f = pl.getOccupancies().stream()
 				.filter(occupancy -> F3.equals(occupancy.getTypeHelper().getType().getCode())
@@ -632,32 +668,38 @@ public class Parking extends FeatureProcess {
 		if (g1 != null && g1.getFloorArea() != null) {
 			occupancyList.add(g1);
 			noOfCarParking = g1.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
+			result.getOccupancyWiseParkingRequired().put(g1.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
 		}
 		if (g2 != null && g2.getFloorArea() != null) {
 			noOfCarParking = g2.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g2);
+			result.getOccupancyWiseParkingRequired().put(g2.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
 		}
 		if (g3 != null && g3.getFloorArea() != null) {
 			noOfCarParking = g3.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g3);
+			result.getOccupancyWiseParkingRequired().put(g3.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
 		}
 		if (g4 != null && g4.getFloorArea() != null) {
 			noOfCarParking = g4.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g4);
+			result.getOccupancyWiseParkingRequired().put(g4.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
 		}
 		if (g5 != null && g5.getFloorArea() != null) {
 			noOfCarParking = g5.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g5);
+			result.getOccupancyWiseParkingRequired().put(g5.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
 		}
 		if (h != null && h.getFloorArea() != null) {
 			occupancyList.add(h);
 			noOfCarParking = h.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
+			result.getOccupancyWiseParkingRequired().put(h.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
 		}
 		processLoadingAndUnloading(pl, occupancyList);
 		return noOfCarParking == null ? 0 : noOfCarParking.doubleValue();
 	}
 
-	private double processParkingForMedical(Plan planDetail) {
+	private double processParkingForMedical(Plan planDetail, ParkingHelper result) {
 		Occupancy c = planDetail.getOccupancies().stream()
 				.filter(occupancy -> C.equals(occupancy.getTypeHelper().getType().getCode())).findAny().orElse(null);
 		Occupancy c1 = planDetail.getOccupancies().stream()
@@ -675,8 +717,11 @@ public class Parking extends FeatureProcess {
 			totalCarpetArea = totalCarpetArea.add(c2.getFloorArea());
 		if (c3 != null && c3.getFloorArea() != null)
 			totalCarpetArea = totalCarpetArea.add(c3.getFloorArea());
-		return totalCarpetArea == null ? 0
+		double parkingRequired = totalCarpetArea == null ? 0
 				: totalCarpetArea.divide(BigDecimal.valueOf(75), DECIMALDIGITS_MEASUREMENTS, ROUNDUP).doubleValue();
+		if(parkingRequired > 0)
+			result.getOccupancyWiseParkingRequired().put("C", parkingRequired);
+		return parkingRequired;
 	}
 
 	private void processLoadingAndUnloading(Plan pl, List<Occupancy> occupancies) {
@@ -764,9 +809,9 @@ public class Parking extends FeatureProcess {
 				.collect(Collectors.toList());
 		if (!occupanciesCode.contains(H) && !occupanciesCode.contains(G1) && !occupanciesCode.contains(G2)
 				&& !occupanciesCode.contains(G3) && !occupanciesCode.contains(G4) && !occupanciesCode.contains(G5)
-				 && !occupanciesCode.contains(I) && !occupanciesCode.contains(I1) && !occupanciesCode.contains(I2)
-				 && !occupanciesCode.contains(I3) && !occupanciesCode.contains(I4) && !occupanciesCode.contains(I5)
-				 && !occupanciesCode.contains(I6)) {
+				&& !occupanciesCode.contains(I) && !occupanciesCode.contains(I1) && !occupanciesCode.contains(I2)
+				&& !occupanciesCode.contains(I3) && !occupanciesCode.contains(I4) && !occupanciesCode.contains(I5)
+				&& !occupanciesCode.contains(I6)) {
 			result.daParking = Math.ceil(result.carParkingForDACal * 3 / 100);
 			checkDimensionForDAParking(pl, result);
 			if (pl.getParkingDetails().getDisabledPersons().isEmpty()) {

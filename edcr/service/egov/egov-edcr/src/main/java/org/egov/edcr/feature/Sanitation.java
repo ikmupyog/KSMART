@@ -51,7 +51,6 @@ import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
-import static org.egov.edcr.constants.DxfFileConstants.A5;
 import static org.egov.edcr.constants.DxfFileConstants.B1;
 import static org.egov.edcr.constants.DxfFileConstants.B2;
 import static org.egov.edcr.constants.DxfFileConstants.B3;
@@ -60,21 +59,21 @@ import static org.egov.edcr.constants.DxfFileConstants.C2;
 import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
 import static org.egov.edcr.constants.DxfFileConstants.D3;
 import static org.egov.edcr.constants.DxfFileConstants.D4;
-import static org.egov.edcr.constants.DxfFileConstants.D2;
 import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.E1;
 import static org.egov.edcr.constants.DxfFileConstants.E2;
 import static org.egov.edcr.constants.DxfFileConstants.F;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
-import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.G3;
 import static org.egov.edcr.constants.DxfFileConstants.G4;
 import static org.egov.edcr.constants.DxfFileConstants.G5;
+import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
 import static org.egov.edcr.constants.DxfFileConstants.I3;
@@ -102,6 +101,7 @@ import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
+import org.egov.common.entity.edcr.ParkingArea;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.SanityDetails;
@@ -448,20 +448,15 @@ public class Sanitation extends FeatureProcess {
                     Map<Integer, Integer> providedSpWcMap = new ConcurrentHashMap<>();
                     Map<Integer, Integer> failedAreaSpWcMap = new ConcurrentHashMap<>();
                     Map<Integer, Integer> failedDimensionSpWcMap = new ConcurrentHashMap<>();
-                    List<Occupancy> sanityDetailParkingArea = b.getSanityDetails().getParkingArea();
-
+                    Map<String, BigDecimal> sanityDetailParkingArea = getParkingAreaDeclaredInsideBuilding(b);
+                    
                     for (Occupancy type : b.getBuilding().getOccupancies()) {//TODO: CONVERSION OCCUPANCY TO BE USED ???
                         double buildUpArea = 0d;
 						BigDecimal deductionArea = BigDecimal.valueOf(0);
 
-						List<Occupancy> collect = sanityDetailParkingArea.stream()
-								.filter(o -> o.getTypeHelper() != null
-										&& (type.getTypeHelper() != null && o.getTypeHelper().getType() != null
-												&& o.getTypeHelper().getType().getCode()
-														.equalsIgnoreCase(type.getTypeHelper().getType().getCode())))
-								.collect(Collectors.toList());
-						if (!collect.isEmpty()) {
-							deductionArea = collect.get(0).getBuiltUpArea();
+						if (!sanityDetailParkingArea.isEmpty()
+								&& sanityDetailParkingArea.containsKey(type.getTypeHelper().getType().getCode())) {
+							deductionArea = sanityDetailParkingArea.get(type.getTypeHelper().getType().getCode());
 						}
      
                         if (I2.equals(type.getTypeHelper().getType().getCode()) && type.getFloorArea().doubleValue() == 0
@@ -800,6 +795,18 @@ public class Sanitation extends FeatureProcess {
         scrutinyDetail.setKey(key);
         return scrutinyDetail;
     }
+    
+    // Get parking area occupancy wise declared inside the building 
+    private Map<String, BigDecimal> getParkingAreaDeclaredInsideBuilding(Block blk) {
+    	 Map<String, BigDecimal> sanityDetailParkingArea = new ConcurrentHashMap<>();
+    	 for (Floor f : blk.getBuilding().getFloors()) {
+             for(ParkingArea parking : f.getParkingProvidedInsideBuilding()) {
+             	if(parking.getOccupancyType() != null)
+             		sanityDetailParkingArea.put(parking.getOccupancyType().getType().getCode(), parking.getParkingArea());
+             }
+           }
+         return sanityDetailParkingArea;
+    }
 
     //Check plot level converted occupancy contain c1+c2+c3>=10000
     //If occupancy D2, E2, I1 AND I2 THEN VALIDATE.
@@ -843,7 +850,6 @@ public class Sanitation extends FeatureProcess {
                     Map<Integer, Integer> providedSpWcMap = new ConcurrentHashMap<>();
                     Map<Integer, Integer> failedAreaSpWcMap = new ConcurrentHashMap<>();
                     Map<Integer, Integer> failedDimensionSpWcMap = new ConcurrentHashMap<>();
-                    List<Occupancy> sanityDetailParkingArea = b.getSanityDetails().getParkingArea();
 
                     //TODO: CHECK DIMENSION OF THESE MEASUREMENTS.
                     providedWcMale +=b.getSanityDetails().getMaleVisitorsWaterClosets().size();
@@ -857,19 +863,14 @@ public class Sanitation extends FeatureProcess {
 	                    providedMaleWashBasin +=f.getMaleVisitorWashBasins().size();
 	                    providedFemaleWashBasin+=f.getFemaleVisitorWashBasins().size();
 	                  }
-                    
+                    Map<String, BigDecimal> sanityDetailParkingArea = getParkingAreaDeclaredInsideBuilding(b);
                     for (Occupancy type : b.getBuilding().getOccupancies()) {
                         double buildUpArea = 0d;
 						BigDecimal deductionArea = BigDecimal.valueOf(0);
 
-						List<Occupancy> collect = sanityDetailParkingArea.stream()
-								.filter(o -> o.getTypeHelper() != null
-										&& (type.getTypeHelper() != null && o.getTypeHelper().getType() != null
-												&& o.getTypeHelper().getType().getCode()
-														.equalsIgnoreCase(type.getTypeHelper().getType().getCode())))
-								.collect(Collectors.toList());
-						if (!collect.isEmpty()) {
-							deductionArea = collect.get(0).getBuiltUpArea();
+						if (!sanityDetailParkingArea.isEmpty()
+								&& sanityDetailParkingArea.containsKey(type.getTypeHelper().getType().getCode())) {
+							deductionArea = sanityDetailParkingArea.get(type.getTypeHelper().getType().getCode());
 						}
 						
 						if (type.getBuiltUpArea() != null && type.getBuiltUpArea().doubleValue() > 0)

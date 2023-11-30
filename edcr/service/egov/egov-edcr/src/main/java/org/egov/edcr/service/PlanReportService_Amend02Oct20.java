@@ -1001,9 +1001,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                                         Iterator<ParkingArea> itr = floor.getParkingProvidedInsideBuilding().iterator();
                                         while (itr.hasNext()) {
                                        	 ParkingArea p = itr.next();
-                                            if (p.getExistParkingArea() != null) {
+                                            if (p.getParkingArea() != null && p.getOccupancyType() != null) {
                                                 parkingDetail.append(p.getOccupancyType().getType().getName()).append("-")
-                                                        .append(p.getExistParkingArea());
+                                                        .append(p.getParkingArea());
                                                 if (itr.hasNext())
                                                     parkingDetail.append(", ");
                                             }
@@ -1118,7 +1118,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                                         Iterator<ParkingArea> itr = floor.getParkingProvidedInsideBuilding().iterator();
                                         while (itr.hasNext()) {
                                        	 ParkingArea p = itr.next();
-                                            if (p.getExistParkingArea() != null) {
+                                            if (p.getExistParkingArea() != null && p.getOccupancyType() != null) {
                                                 parkingDetail.append(p.getOccupancyType().getType().getName()).append("-")
                                                         .append(p.getExistParkingArea());
                                                 if (itr.hasNext())

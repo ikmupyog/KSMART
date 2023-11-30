@@ -91,7 +91,7 @@ public class ParkingExtract extends FeatureExtract {
                 List<DXFLWPolyline> floorParkings = Util.getPolyLinesByLayer(pl.getDoc(), layerParkArea);
                 floorParkings.forEach(parkPline -> {
                 	ParkingArea parking = new ParkingArea();
-                    parking.setOccupancyType(Util.findOccupancyType(parkPline, pl));
+                    //parking.setOccupancyType(Util.findOccupancyType(parkPline, pl));
                     parking.setParkingArea(Util.getPolyLineArea(parkPline));
                     floor.getParkingProvidedInsideBuilding().add(parking);
                 });

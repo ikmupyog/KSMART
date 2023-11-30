@@ -48,6 +48,8 @@
 package org.egov.common.entity.edcr;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ParkingHelper implements Serializable {
 
@@ -62,5 +64,10 @@ public class ParkingHelper implements Serializable {
     public Double mechanicalParking = 0d;
     public String ruleNo;
     public String ruleDescription;
+    public Map<String, Double> occupancyWiseParkingRequired = new HashMap<>();
+    
+	public Map<String, Double> getOccupancyWiseParkingRequired() {
+		return occupancyWiseParkingRequired;
+	}
 
 }
