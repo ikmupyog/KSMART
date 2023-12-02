@@ -73,12 +73,11 @@ import java.util.stream.Collectors;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
-import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InbuiltSolutions extends FeatureProcess {
+public class InBuiltSolutions extends FeatureProcess {
 
 	private static final String RULE_41A = "41A";
 	private static final String RULE_41A_DESC = " In-Building Solutions ";
@@ -102,14 +101,13 @@ public class InbuiltSolutions extends FeatureProcess {
 		validate(pl);
 		for (Block block : pl.getBlocks()) {
 			if (!checkExemption(pl, block)) {
-				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 				scrutinyDetail.setKey("Block_" + block.getNumber() + "_In-Building Solutions");
 				scrutinyDetail.addColumnHeading(1, RULE_NO);
 				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
 				scrutinyDetail.addColumnHeading(3, PERMITTED);
 				scrutinyDetail.addColumnHeading(4, PROVIDED);
 				scrutinyDetail.addColumnHeading(5, STATUS);
-				processInbuiltSolutions(pl);
+				processInbuiltSolutions(pl, block);
 			}
 		}
 		return pl;
@@ -138,8 +136,8 @@ public class InbuiltSolutions extends FeatureProcess {
 		return exmpted;
 	}
 	
-	private void processInbuiltSolutions(Plan pl) {
-		if (!pl.getUtility().getInBuiltSolutuons().isEmpty()) {
+	private void processInbuiltSolutions(Plan pl, Block block) {
+		if (!block.getInBuiltSolutuons().isEmpty()) {
 			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "", OBJECTDEFINED_DESC, Result.Accepted.getResultVal());
 			return;
 		} else {

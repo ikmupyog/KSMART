@@ -82,7 +82,7 @@ import org.egov.edcr.feature.GovtBuildingDistance;
 import org.egov.edcr.feature.GuardRoom;
 import org.egov.edcr.feature.HeadRoom;
 import org.egov.edcr.feature.HeightOfRoom;
-import org.egov.edcr.feature.InbuiltSolutions;
+import org.egov.edcr.feature.InBuiltSolutions;
 import org.egov.edcr.feature.InfoCommsTechService;
 import org.egov.edcr.feature.InteriorOpenSpaceService;
 import org.egov.edcr.feature.Kitchen;
@@ -372,7 +372,7 @@ public class PlanFeatureRepository {
         features.add(pf);
         pf = new PlanFeature(PassageService.class);
         features.add(pf);
-        pf = new PlanFeature(InbuiltSolutions.class);
+        pf = new PlanFeature(InBuiltSolutions.class);
         features.add(pf);
         pf = new PlanFeature(LPGGasPipe.class);
         features.add(pf);

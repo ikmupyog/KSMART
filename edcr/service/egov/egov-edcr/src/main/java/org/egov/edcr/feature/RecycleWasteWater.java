@@ -105,7 +105,7 @@ public class RecycleWasteWater extends FeatureProcess {
                                         SUB_RULE_79_6_DESCRIPTION }, LocaleContextHolder.getLocale()));
                         pl.addErrors(errors);
                         break;
-                    } else if ((occupCode.equals(A2) || occupCode.equals(A3))
+                    } else if ((occupCode.equals(A4) || occupCode.equals(A2) || occupCode.equals(A3))
 							&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
 							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(TWO_THOUSAND) > 0
                             && pl.getUtility().getWasteWaterRecyclePlant().isEmpty()) {
@@ -146,7 +146,7 @@ public class RecycleWasteWater extends FeatureProcess {
 					if (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupCode)) {
 						processWasteWaterRecyclePlant(pl);
 						break;
-					} else if ((occupCode.equals(A2) || occupCode.equals(A3))
+					} else if ((occupCode.equals(A4) || occupCode.equals(A2) || occupCode.equals(A3))
 							&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
 							&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(TWO_THOUSAND) > 0) {
 						processWasteWaterRecyclePlant(pl);
@@ -175,7 +175,7 @@ public class RecycleWasteWater extends FeatureProcess {
     }
 
 	private boolean checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(String occupCode) {
-		return occupCode.equals(A4) || occupCode.equals(G1) || occupCode.equals(G2) || occupCode.equals(G3)
+		return occupCode.equals(G1) || occupCode.equals(G2) || occupCode.equals(G3)
 				|| occupCode.equals(G4) || occupCode.equals(G5) || occupCode.equals(I) || occupCode.equals(I1)
 				|| occupCode.equals(I2) || occupCode.equals(I3) || occupCode.equals(I4) || occupCode.equals(I5)
 				|| occupCode.equals(I6);

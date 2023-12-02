@@ -515,40 +515,38 @@ public class ExitWidth extends FeatureProcess {
 		// calculate minimum of exit widths provided and validate for that.
 		boolean isTypicalRepititiveFloor = false;
 		subRule = SUBRULE_37_2;
-
-		if (!floor.getExitWidthDoor().isEmpty()) {
-			BigDecimal minimumExitWidth = floor.getExitWidthDoor().get(0);
-			for (BigDecimal exitWidthDoor : floor.getExitWidthDoor()) {
-				if (exitWidthDoor.compareTo(minimumExitWidth) < 0) {
-					minimumExitWidth = exitWidthDoor;
-				}
-			}
-			Map<String, Object> typicalFloorValues = Util.getTypicalFloorValues(block, floor, isTypicalRepititiveFloor);
-			if (!(Boolean) typicalFloorValues.get("isTypicalRepititiveFloor")) {
-				Boolean valid = false;
-				if (minimumExitWidth.compareTo(value) >= 0) {
-					valid = true;
-				}
-				String typclFloor = typicalFloorValues.get("typicalFloors") != null
-						? (String) typicalFloorValues.get("typicalFloors")
-						: " floor " + floor.getNumber();
-				String[] occCodesArr = occupancyType.split(",");
-				StringBuilder sb = new StringBuilder();
-				for(String code : occCodesArr) {
-					sb.append(Util.getOccupancyByCode(pl, code.trim()).getType().getName());
-					if (!code.equals(occCodesArr[occCodesArr.length - 1])) {
-						sb.append(" , ");
-					}
-				}
-				if (valid) {
-					setReportOutputDetails(pl, subRule, typclFloor, String.valueOf(sb), value + DcrConstants.IN_METER,
-							minimumExitWidth + DcrConstants.IN_METER, Result.Accepted.getResultVal());
-				} else {
-					setReportOutputDetails(pl, subRule, typclFloor, String.valueOf(sb), value + DcrConstants.IN_METER,
-							minimumExitWidth + DcrConstants.IN_METER, Result.Not_Accepted.getResultVal());
-				}
+		BigDecimal minimumExitWidth = floor.getExitWidthDoor().isEmpty() ? BigDecimal.ZERO : floor.getExitWidthDoor().get(0);
+		for (BigDecimal exitWidthDoor : floor.getExitWidthDoor()) {
+			if (exitWidthDoor.compareTo(minimumExitWidth) < 0) {
+				minimumExitWidth = exitWidthDoor;
 			}
 		}
+		Map<String, Object> typicalFloorValues = Util.getTypicalFloorValues(block, floor, isTypicalRepititiveFloor);
+		if (!(Boolean) typicalFloorValues.get("isTypicalRepititiveFloor")) {
+			Boolean valid = false;
+			if (minimumExitWidth.compareTo(value) >= 0) {
+				valid = true;
+			}
+			String typclFloor = typicalFloorValues.get("typicalFloors") != null
+					? (String) typicalFloorValues.get("typicalFloors")
+					: " floor " + floor.getNumber();
+			String[] occCodesArr = occupancyType.split(",");
+			StringBuilder sb = new StringBuilder();
+			for(String code : occCodesArr) {
+				sb.append(Util.getOccupancyByCode(pl, code.trim()).getType().getName());
+				if (!code.equals(occCodesArr[occCodesArr.length - 1])) {
+					sb.append(" , ");
+				}
+			}
+			if (valid) {
+				setReportOutputDetails(pl, subRule, typclFloor, String.valueOf(sb), value + DcrConstants.IN_METER,
+						minimumExitWidth + DcrConstants.IN_METER, Result.Accepted.getResultVal());
+			} else {
+				setReportOutputDetails(pl, subRule, typclFloor, String.valueOf(sb), value + DcrConstants.IN_METER,
+						minimumExitWidth + DcrConstants.IN_METER, Result.Not_Accepted.getResultVal());
+			}
+		}
+	
 	}
 
 	private void setReportOutputDetails(Plan pl, String ruleNo, String floor, String occupancy, String expected,

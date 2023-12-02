@@ -231,8 +231,9 @@ public class FireStair extends FeatureProcess {
 				BigDecimal floorSize = block.getBuilding().getFloorsAboveGround();
 				Floor topMostFloor = floors.stream().filter(floor -> floor.getTerrace() || floor.getUpperMost())
 						.findAny().orElse(null);
+				BigDecimal generalStairCount = BigDecimal.ZERO;
 				for (Floor floor : floors) {
-
+					generalStairCount = Util.roundOffTwoDecimal(generalStairCount.add(BigDecimal.valueOf(floor.getGeneralStairs().size())));
 					boolean isTypicalRepititiveFloor = false;
 					Map<String, Object> typicalFloorValues = Util.getTypicalFloorValues(block, floor,
 							isTypicalRepititiveFloor);
@@ -486,7 +487,7 @@ public class FireStair extends FeatureProcess {
 										DcrConstants.OBJECTDEFINED_DESC, Result.Accepted.getResultVal(),
 										scrutinyDetail4);
 							} else {
-								if (spiralStairCount == 0)
+								if (spiralStairCount == 0 && generalStairCount.doubleValue() == 0)
 									setReportOutputDetails(pl, RULE_35_2_1,
 											String.format(RULE_35_2_1, block.getNumber()),
 											"Minimum 1 fire stair is required", DcrConstants.OBJECTNOTDEFINED_DESC,
@@ -503,7 +504,7 @@ public class FireStair extends FeatureProcess {
 								setReportOutputDetails(pl, RULE_35_2_5, String.format(RULE_35_2_5, block.getNumber()), "The height of stair handrails shall not be less than 1.0 m and greater than 1.20 m",
 		                                "", Result.Verify.getResultVal(), scrutinyDetail4);
 							} else {
-								if (spiralStairCount == 0)
+								if (spiralStairCount == 0 && generalStairCount.doubleValue() == 0)
 									setReportOutputDetails(pl, RULE_35_2_1,
 											String.format(RULE_35_2_1, block.getNumber()), "",
 											DcrConstants.OBJECTNOTDEFINED_DESC, Result.Not_Accepted.getResultVal(),

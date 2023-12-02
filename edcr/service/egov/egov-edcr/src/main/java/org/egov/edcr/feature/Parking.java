@@ -445,7 +445,7 @@ public class Parking extends FeatureProcess {
 				BigDecimal noOfCarParkingForF = BigDecimal.ZERO;
 				if (occupancy != null && occupancy.getBuiltUpArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) <= 0
 						|| pl.getPlot().getPlotBndryArea().doubleValue() <= 125)
-					result.totalRequiredCarParking = 0d;
+					result.totalRequiredCarParking += 0d;
 				else {
 					if (occupancy != null && occupancy.getFloorArea() != null
 							&& occupancy.getFloorArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) <= 0)
