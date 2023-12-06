@@ -52,6 +52,8 @@ import java.math.BigDecimal;
 public class DcrReportFloorDetail {
 
     private String floorNo;
+    
+    private String floorDescription;
 
     private String occupancy;
 
@@ -119,6 +121,46 @@ public class DcrReportFloorDetail {
 
 	public void setParkingDetail(String parkingDetail) {
 		this.parkingDetail = parkingDetail;
+	}
+
+	public String getFloorDescription() {
+		switch (this.floorNo)
+		{
+		case "0" : 
+			this.floorDescription="Ground";
+			break;
+		case "1" :
+			this.floorDescription="FIRST";
+			break;
+		case "2" :
+			this.floorDescription="SECOND";
+			break;
+		case "3" :
+			this.floorDescription="THIRD";
+			break;	
+		case "4" :
+			this.floorDescription="FOURTH";
+			break;	
+		case "-1" :
+			this.floorDescription="BASEMENT-01";
+			break;	
+		case "-2" :
+			this.floorDescription="BASEMENT-02";
+			break;	
+			
+		}
+		if(this.floorDescription==null)
+			if(this.floorNo.contains("-"))
+				this.floorDescription="BASEMENT-"+floorNo.replace("-", "");
+			else
+				this.floorDescription=floorNo+"TH FLOOR";	
+		
+		
+		return this.floorDescription;
+	}
+
+	public void setFloorDescription(String floorDescription) {
+		this.floorDescription = floorDescription;
 	}
     
 }

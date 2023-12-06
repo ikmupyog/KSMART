@@ -189,13 +189,13 @@ public class Util {
         List<String> disNames = new ArrayList();
         Iterator dxfLayerIterator = doc.getDXFLayerIterator();
         Pattern pat = Pattern.compile(regExp);
-        LOG.info("Pattern in getLayerNamesLike "+pat);
+        LOG.debug("Pattern in getLayerNamesLike "+pat);
         while (dxfLayerIterator.hasNext()) {
             DXFLayer name = (DXFLayer) dxfLayerIterator.next();
             Matcher m = pat.matcher(name.getName());
             while (m.find()) {
                 String group = m.group();
-                LOG.info("Found:" + group);
+                LOG.debug("Found:" + group);
                 layerNames.add(group);
             }
 
@@ -1225,7 +1225,7 @@ public class Util {
         LOG.debug("IS A Line api...............");
         LOG.debug("Points are" + old.getX() + " ," + old.getY() + " and " + in.getX() + " , " + in.getY());
         /*
-         * if(old.getX()== -30.8147745851d && old.getY()==18662.1171192d && in.getX()==-27.0547745852d ) { LOG.info("Debug This");
+         * if(old.getX()== -30.8147745851d && old.getY()==18662.1171192d && in.getX()==-27.0547745852d ) { LOG.debug("Debug This");
          * }
          */
         for (DXFLine line : lines) {
@@ -1823,7 +1823,7 @@ public class Util {
                  else if (pline.getColor() == 2)
               	   name="Proposed Septic Tank";
              }
-        	 LOG.info("returning "+name);
+        	 LOG.debug("returning "+name);
         	return name;
         }
         
@@ -1845,7 +1845,7 @@ public class Util {
                     if (occupancyType.getType() != null)
                         occupancyName = occupancyType.getType().getName();
                 }
-            LOG.info("returning Occupancy " + occupancyName);
+            LOG.debug("returning Occupancy " + occupancyName);
             return occupancyName;
 
         } else {
@@ -1855,7 +1855,7 @@ public class Util {
             name=  name.replace("NO_", "");
             name=  name.replaceAll("_", "");
             name= name.replaceAll("[\\d.]", "");
-            LOG.info("returning layer name " + name);
+            LOG.debug("returning layer name " + name);
             return name;
         }
     }
@@ -1865,7 +1865,7 @@ public class Util {
         OccupancyTypeHelper occupancyType = null;
         String name = null;
         String occupancyName = "";
-        
+        LOG.debug("pline color for oc check.... "+pline.getColor());
         if (pline.getColor() != 0) {
             occupancyType = findOccupancyType((DXFLWPolyline) pline, pl);
         }
@@ -1877,7 +1877,7 @@ public class Util {
                     if (occupancyType.getType() != null)
                         occupancyName = occupancyType.getType().getName();
                 }
-            LOG.info("returning Occupancy " + occupancyName);
+            LOG.debug("returning Occupancy " + occupancyName);
          
     }
         return occupancyName;
@@ -1896,8 +1896,8 @@ public class Util {
 			if(getlayerNameMap(dxfLayer)!=null)
 			{
 				name=getlayerNameMap(dxfLayer);
-				if (LOG.isInfoEnabled())
-					LOG.info("returning  getlayerNameMap  "+name);	
+				if (LOG.isDebugEnabled())
+					LOG.debug("returning  from getPolylinePrintableTextOfLayer  "+name);	
 			}else {
 			
 			name = dxfLayer.getName();
@@ -1908,8 +1908,8 @@ public class Util {
 			name= name.replaceAll("_", " ");
 			name= name.replaceAll("[\\d.]", "");
 			}
-			if (LOG.isInfoEnabled())
-				LOG.info("returning layer name " + name);
+			if (LOG.isDebugEnabled())
+				LOG.debug("returning layer name " + name);
 			return name;
 		
 	}
@@ -1924,8 +1924,8 @@ public class Util {
                else if (circle.getColor() == 2)
             	   name="Proposed Well";
            }
-     		if (LOG.isInfoEnabled())
-				LOG.info("returning layer name " + name);
+     		if (LOG.isDebugEnabled())
+				LOG.debug("returning  from getCirclePrintableTextOfLayer  " + name);
 			return name;
 		
 	}
@@ -1940,8 +1940,8 @@ public class Util {
 		name= name.replaceAll("DISTANCE", "");
 		name = name.replaceAll("_", " ");
 		
-		if (LOG.isInfoEnabled())
-			LOG.info("returning layer name " + name);
+		if (LOG.isDebugEnabled())
+			LOG.debug("returning from getLinePrintableText " + name);
 		return name;
     }
 
@@ -1955,7 +1955,7 @@ public class Util {
 		if(dxfLayer.getName().equalsIgnoreCase("NON_NOTIFIED_ROAD"))
 			  return "Un notified Road-Width less than 6.0 m";
 		if(dxfLayer.getName().contains("UNITFA"))
-			  return "Kithen";
+			  return "Kitchen";
 		
 		
 		return null;

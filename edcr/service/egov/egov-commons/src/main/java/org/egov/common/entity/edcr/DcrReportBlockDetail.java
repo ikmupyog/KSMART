@@ -73,6 +73,14 @@ public class DcrReportBlockDetail {
 
 	private BigDecimal unitsWithDinningRoom = BigDecimal.ZERO;
 
+	private BigDecimal totalBuiltUpArea=BigDecimal.ZERO;
+					   
+
+	private BigDecimal totalFloorArea=BigDecimal.ZERO;;
+
+	private BigDecimal totalCoveredArea=BigDecimal.ZERO;;
+
+	
 	// Occupancy, unitDesc, unitCount
 	private Map<String, Map<String, Integer>> units = new ConcurrentHashMap<>();
 	
@@ -166,5 +174,31 @@ public class DcrReportBlockDetail {
 	public void setDcrReportFloorUnitDetails(List<DcrReportFloorUnitDetail> dcrReportFloorUnitDetails) {
 		this.dcrReportFloorUnitDetails = dcrReportFloorUnitDetails;
 	}
+
+	public BigDecimal getTotalBuiltUpArea() {
+		return totalBuiltUpArea;
+	}
+
+	public void setTotalBuiltUpArea(BigDecimal totalBuiltUpArea) {
+		this.totalBuiltUpArea = totalBuiltUpArea;
+	}
+
+	public BigDecimal getTotalFloorArea() {
+		return totalFloorArea;
+	}
+
+	public void setTotalFloorArea(BigDecimal totalFloorArea) {
+		this.totalFloorArea = totalFloorArea;
+	}
+
+	public BigDecimal getTotalCoveredArea() {
+		return totalCoveredArea;
+	}
+
+	public void setTotalCoveredArea(BigDecimal totalCoveredArea) {
+		this.totalCoveredArea = totalCoveredArea;
+	}
+
+	
     
 }

@@ -677,8 +677,8 @@ public class PlanReportService {
                 plan.getBlocks() != null && !plan.getBlocks().isEmpty() ? plan.getBlocks().size() : 0);
         valuesMap.put("surrenderRoadArea", plan.getTotalSurrenderRoadArea());
         // THIS IS NOT WORKING IN AWS UAT SO TURING OFF NOW .
-      //  String imageURL = ReportUtil.getImageURL("egi/downloadfile/logo");
-        valuesMap.put("egovLogo", cityService.getCityLogoURLByCurrentTenant());
+        String imageURL = ReportUtil.getImageURL("/egi/downloadfile/logo");
+        valuesMap.put("egovLogo", imageURL);
         valuesMap.put("cityLogo", cityService.getCityLogoURLByCurrentTenant());
 
         if (clientSpecificSubReport) {

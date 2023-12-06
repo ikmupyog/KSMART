@@ -73,6 +73,39 @@ public class JasperReportService {
         return detailStyle;
     }
     
+    public Style getNewReportDetailStyle() { 
+        final Style detailStyle = new Style("detail");
+        detailStyle.setBorder(Border.THIN());
+        detailStyle.setTextColor(Color.BLACK);
+        detailStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        detailStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        detailStyle.setFont(new Font(9, Font._FONT_MONOSPACED, false));
+        detailStyle.setTransparency(Transparency.OPAQUE);
+        return detailStyle;
+    }
+    
+    public Style getNewReportDetailNumberStyle() { 
+        final Style detailStyle = new Style("detail");
+        detailStyle.setBorder(Border.THIN());
+        detailStyle.setTextColor(Color.BLACK);
+        detailStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        detailStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        detailStyle.setFont(new Font(9, Font._FONT_MONOSPACED, false));
+        detailStyle.setTransparency(Transparency.OPAQUE);
+        return detailStyle;
+    }
+    
+    public Style getNewReportDescriptionDetailStyle() {
+        final Style detailStyle = new Style("detail");
+        detailStyle.setBorder(Border.THIN());
+        detailStyle.setTextColor(Color.BLACK);
+        detailStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        detailStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        detailStyle.setFont(new Font(9, Font._FONT_MONOSPACED, false,true,false));
+        detailStyle.setTransparency(Transparency.OPAQUE);
+        return detailStyle;
+    }
+    
     public Style getDetailStyle(Color color) {
         final Style detailStyle = new Style("detail");
         detailStyle.setBorderLeft(Border.THIN());
@@ -119,6 +152,27 @@ public class JasperReportService {
         
         return columnStyle; 
     }
+    
+    public Style getColouredStyle() {
+        final Style columnStyle = new Style("ColumnCss");
+        columnStyle.setBorderLeft(Border.THIN());
+        columnStyle.setBorderRight(Border.THIN());
+        columnStyle.setBorderBottom(Border.THIN());
+        columnStyle.setBorderTop(Border.THIN());
+        columnStyle.setTextColor(Color.black);
+        columnStyle.setBackgroundColor(Color.blue);
+        columnStyle.setHorizontalAlign(HorizontalAlign.LEFT); 
+        columnStyle.setFont(new Font(9, Font._FONT_TIMES_NEW_ROMAN, false));
+        columnStyle.setStreching(Stretching.RELATIVE_TO_BAND_HEIGHT);   
+        columnStyle.setStretchWithOverflow(true);
+        columnStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+
+        columnStyle.setTransparent(false);  
+        columnStyle.setPaddingRight(2);
+        
+        return columnStyle; 
+    }
+
 
 
     public Style getNumberStyle() {
@@ -142,13 +196,14 @@ public class JasperReportService {
 
     public Style getTotalNumberStyle() {
         final Style columnStyle = new Style("TotalNumberCss");
-        columnStyle.setBorderLeft(Border.THIN());
+        /*columnStyle.setBorderLeft(Border.THIN());
         columnStyle.setBorderRight(Border.THIN());
         columnStyle.setBorderBottom(Border.THIN());
-        columnStyle.setBorderTop(Border.THIN());
+        columnStyle.setBorderTop(Border.THIN());*/
+        columnStyle.setBorder(Border.THIN());
         columnStyle.setTextColor(Color.black);
         columnStyle.setHorizontalAlign(HorizontalAlign.RIGHT);
-        columnStyle.setFont(new Font(9, Font._FONT_TIMES_NEW_ROMAN, false));
+        columnStyle.setFont(new Font(9, Font._FONT_MONOSPACED, false));
         columnStyle.setStreching(Stretching.RELATIVE_TO_BAND_HEIGHT);
         columnStyle.setStretchWithOverflow(true);
         columnStyle.setVerticalAlign(VerticalAlign.MIDDLE);
@@ -173,17 +228,53 @@ public class JasperReportService {
 
     public Style getColumnHeaderStyle() {
         final Style columnheaderStyle = new Style("ColumnHeaderCss");
-        columnheaderStyle.setBorderLeft(Border.THIN());
+       /* columnheaderStyle.setBorderLeft(Border.THIN());
         columnheaderStyle.setBorderRight(Border.THIN());
         columnheaderStyle.setBorderTop(Border.THIN());
-        columnheaderStyle.setBorderBottom(Border.THIN());
+        columnheaderStyle.setBorderBottom(Border.THIN());*/
+        columnheaderStyle.setBorder(Border.THIN());
         columnheaderStyle.setTextColor(Color.black);
         columnheaderStyle.setHorizontalAlign(HorizontalAlign.CENTER);
         columnheaderStyle.setVerticalAlign(VerticalAlign.MIDDLE);
-        columnheaderStyle.setFont(new Font(8, Font._FONT_ARIAL, true));
+        columnheaderStyle.setFont(new Font(9, Font._FONT_MONOSPACED, true));
+        return columnheaderStyle;
+    }
+    
+    public Style getNewReportColumnHeaderStyle() {
+        final Style columnheaderStyle = new Style("ColumnHeaderCss");
+        columnheaderStyle.setBorder(Border.THIN());
+        columnheaderStyle.setTextColor(Color.black);
+        columnheaderStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        columnheaderStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        columnheaderStyle.setFont(new Font(9, Font._FONT_MONOSPACED, false,true,false));
+        return columnheaderStyle;
+    }
+    
+    public Style getNewReportColumnHeaderParkingStyle() {
+        final Style columnheaderStyle = new Style("ColumnHeaderCss");
+        columnheaderStyle.setBorder(Border.THIN());
+        columnheaderStyle.setTextColor(Color.black);
+        columnheaderStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        columnheaderStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        columnheaderStyle.setFont(new Font(6, Font._FONT_MONOSPACED, true));
         return columnheaderStyle;
     }
 
+    public Style getDetailNewHeaderStyle() {
+        final Style detailNewHeaderStyle = new Style("titleStyle");
+        /*detailNewHeaderStyle.setBorderLeft(Border.BORDER_STYLE_SOLID);
+        detailNewHeaderStyle.setBorderRight(Border.THIN());
+        detailNewHeaderStyle.setBorderTop(Border.THIN());
+        detailNewHeaderStyle.setBorderBottom(Border.THIN());*/
+        detailNewHeaderStyle.setBorder(Border.THIN());
+        detailNewHeaderStyle.setTextColor(Color.black);
+        detailNewHeaderStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        detailNewHeaderStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        detailNewHeaderStyle.setFont(new Font(8, Font._FONT_ARIAL, true,true,false));
+        return detailNewHeaderStyle;
+    }
+    
+    
     public Style getBldgDetlsHeaderStyle() {
         final Style columnheaderStyle = new Style("BldgDtlHeaderCss");
         columnheaderStyle.setBorderLeft(Border.THIN());
@@ -199,13 +290,31 @@ public class JasperReportService {
 
     public Style getTitleStyle() {
         final Style titleStyle = new Style("titleStyle");
-        titleStyle.setFont(new Font(10, Font._FONT_ARIAL, true));
+        titleStyle.setFont(new Font(10, Font._FONT_MONOSPACED, true,true,false));
         titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
         return titleStyle;
     }
+    
+    public Style getNewReportTitleStyle() {
+        final Style titleStyle = new Style("titleStyle");
+        titleStyle.setFont(new Font(9, Font._FONT_MONOSPACED, true,true,false));
+        titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+        titleStyle.setVerticalAlign(VerticalAlign.MIDDLE); 
+        return titleStyle;
+    }
+      
+    
     public Style getSubReportTitleStyle() {
         final Style titleStyle = new Style("subReportTitleStyle");
         titleStyle.setFont(new Font(12, Font._FONT_ARIAL, true));
+        titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+        titleStyle.setTextColor(new Color(0, 0, 255));
+        return titleStyle;
+    }
+    
+    public Style getNewReportSubReportTitleStyle() {
+        final Style titleStyle = new Style("subReportTitleStyle");
+        titleStyle.setFont(new Font(12, Font._FONT_MONOSPACED, true,true,false));
         titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
         titleStyle.setTextColor(new Color(0, 0, 255));
         return titleStyle;

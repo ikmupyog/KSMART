@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InbuiltSolutionsExtract extends FeatureExtract {
-    private static final Logger LOG = LogManager.getLogger(InbuiltSolutionsExtract.class);
+public class InBuiltSolutionsExtract extends FeatureExtract {
+    private static final Logger LOG = LogManager.getLogger(InBuiltSolutionsExtract.class);
     @Autowired
     private LayerNames layerNames;
 

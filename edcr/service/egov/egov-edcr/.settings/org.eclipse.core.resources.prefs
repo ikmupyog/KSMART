@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/resources/reports/templates/Blank_A4_Table_Based.jrxml=UTF-8
+encoding//src/main/resources/reports/templates/Silhouette_Table_Based.jrxml=UTF-8
+encoding//src/main/resources/reports/templates/edcr_report.jrxml=UTF-8
 encoding/<project>=UTF-8
