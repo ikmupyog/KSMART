@@ -5,12 +5,13 @@ import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.infra.security.utils.SecureCodeUtils.generatePDF417Code;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,6 +28,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -56,7 +59,6 @@ import org.egov.edcr.autonumber.OCPlanScrutinyNumberGenerator;
 import org.egov.edcr.entity.ApplicationType;
 import org.egov.edcr.entity.EdcrApplication;
 import org.egov.edcr.entity.EdcrApplicationDetail;
-import org.egov.edcr.utility.DcrConstants;
 import org.egov.infra.admin.master.service.CityService;
 import org.egov.infra.config.core.ApplicationThreadLocals;
 import org.egov.infra.reporting.util.ReportUtil;
@@ -70,7 +72,6 @@ import ar.com.fdvs.dj.core.DJConstants;
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.core.layout.HorizontalBandAlignment;
-import ar.com.fdvs.dj.core.layout.LayoutManager;
 import ar.com.fdvs.dj.domain.AutoText;
 import ar.com.fdvs.dj.domain.DJCalculation;
 import ar.com.fdvs.dj.domain.DJDataSource;
@@ -85,7 +86,6 @@ import ar.com.fdvs.dj.domain.constants.Page;
 import ar.com.fdvs.dj.domain.constants.VerticalAlign;
 import ar.com.fdvs.dj.domain.entities.Subreport;
 import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
-import ar.com.fdvs.dj.domain.entities.columns.PropertyColumn;
 import ar.com.fdvs.dj.domain.entities.conditionalStyle.ConditionalStyle;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -127,8 +127,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     private static final String SIDENUMBER = "Side Number";
     private static final String SIDENUMBER_NAME = "Setback";
     private static final String LEVEL = "Level";
-    private static final String COMBINED_BLOCKS_SUMMARY_DETAILS = "OVERALL AREA SUMMARY";
-    private static final String GENERAL_DETAILS = "GENERALDETAILS";
+    private static final String COMBINED_BLOCKS_SUMMARY_DETAILS = "2) OVERALL AREA SUMMARY";
+    //private static final String GENERAL_DETAILS = "GENERALDETAILS";
     private static final String BLOCK_WISE_SUMMARY = "3) BLOCKWISE VALIDATIONS";
     private static final String TOTAL_FLOOR_UNITS = "Total Floor Units";
     private static final String NUMBERS = " Numbers";
@@ -179,7 +179,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 frb.setSubtitle("\t" + subheading);
 
             frb.setTitleStyle(reportService.getNewReportTitleStyle());
-            frb.setHeaderHeight(5);
+           // frb.setHeaderHeight(5);
             frb.setDefaultStyles(reportService.getNewReportTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getNewReportColumnHeaderStyle(), reportService.getNewReportDetailNumberStyle());
             frb.setAllowDetailSplit(false);
@@ -246,10 +246,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
           
             frb.setTitle("2) PROPOSED AREA AND OCUUPANCY") ;
             frb.setTitleStyle(reportService.getTitleStyle());
-            frb.setHeaderHeight(5);
+           /* frb.setHeaderHeight(5);
             frb.setTopMargin(10);
             frb.setBottomMargin(0);
-            frb.setLeftMargin(20);
+            frb.setLeftMargin(20);*/
             
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getNewReportColumnHeaderStyle(), reportService.getNewReportDetailStyle());
@@ -537,10 +537,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 frb.addColumn(coverageArea);
             }
 
-            frb.setTitle("Total Area");
-            frb.setTitleStyle(reportService.getTitleStyle());
+            frb.setTitle("TOTAL AREA");
+            frb.setTitleStyle(reportService.getNewReportTitleStyle());
             frb.setHeaderHeight(5);
             frb.setTopMargin(5);
+            frb.setTopMargin(120);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -613,12 +614,12 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             }
 
             frb.setTitle("2-1) EXISTING AREA");
-            frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
-            frb.setHeaderHeight(5);
-            frb.setTopMargin(5);
+            frb.setTitleStyle(reportService.getNewReportTitleStyle());
+            //frb.setHeaderHeight(5);
+           // frb.setTopMargin(5);
            
-            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
-                    reportService.getColumnHeaderStyle(), reportService.getDetailStyle());
+            /*frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
+                    reportService.getColumnHeaderStyle(), reportService.getDetailStyle());*/
             frb.setAllowDetailSplit(false);
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
             frb.setGrandTotalLegend(TOTAL);
@@ -672,13 +673,13 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             }
 
             frb.setTitle("2-2) PROPOSED AREA");
-            frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
+            frb.setTitleStyle(reportService.getNewReportSubTitleStyle());
            
-            frb.setSubtitleHeight(5);
+           // frb.setSubtitleHeight(5);
           
             frb.setHeaderHeight(5);
             frb.setTopMargin(5);
-            frb.setLeftMargin(120);
+           // frb.setLeftMargin(120);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -730,7 +731,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
             frb.setHeaderHeight(5);
             frb.setTopMargin(5);
-            frb.setLeftMargin(25);
+            //frb.setLeftMargin(25);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -761,11 +762,13 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             FastReportBuilder frb = new FastReportBuilder();
             frb.setUseFullPageWidth(true);
             frb.setTitle(title);
-
             frb.setShowDetailBand(false);
-            frb.setMargins(0, 0, 25, 0);
-            frb.setTitleStyle(reportService.getSubReportTitleStyle());
+            //frb.setMargins(0, 0, 0, 0);
+            frb.setTitleStyle(reportService.getNewReportSubReportTitleStyle());
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
+            frb.setTitleHeight(20);
+  
+           
             DynamicReport build = frb.build();
             Subreport sub = new Subreport();
             sub.setDynamicReport(build);
@@ -890,7 +893,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         valuesMap.put("errors", plan.getErrors());
         valuesMap.put("errorString", errors.toString());
         valuesMap.put("nocString", nocs.toString());
-        valuesMap.put("surveyNumber", plan.getPlanInfoProperties().get("RS_NO"));
+        
         valuesMap.put("nocs", plan.getNoObjectionCertificates());
         valuesMap.put("reportGeneratedDate", DateUtils.toDefaultDateTimeFormat(new Date()));
         valuesMap.put("currentYear", new LocalDate().getYear());
@@ -906,9 +909,22 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         valuesMap.put("blockCount",
                 plan.getBlocks() != null && !plan.getBlocks().isEmpty() ? plan.getBlocks().size() : 0);
         valuesMap.put("surrenderRoadArea", plan.getTotalSurrenderRoadArea());
-        String imageURL = ReportUtil.getImageURL("/egi/resources/global/images/LSGD.png");
-        valuesMap.put("egovLogo", imageURL);
-        valuesMap.put("cityLogo", cityService.getCityLogoURLByCurrentTenant());
+        String egovLogo = ReportUtil.getImageURL("/egi/resources/global/images/LSGD.png");
+        valuesMap.put("egovLogo", egovLogo);
+        String cityLogo = ReportUtil.getImageURL("/egi/resources/global/images/ksmart.png");
+        valuesMap.put("cityLogo", cityLogo);
+        valuesMap.put("footerLogo", egovLogo); /// this to add new logo
+       
+        //noOfMechanicalParking ,alteredArea ,village ,desam
+        valuesMap.put("surveyNumber", plan.getPlanInfoProperties().get("RS_NO"));
+        valuesMap.put("noOfMechanicalParking", plan.getPlanInformation().getNoOfMechanicalParking());
+        valuesMap.put("alteredArea", plan.getPlanInformation().getAlteredArea());
+        valuesMap.put("revenewWard", plan.getPlanInformation().getRevenueWard());
+        valuesMap.put("village", plan.getPlanInformation().getVillage());
+        valuesMap.put("desam", plan.getPlanInformation().getDesam());
+        valuesMap.put("planInfoPlotArea", plan.getPlanInformation().getPlotArea());
+        valuesMap.put("accWidth", plan.getPlanInformation().getAccessWidth());
+        valuesMap.put("demolitionArea",plan.getPlanInformation().getDemolitionArea());
 
         if (clientSpecificSubReport) {
 
@@ -1549,6 +1565,16 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                         dcrReportBlockDetail.setDcrReportFloorDetails(dcrReportFloorDetails);
                     }
                     dcrReportBlockDetails.add(dcrReportBlockDetail);
+                }
+                else{
+                	 DcrReportBlockDetail dcrReportBlockDetail = new DcrReportBlockDetail();
+                	dcrReportBlockDetail.setBlockNo(block.getNumber());
+                    
+                    dcrReportBlockDetail.setTotalBuiltUpArea(BigDecimal.ZERO);
+                    dcrReportBlockDetail.setTotalFloorArea( BigDecimal.ZERO);
+                    dcrReportBlockDetail.setTotalCoveredArea(BigDecimal.ZERO);
+                    dcrReportBlockDetails.add(dcrReportBlockDetail);
+                	
                 }
 
             }

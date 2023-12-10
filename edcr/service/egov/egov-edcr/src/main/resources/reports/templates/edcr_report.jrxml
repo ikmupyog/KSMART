@@ -73,6 +73,7 @@
 	<parameter name="cityLogo" class="java.lang.String"/>
 	<parameter name="currentYear" class="java.lang.Integer"/>
 	<parameter name="egovLogo" class="java.lang.String"/>
+	<parameter name="footerLogo" class="java.lang.String"/>
 	<parameter name="buildingDetailList" class="java.util.List"/>
 	<parameter name="blocks" class="java.util.List"/>
 	<parameter name="applicantName" class="java.lang.String"/>
@@ -85,6 +86,15 @@
 	<parameter name="bpaApplicationDate" class="java.lang.String"/>
 	<parameter name="planPermissionNumber" class="java.lang.String"/>
 	<parameter name="serviceType" class="java.lang.String"/>
+	<parameter name="surveyNumber" class="java.lang.String"/>
+	<parameter name="noOfMechanicalParking" class="java.lang.Integer"/>
+	<parameter name="alteredArea" class="java.math.BigDecimal"/>
+	<parameter name="planInfoPlotArea" class="java.math.BigDecimal"/>
+	<parameter name="accWidth" class="java.math.BigDecimal"/>
+	<parameter name="demolitionArea" class="java.math.BigDecimal"/>
+	<parameter name="desam" class="java.lang.String"/>
+	<parameter name="village" class="java.lang.String"/>
+	<parameter name="revenewWard" class="java.lang.String"/>
 	<field name="planInformation" class="org.egov.common.entity.edcr.PlanInformation"/>
 	<field name="plot" class="org.egov.common.entity.edcr.Plot"/>
 	<field name="electricLine" class="org.egov.common.entity.edcr.ElectricLine"/>
@@ -106,7 +116,7 @@
 				<text><![CDATA[GOVERNMENT OF KERALA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="106" y="46" width="328" height="20" uuid="3ba843d8-ad7c-4b74-a541-a2d6b99fa9b9"/>
+				<reportElement x="103" y="46" width="328" height="20" uuid="3ba843d8-ad7c-4b74-a541-a2d6b99fa9b9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -116,24 +126,16 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Monospaced" size="12" isBold="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[BUILDING DETAILS -KMBR/ KPBR SCRUTINY REPORT]]></text>
+				<text><![CDATA[BUILDING DETAILS - KMBR/ KPBR SCRUTINY REPORT]]></text>
 			</staticText>
-			<image scaleImage="RetainShape" hAlign="Center" isUsingCache="false" onErrorType="Icon">
-				<reportElement mode="Transparent" x="450" y="9" width="98" height="63" uuid="9575ccfe-2f3c-480c-bea6-2bc196c44f6f"/>
-				<imageExpression><![CDATA["ksmart.png"]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false" onErrorType="Icon">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="4" y="3" width="85" height="63" isPrintWhenDetailOverflows="true" uuid="f778375a-96b7-42de-8819-00bbfd34ae68"/>
-				<imageExpression><![CDATA["LSGD.png"]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="204" y="133" width="57" height="18" uuid="10f39610-2a48-455d-be03-0e94dedee3bc"/>
+				<reportElement x="223" y="145" width="57" height="19" uuid="10f39610-2a48-455d-be03-0e94dedee3bc"/>
 				<box>
 					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Monospaced" size="10" isBold="true"/>
@@ -142,13 +144,13 @@
 				<text><![CDATA[STATUS :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="report status style" x="261" y="132" width="141" height="19" uuid="3f3612b1-a275-495c-bc04-5393d31db615"/>
+				<reportElement style="report status style" x="280" y="145" width="100" height="19" uuid="3f3612b1-a275-495c-bc04-5393d31db615"/>
 				<box>
 					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Monospaced" size="12" isBold="true"/>
@@ -157,22 +159,22 @@
 				<textFieldExpression><![CDATA[$P{reportStatus}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="156" width="80" height="52" isRemoveLineWhenBlank="true" uuid="1bc539b3-3399-4906-9c6d-2f6ce7399eb8">
+				<reportElement x="0" y="176" width="80" height="52" isRemoveLineWhenBlank="true" uuid="1bc539b3-3399-4906-9c6d-2f6ce7399eb8">
 					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true" isUnderline="false"/>
+					<font fontName="Monospaced" size="10" isBold="true" isItalic="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Errors ]]></text>
+				<text><![CDATA[ERRORS]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="89" y="156" width="457" height="52" isRemoveLineWhenBlank="true" uuid="3993cc76-bd9f-4699-897a-2330010ece90">
+				<reportElement x="80" y="176" width="475" height="52" isRemoveLineWhenBlank="true" uuid="3993cc76-bd9f-4699-897a-2330010ece90">
 					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textFieldExpression><![CDATA[$P{errorString}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement x="309" y="88" width="114" height="21" uuid="c6245e01-c7a0-48b4-8332-e20796f62ea8"/>
+				<reportElement x="296" y="88" width="114" height="21" uuid="c6245e01-c7a0-48b4-8332-e20796f62ea8"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -184,10 +186,10 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Uploaded DATE"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["UPLOADED DATE"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="143" y="88" width="166" height="21" uuid="b43fad2f-24fd-4744-a5e1-dabc9902622a"/>
+				<reportElement x="128" y="88" width="137" height="21" uuid="b43fad2f-24fd-4744-a5e1-dabc9902622a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -202,7 +204,7 @@
 				<textFieldExpression><![CDATA[$P{applicantName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement x="29" y="88" width="114" height="21" uuid="bd7d60cd-40ce-4610-810e-0396f20e31ea"/>
+				<reportElement x="14" y="88" width="114" height="21" uuid="bd7d60cd-40ce-4610-810e-0396f20e31ea"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -217,7 +219,7 @@
 				<textFieldExpression><![CDATA["APPLICANT(S)"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement x="29" y="109" width="114" height="21" uuid="31ada674-fa02-474a-ab3c-b55c9ac694a4"/>
+				<reportElement x="14" y="109" width="114" height="21" uuid="31ada674-fa02-474a-ab3c-b55c9ac694a4"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -232,7 +234,7 @@
 				<textFieldExpression><![CDATA["APPLICATION TYPE"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="423" y="88" width="130" height="21" uuid="8f0e1ba4-c0fc-4066-9d8d-81aee79e61c6"/>
+				<reportElement x="410" y="88" width="130" height="21" uuid="8f0e1ba4-c0fc-4066-9d8d-81aee79e61c6"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -247,7 +249,7 @@
 				<textFieldExpression><![CDATA[$P{applicationDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement x="309" y="109" width="114" height="21" uuid="264aecfe-6117-4514-a816-be83a6c7e182"/>
+				<reportElement x="296" y="109" width="114" height="21" uuid="264aecfe-6117-4514-a816-be83a6c7e182"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -259,10 +261,10 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Uploaded Time"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["UPLOADED TIME"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="143" y="109" width="166" height="21" uuid="10868652-0f5a-49c5-b7fe-7a6e69f2c6e1"/>
+				<reportElement x="128" y="109" width="137" height="21" uuid="10868652-0f5a-49c5-b7fe-7a6e69f2c6e1"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -277,7 +279,7 @@
 				<textFieldExpression><![CDATA[$P{applicationType}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="423" y="109" width="130" height="21" uuid="5f95bbc6-5109-48b2-b698-83152cc445ee"/>
+				<reportElement x="410" y="109" width="130" height="21" uuid="5f95bbc6-5109-48b2-b698-83152cc445ee"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -292,7 +294,7 @@
 				<textFieldExpression><![CDATA[$P{dcrNo} != null  && $P{dcrNo} !=  ""  ?  $P{dcrNo} : "NA"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="115" y="2" width="306" height="20" uuid="ed11d28c-ce19-4969-8deb-01f60cd5c4b4"/>
+				<reportElement x="114" y="2" width="306" height="20" uuid="ed11d28c-ce19-4969-8deb-01f60cd5c4b4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -304,10 +306,250 @@
 				</textElement>
 				<text><![CDATA[LOCAL SELF GOVERNMENT]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="236" width="555" height="20" backcolor="#DCFCFA" uuid="f989e0b8-525d-494f-b9a0-f4887497086d"/>
+				<box topPadding="0" leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[1) GENERAL DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="256" width="280" height="18" uuid="bbba6966-0fad-4b84-ad82-cc5a577e20c0"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[SURVEY / RESURVEY NUMBER:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="256" width="275" height="18" uuid="4a1aaa58-c3ff-42ba-9003-982f588b943c"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{surveyNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="274" width="280" height="18" uuid="88beb1f9-d07d-44b9-9441-464de15d5e59"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[REVENUE WARD:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="274" width="275" height="18" uuid="759ac2f0-ea4a-4e2c-924e-ed1d78baf953"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{revenewWard}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="292" width="280" height="18" uuid="160c14d2-4023-4236-9ef0-864b1038405b"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[VILLAGE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="292" width="275" height="18" uuid="e6bf89b0-3fc6-466f-b5fb-13c63c559855"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{village}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="310" width="280" height="18" uuid="82ac3ec8-0c79-46c6-be51-93bd82aa110d"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[DESAM:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="310" width="275" height="18" uuid="8f933432-0532-407d-a436-05513a93dfd3"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desam}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="328" width="280" height="18" uuid="c405b4fe-a14a-4e7b-a668-87cc4545ded9"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[PLOT AREA (IN Sq M):]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="364" width="275" height="18" uuid="4115eeba-4912-46a2-b48f-f58bdaa96f49"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{noOfMechanicalParking}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="364" width="280" height="18" uuid="48ac4815-3c8e-425d-bdb4-f1fcc6330902"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[NUMNBER OF MECHANICAL PARKING:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="382" width="275" height="18" uuid="6b5cad1a-af9b-42df-bc6e-b8eefa244d81"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{demolitionArea}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="382" width="280" height="18" uuid="5fdb63df-53b1-4e73-8e9e-27a7390fc571"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[EXISTING AREA TO BE DEMOLISHED (IN Sq M):]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="328" width="275" height="18" uuid="6f515501-c15c-45d9-908b-44bb218bc34a"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{planInfoPlotArea}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="346" width="280" height="18" uuid="9ddaafe9-3a93-4889-ba54-4971fb158cf7"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[ACCESS WITH (IN METERS):]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="346" width="275" height="18" uuid="a9392dca-5703-4ca5-a1ae-d78ba30138c3"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{accWidth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="400" width="275" height="18" uuid="f458d065-6e43-4a6e-b05a-3947d1c8ab8a"/>
+				<box topPadding="0" leftPadding="5">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{alteredArea}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="400" width="280" height="18" uuid="2266a977-41d0-48d9-b937-5fe858d8706a"/>
+				<box topPadding="0" leftPadding="0" rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9"/>
+				</textElement>
+				<text><![CDATA[ALTERED AREA (IN Sq M):]]></text>
+			</staticText>
+			<image onErrorType="Icon">
+				<reportElement x="3" y="10" width="75" height="56" uuid="331a96e6-0485-4680-955d-ad9ab41a4744"/>
+				<imageExpression><![CDATA[$P{egovLogo}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="80" width="555" height="2" uuid="f7a62cdf-b290-44f8-a8d1-d24e68ef7643"/>
+			</line>
+			<image onErrorType="Icon">
+				<reportElement x="480" y="16" width="65" height="56" uuid="5403e82d-30b9-47f2-b620-0545953e24e7"/>
+				<imageExpression><![CDATA[$P{cityLogo}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageFooter>
-		<band height="52">
+		<band height="78">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="221" y="27" width="15" height="25" uuid="68b285d7-eec7-41c7-a617-0e666c163f7a"/>
 				<textElement verticalAlignment="Bottom">
@@ -329,15 +571,15 @@
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
-			<image scaleImage="RetainShape" hAlign="Left" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
-				<reportElement mode="Transparent" x="9" y="27" width="91" height="25" uuid="a44f1994-7654-4816-a0f5-0de0ffecc5ce"/>
-				<imageExpression><![CDATA["src/main/resources/reports/templates/LSGD.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="370" y="27" width="178" height="20" uuid="a2cafcf9-510a-49f0-8ca8-53c4a4c6d777"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<text><![CDATA[INFORMATION KERALA MISSION]]></text>
 			</staticText>
+			<image onErrorType="Icon">
+				<reportElement x="16" y="28" width="34" height="24" uuid="6fc862e7-1dd7-4d35-bf48-72cbc9acf902"/>
+				<imageExpression><![CDATA[$P{footerLogo}]]></imageExpression>
+			</image>
 		</band>
 	</pageFooter>
 	<summary>

@@ -266,11 +266,11 @@ public class JasperReportService {
         detailNewHeaderStyle.setBorderRight(Border.THIN());
         detailNewHeaderStyle.setBorderTop(Border.THIN());
         detailNewHeaderStyle.setBorderBottom(Border.THIN());*/
-        detailNewHeaderStyle.setBorder(Border.THIN());
+        detailNewHeaderStyle.setBorder(Border.PEN_1_POINT());
         detailNewHeaderStyle.setTextColor(Color.black);
         detailNewHeaderStyle.setHorizontalAlign(HorizontalAlign.CENTER);
         detailNewHeaderStyle.setVerticalAlign(VerticalAlign.MIDDLE);
-        detailNewHeaderStyle.setFont(new Font(8, Font._FONT_ARIAL, true,true,false));
+        detailNewHeaderStyle.setFont(new Font(9, Font._FONT_MONOSPACED, true,true,false));
         return detailNewHeaderStyle;
     }
     
@@ -300,6 +300,7 @@ public class JasperReportService {
         titleStyle.setFont(new Font(9, Font._FONT_MONOSPACED, true,true,false));
         titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
         titleStyle.setVerticalAlign(VerticalAlign.MIDDLE); 
+        titleStyle.setTransparency(Transparency.OPAQUE);
         return titleStyle;
     }
       
@@ -313,10 +314,14 @@ public class JasperReportService {
     }
     
     public Style getNewReportSubReportTitleStyle() {
-        final Style titleStyle = new Style("subReportTitleStyle");
-        titleStyle.setFont(new Font(12, Font._FONT_MONOSPACED, true,true,false));
+        final Style titleStyle = new Style("newSubReportTitleStyle");
+        titleStyle.setFont(new Font(10, Font._FONT_MONOSPACED, true,true,false));
         titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
-        titleStyle.setTextColor(new Color(0, 0, 255));
+        titleStyle.setBorder(Border.PEN_1_POINT());
+        System.out.println("titleStyle.isOverridesExistingStyle()" +titleStyle.isOverridesExistingStyle());
+        titleStyle.setBackgroundColor(Color.decode("#DCFCFA"));
+        titleStyle.setTransparency(Transparency.OPAQUE);
+       // titleStyle.setTextColor(new Color(0, 0, 255));
         return titleStyle;
     }
 
@@ -333,6 +338,17 @@ public class JasperReportService {
         return subTitleStyle;
     }
 
+    public Style getNewReportSubTitleStyle() {
+        final Style subTitleStyle = new Style("newSubTitleStyle");
+        subTitleStyle.setBorder(Border.THIN());
+        subTitleStyle.setTextColor(Color.black);
+        subTitleStyle.setFont(new Font(9, Font._FONT_MONOSPACED, true,true,false));
+        subTitleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+        subTitleStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        return subTitleStyle;
+    }
+
+    
    
 
     public Style getAcceptedResultStyle() {
