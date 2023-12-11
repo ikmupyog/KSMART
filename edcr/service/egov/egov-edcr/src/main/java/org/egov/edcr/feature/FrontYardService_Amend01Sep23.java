@@ -143,7 +143,7 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                 scrutinyDetail.addColumnHeading(1, RULE_NO);
                 scrutinyDetail.addColumnHeading(2, LEVEL);
                 scrutinyDetail.addColumnHeading(3, OCCUPANCY);
-                scrutinyDetail.addColumnHeading(4, FIELDVERIFIED);
+                scrutinyDetail.addColumnHeading(4, DESCRIPTION);
                 scrutinyDetail.addColumnHeading(5, REQUIRED);
                 scrutinyDetail.addColumnHeading(6, PROVIDED);
                 scrutinyDetail.addColumnHeading(7, STATUS);
@@ -206,7 +206,7 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                             details.put(RULE_NO, frontYardResult.subRule);
                             details.put(LEVEL, frontYardResult.level != null ? frontYardResult.level.toString() : "");
                             details.put(OCCUPANCY, frontYardResult.occupancy);
-                            details.put(FIELDVERIFIED, MEANMINIMUMLABEL);
+                            details.put(DESCRIPTION, MEANMINIMUMLABEL);
                             details.put(REQUIRED, "(" + frontYardResult.expectedminimumDistance + ", "
                                     + frontYardResult.expectedmeanDistance + ")");
                             details.put(PROVIDED,

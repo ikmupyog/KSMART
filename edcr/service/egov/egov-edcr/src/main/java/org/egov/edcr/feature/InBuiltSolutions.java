@@ -104,7 +104,7 @@ public class InBuiltSolutions extends FeatureProcess {
 				scrutinyDetail.setKey("Block_" + block.getNumber() + "_In-Building Solutions");
 				scrutinyDetail.addColumnHeading(1, RULE_NO);
 				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-				scrutinyDetail.addColumnHeading(3, PERMITTED);
+				scrutinyDetail.addColumnHeading(3, REQUIRED);
 				scrutinyDetail.addColumnHeading(4, PROVIDED);
 				scrutinyDetail.addColumnHeading(5, STATUS);
 				processInbuiltSolutions(pl, block);
@@ -138,10 +138,10 @@ public class InBuiltSolutions extends FeatureProcess {
 	
 	private void processInbuiltSolutions(Plan pl, Block block) {
 		if (!block.getInBuiltSolutuons().isEmpty()) {
-			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "", OBJECTDEFINED_DESC, Result.Accepted.getResultVal());
+			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "Mandatory", OBJECTDEFINED_DESC, Result.Accepted.getResultVal());
 			return;
 		} else {
-			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "", OBJECTNOTDEFINED_DESC,
+			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "Mandatory", OBJECTNOTDEFINED_DESC,
 					Result.Not_Accepted.getResultVal());
 			return;
 		}

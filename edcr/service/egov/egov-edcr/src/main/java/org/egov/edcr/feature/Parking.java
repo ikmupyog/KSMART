@@ -443,7 +443,7 @@ public class Parking extends FeatureProcess {
 				break;
 			case F:
 				BigDecimal noOfCarParkingForF = BigDecimal.ZERO;
-				if (occupancy != null && occupancy.getBuiltUpArea().compareTo(BigDecimal.valueOf(THOUSAND_200)) <= 0
+				if (occupancy != null && occupancy.getBuiltUpArea().compareTo(BigDecimal.valueOf(200)) <= 0
 						|| pl.getPlot().getPlotBndryArea().doubleValue() <= 125)
 					result.totalRequiredCarParking += 0d;
 				else {
@@ -819,7 +819,8 @@ public class Parking extends FeatureProcess {
 				errors.put(SUB_RULE_42__5,
 						getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.DAPARKING_UNIT));
 				pl.addErrors(errors);
-			} else if (pl.getParkingDetails().getDistFromDAToMainEntrance() == null
+			}
+			if (pl.getParkingDetails().getDistFromDAToMainEntrance() == null
 					|| pl.getParkingDetails().getDistFromDAToMainEntrance().compareTo(BigDecimal.ZERO) == 0) {
 				isValid = false;
 				errors.put(SUB_RULE_42__5,
@@ -831,7 +832,9 @@ public class Parking extends FeatureProcess {
 						"Should be less than 30" + DcrConstants.IN_METER,
 						pl.getParkingDetails().getDistFromDAToMainEntrance() + DcrConstants.IN_METER,
 						Result.Not_Accepted.getResultVal());
-			} else if (pl.getParkingDetails().getValidDAParkingSlots() < result.daParking) {
+			} 
+			
+			if (pl.getParkingDetails().getValidDAParkingSlots() < result.daParking) {
 				setReportOutputDetails(pl, SUB_RULE_42__5, DA_PARKING, result.daParking.intValue() + NUMBERS,
 						pl.getParkingDetails().getValidDAParkingSlots() + NUMBERS, Result.Not_Accepted.getResultVal());
 			} else {

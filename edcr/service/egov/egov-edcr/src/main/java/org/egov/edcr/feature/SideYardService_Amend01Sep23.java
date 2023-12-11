@@ -133,7 +133,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                 scrutinyDetail.addColumnHeading(2, LEVEL);
                 scrutinyDetail.addColumnHeading(3, OCCUPANCY);
                 scrutinyDetail.addColumnHeading(4, SIDENUMBER);
-                scrutinyDetail.addColumnHeading(5, FIELDVERIFIED);
+                scrutinyDetail.addColumnHeading(5, DESCRIPTION);
                 scrutinyDetail.addColumnHeading(6, REQUIRED);
                 scrutinyDetail.addColumnHeading(7, PROVIDED);
                 scrutinyDetail.addColumnHeading(8, STATUS);
@@ -264,7 +264,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                                     details.put(RULE_NO, sideYard1Result.subRule);
                                     details.put(LEVEL, sideYard1Result.level != null ? sideYard1Result.level.toString() : "");
                                     details.put(OCCUPANCY, sideYard1Result.occupancy);
-                                    details.put(FIELDVERIFIED, MEANMINIMUMLABEL);
+                                    details.put(DESCRIPTION, MEANMINIMUMLABEL);
                                     details.put(REQUIRED, "(" + sideYard1Result.expectedDistance + ", "
                                             + sideYard1Result.expectedmeanDistance + ")");
                                     details.put(PROVIDED,
@@ -287,7 +287,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
                                             sideYard2Result.level != null ? sideYard2Result.level.toString() : "");
                                     detailsSideYard2.put(OCCUPANCY, sideYard2Result.occupancy);
                                     detailsSideYard2.put(SIDENUMBER, SIDE_YARD2_DESC);
-                                    detailsSideYard2.put(FIELDVERIFIED, MEANMINIMUMLABEL);
+                                    detailsSideYard2.put(DESCRIPTION, MEANMINIMUMLABEL);
                                     detailsSideYard2.put(REQUIRED, "(" + sideYard2Result.expectedDistance + ", "
                                             + sideYard2Result.expectedmeanDistance + ")");
                                     detailsSideYard2.put(PROVIDED,

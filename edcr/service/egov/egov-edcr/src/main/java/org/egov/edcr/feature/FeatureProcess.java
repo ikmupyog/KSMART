@@ -60,7 +60,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 public abstract class FeatureProcess {
 
 	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-	public static final String STATUS = "Status";
+	public static final String STATUS = "STATUS";
 	public static final String PROVIDED = "PROVIDED";
 	public static final String LEVEL = "Level";
 	public static final String OCCUPANCY = "OCCUPANCY";

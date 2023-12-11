@@ -79,11 +79,7 @@ public class BioGasService extends FeatureProcess {
 			scrutinyDetail.setKey("Common_Biogas");
 			String subRule = SUB_RULE_79_3;
 			String subRuleDesc = SUB_RULE_79_3_DESCRIPTION;
-			if(occupancyTypes.contains(A1))
-			{
-				return pl;
-			}
-			if (( occupancyTypes.contains(A4) || occupancyTypes.contains(A5))
+			if (( occupancyTypes.contains(A1) || occupancyTypes.contains(A4) || occupancyTypes.contains(A5))
 					&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
 					&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREE_HUNDRED) > 0
 					&& pl.getVirtualBuilding().getResidentialBuilding()) {

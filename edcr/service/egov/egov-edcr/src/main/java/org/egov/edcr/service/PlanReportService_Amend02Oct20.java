@@ -98,10 +98,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     private static final Logger LOG = LogManager.getLogger(PlanReportService_Amend02Oct20.class);
 
     private static final String TOTAL = "Total";
-    private static final String DESCRIPTION = "description";
-    private static final String RULE_NO = "RuleNo";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String RULE_NO = "RULE NO";
     public static final String BLOCK = "Block";
-    public static final String STATUS = "Status";
+    public static final String STATUS = "STATUS";
     @Value("${edcr.client.subreport}")
     private boolean clientSpecificSubReport;
     @Autowired
@@ -244,7 +244,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.addColumn(parkingDetail);
 
           
-            frb.setTitle("2) PROPOSED AREA AND OCUUPANCY") ;
+            frb.setTitle("2) PROPOSED AREA AND OCCUPANCY") ;
             frb.setTitleStyle(reportService.getTitleStyle());
            /* frb.setHeaderHeight(5);
             frb.setTopMargin(10);
@@ -659,7 +659,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
                 AbstractColumn builtupArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalBuiltUpArea", BigDecimal.class.getName())
-                        .setTitle("BUILT UP AREA (Sq M)").setWidth(130)
+                        .setTitle("BUILT UP AREA (Sq M)²").setWidth(130)
                         .setStyle(reportService.getNewReportDetailStyle())
                         .build();
 
@@ -1422,9 +1422,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                                         }
                                     DcrReportFloorDetail dcrReportFloorDetail = new DcrReportFloorDetail();
                                     String floorNo;
-                                    if (floor.getTerrace())
+                                    if (floor.getTerrace()) {
                                         floorNo = "Terrace";
-                                    else if (occupancy.getIsMezzanine())
+                                        dcrReportFloorDetail.setFloorDescription("Terrace");
+                                    } else if (occupancy.getIsMezzanine())
                                         floorNo = floor.getNumber() + " (Mezzanine " + floor.getNumber() + ")";
                                     else
                                         floorNo = String.valueOf(floor.getNumber());

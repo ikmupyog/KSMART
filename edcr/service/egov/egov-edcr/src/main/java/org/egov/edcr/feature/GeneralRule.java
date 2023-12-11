@@ -22,17 +22,17 @@ public class GeneralRule extends FeatureProcess {
     protected MessageSource edcrMessageSource;
     // Dont use class variable like this .
     protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-    public static final String STATUS = "Status";
+    public static final String STATUS = "STATUS";
 
-    public static final String PROVIDED = "Provided";
-    public static final String LEVEL = "Level";
-    public static final String OCCUPANCY = "Occupancy";
+    public static final String PROVIDED = "PROVIDED";
+    public static final String LEVEL = "LEVEL";
+    public static final String OCCUPANCY = "OCCUPANCY";
     public static final String FIELDVERIFIED = "Field Verified";
-    public static final String REQUIRED = "Required";
-    public static final String PERMISSIBLE = "Permissible";
-    public static final String DESCRIPTION = "Description";
+    public static final String REQUIRED = "REQUIRED";
+    public static final String PERMISSIBLE = "PERMISSIBLE";
+    public static final String DESCRIPTION = "DESCRIPTION";
 
-    public static final String RULE_NO = "Rule No";
+    public static final String RULE_NO = "RULE NO";
 
     public String getLocaleMessage(String code, String... args) {
         return edcrMessageSource.getMessage(code, args, LocaleContextHolder.getLocale());
