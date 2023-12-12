@@ -117,7 +117,9 @@ public class WasteDisposal extends FeatureProcess {
 				if (pl.getUtility().getWells().isEmpty() && !pl.getUtility().getWasteDisposalUnits().isEmpty()) {
 					boolean isProposed = pl.getUtility().getWasteDisposalUnits().stream()
 							.anyMatch(wasteDisposal -> wasteDisposal.getType().equalsIgnoreCase(DcrConstants.PROPOSED));
-					if (isProposed) {
+					boolean isExisting = pl.getUtility().getWasteDisposalUnits().stream()
+							.anyMatch(wasteDisposal -> wasteDisposal.getType().equalsIgnoreCase(DcrConstants.EXISTING));
+					if (isProposed || isExisting) {
 						printOutputForProposedWasteDisposal(pl);
 					}
 				}

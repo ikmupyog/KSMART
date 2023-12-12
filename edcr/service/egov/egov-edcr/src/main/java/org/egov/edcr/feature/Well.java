@@ -491,19 +491,19 @@ public class Well extends FeatureProcess {
         }
 
         // When proposed and existing waste disposal or only proposed waste disposal is declared
-        if ((proposedWasteDisposal && existingWasteDisposal) || proposedWasteDisposal) {
-            for (RoadOutput roadOutput : pl.getUtility().getWellDistance())
-                if (checkConditionForLeachPitToBoundary(roadOutput)) {
-                    String ruleNo = SUB_RULE_79_4;
-                    BigDecimal minDistance = DIST_1_POINT_2;
-                    if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
-                        minDistance = DIST_30_CM;
-                    setReportOutputDetail(pl, ruleNo,
-                            String.format(SUB_RULE_75_2II_DESC_WASTE_DIS, DcrConstants.PROPOSED), false, roadOutput,
-                            minDistance);
-                }
-
-        }
+		/*
+		 * if ((proposedWasteDisposal && existingWasteDisposal) ||
+		 * proposedWasteDisposal) { for (RoadOutput roadOutput :
+		 * pl.getUtility().getWellDistance()) if
+		 * (checkConditionForLeachPitToBoundary(roadOutput)) { String ruleNo =
+		 * SUB_RULE_79_4; BigDecimal minDistance = DIST_1_POINT_2; if
+		 * (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+		 * minDistance = DIST_30_CM; setReportOutputDetail(pl, ruleNo,
+		 * String.format(SUB_RULE_75_2II_DESC_WASTE_DIS, DcrConstants.PROPOSED), false,
+		 * roadOutput, minDistance); }
+		 * 
+		 * }
+		 */
 
         // When Proposed well and existing waste disposal is declared
         if (existingWasteDisposal && proposedWell) {
@@ -524,34 +524,37 @@ public class Well extends FeatureProcess {
         }
 
         // When proposed septic tank was declared
-        if (proposedSeptic) {
-            for (RoadOutput roadOutput : pl.getUtility().getWellDistance())
-                if (checkConditionForSepticTankToBoundary(roadOutput)) {
-                    String ruleNo = SUB_RULE_75_2II;
-                    BigDecimal minDistance = DIST_1_POINT_2;
-                    if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
-                        minDistance = DIST_30_CM;
-                    setReportOutputDetail(pl, ruleNo,
-                            String.format(SUB_RULE_75_2II_DESC_SEPTIC, DcrConstants.PROPOSED), false, roadOutput,
-                            minDistance);
-                } else if ((proposedWell || existingWell) && checkConditionForWellToSepticTank(roadOutput)) {
-                    String proposedOrExistWell;
-                    if (existingWell)
-                        proposedOrExistWell = DcrConstants.EXISTING;
-                    else
-                        proposedOrExistWell = DcrConstants.PROPOSED;
-                    setReportOutputDetail(pl, SUB_RULE_75_2IV,
-                            String.format(SUB_RULE_75_2IV_DESC_SEPTIC, proposedOrExistWell, DcrConstants.PROPOSED), false,
-                            roadOutput, DIST_7_POINT_5);
-                } else if (proposedWell && checkConditionForBoundary(roadOutput)) {
-                	BigDecimal minDistance = DIST_1_POINT_2;
-                    if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
-                        minDistance = DIST_30_CM;
-                    setReportOutputDetail(pl, SUB_RULE_75_2II,
-                            String.format(SUB_RULE_75_2II_DESCRIPTION, DcrConstants.PROPOSED, DcrConstants.PROPOSED), false,
-                            roadOutput, minDistance);
-                }
-        }
+		if (proposedSeptic) {
+			for (RoadOutput roadOutput : pl.getUtility().getWellDistance()) {
+				/*
+				 * if (checkConditionForSepticTankToBoundary(roadOutput)) { String ruleNo =
+				 * SUB_RULE_75_2II; BigDecimal minDistance = DIST_1_POINT_2; if
+				 * (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+				 * minDistance = DIST_30_CM; setReportOutputDetail(pl, ruleNo,
+				 * String.format(SUB_RULE_75_2II_DESC_SEPTIC, DcrConstants.PROPOSED), false,
+				 * roadOutput, minDistance); } else
+				 */
+
+				if ((proposedWell || existingWell) && checkConditionForWellToSepticTank(roadOutput)) {
+					String proposedOrExistWell;
+					if (existingWell)
+						proposedOrExistWell = DcrConstants.EXISTING;
+					else
+						proposedOrExistWell = DcrConstants.PROPOSED;
+					setReportOutputDetail(pl, SUB_RULE_75_2IV,
+							String.format(SUB_RULE_75_2IV_DESC_SEPTIC, proposedOrExistWell, DcrConstants.PROPOSED),
+							false, roadOutput, DIST_7_POINT_5);
+				}
+				if (proposedWell && checkConditionForBoundary(roadOutput)) {
+					BigDecimal minDistance = DIST_1_POINT_2;
+					if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+						minDistance = DIST_30_CM;
+					setReportOutputDetail(pl, SUB_RULE_75_2II,
+							String.format(SUB_RULE_75_2II_DESCRIPTION, DcrConstants.PROPOSED, DcrConstants.PROPOSED),
+							false, roadOutput, minDistance);
+				}
+			}
+		}
 
         // When proposed well is declared
         if (proposedWell)

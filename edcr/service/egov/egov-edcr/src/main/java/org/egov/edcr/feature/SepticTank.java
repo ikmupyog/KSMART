@@ -48,6 +48,7 @@
 package org.egov.edcr.feature;
 
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.DxfFileConstants.COLOUR_CODE_SEPTICTANK_TO_PLOT_BNDRY;
 import static org.egov.edcr.utility.DcrConstants.IN_METER_SQR;
 
 import java.math.BigDecimal;
@@ -60,7 +61,9 @@ import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
+import org.egov.common.entity.edcr.RoadOutput;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +77,12 @@ public class SepticTank extends FeatureProcess {
     private static final String OBJECT_NOT_DEFINED = "msg.error.mandatory.object1.not.defined";
     private static final String SEPTIC_TANK_AREA_DESC_MULTIPLE = " septic tanks are having minimum area 1.5 m2";
     private static final String SEPTIC_TANK_AREA_DESC_SINGLE = " septic tank is having minimum area 1.5 m2";
+    private static final String SUB_RULE_AMD19_75_2II = "75(2(ii))";
+    private static final String SUB_RULE_AMD20_79_4 = "79(4)";
+    private static final BigDecimal DIST_1_POINT_2 = BigDecimal.valueOf(1.2);
+    private static final BigDecimal DIST_30_CM = BigDecimal.valueOf(0.3);
+    private static final String SUB_RULE_75_2II_DESC_SEPTIC = "Minimum distance from %s septic tank to nearest point on the plot boundary";
+
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -103,6 +112,29 @@ public class SepticTank extends FeatureProcess {
         if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
                 && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
                 && !pl.getSepticTanks().isEmpty()) {
+        	List<String> septicTankType = pl.getSepticTanks().stream().map(org.egov.common.entity.edcr.SepticTank::getType).collect(Collectors.toList());
+            boolean proposedSeptic = false;
+            if (!septicTankType.isEmpty() && septicTankType.get(0) != null) {
+                proposedSeptic = septicTankType.stream().anyMatch(wd -> wd.equalsIgnoreCase(DcrConstants.PROPOSED));
+            }
+        	if(proposedSeptic)
+	            for (RoadOutput roadOutput : pl.getUtility().getWellDistance())
+		            if (checkConditionForSepticTankToBoundary(roadOutput)) {
+		                String ruleNo = SUB_RULE_AMD20_79_4;
+		                BigDecimal minDistance = DIST_1_POINT_2;
+		                if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+	                        minDistance = DIST_30_CM;
+		                String status;
+		                if (roadOutput.distance != null &&
+		                        roadOutput.distance.compareTo(BigDecimal.ZERO) > 0
+		                        && roadOutput.distance.compareTo(minDistance) >= 0)
+		                	status = Result.Accepted.getResultVal();
+		                else 
+		                	status = Result.Not_Accepted.getResultVal();
+		                setReportOutputDetailsWithoutOccupancy(pl, ruleNo,
+		                        String.format(SUB_RULE_75_2II_DESC_SEPTIC, DcrConstants.PROPOSED), String.valueOf(minDistance),
+		                        String.valueOf(roadOutput.distance), status);
+		            }
             List<BigDecimal> collect = pl.getSepticTanks().stream().filter(
                     septicTank -> Util.roundOffTwoDecimal(septicTank.getArea()).compareTo(ONE_POINTFIVE) >= 0)
                     .map(org.egov.common.entity.edcr.SepticTank::getArea).collect(Collectors.toList());
@@ -124,6 +156,9 @@ public class SepticTank extends FeatureProcess {
         return pl;
     }
 
+	private boolean checkConditionForSepticTankToBoundary(RoadOutput roadOutput) {
+		return Integer.valueOf(roadOutput.colourCode).equals(COLOUR_CODE_SEPTICTANK_TO_PLOT_BNDRY);
+	}
     private void setReportOutputDetailsWithoutOccupancy(Plan pl, String ruleNo, String ruleDesc, String expected,
             String actual, String status) {
         Map<String, String> details = new HashMap<>();
