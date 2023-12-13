@@ -752,6 +752,8 @@ public class Sanitation extends FeatureProcess {
                                     String.valueOf(helper.requiredSpecialWc.intValue()),
                                     String.valueOf(helper.providedSpecialWc.intValue()),
                                     Result.Accepted.getResultVal(), scrutinyDetail);
+                        if(helper.providedSpecialWc > 0)
+                        {  
                         if (helper.failedAreaSpecialWc > 0 && helper.failedAreaSpecialWc <= helper.requiredSpecialWc)
                             addReportDetail(ruleNo, BLDG_PART_SPECIAL_WATER_CLOSET + " - Minimum Area", MINIMUM_AREA_SPWC,
                                     String.valueOf(helper.failedAreaSpecialWc.intValue()) + " not having area 2.625 M2",
@@ -774,7 +776,7 @@ public class Sanitation extends FeatureProcess {
                                             helper.providedSpecialWc.intValue() - helper.failedDimensionSpecialWc.intValue())
                                             + " having dimension 1.5M",
                                     Result.Accepted.getResultVal(), scrutinyDetail);
-
+                        }
                     } 
                     accepted = processSanity(pl, b, helper, scrutinyDetail);
 
