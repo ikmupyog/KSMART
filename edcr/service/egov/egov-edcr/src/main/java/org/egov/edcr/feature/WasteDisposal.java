@@ -114,7 +114,7 @@ public class WasteDisposal extends FeatureProcess {
 				setReportOutputDetailsWithoutOccupancy(pl, subRule, description, "", OBJECTDEFINED_DESC,
 						Result.Accepted.getResultVal());
 
-				if (pl.getUtility().getWells().isEmpty() && !pl.getUtility().getWasteDisposalUnits().isEmpty()) {
+				if (!pl.getUtility().getWasteDisposalUnits().isEmpty()) {
 					boolean isProposed = pl.getUtility().getWasteDisposalUnits().stream()
 							.anyMatch(wasteDisposal -> wasteDisposal.getType().equalsIgnoreCase(DcrConstants.PROPOSED));
 					boolean isExisting = pl.getUtility().getWasteDisposalUnits().stream()

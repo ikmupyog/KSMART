@@ -231,7 +231,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.addGlobalFooterVariable(floorArea, DJCalculation.SUM, reportService.getNewReportDetailNumberStyle());
 
             AbstractColumn parkingDetail =ColumnBuilder.getNew().setColumnProperty("parkingDetail", String.class.getName())
-                    .setTitle(PARKING_AREA).setWidth(60).setHeaderStyle(reportService.getNewReportColumnHeaderParkingStyle())
+                    .setTitle(PARKING_AREA).setWidth(100).setHeaderStyle(reportService.getNewReportColumnHeaderParkingStyle())
                     .build();
             		
             frb.addGlobalFooterVariable(parkingDetail, DJCalculation.SUM, reportService.getNewReportDetailNumberStyle());
@@ -496,21 +496,21 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     && virtualBuildingReport.getTotalConstructedArea().compareTo(BigDecimal.ZERO) > 0) {
                 AbstractColumn builtUpArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalBuitUpArea", BigDecimal.class.getName()).setTitle("Built Up Area in m²")
-                        .setWidth(100).setStyle(reportService.getTotalNumberStyle()).build();
+                        .setWidth(135).setStyle(reportService.getTotalNumberStyle()).build();
                 
                 AbstractColumn floorArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalFloorArea", BigDecimal.class.getName())
-                        .setTitle("Floor Area in m²").setWidth(130)
+                        .setTitle("Floor Area in m²").setWidth(135)
                         .setStyle(reportService.getTotalNumberStyle())
                         .build();
 
                 AbstractColumn coverageArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalCoverageArea", BigDecimal.class.getName()).setTitle("Covered Area in m²")
-                        .setWidth(100).setStyle(reportService.getTotalNumberStyle()).build();
+                        .setWidth(135).setStyle(reportService.getTotalNumberStyle()).build();
 
                 AbstractColumn constructedArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalConstructedArea", BigDecimal.class.getName())
-                        .setTitle("Already Constructed Area in m²").setWidth(100)
+                        .setTitle("Already Constructed Area in m²").setWidth(140)
                         .setStyle(reportService.getTotalNumberStyle()).build();
 
                 frb.addColumn(builtUpArea);
@@ -520,17 +520,17 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             } else {
                 AbstractColumn builtUpArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalBuitUpArea", BigDecimal.class.getName()).setTitle("Built Up Area in m²")
-                        .setWidth(120).setStyle(reportService.getTotalNumberStyle()).build();
+                        .setWidth(180).setStyle(reportService.getTotalNumberStyle()).build();
                 
                 AbstractColumn floorArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalFloorArea", BigDecimal.class.getName())
-                        .setTitle("Floor Area in m²").setWidth(130)
+                        .setTitle("Floor Area in m²").setWidth(180)
                         .setStyle(reportService.getTotalNumberStyle())
                         .build();
 
                 AbstractColumn coverageArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalCoverageArea", BigDecimal.class.getName()).setTitle("Covered Area in m²")
-                        .setWidth(120).setStyle(reportService.getTotalNumberStyle()).build();
+                        .setWidth(180).setStyle(reportService.getTotalNumberStyle()).build();
 
                 frb.addColumn(builtUpArea);
                 frb.addColumn(floorArea);
@@ -577,14 +577,14 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             	
             	 AbstractColumn blocks = ColumnBuilder.getNew()
                          .setColumnProperty("blockNo", String.class.getName()).setTitle("BLOCKS")
-                         .setWidth(100).setStyle(reportService.getTotalNumberStyle()).build();
+                         .setWidth(120).setStyle(reportService.getTotalNumberStyle()).build();
                 AbstractColumn builtUpArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalBuiltUpArea", BigDecimal.class.getName()).setTitle("BUILT UP AREA (Sq M)")
-                        .setWidth(100).setStyle(reportService.getTotalNumberStyle()).build();
+                        .setWidth(210).setStyle(reportService.getTotalNumberStyle()).build();
                 
                 AbstractColumn floorArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalFloorArea", BigDecimal.class.getName())
-                        .setTitle("FLOOR AREA (Sq M)").setWidth(130)
+                        .setTitle("FLOOR AREA (Sq M)").setWidth(210)
                         .setStyle(reportService.getTotalNumberStyle())
                         .build();
 
@@ -600,13 +600,13 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
                 AbstractColumn builtupArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalBuiltUpArea", BigDecimal.class.getName())
-                        .setTitle("BUILT UP AREA (Sq M)").setWidth(130)
+                        .setTitle("BUILT UP AREA (Sq M)").setWidth(210)
                         .setStyle(reportService.getTotalNumberStyle())
                         .build();
 
                 AbstractColumn floorArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalFloorArea", BigDecimal.class.getName()).setTitle("FLOOR AREA (Sq M)")
-                        .setWidth(120).setStyle(reportService.getTotalNumberStyle()).build();
+                        .setWidth(210).setStyle(reportService.getTotalNumberStyle()).build();
 
                 frb.addColumn(blocks);
                 frb.addColumn(builtupArea);
@@ -621,6 +621,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             /*frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getDetailStyle());*/
             frb.setAllowDetailSplit(false);
+            frb.setMargins(0, 0, 0, 0);
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
             frb.setGrandTotalLegend(TOTAL);
             frb.setGrandTotalLegendStyle(reportService.getNumberStyle());
@@ -659,13 +660,13 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
                 AbstractColumn builtupArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalBuiltUpArea", BigDecimal.class.getName())
-                        .setTitle("BUILT UP AREA (Sq M)²").setWidth(130)
+                        .setTitle("BUILT UP AREA (Sq M)²").setWidth(210)
                         .setStyle(reportService.getNewReportDetailStyle())
                         .build();
 
                 AbstractColumn floorArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalFloorArea", BigDecimal.class.getName()).setTitle("FLOOR AREA (Sq M)²")
-                        .setWidth(120).setStyle(reportService.getNewReportDetailStyle()).build();
+                        .setWidth(210).setStyle(reportService.getNewReportDetailStyle()).build();
                 //frb.addColumn(emptyRow);
                 frb.addColumn(blocks);
                 frb.addColumn(builtupArea);
@@ -680,6 +681,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setHeaderHeight(5);
             frb.setTopMargin(5);
            // frb.setLeftMargin(120);
+            frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -712,11 +714,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
              {
                 AbstractColumn blocks = ColumnBuilder.getNew()
                         .setColumnProperty("blockNo", String.class.getName()).setTitle("BLOCKS")
-                        .setWidth(120).setStyle(reportService.getNewReportDetailStyle()).build();
+                        .setWidth(200).setStyle(reportService.getNewReportDetailStyle()).build();
                 
                 AbstractColumn builtupArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalCoveredArea", BigDecimal.class.getName())
-                        .setTitle("BUILT UP AREA (Sq M)").setWidth(130)
+                        .setTitle("BUILT UP AREA (Sq M)").setWidth(340)
                         .setStyle(reportService.getNewReportDetailStyle())
                         .build();
 
@@ -731,7 +733,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
             frb.setHeaderHeight(5);
             frb.setTopMargin(5);
-            //frb.setLeftMargin(25);
+            frb.setLeftMargin(25);
+            frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -763,7 +766,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setUseFullPageWidth(true);
             frb.setTitle(title);
             frb.setShowDetailBand(false);
-            //frb.setMargins(0, 0, 0, 0);
+            frb.setMargins(0, 0, 0, 0);
             frb.setTitleStyle(reportService.getNewReportSubReportTitleStyle());
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
             frb.setTitleHeight(20);
@@ -958,8 +961,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             drb.addConcatenatedReport(getProposedArea("Proposed Area Details"));
             valuesMap.put("Proposed Area Details", proposedBlockDetails);
             
+            List<DcrReportBlockDetail> coveredAreas = new ArrayList<>();
+            coveredAreas.addAll(proposedBlockDetails);
+            coveredAreas.addAll(existingBlockDetails);
             drb.addConcatenatedReport(createCoveredArea("Covered Area Details"));
-            valuesMap.put("Covered Area Details", proposedBlockDetails);
+            valuesMap.put("Covered Area Details", coveredAreas);
 
             
             drb.addConcatenatedReport(getTotalAreaDetails(virtualBuildingReport));
@@ -1379,7 +1385,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             for (Block block : blocks) {
 
                 Building building = block.getBuilding();
-                if (building != null) {
+                if (building != null && !block.getCompletelyExisting()) {
                     DcrReportBlockDetail dcrReportBlockDetail = new DcrReportBlockDetail();
                     dcrReportBlockDetail.setBlockNo(block.getNumber());
                     dcrReportBlockDetail.setCoverageArea(building.getCoverageArea());
@@ -1398,58 +1404,60 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
                             if (!occupancies.isEmpty()) {
 
-                                for (Occupancy occupancy : occupancies) {
-                                	StringBuilder parkingDetail = new StringBuilder();
-                                    if (!floor.getParkingProvidedInsideBuilding().isEmpty()) {
-                                        Iterator<ParkingArea> itr = floor.getParkingProvidedInsideBuilding().iterator();
-                                        while (itr.hasNext()) {
-                                       	 ParkingArea p = itr.next();
-                                            if (p.getParkingArea() != null && p.getOccupancyType() != null) {
-                                                parkingDetail.append(p.getOccupancyType().getType().getName()).append("-")
-                                                        .append(p.getParkingArea());
-                                                if (itr.hasNext())
-                                                    parkingDetail.append(", ");
-                                            }
-                                        }
-                                    }
-                                    String occupancyName = "";
-                                    if (occupancy.getTypeHelper() != null)
-                                        if (occupancy.getTypeHelper().getSubtype() != null)
-                                            occupancyName = occupancy.getTypeHelper().getSubtype().getName();
-                                        else {
-                                            if (occupancy.getTypeHelper().getType() != null)
-                                                occupancyName = occupancy.getTypeHelper().getType().getName();
-                                        }
-                                    DcrReportFloorDetail dcrReportFloorDetail = new DcrReportFloorDetail();
-                                    String floorNo;
-                                    if (floor.getTerrace()) {
-                                        floorNo = "Terrace";
-                                        dcrReportFloorDetail.setFloorDescription("Terrace");
-                                    } else if (occupancy.getIsMezzanine())
-                                        floorNo = floor.getNumber() + " (Mezzanine " + floor.getNumber() + ")";
-                                    else
-                                        floorNo = String.valueOf(floor.getNumber());
-                                    dcrReportFloorDetail.setFloorNo(floorNo);
-                                    dcrReportFloorDetail.setOccupancy(occupancyName);
-                                    dcrReportFloorDetail.setBuiltUpArea(
-                                            occupancy.getExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0
-                                                    ? occupancy.getBuiltUpArea()
-                                                            .subtract(occupancy.getExistingBuiltUpArea())
-                                                    : occupancy.getBuiltUpArea());
-                                    dcrReportFloorDetail.setFloorArea(
-                                            occupancy.getExistingFloorArea().compareTo(BigDecimal.ZERO) > 0
-                                                    ? occupancy.getFloorArea()
-                                                            .subtract(occupancy.getExistingFloorArea())
-                                                    : occupancy.getFloorArea());
-                                    if (parkingDetail.length() > 0)
-                                        dcrReportFloorDetail.setParkingDetail(parkingDetail.toString());
-                                    else
-                                        dcrReportFloorDetail.setParkingDetail("-");
-                                    if (dcrReportFloorDetail.getBuiltUpArea().compareTo(BigDecimal.ZERO) > 0) {
-                                        dcrReportFloorDetails.add(dcrReportFloorDetail);
-                                    }
-                                }
-
+								for (Occupancy occupancy : occupancies) {
+									if (occupancy.getBuiltUpArea().compareTo(BigDecimal.ZERO) > 0) {
+										StringBuilder parkingDetail = new StringBuilder();
+										if (!floor.getParkingProvidedInsideBuilding().isEmpty()) {
+											Iterator<ParkingArea> itr = floor.getParkingProvidedInsideBuilding()
+													.iterator();
+											while (itr.hasNext()) {
+												ParkingArea p = itr.next();
+												if (p.getParkingArea() != null && p.getOccupancyType() != null) {
+													parkingDetail.append(p.getOccupancyType().getType().getName())
+															.append("-").append(p.getParkingArea());
+													if (itr.hasNext())
+														parkingDetail.append(", ");
+												}
+											}
+										}
+										String occupancyName = "";
+										if (occupancy.getTypeHelper() != null)
+											if (occupancy.getTypeHelper().getSubtype() != null)
+												occupancyName = occupancy.getTypeHelper().getSubtype().getName();
+											else {
+												if (occupancy.getTypeHelper().getType() != null)
+													occupancyName = occupancy.getTypeHelper().getType().getName();
+											}
+										DcrReportFloorDetail dcrReportFloorDetail = new DcrReportFloorDetail();
+										String floorNo;
+										if (floor.getTerrace()) {
+											floorNo = "Terrace";
+											dcrReportFloorDetail.setFloorDescription("Terrace");
+										} else if (occupancy.getIsMezzanine())
+											floorNo = floor.getNumber() + " (Mezzanine " + floor.getNumber() + ")";
+										else
+											floorNo = String.valueOf(floor.getNumber());
+										dcrReportFloorDetail.setFloorNo(floorNo);
+										dcrReportFloorDetail.setOccupancy(occupancyName);
+										dcrReportFloorDetail.setBuiltUpArea(
+												occupancy.getExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0
+														? occupancy.getBuiltUpArea()
+																.subtract(occupancy.getExistingBuiltUpArea())
+														: occupancy.getBuiltUpArea());
+										dcrReportFloorDetail.setFloorArea(
+												occupancy.getExistingFloorArea().compareTo(BigDecimal.ZERO) > 0
+														? occupancy.getFloorArea()
+																.subtract(occupancy.getExistingFloorArea())
+														: occupancy.getFloorArea());
+										if (parkingDetail.length() > 0)
+											dcrReportFloorDetail.setParkingDetail(parkingDetail.toString());
+										else
+											dcrReportFloorDetail.setParkingDetail("-");
+										if (dcrReportFloorDetail.getBuiltUpArea().compareTo(BigDecimal.ZERO) > 0) {
+											dcrReportFloorDetails.add(dcrReportFloorDetail);
+										}
+									}
+								}
                             }
 
                             List<MezzanineFloor> mezzanineFloors = floor.getMezzanineFloor();
@@ -1567,16 +1575,17 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     }
                     dcrReportBlockDetails.add(dcrReportBlockDetail);
                 }
-                else{
-                	 DcrReportBlockDetail dcrReportBlockDetail = new DcrReportBlockDetail();
-                	dcrReportBlockDetail.setBlockNo(block.getNumber());
-                    
-                    dcrReportBlockDetail.setTotalBuiltUpArea(BigDecimal.ZERO);
-                    dcrReportBlockDetail.setTotalFloorArea( BigDecimal.ZERO);
-                    dcrReportBlockDetail.setTotalCoveredArea(BigDecimal.ZERO);
-                    dcrReportBlockDetails.add(dcrReportBlockDetail);
-                	
-                }
+				/*
+				 * else{ DcrReportBlockDetail dcrReportBlockDetail = new DcrReportBlockDetail();
+				 * dcrReportBlockDetail.setBlockNo(block.getNumber());
+				 * 
+				 * dcrReportBlockDetail.setTotalBuiltUpArea(BigDecimal.ZERO);
+				 * dcrReportBlockDetail.setTotalFloorArea( BigDecimal.ZERO);
+				 * dcrReportBlockDetail.setTotalCoveredArea(BigDecimal.ZERO);
+				 * dcrReportBlockDetails.add(dcrReportBlockDetail);
+				 * 
+				 * }
+				 */
 
             }
 

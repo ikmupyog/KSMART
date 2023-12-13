@@ -619,26 +619,28 @@ public class Parking extends FeatureProcess {
 
 		}
 
-		if (occupancyCodes.contains(A2) || occupancyCodes.contains(F3)) {
-
-			if (occupancyA2UnitsCount == 0)
-				setReportOutputDetails(pl, SUB_RULE_34_2, "UNITFA is not defined", String.valueOf(1),
-						String.valueOf(occupancyA2UnitsCount), Result.Not_Accepted.getResultVal());
-
-			if (occupancyA2UnitsCount > 0 && noOfRoomsWithoutAttchdBthrms > 0)
-				setReportOutputDetails(pl, SUB_RULE_34_2, "No of rooms without attached bathrooms", String.valueOf("-"),
-						String.valueOf(noOfRoomsWithoutAttchdBthrms), Result.Accepted.getResultVal());
-
-			if (occupancyA2UnitsCount > 0 && noOfRoomsWithAttchdBthrms > 0)
-				setReportOutputDetails(pl, SUB_RULE_34_2, "No of rooms with attached bathrooms", String.valueOf("-"),
-						String.valueOf(noOfRoomsWithAttchdBthrms), Result.Accepted.getResultVal());
-
-			if (noOfDineRooms > 0 && (pl.getPlanInformation().getNoOfSeats() == null
-					|| pl.getPlanInformation().getNoOfSeats() == 0)) {
-				errors.put("SEATS_SP_RESI", "SEATS_SP_RESI not defined in PLAN_INFO");
-				pl.addErrors(errors);
-			}
-		}
+		/*
+		 * if (occupancyCodes.contains(A2) || occupancyCodes.contains(F3)) {
+		 * 
+		 * if (occupancyA2UnitsCount == 0) setReportOutputDetails(pl, SUB_RULE_34_2,
+		 * "UNITFA is not defined", String.valueOf(1),
+		 * String.valueOf(occupancyA2UnitsCount), Result.Not_Accepted.getResultVal());
+		 * 
+		 * if (occupancyA2UnitsCount > 0 && noOfRoomsWithoutAttchdBthrms > 0)
+		 * setReportOutputDetails(pl, SUB_RULE_34_2,
+		 * "No of rooms without attached bathrooms", String.valueOf("-"),
+		 * String.valueOf(noOfRoomsWithoutAttchdBthrms),
+		 * Result.Accepted.getResultVal());
+		 * 
+		 * if (occupancyA2UnitsCount > 0 && noOfRoomsWithAttchdBthrms > 0)
+		 * setReportOutputDetails(pl, SUB_RULE_34_2,
+		 * "No of rooms with attached bathrooms", String.valueOf("-"),
+		 * String.valueOf(noOfRoomsWithAttchdBthrms), Result.Accepted.getResultVal());
+		 * 
+		 * if (noOfDineRooms > 0 && (pl.getPlanInformation().getNoOfSeats() == null ||
+		 * pl.getPlanInformation().getNoOfSeats() == 0)) { errors.put("SEATS_SP_RESI",
+		 * "SEATS_SP_RESI not defined in PLAN_INFO"); pl.addErrors(errors); } }
+		 */
 
 	}
 

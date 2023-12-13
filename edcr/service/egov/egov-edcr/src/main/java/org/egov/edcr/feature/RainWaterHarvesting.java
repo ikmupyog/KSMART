@@ -96,6 +96,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
@@ -128,14 +129,10 @@ public class RainWaterHarvesting extends FeatureProcess {
 					if (validateRWH(pl, errors))
 						break;
 				} else if ((occupCode.equals(A1) || occupCode.equals(A5))) {
-					if ((pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() != 1
-							&& (pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
-									|| pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0))
-							&& validateRWH(pl, errors)) {
+					if(validateRWH(pl, errors))
 						break;
 					}
 				}
-			}
 		}
 
 		if (pl.getUtility().getGroundWaterRecharge().isEmpty()) {
@@ -149,132 +146,131 @@ public class RainWaterHarvesting extends FeatureProcess {
 
 	@Override
 	public Plan process(Plan pl) {
-		validate(pl);
-		scrutinyDetail = new ScrutinyDetail();
-		scrutinyDetail.addColumnHeading(1, RULE_NO);
-		scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-		scrutinyDetail.addColumnHeading(3, OCCUPANCY);
-		scrutinyDetail.addColumnHeading(4, REQUIRED);
-		scrutinyDetail.addColumnHeading(5, PROVIDED);
-		scrutinyDetail.addColumnHeading(6, STATUS);
-		scrutinyDetail.setKey("Common_Rain Water Harvesting");
-		String subRule = SUB_RULE_AMD19_76_2;
-		String subRuleDesc = SUB_RULE_109_B_DESCRIPTION;
-		BigDecimal expectedTankCapacity = BigDecimal.ZERO;
-		if (!pl.getOccupancies().isEmpty()) {
-			for (Occupancy occupancyType : pl.getOccupancies()) {
-				String occupCode = occupancyType.getTypeHelper().getType().getCode();
-				if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())) {
-					if (processRWH(pl, subRule, subRuleDesc))
-						break;
-				} else if ((occupCode.equals(A1)
-						|| occupCode.equals(A5) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1)
-						&& (pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
-								&& pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0)
-						&& processRWH(pl, subRule, subRuleDesc)) {
-					break;
-				}
-			}
-		}
-		List<Map<String, Object>> listOfMapOfAllOccupanciesAndTankCapacity = new ArrayList<>();
-		if (pl.getUtility() != null && !pl.getUtility().getRainWaterHarvest().isEmpty()
-				&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null) {
-			if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
+		List<String> occupancies = pl.getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
+		boolean exempted = false;
+		if (occupancies.contains(A1) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
+				&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) <= 0
+						&& pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) <= 0)
+			exempted = true;
+		if(!exempted) {
+			validate(pl);
+			scrutinyDetail = new ScrutinyDetail();
+			scrutinyDetail.addColumnHeading(1, RULE_NO);
+			scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+			scrutinyDetail.addColumnHeading(3, OCCUPANCY);
+			scrutinyDetail.addColumnHeading(4, REQUIRED);
+			scrutinyDetail.addColumnHeading(5, PROVIDED);
+			scrutinyDetail.addColumnHeading(6, STATUS);
+			scrutinyDetail.setKey("Common_Rain Water Harvesting");
+			String subRule = SUB_RULE_AMD19_76_2;
+			String subRuleDesc = SUB_RULE_109_B_DESCRIPTION;
+			BigDecimal expectedTankCapacity = BigDecimal.ZERO;
+			if (!pl.getOccupancies().isEmpty()) {
 				for (Occupancy occupancyType : pl.getOccupancies()) {
 					String occupCode = occupancyType.getTypeHelper().getType().getCode();
-					Map<String, Object> mapOfAllOccupancyAndTankCapacity = new HashMap<>();
-					if ((occupCode.equals(A1) || occupCode.equals(A5))
-							&& !pl.getUtility().getRainWaterHarvest().isEmpty()
-							&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-
-						if (pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() > 1
-								&& pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(THREEHUNDRED) > 0
-								&& pl.getPlot().getArea().compareTo(TWOHUNDREDANDTWODOTTHIRTYFIVE) > 0) {
-							expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
-									.setScale(2, RoundingMode.HALF_UP);
+					if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())) {
+						if (processRWH(pl, subRule, subRuleDesc))
+							break;
+					} else if ((occupCode.equals(A1) || occupCode.equals(A5))
+							&& processRWH(pl, subRule, subRuleDesc)) {
+						break;
+					}
+				}
+			}
+			List<Map<String, Object>> listOfMapOfAllOccupanciesAndTankCapacity = new ArrayList<>();
+			if (pl.getUtility() != null && !pl.getUtility().getRainWaterHarvest().isEmpty()
+					&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null) {
+				if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
+					for (Occupancy occupancyType : pl.getOccupancies()) {
+						String occupCode = occupancyType.getTypeHelper().getType().getCode();
+						Map<String, Object> mapOfAllOccupancyAndTankCapacity = new HashMap<>();
+						if ((occupCode.equals(A1) || occupCode.equals(A5))
+								&& !pl.getUtility().getRainWaterHarvest().isEmpty()
+								&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
+								&& pl.getVirtualBuilding().getTotalCoverageArea() != null
+								&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
+								expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
+										.setScale(2, RoundingMode.HALF_UP);
+								mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());
+								mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
+						} else if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())
+								&& !pl.getUtility().getRainWaterHarvest().isEmpty()
+								&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
+								&& pl.getVirtualBuilding().getTotalCoverageArea() != null
+								&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
+							if (occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4) || occupCode.equals(F)
+									|| occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
+									|| occupCode.equals(J)) {
+								expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
+										.setScale(2, RoundingMode.HALF_UP);
+							} else {
+								expectedTankCapacity = BigDecimal.valueOf(50)
+										.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
+										.setScale(2, RoundingMode.HALF_UP);
+							}
 							mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());
 							mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
 						}
-					} else if (checkOccupancyTypeForRWH(occupancyType.getTypeHelper())
-							&& !pl.getUtility().getRainWaterHarvest().isEmpty()
-							&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea() != null
-							&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-						if (occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4) || occupCode.equals(F)
-								|| occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
-								|| occupCode.equals(J)) {
-							expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
-									.setScale(2, RoundingMode.HALF_UP);
-						} else {
-							expectedTankCapacity = BigDecimal.valueOf(50)
-									.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
-									.setScale(2, RoundingMode.HALF_UP);
+						if (!mapOfAllOccupancyAndTankCapacity.isEmpty()) {
+							listOfMapOfAllOccupanciesAndTankCapacity.add(mapOfAllOccupancyAndTankCapacity);
 						}
-						mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());
-						mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
 					}
-					if (!mapOfAllOccupancyAndTankCapacity.isEmpty()) {
-						listOfMapOfAllOccupanciesAndTankCapacity.add(mapOfAllOccupancyAndTankCapacity);
-					}
-				}
-				Map<String, Object> mapOfMostRestrictiveOccupancyAndItsTankCapacity = new HashMap<>();
-				if (!listOfMapOfAllOccupanciesAndTankCapacity.isEmpty()) {
-					mapOfMostRestrictiveOccupancyAndItsTankCapacity = listOfMapOfAllOccupanciesAndTankCapacity.get(0);
-					for (Map<String, Object> mapOfOccupancyAndTankCapacity : listOfMapOfAllOccupanciesAndTankCapacity) {
-						if (mapOfOccupancyAndTankCapacity.get("expectedTankCapacity")
-								.equals(mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity"))) {
-							if (!(mapOfOccupancyAndTankCapacity.get("occupancy"))
-									.equals(mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy"))) {
-								SortedSet<String> uniqueOccupancies = new TreeSet<>();
-								String[] occupancyString = (mapOfOccupancyAndTankCapacity.get("occupancy") + " , "
-										+ mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy"))
-												.split(" , ");
-								for (String str : occupancyString) {
-									uniqueOccupancies.add(str);
-								}
-								StringBuffer str = new StringBuffer();
-								List<String> unqList = new ArrayList<>(uniqueOccupancies);
-								for (String unique : unqList) {
-									str.append(unique);
-									if (!unique.equals(unqList.get(unqList.size() - 1))) {
-										str.append(" , ");
+					Map<String, Object> mapOfMostRestrictiveOccupancyAndItsTankCapacity = new HashMap<>();
+					if (!listOfMapOfAllOccupanciesAndTankCapacity.isEmpty()) {
+						mapOfMostRestrictiveOccupancyAndItsTankCapacity = listOfMapOfAllOccupanciesAndTankCapacity.get(0);
+						for (Map<String, Object> mapOfOccupancyAndTankCapacity : listOfMapOfAllOccupanciesAndTankCapacity) {
+							if (mapOfOccupancyAndTankCapacity.get("expectedTankCapacity")
+									.equals(mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity"))) {
+								if (!(mapOfOccupancyAndTankCapacity.get("occupancy"))
+										.equals(mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy"))) {
+									SortedSet<String> uniqueOccupancies = new TreeSet<>();
+									String[] occupancyString = (mapOfOccupancyAndTankCapacity.get("occupancy") + " , "
+											+ mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy"))
+													.split(" , ");
+									for (String str : occupancyString) {
+										uniqueOccupancies.add(str);
 									}
+									StringBuffer str = new StringBuffer();
+									List<String> unqList = new ArrayList<>(uniqueOccupancies);
+									for (String unique : unqList) {
+										str.append(unique);
+										if (!unique.equals(unqList.get(unqList.size() - 1))) {
+											str.append(" , ");
+										}
+									}
+									mapOfMostRestrictiveOccupancyAndItsTankCapacity.put("occupancy", str.toString());
 								}
-								mapOfMostRestrictiveOccupancyAndItsTankCapacity.put("occupancy", str.toString());
+								continue;
+							} else if (((BigDecimal) mapOfMostRestrictiveOccupancyAndItsTankCapacity
+									.get("expectedTankCapacity")).compareTo(
+											(BigDecimal) mapOfOccupancyAndTankCapacity.get("expectedTankCapacity")) < 0) {
+								mapOfMostRestrictiveOccupancyAndItsTankCapacity.putAll(mapOfOccupancyAndTankCapacity);
 							}
-							continue;
-						} else if (((BigDecimal) mapOfMostRestrictiveOccupancyAndItsTankCapacity
-								.get("expectedTankCapacity")).compareTo(
-										(BigDecimal) mapOfOccupancyAndTankCapacity.get("expectedTankCapacity")) < 0) {
-							mapOfMostRestrictiveOccupancyAndItsTankCapacity.putAll(mapOfOccupancyAndTankCapacity);
 						}
 					}
-				}
-				Boolean valid = false;
-				if (!mapOfMostRestrictiveOccupancyAndItsTankCapacity.isEmpty()
-						&& mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy") != null
-						&& mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity") != null) {
-					if (((BigDecimal) mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity"))
-							.compareTo(pl.getUtility().getRainWaterHarvestingTankCapacity()) <= 0) {
-						valid = true;
+					Boolean valid = false;
+					if (!mapOfMostRestrictiveOccupancyAndItsTankCapacity.isEmpty()
+							&& mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy") != null
+							&& mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity") != null) {
+						if (((BigDecimal) mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity"))
+								.compareTo(pl.getUtility().getRainWaterHarvestingTankCapacity()) <= 0) {
+							valid = true;
+						}
+						processRWHTankCapacity(pl, subRule, subRuleDesc,
+								(BigDecimal) mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity"),
+								valid, mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy"));
 					}
-					processRWHTankCapacity(pl, subRule, subRuleDesc,
-							(BigDecimal) mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("expectedTankCapacity"),
-							valid, mapOfMostRestrictiveOccupancyAndItsTankCapacity.get("occupancy"));
 				}
+			} else if (!pl.getUtility().getRainWaterHarvest().isEmpty()
+					&& pl.getUtility().getRainWaterHarvestingTankCapacity() == null
+					&& pl.getVirtualBuilding().getTotalCoverageArea() != null
+					&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0
+					&& pl.getVirtualBuilding().getTotalFloorArea() != null) {
+				HashMap<String, String> errors = new HashMap<>();
+				errors.put(RAINWATER_HARVESTING_TANK_CAPACITY, edcrMessageSource.getMessage(RAINWATERCAPACITY,
+						new String[] { RAINWATER_HARVESTING_CAPACITY }, LocaleContextHolder.getLocale()));
+				pl.addErrors(errors);
 			}
-		} else if (!pl.getUtility().getRainWaterHarvest().isEmpty()
-				&& pl.getUtility().getRainWaterHarvestingTankCapacity() == null
-				&& pl.getVirtualBuilding().getTotalCoverageArea() != null
-				&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0
-				&& pl.getVirtualBuilding().getTotalFloorArea() != null) {
-			HashMap<String, String> errors = new HashMap<>();
-			errors.put(RAINWATER_HARVESTING_TANK_CAPACITY, edcrMessageSource.getMessage(RAINWATERCAPACITY,
-					new String[] { RAINWATER_HARVESTING_CAPACITY }, LocaleContextHolder.getLocale()));
-			pl.addErrors(errors);
-
 		}
 
 		if (!pl.getUtility().getGroundWaterRecharge().isEmpty())

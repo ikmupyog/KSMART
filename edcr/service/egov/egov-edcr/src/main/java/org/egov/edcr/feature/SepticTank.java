@@ -50,6 +50,7 @@ package org.egov.edcr.feature;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
 import static org.egov.edcr.constants.DxfFileConstants.COLOUR_CODE_SEPTICTANK_TO_PLOT_BNDRY;
 import static org.egov.edcr.utility.DcrConstants.IN_METER_SQR;
+import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -70,13 +71,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SepticTank extends FeatureProcess {
 
-    private static final String SUB_RULE_79_2_DESCRIPTION = "Minimum area of septic tank";
+    private static final String SEPTIC_TANK = "Septic tank";
+	private static final String SUB_RULE_79_2_DESCRIPTION = "Minimum area of septic tank";
     private static final String SUB_RULE_79_2 = "79(2)";
     private static final BigDecimal HUNDRED = BigDecimal.valueOf(100);
     private static final BigDecimal ONE_POINTFIVE = BigDecimal.valueOf(1.5);
     private static final String OBJECT_NOT_DEFINED = "msg.error.mandatory.object1.not.defined";
     private static final String SEPTIC_TANK_AREA_DESC_MULTIPLE = " septic tanks are having minimum area 1.5 m2";
-    private static final String SEPTIC_TANK_AREA_DESC_SINGLE = " septic tank is having minimum area 1.5 m2";
+    private static final String SEPTIC_TANK_AREA_DESC_SINGLE = "The area provided for the septic tank is insufficient";
     private static final String SUB_RULE_AMD19_75_2II = "75(2(ii))";
     private static final String SUB_RULE_AMD20_79_4 = "79(4)";
     private static final BigDecimal DIST_1_POINT_2 = BigDecimal.valueOf(1.2);
@@ -90,7 +92,7 @@ public class SepticTank extends FeatureProcess {
         if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
                 && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
                 && pl.getSepticTanks().isEmpty()) {
-            errors.put(SUB_RULE_79_2, getLocaleMessage(OBJECT_NOT_DEFINED, "Septic tank"));
+            errors.put(SUB_RULE_79_2, getLocaleMessage(OBJECT_NOT_DEFINED, SEPTIC_TANK));
             pl.addErrors(errors);
         }
         return pl;
@@ -112,6 +114,8 @@ public class SepticTank extends FeatureProcess {
         if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
                 && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
                 && !pl.getSepticTanks().isEmpty()) {
+        	setReportOutputDetailsWithoutOccupancy(pl, subRule, SEPTIC_TANK, "", OBJECTDEFINED_DESC,
+					Result.Accepted.getResultVal());
         	List<String> septicTankType = pl.getSepticTanks().stream().map(org.egov.common.entity.edcr.SepticTank::getType).collect(Collectors.toList());
             boolean proposedSeptic = false;
             if (!septicTankType.isEmpty() && septicTankType.get(0) != null) {
@@ -139,15 +143,9 @@ public class SepticTank extends FeatureProcess {
                     septicTank -> Util.roundOffTwoDecimal(septicTank.getArea()).compareTo(ONE_POINTFIVE) >= 0)
                     .map(org.egov.common.entity.edcr.SepticTank::getArea).collect(Collectors.toList());
 
-            if (!collect.isEmpty()) {
-                setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
-                        ONE_POINTFIVE.toString() + IN_METER_SQR,
-                        collect.size() == 1 ? collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE
-                                : collect.size() + SEPTIC_TANK_AREA_DESC_MULTIPLE,
-                        Result.Accepted.getResultVal());
-            } else {
-                setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
-                        ONE_POINTFIVE.toString() + IN_METER_SQR, collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE,
+            if (collect.isEmpty()) {
+            	setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
+                        ONE_POINTFIVE.toString() + IN_METER_SQR, SEPTIC_TANK_AREA_DESC_SINGLE,
                         Result.Not_Accepted.getResultVal());
             }
         }
