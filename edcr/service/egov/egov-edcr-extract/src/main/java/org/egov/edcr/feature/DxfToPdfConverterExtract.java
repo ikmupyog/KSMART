@@ -30,6 +30,7 @@ import org.egov.common.entity.dcr.helper.PlanPdfLayerConfig;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.EdcrPdfDetail;
 import org.egov.common.entity.edcr.Floor;
+import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.SetBack;
 import org.egov.commons.mdms.EDCRMdmsUtil;
 import org.egov.commons.mdms.config.MdmsConfiguration;
@@ -75,6 +76,7 @@ import org.kabeja.dxf.helpers.StyledTextParagraph;
 import org.kabeja.math.MathUtils;
 import org.kabeja.xml.SAXSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -286,7 +288,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		
 			sanitize(fileName, planDetail.getDxfDocument(), edcrPdfDetail, planDetail);
 			
-			File file = convertDxfToPdf(planDetail.getDxfDocument(), fileName, edcrPdfDetail.getLayer(), edcrPdfDetail);
+			File file = convertDxfToPdf(planDetail,planDetail.getDxfDocument(), fileName, edcrPdfDetail.getLayer(), edcrPdfDetail);
 			disablePrintableLayers(edcrPdfDetail, planDetail.getDxfDocument());
 
 			if (file != null) {
@@ -321,7 +323,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
 			sanitize(fileName, planDetail.getDxfDocument(), printSingleSheetDetails, planDetail);
 
-			File file = convertDxfToPdf(planDetail.getDxfDocument(), fileName, printSingleSheetDetails.getLayer(),
+			File file = convertDxfToPdf(planDetail,planDetail.getDxfDocument(), fileName, printSingleSheetDetails.getLayer(),
 					printSingleSheetDetails);
 			// validate Mandatory layers
 
@@ -1150,7 +1152,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		}
 	}
 
-	private File convertDxfToPdf(DXFDocument dxfDocument, String fileName, String layerName,
+	private File convertDxfToPdf(PlanDetail planDetail, DXFDocument dxfDocument, String fileName, String layerName,
 			EdcrPdfDetail edcrPdfDetail) {
 
 		File fileOut = new File(layerName + ".pdf");
@@ -1183,8 +1185,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 				if (edcrPdfDetail.getPageSize().getRemoveHatch()) {
 					map.put("stroke.width", new Double(0));
 				}
-
-				generator.generate(dxfDocument, out, map);
+     			generator.generate(dxfDocument, out, map);
 				if (LOG.isDebugEnabled())
 					LOG.debug("---------conversion success " + fileName + " - " + layerName + "----------");
 				fout.flush();
@@ -1193,7 +1194,9 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 			} catch (Exception ep) {
 				LOG.error("Pdf convertion failed for " + fileName + " - " + layerName + " due to " + ep.getMessage());
 				edcrPdfDetail.setFailureReasons(ep.getMessage());
+				planDetail.addError("font error", ep.getMessage());
 				ep.printStackTrace();   
+			
 			}
 		}
 

@@ -7,11 +7,10 @@ import static org.egov.edcr.constants.DxfFileConstants.A4;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,8 +27,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -160,7 +157,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 if (STATUS.equalsIgnoreCase(columnHeading.name)) {
                     columnWidth = statusColumnSize.intValue();
                 }
-                frb.addColumn(columnHeading.name, columnHeading.name, String.class.getName(), columnWidth);
+                frb.addColumn(columnHeading.name.toUpperCase(), columnHeading.name, String.class.getName(), columnWidth);
             }
             frb.setMargins(1, 1, 1, 1);
             frb.setUseFullPageWidth(true);
@@ -171,12 +168,12 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
             }
             if (heading != null)
-                frb.setTitle(j + "." + heading);
+                frb.setTitle(j + "." + heading.toUpperCase());
             else
-                frb.setTitle(title);
+                frb.setTitle(title.toUpperCase());
 
             if (subheading != null)
-                frb.setSubtitle("\t" + subheading);
+                frb.setSubtitle("\t" + subheading.toUpperCase());
 
             frb.setTitleStyle(reportService.getNewReportTitleStyle());
            // frb.setHeaderHeight(5);
@@ -773,7 +770,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setUseFullPageWidth(true);
             frb.setTitle(title);
             frb.setShowDetailBand(false);
-            frb.setMargins(10, 0, 0, 0);
+            frb.setMargins(0, 0, 0, 0);
             frb.setTitleStyle(reportService.getNewReportSubReportTitleStyle());
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
             frb.setTitleHeight(20);
@@ -891,13 +888,16 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         if (StringUtils.isBlank(voltages)) {
             voltages = String.valueOf(BigDecimal.ZERO) + " KV";
         }
-
-        final Map<String, Object> valuesMap = new HashMap<>();
+         SimpleDateFormat sf = new SimpleDateFormat("HH:MM");
+         String uploadTime= sf.format(dcrApplication.getApplicationDate());
+         final Map<String, Object> valuesMap = new HashMap<>();
         valuesMap.put("ulbName", ApplicationThreadLocals.getMunicipalityName());
         valuesMap.put("applicantName", dcrApplication.getApplicantName());
         valuesMap.put("licensee", dcrApplication.getArchitectInformation());
         valuesMap.put("applicationNumber", applicationNumber);
         valuesMap.put("applicationDate", applicationDate);
+        valuesMap.put("fileName", dcrApplication.getDxfFile().getOriginalFilename());
+        valuesMap.put("uploadTime", uploadTime);
         valuesMap.put("errors", plan.getErrors());
         valuesMap.put("errorString", errors.toString());
         valuesMap.put("nocString", nocs.toString());

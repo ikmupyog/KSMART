@@ -68,6 +68,8 @@
 	<parameter name="nocString" class="java.lang.String"/>
 	<parameter name="nocs" class="java.util.Map"/>
 	<parameter name="applicationDate" class="java.lang.String"/>
+	<parameter name="fileName" class="java.lang.String"/>
+	<parameter name="uploadTime" class="java.lang.String"/>
 	<parameter name="qrCode" class="java.io.File"/>
 	<parameter name="errors" class="java.util.Map"/>
 	<parameter name="cityLogo" class="java.lang.String"/>
@@ -159,18 +161,30 @@
 				<textFieldExpression><![CDATA[$P{reportStatus}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="176" width="80" height="52" isRemoveLineWhenBlank="true" uuid="1bc539b3-3399-4906-9c6d-2f6ce7399eb8">
+				<reportElement x="0" y="176" width="80" height="52" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1bc539b3-3399-4906-9c6d-2f6ce7399eb8">
 					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
 				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Monospaced" size="10" isBold="true" isItalic="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[ERRORS]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="80" y="176" width="475" height="52" isRemoveLineWhenBlank="true" uuid="3993cc76-bd9f-4699-897a-2330010ece90">
+				<reportElement x="80" y="176" width="475" height="52" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="3993cc76-bd9f-4699-897a-2330010ece90">
 					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
 				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textFieldExpression><![CDATA[$P{errorString}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
@@ -231,7 +245,7 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA["APPLICATION TYPE"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Uploaded File"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="410" y="88" width="130" height="21" uuid="8f0e1ba4-c0fc-4066-9d8d-81aee79e61c6"/>
@@ -276,7 +290,7 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{applicationType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fileName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="410" y="109" width="130" height="21" uuid="5f95bbc6-5109-48b2-b698-83152cc445ee"/>
@@ -291,7 +305,7 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{dcrNo} != null  && $P{dcrNo} !=  ""  ?  $P{dcrNo} : "NA"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{uploadTime}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="114" y="2" width="306" height="20" uuid="ed11d28c-ce19-4969-8deb-01f60cd5c4b4"/>

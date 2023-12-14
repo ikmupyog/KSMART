@@ -352,9 +352,18 @@ public class DcrSvgGenerator extends AbstractSAXGenerator {
 
            SVGUtils.endElement(handler, SVGConstants.SVG_GROUP);
            SVGUtils.endElement(handler, SVGConstants.SVG_ROOT);
-           handler.endDocument();
+	       try {
+				handler.endDocument();
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				throw e;
+			}
+           
        } catch (SAXException e) {
+    	   
            e.printStackTrace();
+           throw e;
        }
    }
 
@@ -376,6 +385,7 @@ public class DcrSvgGenerator extends AbstractSAXGenerator {
                gen.toSAX(handler, this.context, entity, transformContext);
            } catch (SVGGenerationException e) {
                e.printStackTrace();
+               throw new RuntimeException(e.getMessage());
            }
        }
 
@@ -641,6 +651,7 @@ public class DcrSvgGenerator extends AbstractSAXGenerator {
                }
            } catch (SVGGenerationException e) {
                e.printStackTrace();
+               throw new RuntimeException(e.getMessage());
            }
        }
 

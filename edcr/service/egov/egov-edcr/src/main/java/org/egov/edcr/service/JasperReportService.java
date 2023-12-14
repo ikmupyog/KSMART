@@ -113,8 +113,8 @@ public class JasperReportService {
         detailStyle.setBorderTop(Border.THIN());
         detailStyle.setBorderBottom(Border.THIN());
         detailStyle.setTextColor(color);
-        detailStyle.setHorizontalAlign(HorizontalAlign.LEFT);
-        detailStyle.setVerticalAlign(VerticalAlign.TOP);
+        detailStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+        detailStyle.setVerticalAlign(VerticalAlign.MIDDLE);
         detailStyle.setFont(new Font(8, Font._FONT_VERDANA, true));
         detailStyle.setTransparency(Transparency.OPAQUE);
         return detailStyle;
@@ -333,7 +333,7 @@ public class JasperReportService {
         subTitleStyle.setBorderBottom(Border.NO_BORDER());
         subTitleStyle.setTextColor(Color.black);
         subTitleStyle.setFont(new Font(9, Font._FONT_ARIAL, true));
-        subTitleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+        subTitleStyle.setHorizontalAlign(HorizontalAlign.CENTER);
         subTitleStyle.setVerticalAlign(VerticalAlign.MIDDLE);
         return subTitleStyle;
     }
