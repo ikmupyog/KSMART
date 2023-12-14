@@ -73,6 +73,7 @@ import java.util.stream.Collectors;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
+import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -101,13 +102,14 @@ public class InBuiltSolutions extends FeatureProcess {
 		validate(pl);
 		for (Block block : pl.getBlocks()) {
 			if (!checkExemption(pl, block)) {
+				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 				scrutinyDetail.setKey("Block_" + block.getNumber() + "_In-Building Solutions");
 				scrutinyDetail.addColumnHeading(1, RULE_NO);
 				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
 				scrutinyDetail.addColumnHeading(3, REQUIRED);
 				scrutinyDetail.addColumnHeading(4, PROVIDED);
 				scrutinyDetail.addColumnHeading(5, STATUS);
-				processInbuiltSolutions(pl, block);
+				processInbuiltSolutions(pl, block, scrutinyDetail);
 			}
 		}
 		return pl;
@@ -136,19 +138,19 @@ public class InBuiltSolutions extends FeatureProcess {
 		return exmpted;
 	}
 	
-	private void processInbuiltSolutions(Plan pl, Block block) {
+	private void processInbuiltSolutions(Plan pl, Block block, ScrutinyDetail scrutinyDetail ) {
 		if (!block.getInBuiltSolutuons().isEmpty()) {
-			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "Mandatory", OBJECTDEFINED_DESC, Result.Accepted.getResultVal());
+			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "Mandatory", OBJECTDEFINED_DESC, Result.Accepted.getResultVal(), scrutinyDetail);
 			return;
 		} else {
 			setReportOutputDetails(pl, RULE_41A, RULE_41A_DESC, "Mandatory", OBJECTNOTDEFINED_DESC,
-					Result.Not_Accepted.getResultVal());
+					Result.Not_Accepted.getResultVal(), scrutinyDetail);
 			return;
 		}
 	}
 
     private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String expected, String actual,
-            String status) {
+            String status, ScrutinyDetail scrutinyDetail) {
         Map<String, String> details = new HashMap<>();
         details.put(RULE_NO, ruleNo);
         details.put(DESCRIPTION, ruleDesc);
