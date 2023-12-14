@@ -646,7 +646,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         return null;
     }
 
-    private Subreport getProposedArea(String dataSource) {
+    private Subreport getProposedArea(String dataSource, boolean isExistingBuildingPresent) {
         try {
 
             FastReportBuilder frb = new FastReportBuilder();
@@ -676,7 +676,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 frb.addColumn(floorArea);
             }
 
-            frb.setTitle("2-2) PROPOSED AREA");
+             if(isExistingBuildingPresent)
+             	frb.setTitle("2-2) PROPOSED AREA");
+             else 
+             	frb.setTitle("2-1) PROPOSED AREA");
             frb.setTitleStyle(reportService.getNewReportSubTitleStyle());
            
            // frb.setSubtitleHeight(5);
@@ -709,7 +712,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         return null;
     }
    
-    private Subreport createCoveredArea(String dataSource) {
+    private Subreport createCoveredArea(String dataSource, boolean isExistingBuildingPresent) {
         try {
 
             FastReportBuilder frb = new FastReportBuilder();
@@ -730,7 +733,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
             }
 
-            frb.setTitle("2-3) COVERED AREA");
+             if(isExistingBuildingPresent)
+             	frb.setTitle("2-3) COVERED AREA");
+             else
+             	frb.setTitle("2-2) COVERED AREA");
             frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
             frb.setHeaderHeight(5);
             //frb.setTopMargin(5);
@@ -956,14 +962,16 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             drb.addConcatenatedReport(getExistingArea(virtualBuildingReport));
             valuesMap.put("Existing Area Details", existingBlockDetails);   
           
-            
-            drb.addConcatenatedReport(getProposedArea("Proposed Area Details"));
+            boolean isExistingBuildingPresent = false;
+            if(virtualBuildingReport.getTotalExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0)
+            	isExistingBuildingPresent = true;
+            drb.addConcatenatedReport(getProposedArea("Proposed Area Details", isExistingBuildingPresent));
             valuesMap.put("Proposed Area Details", proposedBlockDetails);
             
             List<DcrReportBlockDetail> coveredAreas = new ArrayList<>();
             coveredAreas.addAll(proposedBlockDetails);
             coveredAreas.addAll(existingBlockDetails);
-            drb.addConcatenatedReport(createCoveredArea("Covered Area Details"));
+            drb.addConcatenatedReport(createCoveredArea("Covered Area Details", isExistingBuildingPresent));
             valuesMap.put("Covered Area Details", coveredAreas);
 
             
