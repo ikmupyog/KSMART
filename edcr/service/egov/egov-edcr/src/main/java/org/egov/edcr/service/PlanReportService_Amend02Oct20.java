@@ -1218,9 +1218,6 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     valuesMap.put("Remarks_" + cmnFeature, featureFooter);
                 }
             }
-            drb.addConcatenatedReport(
-                    createHeaderSubreport("Disclaimer: The details furnished above are indicative. Pls refer to the respective sections of Kerala Panchayath Building Rules/ Kerala Municipality Buidling Rules and the amendment from time to time for exact rule requirements.", "discliamer"));
-            valuesMap.put("discliamer", Arrays.asList("discliamer"));
             if (finalReportStatus)
                 for (String cmnFeature : common) {
                     for (Map<String, String> commonStatus : allMap.get(cmnFeature).getDetail()) {

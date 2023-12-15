@@ -1000,6 +1000,7 @@ public class Far extends FeatureProcess {
 	private void processFar(Plan pl, OccupancyTypeHelper occupancyType, FarDetails far, BigDecimal upperLimit,
 			BigDecimal additionFeeLimit, ScrutinyDetail scrutinyDetail, String desc) {
 		String ruleNo = RULE_27;
+		String occupancy = pl.getVirtualBuilding().getOccupancyTypes().stream().map(occ -> occ.getType().getName()).collect(Collectors.joining(","));
 		if (far.getProvidedFar().doubleValue() <= upperLimit.doubleValue()) {
 
 			if (far.getProvidedFar().doubleValue() > additionFeeLimit.doubleValue()) {
@@ -1016,7 +1017,7 @@ public class Far extends FeatureProcess {
 				Map<String, String> details = new HashMap<>();
 				details.put(RULE_NO, ruleNo);
 				details.put(DESCRIPTION, desc);
-				details.put(OCCUPANCY, occupancyType == null ? "" : occupancyType.getType().getName());
+				details.put(OCCUPANCY, occupancy);
 				details.put(REQUIRED, expectedResult);
 				details.put(PROVIDED, actualResult);
 				details.put(STATUS, Result.Verify.getResultVal());
@@ -1034,7 +1035,7 @@ public class Far extends FeatureProcess {
 				Map<String, String> details = new HashMap<>();
 				details.put(RULE_NO, ruleNo);
 				details.put(DESCRIPTION, desc);
-				details.put(OCCUPANCY, occupancyType == null ? "" : occupancyType.getType().getName());
+				details.put(OCCUPANCY, occupancy);
 				details.put(REQUIRED, expectedResult);
 				details.put(PROVIDED, actualResult);
 				details.put(STATUS, Result.Accepted.getResultVal());
