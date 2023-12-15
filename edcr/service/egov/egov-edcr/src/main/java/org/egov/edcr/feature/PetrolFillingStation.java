@@ -47,9 +47,8 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
-import static org.egov.edcr.utility.DcrConstants.CANOPY_DISTANCE;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 
 import java.math.BigDecimal;
@@ -68,61 +67,85 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PetrolFillingStation extends FeatureProcess {
-	private static final String SUBRULE_59_10 = "59-(10)";
-	private static final String SUBRULE_59_10_DESC = "Minimum distance from canopy to plot boundary";
-
+	private static final String SUBRULE_47 = "47";
+	private static final String SUBRULE_47_DESC = "The distance between kiosk/sales office, toilet block";
+	private static final String SUBRULE_47_2 = "47(2)";
+	private static final String SUBRULE_47_2_DESC = "Radius of Dispensing Unit";
 	@Override
 	public Plan validate(Plan pl) {
 		HashMap<String, String> errors = new HashMap<>();
-		if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-			List<String> occupancyTpes = pl.getVirtualBuilding().getOccupancyTypes().stream()
-					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (occupancyTpes.contains(F3) && occupancyTpes.contains(I2)
-					&& pl.getCanopyDistanceFromPlotBoundary().isEmpty()) {
-				errors.put(CANOPY_DISTANCE, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
-						new String[] { CANOPY_DISTANCE }, LocaleContextHolder.getLocale()));
-				pl.addErrors(errors);
-			}
+		if (pl.getCanopy().getKioskDistances().isEmpty()) {
+			errors.put(SUBRULE_47_DESC, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
+					new String[] { SUBRULE_47_DESC }, LocaleContextHolder.getLocale()));
+			pl.addErrors(errors);
+		}
+		
+		if (pl.getCanopy().getDispensingUnits().isEmpty()) {
+			errors.put(SUBRULE_47_2_DESC, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
+					new String[] { SUBRULE_47_2_DESC }, LocaleContextHolder.getLocale()));
+			pl.addErrors(errors);
 		}
 		return pl;
 	}
 
 	@Override
 	public Plan process(Plan pl) {
-		validate(pl);
-		Boolean valid = false;
-		scrutinyDetail = new ScrutinyDetail();
-		scrutinyDetail.setKey("Common_Petrol Filling Station");
-		scrutinyDetail.addColumnHeading(1, RULE_NO);
-		scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-		scrutinyDetail.addColumnHeading(3, REQUIRED);
-		scrutinyDetail.addColumnHeading(4, PROVIDED);
-		scrutinyDetail.addColumnHeading(5, STATUS);
-		if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-			List<String> occupancyTpes = pl.getVirtualBuilding().getOccupancyTypes().stream()
-					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (occupancyTpes.contains(F3) && occupancyTpes.contains(I2)
-					&& !pl.getCanopyDistanceFromPlotBoundary().isEmpty()) {
-				BigDecimal minimumCanopyDistanceFromPlotBoundary = pl.getCanopyDistanceFromPlotBoundary().get(0);
-				for (BigDecimal canopyDistanceFromPlotBoundary : pl.getCanopyDistanceFromPlotBoundary()) {
-					if (canopyDistanceFromPlotBoundary.compareTo(minimumCanopyDistanceFromPlotBoundary) < 0) {
-						minimumCanopyDistanceFromPlotBoundary = canopyDistanceFromPlotBoundary;
+		if (pl != null && !pl.getOccupancies().isEmpty()) {
+			List<String> occupancyTpes = pl.getOccupancies().stream()
+					.map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
+			if(occupancyTpes.contains(I1) || occupancyTpes.contains(I2)) {
+				validate(pl);
+				scrutinyDetail = new ScrutinyDetail();
+				scrutinyDetail.setKey("Common_Automobile Fuel Filling Station");
+				scrutinyDetail.addColumnHeading(1, RULE_NO);
+				scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+				scrutinyDetail.addColumnHeading(3, REQUIRED);
+				scrutinyDetail.addColumnHeading(4, PROVIDED);
+				scrutinyDetail.addColumnHeading(5, STATUS);
+				if(pl.getCanopy() != null && !pl.getCanopy().getKioskDistances().isEmpty()) {
+					int failedCount=0;
+					for(BigDecimal dis : pl.getCanopy().getKioskDistances()) {
+						if(dis.doubleValue() < 1)
+							failedCount++;
 					}
+					if(failedCount > 0)
+						setReportOutputDetails(pl, SUBRULE_47, SUBRULE_47_DESC, "Minimum Dimension >= 1", failedCount +" Out of "+pl.getCanopy().getKioskDistances().size()+" are not having minimum dimension", Result.Not_Accepted.getResultVal());
+					else
+						setReportOutputDetails(pl, SUBRULE_47, SUBRULE_47_DESC, "Minimum Dimension >= 1", pl.getCanopy().getKioskDistances().size()+" are having minimum dimension", Result.Not_Accepted.getResultVal());
 				}
-				minimumCanopyDistanceFromPlotBoundary = BigDecimal
-						.valueOf(Math.round(minimumCanopyDistanceFromPlotBoundary.doubleValue() * Double.valueOf(100))
-								/ Double.valueOf(100));
-				if (minimumCanopyDistanceFromPlotBoundary.compareTo(BigDecimal.valueOf(3)) >= 0) {
-					valid = true;
-				}
-				if (valid) {
-					setReportOutputDetails(pl, SUBRULE_59_10, SUBRULE_59_10_DESC, String.valueOf(3),
-							minimumCanopyDistanceFromPlotBoundary.toString(), Result.Accepted.getResultVal());
-				} else {
-					setReportOutputDetails(pl, SUBRULE_59_10, SUBRULE_59_10_DESC, String.valueOf(3),
-							minimumCanopyDistanceFromPlotBoundary.toString(), Result.Not_Accepted.getResultVal());
+				
+				if(pl.getCanopy() != null && !pl.getCanopy().getDispensingUnits().isEmpty()) {
+					int failedCount=0;
+					for(BigDecimal dis : pl.getCanopy().getDispensingUnits()) {
+						if(dis.doubleValue() < 1)
+							failedCount++;
+					}
+					if(failedCount > 0)
+						setReportOutputDetails(pl, SUBRULE_47_2, SUBRULE_47_2_DESC, "Minimum Dimension >= 7.5", failedCount +" Out of "+pl.getCanopy().getDispensingUnits().size()+" are not having minimum dimension", Result.Not_Accepted.getResultVal());
+					else
+						setReportOutputDetails(pl, SUBRULE_47_2, SUBRULE_47_2_DESC, "Minimum Dimension >= 7.5", pl.getCanopy().getDispensingUnits().size()+" are having minimum dimension", Result.Not_Accepted.getResultVal());
 				}
 			}
+			/*
+			 * if (occupancyTpes.contains(F3) && occupancyTpes.contains(I2) &&
+			 * pl.getCanopy() != null) { //BigDecimal minimumCanopyDistanceFromPlotBoundary
+			 * = pl.getCanopyDistanceFromPlotBoundary().get(0); for (BigDecimal
+			 * canopyDistanceFromPlotBoundary : pl.getCanopyDistanceFromPlotBoundary()) { if
+			 * (canopyDistanceFromPlotBoundary.compareTo(
+			 * minimumCanopyDistanceFromPlotBoundary) < 0) {
+			 * minimumCanopyDistanceFromPlotBoundary = canopyDistanceFromPlotBoundary; } }
+			 * minimumCanopyDistanceFromPlotBoundary = BigDecimal
+			 * .valueOf(Math.round(minimumCanopyDistanceFromPlotBoundary.doubleValue() *
+			 * Double.valueOf(100)) / Double.valueOf(100)); if
+			 * (minimumCanopyDistanceFromPlotBoundary.compareTo(BigDecimal.valueOf(3)) >= 0)
+			 * { valid = true; } if (valid) { setReportOutputDetails(pl, SUBRULE_59_10,
+			 * SUBRULE_59_10_DESC, String.valueOf(3),
+			 * minimumCanopyDistanceFromPlotBoundary.toString(),
+			 * Result.Accepted.getResultVal()); } else { setReportOutputDetails(pl,
+			 * SUBRULE_59_10, SUBRULE_59_10_DESC, String.valueOf(3),
+			 * minimumCanopyDistanceFromPlotBoundary.toString(),
+			 * Result.Not_Accepted.getResultVal()); } }
+			 */
 		}
 		return pl;
 	}

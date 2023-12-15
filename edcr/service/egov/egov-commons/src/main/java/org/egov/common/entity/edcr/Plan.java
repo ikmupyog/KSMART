@@ -120,8 +120,8 @@ public class Plan implements Serializable {
     private transient List<BigDecimal> travelDistancesToExit = new ArrayList<>();
     // Parking facilities provided in the plot. Includes visitor, two wheeler, four wheeler etc
     private transient ParkingDetails parkingDetails = new ParkingDetails();
-    // If canopy present, then distance from the plot boundary
-    private transient List<BigDecimal> canopyDistanceFromPlotBoundary;
+    // If canopy present, then distances of kiosk and dispensing units radius
+    private Canopy canopy;
 
     // List of occupancies present in the plot including all the blocks (Declared and Converted).
     private List<Occupancy> occupancies = new ArrayList<>();
@@ -210,16 +210,19 @@ public class Plan implements Serializable {
     private List<ICT> icts = new ArrayList<>();
     private transient String applicationType;
     private RecreationArea recreationArea;
+    private boolean isKnowYourRequirement = false;
+    private transient Map<String, String> kyrerrors = new LinkedHashMap<>();
     
-    public List<BigDecimal> getCanopyDistanceFromPlotBoundary() {
-        return canopyDistanceFromPlotBoundary;
-    }
 
-    public void setCanopyDistanceFromPlotBoundary(List<BigDecimal> canopyDistanceFromPlotBoundary) {
-        this.canopyDistanceFromPlotBoundary = canopyDistanceFromPlotBoundary;
-    }
+    public Canopy getCanopy() {
+		return canopy;
+	}
 
-    public List<BigDecimal> getTravelDistancesToExit() {
+	public void setCanopy(Canopy canopy) {
+		this.canopy = canopy;
+	}
+
+	public List<BigDecimal> getTravelDistancesToExit() {
         return travelDistancesToExit;
     }
 
@@ -698,4 +701,24 @@ public class Plan implements Serializable {
 		this.recreationArea = recreationArea;
 	}
 
+	public boolean isKnowYourRequirement() {
+		return isKnowYourRequirement;
+	}
+
+	public void setKnowYourRequirement(boolean isKnowYourRequirement) {
+		this.isKnowYourRequirement = isKnowYourRequirement;
+	}
+
+	public Map<String, String> getKyrerrors() {
+		return kyrerrors;
+	}
+
+	public void setKyrerrors(Map<String, String> kyrerrors) {
+		this.kyrerrors = kyrerrors;
+	}
+    public void addKYRError(String key, String value) {
+
+        if (kyrerrors != null)
+            getKyrerrors().put(key, value);
+    }
 }
