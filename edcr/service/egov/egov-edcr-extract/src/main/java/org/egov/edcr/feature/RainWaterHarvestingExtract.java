@@ -162,10 +162,21 @@ public class RainWaterHarvestingExtract extends FeatureExtract {
 
         List<DXFLWPolyline> gwRecharge = Util.getPolyLinesByLayer(pl.getDoc(),
                 layerNames.getLayerName("LAYER_NAME_GW_RECHARGE"));
-        for (DXFLWPolyline pline : gwRecharge) {
-            Measurement gwr = new MeasurementDetail(pline, true);
-            pl.getUtility().addGroundWaterRecharge(gwr);
-        }
+		if (gwRecharge != null && !gwRecharge.isEmpty())
+			for (DXFLWPolyline pline : gwRecharge) {
+				Measurement gwr = new MeasurementDetail(pline, true);
+				pl.getUtility().addGroundWaterRecharge(gwr);
+			}
+		List<DXFCircle> gwRechargeCircle = Util.getPolyCircleByLayer(pl.getDoc(),
+				layerNames.getLayerName("LAYER_NAME_GW_RECHARGE"));
+		if (gwRechargeCircle != null && !gwRechargeCircle.isEmpty()) {
+			for (DXFCircle pline : gwRechargeCircle) {
+				Measurement measurement = new MeasurementDetail();
+				measurement.setColorCode(pline.getColor());
+				measurement.setPresentInDxf(true);
+				pl.getUtility().addGroundWaterRecharge(measurement);
+			}
+		}
         if (LOG.isInfoEnabled())
             LOG.info("End of Rain Water Harvesting Extract......");
         return pl;
