@@ -969,8 +969,12 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             valuesMap.put("Proposed Area Details", proposedBlockDetails);
             
             List<DcrReportBlockDetail> coveredAreas = new ArrayList<>();
-            coveredAreas.addAll(proposedBlockDetails);
-            coveredAreas.addAll(existingBlockDetails);
+            BigDecimal proposedBuiltupArea = proposedBlockDetails.stream().map(pbd -> pbd.getTotalBuiltUpArea()).reduce(BigDecimal.ZERO, BigDecimal::add);
+            if(proposedBuiltupArea.compareTo(BigDecimal.ZERO) > 0)
+            	coveredAreas.addAll(proposedBlockDetails);
+            BigDecimal totalCoveredArea = existingBlockDetails.stream().map(pbd -> pbd.getTotalCoveredArea()).reduce(BigDecimal.ZERO, BigDecimal::add);
+            if(totalCoveredArea.compareTo(BigDecimal.ZERO) > 0)
+            	coveredAreas.addAll(existingBlockDetails);
             drb.addConcatenatedReport(createCoveredArea("Covered Area Details", isExistingBuildingPresent));
             valuesMap.put("Covered Area Details", coveredAreas);
 
@@ -1397,8 +1401,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     dcrReportBlockDetail.setCoverageArea(building.getCoverageArea());
                     dcrReportBlockDetail.setBuildingHeight(building.getBuildingHeight());
                     dcrReportBlockDetail.setConstructedArea(building.getTotalConstructedArea());
-                    dcrReportBlockDetail.setTotalBuiltUpArea(dcrReportBlockDetail.getTotalBuiltUpArea().add(building.getTotalBuitUpArea()));
-                    dcrReportBlockDetail.setTotalFloorArea( dcrReportBlockDetail.getTotalFloorArea().add(building.getTotalFloorArea()));
+                    dcrReportBlockDetail.setTotalBuiltUpArea(building.getTotalBuitUpArea().subtract(building.getTotalExistingBuiltUpArea()));
+                    dcrReportBlockDetail.setTotalFloorArea(building.getTotalFloorArea().subtract(building.getTotalExistingFloorArea()));
                     dcrReportBlockDetail.setTotalCoveredArea( dcrReportBlockDetail.getTotalCoveredArea().add(building.getCoverageArea()));
                     List<Floor> floors = building.getFloors();
 
@@ -1520,9 +1524,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     DcrReportBlockDetail dcrReportBlockDetail = new DcrReportBlockDetail();
                     dcrReportBlockDetail.setBlockNo(block.getNumber());
                     
-                    dcrReportBlockDetail.setTotalBuiltUpArea(dcrReportBlockDetail.getTotalBuiltUpArea().add(building.getTotalExistingBuiltUpArea()));
-                    dcrReportBlockDetail.setTotalFloorArea( dcrReportBlockDetail.getTotalFloorArea().add(building.getTotalFloorArea()));
-                    dcrReportBlockDetail.setTotalCoveredArea( dcrReportBlockDetail.getTotalCoveredArea().add(building.getCoverageArea()));
+                    dcrReportBlockDetail.setTotalBuiltUpArea(building.getTotalExistingBuiltUpArea());
+                    dcrReportBlockDetail.setTotalFloorArea(building.getTotalExistingFloorArea());
+                    if(block.getCompletelyExisting())
+                    	dcrReportBlockDetail.setTotalCoveredArea( dcrReportBlockDetail.getTotalCoveredArea().add(building.getCoverageArea()));
 
                     List<Floor> floors = building.getFloors();
 
