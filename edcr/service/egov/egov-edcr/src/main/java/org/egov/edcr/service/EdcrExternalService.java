@@ -190,7 +190,7 @@ public class EdcrExternalService {
                          * Need to be subtract existing building area from proposed building area to get actual proposed area
                          */
                         for (Occupancy occupancy : f.getOccupancies()) {
-                            occupancy.setBuiltUpArea(occupancy.getBuiltUpArea().subtract(occupancy.getExistingBuiltUpArea()));
+                            occupancy.setBuiltUpArea(occupancy.getBuiltUpArea().subtract(occupancy.getExistingBuiltUpArea()).subtract(occupancy.getRegularizationBuiltUpArea()));
                             occupancy.setFloorArea(occupancy.getFloorArea().subtract(occupancy.getExistingFloorArea()));
                             occupancy.setCarpetArea(occupancy.getCarpetArea().subtract(occupancy.getExistingCarpetArea()));
                         }
@@ -202,16 +202,16 @@ public class EdcrExternalService {
                      */
                     for (Occupancy actualOccupancy : b.getBuilding().getTotalArea()) {
                         actualOccupancy.setBuiltUpArea(
-                                actualOccupancy.getBuiltUpArea().subtract(actualOccupancy.getExistingBuiltUpArea()));
+                                actualOccupancy.getBuiltUpArea().subtract(actualOccupancy.getExistingBuiltUpArea()).subtract(actualOccupancy.getRegularizationBuiltUpArea()));
                         actualOccupancy
                                 .setFloorArea(actualOccupancy.getFloorArea().subtract(actualOccupancy.getExistingFloorArea()));
                         actualOccupancy
                                 .setCarpetArea(actualOccupancy.getCarpetArea().subtract(actualOccupancy.getExistingCarpetArea()));
                     }
                     b.getBuilding().setTotalBuitUpArea(
-                            b.getBuilding().getTotalBuitUpArea().subtract(b.getBuilding().getTotalExistingBuiltUpArea()));
+                            b.getBuilding().getTotalBuitUpArea().subtract(b.getBuilding().getTotalExistingBuiltUpArea()).subtract(b.getBuilding().getRegularizationgBuiltUpArea()));
                     b.getBuilding().setTotalFloorArea(
-                            b.getBuilding().getTotalBuitUpArea().subtract(b.getBuilding().getTotalExistingBuiltUpArea()));
+                            b.getBuilding().getTotalBuitUpArea().subtract(b.getBuilding().getTotalExistingBuiltUpArea()).subtract(b.getBuilding().getRegularizationgBuiltUpArea()));
                 }
         }
 

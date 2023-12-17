@@ -64,6 +64,8 @@ public class VirtualBuilding implements Serializable {
     private BigDecimal totalFloorArea;
     private BigDecimal totalCarpetArea;
     private BigDecimal totalExistingBuiltUpArea;
+    private BigDecimal totalRegularizationBuiltUpArea;
+
     private BigDecimal totalExistingFloorArea;
     private BigDecimal totalExistingCarpetArea;
     private OccupancyType mostRestrictiveFar;
@@ -82,7 +84,15 @@ public class VirtualBuilding implements Serializable {
         return totalCarpetArea;
     }
 
-    public BigDecimal getTotalExistingBuiltUpArea() {
+    public BigDecimal getTotalRegularizationBuiltUpArea() {
+		return totalRegularizationBuiltUpArea;
+	}
+
+	public void setTotalRegularizationBuiltUpArea(BigDecimal totalRegularizationBuiltUpArea) {
+		this.totalRegularizationBuiltUpArea = totalRegularizationBuiltUpArea;
+	}
+
+	public BigDecimal getTotalExistingBuiltUpArea() {
         return totalExistingBuiltUpArea;
     }
 

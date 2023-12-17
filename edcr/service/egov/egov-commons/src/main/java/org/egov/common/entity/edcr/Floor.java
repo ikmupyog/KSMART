@@ -58,6 +58,7 @@ public class Floor extends Measurement {
 
     private List<Occupancy> occupancies = new ArrayList<>();
     private List<Occupancy> convertedOccupancies = new ArrayList<>();
+    
     private List<FloorUnit> units = new ArrayList<>();
     private List<Room> habitableRooms = new ArrayList<>();
     private List<DARoom> daRooms = new ArrayList<>();

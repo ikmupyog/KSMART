@@ -324,6 +324,67 @@ public class FarExtract extends FeatureExtract {
             }
         }
         
+        // get Regularization Builtup area   
+        for (Block block : pl.getBlocks()) {
+            String layerRegExForExistingPlan = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX")
+                    + block.getNumber() + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + "-?\\d+_"
+                    + layerNames.getLayerName("LAYER_NAME_BUILT_UP_AREA")
+                    + layerNames.getLayerName("LAYER_NAME_REGULARIZATION_PREFIX");
+            List<String> layerNamesList = Util.getLayerNamesLike(pl.getDoc(), layerRegExForExistingPlan);
+            Floor floor;
+            for (String layer : layerNamesList) {
+                List<DXFLWPolyline> polylines = Util.getPolyLinesByLayer(pl.getDoc(), layer);
+                if (polylines.isEmpty())
+                    continue;
+                int floorNo = Integer.valueOf(layer.split("_")[3]);
+                if (block.getBuilding().getFloorNumber(floorNo) == null) {
+                    floor = new FloorDetail();
+                    floor.setNumber(floorNo);
+                    extractFloorHeight(pl, block, floor);
+                } else
+                    floor = block.getBuilding().getFloorNumber(floorNo);
+                for (DXFLWPolyline pline : polylines) {
+                    if (!pline.isClosed()) {
+                        pl.getErrors().put(pline.getLayerName() + " not closed", pline.getLayerName() + " is not closed ");
+                    }
+                    BigDecimal occupancyArea = Util.getPolyLineArea(pline);
+                    OccupancyDetail occupancy = new OccupancyDetail();
+                    occupancy.setPolyLine(pline);
+                    occupancy.setBuiltUpArea(occupancyArea == null ? BigDecimal.ZERO : occupancyArea);
+                    occupancy.setRegularizationBuiltUpArea(occupancyArea == null ? BigDecimal.ZERO : occupancyArea);
+                    occupancy.setType(Util.findOccupancyType(pline));
+                    occupancy.setTypeHelper(Util.findOccupancyType(pline, pl));
+                    if (occupancy.getType() == null && occupancy.getTypeHelper() == null)
+                        pl.addError(VALIDATION_WRONG_COLORCODE_FLOORAREA, getLocaleMessage(
+                                VALIDATION_WRONG_COLORCODE_FLOORAREA, String.valueOf(pline.getColor()), layer));
+                    else
+                        floor.addBuiltUpArea(occupancy);
+
+                }
+                if (block.getBuilding().getFloorNumber(floorNo) == null)
+                    block.getBuilding().getFloors().add(floor);
+                // existing deduction
+                String deductLayerName = String.format(
+                        layerNames.getLayerName("LAYER_NAME_REGULARIZATION_DEDUCT_PREFIX"), block.getNumber(),
+                        floor.getNumber());
+                List<DXFLWPolyline> bldDeduct = Util.getPolyLinesByLayer(pl.getDoc(), deductLayerName);
+                for (DXFLWPolyline pline : bldDeduct) {
+                    BigDecimal deductionArea = Util.getPolyLineArea(pline);
+                    Occupancy occupancy = new Occupancy();
+                    occupancy.setDeduction(deductionArea == null ? BigDecimal.ZERO : deductionArea);
+                    occupancy.setRegularizationAreaDeduction(deductionArea == null ? BigDecimal.ZERO : deductionArea);
+                    occupancy.setType(Util.findOccupancyType(pline));
+                    occupancy.setTypeHelper(Util.findOccupancyType(pline, pl));
+                    if (occupancy.getType() == null && occupancy.getTypeHelper() == null)
+                        pl.addError(VALIDATION_WRONG_COLORCODE_FLOORAREA,
+                                getLocaleMessage(VALIDATION_WRONG_COLORCODE_FLOORAREA, String.valueOf(pline.getColor()),
+                                        deductLayerName));
+                    else
+                        floor.addDeductionArea(occupancy);
+                }
+            }
+        }
+        
         for (Block block : pl.getBlocks()) {
             Building building = block.getBuilding();
             if (building != null && !building.getFloors().isEmpty()) {
