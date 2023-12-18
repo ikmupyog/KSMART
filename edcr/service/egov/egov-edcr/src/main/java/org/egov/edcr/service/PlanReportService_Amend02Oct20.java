@@ -1095,7 +1095,13 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     allMap.put(split[1] + split[2], sd);
                 }
             }
-
+            
+            for(Block  b: plan.getBlocks()) {
+            	if(b.getCompletelyExisting()) {
+            		allMap.put(b.getNumber(), new ScrutinyDetail());
+            		blocks.put(b.getNumber(), new HashSet<>());
+            	}
+            }
             List<String> blockSummary = new ArrayList<>();
             blockSummary.add(BLOCK_WISE_SUMMARY);
             drb.addConcatenatedReport(createHeaderSubreport(BLOCK_WISE_SUMMARY, BLOCK_WISE_SUMMARY));
@@ -1172,7 +1178,6 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 ScrutinyDetail front = null;
                 ScrutinyDetail rear = null;
                 ScrutinyDetail side = null;
-                
             	if (existingBlockDetails != null && !existingBlockDetails.isEmpty()) {
                     for (DcrReportBlockDetail existingBlockDetail : existingBlockDetails) {
                     	 if(existingBlockDetail.getBlockNo().equals(blkName))

@@ -270,8 +270,7 @@ public class SetBackServiceExtract extends FeatureExtract {
                 frontYard.setMinimumDistance(
                         minDistance.getYardMinDistance(pl, yardName, String.valueOf(setBack.getLevel()), doc));
                 setYardHeight(doc, yardName, frontYard);
-            } else
-                yardNotDefined(pl, yardName);
+            }
         }
     }
    

@@ -1153,7 +1153,7 @@ public class Far extends FeatureProcess {
 			block.getBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalBlockFloorUnits));
 			List<String> occupancyCodes = pl.getVirtualBuilding().getOccupancyTypes().stream()
 					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (occupancyCodes.contains(A1)) {
+			if (!block.getCompletelyExisting() && occupancyCodes.contains(A1)) {
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
 							String.format("Mandatory Kitchen unit is not defined for Residential in the block %s",
