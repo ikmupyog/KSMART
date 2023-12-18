@@ -159,7 +159,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 }
                 frb.addColumn(columnHeading.name.toUpperCase(), columnHeading.name, String.class.getName(), columnWidth);
             }
-            frb.setMargins(1, 1, 1, 1);
+            //frb.setMargins(1, 1, 1, 1);
             frb.setUseFullPageWidth(true);
             List<AbstractColumn> columns = frb.getColumns();
             for (AbstractColumn col : columns) {
@@ -1328,6 +1328,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     valuesMap.put("Remarks_" + cmnFeature, featureFooter);
                 }
             }
+            List<> declaration= getDeclaration();
+            drb.addConcatenatedReport(createDeclarationSubReport("DECLARATION", ""));
+            valuesMap.put("declaration", declaration); 
+            
+            
             if (finalReportStatus)
                 for (String cmnFeature : common) {
                     for (Map<String, String> commonStatus : allMap.get(cmnFeature).getDetail()) {
@@ -1424,7 +1429,12 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
     }
 
-    public Subreport generateDcrSubReport(final List<DcrReportOutput> dcrReportOutputs) {
+    private Subreport createDeclarationSubReport(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Subreport generateDcrSubReport(final List<DcrReportOutput> dcrReportOutputs) {
         FastReportBuilder drb = new FastReportBuilder();
 
         final Style titleStyle = new Style("titleStyle");
