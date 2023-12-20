@@ -1313,7 +1313,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             int i = 0;
             List<String> cmnHeading = new ArrayList<>();
             cmnHeading.add("Common");
-            drb.addConcatenatedReport(createHeaderSubreport("PLOT LEVEL VALIDATIONS", "Common"));
+            drb.addConcatenatedReport(createHeaderSubreport("4) PLOT LEVEL VALIDATIONS", "Common"));
             valuesMap.put("Common", cmnHeading);
             for (String cmnFeature : common) {
                 i++;
@@ -1329,11 +1329,14 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     valuesMap.put("Remarks_" + cmnFeature, featureFooter);
                 }
             }
-			/*
-			 * List<Declaration> declaration= getDeclaration(plan);
-			 * drb.addConcatenatedReport(createDeclarationSubReport());
-			 * valuesMap.put("declaration", declaration);
-			 */
+            List<String> declarationHeading = new ArrayList<>();
+            declarationHeading.add("Declarationheading");
+            drb.addConcatenatedReport(createHeaderSubreport("5) DECLARATIONS BY THE APPLICANT (S)", "Declarationheading"));
+            valuesMap.put("Declarationheading", declarationHeading);
+			List<Declaration> declaration = getDeclaration(plan);
+			drb.addConcatenatedReport(createDeclarationSubReport("applicantDeclaration"));
+			valuesMap.put("applicantDeclaration", declaration);
+			 
             
             
             if (finalReportStatus)
@@ -1433,53 +1436,111 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     }
 
     private List<Declaration> getDeclaration(Plan plan) {
-    	List<Declaration> declarations= new ArrayList<>();
-    	Declaration declaration=new Declaration();
-    	declaration.setStatement("Is there any opening on the sides of the buildings, at a height above 2.10 m, "
+    	List<Declaration> declarations= new LinkedList<>();
+    	Declaration declaration1=new Declaration();
+    	declaration1.setSlNo("1");
+    	declaration1.setStatement("Is there any opening on the sides of the buildings, at a height above 2.10 m, "
     			+ "where the open space available is less than or equal to 60 cm? ");
-    	declaration.setValue(plan.getPlanInformation().getOpeningOnSideAbove2mtsDesc());
-    	
-    	declarations.add(declaration);
+    	declaration1.setValue(plan.getPlanInformation().getOpeningOnSideAbove2mtsDesc());
+    	declarations.add(declaration1);
+    	Declaration declaration2=new Declaration();
+    	declaration2.setSlNo("2");
+    	declaration2.setStatement("Is there any opening on sides of the buildings, at a height below 2.10 m, where the open space available is less than or equal to 60 cm?");
+    	declaration2.setValue(plan.getPlanInformation().getOpeningOnSideBelow2mtsDesc());
+    	declarations.add(declaration2);
+    	Declaration declaration3=new Declaration();
+    	declaration3.setSlNo("3");
+    	declaration3.setStatement("Is there any opening on rear side of the buildings, at a height above 2.10 m, where the open space available is less than 1.0 m?");
+    	declaration3.setValue(plan.getPlanInformation().getOpeningOnRearAbove2mtsDesc());
+    	declarations.add(declaration3);
+    	Declaration declaration4=new Declaration();
+    	declaration4.setSlNo("4");
+    	declaration4.setStatement("Is there any opening on rear side of the buildings, at a height below 2.10 m, where the open space available is less than 1.0 m? ");
+    	declaration4.setValue(plan.getPlanInformation().getOpeningOnRearBelow2mtsDesc());
+    	declarations.add(declaration4);
+    	Declaration declaration5=new Declaration();
+    	declaration5.setSlNo("5");
+    	declaration5.setStatement("Whether NOC from the adjascent plot owner to abut the side of the buildings available?");
+    	declaration5.setValue(plan.getPlanInformation().getNocToAbutSideDesc());
+    	declarations.add(declaration5);
+    	Declaration declaration6=new Declaration();
+    	declaration6.setSlNo("6");
+    	declaration6.setStatement("Whether NOC from the adjascent plot owner to abut the rear of the buildings available?");
+    	declaration6.setValue(plan.getPlanInformation().getNocToAbutRearDesc());
+    	declarations.add(declaration6);
+    	Declaration declaration7=new Declaration();
+    	declaration7.setSlNo("7");
+    	declaration7.setStatement("Whether the building belongs to the category of Govt. Or Aided School?");
+    	String governmentOrAidedSchool = plan.getPlanInformation().getGovernmentOrAidedSchool() != null && plan.getPlanInformation().getGovernmentOrAidedSchool() ? "YES" : "NA";
+    	declaration7.setValue(governmentOrAidedSchool);
+    	declarations.add(declaration7);
+    	Declaration declaration8=new Declaration();
+    	declaration8.setSlNo("8");
+    	declaration8.setStatement("Whether the building situated in a plot included in an authorised Commercial Zone?");
+    	declaration8.setValue(plan.getPlanInformation().getPlotInCommercialZone());
+    	declarations.add(declaration8);
+    	Declaration declaration9=new Declaration();
+    	declaration9.setSlNo("9");
+    	declaration9.setStatement("Is there any opening on side 01 of the commercial building situated in the Commercial Zone?");
+    	declaration9.setValue(plan.getPlanInformation().getCommercialZoneBldgOpenOnSide1());
+    	declarations.add(declaration9);
+    	Declaration declaration10=new Declaration();
+    	declaration10.setSlNo("10");
+    	declaration10.setStatement("Is there any opening on side 02 of the building situated in the Commercial Zone?");
+    	declaration10.setValue(plan.getPlanInformation().getCommercialZoneBldgOpenOnSide2());
+    	declarations.add(declaration10);
     	return declarations;
     	
 	}
 
-	private Subreport createDeclarationSubReport() {
-		 Subreport sub = new Subreport();
-		try
-		{
+	private Subreport createDeclarationSubReport(String dataSource) {
+        try {
+
             FastReportBuilder frb = new FastReportBuilder();
-            AbstractColumn floor = ColumnBuilder.getNew().setColumnProperty("declaration", String.class.getName())
-                    .setTitle("DECLARATION").setWidth(520).setHeaderStyle(reportService.getNewReportColumnHeaderStyle()).build();
-            
-            AbstractColumn floorDescription = ColumnBuilder.getNew().setColumnProperty("value", String.class.getName())
-                    .setTitle("PROVIDED VALUE").setWidth(100).setHeaderStyle(reportService.getNewReportColumnHeaderStyle())
-                    .build();
-         
-            frb.addColumn(floor);
-            frb.addColumn(floorDescription);
-        	frb.setTitle("DECLARATIONS");
-            frb.setTitleStyle(reportService.getTitleStyle());
+
+             {
+            	AbstractColumn slNo = ColumnBuilder.getNew()
+                         .setColumnProperty("slNo", String.class.getName()).setTitle("SL.NO")
+                         .setWidth(40).setStyle(reportService.getNewReportDetailStyle()).build();
+                AbstractColumn declaration = ColumnBuilder.getNew()
+                        .setColumnProperty("statement", String.class.getName()).setTitle("DECLARATION")
+                        .setWidth(400).setStyle(reportService.getNewReportDetailStyle()).build();
+                
+                AbstractColumn values = ColumnBuilder.getNew()
+                        .setColumnProperty("value", String.class.getName())
+                        .setTitle("PROVIDED VALUE").setWidth(105)
+                        .setStyle(reportService.getNewReportDetailStyle())
+                        .build();
+                frb.addColumn(slNo);
+                frb.addColumn(declaration);
+                frb.addColumn(values);
+                
+            }
+
+            frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
+            frb.setHeaderHeight(5);
             frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
-                    reportService.getNewReportColumnHeaderStyle(), reportService.getNewReportDetailStyle());
+                    reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
-            frb.setGrandTotalLegendStyle(reportService.getNewReportDetailStyle());
             DynamicReport build = frb.build();
+            Subreport sub = new Subreport();
             sub.setDynamicReport(build);
             Style style = new Style();
             style.setStretchWithOverflow(true);
             style.setStreching(RELATIVE_TO_BAND_HEIGHT);
             sub.setStyle(style);
-			
-		}catch(Exception e)
-		{
-			LOG.error(e,e);
-		}
-		 return sub;
-		
-	}
+
+            sub.setDatasource(new DJDataSource(dataSource, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+
+            sub.setLayoutManager(new ClassicLayoutManager());
+            return sub;
+        } catch (ColumnBuilderException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
 
 	public Subreport generateDcrSubReport(final List<DcrReportOutput> dcrReportOutputs) {
         FastReportBuilder drb = new FastReportBuilder();
