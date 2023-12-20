@@ -844,6 +844,63 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         return null;
     }
     
+    private Subreport getUnits(String dataSource, boolean isExistingBuildingPresent) {
+        try {
+
+            FastReportBuilder frb = new FastReportBuilder();
+
+             {
+            	 
+                AbstractColumn blocks = ColumnBuilder.getNew()
+                        .setColumnProperty("blockNo", String.class.getName()).setTitle("BLOCKS")
+                        .setWidth(120).setStyle(reportService.getNewReportDetailStyle()).build();
+                
+                AbstractColumn units = ColumnBuilder.getNew()
+                        .setColumnProperty("totalUnits", BigDecimal.class.getName())
+                        .setTitle("TOTAL UNITS (NUMBERS)").setWidth(210)
+                        .setStyle(reportService.getNewReportDetailStyle())
+                        .build();
+
+                frb.addColumn(blocks);
+                frb.addColumn(units);
+            }
+
+             if(isExistingBuildingPresent)
+             	frb.setTitle("2-4) UNITS");
+             else 
+             	frb.setTitle("2-3) UNITS");
+            frb.setTitleStyle(reportService.getNewReportSubTitleStyle());
+           
+           // frb.setSubtitleHeight(5);
+          
+           // frb.setHeaderHeight(5);
+           // frb.setTopMargin(5);
+           // frb.setLeftMargin(120);
+            frb.setMargins(0, 0, 0, 0);
+            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
+                    reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
+            frb.setAllowDetailSplit(false);
+            frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
+            frb.setGrandTotalLegend(TOTAL);
+            frb.setGrandTotalLegendStyle(reportService.getNumberStyle());
+            DynamicReport build = frb.build();
+            Subreport sub = new Subreport();
+            sub.setDynamicReport(build);
+            Style style = new Style();
+            style.setStretchWithOverflow(true);
+            style.setStreching(RELATIVE_TO_BAND_HEIGHT);
+            sub.setStyle(style);
+
+            sub.setDatasource(new DJDataSource(dataSource, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+
+            sub.setLayoutManager(new ClassicLayoutManager());
+            return sub;
+        } catch (ColumnBuilderException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    
     private Subreport createHeaderSubreport(String title, String dataSourceName) {
         try {
 
@@ -1065,6 +1122,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
           
             drb.addConcatenatedReport(getRegularizationArea(virtualBuildingReport,isExistingBuildingPresent));
             valuesMap.put("Regularization Area Details", regularizationBlockDetails);   
+            
+			if (plan.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) > 0) {
+				drb.addConcatenatedReport(getUnits("Total Units", isExistingBuildingPresent));
+				valuesMap.put("Total Units", proposedBlockDetails);
+			}
           
             drb.addConcatenatedReport(getTotalAreaDetails(virtualBuildingReport));
             valuesMap.put("Total Area Details", Arrays.asList(virtualBuildingReport));
@@ -1947,135 +2009,107 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     
     private void buildFloorUnitsOfBlock(DcrReportBlockDetail dcrReportBlockDetail, Floor floor) {
         if (floor.getUnits() != null && !floor.getUnits().isEmpty()) {
-            Map<String, Map<String, Integer>> unitMap = new ConcurrentHashMap<>();
-            Map<String, Integer> unitCount = new ConcurrentHashMap<>();
-            for (FloorUnit unit : floor.getUnits()) {
-                dcrReportBlockDetail.setTotalUnits(dcrReportBlockDetail.getTotalUnits().add(BigDecimal.ONE));
-                String occName = unit.getOccupancy().getTypeHelper().getType().getName();
-                String occCode = unit.getOccupancy().getTypeHelper().getType().getCode();
-                
-                if (occCode.equals(A1)) {
-                    if (unitMap.containsKey(occName)) {
-                        Map<String, Integer> unitCountExist = unitMap
-                                .get(occName);
-                        unitCountExist.put(A1_UNITS, unitCountExist.get(A1_UNITS) + 1);
-                        unitMap.put(occName, unitCountExist);
-                    } else {
-                        unitCount.put(A1_UNITS, 1);
-                        unitMap.put(occName, unitCount);
-                    }
-                }
-                if (occCode.equals(A4)) {
-                    if (unitMap.containsKey(occName)) {
-                        Map<String, Integer> unitCountExist = unitMap
-                                .get(occName);
-                        unitCountExist.put(A4_UNITS, unitCountExist.get(A4_UNITS) + 1);
-                        unitMap.put(occName, unitCountExist);
-                    } else {
-                        unitCount.put(A4_UNITS, 1);
-                        unitMap.put(occName, unitCount);
-                    }
-                }
-                if (occCode.equals(A2) ||
-                        occCode.equals(F3)) {
-                    if (unit.getOccupancy().getWithAttachedBath()) {
-                        if (unitMap.containsKey(occName) && unitMap.get(occName).containsKey(ROOM_WAB)) {
-                            Map<String, Integer> unitCountExist = unitMap
-                                    .get(occName);
-                            unitCountExist.put(ROOM_WAB, unitCountExist.get(ROOM_WAB) + 1);
-                            unitMap.put(occName, unitCountExist);
-                        } else {
-                            unitCount.put(ROOM_WAB, 1);
-                            unitMap.put(occName, unitCount);
-                        }
-                        dcrReportBlockDetail
-                                .setUnitsWithAttachBath(dcrReportBlockDetail.getUnitsWithAttachBath().add(BigDecimal.ONE));
-                    }
-                    if (unit.getOccupancy().getWithOutAttachedBath()) {
-                        if (unitMap.containsKey(occName) && unitMap.get(occName).containsKey(ROOM_WOAB)) {
-                            Map<String, Integer> unitCountExist = unitMap
-                                    .get(occName);
-                            unitCountExist.put(ROOM_WOAB, unitCountExist.get(ROOM_WOAB) + 1);
-                            unitMap.put(occName, unitCountExist);
-                        } else {
-                            unitCount.put(ROOM_WOAB, 1);
-                            unitMap.put(occName, unitCount);
-                        }
-                        dcrReportBlockDetail
-                                .setUnitsWithoutAttachBath(dcrReportBlockDetail.getUnitsWithoutAttachBath().add(BigDecimal.ONE));
-                    }
-                    if (unit.getOccupancy().getWithDinningSpace()) {
-                        if (unitMap.containsKey(occName) && unitMap.get(occName).containsKey(DINE_ROOM)) {
-                            Map<String, Integer> unitCountExist = unitMap
-                                    .get(occName);
-                            unitCountExist.put(DINE_ROOM, unitCountExist.get(DINE_ROOM) + 1);
-                            unitMap.put(occName, unitCountExist);
-                        } else {
-                            unitCount.put(DINE_ROOM, 1);
-                            unitMap.put(occName, unitCount);
-                        }
-                        dcrReportBlockDetail
-                                .setUnitsWithDinningRoom(dcrReportBlockDetail.getUnitsWithDinningRoom().add(BigDecimal.ONE));
-                    }
-                }
-            }
-            if (dcrReportBlockDetail.getUnits().isEmpty()) {
-                dcrReportBlockDetail.setUnits(unitMap);
-            } else {
-                Map<String, Map<String, Integer>> existUnits = dcrReportBlockDetail.getUnits();
-                for (Map.Entry<String, Map<String, Integer>> occUnit : unitMap.entrySet()) {
-                    if (existUnits.containsKey(occUnit.getKey())) {
-                        for (Map.Entry<String, Integer> unitCnt : occUnit.getValue().entrySet()) {
-                            if (existUnits.get(occUnit.getKey()).containsKey(unitCnt.getKey())) {
-                                existUnits.get(occUnit.getKey()).put(unitCnt.getKey(),
-                                        existUnits.get(occUnit.getKey()).get(unitCnt.getKey()) + unitCnt.getValue());
-                            } else {
-                                existUnits.get(occUnit.getKey()).put(unitCnt.getKey(), unitCnt.getValue());
-                            }
-                        }
-                    } else {
-                        Map<String, Integer> unit = new ConcurrentHashMap<>();
-                        for (Map.Entry<String, Integer> unitCnt : occUnit.getValue().entrySet()) {
-                            unit.put(unitCnt.getKey(), unitCnt.getValue());
-                        }
-                        existUnits.put(occUnit.getKey(), unit);
-                    }
-                }
-                dcrReportBlockDetail.setUnits(existUnits);
-            }
-            for (Map.Entry<String, Map<String, Integer>> occupancyMap : unitMap.entrySet()) {
-                for (Map.Entry<String, Integer> units : occupancyMap.getValue().entrySet()) {
-                    DcrReportFloorUnitDetail floorUnit = new DcrReportFloorUnitDetail();
-                    if (A1_UNITS.equalsIgnoreCase(units.getKey())) {
-                        floorUnit.setDescription(KITCHEN_UNITS);
-                        floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
-                        floorUnit.setOccupancy(occupancyMap.getKey());
-                        floorUnit.setUnits(BigDecimal.valueOf(units.getValue()));
-                    } else if (A4_UNITS.equalsIgnoreCase(units.getKey())) {
-                        floorUnit.setDescription(FLOOR_UNITS);
-                        floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
-                        floorUnit.setOccupancy(occupancyMap.getKey());
-                        floorUnit.setUnits(BigDecimal.valueOf(units.getValue()));
-                    } else if (ROOM_WAB.equalsIgnoreCase(units.getKey())) {
-                        floorUnit.setDescription("Rooms With Attached BathRoom");
-                        floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
-                        floorUnit.setOccupancy(occupancyMap.getKey());
-                        floorUnit.setUnits(BigDecimal.valueOf(units.getValue()));
-                    } else if (ROOM_WOAB.equalsIgnoreCase(units.getKey())) {
-                        floorUnit.setDescription("Rooms Without Attached BathRoom");
-                        floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
-                        floorUnit.setOccupancy(occupancyMap.getKey());
-                        floorUnit.setUnits(BigDecimal.valueOf(units.getValue()));
-                    } else if (DINE_ROOM.equalsIgnoreCase(units.getKey())) {
-                        floorUnit.setDescription("Dinning Rooms");
-                        floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
-                        floorUnit.setOccupancy(occupancyMap.getKey());
-                        floorUnit.setUnits(BigDecimal.valueOf(units.getValue()));
-                    }
-                    dcrReportBlockDetail.getDcrReportFloorUnitDetails().add(floorUnit);
-                }
-
-            }
+        	if(floor.getUnits() != null)
+            	dcrReportBlockDetail.setTotalUnits(dcrReportBlockDetail.getTotalUnits().add(BigDecimal.valueOf(floor.getUnits().size())));
+			/*
+			 * Map<String, Map<String, Integer>> unitMap = new ConcurrentHashMap<>();
+			 * Map<String, Integer> unitCount = new ConcurrentHashMap<>();
+			 */
+			/*
+			 * for (FloorUnit unit : floor.getUnits()) {
+			 * dcrReportBlockDetail.setTotalUnits(dcrReportBlockDetail.getTotalUnits().add(
+			 * BigDecimal.ONE));
+			 * 
+			 * String occName = unit.getOccupancy().getTypeHelper().getType().getName();
+			 * String occCode = unit.getOccupancy().getTypeHelper().getType().getCode();
+			 * 
+			 * if (occCode.equals(A1)) { if (unitMap.containsKey(occName)) { Map<String,
+			 * Integer> unitCountExist = unitMap.get(occName); unitCountExist.put(A1_UNITS,
+			 * unitCountExist.get(A1_UNITS) + 1); unitMap.put(occName, unitCountExist); }
+			 * else { unitCount.put(A1_UNITS, 1); unitMap.put(occName, unitCount); } } if
+			 * (occCode.equals(A4)) { if (unitMap.containsKey(occName)) { Map<String,
+			 * Integer> unitCountExist = unitMap.get(occName); unitCountExist.put(A4_UNITS,
+			 * unitCountExist.get(A4_UNITS) + 1); unitMap.put(occName, unitCountExist); }
+			 * else { unitCount.put(A4_UNITS, 1); unitMap.put(occName, unitCount); } } if
+			 * (occCode.equals(A2) || occCode.equals(F3)) { if
+			 * (unit.getOccupancy().getWithAttachedBath()) { if
+			 * (unitMap.containsKey(occName) && unitMap.get(occName).containsKey(ROOM_WAB))
+			 * { Map<String, Integer> unitCountExist = unitMap.get(occName);
+			 * unitCountExist.put(ROOM_WAB, unitCountExist.get(ROOM_WAB) + 1);
+			 * unitMap.put(occName, unitCountExist); } else { unitCount.put(ROOM_WAB, 1);
+			 * unitMap.put(occName, unitCount); }
+			 * dcrReportBlockDetail.setUnitsWithAttachBath(
+			 * dcrReportBlockDetail.getUnitsWithAttachBath().add(BigDecimal.ONE)); } if
+			 * (unit.getOccupancy().getWithOutAttachedBath()) { if
+			 * (unitMap.containsKey(occName) && unitMap.get(occName).containsKey(ROOM_WOAB))
+			 * { Map<String, Integer> unitCountExist = unitMap.get(occName);
+			 * unitCountExist.put(ROOM_WOAB, unitCountExist.get(ROOM_WOAB) + 1);
+			 * unitMap.put(occName, unitCountExist); } else { unitCount.put(ROOM_WOAB, 1);
+			 * unitMap.put(occName, unitCount); }
+			 * dcrReportBlockDetail.setUnitsWithoutAttachBath(
+			 * dcrReportBlockDetail.getUnitsWithoutAttachBath().add(BigDecimal.ONE)); } if
+			 * (unit.getOccupancy().getWithDinningSpace()) { if
+			 * (unitMap.containsKey(occName) && unitMap.get(occName).containsKey(DINE_ROOM))
+			 * { Map<String, Integer> unitCountExist = unitMap.get(occName);
+			 * unitCountExist.put(DINE_ROOM, unitCountExist.get(DINE_ROOM) + 1);
+			 * unitMap.put(occName, unitCountExist); } else { unitCount.put(DINE_ROOM, 1);
+			 * unitMap.put(occName, unitCount); }
+			 * dcrReportBlockDetail.setUnitsWithDinningRoom(
+			 * dcrReportBlockDetail.getUnitsWithDinningRoom().add(BigDecimal.ONE)); } }
+			 * 
+			 * }
+			 */
+			/*
+			 * if (dcrReportBlockDetail.getUnits().isEmpty()) {
+			 * dcrReportBlockDetail.setUnits(unitMap); } else { Map<String, Map<String,
+			 * Integer>> existUnits = dcrReportBlockDetail.getUnits(); for
+			 * (Map.Entry<String, Map<String, Integer>> occUnit : unitMap.entrySet()) { if
+			 * (existUnits.containsKey(occUnit.getKey())) { for (Map.Entry<String, Integer>
+			 * unitCnt : occUnit.getValue().entrySet()) { if
+			 * (existUnits.get(occUnit.getKey()).containsKey(unitCnt.getKey())) {
+			 * existUnits.get(occUnit.getKey()).put(unitCnt.getKey(),
+			 * existUnits.get(occUnit.getKey()).get(unitCnt.getKey()) + unitCnt.getValue());
+			 * } else { existUnits.get(occUnit.getKey()).put(unitCnt.getKey(),
+			 * unitCnt.getValue()); } } } else { Map<String, Integer> unit = new
+			 * ConcurrentHashMap<>(); for (Map.Entry<String, Integer> unitCnt :
+			 * occUnit.getValue().entrySet()) { unit.put(unitCnt.getKey(),
+			 * unitCnt.getValue()); } existUnits.put(occUnit.getKey(), unit); } }
+			 * dcrReportBlockDetail.setUnits(existUnits); }
+			 */
+			/*
+			 * for (Map.Entry<String, Map<String, Integer>> occupancyMap :
+			 * unitMap.entrySet()) { for (Map.Entry<String, Integer> units :
+			 * occupancyMap.getValue().entrySet()) { DcrReportFloorUnitDetail floorUnit =
+			 * new DcrReportFloorUnitDetail(); if
+			 * (A1_UNITS.equalsIgnoreCase(units.getKey())) {
+			 * floorUnit.setDescription(KITCHEN_UNITS);
+			 * floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
+			 * floorUnit.setOccupancy(occupancyMap.getKey());
+			 * floorUnit.setUnits(BigDecimal.valueOf(units.getValue())); } else if
+			 * (A4_UNITS.equalsIgnoreCase(units.getKey())) {
+			 * floorUnit.setDescription(FLOOR_UNITS);
+			 * floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
+			 * floorUnit.setOccupancy(occupancyMap.getKey());
+			 * floorUnit.setUnits(BigDecimal.valueOf(units.getValue())); } else if
+			 * (ROOM_WAB.equalsIgnoreCase(units.getKey())) {
+			 * floorUnit.setDescription("Rooms With Attached BathRoom");
+			 * floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
+			 * floorUnit.setOccupancy(occupancyMap.getKey());
+			 * floorUnit.setUnits(BigDecimal.valueOf(units.getValue())); } else if
+			 * (ROOM_WOAB.equalsIgnoreCase(units.getKey())) {
+			 * floorUnit.setDescription("Rooms Without Attached BathRoom");
+			 * floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
+			 * floorUnit.setOccupancy(occupancyMap.getKey());
+			 * floorUnit.setUnits(BigDecimal.valueOf(units.getValue())); } else if
+			 * (DINE_ROOM.equalsIgnoreCase(units.getKey())) {
+			 * floorUnit.setDescription("Dinning Rooms");
+			 * floorUnit.setFloorNo(String.valueOf(floor.getNumber()));
+			 * floorUnit.setOccupancy(occupancyMap.getKey());
+			 * floorUnit.setUnits(BigDecimal.valueOf(units.getValue())); }
+			 * dcrReportBlockDetail.getDcrReportFloorUnitDetails().add(floorUnit); }
+			 * 
+			 * }
+			 */
         }
     }
     
