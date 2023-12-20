@@ -95,6 +95,8 @@ public class EdcrRequest {
     private Integer limit;
     
     private String orderBy;
+    
+    private boolean isKnowYourRequirement = false;
 
     public RequestInfo getRequestInfo() {
         return requestInfo;
@@ -240,4 +242,11 @@ public class EdcrRequest {
         this.orderBy = orderBy;
     }
 
+	public boolean isKnowYourRequirement() {
+		return isKnowYourRequirement;
+	}
+
+	public void setKnowYourRequirement(boolean isKnowYourRequirement) {
+		this.isKnowYourRequirement = isKnowYourRequirement;
+	}
 }

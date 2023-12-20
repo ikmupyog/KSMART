@@ -103,6 +103,8 @@ public class EdcrApplication extends AbstractAuditable {
     private transient Map<String, List<Object>> mdmsMasterData;
 
     private transient String deviationStatus;
+    
+    private transient boolean isKnowYourRequirement = false;
 
     @Override
     public Long getId() {
@@ -305,5 +307,13 @@ public class EdcrApplication extends AbstractAuditable {
     public void setDeviationStatus(String deviationStatus) {
         this.deviationStatus = deviationStatus;
     }
+
+	public boolean isKnowYourRequirement() {
+		return isKnowYourRequirement;
+	}
+
+	public void setKnowYourRequirement(boolean isKnowYourRequirement) {
+		this.isKnowYourRequirement = isKnowYourRequirement;
+	}
 
 }

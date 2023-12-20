@@ -299,6 +299,65 @@ public class RestEdcrApplicationController {
   
        
     }
+    
+    @PostMapping(value = "/know-your-building-rules", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> knowYourRequirement(@RequestPart("planFile") MultipartFile planFile,
+            @RequestParam("edcrRequest") String edcrRequest, final HttpServletRequest request) {
+        String userInfo = request.getHeader(USER_INFO_HEADER_NAME);
+        LOGGER.info("###User Info####"+userInfo);
+        EdcrDetail edcrDetail = new EdcrDetail();
+        EdcrRequest edcr = new EdcrRequest();
+        if (!isValidJson(edcrRequest) || (userInfo != null && !isValidJson(userInfo))) {
+            ErrorResponse error = new ErrorResponse(INCORRECT_REQUEST, INVALID_JSON_FORMAT,
+                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            List<ErrorDetail> errorResponses = new ArrayList<ErrorDetail>();
+            edcr = new ObjectMapper().readValue(edcrRequest, EdcrRequest.class);
+            if(userInfo != null) {
+                UserInfo userInfoReq = new ObjectMapper().readValue(userInfo, UserInfo.class);
+                UserInfo enrichUser = new UserInfo();
+                enrichUser.setId(userInfoReq.getId());
+                enrichUser.setUuid(userInfoReq.getUuid());
+                enrichUser.setMobile(userInfoReq.getMobile());
+                enrichUser.setTenantId(userInfoReq.getTenantId());
+                edcr.getRequestInfo().setUserInfo(enrichUser);
+            }
+            ErrorDetail edcRes = edcrValidator.validate(edcr);
+            if (edcRes != null && StringUtils.isNotBlank(edcRes.getErrorMessage()))
+                return new ResponseEntity<>(edcRes, HttpStatus.BAD_REQUEST);
+            List<ErrorDetail> errors = edcrRestService.validateEdcrMandatoryFields(edcr);
+            if (!errors.isEmpty())
+                return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+            Map<String, List<Object>> masterData = new HashMap<>();
+            
+            edcr.setAppliactionType(ApplicationType.KNOW_YOUR_BUILDING_RULES.toString());
+            edcr.setKnowYourRequirement(true);
+            if (!errorResponses.isEmpty())
+                return new ResponseEntity<>(errorResponses, HttpStatus.BAD_REQUEST);
+            else {
+                edcrDetail = edcrRestService.createEdcr(edcr, planFile, masterData);
+            }
+            return getSuccessResponse(Arrays.asList(edcrDetail), edcr.getRequestInfo());
+        } catch (IOException e) {
+        	LOGGER.error("error while scrutiny",e);
+            ErrorResponse error = new ErrorResponse(INCORRECT_REQUEST, e.getLocalizedMessage(),
+                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }catch(Exception e)
+        {
+        	LOGGER.error("Exception while scrutiny",e);
+        	 ErrorResponse error = new ErrorResponse(INCORRECT_REQUEST, e.getLocalizedMessage(),
+                     HttpStatus.BAD_REQUEST);
+             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+  
+       
+    }
 
     @PostMapping(value = "/scrutinydetails", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

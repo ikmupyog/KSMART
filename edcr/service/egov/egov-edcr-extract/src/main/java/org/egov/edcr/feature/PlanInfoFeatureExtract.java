@@ -76,9 +76,12 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 			DXFLWPolyline plotBndryPolyLine = plotBoundaries.get(0);
 			((PlotDetail) pl.getPlot()).setPolyLine(plotBndryPolyLine);
 			pl.getPlot().setPlotBndryArea(Util.getPolyLineArea(plotBndryPolyLine));
-		} else
+		} else {
 			pl.addError(layerNames.getLayerName("LAYER_NAME_PLOT_BOUNDARY"),
 					getLocaleMessage(OBJECTNOTDEFINED, layerNames.getLayerName("LAYER_NAME_PLOT_BOUNDARY")));
+			pl.addKYRError(layerNames.getLayerName("LAYER_NAME_PLOT_BOUNDARY"),
+					getLocaleMessage(OBJECTNOTDEFINED, layerNames.getLayerName("LAYER_NAME_PLOT_BOUNDARY")));
+		}
 	}
 
 	private void extractBuildingFootprint(PlanDetail pl) {
@@ -124,10 +127,14 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 
 		}
 
-		if (pl.getBlocks().isEmpty())
+		if (pl.getBlocks().isEmpty()) {
 			pl.addError(layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT"),
 					getEdcrMessageSource().getMessage(DcrConstants.OBJECTNOTDEFINED,
 							new String[] { layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT") }, null));
+			pl.addKYRError(layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT"),
+					getEdcrMessageSource().getMessage(DcrConstants.OBJECTNOTDEFINED,
+							new String[] { layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT") }, null));
+		}
 
 		for (Block b : pl.getBlocks()) {
 			String layerName = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + b.getNumber() + "_"

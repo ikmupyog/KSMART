@@ -61,11 +61,12 @@ public class ExtractService {
 
     private Logger LOG = LogManager.getLogger(ExtractService.class);
 
-    public Plan extract(File dxfFile, Amendment amd, Date scrutinyDate, List<PlanFeature> features) {
+    public Plan extract(File dxfFile, Amendment amd, Date scrutinyDate, List<PlanFeature> features, boolean isknowYourRequirement) {
 
         PlanInformation pi = new PlanInformation();
         DXFDocument doc = getDxfDocument(dxfFile);
         PlanDetail planDetail = new PlanDetail();
+        planDetail.setKnowYourRequirement(isknowYourRequirement);
         planDetail.setDoc(doc);
         planDetail.setPlanInformation(pi);
         planDetail.setApplicationDate(scrutinyDate);

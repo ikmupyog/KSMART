@@ -81,7 +81,7 @@ public class PlanInformation implements Serializable {
     // Applicant Name 
     private String applicantName;
     // Extracted from Plan info. Whether plot present in CRZ zone. Expecting default value as NO. 
-    private Boolean crzZoneArea = true;
+    private Boolean crzZoneArea = false;
     //Extracted from Plan info. Demolition area to be mentioned in the plan info.
     private BigDecimal demolitionArea = BigDecimal.ZERO;
     //Extracted from Plan info. Depth cutting more than 1.5 Meter flag. 
@@ -90,7 +90,7 @@ public class PlanInformation implements Serializable {
     //YES/NO/NA.Extracted from Plan info. Is building of type government or aided school.
     private transient Boolean governmentOrAidedSchool;
     //YES/NO/NA.Extracted from Plan info. Is plot comes under security zone flag.
-    private transient Boolean securityZone = true;
+    private transient Boolean securityZone = false;
     //YES/NO/NA.Extracted from Plan info.  Access width to the plot.
 	private transient BigDecimal accessWidth;
     //Extracted from Plan info.  In case of medical occupancy, capture number of beds present in the building. Sanitation details are decided based on number of beds present.

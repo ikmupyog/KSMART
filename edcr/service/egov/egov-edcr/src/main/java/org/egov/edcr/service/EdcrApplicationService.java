@@ -120,6 +120,7 @@ public class EdcrApplicationService {
     private Plan callDcrProcess(EdcrApplication edcrApplication, String applicationType) {
     	LOG.info("Initializing DCR Process" );
         Plan planDetail = new Plan();
+        planDetail.setKnowYourRequirement(edcrApplication.isKnowYourRequirement());
         planDetail = planService.process(edcrApplication, applicationType);
         updateFile(planDetail, edcrApplication);
         edcrApplicationDetailService.saveAll(edcrApplication.getEdcrApplicationDetails());

@@ -27,7 +27,6 @@ import org.egov.common.entity.edcr.EdcrPdfDetail;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.PlanFeature;
 import org.egov.common.entity.edcr.PlanInformation;
-import org.egov.edcr.constants.AmendmentConstants;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.contract.ComparisonRequest;
 import org.egov.edcr.contract.EdcrRequest;
@@ -72,6 +71,8 @@ public class PlanService {
     private OcComparisonService ocComparisonService;
     @Autowired
     private OcComparisonDetailService ocComparisonDetailService;
+    @Autowired
+    private KnowYourRequirementService knowYourRequirementService;
 
     public Plan process(EdcrApplication dcrApplication, String applicationType) {
         Map<String, String> cityDetails = specificRuleService.getCityDetails();
@@ -84,25 +85,28 @@ public class PlanService {
         } else {
             asOnDate = new Date();
         }
-
         AmendmentService repo = (AmendmentService) specificRuleService.find("amendmentService");
         Amendment amd = repo.getAmendments();
 
         Plan plan = extractService.extract(dcrApplication.getSavedDxfFile(), amd, asOnDate,
-                featureService.getFeatures());
+                featureService.getFeatures(), dcrApplication.isKnowYourRequirement());
+        if(plan.isKnowYourRequirement())
+        	knowYourRequirementService.SetDefaultValues(plan);
         plan.setMdmsMasterData(dcrApplication.getMdmsMasterData());
         if (plan.getDrawingPreference().getInMeters() && plan.getDrawingPreference().getLengthFactor())
         	plan = applyRules(plan, amd, cityDetails);
 
         String comparisonDcrNumber = dcrApplication.getEdcrApplicationDetails().get(0).getComparisonDcrNumber();
-        if (ApplicationType.PERMIT.getApplicationTypeVal()
-                .equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
-                || (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
-                        .equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
-                        && StringUtils.isBlank(comparisonDcrNumber))) {
-            InputStream reportStream = generateReport(plan, amd, dcrApplication);
-            saveOutputReport(dcrApplication, reportStream, plan);
-        } else if (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
+		if (ApplicationType.PERMIT.getApplicationTypeVal()
+				.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
+				|| (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
+						.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
+						&& StringUtils.isBlank(comparisonDcrNumber))
+				|| ApplicationType.KNOW_YOUR_BUILDING_RULES.getApplicationTypeVal()
+						.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())) {
+			InputStream reportStream = generateReport(plan, amd, dcrApplication);
+			saveOutputReport(dcrApplication, reportStream, plan);
+		} else if (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
                 .equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
                 && StringUtils.isNotBlank(comparisonDcrNumber)) {
             ComparisonRequest comparisonRequest = new ComparisonRequest();
@@ -272,11 +276,10 @@ public class PlanService {
         }
 
         try {
-            if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_011020) >= 0)
-                beanName = "PlanReportService_Amend02Oct20";
-            else if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_081119) >= 0)
-                beanName = "PlanReportService_Amend08Nov19";
-            
+            if(plan.isKnowYourRequirement())
+            	beanName = "PlanKnowYourRequirementReportService";
+            else
+            	beanName = "PlanReportService_Amend02Oct20";
             beanName = beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
 
             if (amd.getDetails().isEmpty() || index == -1)
@@ -398,7 +401,7 @@ public class PlanService {
         AmendmentService repo = (AmendmentService) specificRuleService.find(AmendmentService.class.getSimpleName());
         Amendment amd = repo.getAmendments();
 
-        Plan plan = extractService.extract(planFile, amd, asOnDate, featureService.getFeatures());
+        Plan plan = extractService.extract(planFile, amd, asOnDate, featureService.getFeatures(), edcrRequest.isKnowYourRequirement());
         if (StringUtils.isNotBlank(edcrRequest.getApplicantName()))
             plan.getPlanInformation().setApplicantName(edcrRequest.getApplicantName());
         else
