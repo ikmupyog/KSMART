@@ -1,7 +1,9 @@
 package org.egov.common.entity.dcr.helper;
 
+ 
 public class Declaration {
 	private String slNo;
+ 
 	private String statement;
 	private String value;
 
@@ -28,5 +30,6 @@ public class Declaration {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	 
 
 }

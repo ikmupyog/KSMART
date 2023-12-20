@@ -128,7 +128,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Monospaced" size="12" isBold="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[BUILDING DETAILS - KYRR  REPORT]]></text>
+				<text><![CDATA[KNOW YOUR BUILDING'S RULES]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="223" y="145" width="57" height="19" uuid="10f39610-2a48-455d-be03-0e94dedee3bc"/>

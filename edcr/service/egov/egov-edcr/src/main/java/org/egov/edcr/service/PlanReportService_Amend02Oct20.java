@@ -1391,6 +1391,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     valuesMap.put("Remarks_" + cmnFeature, featureFooter);
                 }
             }
+ 
             List<String> declarationHeading = new ArrayList<>();
             declarationHeading.add("Declarationheading");
             drb.addConcatenatedReport(createHeaderSubreport("5) DECLARATIONS BY THE APPLICANT (S)", "Declarationheading"));
@@ -1399,6 +1400,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 			drb.addConcatenatedReport(createDeclarationSubReport("applicantDeclaration"));
 			valuesMap.put("applicantDeclaration", declaration);
 			 
+ 
             
             
             if (finalReportStatus)
@@ -1498,6 +1500,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     }
 
     private List<Declaration> getDeclaration(Plan plan) {
+ 
     	List<Declaration> declarations= new LinkedList<>();
     	Declaration declaration1=new Declaration();
     	declaration1.setSlNo("1");
@@ -1551,6 +1554,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     	declaration10.setStatement("Is there any opening on side 02 of the building situated in the Commercial Zone?");
     	declaration10.setValue(plan.getPlanInformation().getCommercialZoneBldgOpenOnSide2());
     	declarations.add(declaration10);
+
     	return declarations;
     	
 	}
@@ -1559,7 +1563,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         try {
 
             FastReportBuilder frb = new FastReportBuilder();
-
+ 
              {
             	AbstractColumn slNo = ColumnBuilder.getNew()
                          .setColumnProperty("slNo", String.class.getName()).setTitle("SL.NO")
@@ -1581,6 +1585,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
             frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
             frb.setHeaderHeight(5);
+ 
             frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
@@ -1592,6 +1597,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             Style style = new Style();
             style.setStretchWithOverflow(true);
             style.setStreching(RELATIVE_TO_BAND_HEIGHT);
+            sub.setLayoutManager(new ClassicLayoutManager());
+            sub.setDatasource(new DJDataSource("declarations" ,
+                    DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
             sub.setStyle(style);
 
             sub.setDatasource(new DJDataSource(dataSource, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
