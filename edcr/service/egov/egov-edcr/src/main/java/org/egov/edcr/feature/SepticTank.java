@@ -49,6 +49,7 @@ package org.egov.edcr.feature;
 
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
 import static org.egov.edcr.constants.DxfFileConstants.COLOUR_CODE_SEPTICTANK_TO_PLOT_BNDRY;
+import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.utility.DcrConstants.IN_METER_SQR;
 import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 
@@ -129,7 +130,8 @@ public class SepticTank extends FeatureProcess {
 		            if (checkConditionForSepticTankToBoundary(roadOutput)) {
 		                String ruleNo = SUB_RULE_AMD20_79_4;
 		                BigDecimal minDistance = DIST_1_POINT_2;
-		                if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+						if (pl.getVirtualBuilding().getMostRestrictiveFarHelper().getType().getCode().equals(A1)
+								&& pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
 	                        minDistance = DIST_30_CM;
 		                String status;
 		                if (roadOutput.distance != null &&

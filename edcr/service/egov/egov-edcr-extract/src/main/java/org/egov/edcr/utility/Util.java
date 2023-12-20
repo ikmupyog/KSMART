@@ -809,11 +809,12 @@ public class Util {
             else
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_C_COLOR_CODE);
             
-        } else if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0
-                && "D".equals(occupancy.getType().getCode())) {
-        	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
-        } else if ("D1".equals(occupancy.getType().getCode()) || "D2".equals(occupancy.getType().getCode())) {
-        	occupancy = getConvertedOccupancy(pl, OCCUPANCY_D_COLOR_CODE);
+		} else if ("D".equals(occupancy.getType().getCode()) || "D1".equals(occupancy.getType().getCode())
+				|| "D3".equals(occupancy.getType().getCode()) || "D4".equals(occupancy.getType().getCode())) {
+        	if(floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
+        		occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+        	else
+        		occupancy = getConvertedOccupancy(pl, OCCUPANCY_D_COLOR_CODE);
         } else if ("E".equals(occupancy.getType().getCode())) {
             if (floorArea != null && floorArea.compareTo(TWOHUNDRED) <= 0)
             	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);

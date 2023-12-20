@@ -1329,9 +1329,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     valuesMap.put("Remarks_" + cmnFeature, featureFooter);
                 }
             }
-            List<Declaration> declaration= getDeclaration(plan);
-            drb.addConcatenatedReport(createDeclarationSubReport());
-            valuesMap.put("declaration", declaration); 
+			/*
+			 * List<Declaration> declaration= getDeclaration(plan);
+			 * drb.addConcatenatedReport(createDeclarationSubReport());
+			 * valuesMap.put("declaration", declaration);
+			 */
             
             
             if (finalReportStatus)

@@ -227,8 +227,8 @@ public class Parking extends FeatureProcess {
 				BigDecimal floorCount = blk.getBuilding().getFloorsAboveGround();
 				BigDecimal bldgHht = blk.getBuilding().getBuildingHeight();
 				if (!occupancies.isEmpty()) {
-					if (occupancies.size() == 1 && occupancies.containsKey(A4)
-							&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
+					if (occupancies.size() == 1 && occupancies.containsKey(A1)
+							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
 									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
 									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
 						exempted = true;
@@ -237,18 +237,18 @@ public class Parking extends FeatureProcess {
 									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
 									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
 						exempted = true;
-					} else if (occupancies.size() <= 2 && floorCount != null && floorCount.intValue() <= 3) {
-						if ((occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5)))
-								|| (occupancies.size() == 1
-										&& (occupancies.containsKey(A1) || occupancies.containsKey(A5)))) {
-							exempted = true;
-						} else if (occupancies.size() == 2
-								&& (occupancies.containsKey(A1) || occupancies.containsKey(A5))) {
-							exempted = true;
-						} else {
-							exempted = false;
-							break;
-						}
+					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5))
+							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
+									&& occupancies.get(A5).compareTo(BigDecimal.valueOf(200)) <= 0
+									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
+						exempted = true;
+					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(F))
+							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
+									&& occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
+									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
+						exempted = true;
 					} else {
 						exempted = false;
 						break;
@@ -353,7 +353,8 @@ public class Parking extends FeatureProcess {
 				result.carParkingForDACal += result.a1TotalParking;
 				result.visitorParking = Math.ceil(result.a1TotalParking * 15 / 100);
 				result.totalRequiredCarParking += result.a1TotalParking + result.visitorParking;
-				result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), result.a1TotalParking + result.visitorParking);
+				result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(),
+						result.a1TotalParking + result.visitorParking);
 				rule = SUB_RULE_29_3_9;
 				break;
 			case A2:
@@ -433,13 +434,15 @@ public class Parking extends FeatureProcess {
 								ROUNDUP);
 						result.totalRequiredCarParking += hall.doubleValue();
 						result.carParkingForDACal += hall.doubleValue();
-						result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), hall.doubleValue());
+						result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(),
+								hall.doubleValue());
 					} else {
 						BigDecimal dining = diningSpace.divide((BigDecimal.valueOf(1)), DECIMALDIGITS_MEASUREMENTS,
 								ROUNDUP);
 						result.totalRequiredCarParking += dining.doubleValue();
 						result.carParkingForDACal += dining.doubleValue();
-						result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(), dining.doubleValue());
+						result.getOccupancyWiseParkingRequired().put(occupancy.getTypeHelper().getType().getCode(),
+								dining.doubleValue());
 					}
 				} else {
 					pl.addError(UNITFA_HALL, getLocaleMessage(OBJECT_NOT_DEFINED, UNITFA_HALL_NOT_DEFINED));
@@ -549,7 +552,7 @@ public class Parking extends FeatureProcess {
 			pl.addErrors(errors);
 		}
 		// Calculate the parking area declared inside building for each occupancy
-		if(!result.occupancyWiseParkingRequired.isEmpty()) {
+		if (!result.occupancyWiseParkingRequired.isEmpty()) {
 			for (Block block : pl.getBlocks()) {
 				if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
 					for (Floor floor : block.getBuilding().getFloors()) {
@@ -557,8 +560,8 @@ public class Parking extends FeatureProcess {
 							BigDecimal parkingArea = floor.getParkingProvidedInsideBuilding().stream()
 									.map(ParkingArea::getParkingArea).reduce(BigDecimal.ZERO, BigDecimal::add);
 							for (Map.Entry<String, Double> map : result.getOccupancyWiseParkingRequired().entrySet()) {
-								double AreaForOccupancy = Math.ceil(map.getValue()) / Math.ceil(result.totalRequiredCarParking)
-										* parkingArea.doubleValue();
+								double AreaForOccupancy = Math.ceil(map.getValue())
+										/ Math.ceil(result.totalRequiredCarParking) * parkingArea.doubleValue();
 								ParkingArea parkingAreaByOcc = new ParkingArea();
 								parkingAreaByOcc.setOccupancyType(Util.getOccupancyByCode(pl, map.getKey()));
 								parkingAreaByOcc.setParkingArea(BigDecimal.valueOf(AreaForOccupancy));
@@ -674,32 +677,38 @@ public class Parking extends FeatureProcess {
 		if (g1 != null && g1.getFloorArea() != null) {
 			occupancyList.add(g1);
 			noOfCarParking = g1.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
-			result.getOccupancyWiseParkingRequired().put(g1.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
+			result.getOccupancyWiseParkingRequired().put(g1.getTypeHelper().getType().getCode(),
+					noOfCarParking.doubleValue());
 		}
 		if (g2 != null && g2.getFloorArea() != null) {
 			noOfCarParking = g2.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g2);
-			result.getOccupancyWiseParkingRequired().put(g2.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
+			result.getOccupancyWiseParkingRequired().put(g2.getTypeHelper().getType().getCode(),
+					noOfCarParking.doubleValue());
 		}
 		if (g3 != null && g3.getFloorArea() != null) {
 			noOfCarParking = g3.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g3);
-			result.getOccupancyWiseParkingRequired().put(g3.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
+			result.getOccupancyWiseParkingRequired().put(g3.getTypeHelper().getType().getCode(),
+					noOfCarParking.doubleValue());
 		}
 		if (g4 != null && g4.getFloorArea() != null) {
 			noOfCarParking = g4.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g4);
-			result.getOccupancyWiseParkingRequired().put(g4.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
+			result.getOccupancyWiseParkingRequired().put(g4.getTypeHelper().getType().getCode(),
+					noOfCarParking.doubleValue());
 		}
 		if (g5 != null && g5.getFloorArea() != null) {
 			noOfCarParking = g5.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
 			occupancyList.add(g5);
-			result.getOccupancyWiseParkingRequired().put(g5.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
+			result.getOccupancyWiseParkingRequired().put(g5.getTypeHelper().getType().getCode(),
+					noOfCarParking.doubleValue());
 		}
 		if (h != null && h.getFloorArea() != null) {
 			occupancyList.add(h);
 			noOfCarParking = h.getFloorArea().divide(BigDecimal.valueOf(240), 0, RoundingMode.UP);
-			result.getOccupancyWiseParkingRequired().put(h.getTypeHelper().getType().getCode(), noOfCarParking.doubleValue());
+			result.getOccupancyWiseParkingRequired().put(h.getTypeHelper().getType().getCode(),
+					noOfCarParking.doubleValue());
 		}
 		processLoadingAndUnloading(pl, occupancyList);
 		return noOfCarParking == null ? 0 : noOfCarParking.doubleValue();
@@ -725,7 +734,7 @@ public class Parking extends FeatureProcess {
 			totalCarpetArea = totalCarpetArea.add(c3.getFloorArea());
 		double parkingRequired = totalCarpetArea == null ? 0
 				: totalCarpetArea.divide(BigDecimal.valueOf(75), DECIMALDIGITS_MEASUREMENTS, ROUNDUP).doubleValue();
-		if(parkingRequired > 0)
+		if (parkingRequired > 0)
 			result.getOccupancyWiseParkingRequired().put("C", parkingRequired);
 		return parkingRequired;
 	}
@@ -838,8 +847,8 @@ public class Parking extends FeatureProcess {
 						"Should be less than 30" + DcrConstants.IN_METER,
 						pl.getParkingDetails().getDistFromDAToMainEntrance() + DcrConstants.IN_METER,
 						Result.Not_Accepted.getResultVal());
-			} 
-			
+			}
+
 			if (pl.getParkingDetails().getValidDAParkingSlots() < result.daParking) {
 				setReportOutputDetails(pl, SUB_RULE_42__5, DA_PARKING, result.daParking.intValue() + NUMBERS,
 						pl.getParkingDetails().getValidDAParkingSlots() + NUMBERS, Result.Not_Accepted.getResultVal());

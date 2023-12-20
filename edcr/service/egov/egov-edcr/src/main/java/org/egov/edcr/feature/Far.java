@@ -673,7 +673,7 @@ public class Far extends FeatureProcess {
 		boolean isHeightAllowed = true;
 		if(!bldgHghts.isEmpty())
 			for (BigDecimal hght : bldgHghts)
-				if(hght.doubleValue() > 10) {
+				if(hght.doubleValue() > 16) {
 					isHeightAllowed = false;
 					break;
 				}
@@ -1155,9 +1155,10 @@ public class Far extends FeatureProcess {
 			}
 			totalFloorUnits = totalFloorUnits + totalBlockFloorUnits;
 			block.getBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalBlockFloorUnits));
-			List<String> occupancyCodes = pl.getVirtualBuilding().getOccupancyTypes().stream()
-					.map(occ -> occ.getType().getCode()).collect(Collectors.toList());
-			if (!block.getCompletelyExisting() && occupancyCodes.contains(A1)) {
+			List<String> occupancyCodes = block.getBuilding().getTotalArea().stream()
+					.map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
+			
+			if (!block.getCompletelyExisting() && (occupancyCodes.contains(A1) || occupancyCodes.contains(A5))) {
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
 							String.format("Mandatory Kitchen unit is not defined for Residential in the block %s",
