@@ -1042,21 +1042,37 @@ public class Sanitation extends FeatureProcess {
     private void processVisitorWash(Plan pl, SanityHelper helper, ScrutinyDetail detail,
 			Integer providedCommonWashBasin, Integer providedMaleWashBasin, Integer providedFemaleWashBasin) {
          String description = "";
-         String expected = "";
-         String actual = "";
-        if (helper.maleWash > 0 || helper.femaleWash > 0|| helper.commonWash>0) {
+         StringBuffer expected = new StringBuffer();
+         StringBuffer actual = new StringBuffer();
+
+         if (helper.maleWash > 0 || helper.femaleWash > 0|| helper.commonWash>0) {
 
             int actualWash = providedCommonWashBasin+providedMaleWashBasin+providedFemaleWashBasin;
             description = "Visitor "+BLDG_PART_WASHBASIN + " - Count";
-            Double totalWashExpected = Math.ceil(helper.maleWash + helper.femaleWash + helper.commonWash);
-            expected = "" + totalWashExpected.intValue();
-            actual = "" + actualWash;
+            Double totalWashExpected = Math.ceil(helper.maleWash) + Math.ceil(helper.femaleWash) + Math.ceil(helper.commonWash);
+            
+            if(helper.maleWash >0)
+                expected.append("Male Wash ").append( Math.ceil(helper.maleWash)).append("\n");
+            if(helper.femaleWash >0)
+                expected.append("Female Wash ").append( Math.ceil(helper.femaleWash)).append("\n");
+            if(helper.commonWash >0)
+                expected.append("Common Wash ").append( Math.ceil(helper.commonWash)).append("\n");
+            expected.append("Total Wash ").append(totalWashExpected);
+        
+            if(providedMaleWashBasin > 0)
+            	actual.append("Male Wash ").append(providedMaleWashBasin).append("\n");
+            if(providedFemaleWashBasin > 0)
+            	actual.append("Female Wash ").append(providedFemaleWashBasin).append("\n");
+            if(providedCommonWashBasin > 0)
+            	actual.append("Common Wash ").append(providedCommonWashBasin).append("\n");
+            actual.append("Total Wash ").append(actualWash);
+        
             if (totalWashExpected.intValue() >= 0) {
                 if (totalWashExpected.intValue() > actualWash) {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description, expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
                             detail);
                 } else {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description, expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
                             detail);
                 }
             }
@@ -1067,23 +1083,35 @@ public class Sanitation extends FeatureProcess {
 			Integer providedCommonUrinal, Integer providedUrinalForMale) {
         Boolean accepted = true;
         String description = "";
-        String expected = "";
-        String actual = "";
+        StringBuffer expected = new StringBuffer();
+        StringBuffer actual = new StringBuffer();
+
           if (helper.urinal > 0 || helper.commonUrinal>0) {
             helper.urinal = Math.ceil(helper.urinal); //todo: check this logic required
             description = BLDG_PART_VISITOR_URINAL + " - Count";
         
-        
+            if(helper.urinal >0)
+                expected.append("Male Urinals ").append( Math.ceil(helper.urinal)).append("\n");
+            if(helper.commonUrinal >0)
+                expected.append("Common Urinals ").append( Math.ceil(helper.commonUrinal)).append("\n");
+         
+            if(providedUrinalForMale > 0)
+            	actual.append("Male Urinals ").append(providedUrinalForMale).append("\n");
+            if(providedCommonUrinal > 0)
+            	actual.append("Common Urinals ").append(providedCommonUrinal).append("\n");
+            
             Integer urinalActual = providedCommonUrinal + providedUrinalForMale;
-            Double urinalsExpected = Math.ceil(helper.urinal + helper.commonUrinal ); 
-            expected = "" + urinalsExpected.intValue();
-            actual = "" + urinalActual.intValue();
+            Double urinalsExpected = Math.ceil(helper.urinal) + Math.ceil(helper.commonUrinal); 
+         
+            
+           // expected = "" + urinalsExpected.intValue();
+           // actual = "" + urinalActual.intValue();
             if (urinalsExpected.intValue() >= 0) {
                 if (urinalActual.intValue()>= urinalsExpected.intValue()){
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
                             detail);
                 } else {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
                             detail);
                 }
             }
@@ -1096,26 +1124,45 @@ public class Sanitation extends FeatureProcess {
 			Integer providedWcMale, Integer providedWcFemale, Integer providedCommonWc) {
         Boolean accepted = true;
         String description = "";
-        String expected = "";
-        String actual = "";
+        StringBuffer expected = new StringBuffer();
+        StringBuffer actual = new StringBuffer();
  
         if (helper.maleWc > 0 || helper.femaleWc > 0 || helper.commonWc > 0 ) {
-    	 	             		
-    		            Double totalWCActual = Math.ceil(providedWcMale + providedWcFemale + providedCommonWc);
-    		            Double totalWCExpected = Math.ceil(helper.maleWc + helper.femaleWc+ helper.commonWc); 
-    		            if (totalWCExpected > 0) {
-    		                expected = "" + totalWCExpected.intValue();
-    		                actual = "" + totalWCActual.intValue();
-    		                description = BLDG_PART_VISITOR_WATER_CLOSET + " - Count";
-    		                if (totalWCExpected.intValue() > totalWCActual.intValue()) {
-    		                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
-    		                            detail);
-    		                } else {
-    		                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
-    		                            detail);
-    		
-    		                } 
-    		            }
+        	
+        	 if(helper.maleWc >0)
+                 expected.append("Male WaterCloset ").append( Math.ceil(helper.maleWc)).append("\n");
+             if(helper.femaleWc >0)
+                 expected.append("Female WaterCloset ").append( Math.ceil(helper.femaleWc)).append("\n");
+             if(helper.commonWc >0)
+                 expected.append("Common WaterCloset ").append( Math.ceil(helper.commonWc)).append("\n");
+         
+             if(providedWcMale > 0)
+             	actual.append("Male WaterCloset ").append(providedWcMale).append("\n");
+             if(providedWcFemale > 0)
+             	actual.append("Female WaterCloset ").append(providedWcFemale).append("\n");
+             if(providedCommonWc > 0)
+             	actual.append("Common WaterCloset ").append(providedCommonWc).append("\n");
+
+			Double totalWCActual = Math.ceil(providedWcMale) + Math.ceil(providedWcFemale)
+					+ Math.ceil(providedCommonWc);
+			Double totalWCExpected = Math.ceil(helper.maleWc) + Math.ceil(helper.femaleWc) + Math.ceil(helper.commonWc);
+
+			expected.append("Total WaterCloset ").append(totalWCExpected);
+			actual.append("Total WaterCloset ").append(totalWCActual);
+
+			if (totalWCExpected > 0) {
+				// expected = "" + totalWCExpected.intValue();
+				// actual = "" + totalWCActual.intValue();
+				description = BLDG_PART_VISITOR_WATER_CLOSET + " - Count";
+				if (totalWCExpected.intValue() > totalWCActual.intValue()) {
+					addReportDetail(helper.ruleNo, description, expected.toString(), actual.toString(),
+							Result.Not_Accepted.getResultVal(), detail);
+				} else {
+					addReportDetail(helper.ruleNo, description, expected.toString(), actual.toString(),
+							Result.Accepted.getResultVal(), detail);
+
+				}
+			}
     	        }
          return accepted;
     
@@ -1242,8 +1289,8 @@ public class Sanitation extends FeatureProcess {
 
         Boolean accepted = true;
         String description = "";
-        String expected = "";
-        String actual = "";
+        StringBuffer expected = new StringBuffer();
+        StringBuffer actual = new StringBuffer();
         SanityDetails sanityDetails = b.getSanityDetails();
 
         if (helper.maleWc > 0 || helper.femaleWc > 0 || helper.commonWc > 0 ) {
@@ -1259,45 +1306,72 @@ public class Sanitation extends FeatureProcess {
 
         
             Integer urinalActual = (urinalList!=null?urinalList.size():0);
-            Double urinalsExpected = Math.ceil(helper.urinal + helper.commonUrinal ); 
-            expected = "" + urinalsExpected.intValue();
+            Double urinalsExpected = Math.ceil(helper.urinal) + Math.ceil(helper.commonUrinal ); 
+            
+            if(helper.urinal >0)
+                expected.append("Male Urinals ").append( Math.ceil(helper.urinal)).append("\n");
+            if(helper.commonUrinal >0)
+                expected.append("Common Urinals ").append( Math.ceil(helper.commonUrinal)).append("\n");
+         
+            if(sanityDetails.getMaleUrinals()!=null && sanityDetails.getMaleUrinals().size() > 0)
+            	actual.append("Male Urinals ").append(sanityDetails.getMaleUrinals().size()).append("\n");
+            if(sanityDetails.getCommonUrinals()!=null && sanityDetails.getCommonUrinals().size() > 0)
+            	actual.append("Common Urinals ").append(sanityDetails.getCommonUrinals().size()).append("\n");
+         
+            /*expected = "" + urinalsExpected.intValue();
             actual = "" + urinalActual.intValue();
+            */
             if (urinalsExpected.intValue() >= 0) {
                 checkDimension(urinalsExpected.intValue(), detail, urinalList, 0.6d, 0.42d,
                         BLDG_PART_URINAL, DIMESION_DESC_KEY, RULE_34_1_1);
                 if (urinalActual.intValue()>= urinalsExpected.intValue()){
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
                             detail);
                 } else {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
                             detail);
                 }
             }
         }
 
         if (helper.maleWash > 0 || helper.femaleWash > 0|| helper.commonWash>0) {
-
+        	expected = new StringBuffer();
+            actual = new StringBuffer();
+        	 if(helper.maleWash >0)
+                 expected.append("Male Wash Basin ").append( Math.ceil(helper.maleWash)).append("\n");
+             if(helper.femaleWash >0)
+                 expected.append("Female Wash Basin ").append( Math.ceil(helper.femaleWash)).append("\n");
+             if(helper.commonWash >0)
+                 expected.append("Common Wash Basin ").append( Math.ceil(helper.commonWash)).append("\n");
+         
             int actualWash = 0;
             for (Floor f : b.getBuilding().getFloors()) {
                 actualWash += f.getWashBasins().size();
             }
             description = BLDG_PART_WASHBASIN + " - Count";
-            Double totalWashExpected = Math.ceil(helper.maleWash + helper.femaleWash + helper.commonWash);
-            expected = "" + totalWashExpected.intValue();
+            Double totalWashExpected = Math.ceil(helper.maleWash) + Math.ceil(helper.femaleWash) + Math.ceil(helper.commonWash);
+            expected.append("Total Wash Basin ").append(totalWashExpected);
+            actual.append("Total Wash Basin ").append(actualWash);
+
+            /*expected = "" + totalWashExpected.intValue();
             actual = "" + actualWash;
+            */
             if (totalWashExpected.intValue() >= 0) {
                 if (totalWashExpected.intValue() > actualWash) {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
                             detail);
                 } else {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
                             detail);
                 }
             }
         }
 
         if (helper.maleBath > 0 || helper.femaleBath > 0 || helper.commonBath>0) {
-            description = BLDG_PART_BATHROOM + " - Count";
+        	expected = new StringBuffer();
+            actual = new StringBuffer();
+        	
+        	description = BLDG_PART_BATHROOM + " - Count";
             int maleBathActual = sanityDetails.getMaleBathRooms().size()
                     + sanityDetails.getMaleRoomsWithWaterCloset().size();
             int femaleBathActual = sanityDetails.getFemaleBathRooms().size()
@@ -1305,10 +1379,28 @@ public class Sanitation extends FeatureProcess {
             int commomBathActual = sanityDetails.getCommonBathRooms().size()
                     + sanityDetails.getCommonRoomsWithWaterCloset().size();
             int totalActualBath = maleBathActual + femaleBathActual + commomBathActual;
-            Double totalBathExpected = Math.ceil(helper.maleBath + helper.femaleBath +helper.commonBath);
+            Double totalBathExpected = Math.ceil(helper.maleBath) + Math.ceil(helper.femaleBath) +Math.ceil(helper.commonBath);
 
+            
+            if(helper.maleBath >0)
+                expected.append("Male Bath ").append( Math.ceil(helper.maleBath)).append("\n");
+            if(helper.femaleBath >0)
+                expected.append("Female Bath ").append( Math.ceil(helper.femaleBath)).append("\n");
+            if(helper.commonBath >0)
+                expected.append("Common Bath ").append( Math.ceil(helper.commonBath)).append("\n");
+            expected.append("Total Bath ").append(totalBathExpected);
+        
+            if(maleBathActual > 0)
+            	actual.append("Male Bath ").append(maleBathActual).append("\n");
+            if(femaleBathActual > 0)
+            	actual.append("Female Bath ").append(femaleBathActual).append("\n");
+            if(commomBathActual > 0)
+            	actual.append("Common Bath ").append(commomBathActual).append("\n");
+            actual.append("Total Bath ").append(totalActualBath);
+     
+            /*
             expected = "" + totalBathExpected.intValue();
-            actual = "" + totalActualBath;
+            actual = "" + totalActualBath;*/
             List<Measurement> wcList = new ArrayList<>();
             wcList.addAll(sanityDetails.getMaleBathRooms());
             wcList.addAll(sanityDetails.getFemaleBathRooms());
@@ -1326,10 +1418,10 @@ public class Sanitation extends FeatureProcess {
                         DIMESION_DESC_KEY, RULE_34_1_1);
 
                 if (totalBathExpected.intValue() > totalActualBath) {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
                             detail);
                 } else {
-                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
                             detail);
 
                 }
@@ -1346,9 +1438,9 @@ public class Sanitation extends FeatureProcess {
 
 	private void processWaterClosets(SanityHelper helper, ScrutinyDetail detail, SanityDetails sanityDetails) {
 		String description = "";
-		String expected = "";
-		String actual = "";
-		//TODO: VERIFY All SP_WC provided may be included in no of male WATER_CLOSET provided.
+        StringBuffer expected = new StringBuffer();
+        StringBuffer actual = new StringBuffer();
+        //TODO: VERIFY All SP_WC provided may be included in no of male WATER_CLOSET provided.
 		            int maleWcActual = sanityDetails.getMaleWaterClosets().size()
 		                    + sanityDetails.getMaleRoomsWithWaterCloset().size();
 		            int femaleWcActual = sanityDetails.getFemaleWaterClosets().size()
@@ -1358,24 +1450,42 @@ public class Sanitation extends FeatureProcess {
 		            Double specialWC = helper.providedSpecialWc;
 		
 		            Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual + specialWC );
-		            Double totalWCExpected = Math.ceil(helper.maleWc + helper.femaleWc+ helper.commonWc);//TODO irrespective of type, validations added. Not specifically like common water closet not considered.
+		            Double totalWCExpected = Math.ceil(helper.maleWc) + Math.ceil(helper.femaleWc)+ Math.ceil(helper.commonWc);//TODO irrespective of type, validations added. Not specifically like common water closet not considered.
 		            if (totalWCExpected > 0) {
 		                List<Measurement> wcList = new ArrayList<>();
 		                wcList.addAll(sanityDetails.getMaleWaterClosets());
-		                wcList.addAll(sanityDetails.getFemaleWaterClosets());
 		                wcList.addAll(sanityDetails.getCommonWaterClosets());
 		             
 		                checkDimension(totalWCExpected.intValue(), detail, wcList, 1d, 1.1d, BLDG_PART_WATER_CLOSET,
 		                        DIMESION_DESC_KEY, RULE_34_1_1); 
-		
-		                expected = "" + totalWCExpected.intValue();
-		                actual = "" + totalWCActual.intValue();
+		  
+		                if(helper.maleWc >0)
+		                    expected.append("Male Water Closet ").append( Math.ceil(helper.maleWc)).append("\n");
+		                if(helper.femaleWc >0)
+		                    expected.append("Female Water Closet ").append( Math.ceil(helper.femaleWc)).append("\n");
+		                if(helper.commonWc >0)
+		                    expected.append("Common Water Closet ").append( Math.ceil(helper.commonWc)).append("\n");
+		                expected.append("Total Water Closet ").append(totalWCExpected);
+		            
+		                if(maleWcActual > 0)
+		                	actual.append("Male Water Closet ").append(maleWcActual).append("\n");
+		                if(femaleWcActual > 0)
+		                	actual.append("Female Water Closet ").append(femaleWcActual).append("\n");
+		                if(commonWcActual > 0)
+		                	actual.append("Common Water Closet ").append(commonWcActual).append("\n");
+		                if(specialWC > 0)
+		                	actual.append("Special Water Closet ").append(specialWC).append("\n");
+		                actual.append("Total Water Closet ").append(totalWCActual);
+		         
+		                
+		                //expected = "" + totalWCExpected.intValue();
+		                //actual = "" + totalWCActual.intValue();
 		                description = BLDG_PART_WATER_CLOSET + " - Count";
 		                if (totalWCExpected.intValue() > totalWCActual.intValue()) {
-		                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Not_Accepted.getResultVal(),
+		                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
 		                            detail);
 		                } else {
-		                    addReportDetail(helper.ruleNo, description, expected, actual, Result.Accepted.getResultVal(),
+		                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
 		                            detail);
 		
 		                } 
