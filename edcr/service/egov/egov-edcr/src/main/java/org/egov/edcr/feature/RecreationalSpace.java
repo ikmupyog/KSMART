@@ -69,9 +69,11 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.RoofArea;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RecreationalSpace extends FeatureProcess {
 
 	public static final String SUB_RULE_50_DESC = "Recreational space for Residential Apartment ";
@@ -82,6 +84,7 @@ public class RecreationalSpace extends FeatureProcess {
 	public static final String RECREATION = "RECREATION";
 	public static final int TOTALNUMBEROFUNITS = 12;
 	public static final BigDecimal THREE = BigDecimal.valueOf(3);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

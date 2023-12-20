@@ -109,6 +109,7 @@ import org.egov.common.entity.edcr.SanityHelper;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
@@ -116,6 +117,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Scope("prototype")
 public class Sanitation extends FeatureProcess {
     public static final String MSG_ERROR_MANDATORY = "msg.error.mandatory.object.not.defined";
     public static final String FEMALE = "Female ";
@@ -179,6 +181,7 @@ public class Sanitation extends FeatureProcess {
     public static final BigDecimal MINDIMENSIONOFSPWC = BigDecimal.valueOf(1.5);
     public static final String MINIMUM_AREA_SPWC = "2.625 M2";
     public static final String MINIMUM_DIMENSION_SPWC = "1.5 M";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

@@ -61,14 +61,17 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class GovtBuildingDistance extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(GovtBuildingDistance.class);
 	private static final String RULE_21 = "21";
 	public static final String GOVTBUILDING_DESCRIPTION = "Distance from Government Building";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

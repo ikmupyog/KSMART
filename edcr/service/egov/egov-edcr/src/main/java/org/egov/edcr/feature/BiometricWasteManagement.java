@@ -65,13 +65,16 @@ import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class BiometricWasteManagement extends FeatureProcess {
 	private static final String SUBRULE_54_4_DESC = "Biomedical Waste Treatment";
 	private static final String SUBRULE_54_4 = "54-4";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

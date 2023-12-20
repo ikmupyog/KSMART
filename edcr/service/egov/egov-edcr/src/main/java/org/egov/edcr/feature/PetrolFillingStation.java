@@ -62,15 +62,18 @@ import java.util.stream.Collectors;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class PetrolFillingStation extends FeatureProcess {
 	private static final String SUBRULE_47 = "47";
 	private static final String SUBRULE_47_DESC = "The distance between kiosk/sales office, toilet block";
 	private static final String SUBRULE_47_2 = "47(2)";
 	private static final String SUBRULE_47_2_DESC = "Radius of Dispensing Unit";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 	@Override
 	public Plan validate(Plan pl) {
 		HashMap<String, String> errors = new HashMap<>();

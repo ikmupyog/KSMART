@@ -56,9 +56,11 @@ import org.egov.common.entity.edcr.SetBack;
 import org.egov.common.entity.edcr.Yard;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class SideYardService_Amend08Nov19 extends GeneralRule {
     private static final double VALUE_0_5 = 0.5;
     private static final String RULE_54_3 = "54(3)";

@@ -61,9 +61,11 @@ import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Verandah extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(Verandah.class);
@@ -71,6 +73,7 @@ public class Verandah extends FeatureProcess {
 	private static final String RULE_43 = "43";
 
 	public static final String VERANDAH_DESCRIPTION = "Verandah";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -80,7 +83,7 @@ public class Verandah extends FeatureProcess {
 	@Override
 	public Plan process(Plan pl) {
 		for (Block b : pl.getBlocks()) {
-			ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+			scrutinyDetail = new ScrutinyDetail();
 			scrutinyDetail.setKey("Common_Verandah");
 			scrutinyDetail.addColumnHeading(1, RULE_NO);
 			scrutinyDetail.addColumnHeading(2, DESCRIPTION);

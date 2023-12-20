@@ -62,18 +62,22 @@ import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
+import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.Util;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class LandUse extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(LandUse.class);
     private static final String RULE_28 = "28";
     public static final BigDecimal ROAD_WIDTH_TWELVE_POINTTWO = BigDecimal.valueOf(12.2);
     private static final String ROAD_WIDTH = "Road Width";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

@@ -98,10 +98,12 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class MeanOfAccess extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(MeanOfAccess.class);
 
@@ -132,6 +134,8 @@ public class MeanOfAccess extends FeatureProcess {
     private static final String SUB_RULE_DES = "Minimum access width";
     private static final String OCCPNCYCONDITION = "Occupancy/Condition";
     private static final String REMARKS = "Remarks";
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan process(Plan pl) {

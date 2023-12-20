@@ -15,13 +15,16 @@ import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class OpenStairService extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(OpenStairService.class);
     private static final String SUB_RULE_24_11 = "24-11";
     private static final BigDecimal OPENSTAIR_DISTANCE = BigDecimal.valueOf(0.60);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan plan) {

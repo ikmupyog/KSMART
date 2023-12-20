@@ -68,10 +68,12 @@ import org.egov.common.entity.edcr.ElectricLine;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class OverheadElectricalLineService extends FeatureProcess {
 
 	private static final String SUB_RULE_AMD_22_5 = "22(5) Table 2";
@@ -84,6 +86,7 @@ public class OverheadElectricalLineService extends FeatureProcess {
 	private static final BigDecimal HORIZONTAL_DISTANCE_11000 = BigDecimal.valueOf(1.2);
 	private static final String REMARKS = "Remarks";
 	private static final String VOLTAGE = "Voltage";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

@@ -87,14 +87,17 @@ import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class WaterTreatmentPlant extends FeatureProcess {
     private static final String SUB_RULE_53_5_DESCRIPTION = "Insitu Liquid waste management treatment plant";
     private static final String SUB_RULE_53_5 = "53(5)";
     private static final BigDecimal TWOTHOUSANDFIVEHUNDER = BigDecimal.valueOf(2500);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

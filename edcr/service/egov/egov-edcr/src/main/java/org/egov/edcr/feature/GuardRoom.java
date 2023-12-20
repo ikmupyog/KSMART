@@ -61,9 +61,11 @@ import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class GuardRoom extends FeatureProcess {
 
 	private static final Logger LOGGER = LogManager.getLogger(Parking.class);
@@ -71,6 +73,7 @@ public class GuardRoom extends FeatureProcess {
 	public static final String GUARD_ROOM_DIMENSION_DESCRIPTION = "Guard Room Dimension";
 	public static final String GUARD_ROOM_AREA_DESCRIPTION = "Guard Room Area";
 	public static final String GUARD_ROOM_HEIGHT_DESCRIPTION = "Guard Room Height";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

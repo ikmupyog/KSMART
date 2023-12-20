@@ -61,9 +61,11 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.River;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RiverDistance extends FeatureProcess {
 
     private static final String RULE_22 = "22";
@@ -74,6 +76,7 @@ public class RiverDistance extends FeatureProcess {
     public static final String NO_DISTANCT_MENTIONED = "No distance is provided from protection wall embankment/river main edge or sub river";
     private static final Integer MAIN_RIVER = 1;
     private static final Integer SUB_RIVER = 2;
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

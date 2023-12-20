@@ -105,9 +105,11 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.service.ProcessHelper;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Coverage extends FeatureProcess {
     // private static final String OCCUPANCY2 = "OCCUPANCY";
 
@@ -127,6 +129,8 @@ public class Coverage extends FeatureProcess {
     private static final BigDecimal Eighty = BigDecimal.valueOf(80);
     public static final String RULE_31_1 = "31(1)";
     public static final String RULE_AMD19_27_1 = "27(1)";
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     
     @Override

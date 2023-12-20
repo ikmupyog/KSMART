@@ -93,9 +93,11 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class LiftService extends FeatureProcess {
 
     private static final String SUBRULE_48_DESC = "Minimum number of lifts for block %s";
@@ -106,6 +108,7 @@ public class LiftService extends FeatureProcess {
     private static final String SUBRULE_118 = "118";
     private static final String SUBRULE_118_DESCRIPTION = "Minimum dimension Of lift %s on floor %s";
     private static final String SUBRULE_118_DESC = "Minimum dimension Of lift";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

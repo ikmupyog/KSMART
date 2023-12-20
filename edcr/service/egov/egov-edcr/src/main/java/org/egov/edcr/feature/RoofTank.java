@@ -59,14 +59,17 @@ import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RoofTank extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(RoofTank.class);
 	private static final String RULE_44_A = "44-A";
 	public static final String ROOFTANK_DESCRIPTION = "Roof Tanks";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

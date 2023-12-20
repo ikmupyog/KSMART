@@ -61,15 +61,18 @@ import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class InteriorOpenSpaceService extends FeatureProcess {
 	private static Logger LOG = LogManager.getLogger(InteriorOpenSpaceService.class);
 	private static final String RULE_43A = "43A";
 	private static final String RULE_43 = "43";
 	public static final String INTERNALCOURTYARD_DESCRIPTION = "Internal Courtyard";
 	public static final String VENTILATIONSHAFT_DESCRIPTION = "Ventilation Shaft";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

@@ -63,15 +63,18 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Balcony extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(Balcony.class);
     private static final String FLOOR = "Floor";
     private static final String RULE45_IV = "45-iv";
     private static final String WIDTH_BALCONY_DESCRIPTION = "Minimum width for balcony %s";
     private static final BigDecimal ONE_POINTTWO = BigDecimal.valueOf(1.2);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan plan) {

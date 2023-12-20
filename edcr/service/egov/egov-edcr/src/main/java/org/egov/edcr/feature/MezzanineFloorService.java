@@ -21,10 +21,12 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class MezzanineFloorService extends FeatureProcess {
 	private static final String SUBRULE_35_1 = "35(1)";
 	private static final String SUBRULE_35_1_DESC = "Maximum area of mezzanine floor";
@@ -32,6 +34,7 @@ public class MezzanineFloorService extends FeatureProcess {
 	public static final String SUB_RULE_55_7 = "55(7)";
 	private static final String FLOOR = "Floor";
 	public static final String HALL_NUMBER = "Hall Number";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

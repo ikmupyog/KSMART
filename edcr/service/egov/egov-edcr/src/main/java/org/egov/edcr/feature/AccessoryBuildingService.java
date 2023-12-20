@@ -66,10 +66,12 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class AccessoryBuildingService extends FeatureProcess{
 
     private static final String SUBRULE_88_1_DESC = "Maximum area of accessory block";
@@ -94,6 +96,7 @@ public class AccessoryBuildingService extends FeatureProcess{
     private static final String ACC_BLK_NOT_A1_ERROR = "The accessory buildings shall be allowed to residential buildings only, accessory buildings with occupancy other than residential to be drawn as separate block";
 
     private static final String MIN_DIS_UN_NOTIFIED_ROAD_FROM_ACC_BLDG = "Minimum distance from accessory building to un-notified road";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

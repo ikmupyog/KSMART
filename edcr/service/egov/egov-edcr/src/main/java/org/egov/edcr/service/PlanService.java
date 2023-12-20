@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -179,7 +180,7 @@ public class PlanService {
 
         if (LOG.isDebugEnabled())
             LOG.debug("*************Before serialization******************");
-        File f = new File("plandetail.txt");
+        File f = new File(UUID.randomUUID().toString()+"_plandetail.txt");
         try (FileOutputStream fos = new FileOutputStream(f); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -373,7 +374,10 @@ public class PlanService {
 
                     File convertedPdf = edcrPdfDetail.getConvertedPdf();
                     if (convertedPdf != null && convertedPdf.length() > 0) {
-                        FileStoreMapper fileStoreMapper = fileStoreService.store(convertedPdf, convertedPdf.getName(),
+                    	String fileName1=convertedPdf.getName()
+                    			.replaceAll("[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}","" );
+                    	fileName1=fileName1.replace("___", "");
+                        FileStoreMapper fileStoreMapper = fileStoreService.store(convertedPdf, fileName1,
                                 DcrConstants.PDF_EXT, DcrConstants.FILESTORE_MODULECODE);
                         LOG.info("saved the file  ",fileStoreMapper.getFileName());
                         pdfDetail.setConvertedPdf(fileStoreMapper);

@@ -64,9 +64,11 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class SpiralStair extends FeatureProcess {
 	private static final Logger LOG = LogManager.getLogger(SpiralStair.class);
     private static final String FLOOR = "Floor";
@@ -74,6 +76,7 @@ public class SpiralStair extends FeatureProcess {
     private static final String RULE114_7 = "114(6)";
     private static final String RULE47_1 = "47(1)";
     private static final String DIAMETER_DESCRIPTION = "Minimum diameter for spiral fire stair %s";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan process(Plan plan) {
@@ -87,7 +90,7 @@ public class SpiralStair extends FeatureProcess {
 				}
 				 
 
-				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+				scrutinyDetail = new ScrutinyDetail();
 				scrutinyDetail.addColumnHeading(1, RULE_NO);
 				scrutinyDetail.addColumnHeading(2, FLOOR);
 				scrutinyDetail.addColumnHeading(3, DESCRIPTION);

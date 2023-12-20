@@ -68,9 +68,11 @@ import org.egov.common.entity.dcr.helper.OccupancyHelperDetail;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RoadWidth extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(RoadWidth.class);
@@ -78,6 +80,7 @@ public class RoadWidth extends FeatureProcess {
     public static final String ROADWIDTH_DESCRIPTION = "Minimum Road Width";
     public static final BigDecimal TWELVE_POINT_TWENTY = BigDecimal.valueOf(12.20);
     public static final String NEW = "NEW";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Map<String, Date> getAmendments() {

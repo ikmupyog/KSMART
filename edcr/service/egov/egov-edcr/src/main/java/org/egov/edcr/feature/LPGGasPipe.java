@@ -62,12 +62,15 @@ import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class LPGGasPipe extends FeatureProcess {
 	private static final String RULE_43_3 = "43(3)";
 	private static final String RULE_43_3_DESC = "LPG piped gas system ";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 	
     @Override
     public Plan validate(Plan pl) {

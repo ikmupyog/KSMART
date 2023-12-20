@@ -59,14 +59,17 @@ import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class StairCover extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(StairCover.class);
     private static final String RULE_44_C = "44-c";
     public static final String STAIRCOVER_DESCRIPTION = "Mumty";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {
@@ -77,7 +80,7 @@ public class StairCover extends FeatureProcess {
     @Override
     public Plan process(Plan pl) {
 
-        ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail = new ScrutinyDetail();
         scrutinyDetail.setKey("Common_Mumty");
         scrutinyDetail.addColumnHeading(1, RULE_NO);
         scrutinyDetail.addColumnHeading(2, DESCRIPTION);

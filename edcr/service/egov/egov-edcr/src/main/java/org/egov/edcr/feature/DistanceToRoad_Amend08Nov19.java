@@ -36,9 +36,11 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class DistanceToRoad_Amend08Nov19 extends GeneralRule {
     private static final String SUB_RULE_23_2_PROVISIO_DESC = "Distance from building to street boundary";
     private static final String SUB_RULE_23_1_DESCRIPTION = "Prohibition for constructions abutting public roads.";

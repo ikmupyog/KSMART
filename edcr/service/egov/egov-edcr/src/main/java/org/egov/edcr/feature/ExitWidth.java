@@ -101,10 +101,12 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class ExitWidth extends FeatureProcess {
 
 	private static final String EXIT_WIDTH_DESC = "Exit Width";
@@ -119,6 +121,7 @@ public class ExitWidth extends FeatureProcess {
 	private static final String OCCUPANCY = "Occupancy";
 	private static final String EXIT_WIDTH = "Exit Width";
 	private static final String FLOOR = "Floor";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	private Plan validateExitWidth(Plan pl) {
 		HashMap<String, String> errors = new HashMap<>();

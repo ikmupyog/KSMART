@@ -97,10 +97,12 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class BlockDistancesService extends FeatureProcess {
     public static final String SUBRULE_54_3 = "54-(3)";
     public static final String SUBRULE_55_2 = "55-(2)";
@@ -124,6 +126,7 @@ public class BlockDistancesService extends FeatureProcess {
     private static final String SUB_RULE_DES = "Minimum distance between blocks %s and %s";
     private static final String OCCPNCY = "Occupancy";
     private static final String SUBRULE_AMD20_26_5 = "26-(5)";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

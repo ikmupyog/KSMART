@@ -69,9 +69,11 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.service.ProcessHelper;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Kitchen extends FeatureProcess {
 
     private static final String SUBRULE_41_III = "41-iii";
@@ -94,6 +96,8 @@ public class Kitchen extends FeatureProcess {
     private static final String KITCHEN = "kitchen";
     private static final String KITCHEN_STORE = "kitchen with store room";
     private static final String KITCHEN_DINING = "kitchen with dining hall";
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

@@ -67,9 +67,11 @@ import org.egov.common.entity.dcr.helper.OccupancyHelperDetail;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class PlotArea extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(PlotArea.class);
@@ -77,6 +79,7 @@ public class PlotArea extends FeatureProcess {
     public static final String PLOTAREA_DESCRIPTION = "Minimum Plot Area";
     public static final BigDecimal THREE_ZERO = BigDecimal.valueOf(300);
     public static final BigDecimal FIVE_ZERO = BigDecimal.valueOf(500);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Map<String, Date> getAmendments() {

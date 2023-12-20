@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.egov.common.entity.dcr.helper.Declaration;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Building;
 import org.egov.common.entity.edcr.DcrReportBlockDetail;
@@ -1328,8 +1329,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     valuesMap.put("Remarks_" + cmnFeature, featureFooter);
                 }
             }
-            List<> declaration= getDeclaration();
-            drb.addConcatenatedReport(createDeclarationSubReport("DECLARATION", ""));
+            List<Declaration> declaration= getDeclaration(plan);
+            drb.addConcatenatedReport(createDeclarationSubReport());
             valuesMap.put("declaration", declaration); 
             
             
@@ -1429,9 +1430,53 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
     }
 
-    private Subreport createDeclarationSubReport(String string, String string2) {
-		// TODO Auto-generated method stub
-		return null;
+    private List<Declaration> getDeclaration(Plan plan) {
+    	List<Declaration> declarations= new ArrayList<>();
+    	Declaration declaration=new Declaration();
+    	declaration.setStatement("Is there any opening on the sides of the buildings, at a height above 2.10 m, "
+    			+ "where the open space available is less than or equal to 60 cm? ");
+    	declaration.setValue(plan.getPlanInformation().getOpeningOnSideAbove2mtsDesc());
+    	
+    	declarations.add(declaration);
+    	return declarations;
+    	
+	}
+
+	private Subreport createDeclarationSubReport() {
+		 Subreport sub = new Subreport();
+		try
+		{
+            FastReportBuilder frb = new FastReportBuilder();
+            AbstractColumn floor = ColumnBuilder.getNew().setColumnProperty("declaration", String.class.getName())
+                    .setTitle("DECLARATION").setWidth(520).setHeaderStyle(reportService.getNewReportColumnHeaderStyle()).build();
+            
+            AbstractColumn floorDescription = ColumnBuilder.getNew().setColumnProperty("value", String.class.getName())
+                    .setTitle("PROVIDED VALUE").setWidth(100).setHeaderStyle(reportService.getNewReportColumnHeaderStyle())
+                    .build();
+         
+            frb.addColumn(floor);
+            frb.addColumn(floorDescription);
+        	frb.setTitle("DECLARATIONS");
+            frb.setTitleStyle(reportService.getTitleStyle());
+            frb.setMargins(0, 0, 0, 0);
+            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
+                    reportService.getNewReportColumnHeaderStyle(), reportService.getNewReportDetailStyle());
+            frb.setAllowDetailSplit(false);
+            frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
+            frb.setGrandTotalLegendStyle(reportService.getNewReportDetailStyle());
+            DynamicReport build = frb.build();
+            sub.setDynamicReport(build);
+            Style style = new Style();
+            style.setStretchWithOverflow(true);
+            style.setStreching(RELATIVE_TO_BAND_HEIGHT);
+            sub.setStyle(style);
+			
+		}catch(Exception e)
+		{
+			LOG.error(e,e);
+		}
+		 return sub;
+		
 	}
 
 	public Subreport generateDcrSubReport(final List<DcrReportOutput> dcrReportOutputs) {

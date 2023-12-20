@@ -65,12 +65,15 @@ import java.util.Map;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
+import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.SetBack;
 import org.egov.edcr.utility.DcrConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class SetBackService extends FeatureProcess {
 
     @Autowired
@@ -108,6 +111,8 @@ public class SetBackService extends FeatureProcess {
 
     @Autowired
     private SideYardService_Amend01Sep23 sideYardService_Amend01Sep23;
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

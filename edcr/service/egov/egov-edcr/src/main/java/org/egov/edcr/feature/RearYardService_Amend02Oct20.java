@@ -54,9 +54,11 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.SetBack;
 import org.egov.edcr.constants.AmendmentConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RearYardService_Amend02Oct20 extends GeneralRule {
     private static final double VALUE_0_5 = 0.5;
     private static final String LEVEL = " Level ";

@@ -59,13 +59,16 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class HeadRoom extends FeatureProcess {
     private static final String RULE42_5_ii = "42-5-ii";
     private static final String RULE_42_5_ii_DESCRIPTION = "Minimum clear of stair head-room";
     private static final BigDecimal TWO_POINTTWO = BigDecimal.valueOf(2.2);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan plan) {

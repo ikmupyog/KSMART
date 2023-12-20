@@ -77,10 +77,12 @@ import org.egov.common.entity.edcr.SepticTank;
 import org.egov.common.entity.edcr.WasteDisposal;
 import org.egov.common.entity.edcr.WellUtility;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Well extends FeatureProcess {
 
     private static final String MSG_ERROR_WRONG_COLOR = "msg.error.color.well.pro.exst";
@@ -104,6 +106,7 @@ public class Well extends FeatureProcess {
     private static final BigDecimal DIST_1_POINT_2 = BigDecimal.valueOf(1.2);
     private static final BigDecimal DIST_7_POINT_5 = BigDecimal.valueOf(7.5);
     private static final BigDecimal DIST_30_CM = BigDecimal.valueOf(0.3);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

@@ -52,12 +52,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.egov.common.entity.edcr.Plan;
+import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class DrinageService extends FeatureProcess {
 
-    @Override
+    protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+
+	@Override
     public Plan validate(Plan pl) {
         return pl;
     }

@@ -59,15 +59,18 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class TravelDistanceToExit extends FeatureProcess {
 
     private static final String SUBRULE_43_2 = "43(2)";
     private static final String SUBRULE_43_2_DESC = "Maximum travel distance to emergency exit";
     public static final BigDecimal VAL_30 = BigDecimal.valueOf(30);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

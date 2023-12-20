@@ -73,9 +73,11 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class BuildingHeight extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(BuildingHeight.class);
 
@@ -96,6 +98,8 @@ public class BuildingHeight extends FeatureProcess {
     private static final String MANYLINES = "Multiple Lines Defined";
     private static final String SLOPE = "SLOPE OF LINE";
     private static final String MORETHANONEROAD_ABUTTINGPLOT = "More than one road/street abutting the plot, hence according to wider road/street fix the maximum height of building.";
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 
     @Override

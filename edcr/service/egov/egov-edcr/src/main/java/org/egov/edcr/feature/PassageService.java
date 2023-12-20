@@ -59,16 +59,19 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Scope("prototype")
 public class PassageService extends FeatureProcess {
 		private static final String RULE41 = "41";
 		private static final String RULE39_6 = "39(6)";
 		private static final String PASSAGE_STAIR_MINIMUM_WIDTH = "1.2";
 		private static final String RULE39_6_DESCRIPTION = "The minimum passage giving access to stair";
 		private static final String RULE_41_DESCRIPTION = "The minimum width of corridors/ verandhas";
+		protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 		
 	@Override
 	public Plan validate(Plan plan) {

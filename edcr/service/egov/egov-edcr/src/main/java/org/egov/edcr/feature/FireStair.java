@@ -84,10 +84,12 @@ import org.kabeja.dxf.DXFLWPolyline;
 import org.kabeja.dxf.DXFVertex;
 import org.kabeja.dxf.helpers.Point;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class FireStair extends FeatureProcess {
 	private static final Logger LOG = LogManager.getLogger(FireStair.class);
 	final Ray rayCasting = new Ray(new Point(-1.123456789, -1.987654321, 0d));
@@ -119,6 +121,7 @@ public class FireStair extends FeatureProcess {
     private static final String RISER_DESCRIPTION = "Maximum Height of Riser";
 	@Autowired
 	private LayerNames layerNames;
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan plan) {

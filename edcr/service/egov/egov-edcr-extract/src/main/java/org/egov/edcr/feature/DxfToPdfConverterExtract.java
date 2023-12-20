@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -76,6 +77,7 @@ import org.kabeja.dxf.helpers.StyledTextParagraph;
 import org.kabeja.math.MathUtils;
 import org.kabeja.xml.SAXSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +87,7 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 
 @Service
+@Scope("prototype")
 public class DxfToPdfConverterExtract extends FeatureExtract {
 
 	public static final Logger LOG = LogManager.getLogger(DxfToPdfConverterExtract.class);
@@ -289,6 +292,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 			sanitize(fileName, planDetail.getDxfDocument(), edcrPdfDetail, planDetail);
 			
 			File file = convertDxfToPdf(planDetail,planDetail.getDxfDocument(), fileName, edcrPdfDetail.getLayer(), edcrPdfDetail);
+			LOG.info("file Name  : " + file.getName());
 			disablePrintableLayers(edcrPdfDetail, planDetail.getDxfDocument());
 
 			if (file != null) {
@@ -1155,7 +1159,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 	private File convertDxfToPdf(PlanDetail planDetail, DXFDocument dxfDocument, String fileName, String layerName,
 			EdcrPdfDetail edcrPdfDetail) {
 
-		File fileOut = new File(layerName + ".pdf");
+		File fileOut = new File(layerName +"___"+UUID.randomUUID().toString()+ ".pdf");
 
 		if (fileOut != null) {
 			try {
@@ -1187,9 +1191,10 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 				}
      			generator.generate(dxfDocument, out, map);
 				if (LOG.isDebugEnabled())
-					LOG.debug("---------conversion success " + fileName + " - " + layerName + "----------");
+					LOG.debug("---------conversion success " + " n:" +fileOut.getName()+  " - p:" +fileOut.getAbsolutePath()+ "  l:"+ layerName + "----------");
 				fout.flush();
 				fout.close();
+				LOG.info("---------conversion success " +fileOut.length()+ "  " + " - " + layerName + "----------");
 				return fileOut.length() > 0 ? fileOut : null;
 			} catch (Exception ep) {
 				LOG.error("Pdf convertion failed for " + fileName + " - " + layerName + " due to " + ep.getMessage());

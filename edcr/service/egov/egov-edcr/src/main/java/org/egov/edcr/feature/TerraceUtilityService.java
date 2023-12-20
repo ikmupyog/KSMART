@@ -62,9 +62,11 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.TerraceUtility;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class TerraceUtilityService extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(TerraceUtility.class);
@@ -72,6 +74,7 @@ public class TerraceUtilityService extends FeatureProcess {
     public static final String TERRACEUTILITIESDISTANCE = "TerraceUtilitiesDistance";
     public static final BigDecimal THREE = BigDecimal.valueOf(3);
     public static final String ERROR_MSG = "Minimum_distance";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Map<String, Date> getAmendments() {
@@ -88,7 +91,7 @@ public class TerraceUtilityService extends FeatureProcess {
 
         if (pl.getBlocks() != null) {
             for (Block block : pl.getBlocks()) {
-                ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+                scrutinyDetail = new ScrutinyDetail();
                 scrutinyDetail.setKey("Block_" + block.getNumber() + "_" + "Terrace Utility");
                 scrutinyDetail.addColumnHeading(1, RULE_NO);
                 scrutinyDetail.addColumnHeading(2, DESCRIPTION);

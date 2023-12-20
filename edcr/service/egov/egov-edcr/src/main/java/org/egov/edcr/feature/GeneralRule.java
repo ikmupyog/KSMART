@@ -21,7 +21,8 @@ public class GeneralRule extends FeatureProcess {
     @Qualifier("parentMessageSource")
     protected MessageSource edcrMessageSource;
     // Dont use class variable like this .
-    protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+  //  protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+	
     public static final String STATUS = "STATUS";
 
     public static final String PROVIDED = "PROVIDED";

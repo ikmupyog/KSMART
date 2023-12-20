@@ -115,9 +115,11 @@ import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.egov.edcr.utility.math.Ray;
 import org.kabeja.dxf.helpers.Point;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Parking extends FeatureProcess {
 
 	private static final String MINIMUM_REQUIRED_AREA_30_M = "Minimum required area >= 30 m²";
@@ -162,6 +164,8 @@ public class Parking extends FeatureProcess {
 	private static final String GREATER_THAN_TWENTY = ">20";
 	private static final String ZERO_TO_N = ">0";
 	final Ray rayCasting = new Ray(new Point(-1.123456789, -1.987654321, 0d));
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 	public static final String NO_OF_UNITS = "No of apartment units";
 	private static final String SUB_RULE_34_2_VISIT_DESCRIPTION = "Visitor Car Parking ";
 	private static final String UNITFA_HALL_NOT_DEFINED = "UNITFA_HALL to calculate required parking";

@@ -59,15 +59,18 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class WaterTankCapacity extends FeatureProcess {
     private static final String RULE_59_10_vii = "59-10-vii";
     private static final String RULE_59_10_vii_DESCRIPTION = "Water tank capacity";
     private static final String WATER_TANK_CAPACITY = "Minimum capacity of Water tank";
     private static final BigDecimal TWELVE_POINTFIVE = BigDecimal.valueOf(12.5);
     private static final BigDecimal ONEHUNDRED_THIRTYFIVE = BigDecimal.valueOf(135);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

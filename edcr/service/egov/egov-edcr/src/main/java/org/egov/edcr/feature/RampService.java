@@ -90,10 +90,12 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RampService extends FeatureProcess {
 
     private static final String SUBRULE_40_A3 = "40A(3)";
@@ -111,6 +113,7 @@ public class RampService extends FeatureProcess {
     private static final String FLOOR = "Floor";
     private static final String SUBRULE_40_A_3_WIDTH_DESCRIPTION = "Minimum Width of Ramp %s";
     private static final String SUBRULE_40_A_3_SLOPE_MAN_DESC = "Slope of DA Ramp";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

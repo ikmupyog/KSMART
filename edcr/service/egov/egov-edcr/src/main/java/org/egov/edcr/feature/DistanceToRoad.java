@@ -84,9 +84,11 @@ import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class DistanceToRoad extends FeatureProcess {
     private static final String SUB_RULE_25_1 = "25-1";
     private static final String SUB_RULE_25_1_PROVISIO = "25-1 Provisio";
@@ -105,6 +107,7 @@ public class DistanceToRoad extends FeatureProcess {
     private static final String RULE_ACTUAL_KEY = "meanofaccess.actual";
     @Autowired
     private DistanceToRoad_Amend08Nov19 distanceToRoad_Amend08Nov19;
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

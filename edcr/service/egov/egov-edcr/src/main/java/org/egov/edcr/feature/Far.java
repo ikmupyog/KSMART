@@ -117,9 +117,11 @@ import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.service.ProcessPrintHelper;
 import org.egov.edcr.utility.Util;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Far extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(Far.class);
@@ -143,6 +145,8 @@ public class Far extends FeatureProcess {
 	private static final BigDecimal three = BigDecimal.valueOf(3.0);
 	private static final BigDecimal threePointFive = BigDecimal.valueOf(3.5);
 	private static final BigDecimal four = BigDecimal.valueOf(4.0);
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

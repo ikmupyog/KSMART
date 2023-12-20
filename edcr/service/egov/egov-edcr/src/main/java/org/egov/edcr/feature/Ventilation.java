@@ -62,14 +62,17 @@ import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Ventilation extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(Ventilation.class);
 	private static final String RULE_43 = "43";
 	public static final String LIGHT_VENTILATION_DESCRIPTION = "Light and Ventilation";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -79,7 +82,7 @@ public class Ventilation extends FeatureProcess {
 	@Override
 	public Plan process(Plan pl) {
 		for (Block b : pl.getBlocks()) {
-			ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+			scrutinyDetail = new ScrutinyDetail();
 			scrutinyDetail.setKey("Common_Ventilation");
 			scrutinyDetail.addColumnHeading(1, RULE_NO);
 			scrutinyDetail.addColumnHeading(2, DESCRIPTION);

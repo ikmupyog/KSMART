@@ -107,9 +107,11 @@ import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class HeightOfRoom extends FeatureProcess {
 
     private static final String SUBRULE_32_2 = "32(2)";
@@ -145,6 +147,7 @@ public class HeightOfRoom extends FeatureProcess {
     public static final BigDecimal MINIMUM_HEIGHT_3_6 = BigDecimal.valueOf(3.6);
     private static final String FLOOR = "Floor";
     private static final String HGHT_OF_ROOM_UNDEFINED = "%s is not defined for block %s floor %s with colour code %s";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

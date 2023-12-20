@@ -58,14 +58,17 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class NorthDirection extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(NorthDirection.class);
 	private static final String RULE_5_4_I_I = "5-4-i-i";
 	public static final String NORTH_DIRECTION_DESCRIPTION = "North Direction";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

@@ -64,10 +64,12 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class AdditionalFeature extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(AdditionalFeature.class);
 
@@ -81,6 +83,8 @@ public class AdditionalFeature extends FeatureProcess {
     private static final BigDecimal ten = BigDecimal.valueOf(10);
 
     private static final String PLOT_BOUNDARY_AREA_GREATER = "Area of plot boundary %s m² defined in PLOT_BOUNDARY layer is greater than the plot area %s m² defined in the PLAN_INFO layer.";
+
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 
     @Override

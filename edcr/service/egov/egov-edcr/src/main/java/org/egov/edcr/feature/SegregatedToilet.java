@@ -61,15 +61,18 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class SegregatedToilet extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(SegregatedToilet.class);
     private static final String RULE_59_10  = "59-10-i";
     public static final String SEGREGATEDTOILET_DESCRIPTION = "Num. of segregated toilets";
     public static final String SEGREGATEDTOILET_DIMENSION_DESCRIPTION = "Segregated toilet distance from main entrance";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

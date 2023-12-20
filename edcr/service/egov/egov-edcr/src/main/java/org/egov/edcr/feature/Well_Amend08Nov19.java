@@ -36,10 +36,12 @@ import org.egov.common.entity.edcr.WasteDisposal;
 import org.egov.common.entity.edcr.WellUtility;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Well_Amend08Nov19 extends GeneralRule {
 
     private static final String MSG_ERROR_WRONG_COLOR = "msg.error.color.well.pro.exst";
@@ -65,6 +67,7 @@ public class Well_Amend08Nov19 extends GeneralRule {
     private static final BigDecimal DIST_7_POINT_5 = BigDecimal.valueOf(7.5);
     private static final BigDecimal DIST_30_CM = BigDecimal.valueOf(0.3);
     private static BigDecimal SEVEN = BigDecimal.valueOf(7);
+    protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

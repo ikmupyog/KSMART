@@ -80,15 +80,18 @@ import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RecycleWasteWater extends FeatureProcess {
     private static final BigDecimal TWO_THOUSAND = BigDecimal.valueOf(2000);
     private static final String SUB_RULE_79_6_DESCRIPTION = "Recycling and reuse of waste water generated facility ";
     private static final String SUB_RULE_79_6 = "79(6)";
     private static final BigDecimal FIVE_THOUSAND = BigDecimal.valueOf(5000);
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

@@ -93,9 +93,11 @@ import org.egov.common.entity.edcr.SetBack;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.Util;
 import org.egov.infra.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class FrontYardService extends GeneralRule {
 	private static final double VALUE_0_5 = 0.5;
     private static final String RULE_54_3_I = "54-(3-i)";

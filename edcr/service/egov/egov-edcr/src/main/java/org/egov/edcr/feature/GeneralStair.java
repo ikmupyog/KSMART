@@ -25,10 +25,12 @@ import org.egov.edcr.service.LayerNames;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class GeneralStair extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(GeneralStair.class);
     private static final String EXPECTED_WIDTH = "1.2 M";
@@ -51,6 +53,7 @@ public class GeneralStair extends FeatureProcess {
     
     @Autowired
     private LayerNames layerNames;
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan plan) {

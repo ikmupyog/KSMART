@@ -35,9 +35,11 @@ import org.egov.common.entity.edcr.Ramp;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class CommonFeature extends FeatureProcess {
 
 	private static final String FLOOR = "Floor";
@@ -45,6 +47,7 @@ public class CommonFeature extends FeatureProcess {
 	private static final String SUBRULE_48_3 = "48(3)";
 	private static final String SUBRULE_40A_3 = "40A(3)";
 	private static final String REMARKS = "Remarks";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

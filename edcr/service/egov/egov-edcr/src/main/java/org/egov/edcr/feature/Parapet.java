@@ -59,14 +59,17 @@ import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class Parapet extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(Parapet.class);
 	private static final String RULE_41_V = "41-v";
 	public static final String PARAPET_DESCRIPTION = "Parapet";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

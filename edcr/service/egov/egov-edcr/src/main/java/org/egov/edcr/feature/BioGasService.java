@@ -17,9 +17,11 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class BioGasService extends FeatureProcess {
 
 	private static final String SUB_RULE_79_3_DESCRIPTION = "Minimum area of biogas";
@@ -32,7 +34,7 @@ public class BioGasService extends FeatureProcess {
 
 	private static final String BIO_DEG_WASTE_AREA_DESC_MULTIPLE = " In-situ Waste management system as stipulated by Pollution Control Board are having minimum area 0.5 m2";
 	private static final String BIO_DEG_WASTE_AREA_DESC_SINGLE = " In-situ Waste management system as stipulated by Pollution Control Board is having minimum area 0.5 m2";
-
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 	@Override
 	public Plan validate(Plan pl) {
 		List<String> occupancyTypes = pl.getOccupancies().stream().map(occ -> occ.getTypeHelper().getType().getCode())

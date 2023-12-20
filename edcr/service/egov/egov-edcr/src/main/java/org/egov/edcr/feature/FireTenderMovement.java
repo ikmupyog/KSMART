@@ -62,14 +62,17 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class FireTenderMovement extends FeatureProcess {
     private static final Logger LOG = LogManager.getLogger(FireTenderMovement.class);
     private static final BigDecimal FIFTEEN = BigDecimal.valueOf(15);
     private static final BigDecimal THREE_POINTSIXSIX = BigDecimal.valueOf(3.66);
     private static final String RULE_36_3 = "36-3";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan plan) {

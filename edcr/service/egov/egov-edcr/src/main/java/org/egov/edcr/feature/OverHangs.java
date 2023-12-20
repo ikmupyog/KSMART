@@ -70,15 +70,18 @@ import org.egov.edcr.utility.math.Polygon;
 import org.egov.edcr.utility.math.Ray;
 import org.kabeja.dxf.DXFVertex;
 import org.kabeja.dxf.helpers.Point;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class OverHangs extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(OverHangs.class);
     private static final String SUB_RULE_24_10 = "24(10)";
     private static final String SUB_RULE_AMD19_26_9 = "26(9)";
     final Ray rayCasting = new Ray(new Point(-1.123456789, -1.987654321, 0d));
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
     public Plan validate(Plan pl) {

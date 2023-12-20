@@ -64,15 +64,18 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class VehicleRamp extends FeatureProcess {
 
 	private static final String SUBRULE_40_8 = "40-8";
 	private static final String DESCRIPTION = "Vehicle Ramp";
 	private static final String FLOOR = "Floor";
 	private static final String FLIGHT = "Flight";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 	@Override
 	public Plan validate(Plan pl) {
 		for (Block block : pl.getBlocks()) {

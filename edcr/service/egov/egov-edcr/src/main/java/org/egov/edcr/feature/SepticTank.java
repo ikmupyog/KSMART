@@ -66,9 +66,11 @@ import org.egov.common.entity.edcr.RoadOutput;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class SepticTank extends FeatureProcess {
 
     private static final String SEPTIC_TANK = "Septic tank";
@@ -84,6 +86,7 @@ public class SepticTank extends FeatureProcess {
     private static final BigDecimal DIST_1_POINT_2 = BigDecimal.valueOf(1.2);
     private static final BigDecimal DIST_30_CM = BigDecimal.valueOf(0.3);
     private static final String SUB_RULE_75_2II_DESC_SEPTIC = "Minimum distance from %s septic tank to nearest point on the plot boundary";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 
 	@Override

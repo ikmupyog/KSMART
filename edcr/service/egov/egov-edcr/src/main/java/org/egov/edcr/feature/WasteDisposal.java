@@ -69,15 +69,18 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.RoadOutput;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class WasteDisposal extends FeatureProcess {
 	private static final String SUB_RULE_26A_DESCRIPTION = "Provisions for segregation of waste";
 	private static final String RULE_AMD19_79_1_WD = "79(1)";
 	private static final String WD_DISTANCE_RULE_AMD19_79_4 = "79(4)";
 	private static final String SUB_RULE_104_4_PLOT_DESCRIPTION_WD = "Minimum distance from waste treatment facility like: leach pit,soak pit etc to nearest point on the plot boundary";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {

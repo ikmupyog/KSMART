@@ -103,10 +103,12 @@ import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class RainWaterHarvesting extends FeatureProcess {
 	private static final String SUB_RULE_109_B_DESCRIPTION = "Workable RainWater Storage Arrangement ";
 	private static final String SUB_RULE_AMD19_76_2 = "76(2)";
@@ -117,6 +119,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 	private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
 	private static final BigDecimal TWOHUNDREDANDTWODOTTHIRTYFIVE = BigDecimal.valueOf(202.35);
 	private static final String GW_RECHARGE = "Ground water recharging system";
+	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
 	@Override
 	public Plan validate(Plan pl) {
