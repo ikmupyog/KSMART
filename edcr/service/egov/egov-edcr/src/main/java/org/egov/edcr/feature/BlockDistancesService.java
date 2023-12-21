@@ -51,33 +51,7 @@ import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
 import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
-import static org.egov.edcr.constants.DxfFileConstants.A1;
-import static org.egov.edcr.constants.DxfFileConstants.A2;
-import static org.egov.edcr.constants.DxfFileConstants.A3;
-import static org.egov.edcr.constants.DxfFileConstants.A4;
-import static org.egov.edcr.constants.DxfFileConstants.A5;
-import static org.egov.edcr.constants.DxfFileConstants.B1;
-import static org.egov.edcr.constants.DxfFileConstants.B2;
-import static org.egov.edcr.constants.DxfFileConstants.B3;
-import static org.egov.edcr.constants.DxfFileConstants.C;
-import static org.egov.edcr.constants.DxfFileConstants.C1;
-import static org.egov.edcr.constants.DxfFileConstants.C2;
-import static org.egov.edcr.constants.DxfFileConstants.C3;
-import static org.egov.edcr.constants.DxfFileConstants.D;
-import static org.egov.edcr.constants.DxfFileConstants.D1;
-import static org.egov.edcr.constants.DxfFileConstants.D2;
-import static org.egov.edcr.constants.DxfFileConstants.E;
-import static org.egov.edcr.constants.DxfFileConstants.F;
-import static org.egov.edcr.constants.DxfFileConstants.F1;
-import static org.egov.edcr.constants.DxfFileConstants.F2;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.G1;
-import static org.egov.edcr.constants.DxfFileConstants.G2;
-import static org.egov.edcr.constants.DxfFileConstants.H;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
-import static org.egov.edcr.constants.DxfFileConstants.I2;
-import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
-import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -116,6 +90,10 @@ public class BlockDistancesService extends FeatureProcess {
     public static final String MIN_DISTANCE = "minimumDistance";
     public static final String OCCUPANCY = "occupancy";
     private static final String SUBRULE_24_2 = "24-(2)";
+    private static final String SUBRULE_26_5 = "26-(5)";
+    private static final String SUBRULE_47_2 = "47-(2)";
+    private static final String SUBRULE_81_6 = "81-(6) (ii)";
+
     private static final String SUB_RULE_DESCRIPTION = "Minimum distance between blocks %s and %s for occupancy %s";
     private static final String DIS_BTW_BLOCKS_DESCRIPTION = "Distance between block";
     private static final double VALUE_0_5 = 0.5;
@@ -235,7 +213,27 @@ public class BlockDistancesService extends FeatureProcess {
 					// for a block
 					Map<String, Object> mapOfAllDetails = new ConcurrentHashMap<>();
 					BigDecimal minimumDistanceToOtherBuildings = BigDecimal.ZERO;
-					if (occupancy.getTypeHelper().getType().getCode().equals(A1)
+					
+					if (occupancy.getTypeHelper().getType().getCode().equals(I1)) {
+							subRule = SUBRULE_47_2; 
+							minimumDistanceToOtherBuildings = DIS_7_5;
+						}
+					else
+					{
+						if (getHeightLessThanTenCondition(block)) {
+							subRule = SUBRULE_26_5;
+							minimumDistanceToOtherBuildings = DIS_2;
+						} else if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
+							subRule = SUBRULE_26_5;
+							minimumDistanceToOtherBuildings = DIS_THREE;
+
+						} else {
+							subRule = SUBRULE_81_6;
+							minimumDistanceToOtherBuildings = DIS_5;
+						}
+					}
+					
+/*					if (occupancy.getTypeHelper().getType().getCode().equals(A1)
 							|| occupancy.getTypeHelper().getType().getCode().equals(A2)
 							|| occupancy.getTypeHelper().getType().getCode().equals(A3)
 							|| occupancy.getTypeHelper().getType().getCode().equals(A4)
@@ -245,17 +243,11 @@ public class BlockDistancesService extends FeatureProcess {
 							|| occupancy.getTypeHelper().getType().getCode().equals(F2)
 							|| occupancy.getTypeHelper().getType().getCode().equals(F3)) {
 						if (getHeightLessThanTenCondition(block)) {
-							subRule = SUBRULE_24_2;
-							if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-									|| AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
-								subRule = SUBRULE_AMD20_26_5;
+							subRule = SUBRULE_47_2; 
 							minimumDistanceToOtherBuildings = DIS_2;
 						} else {
 							if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
-								subRule = SUBRULE_24_2;
-								if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
-										|| AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
-									subRule = SUBRULE_AMD20_26_5;
+								subRule = SUBRULE_26_5;
 								minimumDistanceToOtherBuildings = DIS_THREE;
 							} else {
 								subRule = SUBRULE_117_3;
@@ -351,7 +343,7 @@ public class BlockDistancesService extends FeatureProcess {
 						} else {
 							subRule = SUBRULE_117_3;
 						}
-					}
+					}*/
 					mapOfAllDetails.put(SUBRULE, subRule);
 					mapOfAllDetails.put(MIN_DISTANCE, minimumDistanceToOtherBuildings);
 					mapOfAllDetails.put(OCCUPANCY, occupancy.getTypeHelper().getType().getName());
