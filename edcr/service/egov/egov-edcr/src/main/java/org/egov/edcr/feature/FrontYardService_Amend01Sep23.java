@@ -17,17 +17,29 @@ import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.D3;
+import static org.egov.edcr.constants.DxfFileConstants.D4;
 import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.E1;
+import static org.egov.edcr.constants.DxfFileConstants.E2;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
 import static org.egov.edcr.constants.DxfFileConstants.F2;
 import static org.egov.edcr.constants.DxfFileConstants.F3;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
 import static org.egov.edcr.constants.DxfFileConstants.G1;
 import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.G3;
+import static org.egov.edcr.constants.DxfFileConstants.G4;
+import static org.egov.edcr.constants.DxfFileConstants.G5;
 import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.constants.DxfFileConstants.I3;
+import static org.egov.edcr.constants.DxfFileConstants.I4;
+import static org.egov.edcr.constants.DxfFileConstants.I5;
+import static org.egov.edcr.constants.DxfFileConstants.I6;
+import static org.egov.edcr.constants.DxfFileConstants.J;
 import static org.egov.edcr.utility.DcrConstants.BSMT_FRONT_YARD_DESC;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.FRONT_YARD_DESC;
@@ -70,6 +82,8 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
     private static final String RULE_PRO2 = "Proviso 2";
     private static final String RULE_PRO5 = "Proviso 5";
     private static final String RULE_50_2 = "50(2)";
+    private static final String SUB_RULE_47_3 = "47(3)";
+    private static final String SUB_RULE_47_2 = "47(2) Proviso 1";
     private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
     private static final BigDecimal TWOHUNDRED = BigDecimal.valueOf(200);
     private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
@@ -292,6 +306,8 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                 mostRestrictiveOccupancy.getType().getCode().equals(A4) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(A5) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(F) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F1) ||
+                mostRestrictiveOccupancy.getType().getCode().equals(F2) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
             processFrontYardForOccupancyA1A2FWithHightGtThanTenMtrs(setback, buildingHeight, pl, mostRestrictiveOccupancy,
                     blockName, level, plot, frontYardFieldName,
@@ -303,7 +319,7 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                             .valueOf(Math.ceil((buildingHeight.subtract(BigDecimal.TEN)
                                     .divide(THREE, DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS)).doubleValue()))));
 
-            valid = processFrontYardForOccupanciesOtherThanA1A2F(pl, building, blockName, level, plot, frontYardFieldName,
+            valid = processFrontYardMoreThanTenForOccupanciesOtherThanA1A2F(pl, building, blockName, level, plot, frontYardFieldName,
                     subRuleDesc, min, mean,
                     mostRestrictiveOccupancy, distanceIncrementBasedOnHeight, true, frontYardResult);
 
@@ -506,7 +522,7 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                             .valueOf(Math.ceil((buildingHeight.subtract(BigDecimal.TEN)
                                     .divide(THREE, DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS)).doubleValue()))));
 
-            valid = processFrontYardForOccupanciesOtherThanA1A2F(pl, building, blockName, level, plot, frontYardFieldName,
+            valid = processFrontYardMoreThanTenForOccupanciesOtherThanA1A2F(pl, building, blockName, level, plot, frontYardFieldName,
                     subRuleDesc, min, mean,
                     mostRestrictiveOccupancy, distanceIncrementBasedOnHeight, false, frontYardResult);
 
@@ -520,17 +536,8 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
             String subRuleDesc, boolean checkMinimumValue, FrontYardResult frontYardResult) {
         String subRule = RULE_26_4;
         String rule = FRONT_YARD_DESC;
-        BigDecimal minval;
-        BigDecimal meanval;
-        if (plot.getArea().compareTo(BigDecimal.valueOf(SITEAREA_125)) > 0) {
-            subRule = RULE_26_4 + ", " + RULE_50_2;
-            minval = FRONTYARDMINIMUM_DISTANCE_1_8;
-            meanval = THREE;
-        } else {
-            subRule = RULE_26_4;
-            minval = FRONTYARDMINIMUM_DISTANCE_1_2;
-            meanval = FRONTYARDMEAN_DISTANCE_1_8;
-        }
+        BigDecimal minval = FRONTYARDMINIMUM_DISTANCE_3;
+        BigDecimal meanval = FRONTYARDMINIMUM_DISTANCE_3;
 
         if (buildingHeight.compareTo(BigDecimal.TEN) > 0) {
             BigDecimal minValue = (BigDecimal.valueOf(VALUE_0_5)
@@ -726,6 +733,107 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
         }
         return valid;
     }
+    
+    private Boolean processFrontYardMoreThanTenForOccupanciesOtherThanA1A2F(Plan pl, Building building, String blockName,
+            Integer level, Plot plot, String frontYardFieldName,
+            String subRuleDesc, BigDecimal min, BigDecimal mean, OccupancyTypeHelper mostRestrictiveOccupancy,
+            BigDecimal distanceIncrementBasedOnHeight,
+			Boolean checkMinimum5mtsCondition, FrontYardResult frontYardResult) {
+		String subRule = RULE_26_4;
+		String rule = FRONT_YARD_DESC;
+		BigDecimal minVal = BigDecimal.valueOf(0);
+		BigDecimal meanVal = BigDecimal.valueOf(0);
+		Boolean valid = false;
+		if (mostRestrictiveOccupancy.getType().getCode().equals(B1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(B2)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(B3)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(C)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(C1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(C2)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(C3)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(E)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(E1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(E2)) {
+			if (building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(BUILDUPAREA_500)) > 0) {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_6);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_6);
+			} else if (building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(BUILDUPAREA_200)) > 0
+					&& building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(BUILDUPAREA_500)) <= 0) {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_5);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_5);
+			} else {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_3);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_3);
+			}
+
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(H)) {
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_6);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_6);
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(D)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(D2)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(D1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(D3)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(D4)) {
+			if (building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(FLOORAREA_800)) > 0) {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_10_5);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_10_5);
+
+			} else if (building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(FLOORAREA_500)) > 0
+					&& building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(FLOORAREA_800)) <= 0) {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_7_5);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_7_5);
+			} else if (building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(FLOORAREA_200)) > 0
+					&& building.getTotalBuitUpArea().compareTo(BigDecimal.valueOf(FLOORAREA_500)) <= 0) {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_6);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_6);
+			} else {
+				minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_3);
+				meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_3);
+			}
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(G1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(G4)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(G5)) {
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_3);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_3);
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(G2)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(G3)) {
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_5);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_5);
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(I)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(I3)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(I4)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(I5)) {
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_7_5);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_7_5);
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(I1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(I2)) {
+			subRule = SUB_RULE_47_3;
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_1);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_1);
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(I6)) {
+			subRule = SUB_RULE_47_2;
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_3);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMINIMUM_DISTANCE_3);
+		} else if (mostRestrictiveOccupancy.getType().getCode().equals(J)) {
+			minVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_10_5);
+			meanVal = distanceIncrementBasedOnHeight.add(FRONTYARDMEAN_DISTANCE_10_5);
+		}
+
+		if (checkMinimum5mtsCondition) { // TODO: VALIDATE THIS CONDITION
+			minVal = minVal.compareTo(FIVE) <= 0 ? FIVE : minVal;
+			meanVal = meanVal.compareTo(FIVE) <= 0 ? FIVE : meanVal;
+		}
+
+		valid = validateMinimumAndMeanValue(valid, min, mean, minVal, meanVal);// TODO: VALIDATE THIS CONDITION
+		if (-1 == level) {
+			rule = BSMT_FRONT_YARD_DESC;
+			subRuleDesc = SUB_RULE_26_11_DESCRIPTION;
+		}
+
+		compareFrontYardResult(blockName, min, mean, mostRestrictiveOccupancy, frontYardResult, valid, subRule, rule,
+				minVal, meanVal, level);
+		return valid;
+	}
 
     @Override
     public Map<String, Date> getAmendments() {
