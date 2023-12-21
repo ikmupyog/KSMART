@@ -106,7 +106,7 @@ public class FireStair extends FeatureProcess {
 	private static final String WIDTH_DESCRIPTION = "Minimum width for fire stair %s";
 	private static final String TREAD_DESCRIPTION = "Minimum tread for fire stair %s";
 	private static final String HEIGHT_FLOOR_DESCRIPTION = "Height of floor in layer ";
-	private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "Flight polyline is not defined in layer ";
+	private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "Firestair steps are not defined in layer ";
 	private static final String LANDING_NOT_DEFINED_DESCRIPTION = "Landing polyline is not defined in layer ";
 	private static final String LANDING_DESCRIPTION = "Minimum width for fire stair landing %s";
 	private static final String FLIGHT_MAX_ALLOWED_STEPS = "Maximum Number of risers allowed flight of stairs;";

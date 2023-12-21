@@ -39,7 +39,7 @@ public class GeneralStair extends FeatureProcess {
     private static final String TREAD_DESCRIPTION = "Minimum tread for general stair %s";
     private static final String HEIGHT_FLOOR_DESCRIPTION = "Height of floor in layer ";
     private static final String FLOOR = "Floor";
-    private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "Flight polyline is not defined in layer ";
+    private static final String FLIGHT_POLYLINE_NOT_DEFINED_DESCRIPTION = "General Stair steps are not defined in layer ";
     private static final String FLIGHT_WIDTH_DEFINED_DESCRIPTION = "General stair is not defined in layer ";
     private static final String RISER_DESCRIPTION = "Maximum Height of Riser";
     private static final String RULE35_1_5 = "39(1)(5)";
