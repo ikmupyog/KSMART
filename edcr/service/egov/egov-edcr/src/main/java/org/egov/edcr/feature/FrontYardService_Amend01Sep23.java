@@ -74,19 +74,13 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
     private static final double VALUE_0_5 = 0.5; 
     private static final String SUB_RULE_26_4_TABLE_4_4A = "26(4)Table-4 AND 4A";
 
-    private static final String SUB_RULE_26_10 = "26(10)";
     private static final String SUB_RULE_26_11 = "26(11)";
     private static final String RULE_26_4 = "26(4)Table-4";
     private static final String RULE_26_4A = "26(4)Table-4A";
     private static final String RULE_PRO1 = "Proviso 1";
-    private static final String RULE_PRO2 = "Proviso 2";
-    private static final String RULE_PRO5 = "Proviso 5";
     private static final String RULE_50_2 = "50(2)";
     private static final String SUB_RULE_47_3 = "47(3)";
     private static final String SUB_RULE_47_2 = "47(2) Proviso 1";
-    private static final BigDecimal THREEHUNDRED = BigDecimal.valueOf(300);
-    private static final BigDecimal TWOHUNDRED = BigDecimal.valueOf(200);
-    private static final BigDecimal THOUSAND = BigDecimal.valueOf(1000);
 
 
     private static final String SUB_RULE_26_11_DESCRIPTION = "Basement front yard distance";
@@ -121,7 +115,6 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
 
     private static final int FLOORAREA_800 = 800;
     private static final int FLOORAREA_500 = 500;
-    private static final int FLOORAREA_300 = 300;
     private static final int FLOORAREA_200 = 200;
 
 
@@ -584,7 +577,9 @@ public class FrontYardService_Amend01Sep23 extends GeneralRule {
                 mostRestrictiveOccupancy.getType().getCode().equals(C1) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(C2) ||
                 mostRestrictiveOccupancy.getType().getCode().equals(C3) ||
-                mostRestrictiveOccupancy.getType().getCode().equals(E)) {
+				mostRestrictiveOccupancy.getType().getCode().equals(E)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(E1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(E2)) {
 
         	    subRule = SUB_RULE_26_4_TABLE_4_4A;
 

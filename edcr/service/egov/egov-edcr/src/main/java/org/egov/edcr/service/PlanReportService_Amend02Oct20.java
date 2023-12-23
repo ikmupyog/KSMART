@@ -853,11 +853,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             	 
                 AbstractColumn blocks = ColumnBuilder.getNew()
                         .setColumnProperty("blockNo", String.class.getName()).setTitle("BLOCKS")
-                        .setWidth(120).setStyle(reportService.getNewReportDetailStyle()).build();
+                        .setWidth(200).setStyle(reportService.getNewReportDetailStyle()).build();
                 
                 AbstractColumn units = ColumnBuilder.getNew()
                         .setColumnProperty("totalUnits", BigDecimal.class.getName())
-                        .setTitle("TOTAL UNITS (NUMBERS)").setWidth(210)
+                        .setTitle("TOTAL UNITS (NUMBERS)").setWidth(340)
                         .setStyle(reportService.getNewReportDetailStyle())
                         .build();
 
@@ -1242,17 +1242,16 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 ScrutinyDetail rear = null;
                 ScrutinyDetail side = null;
             	if (existingBlockDetails != null && !existingBlockDetails.isEmpty()) {
-                    for (DcrReportBlockDetail existingBlockDetail : existingBlockDetails) {
-                    	 if(existingBlockDetail.getBlockNo().equals(blkName))
-                    			 {
-                        blockDetails.add(existingBlockDetail);
-                     
-                        drb.addConcatenatedReport(getBlkDetails(existingBlockDetail, false));
-                        valuesMap.put("Existing Block No " + existingBlockDetail.getBlockNo(),
-                                existingBlockDetail.getDcrReportFloorDetails());
-                       
-                    			 }
-                    }
+					for (DcrReportBlockDetail existingBlockDetail : existingBlockDetails) {
+						if (existingBlockDetail.getBlockNo().equals(blkName)) {
+							blockDetails.add(existingBlockDetail);
+
+							drb.addConcatenatedReport(getBlkDetails(existingBlockDetail, false));
+							valuesMap.put("Existing Block No " + existingBlockDetail.getBlockNo(),
+									existingBlockDetail.getDcrReportFloorDetails());
+
+						}
+					}
                    
                 }
              	if (regularizationBlockDetails != null && !regularizationBlockDetails.isEmpty()) {

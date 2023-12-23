@@ -227,8 +227,10 @@ public class Parking extends FeatureProcess {
 				BigDecimal floorCount = blk.getBuilding().getFloorsAboveGround();
 				BigDecimal bldgHht = blk.getBuilding().getBuildingHeight();
 				if (!occupancies.isEmpty()) {
-					if (occupancies.size() == 1 && occupancies.containsKey(A1)
-							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
+					if (occupancies.size() == 1 && occupancies.containsKey(A1) || occupancies.containsKey(A5)) {
+						exempted = true;
+					} else if (occupancies.size() == 1 && occupancies.containsKey(A4)
+							&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
 									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
 									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
 						exempted = true;
@@ -237,11 +239,7 @@ public class Parking extends FeatureProcess {
 									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
 									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
 						exempted = true;
-					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5))
-							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
-									&& occupancies.get(A5).compareTo(BigDecimal.valueOf(200)) <= 0
-									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
-									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
+					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5))) {
 						exempted = true;
 					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(F))
 							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
