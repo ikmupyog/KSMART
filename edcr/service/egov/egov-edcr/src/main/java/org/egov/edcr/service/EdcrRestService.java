@@ -383,8 +383,10 @@ public class EdcrRestService {
         }
         ApplicationType applicationType = edcrApplnDtl.getApplication().getApplicationType();
         if (applicationType != null) {
-            if (ApplicationType.PERMIT.getApplicationTypeVal()
-                    .equalsIgnoreCase(edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())) {
+			if (ApplicationType.PERMIT.getApplicationTypeVal()
+					.equalsIgnoreCase(edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())
+					|| ApplicationType.SELF_CERTIFIED_PERMIT.getApplicationTypeVal().equalsIgnoreCase(
+							edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())) {
                 edcrDetail.setAppliactionType("BUILDING_PLAN_SCRUTINY");
             } else if (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
                     .equalsIgnoreCase(edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())) {

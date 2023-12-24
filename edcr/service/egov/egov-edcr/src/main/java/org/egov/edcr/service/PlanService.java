@@ -9,13 +9,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -24,11 +27,13 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.EdcrPdfDetail;
+import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.PlanFeature;
 import org.egov.common.entity.edcr.PlanInformation;
-import org.egov.edcr.constants.DxfFileConstants;
+import static org.egov.edcr.constants.DxfFileConstants.*;
 import org.egov.edcr.contract.ComparisonRequest;
 import org.egov.edcr.contract.EdcrRequest;
 import org.egov.edcr.entity.Amendment;
@@ -98,12 +103,15 @@ public class PlanService {
         	plan = applyRules(plan, amd, cityDetails);
 
         String comparisonDcrNumber = dcrApplication.getEdcrApplicationDetails().get(0).getComparisonDcrNumber();
+        checkLowiskBuildingPermit(plan, dcrApplication);
 		if (ApplicationType.PERMIT.getApplicationTypeVal()
 				.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
 				|| (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
 						.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
 						&& StringUtils.isBlank(comparisonDcrNumber))
 				|| ApplicationType.KNOW_YOUR_BUILDING_RULES.getApplicationTypeVal()
+						.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())
+				|| ApplicationType.SELF_CERTIFIED_PERMIT.getApplicationTypeVal()
 						.equalsIgnoreCase(dcrApplication.getApplicationType().getApplicationType())) {
 			InputStream reportStream = generateReport(plan, amd, dcrApplication);
 			saveOutputReport(dcrApplication, reportStream, plan);
@@ -254,7 +262,7 @@ public class PlanService {
             }
 
             if (plan.getErrors().containsKey("msg.error.occ.invalid")
-                    || plan.getErrors().containsKey("units not in meters") || plan.getErrors().containsKey(DxfFileConstants.OCCUPANCY_ALLOWED))
+                    || plan.getErrors().containsKey("units not in meters") || plan.getErrors().containsKey(OCCUPANCY_ALLOWED))
                 return plan;
         }
         LOG.info("Applied rules.");
@@ -409,7 +417,7 @@ public class PlanService {
         if (StringUtils.isNotBlank(edcrRequest.getApplicantName()))
             plan.getPlanInformation().setApplicantName(edcrRequest.getApplicantName());
         else
-            plan.getPlanInformation().setApplicantName(DxfFileConstants.ANONYMOUS_APPLICANT);
+            plan.getPlanInformation().setApplicantName(ANONYMOUS_APPLICANT);
 
         return plan;
     }
@@ -453,4 +461,30 @@ public class PlanService {
             LOG.error("error", e);
         }
     }
+    
+	private void checkLowiskBuildingPermit(Plan pl, EdcrApplication dcrApplication) {
+		if (!pl.getOccupancies().isEmpty() && pl.getOccupancies().size() == 1) {
+			BigDecimal builtupArea = pl.getOccupancies().stream().map(Occupancy::getBuiltUpArea).reduce(BigDecimal.ZERO,
+					BigDecimal::add);
+			Map<String, BigDecimal> bldgHieghts = new HashMap<>();
+			for (Block blk : pl.getBlocks())
+				bldgHieghts.put(blk.getNumber(), blk.getBuilding().getBuildingHeight());
+			BigDecimal buildingHeight = pl.getBlocks().get(0).getBuilding().getBuildingHeight();
+			BigDecimal floorCount = pl.getVirtualBuilding().getFloorsAboveGround();
+			String occupCode = pl.getOccupancies().get(0).getTypeHelper().getType().getCode();
+			if ((occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))
+					&& builtupArea.compareTo(BigDecimal.valueOf(300)) <= 0
+					&& buildingHeight.compareTo(BigDecimal.valueOf(7)) <= 0
+					&& floorCount.compareTo(BigDecimal.valueOf(2)) <= 0) {
+				dcrApplication.setApplicationType(ApplicationType.SELF_CERTIFIED_PERMIT);
+			} else if ((occupCode.equals(A2) || occupCode.equals(B1) || occupCode.equals(B2) || occupCode.equals(B3)
+					|| occupCode.equals(D) || occupCode.equals(D1))
+					&& builtupArea.compareTo(BigDecimal.valueOf(200)) <= 0) {
+				dcrApplication.setApplicationType(ApplicationType.SELF_CERTIFIED_PERMIT);
+			} else if ((occupCode.equals(F) || occupCode.equals(G5))
+					&& builtupArea.compareTo(BigDecimal.valueOf(100)) <= 0) {
+				dcrApplication.setApplicationType(ApplicationType.SELF_CERTIFIED_PERMIT);
+			}
+		}
+	}
 }

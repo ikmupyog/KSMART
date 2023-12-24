@@ -1444,6 +1444,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 .append("\\n");
         reportBuilder.append("Rules Verified : ").append("\\n");
         valuesMap.put("reportStatus", (finalReportStatus ? "Accepted" : "Not Accepted"));
+        valuesMap.put("applicationType", dcrApplication.getApplicationType().getApplicationTypeVal());
         drb.setTemplateFile("/reports/templates/edcr_report.jrxml");
         drb.setMargins(5, 0, 33, 20);
         if (ApplicationType.OCCUPANCY_CERTIFICATE.equals(dcrApplication.getApplicationType())) {
@@ -1465,7 +1466,6 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             valuesMap.put("qrCode", generatePDF417Code(buildQRCodeDetails(dcrApplication, finalReportStatus)));
         }*/
         LOG.info("Generating QR Code completed");
-        valuesMap.put("applicationType", dcrApplication.getApplicationType().getApplicationTypeVal());
        // Map<String, String> serviceTypeList = DxfFileConstants.getServiceTypeList();
         Map<String, String> serviceTypeList = new ConcurrentHashMap<>();
         serviceTypeList.put("NEW_CONSTRUCTION", "New Construction");
