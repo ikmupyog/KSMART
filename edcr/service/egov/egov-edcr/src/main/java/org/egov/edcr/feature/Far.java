@@ -174,6 +174,7 @@ public class Far extends FeatureProcess {
 		BigDecimal totalExistingFloorArea = BigDecimal.ZERO;
 		BigDecimal totalBuiltUpArea = BigDecimal.ZERO;
 		BigDecimal totalFloorArea = BigDecimal.ZERO;
+		BigDecimal totalRegularizationFloorArea = BigDecimal.ZERO;
 		Set<OccupancyTypeHelper> distinctOccupancyTypesHelper = new HashSet<>();
 		for (Block blk : pl.getBlocks()) {
 			BigDecimal flrArea = BigDecimal.ZERO;
@@ -181,6 +182,7 @@ public class Far extends FeatureProcess {
 			BigDecimal existingFlrArea = BigDecimal.ZERO;
 			BigDecimal existingBltUpArea = BigDecimal.ZERO;
 			BigDecimal regularizationBltUpArea = BigDecimal.ZERO;
+			BigDecimal regularizationFloorArea = BigDecimal.ZERO;
 			Building building = blk.getBuilding();
 			for (Floor flr : building.getFloors()) {
 				for (Occupancy occupancy : flr.getOccupancies()) {
@@ -202,13 +204,14 @@ public class Far extends FeatureProcess {
 					
 					regularizationBltUpArea=regularizationBltUpArea.add(occupancy.getRegularizationBuiltUpArea() == null ? BigDecimal.valueOf(0)
 							: occupancy.getRegularizationBuiltUpArea());
+					regularizationFloorArea = regularizationFloorArea.add(occupancy.getRegularizationBuiltUpArea().subtract(occupancy.getRegularizationAreaDeduction()));
 				}
 			}
 			building.setTotalFloorArea(flrArea);
 			building.setTotalBuitUpArea(bltUpArea);
 			building.setTotalExistingBuiltUpArea(existingBltUpArea);
 			building.setRegularizationgBuiltUpArea(regularizationBltUpArea);
-
+			building.setRegularizationgFloorArea(regularizationFloorArea);
 			building.setTotalExistingFloorArea(existingFlrArea);
 
 			// check block is completely existing building or not.
@@ -220,6 +223,7 @@ public class Far extends FeatureProcess {
 			totalExistingBuiltUpArea = totalExistingBuiltUpArea.add(existingBltUpArea);
 			totalRegularizationBuiltUpArea=totalRegularizationBuiltUpArea.add(regularizationBltUpArea);
 			totalExistingFloorArea = totalExistingFloorArea.add(existingFlrArea);
+			totalRegularizationFloorArea = totalRegularizationFloorArea.add(regularizationFloorArea);
 			// totalCarpetArea = totalCarpetArea.add(carpetArea);
 			// totalExistingCarpetArea = totalExistingCarpetArea.add(existingCarpetArea);
 
@@ -604,6 +608,7 @@ public class Far extends FeatureProcess {
 		pl.getVirtualBuilding().setTotalCarpetArea(getCarpetArea(totalFloorArea));
 		pl.getVirtualBuilding().setTotalExistingBuiltUpArea(totalExistingBuiltUpArea);
 		pl.getVirtualBuilding().setTotalRegularizationBuiltUpArea(totalRegularizationBuiltUpArea);
+		pl.getVirtualBuilding().setTotalRegularizationFloorArea(totalRegularizationFloorArea);
 		pl.getVirtualBuilding().setTotalExistingFloorArea(totalExistingFloorArea);
 		pl.getVirtualBuilding().setTotalExistingCarpetArea(getCarpetArea(totalExistingFloorArea));
 		pl.getVirtualBuilding().setOccupancyTypes(distinctOccupancyTypesHelper);

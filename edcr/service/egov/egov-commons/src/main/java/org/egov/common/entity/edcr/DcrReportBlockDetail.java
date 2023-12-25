@@ -78,9 +78,7 @@ public class DcrReportBlockDetail {
 
 	private BigDecimal totalFloorArea=BigDecimal.ZERO;;
 
-	private BigDecimal totalCoveredArea=BigDecimal.ZERO;;
-	private BigDecimal totalRegularizionArea=BigDecimal.ZERO;;
-
+	private BigDecimal totalCoveredArea=BigDecimal.ZERO;
 	
 	// Occupancy, unitDesc, unitCount
 	private Map<String, Map<String, Integer>> units = new ConcurrentHashMap<>();
@@ -199,15 +197,4 @@ public class DcrReportBlockDetail {
 	public void setTotalCoveredArea(BigDecimal totalCoveredArea) {
 		this.totalCoveredArea = totalCoveredArea;
 	}
-
-	public BigDecimal getTotalRegularizionArea() {
-		return totalRegularizionArea;
-	}
-
-	public void setTotalRegularizionArea(BigDecimal totalRegularizionArea) {
-		this.totalRegularizionArea = totalRegularizionArea;
-	}
-
-	
-    
 }

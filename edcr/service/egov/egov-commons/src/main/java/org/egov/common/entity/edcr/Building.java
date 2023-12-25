@@ -102,6 +102,7 @@ public class Building extends Measurement {
 
     private BigDecimal totalExistingBuiltUpArea;
     private BigDecimal regularizationgBuiltUpArea= BigDecimal.ZERO;
+    private BigDecimal regularizationgFloorArea= BigDecimal.ZERO;
 
     private OccupancyType mostRestrictiveOccupancy;
     private OccupancyType mostRestrictiveOccupancyType;
@@ -412,6 +413,14 @@ public class Building extends Measurement {
 
 	public void setRegularizationgBuiltUpArea(BigDecimal regularizationgBuiltUpArea) {
 		this.regularizationgBuiltUpArea = regularizationgBuiltUpArea;
+	}
+
+	public BigDecimal getRegularizationgFloorArea() {
+		return regularizationgFloorArea;
+	}
+
+	public void setRegularizationgFloorArea(BigDecimal regularizationgFloorArea) {
+		this.regularizationgFloorArea = regularizationgFloorArea;
 	}
 
 }

@@ -88,7 +88,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class PlanReportService_Amend02Oct20 extends PlanReportService {
 	
-    private static final Logger LOG = LogManager.getLogger(PlanReportService_Amend02Oct20.class);
+    private static final String REGULARIZATION_AREA_DETAILS = "Regularization Area Details";
+
+	private static final Logger LOG = LogManager.getLogger(PlanReportService_Amend02Oct20.class);
 
     private static final String TOTAL = "Total";
     private static final String DESCRIPTION = "DESCRIPTION";
@@ -194,7 +196,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
     }
 
-    private Subreport getBlkDetails(DcrReportBlockDetail dcrReportBlockDetail, boolean isProposed) {
+    private Subreport getBlkDetails(DcrReportBlockDetail dcrReportBlockDetail, boolean isProposed, boolean isRegularized) {
         try {
 
             FastReportBuilder frb = new FastReportBuilder();
@@ -237,9 +239,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.addColumn(parkingDetail);
 
 			if (isProposed)
-				frb.setTitle("2) PROPOSED AREA AND OCCUPANCY");
-			else
-				frb.setTitle("2) EXISTING AREA AND OCCUPANCY");
+				frb.setTitle("PROPOSED AREA AND OCCUPANCY");
+			else if (isRegularized)
+				frb.setTitle("REGULARIZATION AREA AND OCCUPANCY");
+			else if(!isRegularized && !isProposed)
+				frb.setTitle("EXISTING AREA AND OCCUPANCY");
             frb.setTitleStyle(reportService.getTitleStyle());
            /* frb.setHeaderHeight(5);
             frb.setTopMargin(10);
@@ -262,6 +266,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             sub.setStyle(style);
             if (isProposed) {
                 sub.setDatasource(new DJDataSource("Block No " + dcrReportBlockDetail.getBlockNo(),
+                        DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+            } if(isRegularized) {
+            	sub.setDatasource(new DJDataSource("Regularization Block No " + dcrReportBlockDetail.getBlockNo(),
                         DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
             } else
                 sub.setDatasource(new DJDataSource("Existing Block No " + dcrReportBlockDetail.getBlockNo(),
@@ -451,7 +458,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
             frb.addColumn(colored);
             frb.addColumn(rest);
-            frb.addSubreportInGroup("rest", 1, getBlkDetails(dcrReportBlockDetail,isProposed).getDynamicReport(), new ClassicLayoutManager(),
+            frb.addSubreportInGroup("rest", 1, getBlkDetails(dcrReportBlockDetail,isProposed, false).getDynamicReport(), new ClassicLayoutManager(),
             		"block details", DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0, null, false, true);
 
             frb.setTitleStyle(reportService.getTitleStyle());
@@ -562,34 +569,17 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         return null;
     }
     
-      
-    private Subreport getRegularizationArea(VirtualBuildingReport virtualBuildingReport, boolean isExistingBuildingPresent) {
+    private Subreport getRegularizationArea(String dataSource, String title) {
         try {
 
             FastReportBuilder frb = new FastReportBuilder();
 
-            if (virtualBuildingReport.getTotalConstructedArea() != null
-                    && virtualBuildingReport.getTotalConstructedArea().compareTo(BigDecimal.ZERO) > 0) {
-            	
-            	 AbstractColumn blocks = ColumnBuilder.getNew()
-                         .setColumnProperty("blockNo", String.class.getName()).setTitle("BLOCKS")
-                         .setWidth(120).setStyle(reportService.getNewReportDetailStyle()).build();
-                AbstractColumn builtUpArea = ColumnBuilder.getNew()
-                        .setColumnProperty("totalBuiltUpArea", BigDecimal.class.getName()).setTitle("BUILT UP AREA (Sq M)")
-                        .setWidth(210).setStyle(reportService.getNewReportDetailStyle()).build();
-                
-                AbstractColumn floorArea = ColumnBuilder.getNew()
-                        .setColumnProperty("totalFloorArea", BigDecimal.class.getName())
-                        .setTitle("FLOOR AREA (Sq M)").setWidth(210)
-                        .setStyle(reportService.getNewReportDetailStyle())
-                        .build();
-
-              
-                frb.addColumn(blocks);
-                frb.addColumn(builtUpArea);
-                frb.addColumn(floorArea);
-                
-            } else {
+             {
+            	 
+            	/* AbstractColumn emptyRow = ColumnBuilder.getNew().setWidth(120)
+                         .setColumnProperty("empty", String.class.getName())  .setWidth(120).build(); */
+                         
+                        
                 AbstractColumn blocks = ColumnBuilder.getNew()
                         .setColumnProperty("blockNo", String.class.getName()).setTitle("BLOCKS")
                         .setWidth(120).setStyle(reportService.getNewReportDetailStyle()).build();
@@ -603,25 +593,24 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 AbstractColumn floorArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalFloorArea", BigDecimal.class.getName()).setTitle("FLOOR AREA (Sq M)")
                         .setWidth(210).setStyle(reportService.getNewReportDetailStyle()).build();
-
+                //frb.addColumn(emptyRow);
                 frb.addColumn(blocks);
                 frb.addColumn(builtupArea);
                 frb.addColumn(floorArea);
             }
 
-            if(isExistingBuildingPresent)
-             	frb.setTitle("2-4) REGULARIZATION AREA");
-             else
-             	frb.setTitle("2-3) REGULARIZATION AREA");
-            
-            frb.setTitleStyle(reportService.getNewReportTitleStyle());
-            //frb.setHeaderHeight(5);
-           // frb.setTopMargin(5);
+            frb.setTitle(title);
+            frb.setTitleStyle(reportService.getNewReportSubTitleStyle());
            
-            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
-                    reportService.getColumnHeaderStyle(), reportService.getDetailStyle());
-            frb.setAllowDetailSplit(false);
+           // frb.setSubtitleHeight(5);
+          
+           // frb.setHeaderHeight(5);
+           // frb.setTopMargin(5);
+           // frb.setLeftMargin(120);
             frb.setMargins(0, 0, 0, 0);
+            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
+                    reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
+            frb.setAllowDetailSplit(false);
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
             frb.setGrandTotalLegend(TOTAL);
             frb.setGrandTotalLegendStyle(reportService.getNumberStyle());
@@ -633,7 +622,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             style.setStreching(RELATIVE_TO_BAND_HEIGHT);
             sub.setStyle(style);
 
-            sub.setDatasource(new DJDataSource("Regularization Area Details", DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+            sub.setDatasource(new DJDataSource(dataSource, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
 
             sub.setLayoutManager(new ClassicLayoutManager());
             return sub;
@@ -642,7 +631,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         }
         return null;
     }
-
+    
     private Subreport getExistingArea(VirtualBuildingReport virtualBuildingReport) {
         try {
 
@@ -785,7 +774,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         return null;
     }
    
-    private Subreport createCoveredArea(String dataSource, boolean isExistingBuildingPresent) {
+    private Subreport createCoveredArea(String dataSource, String coveredTitle) {
         try {
 
             FastReportBuilder frb = new FastReportBuilder();
@@ -806,10 +795,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
             }
 
-             if(isExistingBuildingPresent)
-             	frb.setTitle("2-3) COVERED AREA");
-             else
-             	frb.setTitle("2-2) COVERED AREA");
+            frb.setTitle(coveredTitle);
             frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
             frb.setHeaderHeight(5);
             //frb.setTopMargin(5);
@@ -1056,10 +1042,12 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
         if (plan.getErrors() != null && plan.getErrors().size() > 0) {
             int i = 1;
+            int length = plan.getErrors().entrySet().size();
             for (Map.Entry<String, String> entry : plan.getErrors().entrySet()) {
                 errors.append(String.valueOf(i)).append(". ");
                 errors.append(entry.getValue());
-                errors.append("\n");
+                if(length != i)
+                	errors.append("\n");
                 i++;
                 finalReportStatus = false;
             }
@@ -1131,15 +1119,15 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
         if (clientSpecificSubReport) {
 
+        	VirtualBuildingReport virtualBuildingReport = buildVirtualBuilding(plan.getVirtualBuilding());
             List<DcrReportBlockDetail> blockDetails = new ArrayList<>();
 
             List<DcrReportBlockDetail> existingBlockDetails = buildBlockWiseExistingInfo(plan);
-            List<DcrReportBlockDetail> regularizationBlockDetails = buildBlockWiseRegularizationInfo(plan);
+            List<DcrReportBlockDetail> regularizationBlockDetails = buildBlockWiseRegularizationInfo(plan, virtualBuildingReport);
 
             List<DcrReportBlockDetail> proposedBlockDetails = buildBlockWiseProposedInfo(plan);
             List<ReportOccupancyFloorUnit> plotFloorUnits = buildUnitsOfPlot(proposedBlockDetails);
             
-            VirtualBuildingReport virtualBuildingReport = buildVirtualBuilding(plan.getVirtualBuilding());
             
            /* List<String> generalDetails = new ArrayList<>();
             generalDetails.add(GENERAL_DETAILS);
@@ -1156,29 +1144,48 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             valuesMap.put(COMBINED_BLOCKS_SUMMARY_DETAILS, combinedSummary);
 
             // Add total area details
-            
-            drb.addConcatenatedReport(getExistingArea(virtualBuildingReport));
-            valuesMap.put("Existing Area Details", existingBlockDetails);   
-
             boolean isExistingBuildingPresent = false;
             if(virtualBuildingReport.getTotalExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0)
             	isExistingBuildingPresent = true;
-            drb.addConcatenatedReport(getProposedArea("Proposed Area Details", isExistingBuildingPresent));
-            valuesMap.put("Proposed Area Details", proposedBlockDetails);
             
-            List<DcrReportBlockDetail> coveredAreas = new ArrayList<>();
+			if (isExistingBuildingPresent) {
+				drb.addConcatenatedReport(getExistingArea(virtualBuildingReport));
+				valuesMap.put("Existing Area Details", existingBlockDetails);
+			}
+
             BigDecimal proposedBuiltupArea = proposedBlockDetails.stream().map(pbd -> pbd.getTotalBuiltUpArea()).reduce(BigDecimal.ZERO, BigDecimal::add);
+			if (proposedBuiltupArea.compareTo(BigDecimal.ZERO) > 0) {
+				drb.addConcatenatedReport(getProposedArea("Proposed Area Details", isExistingBuildingPresent));
+				valuesMap.put("Proposed Area Details", proposedBlockDetails);
+			}
+            
+			if (virtualBuildingReport.getTotalRegularizationBuiltupArea().compareTo(BigDecimal.ZERO) > 0) {
+				String title = proposedBuiltupArea.compareTo(BigDecimal.ZERO) > 0 && isExistingBuildingPresent ? "2-3) REGULARIZATION AREA" : "2-2) REGULARIZATION AREA" ;
+				drb.addConcatenatedReport(
+						getRegularizationArea(REGULARIZATION_AREA_DETAILS, title));
+				valuesMap.put(REGULARIZATION_AREA_DETAILS, regularizationBlockDetails);
+			}
+			
+            List<DcrReportBlockDetail> coveredAreas = new ArrayList<>();
             if(proposedBuiltupArea.compareTo(BigDecimal.ZERO) > 0)
             	coveredAreas.addAll(proposedBlockDetails);
+            if(virtualBuildingReport.getTotalRegularizationBuiltupArea().compareTo(BigDecimal.ZERO) > 0)
+            	coveredAreas.addAll(regularizationBlockDetails);
             BigDecimal totalCoveredArea = existingBlockDetails.stream().map(pbd -> pbd.getTotalCoveredArea()).reduce(BigDecimal.ZERO, BigDecimal::add);
             if(totalCoveredArea.compareTo(BigDecimal.ZERO) > 0)
             	coveredAreas.addAll(existingBlockDetails);
-            drb.addConcatenatedReport(createCoveredArea("Covered Area Details", isExistingBuildingPresent));
+            String coveredTitle;
+            if(virtualBuildingReport.getTotalRegularizationBuiltupArea().compareTo(BigDecimal.ZERO) > 0 && isExistingBuildingPresent && proposedBuiltupArea.compareTo(BigDecimal.ZERO) > 0)
+            	coveredTitle = "2-4) COVERED AREA";
+			else if (isExistingBuildingPresent
+					&& (virtualBuildingReport.getTotalRegularizationBuiltupArea().compareTo(BigDecimal.ZERO) > 0
+							|| proposedBuiltupArea.compareTo(BigDecimal.ZERO) > 0))
+            	coveredTitle = "2-3) COVERED AREA";
+            else
+            	coveredTitle = "2-2) COVERED AREA";
+            drb.addConcatenatedReport(createCoveredArea("Covered Area Details", coveredTitle));
             valuesMap.put("Covered Area Details", coveredAreas);
           
-            drb.addConcatenatedReport(getRegularizationArea(virtualBuildingReport,isExistingBuildingPresent));
-            valuesMap.put("Regularization Area Details", regularizationBlockDetails);   
-            
 			if (plan.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) > 0) {
 				drb.addConcatenatedReport(getUnits("Total Units", isExistingBuildingPresent));
 				valuesMap.put("Total Units", proposedBlockDetails);
@@ -1297,52 +1304,44 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 ScrutinyDetail front = null;
                 ScrutinyDetail rear = null;
                 ScrutinyDetail side = null;
-            	if (existingBlockDetails != null && !existingBlockDetails.isEmpty()) {
+				if (existingBlockDetails != null && !existingBlockDetails.isEmpty()) {
 					for (DcrReportBlockDetail existingBlockDetail : existingBlockDetails) {
-						if (existingBlockDetail.getBlockNo().equals(blkName)) {
+						if (existingBlockDetail.getBlockNo().equals(blkName)
+								&& existingBlockDetail.getTotalBuiltUpArea().compareTo(BigDecimal.ZERO) > 0) {
 							blockDetails.add(existingBlockDetail);
-
-							drb.addConcatenatedReport(getBlkDetails(existingBlockDetail, false));
+							drb.addConcatenatedReport(getBlkDetails(existingBlockDetail, false, false));
 							valuesMap.put("Existing Block No " + existingBlockDetail.getBlockNo(),
 									existingBlockDetail.getDcrReportFloorDetails());
-
 						}
 					}
-                   
-                }
-             	if (regularizationBlockDetails != null && !regularizationBlockDetails.isEmpty()) {
-                    for (DcrReportBlockDetail regularizeBlockDetail : regularizationBlockDetails) {
-                    	 if(regularizeBlockDetail.getBlockNo().equals(blkName))
-                    			 {
-                        blockDetails.add(regularizeBlockDetail);
-                     
-                        drb.addConcatenatedReport(getBlkDetails(regularizeBlockDetail, false));
-                        valuesMap.put("Regularization Block No " + regularizeBlockDetail.getBlockNo(),
-                                regularizeBlockDetail.getDcrReportFloorDetails());
-
-						}
-					}
-
 				}
-            	
-            	if(proposedBlockDetails!=null && !proposedBlockDetails.isEmpty())
-            	{
-                	for (DcrReportBlockDetail dcrReportBlockDetail : proposedBlockDetails)
-                	{
-                		if(dcrReportBlockDetail.getBlockNo().equals(blkName))
-                		{
-                        blockDetails.add(dcrReportBlockDetail);
-                        drb.addConcatenatedReport(getBlkDetails(dcrReportBlockDetail, true));
-                        valuesMap.put("Block No " + dcrReportBlockDetail.getBlockNo(),
-                                dcrReportBlockDetail.getDcrReportFloorDetails());
-                                    
-                       }
-                    }
-            	}
+
+				if (proposedBlockDetails != null && !proposedBlockDetails.isEmpty()) {
+					for (DcrReportBlockDetail dcrReportBlockDetail : proposedBlockDetails) {
+						if (dcrReportBlockDetail.getBlockNo().equals(blkName)
+								&& dcrReportBlockDetail.getTotalBuiltUpArea().compareTo(BigDecimal.ZERO) > 0) {
+							blockDetails.add(dcrReportBlockDetail);
+							drb.addConcatenatedReport(getBlkDetails(dcrReportBlockDetail, true, false));
+							valuesMap.put("Block No " + dcrReportBlockDetail.getBlockNo(),
+									dcrReportBlockDetail.getDcrReportFloorDetails());
+						}
+					}
+				}
+
+				if (regularizationBlockDetails != null && !regularizationBlockDetails.isEmpty()) {
+					for (DcrReportBlockDetail regularizeBlockDetail : regularizationBlockDetails) {
+						if (regularizeBlockDetail.getBlockNo().equals(blkName)
+								&& regularizeBlockDetail.getTotalBuiltUpArea().compareTo(BigDecimal.ZERO) > 0) {
+							blockDetails.add(regularizeBlockDetail);
+
+							drb.addConcatenatedReport(getBlkDetails(regularizeBlockDetail, false, true));
+							valuesMap.put("Regularization Block No " + regularizeBlockDetail.getBlockNo(),
+									regularizeBlockDetail.getDcrReportFloorDetails());
+						}
+					}
+				}
 
                 for (String blkFeature : blocks.get(blkName)) {
-                	
-                
                 	
                     if (blkFeature.equals(FRONT_YARD_DESC) || blkFeature.equals(REAR_YARD_DESC)
                             || blkFeature.equals(SIDE_YARD_DESC)) {
@@ -1625,7 +1624,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                          .setWidth(40).setStyle(reportService.getNewReportDetailStyle()).build();
                 AbstractColumn declaration = ColumnBuilder.getNew()
                         .setColumnProperty("statement", String.class.getName()).setTitle("DECLARATION")
-                        .setWidth(400).setStyle(reportService.getNewReportDetailStyle()).build();
+                        .setWidth(400).setStyle(reportService.getDetailStyleWithLeftAlign()).build();
                 
                 AbstractColumn values = ColumnBuilder.getNew()
                         .setColumnProperty("value", String.class.getName())
@@ -1750,10 +1749,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     dcrReportBlockDetail.setCoverageArea(building.getCoverageArea());
                     dcrReportBlockDetail.setBuildingHeight(building.getBuildingHeight());
                     dcrReportBlockDetail.setConstructedArea(building.getTotalConstructedArea());
-                    dcrReportBlockDetail.setTotalBuiltUpArea(building.getTotalBuitUpArea().subtract(building.getTotalExistingBuiltUpArea()));
-                    dcrReportBlockDetail.setTotalFloorArea(building.getTotalFloorArea().subtract(building.getTotalExistingFloorArea()));
-                    dcrReportBlockDetail.setTotalRegularizionArea( dcrReportBlockDetail.getTotalRegularizionArea().add(building.getRegularizationgBuiltUpArea()));
-                    dcrReportBlockDetail.setTotalCoveredArea( dcrReportBlockDetail.getTotalCoveredArea().add(building.getCoverageArea()));
+                    dcrReportBlockDetail.setTotalBuiltUpArea(building.getTotalBuitUpArea().subtract(building.getTotalExistingBuiltUpArea()).subtract(building.getRegularizationgBuiltUpArea()));
+                    dcrReportBlockDetail.setTotalFloorArea(building.getTotalFloorArea().subtract(building.getTotalExistingFloorArea()).subtract(building.getRegularizationgFloorArea()));
+                    dcrReportBlockDetail.setTotalCoveredArea(dcrReportBlockDetail.getTotalCoveredArea().add(building.getCoverageArea()));
                     List<Floor> floors = building.getFloors();
 
                     if (!floors.isEmpty()) {
@@ -1859,7 +1857,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
     }
     
     
-    private List<DcrReportBlockDetail> buildBlockWiseRegularizationInfo(Plan plan)
+    private List<DcrReportBlockDetail> buildBlockWiseRegularizationInfo(Plan plan, VirtualBuildingReport virtualBuildingReport)
     {
         List<DcrReportBlockDetail> dcrReportBlockDetails = new ArrayList<>();
 
@@ -1876,8 +1874,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                     DcrReportBlockDetail dcrReportBlockDetail = new DcrReportBlockDetail();
                     dcrReportBlockDetail.setBlockNo(block.getNumber());
                     
-                    dcrReportBlockDetail.setTotalBuiltUpArea(dcrReportBlockDetail.getTotalRegularizionArea().add(building.getRegularizationgBuiltUpArea()));
-                    dcrReportBlockDetail.setTotalFloorArea(dcrReportBlockDetail.getTotalRegularizionArea().add(building.getRegularizationgBuiltUpArea()));
+                    dcrReportBlockDetail.setTotalBuiltUpArea(building.getRegularizationgBuiltUpArea());
+                    dcrReportBlockDetail.setTotalFloorArea(building.getRegularizationgFloorArea());
+                    if(virtualBuildingReport.getProposedBuitUpArea() != null && virtualBuildingReport.getProposedBuitUpArea().compareTo(BigDecimal.ZERO) == 0)
+                    	dcrReportBlockDetail.setTotalCoveredArea(dcrReportBlockDetail.getTotalCoveredArea().add(building.getCoverageArea()));
                     List<Floor> floors = building.getFloors();
 
                     if (!floors.isEmpty()) {
@@ -1903,7 +1903,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                                                 .setFloorNo(floor.getTerrace() ? "Terrace" : floor.getNumber().toString());
                                         dcrReportFloorDetail.setOccupancy(occupancyName);
                                         dcrReportFloorDetail.setBuiltUpArea(occupancy.getRegularizationBuiltUpArea());
-                                        dcrReportFloorDetail.setFloorArea(occupancy.getRegularizationBuiltUpArea());
+										dcrReportFloorDetail.setFloorArea(occupancy.getRegularizationBuiltUpArea()
+												.subtract(occupancy.getRegularizationAreaDeduction()));
                                         dcrReportFloorDetails.add(dcrReportFloorDetail);
                                     }
                                 }
@@ -2028,9 +2029,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         if (virtualBuilding != null) {
             if (virtualBuilding.getTotalExistingBuiltUpArea() != null) {
                 virtualBuildingReport.setProposedBuitUpArea(
-                        virtualBuilding.getTotalBuitUpArea().subtract(virtualBuilding.getTotalExistingBuiltUpArea()));
+                        virtualBuilding.getTotalBuitUpArea().subtract(virtualBuilding.getTotalExistingBuiltUpArea()).subtract(virtualBuilding.getTotalRegularizationBuiltUpArea()));
                 virtualBuildingReport.setProposedFloorArea(
-                        virtualBuilding.getTotalFloorArea().subtract(virtualBuilding.getTotalExistingFloorArea()));
+                        virtualBuilding.getTotalFloorArea().subtract(virtualBuilding.getTotalExistingFloorArea()).subtract(virtualBuilding.getTotalRegularizationFloorArea()));
                 virtualBuildingReport.setProposedCarpetArea(
                         virtualBuilding.getTotalCarpetArea().subtract(virtualBuilding.getTotalExistingCarpetArea()));
             }
@@ -2045,7 +2046,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             virtualBuildingReport.setTotalFloorArea(virtualBuilding.getTotalFloorArea());
             virtualBuildingReport.setTotalCarpetArea(virtualBuilding.getTotalCarpetArea());
 
-            virtualBuildingReport.setTotalConstructedArea(virtualBuilding.getTotalConstructedArea());
+            virtualBuildingReport.setTotalRegularizationBuiltupArea(virtualBuilding.getTotalRegularizationBuiltUpArea());
+            virtualBuildingReport.setTotalRegularizationFloorArea(virtualBuilding.getTotalRegularizationFloorArea());
         }
         return virtualBuildingReport;
     }

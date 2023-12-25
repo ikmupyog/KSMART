@@ -79,6 +79,10 @@ public class VirtualBuildingReport {
     
     private BigDecimal totalConstructedArea;
     
+    private BigDecimal totalRegularizationBuiltupArea;
+    
+    private BigDecimal totalRegularizationFloorArea;
+    
     public BigDecimal getProposedBuitUpArea() {
         return proposedBuitUpArea;
     }
@@ -190,5 +194,21 @@ public class VirtualBuildingReport {
     public void setTotalConstructedArea(BigDecimal totalConstructedArea) {
         this.totalConstructedArea = totalConstructedArea;
     }
+
+	public BigDecimal getTotalRegularizationBuiltupArea() {
+		return totalRegularizationBuiltupArea;
+	}
+
+	public void setTotalRegularizationBuiltupArea(BigDecimal totalRegularizationBuiltupArea) {
+		this.totalRegularizationBuiltupArea = totalRegularizationBuiltupArea;
+	}
+
+	public BigDecimal getTotalRegularizationFloorArea() {
+		return totalRegularizationFloorArea;
+	}
+
+	public void setTotalRegularizationFloorArea(BigDecimal totalRegularizationFloorArea) {
+		this.totalRegularizationFloorArea = totalRegularizationFloorArea;
+	}
 
 }

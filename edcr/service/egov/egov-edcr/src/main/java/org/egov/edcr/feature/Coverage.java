@@ -64,6 +64,8 @@ import static org.egov.edcr.constants.DxfFileConstants.C3;
 import static org.egov.edcr.constants.DxfFileConstants.D;
 import static org.egov.edcr.constants.DxfFileConstants.D1;
 import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.D3;
+import static org.egov.edcr.constants.DxfFileConstants.D4;
 import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.F;
 import static org.egov.edcr.constants.DxfFileConstants.F1;
@@ -75,6 +77,7 @@ import static org.egov.edcr.constants.DxfFileConstants.G3;
 import static org.egov.edcr.constants.DxfFileConstants.G4;
 import static org.egov.edcr.constants.DxfFileConstants.G5;
 import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I;
 import static org.egov.edcr.constants.DxfFileConstants.I1;
 import static org.egov.edcr.constants.DxfFileConstants.I2;
 import static org.egov.edcr.constants.DxfFileConstants.I3;
@@ -130,9 +133,6 @@ public class Coverage extends FeatureProcess {
     public static final String RULE_31_1 = "31(1)";
     public static final String RULE_AMD19_27_1 = "27(1)";
 
-	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-
-    
     @Override
     public Plan validate(Plan pl) {
         for (Block block : pl.getBlocks()) {
@@ -228,6 +228,15 @@ public class Coverage extends FeatureProcess {
 				pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
 			        
 			} else {
+				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+		        scrutinyDetail.setKey("Common_Coverage");
+		        scrutinyDetail.setHeading("Coverage in Percentage");
+		        scrutinyDetail.addColumnHeading(1, RULE_NO);
+		        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+		        scrutinyDetail.addColumnHeading(3, OCCUPANCY);
+		        scrutinyDetail.addColumnHeading(4, PERMISSIBLE);
+		        scrutinyDetail.addColumnHeading(5, PROVIDED);
+		        scrutinyDetail.addColumnHeading(6, STATUS);
 				if(pl.getOccupancies()!=null && pl.getOccupancies().size()==1) //Mean the blocks has more than one type of occupancy or any one block has more than one type of occupancy.
 				{
 					//Based on covered area, based on most restrictive occupancy, calculate the expected plot area
@@ -241,13 +250,12 @@ public class Coverage extends FeatureProcess {
 							pl.getVirtualBuilding().getOccupancyTypes());
 					weightedCoverage=getPermissibleCoverage(mostRestrictiveOccupancy);
 					
-			    	processCoverage(pl, mostRestrictiveOccupancy.getType().getName(), pl.getCoverage().setScale(2, ROUNDMODE_MEASUREMENTS),
-							weightedCoverage.setScale(2, ROUNDMODE_MEASUREMENTS));
+			    	processCoverage(pl, mostRestrictiveOccupancy.getType().getName(), pl.getCoverage().setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS),
+							weightedCoverage.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS), scrutinyDetail);
 				
 				}else
 				{
 			        Map<Integer, List<Occupancy>> codesMap = new HashMap<Integer,List<Occupancy>>();
-					BigDecimal weightedArea = BigDecimal.ZERO;
 
 					 for (Block block : pl.getBlocks()) {
 						//sum total area present in each floor, occupancy wise. Also save block and floor information to print.
@@ -268,13 +276,17 @@ public class Coverage extends FeatureProcess {
 				 
 				        for (Map.Entry<Integer, List<Occupancy>> floorOccupancies : codesMap.entrySet())  
 				        {
+				        	BigDecimal weightedArea = BigDecimal.ZERO;
 				        	for(Occupancy occ:floorOccupancies.getValue())
 							 {
-								BigDecimal occupancyWiseCoverage = occ.getBuiltUpArea().multiply(getPermissibleCoverage(occ.getTypeHelper()));
-								weightedArea = weightedArea.add(occupancyWiseCoverage);
+									BigDecimal occupancyWiseCoverage = occ.getBuiltUpArea()
+											.divide(getPermissibleCoverage(occ.getTypeHelper()), DECIMALDIGITS_MEASUREMENTS,
+													ROUNDMODE_MEASUREMENTS)
+											.multiply(BigDecimal.valueOf(100));
+									weightedArea = weightedArea.add(occupancyWiseCoverage);
 							}
-				        	processCoverage(pl,"Coverage in Floor " +floorOccupancies.getKey(), weightedArea.setScale(2, ROUNDMODE_MEASUREMENTS),
-				        			pArea.setScale(2, ROUNDMODE_MEASUREMENTS));
+				        	processCoverage(pl,"Coverage in Floor " + floorOccupancies.getKey(), weightedArea.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS),
+				        			pArea.setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS), scrutinyDetail);
 				        }
 				   
 					 }
@@ -296,9 +308,12 @@ public class Coverage extends FeatureProcess {
         case D1:
             return Fifty;
         case D:
-        case D2:	
+        case D2:
+        case D3:
+        case D4:
             return Forty;
-
+        
+        case I:
         case I1:
 		case I2:
 		case I3:
@@ -340,17 +355,7 @@ public class Coverage extends FeatureProcess {
             return BigDecimal.ZERO;
         }
     }
-    private void processCoverage(Plan pl, String occupancy, BigDecimal coverage, BigDecimal upperLimit) {
-        ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-        scrutinyDetail.setKey("Common_Coverage");
-        scrutinyDetail.setHeading("Coverage in Percentage");
-        scrutinyDetail.addColumnHeading(1, RULE_NO);
-        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-        scrutinyDetail.addColumnHeading(3, OCCUPANCY);
-        scrutinyDetail.addColumnHeading(4, PERMISSIBLE);
-        scrutinyDetail.addColumnHeading(5, PROVIDED);
-        scrutinyDetail.addColumnHeading(6, STATUS);
-
+    private void processCoverage(Plan pl, String occupancy, BigDecimal coverage, BigDecimal upperLimit, ScrutinyDetail scrutinyDetail) {
         String desc = getLocaleMessage(RULE_DESCRIPTION_KEY, upperLimit.toString());
         String actualResult = getLocaleMessage(RULE_ACTUAL_KEY, coverage.toString());
         String expectedResult = getLocaleMessage(RULE_EXPECTED_KEY, upperLimit.toString());
@@ -400,14 +405,28 @@ public class Coverage extends FeatureProcess {
             return codesMap.get(D);
         if (codes.contains(D1))
             return codesMap.get(D1);
+        if (codes.contains(D3))
+            return codesMap.get(D3);
+        if (codes.contains(D4))
+            return codesMap.get(D4);
         if (codes.contains(B2))
             return codesMap.get(B2);
         if (codes.contains(B3))
             return codesMap.get(B3);
+        if (codes.contains(I))
+            return codesMap.get(I);
         if (codes.contains(I2))
             return codesMap.get(I2);
         if (codes.contains(I1))
             return codesMap.get(I1);
+        if (codes.contains(I3))
+            return codesMap.get(I3);
+        if (codes.contains(I4))
+            return codesMap.get(I4);
+        if (codes.contains(I5))
+            return codesMap.get(I5);
+        if (codes.contains(I6))
+            return codesMap.get(I6);
         if (codes.contains(F3))
             return codesMap.get(F3);
         if (codes.contains(C))
@@ -438,10 +457,10 @@ public class Coverage extends FeatureProcess {
             return codesMap.get(F1);
         if (codes.contains(F2))
             return codesMap.get(F2);
-        if (codes.contains(H))
-            return codesMap.get(H);
         if (codes.contains(J))
             return codesMap.get(J);
+        if (codes.contains(H))
+            return codesMap.get(H);
         else
             return null;
     }

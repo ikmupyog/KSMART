@@ -64,7 +64,8 @@ public class VirtualBuilding implements Serializable {
     private BigDecimal totalFloorArea;
     private BigDecimal totalCarpetArea;
     private BigDecimal totalExistingBuiltUpArea;
-    private BigDecimal totalRegularizationBuiltUpArea;
+    private BigDecimal totalRegularizationBuiltUpArea = BigDecimal.ZERO;
+    private BigDecimal totalRegularizationFloorArea = BigDecimal.ZERO;
 
     private BigDecimal totalExistingFloorArea;
     private BigDecimal totalExistingCarpetArea;
@@ -248,6 +249,14 @@ public class VirtualBuilding implements Serializable {
 		this.totalParkingArea = totalParkingArea;
 	}
     
+	public BigDecimal getTotalRegularizationFloorArea() {
+		return totalRegularizationFloorArea;
+	}
+
+	public void setTotalRegularizationFloorArea(BigDecimal totalRegularizationFloorArea) {
+		this.totalRegularizationFloorArea = totalRegularizationFloorArea;
+	}
+
 	public boolean containsOccupancy(String occupancyCode) {
 		if(!this.occupancyTypes.isEmpty()) {
 			List<String> occupancyTypeCodes = this.occupancyTypes.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
