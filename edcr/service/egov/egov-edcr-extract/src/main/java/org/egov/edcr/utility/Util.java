@@ -1829,7 +1829,7 @@ public class Util {
         }
         
         
-        String name1 = getlayerNameMap(dxfLayer);
+        String name1 = getlayerNameMap(dxfLayer,pline);
         if(name1!=null)
         {
         	name=name1;
@@ -1894,9 +1894,9 @@ public class Util {
 		String name = null;
 
 		
-			if(getlayerNameMap(dxfLayer)!=null)
+			if(getlayerNameMap(dxfLayer,pline)!=null)
 			{
-				name=getlayerNameMap(dxfLayer);
+				name=getlayerNameMap(dxfLayer,pline);
 				if (LOG.isDebugEnabled())
 					LOG.debug("returning  from getPolylinePrintableTextOfLayer  "+name);	
 			}else {
@@ -1946,7 +1946,7 @@ public class Util {
 		return name;
     }
 
-	private static String getlayerNameMap(DXFLayer dxfLayer) {
+	private static String getlayerNameMap(DXFLayer dxfLayer, DXFPolyline pline) {
 		if(dxfLayer.getName().equalsIgnoreCase("NOTIFIED_ROAD"))
 		  return "Notified Road/ Un notified road with width more than 6.0 m";
 		if(dxfLayer.getName().equalsIgnoreCase("CULD_1"))
@@ -1955,9 +1955,113 @@ public class Util {
 			  return "Lanes up to 75m";
 		if(dxfLayer.getName().equalsIgnoreCase("NON_NOTIFIED_ROAD"))
 			  return "Un notified Road-Width less than 6.0 m";
-		if(dxfLayer.getName().contains("UNITFA"))
-			  return "Kitchen";
+		if(dxfLayer.getName().equalsIgnoreCase("LANE_1"))
+			  return "Lanes up to 75m";
 		
+		if(dxfLayer.getName().contains("DA_PARKING"))
+			return "DA";
+		if(dxfLayer.getName().contains("TWO_WHEELER_PARKING"))
+			return "BIKE";
+		if(dxfLayer.getName().contains("PARKING_SLOT"))
+			return "CAR";
+		if(dxfLayer.getName().contains("LOADING_UNLOADING"))
+			return "LOAD & UNLOAD";
+		//Sanitation
+		if(dxfLayer.getName().contains("WATER_CLOSET"))
+			return "WC";
+		if(dxfLayer.getName().contains("URINAL"))
+			return "U";
+		if(dxfLayer.getName().contains("SP_WC"))
+			return "SP WC";
+		if(dxfLayer.getName().contains("BATH"))
+			return "BATH";
+		
+		
+		if(dxfLayer.getName().contains("DEDUCT"))
+			return "DEDUCT";
+		
+		if(dxfLayer.getName().contains("UNITFA_BALCONY"))
+			return "Library Stack area";
+		if(dxfLayer.getName().contains("DRINKING_WATER"))
+			return "Drinking Water Fountain";
+		
+		
+		if(dxfLayer.getName().contains("AVG_GROUND_LVL"))
+			return "Average Proposed Ground Level";
+		
+		if(dxfLayer.getName().contains("ROOF_LVL"))
+			return "Average Proposed Roof Level";
+		if(dxfLayer.getName().contains("EXT_RECREATION"))
+			return "External Recreational Area";
+		if(dxfLayer.getName().contains("BIO_DEG_WASTE"))
+			return "Bio WMS";
+		
+		if(dxfLayer.getName().contains("RECYCLING_WASTE_WATER"))
+			return "WTP";
+		if(dxfLayer.getName().contains("SOLID_LIQUID_WASTE_TREATMENT"))
+			return "GW RECHARGE";
+		if(dxfLayer.getName().contains("LPG_SYSTEM"))
+			return "LPG Piped system";
+		
+		if(dxfLayer.getName().contains("LPG_SYSTEM"))
+			return "LPG Piped system";
+		
+		if(dxfLayer.getName().contains("LIFT"))
+			return "LIFT";
+		
+		
+		
+		// this may not work for all accblk layers it will work only for accblk_i
+		if(dxfLayer.getName().contains("ACCBLK"))
+			  return "Accessory Block "+dxfLayer.getName().substring(dxfLayer.getName().lastIndexOf("_")+1,dxfLayer.getName().length());
+		
+		
+		if(dxfLayer.getName().contains("BIO_GAS"))
+		{
+			if(pline.getColor()==1)
+			return "Existing  Bio Gas facility";
+			else if (pline.getColor()==2)
+			return "Proposed  Bio Gas facility";
+		}
+		
+		if(dxfLayer.getName().contains("UNITFA_HALL"))
+			return "Assembly Hall";
+		if(dxfLayer.getName().contains("UNITFA"))
+		{
+			if(pline.getColor()==24)
+				return "Dinning Area";
+				else 
+				return "Kitchen";
+		}
+		
+		 String name = null;
+	        
+	        if(dxfLayer.getName().equalsIgnoreCase("WASTE_DISPOSAL"))
+	        {
+	        	
+	        	 if(pline.getColor()!=0)
+	             {
+	          	   if (pline.getColor() == 1)
+	          		   name="Existing Waste Disposal Facility";
+	                 else if (pline.getColor() == 2)
+	              	   name="Proposed Waste Disposal Facility";
+	             }
+	        	return name;
+	        }
+	        if(dxfLayer.getName().equalsIgnoreCase("SEPTIC_TANK"))
+	        {
+	        	
+	        	
+	        	 if(pline.getColor()!=0)
+	             {
+	          	   if (pline.getColor() == 1)
+	          		   name="Existing Septic Tank";
+	                 else if (pline.getColor() == 2)
+	              	   name="Proposed Septic Tank";
+	             }
+	        	 LOG.debug("returning "+name);
+	        	return name;
+	        }
 		
 		return null;
 	}

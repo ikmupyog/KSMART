@@ -131,36 +131,6 @@
 				<text><![CDATA[KNOW YOUR BUILDING'S RULES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="145" width="57" height="19" uuid="10f39610-2a48-455d-be03-0e94dedee3bc"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Monospaced" size="10" isBold="true"/>
-					<paragraph leftIndent="0" rightIndent="4"/>
-				</textElement>
-				<text><![CDATA[STATUS :]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="report status style" x="280" y="145" width="100" height="19" uuid="3f3612b1-a275-495c-bc04-5393d31db615"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Monospaced" size="12" isBold="true"/>
-					<paragraph leftIndent="3"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{reportStatus}]]></textFieldExpression>
-			</textField>
-			<staticText>
 				<reportElement x="0" y="176" width="80" height="52" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1bc539b3-3399-4906-9c6d-2f6ce7399eb8">
 					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
 				</reportElement>
