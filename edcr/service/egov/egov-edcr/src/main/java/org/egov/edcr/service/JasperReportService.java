@@ -84,6 +84,17 @@ public class JasperReportService {
         return detailStyle;
     }
     
+    public Style getDetailStyleWithLeftAlign() { 
+        final Style detailStyle = new Style("detail");
+        detailStyle.setBorder(Border.THIN());
+        detailStyle.setTextColor(Color.RED);
+        detailStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+        detailStyle.setVerticalAlign(VerticalAlign.MIDDLE);
+        detailStyle.setFont(new Font(9, Font._FONT_MONOSPACED, false));
+        detailStyle.setTransparency(Transparency.OPAQUE);
+        return detailStyle;
+    }
+    
     public Style getNewReportDetailNumberStyle() { 
         final Style detailStyle = new Style("detail");
         detailStyle.setBorder(Border.THIN());

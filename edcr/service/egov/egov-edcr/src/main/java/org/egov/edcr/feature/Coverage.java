@@ -255,11 +255,12 @@ public class Coverage extends FeatureProcess {
 						if( block.getBuilding()!=null)
 						 for (Floor flr : block.getBuilding().getFloors() ) {
 							 
-							 if(codesMap!=null && codesMap.get(flr.getNumber()).equals(flr.getNumber()))
-								 codesMap.get(flr.getNumber()).addAll(flr.getOccupancies());  
-							 else
+							 if(codesMap!=null && !codesMap.isEmpty() && codesMap.containsKey(Integer.valueOf(flr.getNumber()))) {
+								 List<Occupancy> occupancies = codesMap.get(flr.getNumber());
+								 occupancies.addAll(flr.getOccupancies());
+								 codesMap.put(Integer.valueOf(flr.getNumber()), occupancies);  
+							 } else
 								 codesMap.put(flr.getNumber(), flr.getOccupancies());
-							
 						 }
 					 }
 					 

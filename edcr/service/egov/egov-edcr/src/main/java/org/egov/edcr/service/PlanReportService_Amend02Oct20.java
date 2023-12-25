@@ -1,10 +1,6 @@
 package org.egov.edcr.service;
 
 import static ar.com.fdvs.dj.domain.constants.Stretching.RELATIVE_TO_BAND_HEIGHT;
-import static org.egov.edcr.constants.DxfFileConstants.A1;
-import static org.egov.edcr.constants.DxfFileConstants.A2;
-import static org.egov.edcr.constants.DxfFileConstants.A4;
-import static org.egov.edcr.constants.DxfFileConstants.F3;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -32,16 +28,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.dcr.helper.Declaration;
+import org.egov.common.entity.dcr.helper.ErrorHelper;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Building;
 import org.egov.common.entity.edcr.DcrReportBlockDetail;
 import org.egov.common.entity.edcr.DcrReportFloorDetail;
-import org.egov.common.entity.edcr.DcrReportFloorUnitDetail;
 import org.egov.common.entity.edcr.DcrReportOutput;
 import org.egov.common.entity.edcr.DcrReportPlanDetail;
 import org.egov.common.entity.edcr.ElectricLine;
 import org.egov.common.entity.edcr.Floor;
-import org.egov.common.entity.edcr.FloorUnit;
 import org.egov.common.entity.edcr.MezzanineFloor;
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.ParkingArea;
@@ -901,6 +896,67 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         return null;
     }
     
+	private Subreport getErrors(String dataSource) {
+        try {
+
+            FastReportBuilder frb = new FastReportBuilder();
+
+             {
+                AbstractColumn blocks = ColumnBuilder.getNew()
+                        .setColumnProperty("slNo", String.class.getName())
+                        .setWidth(100).setStyle(reportService.getDetailStyleWithLeftAlign()).build();
+                AbstractColumn builtupArea = ColumnBuilder.getNew()
+                        .setColumnProperty("description", String.class.getName())
+                        .setWidth(442)
+                        .setStyle(reportService.getDetailStyleWithLeftAlign())
+                        .build();
+
+                frb.addColumn(blocks);
+                frb.addColumn(builtupArea);
+                
+            }
+            frb.setTitleStyle(reportService.getDetailStyleWithLeftAlign());
+            frb.setHeaderHeight(5);
+            //frb.setTopMargin(5);
+            //frb.setLeftMargin(25);
+            frb.setMargins(10, 10, 0, 0);
+            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
+                    reportService.getDetailStyleWithLeftAlign(), reportService.getDetailStyleWithLeftAlign());
+            frb.setAllowDetailSplit(false);
+            frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
+            DynamicReport build = frb.build();
+            Subreport sub = new Subreport();
+            sub.setDynamicReport(build);
+            Style style = new Style();
+            style.setStretchWithOverflow(true);
+            style.setStreching(RELATIVE_TO_BAND_HEIGHT);
+            sub.setStyle(style);
+
+            sub.setDatasource(new DJDataSource(dataSource, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+
+            sub.setLayoutManager(new ClassicLayoutManager());
+            return sub;
+        } catch (ColumnBuilderException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    
+    private List<ErrorHelper> setErrors(Plan pl, String error) {
+    	List<ErrorHelper> errors = new LinkedList<>();
+    	ErrorHelper eh = new ErrorHelper();
+    	eh.setSlNo("ERRORS");
+    	eh.setDescription(error);
+    	errors.add(eh);
+		/*
+		 * if(pl.getErrors() != null && !pl.getErrors().isEmpty()) { int i = 1; for
+		 * (Map.Entry<String, String> entry : pl.getErrors().entrySet()) { ErrorHelper
+		 * eh = new ErrorHelper(); eh.setSlNo(String.valueOf(i)+ ". ");
+		 * eh.setDescription(entry.getValue()); errors.add(eh); i++; } }
+		 */
+    	return errors;
+    }
+    
     private Subreport createHeaderSubreport(String title, String dataSourceName) {
         try {
 
@@ -923,7 +979,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         }
         return null;
     }
-
+    
     private Subreport createFooterSubreport(String title, String dataSourceName) {
         try {
 
@@ -1090,7 +1146,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             drb.addConcatenatedReport(creategeneralDetails(GENERAL_DETAILS, GENERAL_DETAILS));
             valuesMap.put(GENERAL_DETAILS, generalDetails);*/
             
-
+            if (plan.getErrors() != null && plan.getErrors().size() > 0) {
+				drb.addConcatenatedReport(getErrors("ERRORSDETAILS"));
+				valuesMap.put("ERRORSDETAILS", setErrors(plan, errors.toString()));
+			}
             List<String> combinedSummary = new ArrayList<>();
             combinedSummary.add(COMBINED_BLOCKS_SUMMARY_DETAILS);
             drb.addConcatenatedReport(createHeaderSubreport(COMBINED_BLOCKS_SUMMARY_DETAILS, COMBINED_BLOCKS_SUMMARY_DETAILS));
@@ -1098,11 +1157,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
             // Add total area details
             
-           
-            
             drb.addConcatenatedReport(getExistingArea(virtualBuildingReport));
             valuesMap.put("Existing Area Details", existingBlockDetails);   
-          
 
             boolean isExistingBuildingPresent = false;
             if(virtualBuildingReport.getTotalExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0)
@@ -1440,10 +1496,10 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         }
         
         LOG.info("status"+finalReportStatus);
-        reportBuilder.append("Report Status : " + (finalReportStatus ? "Accepted" : "Not Accepted")).append("\\n")
+        reportBuilder.append("Report Status : " + (finalReportStatus ? "ACCEPTED" : "NOT ACCEPTED")).append("\\n")
                 .append("\\n");
         reportBuilder.append("Rules Verified : ").append("\\n");
-        valuesMap.put("reportStatus", (finalReportStatus ? "Accepted" : "Not Accepted"));
+        valuesMap.put("reportStatus", (finalReportStatus ? "ACCEPTED" : "NOT ACCEPTED"));
         valuesMap.put("applicationType", dcrApplication.getApplicationType().getApplicationTypeVal());
         drb.setTemplateFile("/reports/templates/edcr_report.jrxml");
         drb.setMargins(5, 0, 33, 20);
