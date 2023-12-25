@@ -160,33 +160,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportStatus}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="176" width="80" height="52" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1bc539b3-3399-4906-9c6d-2f6ce7399eb8">
-					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Monospaced" size="10" isBold="true" isItalic="true" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[ERRORS]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="80" y="176" width="475" height="52" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="3993cc76-bd9f-4699-897a-2330010ece90">
-					<printWhenExpression><![CDATA[!$P{errors}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textFieldExpression><![CDATA[$P{errorString}]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement x="296" y="88" width="114" height="21" uuid="c6245e01-c7a0-48b4-8332-e20796f62ea8"/>
 				<box>
@@ -215,7 +188,7 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{applicantName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{applicationType}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement x="14" y="88" width="114" height="21" uuid="bd7d60cd-40ce-4610-810e-0396f20e31ea"/>
@@ -230,7 +203,7 @@
 					<font fontName="Monospaced" size="11"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA["APPLICANT(S)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["APPLICATION TYPE"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement x="14" y="109" width="114" height="21" uuid="31ada674-fa02-474a-ab3c-b55c9ac694a4"/>
@@ -245,7 +218,7 @@
 					<font fontName="Monospaced" size="10"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Uploaded File"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["UPLOADED FILE"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="410" y="88" width="130" height="21" uuid="8f0e1ba4-c0fc-4066-9d8d-81aee79e61c6"/>
@@ -287,7 +260,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="Monospaced" size="10"/>
+					<font fontName="Monospaced" size="8"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fileName}]]></textFieldExpression>

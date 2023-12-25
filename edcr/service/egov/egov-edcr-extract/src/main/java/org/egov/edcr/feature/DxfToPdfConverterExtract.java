@@ -1630,14 +1630,16 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
 						}
 					}
-					boolean found=false;
+					boolean found=true;
 					if(pdfdetail.getLayers()!=null && !pdfdetail.getLayers().isEmpty())
 					{
-						for (String s: pdfdetail.getLayers())
+						
+						//Enable this for validation
+						/*for (String s: pdfdetail.getLayers())
 						{
 							if(s.contains("FLOOR_PLAN_PRINT"))
 								found=true;
-						}
+						}*/
 					}
 					if(found)
 						pdfLayers.add(pdfdetail);
