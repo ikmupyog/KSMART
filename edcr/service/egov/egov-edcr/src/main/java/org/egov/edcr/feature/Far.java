@@ -1151,6 +1151,7 @@ public class Far extends FeatureProcess {
 
 	private void processFloorUnits(Plan pl) {
 		long totalFloorUnits = 0l;
+		Map<String, Long> blockWiseUnits = new HashMap<>(); 
 		for (Block block : pl.getBlocks()) {
 			long totalBlockFloorUnits = 0l;
 			if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
@@ -1162,8 +1163,9 @@ public class Far extends FeatureProcess {
 			block.getBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalBlockFloorUnits));
 			List<String> occupancyCodes = block.getBuilding().getTotalArea().stream()
 					.map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
-			
+				
 			if (!block.getCompletelyExisting() && (occupancyCodes.contains(A1) || occupancyCodes.contains(A5))) {
+				blockWiseUnits.put(block.getNumber(), totalBlockFloorUnits);
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
 							String.format("Mandatory Kitchen unit is not defined for Residential in the block %s",
@@ -1174,6 +1176,13 @@ public class Far extends FeatureProcess {
 							block.getNumber()));
 			}
 		}
+		
+		Map<String, Long> filteredMap = blockWiseUnits.entrySet()
+		        .stream().filter(x -> 1 == x.getValue())
+		        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+			if(blockWiseUnits.size() > 0 && filteredMap.size() == blockWiseUnits.size())
+				pl.getVirtualBuilding().setSingleFamilyResidential(true);
+			
 		pl.getVirtualBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalFloorUnits));
 	}
 

@@ -267,7 +267,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             if (isProposed) {
                 sub.setDatasource(new DJDataSource("Block No " + dcrReportBlockDetail.getBlockNo(),
                         DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
-            } if(isRegularized) {
+            } else if(isRegularized) {
             	sub.setDatasource(new DJDataSource("Regularization Block No " + dcrReportBlockDetail.getBlockNo(),
                         DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
             } else

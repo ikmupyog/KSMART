@@ -165,7 +165,7 @@ public class WasteDisposal extends FeatureProcess {
 			minimumDistance = BigDecimal.valueOf(1.2);
 			subRule = WD_DISTANCE_RULE_AMD19_79_4;
 			pl.getFeatureAmendments().put("Leach pit to boundary", AMEND_DATE_011020.toString());
-			if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+			if (pl.getVirtualBuilding().getSingleFamilyResidential())
 				minimumDistance = BigDecimal.valueOf(0.3);
 			subRuleDesc = SUB_RULE_104_4_PLOT_DESCRIPTION_WD;
 

@@ -86,6 +86,7 @@ import static org.egov.edcr.constants.DxfFileConstants.UNITFA_HALL;
 import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
 import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 import static org.egov.edcr.utility.DcrConstants.ROUNDUP;
+import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -562,7 +563,7 @@ public class Parking extends FeatureProcess {
 										/ Math.ceil(result.totalRequiredCarParking) * parkingArea.doubleValue();
 								ParkingArea parkingAreaByOcc = new ParkingArea();
 								parkingAreaByOcc.setOccupancyType(Util.getOccupancyByCode(pl, map.getKey()));
-								parkingAreaByOcc.setParkingArea(BigDecimal.valueOf(AreaForOccupancy));
+								parkingAreaByOcc.setParkingArea(BigDecimal.valueOf(AreaForOccupancy).setScale(DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS));
 								floor.getParkingProvidedInsideBuilding().add(parkingAreaByOcc);
 							}
 						}

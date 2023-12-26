@@ -131,7 +131,7 @@ public class SepticTank extends FeatureProcess {
 		                String ruleNo = SUB_RULE_AMD20_79_4;
 		                BigDecimal minDistance = DIST_1_POINT_2;
 						if (pl.getVirtualBuilding().getMostRestrictiveFarHelper().getType().getCode().equals(A1)
-								&& pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+								&& pl.getVirtualBuilding().getSingleFamilyResidential())
 	                        minDistance = DIST_30_CM;
 		                String status;
 		                if (roadOutput.distance != null &&
