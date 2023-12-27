@@ -1918,13 +1918,25 @@ public class Util {
     public static String getCirclePrintableTextOfLayer(DXFCircle circle, DXFLayer dxfLayer, EdcrPdfDetail detail,
 			PlanDetail pl) {
      		String name = null;
-           if(circle.getColor()!=0)
+        if(dxfLayer.getName().contains("WELL"))  
+        {
+     	if(circle.getColor()!=0)
            {
         	   if (circle.getColor() == 1)
         		   name="Existing Well";
                else if (circle.getColor() == 2)
             	   name="Proposed Well";
            }
+        }else  if(dxfLayer.getName().contains("BIO_GAS"))  
+        {
+     	if(circle.getColor()!=0)
+           {
+        	   if (circle.getColor() == 1)
+        		   name="Existing Bio Gas facility";
+               else if (circle.getColor() == 2)
+            	   name="Proposed Bio Gas facility";
+           }
+        }
      		if (LOG.isDebugEnabled())
 				LOG.debug("returning  from getCirclePrintableTextOfLayer  " + name);
 			return name;
